@@ -1,0 +1,39 @@
+// Model type
+//
+  type = 0    // Integer flag for type of RVE; 0 --> single, 1 --> bounded, 2 --> periodic
+//
+// Material geometry
+//
+  Rf = 1.0      // Fiber radius [mm]
+  Vff = 0.6     // Fiber volume fraction [-]
+  tr = 1.0      // Thickness ratio of bounding UD to 90° ply [-]
+//
+// Crack geometry
+//
+  theta = 0.0        // Crack reference angular position [°]
+  deltatheta = 15.0  // Crack angular semi-aperture [°]
+//
+// Material properties
+//
+  Ef = 30.0   // Fiber Young's modulus [GPa]
+  Gf = 20.0   // Fiber tangential modulus [GPa]
+  nuf = 0.5   // Fiber Poisson ratio [-]
+  Em = 3.5    // Matrix Young's modulus [GPa]
+  Gm = 1.3    // Matrix tangential modulus [GPa]
+  num = 0.4   // Matrix Poisson ratio [-]
+//
+// Mesh parameters
+//
+  fmesh = 1      // Mesh scale factor 1 [-]
+  gmesh = 1      // Mesh scale factor 2 [-]
+  hmesh = 1      // Mesh scale factor 3 [-]
+  Niter = 10     // Number of iterations for elliptic relaxation method [-]
+  Nalpha = 10    // Number of elements along dimension alpha [-]
+  Nbeta = 10     // Number of elements along dimension beta [-]
+  Ngamma = 10    // Number of elements along dimension gamma [-]
+  Ndelta = 10    // Number of elements along dimension delta [-]
+  Nepsilon = 10  // Number of elements along dimension epsilon [-]
+  Nzeta = 10     // Number of elements along dimension zeta [-]
+//
+// Boundary conditions
+//

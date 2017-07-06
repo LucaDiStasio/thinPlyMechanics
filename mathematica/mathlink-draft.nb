@@ -1,0 +1,359 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     13653,        351]
+NotebookOptionsPosition[     12881,        321]
+NotebookOutlinePosition[     13231,        336]
+CellTagsIndexPosition[     13188,        333]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"SystemOpen", "@", 
+  RowBox[{"FileNameJoin", "[", 
+   RowBox[{"{", 
+    RowBox[{"$UserBaseDirectory", ",", "\"\<Applications\>\""}], "}"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.67808803633045*^9, 3.678088036346076*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["$UserBaseDirectory"], "Input"],
+
+Cell[BoxData["\<\"C:\\\\Users\\\\Luca\\\\AppData\\\\Roaming\\\\Mathematica\"\>\
+"], "Output",
+ CellChangeTimes->{3.6780880625364695`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FileNameJoin", "[", 
+  RowBox[{"{", 
+   RowBox[{"$UserBaseDirectory", ",", "\"\<Applications\>\""}], "}"}], 
+  "]"}]], "Input"],
+
+Cell[BoxData["\<\"C:\\\\Users\\\\Luca\\\\AppData\\\\Roaming\\\\Mathematica\\\\\
+Applications\"\>"], "Output",
+ CellChangeTimes->{3.678088071252965*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<MATLink`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.678088126084445*^9, 3.678088126107669*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"LOCfiberArrangement", "=", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCisUpperBounded", "=", "0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCisLowerBounded", "=", "0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCisCohesive", "=", "0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCisXFEM", "=", "0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCcrackType", "=", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCelement", "=", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCorder", "=", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCoptimize", "=", "0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCRf", "=", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCVff", "=", "0.6"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCtratio", "=", "0.6"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCtheta", "=", "30"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCdeltatheta", "=", "20"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"LOCf1", "=", "0.25"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCf2", "=", "0.77"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCf3", "=", "1.05"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"LOCN1", "=", "20"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCN2", "=", "20"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCN3", "=", "8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCN4", "=", "5"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCN5", "=", "20"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LOCN6", "=", "20"}], ";"}], "\n"}], "Input",
+ CellChangeTimes->{{3.6780970454107075`*^9, 3.6780971460141783`*^9}, {
+   3.6780973359808054`*^9, 3.678097432906947*^9}, {3.678097686931629*^9, 
+   3.678097857855774*^9}, {3.6780978886604195`*^9, 3.678097913401365*^9}, {
+   3.6780983691067753`*^9, 3.6780983841629744`*^9}, 3.6781004992479177`*^9, {
+   3.6781045087606745`*^9, 3.6781046238542557`*^9}, {3.678105204165436*^9, 
+   3.678105214618642*^9}, {3.6783547366062403`*^9, 3.6783547398937597`*^9}, {
+   3.6783561991031218`*^9, 3.678356227313837*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"plotSingleMeshDetails", "[", 
+   RowBox[{
+   "fiberArrangement_", ",", "isUpperBounded_", ",", "isLowerBounded_", ",", 
+    "isCohesive_", ",", "crackType_", ",", "element_", ",", "order_", ",", 
+    "optimize_", ",", "Rf_", ",", "Vff_", ",", "tratio_", ",", "theta_", ",", 
+    "dtheta_", ",", "f1_", ",", "f2_", ",", "f3_", ",", "N1_", ",", "N2_", 
+    ",", "N3_", ",", "N4_", ",", "N5_", ",", "N6_", ",", "ImgSize_"}], "]"}], 
+  ":=", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"MEvaluate", "[", 
+     RowBox[{"StringJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<[nodes,edges,elements,fiberN,matrixN,part6bot,part6up,fiberEl,\
+matrixEl,cohesiveEl,boundedBot,boundedUp,gammaNo1,gammaNo2,gammaNo3,gammaNo4,\
+gammaEl1,gammaEl2,gammaEl3,gammaEl4,NintUpNine,NintUpZero,NintBotNine,\
+NintBotZero,NintUpNineCorners,NintUpZeroCorners,NintBotNineCorners,\
+NintBotZeroCorners,NbotRight,NbotLeft,NupRight,NupLeft,EintUpNine,EintUpZero,\
+EintBotNine,EintBotZero,EbotRight,EbotLeft,EupRight,EupLeft,Ncorners,Ndown,\
+Nright,Nup,Nleft,Edown,Eright,Eup,Eleft]=rve_mesh(\>\"", ",", 
+        RowBox[{"ToString", "[", "fiberArrangement", "]"}], ",", "\"\<,\>\"", 
+        ",", 
+        RowBox[{"ToString", "[", "isUpperBounded", "]"}], ",", "\"\<,\>\"", 
+        ",", 
+        RowBox[{"ToString", "[", "isLowerBounded", "]"}], ",", "\"\<,\>\"", 
+        ",", 
+        RowBox[{"ToString", "[", "isCohesive", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "crackType", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "element", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "order", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "optimize", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "Rf", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "Vff", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "tratio", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "theta", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "dtheta", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "f1", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "f2", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "f3", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "N1", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "N2", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "N3", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "N4", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "N5", "]"}], ",", "\"\<,\>\"", ",", 
+        RowBox[{"ToString", "[", "N6", "]"}], ",", "\"\<);\>\""}], "}"}], 
+      "]"}], "]"}], ";", 
+    RowBox[{"nodes", "=", 
+     RowBox[{"MGet", "[", "\"\<nodes\>\"", "]"}]}], ";", 
+    RowBox[{"edges", "=", 
+     RowBox[{"MGet", "[", "\"\<edges\>\"", "]"}]}], ";", 
+    RowBox[{"With", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"l", "=", 
+        RowBox[{"0.5", "*", "Rf", "*", 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{"Pi", "/", "Vff"}], "]"}]}]}], "}"}], ",", 
+      RowBox[{"Graphics", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Point", "[", "nodes", "]"}], ",", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"Line", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"nodes", "[", 
+                RowBox[{"[", 
+                 RowBox[{"edges", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"i", ",", "1"}], "]"}], "]"}], "]"}], "]"}], ",", 
+               RowBox[{"nodes", "[", 
+                RowBox[{"[", 
+                 RowBox[{"edges", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"i", ",", "2"}], "]"}], "]"}], "]"}], "]"}]}], 
+              "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"i", ",", "1", ",", 
+              RowBox[{"Length", "[", "edges", "]"}], ",", "1"}], "}"}]}], 
+           "]"}], ",", "Thick", ",", "Black", ",", 
+          RowBox[{"Circle", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "0"}], "}"}], ",", "Rf"}], "]"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "l"}], ",", 
+               RowBox[{"-", "l"}]}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"l", ",", 
+               RowBox[{"-", "l"}]}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"l", ",", "l"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "l"}], ",", "l"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "l"}], ",", 
+               RowBox[{"-", "l"}]}], "}"}]}], "}"}], "]"}], ",", 
+          RowBox[{"AbsoluteDashing", "[", 
+           RowBox[{"{", "}"}], "]"}], ",", "Red", ",", 
+          RowBox[{"Circle", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "0"}], "}"}], ",", "Rf", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"theta", "-", "dtheta"}], ",", 
+              RowBox[{"theta", "+", "dtheta"}]}], "}"}]}], "]"}]}], "}"}], 
+        ",", 
+        RowBox[{"Axes", "\[Rule]", "True"}], ",", 
+        RowBox[{"AxesLabel", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "z"}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+        RowBox[{"ImageSize", "\[Rule]", "ImgSize"}]}], "]"}]}], "]"}]}], 
+   ")"}]}]], "Input",
+ CellChangeTimes->{{3.6781050172188435`*^9, 3.678105039502927*^9}, {
+  3.678105076936019*^9, 3.678105086729842*^9}, {3.678105131577364*^9, 
+  3.678105139562784*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"guiMAT", "[", "]"}], ":=", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"OpenMATLAB", "[", "]"}], ";", 
+    RowBox[{"CreateDialog", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Deploy", "[", 
+        RowBox[{"MenuView", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<Select Test Family\>\"", "\[Rule]", 
+            RowBox[{"Text", "[", "\"\<Select Test Family\>\"", "]"}]}], ",", 
+           RowBox[{"\"\<2D Standard Mechanical Tests\>\"", "\[Rule]", 
+            RowBox[{"twoDstdmechtests", "[", "]"}]}], ",", 
+           RowBox[{
+           "\"\<2D Micromechanical Tests on Thin Ply FRPC Laminates\>\"", 
+            "\[Rule]", 
+            RowBox[{"plotSingleMeshDetails", "[", 
+             RowBox[{
+             "LOCfiberArrangement", ",", "LOCisUpperBounded", ",", 
+              "LOCisLowerBounded", ",", "LOCisCohesive", ",", "LOCcrackType", 
+              ",", "LOCelement", ",", "LOCorder", ",", "LOCoptimize", ",", 
+              "LOCRf", ",", "LOCVff", ",", "LOCtratio", ",", 
+              RowBox[{"N", "[", 
+               RowBox[{"LOCtheta", " ", "Degree"}], "]"}], ",", 
+              RowBox[{"N", "[", 
+               RowBox[{"LOCdeltatheta", " ", "Degree"}], "]"}], ",", "LOCf1", 
+              ",", "LOCf2", ",", "LOCf3", ",", "LOCN1", ",", "LOCN2", ",", 
+              "LOCN3", ",", "LOCN4", ",", "LOCN5", ",", "LOCN6", ",", "750"}],
+              "]"}]}], ",", 
+           RowBox[{
+           "\"\<3D Micromechanical Tests on Thin Ply FRPC Laminates\>\"", 
+            "\[Rule]", 
+            RowBox[{"threeDthinplysection", "[", "]"}]}], ",", 
+           RowBox[{"\"\<3D Standard Mechanical Tests\>\"", "\[Rule]", 
+            RowBox[{"threeDstdmechtests", "[", "]"}]}], ",", 
+           RowBox[{"\"\<3D Fiber/Matrix Crack Propagation\>\"", "\[Rule]", 
+            RowBox[{"threeDfibermatrixinterface", "[", "]"}]}]}], "}"}], 
+         "]"}], "]"}], "}"}], ",", 
+      RowBox[{
+      "WindowTitle", "\[Rule]", 
+       "\"\<Virtual Laboratory for Fiber Composite Testing\>\""}], ",", 
+      RowBox[{"WindowElements", "\[Rule]", "\"\<VerticalScrollBar\>\""}]}], 
+     "]"}]}], ")"}]}]], "Input",
+ CellChangeTimes->{{3.678101095955624*^9, 3.6781011136200886`*^9}, {
+  3.6781047015973616`*^9, 3.6781047351476393`*^9}, {3.678105149164212*^9, 
+  3.6781051506515913`*^9}, {3.6782776578465724`*^9, 3.6782776643153667`*^9}, {
+  3.678354783183545*^9, 3.6783547879403296`*^9}, {3.678354903156187*^9, 
+  3.6783549152445407`*^9}, {3.6783562357507896`*^9, 3.6783562721878743`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"guiMAT", "[", "]"}]], "Input",
+ CellChangeTimes->{{3.6781011167215195`*^9, 3.6781011240099044`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"OpenMATLAB", "::", "wspo"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"The MATLAB workspace is already open.\"\>"}]], "Message", \
+"MSG",
+ CellChangeTimes->{3.6783443189008536`*^9, 3.6783549198324385`*^9, 
+  3.6783562828655615`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{FrontEndObject[
+    LinkObject["esfhr_shm", 3, 1]],30,
+   "FrontEndObject[LinkObject[\"esfhr_shm\", 3, 1]]","30",
+   "\"Virtual Laboratory for Fiber Composite Testing\""},
+  "NotebookObjectUnsaved"]], "Output",
+ CellChangeTimes->{{3.6781011186892443`*^9, 3.678101128796505*^9}, 
+   3.678104749017696*^9, 3.6781051120838895`*^9, 3.678105232164355*^9, 
+   3.6782721717780333`*^9, 3.67827245487494*^9, 3.678272541548456*^9, 
+   3.67827769975881*^9, 3.6783443260666666`*^9, 3.678354924987119*^9, 
+   3.6783562875150375`*^9}]
+}, Open  ]]
+},
+WindowSize->{1264, 710},
+WindowMargins->{{Automatic, -1272}, {Automatic, 46}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (February 25, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 251, 6, 31, "Input"],
+Cell[CellGroupData[{
+Cell[834, 30, 44, 0, 31, "Input"],
+Cell[881, 32, 137, 2, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1055, 39, 151, 4, 31, "Input"],
+Cell[1209, 45, 151, 2, 31, "Output"]
+}, Open  ]],
+Cell[1375, 50, 139, 2, 31, "Input"],
+Cell[1517, 54, 1933, 53, 492, "Input"],
+Cell[3453, 109, 5864, 128, 392, "Input"],
+Cell[9320, 239, 2557, 51, 192, "Input"],
+Cell[CellGroupData[{
+Cell[11902, 294, 124, 2, 31, "Input"],
+Cell[12029, 298, 285, 8, 21, "Message"],
+Cell[12317, 308, 548, 10, 48, "Output"]
+}, Open  ]]
+}
+]
+*)
+

@@ -1,0 +1,373 @@
+\documentclass{minimal}
+
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage{pgf,tikz}
+\usepackage{mathrsfs}
+
+\usetikzlibrary{arrows}
+
+%global definitions
+
+\def\Rf{1cm}
+\def\Vff{0.5}
+\def\l{1.25331}
+\def\thetavalue{45}
+\def\deltatheta{15}
+
+\newcommand{\half}[1]{
+       0.5*#1
+       }
+
+\def\domlim{1.28*\l}
+\def\loadlim{1.197*\l}
+\def\loadlabel{0.2*\Rf}
+\def\cornerlabel{1.077*\l}
+
+\def\thetabot{\thetavalue-\deltatheta}
+\def\thetaup{\thetavalue+\deltatheta}
+
+\def\thetaround{360+\thetavalue-\deltatheta}
+\def\thetadraw{0.25*\thetavalue}
+
+\pgfmathsetmacro\costheta{cos(\thetavalue)}
+\pgfmathsetmacro\sintheta{sin(\thetavalue)}
+
+\pgfmathsetmacro\costhetabot{cos(\thetabot)}
+\pgfmathsetmacro\sinthetabot{sin(\thetabot)}
+
+\pgfmathsetmacro\costhetaup{cos(\thetaup)}
+\pgfmathsetmacro\sinthetaup{sin(\thetaup)}
+  
+\pgfmathsetmacro\xM{0.9*cos(\thetavalue)*\Rf}
+\pgfmathsetmacro\yM{0.9*sin(\thetavalue)*\Rf}
+
+\pgfmathsetmacro\xcrack{1.167084*cos(\thetavalue)*\Rf}
+\pgfmathsetmacro\ycrack{1.167084*sin(\thetavalue)*\Rf}
+
+% \pgfmathsetmacro\drawparone{0.2}
+% \pgfmathsetmacro\drawpartwo{0.3}
+% \pgfmathsetmacro\drawparthree{0.6}
+% \pgfmathsetmacro\drawparfour{-1.375}
+% \pgfmathsetmacro\drawparfive{-0.433013}
+% \pgfmathsetmacro\drawparsix{0.25}
+% \pgfmathsetmacro\drawparseven{-0.05}
+% \pgfmathsetmacro\drawpareight{0.75}
+% \pgfmathsetmacro\drawparnine{0.852}
+% \pgfmathsetmacro\drawparten{0.85}
+% \pgfmathsetmacro\drawpareleven{0.52}
+% \pgfmathsetmacro\drawpartwelve{0.259808}
+% \pgfmathsetmacro\drawparthirteen{0.15}
+% \pgfmathsetmacro\drawparfourteen{0.519615}
+% \pgfmathsetmacro\drawparfifteen{0.212132}
+% \pgfmathsetmacro\drawparsixteen{0.357009}
+% \pgfmathsetmacro\drawparseventeen{0.273943}
+% \pgfmathsetmacro\drawpareighteen{0.424264}
+% \pgfmathsetmacro\drawparnineteen{-30.7096}
+% \pgfmathsetmacro\drawpartwenty{120.71}
+% \pgfmathsetmacro\drawpartwentyone{0.267084}
+
+\pgfmathsetmacro\drawpartwelve{0.3*\Rf*cos(\theta-\deltatheta)}
+\pgfmathsetmacro\drawparthirteen{0.3*\Rf*sin(\theta-\deltatheta)}
+\pgfmathsetmacro\drawpartwelvebis{0.3*\Rf*cos(\theta+\deltatheta)}
+\pgfmathsetmacro\drawparthirteenbis{0.3*\Rf*sin(\theta+\deltatheta)}
+\pgfmathsetmacro\drawparfourteen{0.6*\Rf*cos(\theta-\deltatheta)}
+\pgfmathsetmacro\drawparfourteenbis{0.6*\Rf*sin(\theta-\deltatheta)}
+\pgfmathsetmacro\drawparfifteen{0.3*\Rf*cos(\theta)}
+\pgfmathsetmacro\drawparfifteenbis{0.3*\Rf*sin(\theta)}
+\pgfmathsetmacro\drawparsixteen{0.45*\Rf*cos(\theta-0.5*\deltatheta)}
+\pgfmathsetmacro\drawparseventeen{0.45*\Rf*sin(\theta-0.5*\deltatheta)}
+\pgfmathsetmacro\drawparsixteenbis{0.45*\Rf*cos(\theta+0.5*\deltatheta)}
+\pgfmathsetmacro\drawparseventeenbis{0.45*\Rf*sin(\theta+0.5*\deltatheta)}
+\pgfmathsetmacro\drawpareighteen{0.6*\Rf*cos(\theta)}
+\pgfmathsetmacro\drawpareighteenbis{0.6*\Rf*sin(\theta)}
+\pgfmathsetmacro\drawpartwentytwo{cos(\thetavalue+0.5*\deltatheta)}
+\pgfmathsetmacro\drawpartwentythree{sin(\thetavalue+0.5*\deltatheta)}
+
+\pgfmathsetmacro\deltay{\l*0.1}
+\pgfmathsetmacro\yarrowone{-\l+\deltay}
+\pgfmathsetmacro\yarrowtwo{-\l+2*\deltay}
+\pgfmathsetmacro\yarrowthree{-\l+3*\deltay}
+\pgfmathsetmacro\yarrowfour{-\l+4*\deltay}
+\pgfmathsetmacro\yarrowfive{-\l+6*\deltay}
+\pgfmathsetmacro\yarrowsix{-\l+7*\deltay}
+\pgfmathsetmacro\yarrowseven{-\l+8*\deltay}
+\pgfmathsetmacro\yarroweight{-\l+9*\deltay}
+\pgfmathsetmacro\yarrownine{-\l+10*\deltay}
+\pgfmathsetmacro\yarrowten{-\l+11*\deltay}
+\pgfmathsetmacro\yarroweleven{-\l+12*\deltay}
+\pgfmathsetmacro\yarrowtwelve{-\l+13*\deltay}
+\pgfmathsetmacro\yarrowthirteen{-\l+14*\deltay}
+\pgfmathsetmacro\yarrowfourteen{-\l+16*\deltay}
+\pgfmathsetmacro\yarrowfifteen{-\l+17*\deltay}
+\pgfmathsetmacro\yarrowsixteen{-\l+18*\deltay}
+\pgfmathsetmacro\yarrowseventeen{-\l+19*\deltay}
+
+\pgfmathsetmacro\deltax{\l*0.2}
+\pgfmathsetmacro\xloadarrowone{\l*0.2}
+\pgfmathsetmacro\xloadarrowtwo{2*\l*0.2}
+\pgfmathsetmacro\xloadarrowthree{3*\l*0.2}
+\pgfmathsetmacro\xloadarrowfour{4*\l*0.2}
+\pgfmathsetmacro\yloadarrowone{\l+(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowtwo{\l+2*(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowthree{\l+3*(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowfour{\l+4*(\loadlim-\l)*0.2}
+
+
+\begin{document}
+\pagestyle{empty}
+
+\begin{center}
+ 
+\begin{tikzpicture}[scale=4.5,cap=round]
+
+\tikzstyle{axes}=[]
+
+\draw (\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+
+\begin{scope}[style=axes]
+  \draw[->] (-\domlim,0) -- (\domlim,0) node[right] {$\underline{i}, x$};
+  \draw[->] (0,-\domlim) -- (0,\domlim) node[above] {$\underline{k}, z$};
+\end{scope}
+
+\foreach \x in {-\l, \yarrowone, \yarrowtwo, \yarrowthree, \yarrowfour, -\half{\l}, \yarrowfive, \yarrowsix, \yarrowseven, \yarroweight, \yarrownine, \yarrowten, \yarroweleven, \yarrowtwelve, \yarrowthirteen, \half{\l}, \yarrowfourteen, \yarrowfifteen, \yarrowsixteen, \yarrowseventeen, \l}
+ \draw[->] (\l,\x) -- (\loadlim,\x);
+ 
+ 
+\foreach \x in {-\l, \yarrowone, \yarrowtwo, \yarrowthree, \yarrowfour, -\half{\l}, \yarrowfive, \yarrowsix, \yarrowseven, \yarroweight, \yarrownine, \yarrowten, \yarroweleven, \yarrowtwelve, \yarrowthirteen, \half{\l}, \yarrowfourteen, \yarrowfifteen, \yarrowsixteen, \yarrowseventeen, \l}
+ \draw[->] (-\l,\x) -- (-\loadlim,\x);
+
+\foreach \y in {\yloadarrowone,-\yloadarrowone}
+  \draw[->] (\xloadarrowone,\y) -- (\l,\y);
+\foreach \y in {\yloadarrowone,-\yloadarrowone}
+  \draw[->] (-\xloadarrowone,\y) -- (-\l,\y);
+
+\foreach \y in {\yloadarrowtwo,-\yloadarrowtwo}
+  \draw[->] (\xloadarrowtwo,\y) -- (\l,\y);
+\foreach \y in {\yloadarrowtwo,-\yloadarrowtwo}
+  \draw[->] (-\xloadarrowtwo,\y) -- (-\l,\y);
+  
+\foreach \y in {\yloadarrowthree,-\yloadarrowthree}
+  \draw[->] (\xloadarrowthree,\y) -- (\l,\y);
+\foreach \y in {\yloadarrowthree,-\yloadarrowthree}
+  \draw[->] (-\xloadarrowthree,\y) -- (-\l,\y);
+  
+\foreach \y in {\yloadarrowfour,-\yloadarrowfour}
+  \draw[->] (\xloadarrowfour,\y) -- (\l,\y);
+\foreach \y in {\yloadarrowfour,-\yloadarrowfour}
+  \draw[->] (-\xloadarrowfour,\y) -- (-\l,\y);
+  
+\foreach \x in {-\l, \l}
+ \draw (\x,\l) -- (\x,\loadlim) -- (0,\l);
+
+\foreach \x in {-\l, \l}
+\draw (\x,-\l) -- (\x,-\loadlim) -- (0,-\l);
+
+\draw (-\l,-\l) -- (-\l,\l);
+\draw[line width=2pt] (-\l,\l) -- (\l,\l) ;
+\draw (\l,\l) -- (\l,-\l);
+\draw[line width=2pt] (\l,-\l) -- (-\l,-\l);
+
+\draw[line width=0.05pt] (-\loadlim,-\l) -- (-\loadlim,\l);
+\draw[line width=0.05pt] (\loadlim,-\l) -- (\loadlim,\l);
+
+\draw (-\l,\half{\l}) node[black,right] {$l$};
+\draw (-\l,-\half{\l}) node[black,right] {$l$};
+\draw (\half{\l},\l) node[black,below] {$l$};
+\draw (-\half{\l},\l) node[black,below] {$l$};
+
+\draw (\domlim,\loadlabel) node[black,right] {$\bar{u}_{x}=\bar{\varepsilon}_{x}\cdot l$};
+\draw (-\domlim,-\loadlabel) node[black,left] {$\bar{u}_{x}=\bar{\varepsilon}_{x}\cdot l$};
+
+\draw (\loadlabel,0.925*\domlim) node[black,right] {$\bar{u}_{x}=\bar{u}_{x}\frac{x}{l}$};
+\draw (-\loadlabel,-0.925*\domlim) node[black,left] {$\bar{u}_{x}=\bar{u}_{x}\frac{x}{l}$};
+
+\draw (\l,\cornerlabel) node[black,right] {$C\equiv\left(+l,+l\right)$};
+\draw (-\l,\cornerlabel) node[black,left] {$D\equiv\left(-l,+l\right)$};
+
+\draw (\l,-\cornerlabel) node[black,right] {$B\equiv\left(+l,-l\right)$};
+\draw (-\l,-\cornerlabel) node[black,left] {$A\equiv\left(-l,-l\right)$};
+
+\draw (0,\Rf) node[black,above] {$\left(0,R_{f}\right)$};
+\draw (-\Rf,0) node[black,above] {$\left(-R_{f},0\right)$};
+\draw (0,-\Rf) node[black,below] {$\left(0,-R_{f}\right)$};
+\draw (\Rf,0) node[black,right] {$\left(R_{f},0\right)$};
+
+\draw (-0.5\Rf,-0.5\Rf) node[black,above] {$\Omega_{f}$};
+\draw (-\Rf,-\Rf) node[black,above] {$\Omega_{m}$};
+\draw (-0.5*\Rf*\costhetabot,0.5*\Rf*\sinthetabot) node[black,above] {$R_{f}$};
+\draw (-0.05,0) node[black,left,below] {$O$};
+\draw (-\costhetaup,-\sinthetaup) node[black,below] {$\Gamma_{1}$};
+\draw (\costhetabot,\sinthetabot) node[black,below] {$I$};
+\draw (\costhetaup,\sinthetaup) node[black,above] {$L$};
+\draw (\costheta,\sintheta) node[black,below] {$H$};
+\draw (\costheta,\sintheta) node[red!50!black,above] {$a$};
+\draw (\drawpartwentytwo,\drawpartwentythree) node[black,above] {$\Gamma_{3}$};
+\draw (0.95*\costhetabot,1.1*\sinthetabot) node[black,left] {$\Gamma_{2}$};
+
+\filldraw[fill=green!20,draw=green!50!black] (0,0) -- (0.3*\Rf,0) arc(0:\thetavalue:0.3*\Rf);
+\draw (\thetadraw:0.2*\Rf) node[green!50!black] {$\theta$};
+
+\pgfmathsetmacro\drawpartwelve{0.3*\Rf*cos(\theta-\deltatheta)}
+\pgfmathsetmacro\drawparthirteen{0.3*\Rf*sin(\theta-\deltatheta)}
+\pgfmathsetmacro\drawpartwelvebis{0.3*\Rf*cos(\theta+\deltatheta)}
+\pgfmathsetmacro\drawparthirteenbis{0.3*\Rf*sin(\theta+\deltatheta)}
+\pgfmathsetmacro\drawparfourteen{0.6*\Rf*cos(\theta-\deltatheta)}
+\pgfmathsetmacro\drawparfourteenbis{0.6*\Rf*sin(\theta-\deltatheta)}
+\pgfmathsetmacro\drawparfifteen{0.3*\Rf*cos(\theta)}
+\pgfmathsetmacro\drawparfifteenbis{0.3*\Rf*sin(\theta)}
+\pgfmathsetmacro\drawparsixteen{0.45*\Rf*cos(\theta-0.5*\deltatheta)}
+\pgfmathsetmacro\drawparseventeen{0.45*\Rf*sin(\theta-0.5*\deltatheta)}
+\pgfmathsetmacro\drawparsixteenbis{0.45*\Rf*cos(\theta+0.5*\deltatheta)}
+\pgfmathsetmacro\drawparseventeenbis{0.45*\Rf*sin(\theta+0.5*\deltatheta)}
+\pgfmathsetmacro\drawpareighteen{0.6*\Rf*cos(\theta)}
+\pgfmathsetmacro\drawpareighteenbis{0.6*\Rf*sin(\theta)}
+
+\filldraw[fill=blue!20,draw=blue!50!black](\drawpartwelve,\drawparthirteen) -- (\drawparfourteen,\drawparfourteenbis) arc(\thetabot:\thetavalue:0.6*\Rf) --  (\drawparfifteen,\drawparfifteenbis) arc(\thetavalue:\thetabot:0.3*\Rf);
+\draw (\drawparsixteen,\drawparseventeen) node[blue!50!black] {$\Delta\theta$};
+
+\filldraw[fill=blue!20,draw=blue!50!black](\drawparfifteen,\drawparfifteenbis) -- (\drawpareighteen,\drawpareighteenbis) arc(\thetavalue:\thetaup:0.6*\Rf) --  (\drawpartwelvebis,\drawparthirteenbis) arc(\thetaup:\thetavalue:0.3*\Rf);
+\draw (\drawparsixteenbis,\drawparseventeenbis) node[blue!50!black] {$\Delta\theta$};
+
+\draw[draw=red,line width=2pt](\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+
+
+\draw (0,0)--(\costheta,\sintheta);
+\draw (0,0)--(\costhetabot,\sinthetabot);
+\draw (0,0)--(-\costhetabot,\sinthetabot);
+\draw (0,0)--(\costhetaup,\sinthetaup);
+
+
+\end{tikzpicture}
+
+\end{center}
+
+% \newpage
+% 
+% \begin{center}
+% 
+% \begin{tikzpicture}[scale=4.5,cap=round]
+% 
+% \tikzstyle{axes}=[]
+% 
+% \draw (\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+% 
+% \begin{scope}[style=axes]
+%   \draw[->] (-\domlim,0) -- (\domlim,0) node[right] {$\underline{i}, x$};
+%   \draw[->] (0,-\domlim) -- (0,\domlim) node[above] {$\underline{k}, z$};
+% \end{scope}
+% 
+% \foreach \x in {-\l, \yarrowone, \yarrowtwo, \yarrowthree, \yarrowfour, -\half{\l}, \yarrowfive, \yarrowsix, \yarrowseven, \yarroweight, \yarrownine, \yarrowten, \yarroweleven, \yarrowtwelve, \yarrowthirteen, \half{\l}, \yarrowfourteen, \yarrowfifteen, \yarrowsixteen, \yarrowseventeen, \l}
+%  \draw[->] (\l,\x) -- (\loadlim,\x);
+% 
+% \foreach \x in {-\l, \yarrowone, \yarrowtwo, \yarrowthree, \yarrowfour, \yarrowfive, \yarrowsix, \yarrowseven, \yarroweight, \yarrownine, \yarrowten, \yarroweleven, \yarrowtwelve, \yarrowthirteen,  \yarrowfourteen, \yarrowfifteen, \yarrowsixteen, \yarrowseventeen, \l}
+% \draw[->] (-\l,\x) -- (-\loadlim,\x);
+% 
+% \draw (-\l,-\l) -- (-\l,\l);
+% \draw (-\l,\l) -- (\l,\l) ;
+% \draw (\l,\l) -- (\l,-\l);
+% \draw (\l,-\l) -- (-\l,-\l);
+% 
+% \draw (-\l,\half{\l}) node[black,left] {$l$};
+% \draw (-\l,-\half{\l}) node[black,left] {$l$};
+% \draw (\half{\l},\l) node[black,above] {$l$};
+% \draw (-\half{\l},\l) node[black,above] {$l$};
+% \draw (\domlim,\loadlabel) node[black,above] {$\bar{u}_{x}$};
+% \draw (-\domlim,-\loadlabel) node[black,below] {$\bar{u}_{x}$};
+% \draw (\drawparfive,\drawparsix) node[black,above] {$R_{f}$};
+% \draw (\drawparseven,0) node[black,left,below] {$O$};
+% \draw (-\costhetaup,-\sinthetaup) node[black,below] {$\Gamma_{1}$};
+% \draw (\xM,\yM) node[black,left] {$M$};
+% \draw (\costhetabot,\sinthetabot) node[black,below] {$I$};
+% \draw (\costhetaup,\sinthetaup) node[black,above] {$L$};
+% \draw (\costheta,\sintheta) node[black,below] {$H$};
+% \draw (\xcrack,\ycrack) node[red!50!black,right] {$a$};
+% \draw (\drawpareight,\drawparnine) node[black,above] {$\Gamma_{3}$};
+% \draw (\drawparten,\drawpareleven) node[black,left] {$\Gamma_{2}$};
+% 
+% \filldraw[fill=green!20,draw=green!50!black] (0,0) -- (\drawpartwo,0pt) arc(0:\thetavalue:\drawpartwo);
+% \draw (\thetadraw:\drawparone) node[green!50!black] {$\theta$};
+% 
+% \filldraw[fill=blue!20,draw=blue!50!black](\drawpartwelve,\drawparthirteen) -- (\drawparfourteen,\drawpartwo) arc(\thetabot:\thetavalue:\drawparthree) --  (\drawparfifteen,\drawparfifteen) arc(\thetavalue:\thetabot:\drawpartwo);
+% \draw (\drawparsixteen,\drawparseventeen) node[blue!50!black] {$\Delta\theta$};
+% 
+% \filldraw[fill=blue!20,draw=blue!50!black](\drawparfifteen,\drawparfifteen) -- (\drawpareighteen,\drawpareighteen) arc(\thetavalue:\thetaup:\drawparthree) --  (\drawparthirteen,\drawpartwelve) arc(\thetaup:\thetavalue:\drawpartwo);
+% \draw (\drawparseventeen,\drawparsixteen) node[blue!50!black] {$\Delta\theta$};
+% 
+% \filldraw[fill=red!20,draw=red!50!black]([shift=(\drawparnineteen:\drawpartwentyone)]\xM,\yM) arc (\drawparnineteen:\drawpartwenty:\drawpartwentyone) --  (\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+% 
+% 
+% \draw[draw=red!75!black] (\costheta,\sintheta) -- (\xcrack,\ycrack);
+% \draw (0,0)--(\costheta,\sintheta);
+% \draw (0,0)--(\costhetabot,\sinthetabot);
+% \draw (0,0)--(-\costhetabot,\sinthetabot);
+% \draw (0,0)--(\costhetaup,\sinthetaup);
+% \draw (\xM,\yM)--(\costhetabot,\sinthetabot);
+% \draw (\xM,\yM)--(\costhetaup,\sinthetaup);
+% 
+% \end{tikzpicture}
+% 
+% \end{center}
+% 
+% \newpage
+% 
+% 
+% 
+% 
+% 
+% \begin{center}
+%   
+% \begin{tikzpicture}[scale=4.5,cap=round]
+% 
+% \tikzstyle{axes}=[]
+% 
+% \draw (\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+% 
+% \begin{scope}[style=axes]
+%   \draw[->] (-\domlim,0) -- (\domlim,0) node[right] {$\underline{i}, x$};
+%   \draw[->] (0,-\domlim) -- (0,\domlim) node[above] {$\underline{k}, z$};
+% \end{scope}
+% 
+% 
+% 
+% 
+% 
+% \draw (-\l,-\l) -- (-\l,\l);
+% \draw (-\l,\l) -- (\l,\l) ;
+% \draw (\l,\l) -- (\l,-\l);
+% \draw (\l,-\l) -- (-\l,-\l);
+% 
+% 
+% \draw (-\l,\half{\l}) node[black,left] {$l$};
+% \draw (-\l,-\half{\l}) node[black,left] {$l$};
+% \draw (\half{\l},\l) node[black,above] {$l$};
+% \draw (-\half{\l},\l) node[black,above] {$l$};
+% \draw (\l,\cornerlabel) node[black,right] {$C\equiv\left(+l,+l\right)$};
+% \draw (-\l,\cornerlabel) node[black,left] {$D\equiv\left(-l,+l\right)$};
+% \draw (\l,-\cornerlabel) node[black,right] {$B\equiv\left(+l,-l\right)$};
+% \draw (-\l,-\cornerlabel) node[black,left] {$A\equiv\left(-l,-l\right)$};
+% \draw (-0.5\Rf,-0.5\Rf) node[black,above] {$\Omega_{f}$};
+% \draw (-\Rf,-\Rf) node[black,above] {$\Omega_{m}$};
+% \draw (\drawparseven,0) node[black,left,below] {$O$};
+% \draw (-\costhetaup,-\sinthetaup) node[black,below] {$\Gamma_{1}$};
+% \draw (\costhetabot,\sinthetabot) node[black,below] {$I$};
+% \draw (\costhetaup,\sinthetaup) node[black,above] {$L$};
+% \draw (\costheta,\sintheta) node[black,below] {$H$};
+% \draw (\costheta,\sintheta) node[red!50!black,above] {$a$};
+% \draw (\drawpartwentytwo,\drawpartwentythree) node[black,above] {$\Gamma_{3}$};
+% \draw (\drawparten,\drawpareleven) node[black,left] {$\Gamma_{2}$};
+% 
+% 
+% \draw[draw=red,line width=2pt](\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+% 
+% 
+% \draw (0,0)--(\costheta,\sintheta);
+% \draw (0,0)--(\costhetabot,\sinthetabot);
+% \draw (0,0)--(\costhetaup,\sinthetaup);
+% 
+% 
+% \end{tikzpicture}
+% 
+% \end{center}
+
+\end{document}

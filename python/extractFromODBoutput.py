@@ -1697,7 +1697,7 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
         # compute energy release rates for crack tip 1
         dataMatrixSideCrackTip1 = []
         dataFiberSideCrackTip1 = []
-        for elN in range(nEl0,NELMax+DeltaEl,DeltaEl):
+        for elN in range(nEl0,NElMax+DeltaEl,DeltaEl):
             psMatrix = []
             psFiber = []
             if preMatrixCrackTip1Label<matrixCrackTip1Label:
@@ -1813,7 +1813,7 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
         # compute energy release rates for crack tip 2
         dataMatrixSideCrackTip2 = []
         dataFiberSideCrackTip2 = []
-        for elN in range(nEl0,NELMax+DeltaEl,DeltaEl):
+        for elN in range(nEl0,NElMax+DeltaEl,DeltaEl):
             psMatrix = []
             psFiber = []
             if preMatrixCrackTip2Label<matrixCrackTip2Label:

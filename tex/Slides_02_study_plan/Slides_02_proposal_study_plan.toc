@@ -1,0 +1,6 @@
+\beamer@endinputifotherversion {3.26pt}
+\beamer@sectionintoc {1}{Review of educational requirements}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Requirements of DocMASE framework}{4}{0}{1}
+\beamer@subsectionintoc {1}{2}{Requirements of EMMA doctoral school}{5}{0}{1}
+\beamer@subsectionintoc {1}{3}{Requirements of Lule\r a\ University of Technology}{6}{0}{1}
+\beamer@sectionintoc {2}{Proposed study plan}{7}{0}{2}

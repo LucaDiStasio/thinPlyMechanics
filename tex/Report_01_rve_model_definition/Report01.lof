@@ -1,0 +1,31 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\select@language {english}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1}{\ignorespaces Single \acrshort {rve} model.\relax }}{3}{figure.caption.10}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {2}{\ignorespaces Initial state of single \acrshort {rve} model: crack closed in the radial direction.\relax }}{4}{figure.caption.11}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3}{\ignorespaces Bounded \acrshort {rve} model.\relax }}{5}{figure.caption.12}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {4}{\ignorespaces Initial state of bounded \acrshort {rve} model: crack closed in the radial direction.\relax }}{6}{figure.caption.13}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {5}{\ignorespaces Periodic \acrshort {rve} model.\relax }}{7}{figure.caption.14}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6}{\ignorespaces Initial state of periodic \acrshort {rve} model: crack closed in the radial direction.\relax }}{8}{figure.caption.15}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {7}{\ignorespaces Block regions of the \acrshort {rve} geometry.\relax }}{11}{figure.caption.18}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {8}{\ignorespaces Parameters for mesh generation for the single and periodic \acrshort {rve}.\relax }}{12}{figure.caption.19}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {9}{\ignorespaces Parameters for mesh generation for the bounded \acrshort {rve}.\relax }}{13}{figure.caption.20}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {10}{\ignorespaces Representation of the helical numbering method.\relax }}{14}{figure.caption.21}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {11}{\ignorespaces Main steps of the topological transformation for mesh generation.\relax }}{15}{figure.caption.22}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {12}{\ignorespaces Topological transformation for mesh generation.\relax }}{16}{figure.caption.23}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {13}{\ignorespaces \gls {abaqus} \gls {cpe4} first-order 4-node plane strain element (for details see~\cite {ABAQUS2013}).\relax }}{17}{figure.caption.24}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {14}{\ignorespaces \gls {abaqus} \gls {cpe8} second-order 8-node plane strain element (for details see~\cite {ABAQUS2013}).\relax }}{18}{figure.caption.25}

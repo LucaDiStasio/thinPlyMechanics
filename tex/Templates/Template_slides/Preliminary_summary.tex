@@ -1,0 +1,274 @@
+%\documentclass[first,firstsupp,handout,compress,notes,navigation]{ETHclass} 
+%\documentclass[first,firstsupp,handout,lastsupp]{ETHclass} 
+\documentclass[first,firstsupp,lastsupp,handout,last,hyperref,table]{ETHclass} 
+%\documentclass[first,firstsupp]{ETHclass}
+
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage{amssymb}
+
+\usepackage{charter}
+\usepackage{subfig}
+\usepackage{etoolbox}
+\usepackage{ragged2e}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+%\usepackage[style=numeric-comp]{biblatex}
+
+%\usepackage{lipsum}
+
+%\usetikzlibrary{fit}
+\usetikzlibrary{arrows}
+\usetikzlibrary{trees}
+
+% Options for beamer:
+%
+% 9,10,11,12,13,14,17pt  Fontsizes
+% 
+% compress: navigation bar becomes smaller
+% t       : place contents of frames on top (alternative: b,c)
+% handout : handoutversion
+% notes   : show notes
+% notes=onlyslideswithnotes
+%
+%hyperref={bookmarksopen,bookmarksnumbered} : Needed for menues in
+%                                             acrobat. Also need
+%                                             pdftex as option or 
+%                                             compile with
+% pdflatex '\PassOptionsToPackage{pdftex,bookmarksopen,bookmarksnumbered}{hyperref} \input{file}'
+
+%\usepackage{beamerseminar}
+%\usepackage[accumulated]{beamerseminar}
+                                % remove ``accumulated'' option
+                                % for original behaviour
+%\usepackage{beamerbasenotes}
+%\setbeamertemplate{note page}[plain] 
+%\setbeameroption{notes on second screen}
+
+%\setbeamertemplate{note page}[plain] 
+\setbeamertemplate{note page}{\ \\[.3cm]
+\textbf{\color{blue}Notes:}\\%[0.1cm]
+{\footnotesize %\tiny
+\insertnote}}
+%\setbeameroption{notes on second screen}
+
+
+%\setbeamertemplate{navigation symbols}{} % suppresses all navigation symbols:
+ \setbeamertemplate{navigation symbols}[horizontal] % Organizes the navigation symbols horizontally.
+% \setbeamertemplate{navigation symbols}[vertical] % Organizes the navigation symbols vertically.
+% \setbeamertemplate{navigation symbols}[only frame symbol] % Shows only the navigational symbol for navigating frames.
+
+\setlayoutscale{0.5}
+\setparametertextfont{\scriptsize}
+\setlabelfont{\scriptsize}
+
+% \useoutertheme[subsection=false]{miniframes}
+% \usepackage{etoolbox}
+% \makeatletter
+% \patchcmd{\slideentry}{\advance\beamer@xpos by1\relax}{}{}{}
+% \def\beamer@subsectionentry#1#2#3#4#5{\advance\beamer@xpos by1\relax}%
+% \makeatother
+
+% \makeatletter
+%     \newenvironment{withoutheadline}{
+%        \setbeamertemplate{headline}{%
+% \vspace{15pt}
+% }
+%     }{}
+% \makeatother
+
+\makeatletter
+    \newenvironment{withoutheadline}{
+         \setbeamertemplate{headline}{%
+\vspace{35pt}
+}
+        %\def\beamer@entrycode{\vspace*{-1.5\headheight}}
+    }{}
+\makeatother
+
+\newcommand{\Cross}{$\mathbin{\tikz [x=1.4ex,y=1.4ex,line width=.2ex, red] \draw (0,0) -- (1,1) (0,1) -- (1,0);}$}%
+
+\newcommand{\Checkmark}{$\color{green}\checkmark$}
+
+\setbeamerfont{subsection in toc}{size=\tiny}
+
+\makeatletter
+\patchcmd{\beamer@sectionintoc}
+  {\vfill}
+  {\vskip1.5\itemsep}
+  {}
+  {}
+\makeatother  
+
+\setbeamertemplate{frametitle continuation}{}
+
+\setbeamertemplate{bibliography entry title}{}
+\setbeamertemplate{bibliography entry author}{}
+\setbeamertemplate{bibliography entry location}{}
+\setbeamertemplate{bibliography entry note}{}
+
+\setbeamercolor*{bibliography entry title}{fg=black}
+\setbeamercolor*{bibliography entry author}{fg=black}
+\setbeamercolor*{bibliography entry location}{fg=black}
+\setbeamercolor*{bibliography entry note}{fg=black}
+% and kill the abominable icon
+%\setbeamertemplate{bibliography item}{\color{forestgreen}$\blacktriangleright$}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+%\setbeamertemplate{bibliography item}{\theenumiv}
+
+\newcommand{\highlightred}[1]{%
+  \colorbox{red!50}{$\displaystyle#1$}}
+  
+\newcommand{\highlightyellow}[1]{%
+  \colorbox{yellow!50}{$\displaystyle#1$}}
+  
+\newcommand{\highlightgreen}[1]{%
+  \colorbox{green!50}{$\displaystyle#1$}}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{frametitle}\includegraphics[width=2ex]{freccia_trasparente_verde_foresta.png}\hspace{.5ex}~{\LARGE \textsc{\bfseries \insertsectionhead}}\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\hyphenpenalty=5000
+\tolerance=1000
+
+\graphicspath{{figures/}}
+
+\newenvironment{system}%
+{\left\lbrace\begin{array}{@{}l@{}}}%
+{\end{array}\right.}
+
+\newenvironment{subsystem}%
+{\left\lgroup\begin{array}{@{}l@{}}}%
+{\end{array}\right.}
+
+\defbeamertemplate*{title page}{customized}[1][]
+{
+\usebeamerfont{subtitle}
+\usebeamercolor[fg]{subtitle}
+
+\vspace{-1.25cm}
+
+{\flushleft
+ \usebeamerfont{title}{\inserttitle}\par
+}
+\vspace{-.25cm}
+{\flushleft
+ \usebeamerfont{subtitle}{\small \insertsubtitle} \par
+}
+
+\vspace{-.5cm}
+
+{\flushright
+\setbeamercolor{author}{bg=white,fg=Red}
+\usebeamerfont{author}{\footnotesize \insertauthor} \par}
+
+\vspace{-.2cm}
+
+{\flushright
+\usebeamerfont{institute}{\tiny \insertinstitute}\par }
+
+\vspace{.2cm}
+
+{\centering
+\usebeamerfont{date}{\scriptsize \insertdate} \par }
+
+\vspace{0.2in}
+
+
+%\begin{beamercolorbox}[sep=1em,wd=1.1\textwidth,ht=3cm,dp=3cm,right]{white}
+%\usebeamerfont{title} {\huge \inserttitle}\par
+%\usebeamerfont{subtitle} {\insertsubtitle}
+%\end{beamercolorbox}
+}
+
+\begin{document}
+
+\title{\textsc{Mechanics of Extreme Thin Composite Layers for Aerospace Applications}}
+\subtitle{\textsc{Background}}
+\author{ Luca Di Stasio}
+\institute{ Science et Ing\'enierie des Mat\'eriaux et M\'etallurgie (SI2M), Institut Jean Lamour, Nancy, France\\Department of Engineering Sciences and Mathematics, Division of Materials Science, Lule\aa\ University of Technology, Lule\aa, Sweden}
+\date[06-10-2015]{October $6^{th}$, 2015}
+
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
+
+\begin{withoutheadline}
+\begin{frame}
+\frametitle{Outline}
+\justifying
+% \tableofcontents[hidesubsections]
+% \begin{multicols}{2}
+% \tableofcontents[hidesubsections]
+% \end{multicols}
+% \begin{columns}[t]
+%         \begin{column}{.5\textwidth}
+%             \tableofcontents[sections={1-2}]
+%         \end{column}
+%         \begin{column}{.5\textwidth}
+%             \tableofcontents[sections={3-6}]
+%         \end{column}
+%     \end{columns}
+% \end{frame}
+\tableofcontents[hidesubsections]
+\end{frame}
+\end{withoutheadline}
+
+%\note{}
+
+%\begin{frame}
+%\pagediagram
+%\end{frame}
+%% \note{}
+
+
+
+\begin{frame}[plain]
+\frametitle{}
+\vspace{1cm}
+\centering
+{\LARGE
+\textsc{Thank you!}
+}
+\end{frame}
+
+\section{Appendices}
+
+\begin{frame}[label=]
+\frametitle{}
+
+\end{frame}
+
+
+
+\section{References}
+
+\begin{frame}[t,label=references,allowframebreaks]
+       \frametitle{References}
+	\begin{itemize}
+	\item Loading rate effects on delamination:\\[10pt] \textit{Loading\_rate\_effects\_on\_CFRP.bib}\\[30pt]
+	\item Body-fitted grids for FSI modeling with LBM:\\[10pt] \textit{Fluid\_structure\_interaction\_on\_deformable\_surfaces.bib}
+	\end{itemize}
+%        \bibliographystyle{amsalpha}
+%        {\footnotesize
+%          \bibliography{PSI_talk.bib}
+%        }
+        %\bibliography{/auto.mounter/home/lucadistasio/Documents/ETH/Research_material/References/fsi_references_kbib.bib}
+\end{frame}
+
+\begin{frame}[plain]
+\frametitle{}
+\end{frame}
+
+\end{document}

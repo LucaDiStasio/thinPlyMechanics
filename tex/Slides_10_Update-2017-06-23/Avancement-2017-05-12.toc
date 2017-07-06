@@ -1,0 +1,11 @@
+\beamer@endinputifotherversion {3.26pt}
+\beamer@sectionintoc {1}{Symboles, Mod\`eles \& Donn\'ees de R\'ef\'erence}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Symboles}{4}{0}{1}
+\beamer@subsectionintoc {1}{2}{Mod\`eles de R\'ef\'erence}{6}{0}{1}
+\beamer@subsectionintoc {1}{3}{Discr\'etisation angulaire}{9}{0}{1}
+\beamer@subsectionintoc {1}{4}{Propri\'et\'es des mat\'eriaux}{10}{0}{1}
+\beamer@sectionintoc {2}{D\'eveloppements \& travail r\'ealis\'e}{11}{0}{2}
+\beamer@subsectionintoc {2}{1}{R\'ecapitulation des r\'esultats obtenus}{12}{0}{2}
+\beamer@subsectionintoc {2}{2}{R\'ecapitulation des objectifs}{13}{0}{2}
+\beamer@subsectionintoc {2}{3}{Travail r\'ealis\'e \& Actions \'a suivre}{14}{0}{2}
+\beamer@subsectionintoc {2}{4}{R\'esultats}{21}{0}{2}

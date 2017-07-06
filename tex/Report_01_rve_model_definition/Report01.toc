@@ -1,0 +1,25 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\select@language {english}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{Figures}{iii}{section*.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{Tables}{v}{section*.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{Acronyms}{vii}{section*.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{Symbols}{ix}{section*.6}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{Abstract}{xi}{section*.8}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1}Geometries, loads and boundary conditions}{1}{section.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2}Material properties}{9}{section.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}Mesh characteristics}{11}{section.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}Types of analysis}{19}{section.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{Glossary}{23}{section*.28}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{References}{25}{section*.29}

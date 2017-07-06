@@ -1,0 +1,159 @@
+\documentclass[psamsfonts]{amsart}
+
+%-------Packages---------
+\usepackage{amssymb,amsfonts}
+\usepackage[all,arc]{xy}
+\usepackage{enumerate}
+\usepackage{mathrsfs}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- default
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+\newtheorem{exer}[thm]{Exercise}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+\numberwithin{equation}{section}
+
+\bibliographystyle{plain}
+
+%--------Meta Data: Fill in your info------
+\title{Template for REU papers}
+
+\author{Your Name}
+
+\date{DEADLINES: Draft AUGUST 13 and Final version AUGUST 24, 2012}
+
+\begin{document}
+
+\begin{abstract}
+
+This is a sample latex document with emphasis on using math mode and
+equation environments.  You should use it as a template for your paper.
+Remember that a first draft must be submitted to mentors at the very 
+latest by August 13, with
+no exceptions.  The completed paper must be submitted by August 24, unless 
+permission for a later date has been obtained from the director of the program. 
+
+
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+\section{What does the table of contents command do?}
+
+The table of contents command will automatically make a contents.
+You must run tex at least twice for this to work.
+
+\section{How do the environment commands work?}
+
+``Environments'' are commands that are given using the \verb|\begin{}|
+  and \verb|\end{}| syntax. In the preamble, you can see we've defined
+  a bunch of theorem-type environments, including, for example ``defn'' To get a definition, 
+you type:
+
+\begin{defn}  This is how to define a definition.
+\end{defn}
+
+And for a theorem and its proof you would type:
+
+\begin{thm}
+This is the statement of a theorem.
+\end{thm}
+\begin{proof}
+And this shows that the statement is correct.
+\end{proof}
+
+Note that the numbering is taken care of automatically, and that we've predefined a bunch of these sorts of environments to take care lemmas, corollaries and such in the header. 
+
+Another useful kind of enviroment is the equation environment.  Equations
+get numbered in sequence with statements, as for example
+
+\begin{equation}  e = mc^2
+\end{equation}
+
+Note if you do not want a numbered equation, you can use the
+environment ``equation*''
+ like so:
+
+\begin{equation*}
+e=mc^2
+\end{equation*}
+
+There are plenty of other equation-type enviroments that allow you to
+align several equations and such like things. The AMS's guide \cite{amsshort} is a
+good place to start with these.
+
+You can also typeset math directly in a paragraph by placing it within
+dollar signs.  This is called ``math mode.''  For example: Let $e$
+be energy, $m$ be momentum and $c$ be the speed of light.  Then
+Einstein's famous equation says that $e=mc^2$.  This is useful, but
+remember that it is harder to read inline math than displayed math. 
+
+Remember that letters get put in a different font in math mode, so
+whenever you are referencing a mathematical object you should always
+put it in dollar signs.  For example, $f$ is a function, but f is just
+a random letter.
+
+Both \cite{notsoshort} and \cite{amsshort} have good lists of other symbols you can use in math mode.
+These include greek letters ($\alpha, \beta, \Gamma, \Delta$),
+operators ($\otimes, +, \sum$) and much more ($\leq, \diamond$).
+
+
+\section{Xypic and diagrams}
+
+If you want to draw diagrams, you should use xypic.  It's actually
+much easier than it looks, and we've already included it in the header
+above.  Here is an example. 
+\[\xymatrix{
+FX \ar[r]^-{Ff} \ar[d]_{\eta_X} & FY \ar[d]^{\eta_Y} \\
+GX \ar[r]_-{Gf} & GY\\} \]
+
+\subsection*{Acknowledgments}  It is a pleasure to thank my mentor, 
+his/her name, for ....
+
+\begin{thebibliography}{9}
+
+\bibitem{amsshort}
+Michael Downes.
+Short Math Guide for \LaTeX.
+ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf
+
+\bibitem{May}
+J. P. May.
+A Concise Course in Algebraic Topology.
+University of Chicago Press. 1999. 
+
+\bibitem{notsoshort}
+Tobias Oekiter, Hubert Partl, Irene Hyna and Elisabeth Schlegl.
+The Not So Short Introduction to \LaTeXe.
+http://tobi.oetiker.ch/lshort/lshort.pdf.
+
+\end{thebibliography}
+
+\end{document}
+

@@ -1,0 +1,287 @@
+\documentclass
+[
+a4paper,                      % Format A4
+twoside,					  % double sided, alternative: oneside
+12pt,                         % font size
+abstract,		      % include if you want to use the abstract environment (if there is an abstract)
+fleqn,                        % equations are aligned on the left side, comment if you want centered equations
+%BCOR=5mm,                     % indention on left side because of the binding
+%cleardoubleplain              % page numbers are printed on empty pages, comment if this is not desired
+]
+{scrartcl} % KOMA script package for scientific articles
+%-----------------------------------------------------------------------------------
+% Packages (do not touch if you don't know what you are doing)
+%-----------------------------------------------------------------------------------
+% symbols and orthography
+\usepackage[latin1]{inputenc} % symbol set 
+\usepackage[english]{babel}   	% englisch orthography
+%\usepackage[french]{babel}	   % french					
+%\usepackage[ngerman]{babel}   % german
+\usepackage[T1]{fontenc}      % enables "Umlaute" (not really needed for English)
+\usepackage[scaled=.90]{helvet}
+%----------------------
+% graphics
+\usepackage{graphicx}         	% package to include graphics (pdf, png, jpg)
+\usepackage{subfig}			% package for subfigures
+\usepackage{float}            		% Option [H] for fixing floats where you want them to be (not recommended unless you really need it)
+%------------------------------
+% math packages
+\usepackage[cmex10]{amsmath}  
+\usepackage{amstext}          
+\usepackage{amsfonts}        
+\usepackage{amssymb}          
+\usepackage{bm}               
+
+%--------------------------------
+% other packages
+\usepackage{enumerate}        % better listings
+\usepackage{booktabs}         % nicer tables (see manual for usage)
+\usepackage{textcomp}         % for \textdegree , \textcelsius , sometimes causes problems
+\usepackage{pdfpages}         % include whole pages from pdf files
+\usepackage{parskip}          % insert an empty line between paragraphs instead of an indented beginning
+\usepackage[right]{eurosym}   % Euro symbol
+\usepackage[hyphens]{url}     
+\usepackage[inner=3cm, outer=2cm,top=2.7cm,bottom=3.2cm]{geometry}
+\usepackage{setspace}		  % for a different line spacing
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{xcolor,colortbl}
+
+\usepackage{url}
+
+\definecolor{Gray}{gray}{0.85}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+%-----------------------------------------------------------------------------------
+% other stuff (do not touch, it is good that way !)
+%-----------------------------------------------------------------------------------
+\sloppy                   % avoids lines that are too long on the right side
+% avoid "orphans"
+\clubpenalty = 10000
+% avoid "widows"
+\widowpenalty = 10000
+% this makes the table of content etc. look better
+\renewcommand{\dotfill}{\leaders\hbox to 5pt{\hss.\hss}\hfill}
+
+% avoid indentation of line after a paragraph
+\setlength{\parindent}{0pt}
+%-----------------------------------------------------------------------------------
+%-----------------------------------------------------------------------------------
+
+%Header and footer settings
+% 
+\usepackage{scrpage2} % see manual for usage
+\pagestyle{scrheadings}
+\automark[section]{section}
+\ofoot{\pagemark} % ofoo
+\ifoot{Research Plan} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+%\ohead{\headmark}
+%\setheadtopline{2pt}
+%\setheadsepline{0.5pt}
+%\setfootsepline{0.5pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% References with BibTeX
+%
+%\usepackage{natbib}
+
+%\bibliographystyle{elsart-harv}
+%\setlength{\bibsep}{3mm}                  % spacing of the entries in the references
+%
+% look at the chapterbib package if you want to use a separate bibliography for each chapter
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% some other stuff...
+%
+\setlength{\unitlength}{1cm}
+\setlength{\oddsidemargin}{0.3cm}
+\setlength{\evensidemargin}{0.3cm}
+\setlength{\textwidth}{15.5cm}
+\setlength{\topmargin}{0cm}
+\setlength{\textheight}{22cm}
+\columnsep 0.5cm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% just compile particular parts
+%
+%\includeonly{./SUMMARY/summary} % put in here the path of the file you want to include only
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% define own commands
+\newcommand{\brac}[1]{\left(#1\right)}		
+
+
+
+
+%-----------------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------------%
+%                                    START OF THE DOCUMENT                                %
+%-----------------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------------%
+
+\begin{document}
+
+%------------------------------------------------%
+%------------------------------------------------%
+%                  Front Matter                         %
+%------------------------------------------------%
+%------------------------------------------------%
+
+%------------------------------------------------%
+%                 Title Page                               
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+%\ofoot{\pagemark} % ofoo
+%\ifoot{Research Plan} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ihead{\includegraphics[height=1.5cm]{lulea_logo1.jpg}\hspace{8cm}\includegraphics[height=1.5cm]{Universite-de-Lorraine_Logo2.png}}
+\ifoot{\noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}\\\includegraphics[height=1.75cm]{erasmusmundus_logo.jpg}\hspace{9.55cm}\includegraphics[height=1.75cm]{Docmase_logo.jpg}}
+
+%\ohead{Abstract}
+%\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+%\setfootsepline{0.5pt}
+
+\begin{center}
+
+\vspace*{0.1cm}
+
+\begin{Large}
+\textbf{\textsc{EUSMAT}}\\[0.75ex]
+\end{Large}
+
+\begin{large}
+\textbf{European School of Materials}\\[0.75ex]
+
+\vspace*{0.75cm}
+
+\textbf{DocMASE}\\[0.75ex]
+\textbf{\textsc{Doctorate in Materials Science and Engineering}}
+\end{large}
+
+\vspace{1.5cm}
+
+\begin{Large}
+\textbf{\textsc{Subject and Scope of the Research Project}}\\[0.75ex]
+\end{Large}
+\vspace*{0.5cm}
+
+\begin{LARGE}
+\textbf{\textsc{Mechanics of Extreme Thin Composite Layers for Aerospace Applications}}\\[0.75ex]
+\end{LARGE}
+\vspace*{2cm}
+
+\begin{flushright}
+\begin{tabular}{l l }
+{\large \textbf{Doctoral Candidate:}} & {\large Luca DI STASIO}\\[10pt]
+&\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\\
+&{\scriptsize (signature)}\\
+&\\
+{\large \textbf{Thesis Supervisors:}}& {\large Prof. Zoubir AYADI}\\
+&{\large Universit\'e de Lorraine}\\
+&{\large Nancy, France}\\[10pt]
+&\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\\
+&{\scriptsize (signature)}\\
+&\\
+& {\large Prof. Janis VARNA}\\
+&{\large Lule\aa\ University of Technology}\\
+&{\large Lule\aa, Sweden}\\
+\end{tabular}
+\end{flushright}
+
+%\begin{flushright}
+%\begin{tabular}{l l }
+%{\large \textbf{Author(s):}} & {\large Luca DI STASIO}\\
+%\end{tabular}
+%\end{flushright}
+
+\vspace*{1.5cm}
+
+
+{\Large \textbf{November 9, 2015}}\\
+%\textsc{DEFENSE LOCATION}\\
+
+%------------------------------------------------
+% Committee members:
+%\textbf{\textsc{Committee Members}}\\[0.75ex]
+%\textsc{NAME AND AFFILIATION}\\
+%\textsc{NAME AND AFFILIATION}\\
+%\textsc{NAME AND AFFILIATION}\\
+%\textsc{ }\\
+
+\end{center}
+
+\cleardoublepage
+
+%------------------------------------------------%
+%------------------------------------------------%
+%                   Main Matter                          %
+%------------------------------------------------%
+%------------------------------------------------%
+
+\pagenumbering{arabic}
+
+\setcounter{page}{1}
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\\pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Subject and Scope of the Research Project}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+Social and political awareness for a renovation in industrial practices towards a reduction of the environmental impact are nowadays increasing across the globe (see for example \cite{Ozik2006}). New fiscal policies have been put into place, elevating the costs of running environment-unfriendly businesses through taxes and fines. Transportation has answered such call mainly through two different but related strategies: the adoption of alternative energy sources and the improvement of fuel efficiency. Driven by the increased costs derived from its extensive use of fossil fuels, the aerospace sector has been a pioneer in these efforts in recent years. From a technical standpoint, both strategies depend strongly on the adoption of novel structures and materials, which could allow significant reduction in weight, and thus in consumption, without compromising safety and structural integrity.\\
+Carbon  and Glass Fiber Reinforced Polymers (CFRP and GFRP, respectively) hold the promise of lighter and robust structures, due to their high stiffness to density ratio. Furthermore, the development in very recent years of the spread tow technology has allowed increased savings in terms of weight. Originally developed by Kawabe of Fukui Technology Center, the spread tow technology allows the original tow of 12k or 24k fibers to spread along the width, reducing its thickness to values around $0.02\ mm$ or less (see~\cite{NTPTApril2015} and~\cite{NTPTJune2015} for a producer's recent press releases). Extremely thin plies can thus be produced. When used in cross-ply, angle-ply or quasi-isotropic laminates, thin plies show a significant increase in their resistance to fracture, as found in~\cite{RAmacherJCugnoniJBotsisSeptember2014}. This phenomenon, already known in literature (see~\cite{AParviziJEBaileyOctober1978} for one of the first accounts on the topic), is known as the \textit{in-situ effect}. Unfortunately, as the organizers of the Third World Wide Failure Exercise (WWFE-III) point out (\cite{Kaddour2007} and~\cite{Kaddour2011}), neither a clear physical understanding nor reliable modeling tools exist on the mechanisms governing the failure of thin ply laminates. It implies that damage propagation inside such laminates cannot be reliably predicted, leaving room for the possibility of sudden collapse or onset of instabilities. Such lack of knowledge hampers the effective exploitation of the phenomenon, as it cannot be quantified in the design phase (see~\cite{Minter2011} for details on certification and airworthiness).\\
+The research project presented here focuses on the study of this phenomenon. The subject of this doctoral thesis is thus modeling and understanding of the mechanisms governing the onset and propagation of damage in extremely thin carbon- and glass-fiber composite plies. It aims to the development of reliable analytical and numerical tools for the analysis and design of structures made of this kind of material. The initial focus is on the study of the ply constraint effect on a representative Reference Volume Element (RVE). The selected RVE is 2-dimensional and formed by just a single fiber and its matrix surroundings; the extent of the matrix region depends on the fiber volume fraction. Consider a thin $90^{\circ}$ oriented ply inside a cross-ply laminate and consider a laminate section along a plane parallel to the $0^{\circ}$ fiber direction and normal to the laminate mid-plane; the image of a fiber with its matrix surroundings on this section corresponds to the chosen RVE. Let the upper and bottom faces be those bounded by the adjacent $0^{\circ}$ oriented plies and let the left and right faces be those bounded by the remaining $90^{\circ}$ oriented ply. In order to represent the constraints due to adjacent $0^{\circ}$ oriented plies, three different combinations of boundary and loading conditions are considered:
+
+\begin{enumerate}
+\item a simple RVE, with constant longitudinal (laminate x-direction) strain applied to the upper and bottom faces and subject to constant displacement along the laminate x-direction on the left and right faces;
+\item a periodic RVE, with constant longitudinal (laminate x-direction) strain applied to the upper and bottom faces and subject to constant displacement along the laminate x-direction on the left and right faces;
+\item a RVE bounded by thicker $0^{\circ}$ oriented plies on both the upper and bottom faces, subject to constant displacement along the laminate x-direction on the left and right faces.
+\end{enumerate}
+
+A partial finite fiber-matrix debond is considered at the fiber-matrix interface, with varying initial angular position and angular extension. The system is discretized and analyzed by means of the Finite Element Method (FEM). Geometry discretization and mesh generation are developed using a custom-made C++ code, while FEM computations are  performed using the commercial suite ABAQUS. The two different methodologies described in the following are applied to all three boundary-loading combinations.
+
+\begin{itemize}
+\item Tied surface constraints are applied at the fiber-matrix interface except in the debonded region. Load and boundary conditions are applied and the equilibrium configuration is determined. The radial extension of the crack, the crack tip stresses, the stress intensity factors and the crack energy release rates are computed. The Virtual Crack Closure Technique (VCCT) and the J-Integral Technique are used for the latter calculations. All the output quantities are evaluated for different crack angular extensions.
+\item Bi-dimensional cohesive elements are placed all over the fiber-matrix interface, except in the debonded region. Maximum allowable stresses and crack energy release rates are assigned as input parameters. Boundary and loading conditions are applied and the equilibrium configuration is determined. The angular and radial extension of the crack as well the stress and strain distribution are evaluated.
+\end{itemize}
+
+For both strategies, the optimal mesh size is determined running simulations with different mean element size for two different initial debonded areas ($30^{\circ}$ and $80^{\circ}$).\\
+Comparison and discussion of the results will follow, from which the next steps of the work will be designed.
+
+\cleardoublepageusingstyle{scrheadings}
+
+%------------------------------------------------%
+%------------------------------------------------%
+%                   Back Matter                          %
+%------------------------------------------------%
+%------------------------------------------------%
+
+
+\addcontentsline{toc}{section}{References}
+
+\bibliography{2015_11_8_DocMASE_references}
+\bibliographystyle{plain}
+
+\end{document}

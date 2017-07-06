@@ -1,0 +1,618 @@
+\documentclass[a4paper, twoside,12pt, abstract]{scrartcl} % KOMA script package for scientific articles
+
+%----------------------------------------------------------------------------------------------%
+%                                      	                  PACKAGES
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}  
+\usepackage{amssymb}
+\usepackage{amstext}      
+\usepackage{animate}    
+\usepackage[english]{babel} 
+\usepackage[backend=bibtex, sorting=none,style=numeric]{biblatex}
+\usepackage{bm}               
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{colortbl}
+\usepackage{csquotes}
+\usepackage{enumerate}
+\usepackage[right]{eurosym}
+\usepackage[inner=3cm,outer=2cm,top=2.7cm,bottom=3.2cm]{geometry}
+\usepackage{graphicx}  
+\usepackage{float}
+\usepackage[scaled=.90]{helvet}
+\usepackage{longtable}
+\usepackage{makeidx}
+\usepackage{multirow}
+\usepackage{parskip} 
+\usepackage{pdfpages}    
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{standalone}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{textcomp}
+\usepackage{tikz}
+\usepackage{xcolor}   
+%\usepackage[hyphens]{url}    
+
+\usepackage[acronym,nonumberlist,nopostdot,toc]{glossaries}
+\usepackage{hyperref}
+
+
+
+\definecolor{Gray}{gray}{0.85}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+
+
+\sloppy                   % avoids lines that are too long on the right side
+% avoid "orphans"
+\clubpenalty = 10000
+% avoid "widows"
+\widowpenalty = 10000
+% this makes the table of content etc. look better
+\renewcommand{\dotfill}{\leaders\hbox to 5pt{\hss.\hss}\hfill}
+
+% avoid indentation of line after a paragraph
+\setlength{\parindent}{0pt}
+
+\usepackage{scrpage2} 
+\pagestyle{scrheadings}
+\automark[section]{section}
+\ofoot{\pagemark} % ofoo
+\ifoot{Research Plan} % ofoo
+
+%\usepackage{natbib}
+%\bibliographystyle{apalike}
+
+%\setlength{\bibsep}{3mm}    
+\setlength{\unitlength}{1cm}
+\setlength{\oddsidemargin}{0.3cm}
+\setlength{\evensidemargin}{0.3cm}
+\setlength{\textwidth}{15.5cm}
+\setlength{\topmargin}{0cm}
+\setlength{\textheight}{22cm}
+
+\columnsep 0.5cm
+
+
+\newcommand{\brac}[1]{\left(#1\right)}		
+
+%\addbibresource{2015_11_8_DocMASE_references.bib}
+
+\addto\captionsenglish{\renewcommand{\listfigurename}{Figures}}
+ 
+\addto\captionsenglish{\renewcommand{\listtablename}{Tables}}
+
+\makeglossaries
+
+%\newglossaryentry{abaqus}
+%{
+%    name=ABAQUS FEA,
+%    description={(formerly ABAQUS) is a software suite for finite element analysis and computer-aided engineering, originally released in 1978.}
+%}
+
+
+\newacronym{docmase}{DocMASE}{Doctorate in Materials Science and Engineering}
+\newacronym{ects}{ECTS}{European Credits Transfer System}
+\newacronym{emma}{EMMA}{\'Ecole Doctorale Energie M\'ecanique et MAteriaux}
+\newacronym{fem}{FEM}{Finite Element Method}
+\newacronym{vba}{VBA}{Visual Basic for Applications}
+
+\makeindex
+%-----------------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------------%
+%                                    START OF THE DOCUMENT                                %
+%-----------------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------------%
+
+\begin{document}
+
+%------------------------------------------------%
+%------------------------------------------------%
+%                  Front Matter                         %
+%------------------------------------------------%
+%------------------------------------------------%
+
+%------------------------------------------------%
+%                 Title Page                               
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+%\ofoot{\pagemark} % ofoo
+%\ifoot{Research Plan} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ihead{\includegraphics[height=1.5cm]{lulea_logo1.jpg}\hspace{8cm}\includegraphics[height=1.5cm]{Universite-de-Lorraine_Logo2.png}}
+\ifoot{\noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}\\\includegraphics[height=1.75cm]{erasmusmundus_logo.jpg}\hspace{9.55cm}\includegraphics[height=1.75cm]{Docmase_logo.jpg}}
+
+%\ohead{Abstract}
+%\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+%\setfootsepline{0.5pt}
+
+\begin{center}
+
+\vspace*{0.1cm}
+
+\begin{Large}
+\textbf{\textsc{EUSMAT}}\\[0.75ex]
+\end{Large}
+
+\begin{large}
+\textbf{European School of Materials}\\[0.75ex]
+
+\vspace*{1cm}
+
+\textbf{DocMASE}\\[0.75ex]
+\textbf{\textsc{Doctorate in Materials Science and Engineering}}
+\end{large}
+
+\vspace{2cm}
+
+\begin{Large}
+\textbf{\textsc{Report}}\\[0.75ex]
+\end{Large}
+\vspace*{0.5cm}
+
+\begin{LARGE}
+\textbf{\textsc{Study plan}}\\[0.75ex]
+\end{LARGE}
+\vspace*{2.5cm}
+
+\begin{flushright}
+\begin{tabular}{l l }
+{\large \textbf{Doctoral Candidate:}} & {\large Luca DI STASIO}\\
+&\\
+&\\
+&\\
+{\large \textbf{Thesis Supervisors:}}& {\large Prof. Zoubir AYADI}\\
+&{\large Universit\'e de Lorraine}\\
+&{\large Nancy, France}\\
+&\\
+& {\large Prof. Janis VARNA}\\
+&{\large Lule\aa\ University of Technology}\\
+&{\large Lule\aa, Sweden}\\
+\end{tabular}
+\end{flushright}
+
+%\begin{flushright}
+%\begin{tabular}{l l }
+%{\large \textbf{Author(s):}} & {\large Luca DI STASIO}\\
+%\end{tabular}
+%\end{flushright}
+
+\vspace*{2.25cm}
+
+
+{\Large \textbf{\today}}\\
+%\textsc{DEFENSE LOCATION}\\
+
+%------------------------------------------------
+% Committee members:
+%\textbf{\textsc{Committee Members}}\\[0.75ex]
+%\textsc{NAME AND AFFILIATION}\\
+%\textsc{NAME AND AFFILIATION}\\
+%\textsc{NAME AND AFFILIATION}\\
+%\textsc{ }\\
+
+\end{center}
+
+\newpage
+
+%------------------------------------------------%
+%            Table of Contents
+%------------------------------------------------%
+
+\pagenumbering{roman}
+
+\setcounter{page}{1}
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\ \pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Contents}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+\tableofcontents 
+
+\cleardoublepage
+
+%------------------------------------------------%
+%            List of Figures
+%------------------------------------------------%
+
+%\clearscrheadings
+%\pagestyle{scrheadings}
+%\manualmark
+%\ofoot{\\ \pagemark} % ofoo
+%\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+%\ohead{Figures}
+%\setheadtopline{2pt}
+%\setheadsepline{0.5pt}
+%\setfootsepline{0.5pt}
+
+%\section*{List of Figures}
+%\addcontentsline{toc}{section}{Figures}
+
+%\listoffigures
+
+%\cleardoublepageusingstyle{scrheadings}
+
+%------------------------------------------------%
+%            List of Tables
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\ \pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Tables}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+%\section*{List of Tables}
+\addcontentsline{toc}{section}{Tables}
+
+\listoftables
+
+\cleardoublepageusingstyle{scrheadings}
+
+%------------------------------------------------%
+%            List of Acronyms
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\ \pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Acronyms}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+%\addcontentsline{toc}{section}{Glossary \& Acronyms}
+
+\printglossary[type=\acronymtype]
+
+%\printglossary
+
+\cleardoublepageusingstyle{scrheadings}
+
+%------------------------------------------------%
+%            List of Symbols
+%------------------------------------------------%
+
+%\clearscrheadings
+%\pagestyle{scrheadings}
+%\manualmark
+%\ofoot{\\ \pagemark} % ofoo
+%\ifoot{} % ofoo
+%%\cfoot[]{\pagemark}
+%%\ihead{}
+%%\ohead{}
+%\ohead{Symbols}
+%\setheadtopline{2pt}
+%\setheadsepline{0.5pt}
+%\setfootsepline{0.5pt}
+%
+%\section*{Symbols}
+%\addcontentsline{toc}{section}{Symbols}
+%
+%\input{symbols}
+%
+%\cleardoublepageusingstyle{scrheadings}
+
+%------------------------------------------------%
+%                       Abstract
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\ \pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Abstract}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+The different requirements imposed by the regulations of \acrshort{emma} doctoral school, Lule\aa\ University of Technology Graduate School and the \acrshort{docmase} framework are reviewed. Based on such constraints, a tentative study plan for first year is proposed. The purpose is to satisfy the bulk training requirements at the beginning of the project, in order to devote the remaining years to research activities, such as coding, publishing and conference attendance.  
+
+\cleardoublepageusingstyle{scrheadings}
+
+%------------------------------------------------%
+%------------------------------------------------%
+%                   Main Matter                          %
+%------------------------------------------------%
+%------------------------------------------------%
+
+\pagenumbering{arabic}
+
+\setcounter{page}{1}
+
+%------------------------------------------------%
+%                   Introduction
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\\pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Review of educational requirements}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+\section{Review of educational requirements}
+
+\subsection{Requirements of \acrshort{docmase} framework}
+
+\begin{table}[h!]
+  \centering
+  \small
+  \caption[Requirements of the \acrfull{docmase} framework.]{Requirements of the \acrfull{docmase} framework.\\[5pt]}
+    \begin{tabularx}{\textwidth}{p{0.3\textwidth}ccp{0.3\textwidth}}
+    \toprule
+  \textbf{Type} & \textbf{\acrshort{ects}}&\textbf{Attendance}&\textbf{Description/Notes} \\
+  & \textbf{credits}&&\\
+    \midrule
+   Scientific courses&15&&\\
+   Intercultural skills&10&&\\
+   Complementary skills&5&&\\
+   Yearly summer schools&&At least 2&\\
+   Annual workshops&&&Presentation of research work.\\
+   Seminars \& Conferences&&&Attend conferences and present individual research work.\\
+   Scientific publications&&&Peer-reviewed publications.\\
+    \bottomrule
+    \end{tabularx}%
+  \label{tab:docmase_tab}%
+\end{table}%
+
+\newpage
+
+\subsection{Requirements of \acrshort{emma} doctoral school}
+
+\begin{table}[h!]
+  \centering
+  \small
+  \caption[Requirements of the doctoral school \acrfull{emma}.]{Requirements of the doctoral school \acrfull{emma}.\\[5pt]}
+    \begin{tabularx}{\textwidth}{p{0.25\textwidth}ccXp{0.3\textwidth}}
+    \toprule
+  \textbf{Type} & \textbf{\acrshort{ects}}&\textbf{Hours}&\textbf{Attendance}&\textbf{Description/Notes} \\
+  & \textbf{credits}&&&\\
+    \midrule
+   Scientific courses&4&20&&Reduced requirement for co-supervised project with foreign university.\\
+   Transverse courses&4&20&&Reduced requirement for co-supervised project with foreign university.\\
+   Doctoriales&&&At least once&1-time for 5-days, preferably during the $2^{nd}$ year. Held by Coll\'ge Lorrain Ecole Doctorale.\\
+   Seminars \& Conferences&&&15 seminars&\\
+   Yearly doctoral school seminar&&&At least once&Oral or poster presentation.\\
+   First quarter review&&&& Written report.\\
+   Mid-term review&&&&Oral presentation.\\
+   On-line portfolio of competences&&&&To be regularly updated.\\
+   Scientific publications&&&&At least one peer-reviewed publication.\\
+    \bottomrule
+    \end{tabularx}%
+  \label{tab:emma_tab}%
+\end{table}%
+
+\newpage
+
+\subsection{Requirements of Lule\aa\ University of Technology}
+
+\begin{table}[h!]
+  \centering
+  \small
+  \caption[Requirements of Lule\aa\ University of Technology.]{Requirements of Lule\aa\ University of Technology.\\[10pt]}
+    \begin{tabularx}{\textwidth}{p{0.4\textwidth}ccX}
+    \toprule
+  \textbf{Type} & \textbf{\acrshort{ects}}&\textbf{Hours}&\textbf{Description/Notes} \\
+  & \textbf{credits}&&\\
+    \midrule
+   Scientific \& transverse courses&60&&Minimum 60, maximum 120 \acrshort{ects} credits.\\
+    \bottomrule
+    \end{tabularx}%
+  \label{tab:lulea_tab}%
+\end{table}%
+
+\cleardoublepageusingstyle{scrheadings}
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\\pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Proposed study plan}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+\section{Proposed study plan}
+
+\begin{center}
+\small
+\begin{longtable}{cccccc}
+\caption{Proposed first-year study plan.}\\
+    \toprule
+  \multicolumn{3}{l}{\textbf{Title}}&\textbf{Code} &\textbf{\acrshort{ects}}&\textbf{Hours} \\
+   &&&& \textbf{credits}&\\
+    \midrule
+    &&&&&\\
+    \multicolumn{3}{p{0.5\textwidth}}{\textbf{Aerospace Materials}}&T7005T&7.5&\\
+    &\textit{Institution}&\multicolumn{4}{p{0.7\textwidth}}{Lule\aa\ University of Technology.}\\
+    &\textit{Organization}&\multicolumn{4}{p{0.7\textwidth}}{The course will take place from April 4, 2016 (week 14) to June 19, 2016 (week 24).}\\
+    &\textit{Objective}&\multicolumn{4}{p{0.7\textwidth}}{After the end of this course the student is supposed to - have deep knowledge about structure and behaviour of high performance materials used in aerospace industry - be able to evaluate properties of composites, ceramic materials and alloys to perform optimal material selection for use in harsh environments and service conditions - will know and understand the most important degradation mechanisms that initiate and evolve due to thermal and mechanical loads and lead to material fatigue and reduced durability - be able to do produce long fiber composites, to measure their mechanical properties, to observe and to quantify damage modes and to analyse their effect on properties - be able to apply composite material degradation models, to perform fracture mechanics analysis in alloys and to predict time dependent material behaviour - be able to perform numerical simulations of structures using commercial software to design optimized structures - have good skills in analysing research papers and writing research reports.}\\
+    &\textit{Syllabus}&\multicolumn{4}{p{0.7\textwidth}}{The material classes analyzed in this course are high performance materials like light weight alloys, superalloys, ceramics and different types of composites including materials modified on nanoscale. Methodology will be given to determine properties of these multiscale materials on all considered length scales. The properties most important for design in the aerospace applications are performance at high mechanical loads, extreme temperatures and material aging and fatigue due to extreme environmental effects. Processing methods will be considered in relation to desired material performance. Durability and damage tolerance will be accessed by analyzing degradation, creep and damage mechanisms. Methodology for structural analysis will be given and training performed.}\\
+    &\textit{Requirements}&\multicolumn{4}{p{0.7\textwidth}}{It satisfies the \acrshort{docmase} for scientific training, \acrshort{emma} requirements for scientific courses and Lule\aa\ University of Technology requirements.}\\
+    &\textit{Needs}&\multicolumn{4}{p{0.7\textwidth}}{The focus of the course is strongly related to the project theme, as it reviews the methods for performance assessment and damage prediction for materials used in aerospace applications.}\\
+    &\textit{Status}&\multicolumn{4}{p{0.7\textwidth}}{Agreed upon with supervisors.}\\
+    &&&&&\\
+    \midrule
+    &&&&&\\
+   \multicolumn{3}{p{0.5\textwidth}}{\textbf{Français langue \'etrang\'ere}}&FI4 131 B&$\approx8/9$&44\\
+   \multicolumn{3}{p{0.5\textwidth}}{\textbf{(French as second language)}}&&&\\
+   &\textit{Institution}&\multicolumn{4}{p{0.7\textwidth}}{Universit\'e de Lorraine.}\\
+   &\textit{Organisation}&\multicolumn{4}{p{0.7\textwidth}}{The course will take place between 18:00 and 20:00 for two days a week (Monday and Tuesday), between January 4, 2016 and March 25, 2016.}\\
+   &\textit{Requirements}&\multicolumn{4}{p{0.7\textwidth}}{It satisfies the \acrshort{docmase} for intercultural skills training and \acrshort{emma} requirements for transverse courses. It could probably be transferred for credits to satisfy Lule\aa\ requirements.}\\
+   &\textit{Needs}&\multicolumn{4}{p{0.7\textwidth}}{As I have never studied French, the course will provide me with the basic tools to live and work in France as well with the foundations on which to build an independent learning path.}\\
+   &\textit{Status}&\multicolumn{4}{p{0.7\textwidth}}{Enrolled.}\\
+   &&&&&\\
+   \midrule
+    &&&&&\\
+    \multicolumn{3}{p{0.5\textwidth}}{\textbf{Modeling of crystal behavior and textures}}&EMMA 05&5&24\\
+    &\textit{Institution}&\multicolumn{4}{p{0.7\textwidth}}{Universit\'e de Lorraine.}\\
+    &\textit{Organisation}&\multicolumn{4}{p{0.7\textwidth}}{Distance learning format.}\\
+    &\textit{Objective}&\multicolumn{4}{p{0.7\textwidth}}{Nowadays, the basic problems of crystal plasticity are well solved and their applications in the various fields of research of mechanics and physics of materials became standard. The goal of this course is to familiarize with crystal plasticity in order to understand and set up various modeling in the broad field of mechanics of materials. The course is supplemented by simulations to carry out on PC.}\\
+    &\textit{Syllabus}&\multicolumn{4}{p{0.7\textwidth}}{Introduction (geometrical considerations, mechanisms of plastic deformation of crystals). Equations of deformation (small and large strain formulation). Crystal plasticity criteria (Schmid, Bishop and Hill, viscoplastic slip). Work hardening of crystals (matrix of work hardening, techniques of simulations). The mechanical problem of crystal plasticity (relation between strain and stress). Polycrystal deformation (static, Sachs, Taylor, relaxed constraints, self consistent models, finite elements). Discrete modelings (molecular, atomic). Application of polycrystalline models to materials (prediction of crystallographic texture, parameters of anisotropy, work hardening and formability for cubic, hexagonal, multiphase, intermetallic, superplastic materials and nano materials). Computer modeling in crystal plasticity. Effects of temperature on crystal plasticity (continuous or discontinuous recrystallization, possibilities of modeling). Heterogeneities of the deformation (instability and localization of deformation in single and polycrystals).}\\
+    &\textit{Requirements}&\multicolumn{4}{p{0.7\textwidth}}{It satisfies the \acrshort{docmase} for scientific training and \acrshort{emma} requirements for scientific courses. It could probably be transferred for credits to satisfy Lule\aa\ requirements.}\\
+    &\textit{Needs}&\multicolumn{4}{p{0.7\textwidth}}{The course is not directly related to the topic of the research project. It is nonetheless related to the doctoral school theme, i.e. materials science. Being formed in aerospace and mechanical engineering, given that the thesis' topic refers directly to aerospace applications and envisioning a career related to such fields, I think a higher-level course on crystal behaviour fits well and could help me acquire a more complete background in the field.}\\
+    &\textit{Status}&\multicolumn{4}{p{0.7\textwidth}}{Under discussion.}\\
+    &&&&&\\
+    \midrule
+    &&&&&\\
+    \multicolumn{3}{p{0.5\textwidth}}{\textbf{Physique quantique à l'usage exclusif des non physiciens}}&EMMA 11&3&15\\
+    \multicolumn{3}{p{0.5\textwidth}}{\textbf{(Quantum physics for non-physicists)}}&&&\\
+    &\textit{Institution}&\multicolumn{4}{p{0.7\textwidth}}{Universit\'e de Lorraine.}\\
+    &\textit{Organisation}&\multicolumn{4}{p{0.7\textwidth}}{The course will take place from 14:00 to 17:00 on February 24, March 02, 09, 16, 23, 2016 (a total of 5 lectures).}\\
+    &\textit{Objective}&\multicolumn{4}{p{0.7\textwidth}}{The course presents the basics of quantum mechanics for non-specialists with mathematical background.}\\
+    &\textit{Syllabus}&\multicolumn{4}{p{0.7\textwidth}}{Axioms and formulations of quantum mechancis. Interpretations of quantum physics. From classical to quantum mechanics. From quantum to classical mechanics. Quantum information and informatics.}\\
+    &\textit{Requirements}&\multicolumn{4}{p{0.7\textwidth}}{It satisfies the \acrshort{docmase} for scientific training and \acrshort{emma} requirements for scientific courses. It could probably be transferred for credits to satisfy Lule\aa\ requirements.}\\
+    &\textit{Needs}&\multicolumn{4}{p{0.7\textwidth}}{The course is not directly related to the topic of the research project. It is nonetheless related to the doctoral school theme, i.e. materials science. It will provide the basics to understand advanced topics in materials science research related to molecular, atomic and sub-atomic scales.}\\
+    &\textit{Status}&\multicolumn{4}{p{0.7\textwidth}}{Under discussion.}\\
+    &&&&&\\
+    \midrule
+    &&&&&\\
+    \multicolumn{3}{p{0.5\textwidth}}{\textbf{Utilisation avanc\'ee de Microsoft-Excel et realisation de macro-commandes en langage visual basic pour la r\'esolution de probl\'emes scientifiques et le traitement de donn\'ees}}&RP2E MS 21&$\approx4$&20\\
+    \multicolumn{3}{p{0.5\textwidth}}{\textbf{(Advanced use of Microsoft-Excel and realisation of macros in visual basic for the solution of scientific problems and data analysis)}}&&&\\
+    &\textit{Institution}&\multicolumn{4}{p{0.7\textwidth}}{Universit\'e de Lorraine.}\\
+    &\textit{Organization}&\multicolumn{4}{p{0.7\textwidth}}{The course will take place from 09:00 to 17:00 (with a hour and a half lunch-break) on March 07, 08 and 10, 2016 (a total of 6 lectures).}\\
+    &\textit{Objective}&\multicolumn{4}{p{0.7\textwidth}}{The student will be capable of apply in practical cases all the concepts acquired in the course.}\\
+    &\textit{Syllabus}&\multicolumn{4}{p{0.7\textwidth}}{Advanced Microsoft-Excel functions for the solution of non-linear equations, matrix equation, non-linear systems of equations, \dots... Application of Microsoft-Excel to the analysis of complex sets of data (requiring algorithmic programming). Create an application with \acrfull{vba}.}\\
+    &\textit{Requirements}&\multicolumn{4}{p{0.7\textwidth}}{It satisfies the \acrshort{docmase} for scientific training and \acrshort{emma} requirements for scientific courses. It could probably be transferred for credits to satisfy Lule\aa\ requirements.}\\
+    &\textit{Needs}&\multicolumn{4}{p{0.7\textwidth}}{The course could greatly help the research work conducted in the doctoral project. As many simulations will be run and thus a large amount will be generated, an advanced knowledge of Microsoft-Excel could help automate the data analysis procedure and thus increase productivity.}\\
+    &\textit{Status}&\multicolumn{4}{p{0.7\textwidth}}{Under discussion.}\\
+    &&&&&\\
+    \midrule
+    &&&&&\\
+    \multicolumn{3}{p{0.5\textwidth}}{\textbf{Modelisation des milieux heterogenes}}&RP2E MS 23&$\approx4$&20\\
+    \multicolumn{3}{p{0.5\textwidth}}{\textbf{(Heterogeneous materials modeling)}}&&&\\
+    &\textit{Institution}&\multicolumn{4}{p{0.7\textwidth}}{Universit\'e de Lorraine.}\\
+    &\textit{Organization}&\multicolumn{4}{p{0.7\textwidth}}{The course will take place on March 21, 22, 23, 24 and 25, 2016 (a total of 6 lectures).}\\
+    &\textit{Objective}&\multicolumn{4}{p{0.7\textwidth}}{Provide the scientific foundations for the numerical modeling of heterogeneous materials at multiple scales.}\\
+    &\textit{Syllabus}&\multicolumn{4}{p{0.7\textwidth}}{Homogenisation techniques: introduction to the micro-mechanics of materials; homogenisation methods; estimation of effective material properties. Variational and \acrfull{fem}: principles of variational methods in heterogeneous media elasticity; homogenisation and its application to \acrshort{fem} in linear thermo-elasticity.}\\
+    &\textit{Requirements}&\multicolumn{4}{p{0.7\textwidth}}{It satisfies the \acrshort{docmase} for scientific training and \acrshort{emma} requirements for scientific courses. It could probably be transferred for credits to satisfy Lule\aa\ requirements.}\\
+    &\textit{Needs}&\multicolumn{4}{p{0.7\textwidth}}{The subject of the course is related to the project theme, as it reviews the methods for the micro-mechanical and multi-scale analysis of heterogeneous materials, such as fiber reinforced polymer composites. It could potentially provide valid tools that can be put to fruitful use in the research work.}\\
+    &\textit{Status}&\multicolumn{4}{p{0.7\textwidth}}{Under discussion.}\\
+    &&&&&\\
+    \bottomrule
+\label{tab:proposal_tab}  
+\end{longtable}%
+\end{center}
+%------------------------------------------------%
+%------------------------------------------------%
+%                   Back Matter                          %
+%------------------------------------------------%
+%------------------------------------------------%
+
+%\begin{appendix}
+%
+%\clearscrheadings
+%\pagestyle{scrheadings}
+%\manualmark
+%\ofoot{\\\pagemark} % ofoo
+%\ifoot{} % ofoo
+%%\cfoot[]{\pagemark}
+%%\ihead{}
+%%\ohead{}
+%\ohead{Appendix A}
+%\setheadtopline{2pt}
+%\setheadsepline{0.5pt}
+%\setfootsepline{0.5pt}
+%
+%\section{First appendix}
+%
+%\cleardoublepageusingstyle{scrheadings}
+%%\cleardoublepage
+%\end{appendix}
+
+%\clearscrheadings
+%\pagestyle{scrheadings}
+%\manualmark
+%\ofoot{\\ \pagemark} % ofoo
+%\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+%\ohead{Glossary}
+%\setheadtopline{2pt}
+%\setheadsepline{0.5pt}
+%\setfootsepline{0.5pt}
+
+%\addcontentsline{toc}{section}{Glossary \& Acronyms}
+
+%\printglossary
+
+%\printglossary
+
+%\cleardoublepageusingstyle{scrheadings}
+
+% References
+%\clearscrheadings
+%\pagestyle{scrheadings}
+%\manualmark
+%\ofoot{\\\pagemark} % ofoo
+%\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+%\ohead{References}
+%\setheadtopline{2pt}
+%\setheadsepline{0.5pt}
+%\setfootsepline{0.5pt}
+
+%\addcontentsline{toc}{section}{\bibname}
+%\printbibliography
+
+
+\end{document}

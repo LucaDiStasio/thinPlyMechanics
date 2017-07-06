@@ -1,0 +1,16 @@
+\beamer@endinputifotherversion {3.26pt}
+\beamer@sectionintoc {1}{Symbols, Models \& Reference Data}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Symbols}{4}{0}{1}
+\beamer@subsectionintoc {1}{2}{Reference Models}{5}{0}{1}
+\beamer@subsectionintoc {1}{3}{Angular discretization}{7}{0}{1}
+\beamer@subsectionintoc {1}{4}{Materials' properties}{8}{0}{1}
+\beamer@sectionintoc {2}{Review of work's progress}{9}{0}{2}
+\beamer@subsectionintoc {2}{1}{Where we were}{10}{0}{2}
+\beamer@subsectionintoc {2}{2}{What was to be done}{12}{0}{2}
+\beamer@subsectionintoc {2}{3}{Where we are}{13}{0}{2}
+\beamer@sectionintoc {3}{Discussion of results}{15}{0}{3}
+\beamer@subsectionintoc {3}{1}{Energy Release Rates by VCCT}{16}{0}{3}
+\beamer@subsectionintoc {3}{2}{Total Energy Release Rate by J-integral}{19}{0}{3}
+\beamer@subsectionintoc {3}{3}{Interface}{21}{0}{3}
+\beamer@subsectionintoc {3}{4}{Numerical performances}{30}{0}{3}
+\beamer@subsectionintoc {3}{5}{Conclusion}{32}{0}{3}

@@ -1,0 +1,13 @@
+\beamer@endinputifotherversion {3.26pt}
+\beamer@sectionintoc {1}{Symbols, Models, Equations \& Reference Data}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Symbols}{4}{0}{1}
+\beamer@subsectionintoc {1}{2}{Reference Models}{6}{0}{1}
+\beamer@subsectionintoc {1}{3}{Angular discretization}{9}{0}{1}
+\beamer@subsectionintoc {1}{4}{Material properties}{10}{0}{1}
+\beamer@subsectionintoc {1}{5}{Evaluation of $G_{0}$}{11}{0}{1}
+\beamer@subsectionintoc {1}{6}{VCCT}{12}{0}{1}
+\beamer@sectionintoc {2}{Developments \& Work Realised}{14}{0}{2}
+\beamer@subsectionintoc {2}{1}{Summary of previous results}{15}{0}{2}
+\beamer@subsectionintoc {2}{2}{Summary of objectives}{16}{0}{2}
+\beamer@subsectionintoc {2}{3}{Work realised \& Follow-Up Actions}{17}{0}{2}
+\beamer@subsectionintoc {2}{4}{Results}{28}{0}{2}

@@ -1,0 +1,175 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+
+\usetikzlibrary{arrows}
+
+%----------------------------------------------------------------------------------------------%
+%                                          INPUT PARAMETERS
+%----------------------------------------------------------------------------------------------%
+
+\def\Rf{1}
+\def\Vff{0.5}
+\def\tratio{0.75}
+\def\meshfacone{0.2}
+\def\meshfactwo{0.75}
+\def\meshfacthree{0.5}
+\def\thetavalue{45}
+\def\deltatheta{15}
+
+%----------------------------------------------------------------------------------------------%
+%                               Definition of dependent parameters
+%----------------------------------------------------------------------------------------------%
+
+\def\pivalue{3.141592653589793238462643383279502884197169399375105820974944592307816406286}
+
+\newcommand{\half}[1]{
+       0.5*#1
+       }
+
+\pgfmathsetmacro\l{0.5*\Rf*sqrt(\pivalue/\Vff)}
+
+\def\domlim{1.28*\l}
+\def\loadlim{1.197*\l}
+\def\loadlabel{0.2*\Rf}
+\def\cornerlabel{1.077*\l}
+
+\def\thetabot{\thetavalue-\deltatheta}
+\def\thetaup{\thetavalue+\deltatheta}
+
+\def\thetahalfbot{\thetavalue-0.5*\deltatheta}
+\def\thetahalfup{\thetavalue+0.5*\deltatheta}
+
+\def\thetaround{360+\thetavalue-\deltatheta}
+\def\thetadraw{0.25*\thetavalue}
+
+\def\xM{0.9*\costheta*\Rf}
+\def\yM{0.9*\sintheta*\Rf}
+
+\pgfmathsetmacro\cosfourtyfive{cos(45)}
+\pgfmathsetmacro\sinfourtyfive{sin(45)}
+
+\pgfmathsetmacro\costheta{cos(\thetavalue)}
+\pgfmathsetmacro\sintheta{sin(\thetavalue)}
+
+\pgfmathsetmacro\costhetabot{cos(\thetabot)}
+\pgfmathsetmacro\sinthetabot{sin(\thetabot)}
+
+\pgfmathsetmacro\costhetaup{cos(\thetaup)}
+\pgfmathsetmacro\sinthetaup{sin(\thetaup)}
+
+\pgfmathsetmacro\costhetahalfbot{cos(\thetahalfbot)}
+\pgfmathsetmacro\sinthetahalfbot{sin(\thetahalfbot)}
+
+\pgfmathsetmacro\costhetahalfup{cos(\thetahalfup)}
+\pgfmathsetmacro\sinthetahalfup{sin(\thetahalfup)}
+  
+\pgfmathsetmacro\yloadarrowone{\l+(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowtwo{\l+2*(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowthree{\l+3*(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowfour{\l+4*(\loadlim-\l)*0.2}
+
+\pgfmathsetmacro\ILsquared{(\costhetabot-\costhetaup)*(\costhetabot-\costhetaup)+(\sinthetabot-\sinthetaup)*(\sinthetabot-\sinthetaup))}
+\pgfmathsetmacro\IMsquared{(\costhetabot-0.9*\costheta)*(\costhetabot-0.9*\costheta)+(\sinthetabot-0.9*\sintheta)*(\sinthetabot-0.9*\sintheta)}
+\pgfmathsetmacro\IL{sqrt(\ILsquared)}
+\pgfmathsetmacro\IM{sqrt(\IMsquared)}
+\pgfmathsetmacro\angleM{asin(0.5*\IL/\IM)}
+
+\def\crackstartangle{\thetavalue-\angleM}
+\def\crackstopangle{\thetavalue+\angleM}
+
+\pgfmathsetmacro\meshradiusone{\meshfactwo*\Rf}
+\pgfmathsetmacro\meshradiustwo{\Rf+\meshfacthree*(\l-\Rf)}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+\begin{document}
+
+\begin{tikzpicture}[scale=4.5,cap=round,x=1cm,y=1cm]
+
+\tikzstyle{axes}=[]
+
+\draw (\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+
+\begin{scope}[style=axes]
+  \draw[->][ultra thin] (-\domlim,0) -- (\domlim,0) node[right] {$\underline{i}, x$};
+  \draw[->][ultra thin] (0,-\domlim) -- (0,\domlim) node[above] {$\underline{k}, z$};
+\end{scope}
+
+\draw (-\l,-\l) -- (-\l,\l);
+\draw (-\l,\l) -- (\l,\l) ;
+\draw (\l,\l) -- (\l,-\l);
+\draw (\l,-\l) -- (-\l,-\l);
+
+\draw[dashed] (\meshfacone*\Rf,\meshfacone*\Rf) -- (\l,\l);
+\draw[dashed] (-\meshfacone*\Rf,\meshfacone*\Rf) -- (-\l,\l);
+\draw[dashed] (\meshfacone*\Rf,-\meshfacone*\Rf) -- (\l,-\l);
+\draw[dashed] (-\meshfacone*\Rf,-\meshfacone*\Rf) -- (-\l,-\l);
+
+\draw[dashed] (0,0) circle(\meshradiusone);
+\draw[dashed] (0,0) circle(\meshradiustwo);
+
+\draw[dashed] (-\meshfacone*\Rf,-\meshfacone*\Rf) rectangle (\meshfacone*\Rf,\meshfacone*\Rf);
+
+\draw (-\l,\half{\l}) node[black,left] {$l$};
+\draw (-\l,-\half{\l}) node[black,left] {$l$};
+\draw (\half{\l},\l) node[black,above] {$l$};
+\draw (-\half{\l},\l) node[black,above] {$l$};
+
+\draw (\l,\cornerlabel) node[black,right] {$C\equiv\left(+l,+l\right)$};
+\draw (-\l,\cornerlabel) node[black,left] {$D\equiv\left(-l,+l\right)$};
+
+\draw (\l,-\cornerlabel) node[black,right] {$B\equiv\left(+l,-l\right)$};
+\draw (-\l,-\cornerlabel) node[black,left] {$A\equiv\left(-l,-l\right)$};
+
+\draw (-\meshfacone*\Rf,\meshfacone*\Rf) node[black,above] {$E$};
+\draw (-\meshradiusone*\cosfourtyfive,\meshradiusone*\sinfourtyfive) node[black,right] {$F$};
+\draw (-\Rf*\cosfourtyfive,\Rf*\sinfourtyfive) node[black,right] {$G$};
+\draw (-\meshradiustwo*\cosfourtyfive,\meshradiustwo*\sinfourtyfive) node[black,right] {$H$};
+\draw (-1.05*\meshfacone*\Rf,0) node[black,below] {$P$};
+
+\draw (-\meshfacone*\Rf,0.5*\meshfacone*\Rf) node[black,left] {$N_{\alpha}$};
+\draw (-0.6*\meshradiusone*\cosfourtyfive,0.6*\meshradiusone*\sinfourtyfive) node[black,left] {$N_{\beta}$};
+\draw (-0.4*\meshradiusone*\cosfourtyfive-0.6*\Rf*\cosfourtyfive,0.4*\meshradiusone*\sinfourtyfive+0.6*\Rf*\sinfourtyfive) node[black,below] {$N_{\gamma}$};
+\draw (-0.75*\meshradiustwo*\cosfourtyfive-0.25*\Rf*\cosfourtyfive,0.75*\meshradiustwo*\sinfourtyfive+0.25*\Rf*\sinfourtyfive) node[black,below] {$N_{\delta}$};
+\draw (-\meshradiustwo*\cosfourtyfive-0.75*\l+0.75*\meshradiustwo,\meshradiustwo*\sinfourtyfive+0.75*\l-0.75*\meshradiustwo) node[black,left] {$N_{\varepsilon}$};
+
+\draw (-0.5*\l,-1.75*\l) node[black] {$E\equiv\left(-f_{1}\cdot R_{f},+f_{1}\cdot R_{f}\right)$};
+\draw (0.5*\l,-1.75*\l) node[black] {$F\equiv f_{2} R_{f}\left(-\cos{45^{\circ}},\sin{45^{\circ}}\right)$};
+\draw (0.0,-2*\l) node[black] {$G\equiv  R_{f}\left(-\cos{45^{\circ}},\sin{45^{\circ}}\right)$};
+\draw (0.0,-2.25*\l) node[black] {$H\equiv \left(R_{f}+f_{3}\left(l-R_{f}\right)\right)\left(-\cos{45^{\circ}},\sin{45^{\circ}}\right)$};
+
+\draw (0,\Rf) node[black,above] {$\left(0,R_{f}\right)$};
+\draw (-\Rf,0) node[black,above] {$\left(-R_{f},0\right)$};
+\draw (0,-\Rf) node[black,below] {$\left(0,-R_{f}\right)$};
+\draw (\Rf,0) node[black,below] {$\left(R_{f},0\right)$};
+
+\draw (-0.5\Rf,-0.5\Rf) node[black,above] {$\Omega_{f}$};
+\draw (-\Rf,-\Rf) node[black,above] {$\Omega_{m}$};
+\draw (-0.05,0) node[black,left,below] {$O$};
+\draw (-\costhetaup*\Rf,-\sinthetaup*\Rf) node[black,below] {$\Gamma_{1}$};
+\draw (\costhetabot*\Rf,\sinthetabot*\Rf) node[black,below] {$I$};
+\draw (\costhetaup*\Rf,\sinthetaup*\Rf) node[black,above] {$L$};
+\draw (\costheta*\Rf,\sintheta*\Rf) node[red!50!black,above] {$a$};
+\draw (\costhetahalfup*\Rf,\sinthetahalfup*\Rf) node[black,above] {$\Gamma_{3}$};
+\draw (0.95*\costhetabot*\Rf,1.1*\sinthetabot*\Rf) node[black,left] {$\Gamma_{2}$};
+
+\draw[draw=red,line width=2pt](\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+
+
+
+\end{tikzpicture}
+
+\end{document}

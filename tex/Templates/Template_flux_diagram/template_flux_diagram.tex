@@ -1,0 +1,441 @@
+\documentclass{minimal}
+\usepackage[a2paper,margin=1cm,landscape]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,shadows,arrows}
+
+\begin{document}
+
+\tikzstyle{main_obj}=[rectangle, draw=black, rounded corners, fill=red!80, drop shadow,
+        text centered, anchor=north, text=gray!99, text width=12cm]
+
+\tikzstyle{fund_obj}=[rectangle, draw=black, rounded corners, fill=blue!40, drop shadow,
+        text centered, anchor=north, text=white, text width=4cm]
+
+\tikzstyle{means_obj}=[rectangle, draw=black, rounded corners, fill=green!99, drop shadow,
+        text centered, anchor=north, text=black, text width=2cm]
+
+\tikzstyle{attribute}=[rectangle, draw=black, rounded corners, fill=green!30, drop shadow,
+        text centered, anchor=north, text=black, text width=2cm]
+
+\tikzstyle{line}=[-, thick]
+        
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+    \node (Item) [main_obj]
+        {
+            \textbf{IDENTIFY BEST WORKING SPACE SOLUTION}
+        };
+    \node (AuxNode01) [text width=0.025cm, below=of Item] {};
+    \node (Fund3) [fund_obj, left=of AuxNode01]
+        {
+            \textbf{Optimize Studio's Internal Design}
+        };
+   \node (AuxNode03) [text height=5cm, below=of Fund3] {};
+   \node (AuxNode04) [text height=5cm, below=of AuxNode03] {};
+   \node (Means36) [means_obj, below=of AuxNode04]
+       {
+         \textbf{Maximize acustic insulation}
+       };
+   \node (Means35) [means_obj,text width=2.5cm, left=of Means36]
+       {
+         \textbf{Optimize air-conditioning}
+       };
+   \node (Means34) [means_obj, left=of Means35]
+       {
+         \textbf{Maximize comfort of people}
+       };
+   \node (Means33) [means_obj, left=of Means34]
+       {
+         \textbf{Maximize natural lighting}
+       };
+   \node (Means32) [means_obj, left=of Means33]
+       {
+         \textbf{Eliminate bottlenecks}
+       };
+   \node (Means31) [means_obj, left=of Means32]
+       {
+         \textbf{Maximize ease of communication}
+       };
+
+   \node (Attribute36) [attribute, rectangle split, rectangle split parts=2,below=of Means36]
+       {
+         \textbf{Sound reduction index R}
+        \nodepart{second}Decibel $dB$
+       };
+   \node (Attribute35) [attribute,text width=2.5cm, rectangle split, rectangle split parts=2,below=of Means35]
+       {
+         \textbf{Temperature and humidity}
+        \nodepart{second}Kelvin $K$ and relative humidity $\phi$ (Mollier tables)
+       };
+   \node (Attribute34) [attribute, rectangle split, rectangle split parts=2,below=of Means34]
+       {
+         \textbf{Comfort}
+        \nodepart{second}Constructed scale
+       };
+   \node (Attribute33) [attribute, rectangle split, rectangle split parts=2,below=of Means33]
+       {
+         \textbf{Area (of windows)}
+        \nodepart{second}Square feet $sqft$ or square meters $sqm$
+       };
+   \node (Attribute32) [attribute, rectangle split, rectangle split parts=2,below=of Means32]
+       {
+         \textbf{Number and type of bottlenecks}
+        \nodepart{second}Constructed scale
+       };
+   \node (Attribute31) [attribute,text width=2.75cm, rectangle split, rectangle split parts=2,below=of Means31]
+       {
+         \textbf{Communication quality}
+        \nodepart{second}Constructed scale
+       };
+
+
+
+    \node (Fund2) [fund_obj, left=of Fund3]
+        {
+            \textbf{Maximize Space}
+        };
+   \node (AuxNode02) [text height=5cm, below=of Fund2] {};
+    \node (Means23) [means_obj, below=of AuxNode02]
+       {
+         \textbf{Maximize number of staff/guests allowed in}
+       };
+    \node (Means22) [means_obj, left=of Means23]
+       {
+         \textbf{Minimize area occupied by equipment}
+       };
+    \node (Means21) [means_obj, left=of Means22]
+       {
+         \textbf{Maximize floor area}
+       };
+
+    \node (Attribute23) [attribute, rectangle split, rectangle split parts=2,below=of Means23]
+       {
+         \textbf{Number of people}
+        \nodepart{second}Number of people
+       };
+   \node (Attribute22) [attribute, rectangle split, rectangle split parts=2,below=of Means22]
+       {
+         \textbf{Area}
+        \nodepart{second}Square feet $sqft$ or square meters $sqm$
+       };
+   \node (Attribute21) [attribute, rectangle split, rectangle split parts=2,below=of Means21]
+       {
+         \textbf{Area}
+        \nodepart{second}Square feet $sqft$ or square meters $sqm$
+       };
+
+
+    \node (Fund1) [fund_obj, left=of Fund2]
+        {
+            \textbf{Minimize Cost}
+        };
+    \node (Means13) [means_obj, below=of Fund1]
+      {
+        \textbf{Maximize thermal insulation}
+     };
+    \node (Means12) [means_obj, left=of Means13]
+      {
+        \textbf{Minimize utilities' costs}
+     };
+    \node (Means11) [means_obj,left=of Means12]
+      {
+        \textbf{Minimize monthly rent}
+     };
+
+    \node (Attribute13) [attribute, rectangle split, rectangle split parts=2, below=of Means13]
+      {
+        \textbf{Heat loss per unit time}
+        \nodepart{second}Watt $W$
+     };
+    \node (Attribute12) [attribute, rectangle split, rectangle split parts=2, below=of Means12]
+      {
+        \textbf{Money}
+        \nodepart{second}Singapore dollar $S\$$
+     };
+    \node (Attribute11) [attribute, rectangle split, rectangle split parts=2,below=of Means11]
+      {
+        \textbf{Money}
+        \nodepart{second}Singapore dollar $S\$$
+     };
+
+
+
+    \node (Fund4) [fund_obj, right=of AuxNode01]
+        {
+            \textbf{Optimize Location}
+        };
+   \node (AuxNode06) [text height=10cm, below=of Fund4] {};
+   \node (AuxNode07) [text height=10cm, below=of AuxNode06] {};
+    \node (Means45) [means_obj, below=of AuxNode07]
+       {
+         \textbf{Maximize proximity to shops, groceries, restaurants}
+       };
+    \node (Means44) [means_obj, left=of Means45]
+       {
+         \textbf{Maximize parking availability}
+       };
+    \node (Means43) [means_obj, left=of Means44]
+       {
+         \textbf{Maximize access to main road arteries}
+       };
+    \node (Means42) [means_obj, left=of Means43]
+       {
+         \textbf{Maximize access to public transport}
+       };
+    \node (Means41) [means_obj, left=of Means42]
+       {
+         \textbf{Maximize proximity to Singapore’s Central Business District (CBD)}
+       };
+    \node (Means46) [means_obj, right=of Means45]
+       {
+         \textbf{Minimize transport costs}
+       };
+    \node (Means47) [means_obj, right=of Means46]
+       {
+         \textbf{Minimize external noise}
+       };
+    \node (Means48) [means_obj, right=of Means47]
+       {
+         \textbf{Minimize external pollution}
+       };
+    \node (Means49) [means_obj, right=of Means48]
+       {
+         \textbf{Minimize adiacency to industrial plant}
+       };
+    \node (Means410) [means_obj, right=of Means49]
+       {
+         \textbf{Minimize adiacency to construnction sites}
+       };
+
+   \node (Attribute410) [attribute, rectangle split, rectangle split parts=2,below=of Means410]
+       {
+         \textbf{Distance}
+        \nodepart{second}Meter $m$
+       };
+   \node (Attribute49) [attribute, rectangle split, rectangle split parts=2,below=of Means49]
+       {
+         \textbf{Distance}
+        \nodepart{second}Meter $m$
+       };
+   \node (Attribute48) [attribute, rectangle split, rectangle split parts=2,below=of Means48]
+       {
+         \textbf{Air quality}
+        \nodepart{second}Pollutant Standards Index $PSI$
+       };
+   \node (Attribute47) [attribute, rectangle split, rectangle split parts=2,below=of Means47]
+       {
+         \textbf{Noise intensity}
+        \nodepart{second}Decibel $dB$
+       };
+   \node (Attribute46) [attribute, rectangle split, rectangle split parts=2,below=of Means46]
+       {
+         \textbf{Money}
+        \nodepart{second}Singapore dollar $S\$$
+       };
+   \node (Attribute45) [attribute, rectangle split, rectangle split parts=2,below=of Means45]
+       {
+         \textbf{Distance}
+        \nodepart{second}Meter $m$
+       };
+   \node (Attribute44) [attribute, rectangle split, rectangle split parts=2,below=of Means44]
+       {
+         \textbf{Parking space}
+        \nodepart{second}Number of parking spots during rush hours
+       };
+   \node (Attribute43) [attribute, rectangle split, rectangle split parts=2,below=of Means43]
+       {
+         \textbf{Distance}
+        \nodepart{second}Meter $m$
+       };
+   \node (Attribute42) [attribute, rectangle split, rectangle split parts=2,below=of Means42]
+       {
+         \textbf{Distance}
+        \nodepart{second}Meter $m$
+       };
+   \node (Attribute41) [attribute, rectangle split, rectangle split parts=2,below=of Means41]
+       {
+         \textbf{Distance}
+        \nodepart{second}Meter $m$
+       };
+
+    \node (Fund5) [fund_obj, right=of Fund4]
+        {
+            \textbf{Minimize\\Commuting Time}
+        };
+   \node (AuxNode05) [text height=7.5cm, below=of Fund5] {};
+    \node (Means51) [means_obj, below=of AuxNode05]
+       {
+         \textbf{Minimize home-office commuting time}
+       };
+    \node (Means52) [means_obj, right=of Means51]
+       {
+         \textbf{Minimize office-son’s school commuting time}
+       };
+    \node (Means53) [means_obj, right=of Means52]
+       {
+         \textbf{Minimize office-bank commuting time}
+       };
+    \node (Means54) [means_obj, right=of Means53]
+       {
+         \textbf{Minimize office-main public authorities’ offices commuting time}
+       };
+    \node (Means55) [means_obj, right=of Means54]
+       {
+         \textbf{Minimize office-groceries/ shops/ restaurants commuting time}
+       };
+
+   \node (Attribute55) [attribute, rectangle split, rectangle split parts=2,below=of Means55]
+       {
+         \textbf{Time}
+        \nodepart{second}Minutes $min$
+       };
+   \node (Attribute54) [attribute, rectangle split, rectangle split parts=2,below=of Means54]
+       {
+         \textbf{Time}
+        \nodepart{second}Minutes $min$
+       };
+   \node (Attribute53) [attribute, rectangle split, rectangle split parts=2,below=of Means53]
+       {
+         \textbf{Time}
+        \nodepart{second}Minutes $min$
+       };
+   \node (Attribute52) [attribute, rectangle split, rectangle split parts=2,below=of Means52]
+       {
+         \textbf{Time}
+        \nodepart{second}Minutes $min$
+       };
+   \node (Attribute51) [attribute, rectangle split, rectangle split parts=2,below=of Means51]
+       {
+         \textbf{Time}
+        \nodepart{second}Minutes $min$
+       };
+
+
+    \node (Fund6) [fund_obj, right=of Fund5]
+        {
+            \textbf{Maximize\\Office Services}
+        };
+    \node (Means61) [means_obj, below=of Fund6]
+       {
+         \textbf{Maximize print/ copy/ scan services}
+       };
+    \node (Means62) [means_obj, right=of Means61]
+       {
+         \textbf{Optimize administrative tasks}
+       };
+    \node (Means63) [means_obj, right=of Means62]
+       {
+         \textbf{Optimize drawings' delivery}
+       };
+    \node (Means64) [means_obj, right=of Means63]
+       {
+         \textbf{Optimize access to banking and legal support services}
+       };
+
+   \node (Attribute64) [attribute, rectangle split, rectangle split parts=2,below=of Means64]
+       {
+         \textbf{Service quality}
+        \nodepart{second}Constructed scale
+       };
+   \node (Attribute63) [attribute, rectangle split, rectangle split parts=2,below=of Means63]
+       {
+         \textbf{Service quality}
+        \nodepart{second}Constructed scale
+       };
+   \node (Attribute62) [attribute, rectangle split, rectangle split parts=2,below=of Means62]
+       {
+         \textbf{Service quality}
+        \nodepart{second}Constructed scale
+       };
+   \node (Attribute61) [attribute, rectangle split, rectangle split parts=2,below=of Means61]
+       {
+         \textbf{Service quality}
+        \nodepart{second}Constructed scale
+       };
+
+    
+    \draw[line] (Fund3.north) -- ++(0,0.8) -| (Item.south);
+    \draw[line] (Fund3.north) -- ++(0,0.8) -| (Fund4.north);
+    \draw[line] (Fund3.north) -- ++(0,0.8) -| (Fund2.north);
+    \draw[line] (Fund3.north) -- ++(0,0.8) -| (Fund1.north);
+    \draw[line] (Fund3.north) -- ++(0,0.8) -| (Fund5.north);
+    \draw[line] (Fund3.north) -- ++(0,0.8) -| (Fund6.north);
+
+    \draw[line] (Means13.north) -- (Fund1.south);
+    \draw[line] (Means13.north) -- ++(0,0.8) -| (Means12.north);
+    \draw[line] (Means13.north) -- ++(0,0.8) -| (Means11.north);
+    
+    \draw[line] (Means23.north) -- (Fund2.south);
+    \draw[line] (Means23.north) -- ++(0,0.8) -| (Means21.north);
+    \draw[line] (Means23.north) -- ++(0,0.8) -| (Means22.north);
+    
+    \draw[line] (Means36.north) -- (Fund3.south);
+    \draw[line] (Means36.north) -- ++(0,0.8) -| (Means35.north);
+    \draw[line] (Means36.north) -- ++(0,0.8) -| (Means34.north);
+    \draw[line] (Means36.north) -- ++(0,0.8) -| (Means33.north);
+    \draw[line] (Means36.north) -- ++(0,0.8) -| (Means32.north);
+    \draw[line] (Means36.north) -- ++(0,0.8) -| (Means31.north);
+
+    \draw[line] (Means45.north) -- (Fund4.south);
+    \draw[line] (Means41.north) -- ++(0,0.8) -| (Means42.north);
+    \draw[line] (Means41.north) -- ++(0,0.8) -| (Means43.north);
+    \draw[line] (Means41.north) -- ++(0,0.8) -| (Means44.north);
+    \draw[line] (Means41.north) -- ++(0,0.8) -| (Means45.north);
+    \draw[line] (Means41.north) -- ++(0,0.8) -| (Means46.north);
+    \draw[line] (Means41.north) -- ++(0,0.8) -| (Means47.north);
+    \draw[line] (Means41.north) -- ++(0,0.8) -| (Means48.north);
+    \draw[line] (Means41.north) -- ++(0,0.8) -| (Means49.north);
+    \draw[line] (Means41.north) -- ++(0,0.8) -| (Means410.north);
+
+    \draw[line] (Means51.north) -- (Fund5.south);
+    \draw[line] (Means51.north) -- ++(0,0.8) -| (Means52.north);
+    \draw[line] (Means51.north) -- ++(0,0.8) -| (Means53.north);
+    \draw[line] (Means51.north) -- ++(0,0.8) -| (Means54.north);
+    \draw[line] (Means51.north) -- ++(0,0.8) -| (Means55.north);
+
+    \draw[line] (Means61.north) -- (Fund6.south);
+    \draw[line] (Means61.north) -- ++(0,0.8) -| (Means62.north);
+    \draw[line] (Means61.north) -- ++(0,0.8) -| (Means63.north);
+    \draw[line] (Means61.north) -- ++(0,0.8) -| (Means64.north);
+
+    \draw[line] (Means11.south) -- (Attribute11.north);
+    \draw[line] (Means12.south) -- (Attribute12.north);
+    \draw[line] (Means13.south) -- (Attribute13.north);
+
+    \draw[line] (Means21.south) -- (Attribute21.north);
+    \draw[line] (Means22.south) -- (Attribute22.north);
+    \draw[line] (Means23.south) -- (Attribute23.north);
+
+    \draw[line] (Means31.south) -- (Attribute31.north);
+    \draw[line] (Means32.south) -- (Attribute32.north);
+    \draw[line] (Means33.south) -- (Attribute33.north);
+    \draw[line] (Means34.south) -- (Attribute34.north);
+    \draw[line] (Means35.south) -- (Attribute35.north);
+    \draw[line] (Means36.south) -- (Attribute36.north);
+
+    \draw[line] (Means41.south) -- (Attribute41.north);
+    \draw[line] (Means42.south) -- (Attribute42.north);
+    \draw[line] (Means43.south) -- (Attribute43.north);
+    \draw[line] (Means44.south) -- (Attribute44.north);
+    \draw[line] (Means45.south) -- (Attribute45.north);
+    \draw[line] (Means46.south) -- (Attribute46.north);
+    \draw[line] (Means47.south) -- (Attribute47.north);
+    \draw[line] (Means48.south) -- (Attribute48.north);
+    \draw[line] (Means49.south) -- (Attribute49.north);
+    \draw[line] (Means410.south) -- (Attribute410.north);
+
+    \draw[line] (Means51.south) -- (Attribute51.north);
+    \draw[line] (Means52.south) -- (Attribute52.north);
+    \draw[line] (Means53.south) -- (Attribute53.north);
+    \draw[line] (Means54.south) -- (Attribute54.north);
+    \draw[line] (Means55.south) -- (Attribute55.north);
+
+    \draw[line] (Means61.south) -- (Attribute61.north);
+    \draw[line] (Means62.south) -- (Attribute62.north);
+    \draw[line] (Means63.south) -- (Attribute63.north);
+    \draw[line] (Means64.south) -- (Attribute64.north);
+
+        
+\end{tikzpicture}
+\end{center}
+\end{document}

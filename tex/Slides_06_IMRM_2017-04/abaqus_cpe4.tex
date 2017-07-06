@@ -1,0 +1,44 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+
+\usetikzlibrary{arrows}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+\begin{document}
+
+\begin{tikzpicture}[scale=4.5,cap=round,x=1cm,y=1cm]
+
+\draw [black,thick] plot coordinates { (0,0) (2,1.5)};
+\draw [black,thick] plot coordinates { (2,1.5) (1.25,2.25)};
+\draw [black,thick] plot coordinates { (1.25,2.25) (-2.0,1.0)};
+\draw [black,thick] plot coordinates { (-2.0,1.0) (0,0)};
+
+\draw[fill=black] (0,0) circle (0.015cm);
+\draw[fill=black] (2,1.5) circle (0.015cm);
+\draw[fill=black] (1.25,2.25) circle (0.015cm);
+\draw[fill=black] (-2.0,1.0) circle (0.015cm);
+
+\draw (0,0) node[black,below] {$A$};
+\draw (2,1.5) node[black,below] {$B$};
+\draw (1.25,2.25) node[black,above] {$C$};
+\draw (-2.0,1.0) node[black,left] {$D$};
+
+\draw[->][thick] (-0.1,0.8) arc (-140:140:0.4);
+
+\end{tikzpicture}
+
+\end{document}

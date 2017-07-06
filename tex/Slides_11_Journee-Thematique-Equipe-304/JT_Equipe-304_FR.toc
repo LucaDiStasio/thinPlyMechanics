@@ -1,0 +1,17 @@
+\beamer@endinputifotherversion {3.33pt}
+\beamer@sectionintoc {1}{Les composites stratifi\'es avec couches extr\^emement minces}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{La technologie Spread Tow}{4}{0}{1}
+\beamer@subsectionintoc {1}{2}{L'effet thin ply sur les fissures transversales}{6}{0}{1}
+\beamer@sectionintoc {2}{Objectifs \& Approche}{8}{0}{2}
+\beamer@sectionintoc {3}{Les mod\`eles microm\'ecaniques}{10}{0}{3}
+\beamer@subsectionintoc {3}{1}{Conception des Volumes \'El\'ementaires Repr\'esentatifs (VERs)}{11}{0}{3}
+\beamer@subsectionintoc {3}{2}{Conception et g\'en\'eration du maillage}{13}{0}{3}
+\beamer@subsectionintoc {3}{3}{Mod\`ele aux \'El\'ements Finis en Abaqus}{15}{0}{3}
+\beamer@subsectionintoc {3}{4}{\'Evaluation num\'erique du taux de restitution d'\'energie}{15}{0}{3}
+\beamer@sectionintoc {4}{R\'esultats pr\'liminaires \& Perspectives}{17}{0}{4}
+\beamer@subsectionintoc {4}{1}{$\sigma _{0}$ et $G_{0}$}{18}{0}{4}
+\beamer@subsectionintoc {4}{2}{Formulation en petites et grands d\'eformations}{22}{0}{4}
+\beamer@sectionintoc {5}{Conclusions}{27}{0}{5}
+\beamer@sectionintoc {6}{Annexes \& Bibliographie}{29}{0}{6}
+\beamer@subsectionintoc {6}{1}{Annexes}{30}{0}{6}
+\beamer@subsectionintoc {6}{2}{Bibliographie}{39}{0}{6}

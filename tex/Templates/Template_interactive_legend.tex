@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{pgfplots.groupplots}
+\usetikzlibrary{backgrounds,fit,calc,shadows,chains,ocgx,shapes.geometric}
+\usepackage{scalefnt}
+\usepackage{pdfcomment}
+
+\usepackage{ocgx}
+\usepackage{pgfplots}
+\usepgfplotslibrary{groupplots}
+
+\usepgfplotslibrary{clickable}
+\pgfplotsset{compat=1.5,samples=10}
+\pgfplotsset{every axis legend/.append style={scale=8}}
+\usepackage{verbatim}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{5pt}%
+
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+\newcommand*{\Peak}{18}
+% The data files, written on the first run.
+\begin{filecontents}{in1.data}
+Granularity      Speedup
+16      0.71
+32      0.72
+64      0.75
+128     0.80
+256     0.89
+512     1.08
+1024    1.44
+2048    2.10
+4096    3.23
+\end{filecontents}
+
+\begin{filecontents}{in2.data}
+Granularity      Speedup
+16      0.71
+32      0.73
+64      0.75
+128     0.80
+256     0.90
+512     1.10
+1024    1.50
+2048    2.28
+4096 3.80
+\end{filecontents}
+
+\begin{document}
+\begin{center}
+\tikzset{every mark/.append style={scale=2}}
+\begin{tikzpicture}
+
+\begin{loglogaxis}[
+height=10cm, width=20cm,
+axis lines=left,
+xlabel={Granularity (Bytes)},
+ylabel= {Speedup},
+xmin=8,
+xmax=8192,
+xtick={16,32,64,128,256,512,1024,2048,4096,8192},
+xticklabels={16,,,128,,,1K,,,8K,},
+ymin=0.1,
+ymax=100,
+ytick={0.1,1,10,100},
+yticklabels={0.1,1,10,100},
+ymajorgrids,
+legend entries={\switchocg{actual}{LogCA},\switchocg{A}{$A_{10x}$}},
+legend columns=-1,
+legend style={at={(0.8,-0.4)},font=\Huge},
+xticklabel style={
+rotate=37,},
+]
+\begin{scope}[ocg={ref=actual,status=visible}]
+\addplot  [black,solid,very thick,
+    clickable coords={in1 (xy)}] table {in1.data};
+\end{scope}
+\begin{scope}[ocg={ref=A,status=visible}]
+\addplot  [mark=square,
+    clickable coords={in2 (xy)}] table {in2.data};
+\end{scope}
+
+\node(source1) at (axis cs:0,\Peak){};
+\node(destination1) at (axis cs:67108864,\Peak){};
+\draw[-,very thick,red](source1)--(destination1);
+
+\node[black,above] (c) at (axis cs:16,\Peak){A};
+\draw (c) node {\pdftooltip{\rule{0pt}{5pt}\rule{5pt}{0pt}}{Hint: Peak Acceleration}};
+
+\end{loglogaxis}
+\end{tikzpicture}
+\end{center}
+\end{document}

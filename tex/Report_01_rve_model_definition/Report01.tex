@@ -1,0 +1,792 @@
+\documentclass[a4paper, twoside,12pt, abstract]{scrartcl} % KOMA script package for scientific articles
+
+%----------------------------------------------------------------------------------------------%
+%                                      	                  PACKAGES
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}  
+\usepackage{amssymb}
+\usepackage{amstext}      
+\usepackage{animate}    
+\usepackage[english]{babel} 
+\usepackage[backend=bibtex, sorting=none,style=numeric]{biblatex}
+\usepackage{bm}               
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{colortbl}
+\usepackage{enumerate}
+\usepackage[right]{eurosym}
+\usepackage[inner=3cm,outer=2cm,top=2.7cm,bottom=3.2cm]{geometry}
+\usepackage{graphicx}  
+\usepackage{float}
+\usepackage[scaled=.90]{helvet}
+\usepackage{makeidx}
+\usepackage{multirow}
+\usepackage{parskip} 
+\usepackage{pdfpages}    
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{standalone}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{textcomp}
+\usepackage{tikz}
+\usepackage{xcolor}   
+%\usepackage[hyphens]{url}    
+
+\usepackage[acronym,nonumberlist,nopostdot,toc]{glossaries}
+\usepackage{hyperref}
+
+
+
+\definecolor{Gray}{gray}{0.85}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+
+
+\sloppy                   % avoids lines that are too long on the right side
+% avoid "orphans"
+\clubpenalty = 10000
+% avoid "widows"
+\widowpenalty = 10000
+% this makes the table of content etc. look better
+\renewcommand{\dotfill}{\leaders\hbox to 5pt{\hss.\hss}\hfill}
+
+% avoid indentation of line after a paragraph
+\setlength{\parindent}{0pt}
+
+\usepackage{scrpage2} 
+\pagestyle{scrheadings}
+\automark[section]{section}
+\ofoot{\pagemark} % ofoo
+\ifoot{Research Plan} % ofoo
+
+%\usepackage{natbib}
+%\bibliographystyle{apalike}
+
+%\setlength{\bibsep}{3mm}    
+\setlength{\unitlength}{1cm}
+\setlength{\oddsidemargin}{0.3cm}
+\setlength{\evensidemargin}{0.3cm}
+\setlength{\textwidth}{15.5cm}
+\setlength{\topmargin}{0cm}
+\setlength{\textheight}{22cm}
+
+\columnsep 0.5cm
+
+
+\newcommand{\brac}[1]{\left(#1\right)}		
+
+%----------------------------------------------------------------------------------------------%
+%                                          INPUT PARAMETERS
+%----------------------------------------------------------------------------------------------%
+
+\def\Rf{1}
+\def\Vff{0.5}
+\def\tratio{0.75}
+\def\meshfacone{0.2}
+\def\meshfactwo{0.75}
+\def\meshfacthree{0.5}
+\def\thetavalue{45}
+\def\deltatheta{15}
+
+%----------------------------------------------------------------------------------------------%
+%                               Definition of dependent parameters
+%----------------------------------------------------------------------------------------------%
+
+\def\pivalue{3.141592653589793238462643383279502884197169399375105820974944592307816406286}
+
+\newcommand{\half}[1]{
+       0.5*#1
+       }
+
+\pgfmathsetmacro\l{0.5*\Rf*sqrt(\pivalue/\Vff)}
+
+\def\domlim{1.28*\l}
+\def\loadlim{1.197*\l}
+\def\loadlabel{0.2*\Rf}
+\def\cornerlabel{1.077*\l}
+
+\def\thetabot{\thetavalue-\deltatheta}
+\def\thetaup{\thetavalue+\deltatheta}
+
+\def\thetahalfbot{\thetavalue-0.5*\deltatheta}
+\def\thetahalfup{\thetavalue+0.5*\deltatheta}
+
+\def\thetaround{360+\thetavalue-\deltatheta}
+\def\thetadraw{0.25*\thetavalue}
+
+\def\xM{0.9*\costheta*\Rf}
+\def\yM{0.9*\sintheta*\Rf}
+
+\pgfmathsetmacro\cosfourtyfive{cos(45)}
+\pgfmathsetmacro\sinfourtyfive{sin(45)}
+
+\pgfmathsetmacro\costheta{cos(\thetavalue)}
+\pgfmathsetmacro\sintheta{sin(\thetavalue)}
+
+\pgfmathsetmacro\costhetabot{cos(\thetabot)}
+\pgfmathsetmacro\sinthetabot{sin(\thetabot)}
+
+\pgfmathsetmacro\costhetaup{cos(\thetaup)}
+\pgfmathsetmacro\sinthetaup{sin(\thetaup)}
+
+\pgfmathsetmacro\costhetahalfbot{cos(\thetahalfbot)}
+\pgfmathsetmacro\sinthetahalfbot{sin(\thetahalfbot)}
+
+\pgfmathsetmacro\costhetahalfup{cos(\thetahalfup)}
+\pgfmathsetmacro\sinthetahalfup{sin(\thetahalfup)}
+  
+\pgfmathsetmacro\yloadarrowone{\l+(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowtwo{\l+2*(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowthree{\l+3*(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowfour{\l+4*(\loadlim-\l)*0.2}
+
+\pgfmathsetmacro\ILsquared{(\costhetabot-\costhetaup)*(\costhetabot-\costhetaup)+(\sinthetabot-\sinthetaup)*(\sinthetabot-\sinthetaup))}
+\pgfmathsetmacro\IMsquared{(\costhetabot-0.9*\costheta)*(\costhetabot-0.9*\costheta)+(\sinthetabot-0.9*\sintheta)*(\sinthetabot-0.9*\sintheta)}
+\pgfmathsetmacro\IL{sqrt(\ILsquared)}
+\pgfmathsetmacro\IM{sqrt(\IMsquared)}
+\pgfmathsetmacro\angleM{asin(0.5*\IL/\IM)}
+
+\def\crackstartangle{\thetavalue-\angleM}
+\def\crackstopangle{\thetavalue+\angleM}
+
+\pgfmathsetmacro\meshradiusone{\meshfactwo*\Rf}
+\pgfmathsetmacro\meshradiustwo{\Rf+\meshfacthree*(\l-\Rf)}
+
+\addbibresource{2015_11_8_DocMASE_references.bib}
+
+\addto\captionsenglish{\renewcommand{\listfigurename}{Figures}}
+ 
+\addto\captionsenglish{\renewcommand{\listtablename}{Tables}}
+
+\makeglossaries
+
+\newglossaryentry{abaqus}
+{
+    name=ABAQUS FEA,
+    description={(formerly ABAQUS) is a software suite for finite element analysis and computer-aided engineering, originally released in 1978.}
+}
+
+\newglossaryentry{abaqusstd}
+{
+    name=ABAQUS FEA/STANDARD,
+    description={is part of ABAQUS FEA suite and tailored for the static or quasi-static analysis of problems in solid and structural mechanics.}
+}
+
+\newglossaryentry{cpe4}
+{
+    name=CPEG4,
+    description={4-node bilinear plane strain iso-parametric element, from ABAQUS FEA two-dimensional solid elements library.}
+}
+
+\newglossaryentry{cpe8}
+{
+    name=CPEG8,
+    description={8-node biquadratic plane strain iso-parametric element, from ABAQUS FEA two-dimensional solid elements library.}
+}
+
+\newglossaryentry{coh2d4}
+{
+    name=COH2D4,
+    description={4-node two-dimensional cohesive element, from ABAQUS FEA special-purpose elements library.}
+}
+
+\newglossaryentry{cpp}
+{
+    name=C++,
+    description={is a general-purpose programming language. It has imperative, object-oriented and generic programming features, while also providing facilities for low-level memory manipulation.}
+}
+
+\newglossaryentry{python}
+{
+    name=Python,
+    description={is a widely used general-purpose, high-level programming language.}
+}
+
+\newacronym{cae}{CAE}{Computer Aided Engineering}
+\newacronym{cf}{CF}{Carbon Fiber}
+\newacronym{czm}{CZM}{Cohesive Zone Model}
+\newacronym{gf}{GF}{Glass Fiber}
+\newacronym{ep}{EP}{Glass Fiber}
+\newacronym{fem}{FEM}{Finite Element Method}
+\newacronym{lefm}{LEFM}{Linear Elastic Fracture Mechanics}
+\newacronym{rve}{RVE}{Reference Volume Element}
+\newacronym{ud}{UD}{Uni-Directional}
+\newacronym{vcct}{VCCT}{Virtual Crack Closure Technique}
+
+\makeindex
+%-----------------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------------%
+%                                    START OF THE DOCUMENT                                %
+%-----------------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------------%
+
+\begin{document}
+
+%------------------------------------------------%
+%------------------------------------------------%
+%                  Front Matter                         %
+%------------------------------------------------%
+%------------------------------------------------%
+
+%------------------------------------------------%
+%                 Title Page                               
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+%\ofoot{\pagemark} % ofoo
+%\ifoot{Research Plan} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ihead{\includegraphics[height=1.5cm]{lulea_logo1.jpg}\hspace{8cm}\includegraphics[height=1.5cm]{Universite-de-Lorraine_Logo2.png}}
+\ifoot{\noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}\\\includegraphics[height=1.75cm]{erasmusmundus_logo.jpg}\hspace{9.55cm}\includegraphics[height=1.75cm]{Docmase_logo.jpg}}
+
+%\ohead{Abstract}
+%\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+%\setfootsepline{0.5pt}
+
+\begin{center}
+
+\vspace*{0.1cm}
+
+\begin{Large}
+\textbf{\textsc{EUSMAT}}\\[0.75ex]
+\end{Large}
+
+\begin{large}
+\textbf{European School of Materials}\\[0.75ex]
+
+\vspace*{1cm}
+
+\textbf{DocMASE}\\[0.75ex]
+\textbf{\textsc{Doctorate in Materials Science and Engineering}}
+\end{large}
+
+\vspace{1cm}
+
+\begin{Large}
+\textbf{\textsc{Report}}\\[0.75ex]
+\end{Large}
+\vspace*{0.5cm}
+
+\begin{LARGE}
+\textbf{\textsc{Definition of a \acrfull{rve} model for the numerical analysis of thin ply mechanics}}\\[0.75ex]
+\end{LARGE}
+\vspace*{2.5cm}
+
+\begin{flushright}
+\begin{tabular}{l l }
+{\large \textbf{Doctoral Candidate:}} & {\large Luca DI STASIO}\\
+&\\
+&\\
+&\\
+{\large \textbf{Thesis Supervisors:}}& {\large Prof. Zoubir AYADI}\\
+&{\large Universit\'e de Lorraine}\\
+&{\large Nancy, France}\\
+&\\
+& {\large Prof. Janis VARNA}\\
+&{\large Lule\aa\ University of Technology}\\
+&{\large Lule\aa, Sweden}\\
+\end{tabular}
+\end{flushright}
+
+%\begin{flushright}
+%\begin{tabular}{l l }
+%{\large \textbf{Author(s):}} & {\large Luca DI STASIO}\\
+%\end{tabular}
+%\end{flushright}
+
+\vspace*{2.25cm}
+
+
+{\Large \textbf{\today}}\\
+%\textsc{DEFENSE LOCATION}\\
+
+%------------------------------------------------
+% Committee members:
+%\textbf{\textsc{Committee Members}}\\[0.75ex]
+%\textsc{NAME AND AFFILIATION}\\
+%\textsc{NAME AND AFFILIATION}\\
+%\textsc{NAME AND AFFILIATION}\\
+%\textsc{ }\\
+
+\end{center}
+
+\newpage
+
+%------------------------------------------------%
+%            Table of Contents
+%------------------------------------------------%
+
+\pagenumbering{roman}
+
+\setcounter{page}{1}
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\ \pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Contents}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+\tableofcontents 
+
+\cleardoublepage
+
+%------------------------------------------------%
+%            List of Figures
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\ \pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Figures}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+%\section*{List of Figures}
+\addcontentsline{toc}{section}{Figures}
+
+\listoffigures
+
+\cleardoublepageusingstyle{scrheadings}
+
+%------------------------------------------------%
+%            List of Tables
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\ \pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Tables}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+%\section*{List of Tables}
+\addcontentsline{toc}{section}{Tables}
+
+\listoftables
+
+\cleardoublepageusingstyle{scrheadings}
+
+%------------------------------------------------%
+%            List of Acronyms
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\ \pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Acronyms}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+%\addcontentsline{toc}{section}{Glossary \& Acronyms}
+
+\printglossary[type=\acronymtype]
+
+%\printglossary
+
+\cleardoublepageusingstyle{scrheadings}
+
+%------------------------------------------------%
+%            List of Symbols
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\ \pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Symbols}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+\section*{Symbols}
+\addcontentsline{toc}{section}{Symbols}
+
+\input{symbols}
+
+\cleardoublepageusingstyle{scrheadings}
+
+%------------------------------------------------%
+%                       Abstract
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\ \pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Abstract}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+In order to start probing the mechanics of thin ply composites from a numerical stand-point, a \acrfull{rve} model is developed for subsequent numerical simulations with the \acrfull{fem}.\\
+The \acrshort{rve} is 2-dimensional and it is supposed to be taken from a $\left[90^{\circ}\right]$ ply inside a cross-ply laminate. The element lies inside the $\left[90^{\circ}\right]$ ply on a plane parallel to the $\left[0^{\circ}\right]$ direction of the laminate (global x-direction) and to the across-the-thickness direction of the laminate itself (global z-direction). Three different specifications of the \acrshort{rve} are developed: a simple single element made up by a fiber inside a square matrix domain; the latter element bounded by $\left[0^{\circ}\right]$ plies on the upper and bottom side; a periodic pattern constituted by the single \acrshort{rve} tiled in a $3\times 3$ 2D array.\\
+The discretization of the geometry and the consequent mesh generation is performed by means of a custom-developed application written in \gls{cpp}. Such choice has been motivated by the need of generating a structured grid of quadrilateral elements capable of adapting to the curved geometry of the problem. Furthermore, as mesh geometry and size could affect significantly the final result of simulations, full control on the discretization process is fundamental for reliable numerical results. Hence the choice of developing a custom algorithm for the discretization step instead of using the \gls{abaqus} \acrshort{cae} interface. The main reason is the fact that numerical simulations of fracture mechanics are strongly dipendent on mesh size and characteristics; thus it is better to have direct knowledge and control of the mesh generation process instead of leaving it to ABAQUS algorithms, which are kind of "black boxes" and thus not so easily customizable. Furthermore, based on author's experience, building a custom parametric mesh using \gls{abaqus} input file syntax is certainly possible but quite cumbersome and rigid. Hence the choice of \gls{cpp}, as it allows for flexibility and, if needed, custom-made features.\\
+The main output of the \gls{cpp} code is an \gls{abaqus} input file; using a \gls{python} script, the all process can be streamlined and automatized allowing parametric studies to be performed. In order to accommodate a grid of quadrilateral elements in a curvilinear geometry, the \acrshort{rve} geometry is split into different regions and a few parameters are introduced in order to control the outcome of the discretization process. The creation of multiple regions is important to control the localization of irregularities and elements' deformation. These can be in fact greatly reduced and smoothed out but not completely removed. Thus, transition zones are created in order to prevent irregularities to appear close to the fiber/matrix interface, where the fracture process takes place. The geometry is topologically transformed and discretized using transfinite interpolation and elliptic smoothing.\\
+As the problem is 2-dimensional and in plane-strain, \gls{abaqus} elements \gls{cpe4} (2D bi-linear plane strain elements) and \gls{cpe8} (2D bi-quadratic plane strain elements) are chosen. \gls{cpe8} are considered in addition to  \gls{cpe4} because only quadratic elements can capture curvature effects, as they might be present at a circular interface. Comparison of results from the same set-up with the two different elements could show the presence (or absence) of curvature effects on the fracture process. Furthermore, the choice of \gls{cpe4} and \gls{cpe8} allows for a direct comparison with the work presented in~\cite{Herraez2015196}.\\
+Numerical simulations are then conducted with the \acrfull{fem} using the commercial \acrshort{cae} software \gls{abaqus}. Two different analyses are conducted: a \acrfull{lefm} study and \acrfull{czm} approach. The details of the solving procedure and the corresponding \gls{abaqus} commands are described.
+\cleardoublepageusingstyle{scrheadings}
+
+%------------------------------------------------%
+%------------------------------------------------%
+%                   Main Matter                          %
+%------------------------------------------------%
+%------------------------------------------------%
+
+\pagenumbering{arabic}
+
+\setcounter{page}{1}
+
+%------------------------------------------------%
+%                   Introduction
+%------------------------------------------------%
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\\pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Geometries, loads and boundary conditions}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+\section{Geometries, loads and boundary conditions}
+
+\input{tablegeometries}
+
+\begin{sidewaysfigure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+         \includestandalone[width=\textwidth]{singleRVE_cc}%     without .tex extension
+        \caption{Crack closed in the radial direction.}
+        \label{fig:singleRVE_cc}
+    \end{subfigure}
+\quad
+ \begin{subfigure}[b]{0.45\textwidth}
+        \includestandalone[width=\textwidth]{singleRVE_oc}
+        \caption{Crack open in the radial direction.}
+        \label{fig:singleRVE_oc}
+    \end{subfigure}
+  % or use \input{mytikz}
+  \caption{Single \acrshort{rve} model.}
+  \label{fig:singleRVE_ccoc}
+\end{sidewaysfigure}
+
+\begin{figure}[!h]
+\centering
+    \includestandalone[width=\textwidth]{singleRVE_cc}%     without .tex extension
+  % or use \input{mytikz}
+  \caption{Initial state of single \acrshort{rve} model: crack closed in the radial direction.}
+  \label{fig:singleRVE_onlycc}
+\end{figure}
+
+\begin{sidewaysfigure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+         \includestandalone[width=\textwidth]{boundedRVE_cc}%     without .tex extension
+        \caption{Crack closed in the radial direction.}
+        \label{fig:boundedRVE_cc}
+    \end{subfigure}
+\quad
+ \begin{subfigure}[b]{0.45\textwidth}
+        \includestandalone[width=\textwidth]{boundedRVE_oc}
+        \caption{Crack open in the radial direction.}
+        \label{fig:boundedRVE_oc}
+    \end{subfigure}
+  % or use \input{mytikz}
+  \caption{Bounded \acrshort{rve} model.}
+  \label{fig:boundedRVE_ccoc}
+\end{sidewaysfigure}
+
+\begin{figure}[!h]
+\centering
+    \includestandalone[width=\textwidth]{boundedRVE_cc}%     without .tex extension
+  % or use \input{mytikz}
+  \caption{Initial state of bounded \acrshort{rve} model: crack closed in the radial direction.}
+  \label{fig:boundedRVE_onlycc}
+\end{figure}
+
+\begin{sidewaysfigure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+         \includestandalone[width=\textwidth]{periodicRVE_cc}%     without .tex extension
+        \caption{Crack closed in the radial direction.}
+        \label{fig:periodicRVE_cc}
+    \end{subfigure}
+\quad
+ \begin{subfigure}[b]{0.45\textwidth}
+        \includestandalone[width=\textwidth]{periodicRVE_oc}
+        \caption{Crack open in the radial direction.}
+        \label{fig:periodicRVE_oc}
+    \end{subfigure}
+  % or use \input{mytikz}
+  \caption{Periodic \acrshort{rve} model.}
+  \label{fig:periodicRVE_ccoc}
+\end{sidewaysfigure}
+
+\begin{figure}[!h]
+\centering
+    \includestandalone[width=\textwidth]{periodicRVE_cc}%     without .tex extension
+  % or use \input{mytikz}
+  \caption{Initial state of periodic \acrshort{rve} model: crack closed in the radial direction.}
+  \label{fig:periodicRVE_onlycc}
+\end{figure}
+
+\cleardoublepageusingstyle{scrheadings}
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\\pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Material properties}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+\section{Material properties}
+
+\input{material_prop_tab1}
+
+\input{material_prop_tab2}
+
+\cleardoublepageusingstyle{scrheadings}
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\\pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Mesh characteristics}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+\section{Mesh characteristics}
+
+\begin{figure}[!h]
+\centering
+    \includestandalone[width=\textwidth]{mesh_regions}%     without .tex extension
+  % or use \input{mytikz}
+  \caption{Block regions of the \acrshort{rve} geometry.}
+  \label{fig:mesh_regions}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \includestandalone[width=\textwidth]{mesh_parameters_single}%     without .tex extension
+  % or use \input{mytikz}
+  \caption{Parameters for mesh generation for the single and periodic \acrshort{rve}.}
+  \label{fig:mesh_param_single}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \includestandalone[height=\textheight]{mesh_parameters_bounded}%     without .tex extension
+  % or use \input{mytikz}
+  \caption{Parameters for mesh generation for the bounded \acrshort{rve}.}
+  \label{fig:mesh_param_bounded}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \includestandalone[width=\textwidth]{helical_numbering}%     without .tex extension
+  % or use \input{mytikz}
+  \caption{Representation of the helical numbering method.}
+  \label{fig:helical_numbering}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.3\textheight}
+         \includestandalone[width=\textwidth]{opening1}%     without .tex extension
+        \caption{Initial state.}
+        \label{fig:init_state}
+    \end{subfigure}\\
+ \begin{subfigure}[b]{0.3\textheight}
+         \includestandalone[width=\textwidth]{opening2}%     without .tex extension
+        \caption{Intermediate step of the transformation.}
+        \label{fig:inter_state}
+    \end{subfigure}\\
+ \begin{subfigure}[b]{0.3\textheight}
+        \includestandalone[width=\textwidth]{opening3}
+        \caption{Final state.}
+        \label{fig:final_state}
+    \end{subfigure}
+  % or use \input{mytikz}
+  \caption{Main steps of the topological transformation for mesh generation.}
+  \label{fig:topo_transf_steps}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \includestandalone[width=\textwidth]{scheme_model2}%     without .tex extension
+  % or use \input{mytikz}
+  \caption{Topological transformation for mesh generation.}
+  \label{fig:topo_transf}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[!h]
+\centering
+    \includestandalone[width=\textwidth]{abaqus_cpe4}%     without .tex extension
+  % or use \input{mytikz}
+  \caption{\gls{abaqus} \gls{cpe4} first-order 4-node plane strain element (for details see~\cite{ABAQUS2013}).}
+  \label{fig:abaqus_cpe4}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \includestandalone[width=\textwidth]{abaqus_cpe8}%     without .tex extension
+  % or use \input{mytikz}
+  \caption{\gls{abaqus} \gls{cpe8} second-order 8-node plane strain element (for details see~\cite{ABAQUS2013}).}
+  \label{fig:abaqus_cpe8}
+\end{figure}
+
+\cleardoublepageusingstyle{scrheadings}
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\\pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Types of analysis}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+\section{Types of analysis}
+
+\input{tableanalysis}
+
+\input{tablecommands}
+
+\cleardoublepageusingstyle{scrheadings}
+
+%------------------------------------------------%
+%------------------------------------------------%
+%                   Back Matter                          %
+%------------------------------------------------%
+%------------------------------------------------%
+
+%\begin{appendix}
+%
+%\clearscrheadings
+%\pagestyle{scrheadings}
+%\manualmark
+%\ofoot{\\\pagemark} % ofoo
+%\ifoot{} % ofoo
+%%\cfoot[]{\pagemark}
+%%\ihead{}
+%%\ohead{}
+%\ohead{Appendix A}
+%\setheadtopline{2pt}
+%\setheadsepline{0.5pt}
+%\setfootsepline{0.5pt}
+%
+%\section{First appendix}
+%
+%\cleardoublepageusingstyle{scrheadings}
+%%\cleardoublepage
+%\end{appendix}
+
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\ \pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{Glossary}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+%\addcontentsline{toc}{section}{Glossary \& Acronyms}
+
+\printglossary
+
+%\printglossary
+
+\cleardoublepageusingstyle{scrheadings}
+
+% References
+\clearscrheadings
+\pagestyle{scrheadings}
+\manualmark
+\ofoot{\\\pagemark} % ofoo
+\ifoot{} % ofoo
+%\cfoot[]{\pagemark}
+%\ihead{}
+%\ohead{}
+\ohead{References}
+\setheadtopline{2pt}
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+\addcontentsline{toc}{section}{References}
+\printbibliography
+
+
+\end{document}

@@ -1,0 +1,462 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+\usepackage{etex}
+\usepackage{tikz}
+\usepackage{adjustbox}
+\usepackage{animate}
+\usepackage{ifthen}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{pgf}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{mathrsfs}
+\usepackage{multicol}
+\usepackage{longtable}
+\usepackage{rotating}
+
+\usetikzlibrary{arrows,decorations.pathreplacing,positioning,shapes,shadows,arrows}
+
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+\begin{document}
+
+% MODEL TOPOLOGY
+
+
+\begin{adjustbox}{max totalsize={\textwidth}{\textheight},center}
+\begin{animateinline}[poster=first,controls]{8}%
+   \multiframe{6}{icount=1+1}{
+\begin{turn}{270}
+\begin{tikzpicture}
+
+%----------------------------------------------------------------------------------------------%
+%                                          INPUT PARAMETERS
+%----------------------------------------------------------------------------------------------%
+
+\def\Rf{1}
+\def\Vff{0.5}
+\def\tratio{0.75}
+\def\meshfacone{0.2}
+\def\meshfactwo{0.75}
+\def\meshfacthree{0.5}
+\def\thetavalue{45}
+\def\deltatheta{15}
+
+%----------------------------------------------------------------------------------------------%
+%                               Definition of dependent parameters
+%----------------------------------------------------------------------------------------------%
+
+\def\pivalue{3.141592653589793238462643383279502884197169399375105820974944592307816406286}
+\pgfmathsetmacro\sqrttwo{sqrt(2)}
+
+\newcommand{\half}[1]{
+       0.5*#1
+       }
+
+\pgfmathsetmacro\l{0.5*\Rf*sqrt(\pivalue/\Vff)}
+
+\def\domlim{1.28*\l}
+\def\loadlim{1.197*\l}
+\def\loadlabel{0.2*\Rf}
+\def\cornerlabel{1.077*\l}
+
+\def\thetabot{\thetavalue-\deltatheta}
+\def\thetaup{\thetavalue+\deltatheta}
+
+\def\thetahalfbot{\thetavalue-0.5*\deltatheta}
+\def\thetahalfup{\thetavalue+0.5*\deltatheta}
+
+\def\thetaround{360+\thetavalue-\deltatheta}
+\def\thetadraw{0.25*\thetavalue}
+
+\def\xM{0.9*\costheta*\Rf}
+\def\yM{0.9*\sintheta*\Rf}
+
+\pgfmathsetmacro\cosfourtyfive{cos(45)}
+\pgfmathsetmacro\sinfourtyfive{sin(45)}
+
+\pgfmathsetmacro\costheta{cos(\thetavalue)}
+\pgfmathsetmacro\sintheta{sin(\thetavalue)}
+
+\pgfmathsetmacro\costhetabot{cos(\thetabot)}
+\pgfmathsetmacro\sinthetabot{sin(\thetabot)}
+
+\pgfmathsetmacro\costhetaup{cos(\thetaup)}
+\pgfmathsetmacro\sinthetaup{sin(\thetaup)}
+
+\pgfmathsetmacro\costhetahalfbot{cos(\thetahalfbot)}
+\pgfmathsetmacro\sinthetahalfbot{sin(\thetahalfbot)}
+
+\pgfmathsetmacro\costhetahalfup{cos(\thetahalfup)}
+\pgfmathsetmacro\sinthetahalfup{sin(\thetahalfup)}
+  
+\pgfmathsetmacro\yloadarrowone{\l+(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowtwo{\l+2*(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowthree{\l+3*(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowfour{\l+4*(\loadlim-\l)*0.2}
+
+\pgfmathsetmacro\ILsquared{(\costhetabot-\costhetaup)*(\costhetabot-\costhetaup)+(\sinthetabot-\sinthetaup)*(\sinthetabot-\sinthetaup))}
+\pgfmathsetmacro\IMsquared{(\costhetabot-0.9*\costheta)*(\costhetabot-0.9*\costheta)+(\sinthetabot-0.9*\sintheta)*(\sinthetabot-0.9*\sintheta)}
+\pgfmathsetmacro\IL{sqrt(\ILsquared)}
+\pgfmathsetmacro\IM{sqrt(\IMsquared)}
+\pgfmathsetmacro\angleM{asin(0.5*\IL/\IM)}
+
+\def\crackstartangle{\thetavalue-\angleM}
+\def\crackstopangle{\thetavalue+\angleM}
+
+\pgfmathsetmacro\meshradiusone{\meshfactwo*\Rf}
+\pgfmathsetmacro\meshradiustwo{\Rf+\meshfacthree*(\l-\Rf)}
+
+\def\psi{90}
+\def\translfac{6}
+
+\pgfmathsetmacro\cospsi{cos(\psi)}
+\pgfmathsetmacro\sinpsi{sin(\psi)}
+
+\pgfmathsetmacro\costwopsi{cos(2*\psi)}
+\pgfmathsetmacro\sintwopsi{sin(2*\psi)}
+
+\pgfmathsetmacro\costhreepsi{cos(3*\psi)}
+\pgfmathsetmacro\sinthreepsi{sin(3*\psi)}
+
+\pgfmathsetmacro\xC{\l+2*\l*sin(\psi)}
+\pgfmathsetmacro\yC{-\l+2*\l*cos(\psi)}
+
+\pgfmathsetmacro\xD{\l+2*\l*sin(\psi)-2*\l*cos(2*\psi)}
+\pgfmathsetmacro\yD{-\l+2*\l*cos(\psi)+2*\l*sin(2*\psi)}
+
+\ifthenelse{\icount>1 \AND \icount<3}{
+\draw (\xC,2.5*\yC) node[rectangle, draw=none, fill=none, text centered, text=black,anchor=east,rotate=90,text height = 5\l,text height = 6\l]{
+{\scriptsize
+\begin{tabular}{cccccc}
+\toprule
+\midrule
+Node&i&j&n&Current number of nodes&Current number of elements\\
+&&&$n\equiv i+j\cdot N_{x}$&&\\
+&&&$N_{x}=4N_{\alpha}$&&\\
+\midrule
+\midrule
+A&0&0&0&1&0\\
+B&$N_{\alpha}$&0&$N_{\alpha}$&$N_{\alpha}+1$&$N_{\alpha}$\\
+C&$2N_{\alpha}$&0&$2N_{\alpha}$&$2N_{\alpha}+1$&$2N_{\alpha}$\\
+D&$3N_{\alpha}$&0&$3N_{\alpha}$&$3N_{\alpha}+1$&$3N_{\alpha}$\\
+A'&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+\midrule
+&0&1&$4N_{\alpha}$&$4N_{\alpha}+1$&$4N_{\alpha}$\\
+&$N_{\alpha}$&1&$5*N_{\alpha}$&$5N_{\alpha}+1$&$5N_{\alpha}$\\
+&$2N_{\alpha}$&1&$6N_{\alpha}$&$6N_{\alpha}+1$&$6N_{\alpha}$\\
+&$3N_{\alpha}$&1&$7N_{\alpha}$&$7N_{\alpha}+1$&$7N_{\alpha}$\\
+&$4N_{\alpha}-1$&1&$8N_{\alpha}-1$&$8N_{\alpha}$&$8N_{\alpha}$\\
+\midrule
+E&0&0&0&1&0\\
+J&$N_{\alpha}$&0&$N_{\alpha}$&$N_{\alpha}+1$&$N_{\alpha}$\\
+J'&$2N_{\alpha}$&0&$2N_{\alpha}$&$2N_{\alpha}+1$&$2N_{\alpha}$\\
+O&$3N_{\alpha}$&0&$3N_{\alpha}$&$3N_{\alpha}+1$&$3N_{\alpha}$\\
+O'&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+T&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+T'&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+E'&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+\bottomrule
+\end{tabular}
+}
+};
+}
+
+\ifthenelse{\icount>2 \AND \icount<4}{
+\draw (\xC,2.5*\yC) node[rectangle, draw=none, fill=none, text centered, text=black,anchor=east,rotate=90,text height = 5\l,text height = 6\l]{
+{\scriptsize
+\begin{tabular}{cccccc}
+\toprule
+\midrule
+Node&i&j&n&Current number of nodes&Current number of elements\\
+&&&$n\equiv i+j\cdot N_{x}$&&\\
+&&&$N_{x}=4N_{\alpha}$&&\\
+\midrule
+\midrule
+&0&0&0&1&0\\
+&$N_{\alpha}$&0&$N_{\alpha}$&$N_{\alpha}+1$&$N_{\alpha}$\\
+&$2N_{\alpha}$&0&$2N_{\alpha}$&$2N_{\alpha}+1$&$2N_{\alpha}$\\
+&$3N_{\alpha}$&0&$3N_{\alpha}$&$3N_{\alpha}+1$&$3N_{\alpha}$\\
+&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+\midrule
+F&0&0&0&1&0\\
+K&$N_{\alpha}$&0&$N_{\alpha}$&$N_{\alpha}+1$&$N_{\alpha}$\\
+K'&$2N_{\alpha}$&0&$2N_{\alpha}$&$2N_{\alpha}+1$&$2N_{\alpha}$\\
+P&$3N_{\alpha}$&0&$3N_{\alpha}$&$3N_{\alpha}+1$&$3N_{\alpha}$\\
+P'&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+U&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+U'&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+F'&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+\midrule
+G&0&0&0&1&0\\
+L&$N_{\alpha}$&0&$N_{\alpha}$&$N_{\alpha}+1$&$N_{\alpha}$\\
+L'&$2N_{\alpha}$&0&$2N_{\alpha}$&$2N_{\alpha}+1$&$2N_{\alpha}$\\
+Q&$3N_{\alpha}$&0&$3N_{\alpha}$&$3N_{\alpha}+1$&$3N_{\alpha}$\\
+Q'&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+W&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+W'&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+G'&$4N_{\alpha}-1$&0&$4N_{\alpha}-1$&$4N_{\alpha}$&$4N_{\alpha}$\\
+\bottomrule
+\end{tabular}
+}
+};
+}
+\tikzstyle{axes}=[]
+
+\draw[white,dashed] (\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf) -- (\meshfacone*\Rf,\meshfacone*\Rf+\translfac*\meshfacone*\Rf);
+\draw[white,dashed] (\meshfacone*\Rf,\meshfacone*\Rf+\translfac*\meshfacone*\Rf) -- (-\meshfacone*\Rf,\meshfacone*\Rf+\translfac*\meshfacone*\Rf);
+\draw[white,dashed] (-\meshfacone*\Rf,\meshfacone*\Rf+\translfac*\meshfacone*\Rf) -- (-\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf);
+\draw[white,dashed] (-\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf) -- (\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf);
+\fill[fill=white] (-\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf) -- (-\meshfacone*\Rf,\meshfacone*\Rf+\translfac*\meshfacone*\Rf) -- (\meshfacone*\Rf,\meshfacone*\Rf+\translfac*\meshfacone*\Rf) -- (\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf) -- (-\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf);
+
+\draw[white,thick] (-\l,-\l) -- (\l,-\l);
+\draw[white,dashed] (-\meshfacone*\Rf,-\meshfacone*\Rf) -- (\meshfacone*\Rf,-\meshfacone*\Rf);
+\draw[white,thick] (-\cosfourtyfive*\Rf,-\sinfourtyfive*\Rf)arc (225:315:\Rf);
+\draw[white,dashed] (-\cosfourtyfive*\meshradiusone,-\sinfourtyfive*\meshradiusone)arc (225:315:\meshradiusone);
+\draw[white,dashed] (-\cosfourtyfive*\meshradiustwo,-\sinfourtyfive*\meshradiustwo)arc (225:315:\meshradiustwo);
+\fill[white] (-\meshfacone*\Rf,-\meshfacone*\Rf) -- (\meshfacone*\Rf,-\meshfacone*\Rf) -- (\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) -- (\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) arc(315:225:\meshradiusone);
+\fill[white,] (\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) arc(315:225:\meshradiusone) -- (-\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) -- (-\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) arc(225:315:\Rf) --  (\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive);
+\fill[white,] (\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) arc(315:225:\Rf) -- (-\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) -- (-\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) arc(225:315:\meshradiustwo) --  (\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive);
+\fill[white,] (\l,-\l) -- (-\l,-\l) -- (-\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) -- (-\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) arc(225:315:\meshradiustwo) --  (\l,-\l);
+\draw[white,dashed] (\meshfacone*\Rf,-\meshfacone*\Rf) -- (\l,-\l);
+\draw[white,dashed] (-\meshfacone*\Rf,-\meshfacone*\Rf) -- (-\l,-\l);
+
+
+\draw[thick,white,rotate around={-\psi:(\l,-\l)}] (\l,-\l) -- (\l,\l);
+\draw[white,rotate around={-\psi:(\l,-\l)},dashed] (\meshfacone*\Rf,-\meshfacone*\Rf) -- (\meshfacone*\Rf,\meshfacone*\Rf);
+\draw[white,thick,rotate around={-\psi:(\l,-\l)}] (\cosfourtyfive*\Rf,-\sinfourtyfive*\Rf)arc (-45:45:\Rf);
+\draw[white,rotate around={-\psi:(\l,-\l)},dashed] (\cosfourtyfive*\meshradiusone,-\sinfourtyfive*\meshradiusone)arc (-45:45:\meshradiusone);
+\draw[white,rotate around={-\psi:(\l,-\l)},dashed] (\cosfourtyfive*\meshradiustwo,-\sinfourtyfive*\meshradiustwo)arc (-45:45:\meshradiustwo);
+\fill[rotate around={-\psi:(\l,-\l)},fill=white,] (\meshfacone*\Rf,-\meshfacone*\Rf) -- (\meshfacone*\Rf,\meshfacone*\Rf) -- (\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive) -- (\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive) arc(45:-45:\meshradiusone);
+\fill[rotate around={-\psi:(\l,-\l)},fill=white,] (\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive) arc(45:-45:\meshradiusone) -- (\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) -- (\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) arc(-45:45:\Rf) --  (\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive);
+\fill[rotate around={-\psi:(\l,-\l)},fill=white,] (\Rf*\cosfourtyfive,\Rf*\cosfourtyfive) arc(45:-45:\Rf) -- (\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) -- (\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) arc(-45:45:\meshradiustwo) --  (\Rf*\cosfourtyfive,\Rf*\cosfourtyfive);
+\fill[rotate around={-\psi:(\l,-\l)},fill=white,] (\l,\l) -- (\l,-\l) -- (\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) -- (\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) arc(-45:45:\meshradiustwo) --  (\l,\l);
+\draw[white,rotate around={-\psi:(\l,-\l)},dashed] (\meshfacone*\Rf,-\meshfacone*\Rf) -- (\l,-\l);
+\draw[white,rotate around={-\psi:(\l,-\l)},dashed] (\meshfacone*\Rf,\meshfacone*\Rf) -- (\l,\l);
+
+
+\draw[white,thick,rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)}] (\l,\l) -- (-\l,\l);
+\draw[white,rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},dashed] (\meshfacone*\Rf,\meshfacone*\Rf) -- (-\meshfacone*\Rf,\meshfacone*\Rf);
+\draw[white,thick,rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)}] (\cosfourtyfive*\Rf,\sinfourtyfive*\Rf)arc (45:135:\Rf);
+\draw[white,rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},dashed] (\cosfourtyfive*\meshradiusone,\sinfourtyfive*\meshradiusone)arc (45:135:\meshradiusone);
+\draw[white,rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},dashed] (\cosfourtyfive*\meshradiustwo,\sinfourtyfive*\meshradiustwo)arc (45:135:\meshradiustwo);
+\fill[rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},fill=white,] (-\meshfacone*\Rf,\meshfacone*\Rf) -- (\meshfacone*\Rf,\meshfacone*\Rf) -- (\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive) -- (\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive) arc(45:135:\meshradiusone) --  (-\meshfacone*\Rf,\meshfacone*\Rf);
+\fill[rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},fill=white,] (-\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive) arc(135:45:\meshradiusone) -- (\Rf*\cosfourtyfive,\Rf*\cosfourtyfive) -- (\Rf*\cosfourtyfive,\Rf*\cosfourtyfive) arc(45:135:\Rf) --  (-\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive);
+\fill[rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},fill=white,] (-\Rf*\cosfourtyfive,\Rf*\cosfourtyfive) arc(135:45:\Rf) -- (\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) -- (\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) arc(45:135:\meshradiustwo) --  (-\Rf*\cosfourtyfive,\Rf*\cosfourtyfive);
+\fill[rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},fill=white,] (-\l,\l) -- (\l,\l) -- (\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) -- (\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) arc(45:135:\meshradiustwo) --  (-\l,\l);
+\draw[white,rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},dashed] (-\meshfacone*\Rf,\meshfacone*\Rf) -- (-\l,\l);
+\draw[white,rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},dashed] (\meshfacone*\Rf,\meshfacone*\Rf) -- (\l,\l);
+
+
+\draw[white,thick,rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)}] (-\l,\l) -- (-\l,-\l);
+\draw[white,rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},dashed] (-\meshfacone*\Rf,\meshfacone*\Rf) -- (-\meshfacone*\Rf,-\meshfacone*\Rf);
+\draw[white,thick,rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)}] (-\cosfourtyfive*\Rf,\sinfourtyfive*\Rf)arc (135:225:\Rf);
+\draw[white,rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},dashed] (-\cosfourtyfive*\meshradiusone,\sinfourtyfive*\meshradiusone)arc (135:225:\meshradiusone);
+\draw[white,rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},dashed] (-\cosfourtyfive*\meshradiustwo,\sinfourtyfive*\meshradiustwo)arc (135:225:\meshradiustwo);
+\fill[rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},fill=white,] (-\meshfacone*\Rf,\meshfacone*\Rf) -- (-\meshfacone*\Rf,-\meshfacone*\Rf) -- (-\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) -- (-\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) arc(225:135:\meshradiusone);
+\fill[rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},fill=white,] (-\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) arc(225:135:\meshradiusone) -- (-\Rf*\cosfourtyfive,\Rf*\cosfourtyfive) -- (-\Rf*\cosfourtyfive,\Rf*\cosfourtyfive) arc(135:225:\Rf) --  (-\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive);
+\fill[rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},fill=white,] (-\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) arc(225:135:\Rf) -- (-\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) -- (-\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) arc(135:225:\meshradiustwo) --  (-\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive);
+\fill[rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},fill=white,](-\l,-\l) -- (-\l,\l) -- (-\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) -- (-\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) arc(135:225:\meshradiustwo) --  (-\l,-\l);
+\draw[white,rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},dashed] (-\meshfacone*\Rf,\meshfacone*\Rf) -- (-\l,\l);
+\draw[white,rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},dashed] (-\meshfacone*\Rf,-\meshfacone*\Rf) -- (-\l,-\l);
+
+\draw (-\l,-\cornerlabel) node[white,left,rotate=90] {\scriptsize $A$};
+\draw (\l,-\cornerlabel) node[white,left,rotate=90] {\scriptsize $B$};
+\draw (\xC,\yC) node[white,left,rotate=90] {\scriptsize $C$};
+\draw (\xD,\yD) node[white,left,rotate=90] {\scriptsize $D$};
+\draw (\xD-2*\l*\sinthreepsi,\yD-2*\l*\costhreepsi) node[white,left,rotate=90] {\scriptsize $A'$};
+
+\draw (-\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) node[white,above,rotate=90] {\scriptsize $E$};
+\draw (-\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) node[white,right,rotate=90] {\scriptsize $F,G$};
+\draw (-\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) node[white,below,rotate=90] {\scriptsize $H$};
+\draw (-\meshfacone*\Rf,-\meshfacone*\Rf) node[white,right,rotate=90] {\scriptsize $I$};
+
+\draw (\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) node[white,below,rotate=90] {\scriptsize $J$};
+\draw (\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) node[white,right,rotate=90] {\scriptsize $K,L$};
+\draw (\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) node[white,above,rotate=90] {\scriptsize $M$};
+\draw (\meshfacone*\Rf,-\meshfacone*\Rf) node[white,right,rotate=90] {\scriptsize $N$};
+
+\draw (-\meshradiustwo*\cosfourtyfive+2*\l,-\meshradiustwo*\cosfourtyfive) node[white,above,rotate=90] {\scriptsize $J'$};
+\draw (-\Rf*\cosfourtyfive+2*\l,-\Rf*\cosfourtyfive) node[white,right,rotate=90] {\scriptsize $K',L'$};
+\draw (-\meshradiusone*\cosfourtyfive+2*\l,-\meshradiusone*\cosfourtyfive) node[white,below,rotate=90] {\scriptsize $M'$};
+\draw (-\meshfacone*\Rf+2*\l,-\meshfacone*\Rf) node[white,right,rotate=90] {\scriptsize $N'$};
+
+\draw (\meshradiustwo*\cosfourtyfive+2*\l,-\meshradiustwo*\cosfourtyfive) node[white,below,rotate=90] {\scriptsize $O$};
+\draw (\Rf*\cosfourtyfive+2*\l,-\Rf*\cosfourtyfive) node[white,right,rotate=90] {\scriptsize $P,Q$};
+\draw (\meshradiusone*\cosfourtyfive+2*\l,-\meshradiusone*\cosfourtyfive) node[white,above,rotate=90] {\scriptsize $R$};
+\draw (\meshfacone*\Rf+2*\l,-\meshfacone*\Rf) node[white,right,rotate=90] {\scriptsize $S$};
+
+\draw (-\meshradiustwo*\cosfourtyfive+4*\l,-\meshradiustwo*\cosfourtyfive) node[white,above,rotate=90] {\scriptsize $O'$};
+\draw (-\Rf*\cosfourtyfive+4*\l,-\Rf*\cosfourtyfive) node[white,right,rotate=90] {\scriptsize $P',Q'$};
+\draw (-\meshradiusone*\cosfourtyfive+4*\l,-\meshradiusone*\cosfourtyfive) node[white,below,rotate=90] {\scriptsize $R'$};
+\draw (-\meshfacone*\Rf+4*\l,-\meshfacone*\Rf) node[white,right,rotate=90] {\scriptsize $S'$};
+
+\draw (\meshradiustwo*\cosfourtyfive+4*\l,-\meshradiustwo*\cosfourtyfive) node[white,below,rotate=90] {\scriptsize $T$};
+\draw (\Rf*\cosfourtyfive+4*\l,-\Rf*\cosfourtyfive) node[white,right,rotate=90] {\scriptsize $U,W$};
+\draw (\meshradiusone*\cosfourtyfive+4*\l,-\meshradiusone*\cosfourtyfive) node[white,above,rotate=90] {\scriptsize $X$};
+\draw (\meshfacone*\Rf+4*\l,-\meshfacone*\Rf) node[white,right,rotate=90] {\scriptsize $Y$};
+
+\draw (-\meshradiustwo*\cosfourtyfive+6*\l,-\meshradiustwo*\cosfourtyfive) node[white,above,rotate=90] {\scriptsize $T'$};
+\draw (-\Rf*\cosfourtyfive+6*\l,-\Rf*\cosfourtyfive) node[white,right,rotate=90] {\scriptsize $U',W'$};
+\draw (-\meshradiusone*\cosfourtyfive+6*\l,-\meshradiusone*\cosfourtyfive) node[white,below,rotate=90] {\scriptsize $X'$};
+\draw (-\meshfacone*\Rf+6*\l,-\meshfacone*\Rf) node[white,right,rotate=90] {\scriptsize $Y'$};
+
+\draw (\meshradiustwo*\cosfourtyfive+6*\l,-\meshradiustwo*\cosfourtyfive) node[white,below,rotate=90] {\scriptsize $E'$};
+\draw (\Rf*\cosfourtyfive+6*\l,-\Rf*\cosfourtyfive) node[white,right,rotate=90] {\scriptsize $F',G'$};
+\draw (\meshradiusone*\cosfourtyfive+6*\l,-\meshradiusone*\cosfourtyfive) node[white,above,rotate=90] {\scriptsize $H'$};
+\draw (\meshfacone*\Rf+6*\l,-\meshfacone*\Rf) node[white,right,rotate=90] {\scriptsize $I'$};
+
+\draw (-\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf) node[white,left,rotate=90] {\scriptsize $I''$};
+\draw (\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf) node[white,left,rotate=90] {\scriptsize $N''$};
+\draw (\meshfacone*\Rf,\meshfacone*\Rf+\translfac*\meshfacone*\Rf) node[white,right,rotate=90] {\scriptsize $S''$};
+\draw (-\meshfacone*\Rf,\meshfacone*\Rf+\translfac*\meshfacone*\Rf) node[white,right,rotate=90] {\scriptsize $Y''$};
+
+
+\ifthenelse{\icount>1}{
+
+\fill[fill=green!50!black, fill opacity = 0.25] (\l,-\l) -- (-\l,-\l) -- (-\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) -- (-\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) arc(225:315:\meshradiustwo) --  (\l,-\l);
+
+\fill[rotate around={-\psi:(\l,-\l)},fill=green!50!black, fill opacity = 0.25] (\l,\l) -- (\l,-\l) -- (\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) -- (\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) arc(-45:45:\meshradiustwo) --  (\l,\l);
+
+\fill[rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},fill=green!50!black, fill opacity = 0.25] (-\l,\l) -- (\l,\l) -- (\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) -- (\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) arc(45:135:\meshradiustwo) --  (-\l,\l);
+
+\fill[rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},fill=green!50!black, fill opacity = 0.25](-\l,-\l) -- (-\l,\l) -- (-\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) -- (-\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) arc(135:225:\meshradiustwo) --  (-\l,-\l);
+
+\draw (-\l,-\cornerlabel) node[black,left,rotate=90] {\scriptsize $A$};
+\draw (\l,-\cornerlabel) node[black,left,rotate=90] {\scriptsize $B$};
+\draw (\xC,\yC) node[black,left,rotate=90] {\scriptsize $C$};
+\draw (\xD,\yD) node[black,left,rotate=90] {\scriptsize $D$};
+\draw (\xD-2*\l*\sinthreepsi,\yD-2*\l*\costhreepsi) node[black,left,rotate=90] {\scriptsize $A'$};
+
+\draw (-\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) node[black,above,rotate=90] {\scriptsize $E$};
+
+\draw (\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) node[black,below,rotate=90] {\scriptsize $J$};
+
+\draw (-\meshradiustwo*\cosfourtyfive+2*\l,-\meshradiustwo*\cosfourtyfive) node[black,above,rotate=90] {\scriptsize $J'$};
+
+\draw (\meshradiustwo*\cosfourtyfive+2*\l,-\meshradiustwo*\cosfourtyfive) node[black,below,rotate=90] {\scriptsize $O$};
+
+\draw (-\meshradiustwo*\cosfourtyfive+4*\l,-\meshradiustwo*\cosfourtyfive) node[black,above,rotate=90] {\scriptsize $O'$};
+
+\draw (\meshradiustwo*\cosfourtyfive+4*\l,-\meshradiustwo*\cosfourtyfive) node[black,below,rotate=90] {\scriptsize $T$};
+
+\draw (-\meshradiustwo*\cosfourtyfive+6*\l,-\meshradiustwo*\cosfourtyfive) node[black,above,rotate=90] {\scriptsize $T'$};
+
+\draw (\meshradiustwo*\cosfourtyfive+6*\l,-\meshradiustwo*\cosfourtyfive) node[black,below,rotate=90] {\scriptsize $E'$};
+
+}{}
+
+\ifthenelse{\icount>2}{
+
+\fill[,fill=blue!25!black, fill opacity = 0.25] (\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) arc(315:225:\Rf) -- (-\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) -- (-\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) arc(225:315:\meshradiustwo) --  (\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive);
+
+\fill[rotate around={-\psi:(\l,-\l)},fill=blue!25!black, fill opacity = 0.25] (\Rf*\cosfourtyfive,\Rf*\cosfourtyfive) arc(45:-45:\Rf) -- (\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) -- (\meshradiustwo*\cosfourtyfive,-\meshradiustwo*\cosfourtyfive) arc(-45:45:\meshradiustwo) --  (\Rf*\cosfourtyfive,\Rf*\cosfourtyfive);
+
+\fill[rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},fill=blue!25!black, fill opacity = 0.25] (-\Rf*\cosfourtyfive,\Rf*\cosfourtyfive) arc(135:45:\Rf) -- (\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) -- (\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) arc(45:135:\meshradiustwo) --  (-\Rf*\cosfourtyfive,\Rf*\cosfourtyfive);
+
+\fill[rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},fill=blue!25!black, fill opacity = 0.25] (-\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) arc(225:135:\Rf) -- (-\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) -- (-\meshradiustwo*\cosfourtyfive,\meshradiustwo*\cosfourtyfive) arc(135:225:\meshradiustwo) --  (-\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive);
+
+\draw (-\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) node[black,right,rotate=90] {\scriptsize $F,G$};
+
+\draw (\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) node[black,right,rotate=90] {\scriptsize $K,L$};
+
+\draw (-\Rf*\cosfourtyfive+2*\l,-\Rf*\cosfourtyfive) node[black,right,rotate=90] {\scriptsize $K',L'$};
+
+\draw (\Rf*\cosfourtyfive+2*\l,-\Rf*\cosfourtyfive) node[black,right,rotate=90] {\scriptsize $P,Q$};
+
+\draw (-\Rf*\cosfourtyfive+4*\l,-\Rf*\cosfourtyfive) node[black,right,rotate=90] {\scriptsize $P',Q'$};
+
+\draw (\Rf*\cosfourtyfive+4*\l,-\Rf*\cosfourtyfive) node[black,right,rotate=90] {\scriptsize $U,W$};
+
+\draw (-\Rf*\cosfourtyfive+6*\l,-\Rf*\cosfourtyfive) node[black,right,rotate=90] {\scriptsize $U',W'$};
+
+\draw (\Rf*\cosfourtyfive+6*\l,-\Rf*\cosfourtyfive) node[black,right,rotate=90] {\scriptsize $F',G'$};
+
+}{}
+
+\ifthenelse{\icount>3}{
+
+\fill[,fill=blue!50!black, fill opacity = 0.25] (\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) arc(315:225:\meshradiusone) -- (-\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) -- (-\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) arc(225:315:\Rf) --  (\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive);
+
+\fill[rotate around={-\psi:(\l,-\l)},fill=blue!50!black, fill opacity = 0.25] (\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive) arc(45:-45:\meshradiusone) -- (\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) -- (\Rf*\cosfourtyfive,-\Rf*\cosfourtyfive) arc(-45:45:\Rf) --  (\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive);
+
+\fill[rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},fill=blue!50!black, fill opacity = 0.25] (-\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive) arc(135:45:\meshradiusone) -- (\Rf*\cosfourtyfive,\Rf*\cosfourtyfive) -- (\Rf*\cosfourtyfive,\Rf*\cosfourtyfive) arc(45:135:\Rf) --  (-\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive);
+
+\fill[rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},fill=blue!50!black, fill opacity = 0.25] (-\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) arc(225:135:\meshradiusone) -- (-\Rf*\cosfourtyfive,\Rf*\cosfourtyfive) -- (-\Rf*\cosfourtyfive,\Rf*\cosfourtyfive) arc(135:225:\Rf) --  (-\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive);
+
+\draw (-\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) node[black,below,rotate=90] {\scriptsize $H$};
+
+\draw (\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) node[black,above,rotate=90] {\scriptsize $M$};
+
+\draw (-\meshradiusone*\cosfourtyfive+2*\l,-\meshradiusone*\cosfourtyfive) node[black,below,rotate=90] {\scriptsize $M'$};
+
+\draw (\meshradiusone*\cosfourtyfive+2*\l,-\meshradiusone*\cosfourtyfive) node[black,above,rotate=90] {\scriptsize $R$};
+
+\draw (-\meshradiusone*\cosfourtyfive+4*\l,-\meshradiusone*\cosfourtyfive) node[black,below,rotate=90] {\scriptsize $R'$};
+
+\draw (\meshradiusone*\cosfourtyfive+4*\l,-\meshradiusone*\cosfourtyfive) node[black,above,rotate=90] {\scriptsize $X$};
+
+\draw (-\meshradiusone*\cosfourtyfive+6*\l,-\meshradiusone*\cosfourtyfive) node[black,below,rotate=90] {\scriptsize $X'$};
+
+\draw (\meshradiusone*\cosfourtyfive+6*\l,-\meshradiusone*\cosfourtyfive) node[black,above,rotate=90] {\scriptsize $H'$};
+
+}{}
+
+\ifthenelse{\icount>4}{
+
+\fill[fill=green!75!black, fill opacity = 0.25] (-\meshfacone*\Rf,-\meshfacone*\Rf) -- (\meshfacone*\Rf,-\meshfacone*\Rf) -- (\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) -- (\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) arc(315:225:\meshradiusone);
+
+\fill[rotate around={-\psi:(\l,-\l)},fill=green!75!black, fill opacity = 0.25] (\meshfacone*\Rf,-\meshfacone*\Rf) -- (\meshfacone*\Rf,\meshfacone*\Rf) -- (\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive) -- (\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive) arc(45:-45:\meshradiusone);
+
+\fill[rotate around={-2*\psi:(\xC,\yC)},shift={(2*\l*\sinpsi,-2*\l+2*\l*\cospsi)},fill=green!75!black, fill opacity=0.25] (-\meshfacone*\Rf,\meshfacone*\Rf) -- (\meshfacone*\Rf,\meshfacone*\Rf) -- (\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive) -- (\meshradiusone*\cosfourtyfive,\meshradiusone*\cosfourtyfive) arc(45:135:\meshradiusone) --  (-\meshfacone*\Rf,\meshfacone*\Rf);
+
+\fill[rotate around={-3*\psi:(\xD,\yD)},shift={(2*\l+2*\l*\sinpsi-2*\l*\costwopsi,-2*\l+2*\l*\cospsi+2*\l*\sintwopsi)},fill=green!75!black, fill opacity = 0.25] (-\meshfacone*\Rf,\meshfacone*\Rf) -- (-\meshfacone*\Rf,-\meshfacone*\Rf) -- (-\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) -- (-\meshradiusone*\cosfourtyfive,-\meshradiusone*\cosfourtyfive) arc(225:135:\meshradiusone);
+
+\draw (-\meshfacone*\Rf,-\meshfacone*\Rf) node[black,right,rotate=90] {\scriptsize $I$};
+
+\draw (\meshfacone*\Rf,-\meshfacone*\Rf) node[black,right,rotate=90] {\scriptsize $N$};
+
+\draw (-\meshfacone*\Rf+2*\l,-\meshfacone*\Rf) node[black,right,rotate=90] {\scriptsize $N'$};
+
+\draw (\meshfacone*\Rf+2*\l,-\meshfacone*\Rf) node[black,right,rotate=90] {\scriptsize $S$};
+
+\draw (-\meshfacone*\Rf+4*\l,-\meshfacone*\Rf) node[black,right,rotate=90] {\scriptsize $S'$};
+
+\draw (\meshfacone*\Rf+4*\l,-\meshfacone*\Rf) node[black,right,rotate=90] {\scriptsize $Y$};
+
+\draw (-\meshfacone*\Rf+6*\l,-\meshfacone*\Rf) node[black,right,rotate=90] {\scriptsize $Y'$};
+
+\draw (\meshfacone*\Rf+6*\l,-\meshfacone*\Rf) node[black,right,rotate=90] {\scriptsize $I'$};
+
+}{}
+
+\ifthenelse{\icount>5}{
+
+\fill[fill=blue!85!black, fill opacity = 0.25] (-\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf) -- (-\meshfacone*\Rf,\meshfacone*\Rf+\translfac*\meshfacone*\Rf) -- (\meshfacone*\Rf,\meshfacone*\Rf+\translfac*\meshfacone*\Rf) -- (\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf) -- (-\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf);
+
+\draw (-\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf) node[black,left,rotate=90] {\scriptsize $I''$};
+\draw (\meshfacone*\Rf,-\meshfacone*\Rf+\translfac*\meshfacone*\Rf) node[black,left,rotate=90] {\scriptsize $N''$};
+\draw (\meshfacone*\Rf,\meshfacone*\Rf+\translfac*\meshfacone*\Rf) node[black,right,rotate=90] {\scriptsize $S''$};
+\draw (-\meshfacone*\Rf,\meshfacone*\Rf+\translfac*\meshfacone*\Rf) node[black,right,rotate=90] {\scriptsize $Y''$};
+}{}
+
+\end{tikzpicture}
+\end{turn}
+}
+\end{animateinline}
+\end{adjustbox}
+
+\end{document}

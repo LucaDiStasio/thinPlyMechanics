@@ -1,0 +1,15 @@
+\begin{sidewaystable}[htbp]
+\footnotesize
+  \centering
+  \caption{Analysis methods summary.}
+    \begin{tabularx}{\textwidth}{XXXXXXX}
+    \toprule
+  \textbf{Method}&  \textbf{Type}&\textbf{Elements}&\textbf{Interface}&\textbf{Input variables}&\textbf{Control variables}&\textbf{Output variables} \\
+    \midrule
+    \gls{abaqusstd} static analysis with the use of the \acrshort{vcct} and the J-integral method.&The analysis is static, i.e. inertial effects are neglected. The numerical solver relaxes the system until the equilibrium state is found.&\gls{cpe4}/\gls{cpe8}&Tied surface constraint on the fiber/matrix interface except inside the crack. In the crack region, the two surfaces are disjoint; contact mechanics is applied to avoid inter-penetration and resolve eventual friction between sliding crack surfaces.&Fiber radius, fiber volume fraction, material properties, interface properties.&Crack angular position, crack angular semi-aperture, applied strain.&Stress field, crack tip stress, stress intensity factors, energy release rates, mean radial crack aperture.\\
+\midrule
+\gls{abaqusstd} static analysis with the use of the cohesive element method.&The analysis is static, i.e. inertial effects are neglected. The numerical solver relaxes the system until the equilibrium state is found.&\gls{cpe4}/\gls{cpe8} and \gls{coh2d4}&The whole interface is discretized with cohesive elements.&Fiber radius, fiber volume fraction, material properties.&Interface properties, maximum stresses for crack onset, energy release rates, applied strain.&Crack angular position, crack angular semi-aperture, mean radial crack aperture, stress field, peak crack boundary stresses.\\
+    \bottomrule
+    \end{tabularx}%
+  \label{tab:analysis_tab}%
+\end{sidewaystable}%

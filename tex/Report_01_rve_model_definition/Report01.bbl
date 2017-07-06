@@ -1,0 +1,124 @@
+% $ biblatex auxiliary file $
+% $ biblatex version 2.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\entry{Herraez2015196}{article}{}
+  \name{author}{6}{}{%
+    {{}%
+     {Herr\'{a}ez}{H.}%
+     {Miguel}{M.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Mora}{M.}%
+     {Diego}{D.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Naya}{N.}%
+     {Fernando}{F.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Lopes}{L.}%
+     {Claudio~S.}{C.~S.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Gonz\'{a}lez}{G.}%
+     {Carlos}{C.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {LLorca}{L.}%
+     {Javier}{J.}%
+     {}{}%
+     {}{}}%
+  }
+  \keyw{A. polymer-matrix composites (PMC{\rq}s); C. Finite element analysis;
+  C. Transverse cracking; C. Computational mechanics}
+  \strng{namehash}{HM+1}
+  \strng{fullhash}{HMMDNFLCSGCLJ1}
+  \field{abstract}{%
+  Abstract Transverse cracking in cross-ply carbon/epoxy and glass/epoxy
+  laminates in tension is analyzed by means of computational micromechanics.
+  Longitudinal plies were modeled as homogenized, anisotropic elastic solids
+  while the actual fiber distribution was included in the transverse plies. The
+  mechanical response was obtained by the finite element analysis of a long
+  representative volume element of the laminate. Damage in the transverse plies
+  was triggered by interface decohesion and matrix cracking. The simulation
+  strategy was applied to study the influence of ply thickness on the critical
+  stress for the cracking of the transverse plies and on the evolution of crack
+  density in 0 2 / 90 n / 2 s laminates, with n = 1, 2, 4 and 8. It was found
+  that the transverse ply strength corresponding to the initiation and
+  propagation of a through-thickness crack was independent of the ply thickness
+  and that the transverse strength of carbon/epoxy laminates was 35\% higher
+  than that of the glass fiber counterparts. In addition, the mechanisms of
+  crack initiation and propagation through the thickness as well as of multiple
+  matrix cracking were ascertained and the stiffness reduction in the 90° ply
+  as a function of crack density was computed as a function of the ply
+  thickness.%
+  }
+  \verb{doi}
+  \verb 10.1016/j.compscitech.2015.02.008
+  \endverb
+  \field{issn}{0266-3538}
+  \field{pages}{196\bibrangedash 204}
+  \field{title}{{Transverse cracking of cross-ply laminates: A computational
+  micromechanics perspective}}
+  \verb{url}
+  \verb http://www.sciencedirect.com/science/article/pii/S0266353815000792
+  \endverb
+  \field{volume}{110}
+  \field{journaltitle}{Composites Science and Technology}
+  \field{year}{2015}
+\endentry
+
+\entry{ABAQUS2013}{book}{}
+  \name{author}{3}{}{%
+    {{}%
+     {Hibbit}{H.}%
+     {}{}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Karlsson}{K.}%
+     {}{}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Sorensen}{S.}%
+     {}{}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Hibbit, Karlsson, Sorensen Inc.}%
+  }
+  \strng{namehash}{HKS1}
+  \strng{fullhash}{HKS1}
+  \field{title}{{ABAQUS Analysis User's Manual}}
+  \list{location}{1}{%
+    {USA}%
+  }
+  \field{year}{2013}
+\endentry
+
+\lossort
+\endlossort
+
+\endinput

@@ -1,0 +1,18 @@
+\begin{sidewaystable}[htbp]
+  \centering
+  \small
+  \caption{Model geometries summary.}
+    \begin{tabularx}{\textwidth}{lXp{0.08\textwidth}XXX}
+    \toprule
+  \textbf{Name} & \textbf{Description}&\textbf{Number of phases}&\textbf{Geometry of each phase}&\textbf{Boundary conditions}&\textbf{Imposed conditions} \\
+    \midrule
+   single-RVE &Circular fiber inside a square matrix domain.&2&Fiber: circular; matrix: square with circular inclusion at its center.&Constant strain at $z=\pm l$; in order to have constant strain, the displacement has a linear functional form, i.e. $u_{x}|_{z=\pm l}=\bar{u}_{x}\frac{x}{l}$.&Constant displacement $u_{x}|_{z=\pm l}=\bar{u}_{x}=\bar{\varepsilon}_{x}\cdot l$ at $x=\pm l$.\\
+ \midrule
+   bounded-RVE&Circular fiber inside a square matrix domain, bounded by two \acrshort{ud} rectangular domains on the upper and lower side.&3&Fiber: circular; matrix: square with circular inclusion at its center; \acrshort{ud}: rectangular.&Free surface at $z=\pm l$.&Constant displacement $u_{x}|_{z=\pm l}=\bar{u}_{x}=\bar{\varepsilon}_{x}\cdot l$ at $x=\pm l$.\\
+ \midrule
+   periodic-RVE&Periodically repeated unit cell, constituted by a circular fiber inside a square matrix domain.&2&Fiber: circular; matrix: square with circular inclusion at its center.&Periodic boundary conditions on all sides.&Constant displacement $u_{x}|_{z=\pm l}=\bar{u}_{x}=\bar{\varepsilon}_{x}\cdot l$ at $x=\pm l$.\\
+    &&&&&\\
+    \bottomrule
+    \end{tabularx}%
+  \label{tab:geom_tab}%
+\end{sidewaystable}%

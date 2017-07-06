@@ -1,0 +1,79 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+\usepackage{fourier}
+
+\usetikzlibrary{arrows,calc,3d}
+
+%----------------------------------------------------------------------------------------------%
+%                                          INPUT PARAMETERS
+%----------------------------------------------------------------------------------------------%
+
+\def\L{1}
+\def\rW{0.7}
+\def\rT{0.5}
+\def\rRf{0.1}
+
+\def\rxlim{1.5}
+\def\rylim{1.5}
+\def\rzlim{1.5}
+
+\def\pivalue{3.141592653589793238462643383279502884197169399375105820974944592307816406286}
+
+%----------------------------------------------------------------------------------------------%
+%                               Definition of dependent parameters
+%----------------------------------------------------------------------------------------------%
+
+\pgfmathsetmacro\W{\rW*\L}
+\pgfmathsetmacro\T{\rT*\L}
+\pgfmathsetmacro\Rf{\rRf*\T}
+
+\pgfmathsetmacro\xL{\rxlim*\L}
+\pgfmathsetmacro\yL{\rylim*\W}
+\pgfmathsetmacro\zL{\rzlim*\T}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------------%
+%                Single RVE with applied constant strain, only debonded
+%----------------------------------------------------------------------------------------------%
+ 
+\begin{tikzpicture}[scale=4.5,cap=round,x=\xL cm,y=\yL cm, z=\zL cm]
+% style of faces
+\tikzset{facestyle/.style={fill=lightgray,draw=black,very thin,line join=round}}
+% face "back" 
+%\begin{scope}[canvas is zy plane at x=0]
+%  \path[facestyle,shade] (0,0) rectangle (\T,\W);
+%\end{scope}
+% face  "left"
+\begin{scope}[canvas is zx plane at y=0]
+  \path[facestyle,shade] (0,0) rectangle (\T,\L);
+\end{scope}
+% face "front"
+%\begin{scope}[canvas is zy plane at x=3]
+%  \path[facestyle] (0,0) rectangle (2,4);
+%\end{scope}
+%% face  "right"
+%\begin{scope}[canvas is zx plane at y=4]
+%  \path[facestyle] (0,0) rectangle (2,3);
+%\end{scope}
+
+
+\end{tikzpicture}
+
+\end{document}

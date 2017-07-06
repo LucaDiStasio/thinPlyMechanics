@@ -1,0 +1,21 @@
+\documentclass{beamer}
+\usepackage{tikz}
+\usetikzlibrary{shapes.callouts}
+\usetikzlibrary{ocgx}
+
+\newcommand{\tikzmark}[1]%
+{\tikz[overlay,baseline,remember picture]\coordinate(#1);}
+
+\begin{document}
+\begin{frame}
+  \switchocg{mee}{$E = mc^2$}\tikzmark{mee}
+
+  \begin{tikzpicture}[overlay,remember picture]
+    \begin{scope}[ocg={ref=mee,status=invisible,name=Mass Energy Equivalence}]
+      \node[rectangle callout,callout absolute pointer=(mee),fill=orange]
+      at ([shift={(+3,+1)}]mee) {Mass Energy Equivalence};
+    \end{scope}
+  \end{tikzpicture}
+
+\end{frame}
+\end{document}

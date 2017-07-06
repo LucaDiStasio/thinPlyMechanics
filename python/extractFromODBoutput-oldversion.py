@@ -1211,7 +1211,7 @@ def extractFromODBoutputSet03(wd,project,tol):
 #
 #===============================================================================#
 
-def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
+def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NEl,DeltaEl,tol):
     print('Starting post-processing on project ' + project + '\n')
     # define database name
     odbname = project + '.odb'
@@ -1374,10 +1374,10 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
                 JINToverG0s.append(valuesOverG0)
     print('...done.\n')
     #=======================================================================
-    # VCCT in forces
+    # get energy release rates
     #=======================================================================
     print('\n')
-    print('Compute energy release rates with VCCT in forces...\n')
+    print('Get energy release rates...\n')
     
     crackTips = []
     
@@ -1622,450 +1622,6 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
                 line += ', '
         
         with open(join(csvfolder,'ENRRTs-Summary.csv'),'w') as csv:
-            csv.write(line + '\n')
-            csv.write(secondline + '\n')
-            for tip in crackTips:
-                line = ''
-                for v,value in enumerate(tip):
-                    if v>0:
-                        line += ','
-                    line += str(value)
-                csv.write(line + '\n')
-                    
-    print('...done.\n')
-    #=======================================================================
-    # VCCT in stresses (trapezoidal integration for elements of equal length at the interface in the undeformed configuration)
-    #=======================================================================
-    print('\n')
-    print('Compute energy release rates with VCCT in stresses...\n')
-    
-    crackTips = []
-    
-    if deltaTheta>0 and deltaTheta<180:
-        # get crack tips' node sets
-        matrixCrackTip1 = getSingleNodeSet(odb,'PART-1-1','MATRIXCRACKTIP1-NODE')
-        fiberCrackTip1 = getSingleNodeSet(odb,'PART-1-1','FIBERCRACKTIP1-NODE')
-        matrixCrackTip2 = getSingleNodeSet(odb,'PART-1-1','MATRIXCRACKTIP2-NODE')
-        fiberCrackTip2 = getSingleNodeSet(odb,'PART-1-1','FIBERCRACKTIP2-NODE')
-        # get surface sections' node sets
-        gamma2 = getSingleNodeSet(odb,'PART-1-1','GAMMA4-NODES')
-        # get crack tips' node labels
-        matrixCrackTip1Label = int(lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip1).values[0].nodeLabel)
-        matrixCrackTip2Label = int(lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip2).values[0].nodeLabel)
-        # get labels of nodes just before the crack tip on matrix side
-        gamma2Labels = []
-        for value in lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=gamma2).values:
-            gamma2Labels.append(int(value.nodeLabel))
-        if matrixCrackTip1Label==4*N1*(N4+N5+1):
-            if 4*N1*(N4+N5) in gamma2Labels:
-                preMatrixCrackTip1Label = 4*N1*(N4+N5)
-            else:
-                preMatrixCrackTip1Label = matrixCrackTip1Label-1
-        elif matrixCrackTip1Label==4*N1*(N4+N5):
-            if matrixCrackTip1Label+1 in gamma2Labels:
-                preMatrixCrackTip1Label = matrixCrackTip1Label+1
-            else:
-                preMatrixCrackTip1Label = 4*N1*(N4+N5+1)
-        else:
-            if matrixCrackTip1Label+1 in gamma2Labels:
-                preMatrixCrackTip1Label = matrixCrackTip1Label+1
-            else:
-                preMatrixCrackTip1Label = matrixCrackTip1Label-1
-        if matrixCrackTip2Label==4*N1*(N4+N5+1):
-            if matrixCrackTip2Label-1 in gamma2Labels:
-                preMatrixCrackTip1Label = matrixCrackTip2Label-1
-            else:
-                preMatrixCrackTip1Label = 4*N1*(N4+N5)
-        elif matrixCrackTip2Label==4*N1*(N4+N5):
-            if 4*N1*(N4+N5+1) in gamma2Labels:
-                preMatrixCrackTip1Label = 4*N1*(N4+N5+1)
-            else:
-                preMatrixCrackTip1Label = matrixCrackTip2Label+1
-        else:
-            if matrixCrackTip2Label-1 in gamma2Labels:
-                preMatrixCrackTip2Label = matrixCrackTip2Label-1
-            else:
-                preMatrixCrackTip2Label = matrixCrackTip2Label+1
-        # get crack tips' coordinates
-        undeftip1 = firstFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip1).values[0]
-        deftip1 = lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip1).values[0]
-        undeftip2 = firstFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip2).values[0]
-        deftip2 = lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip2).values[0]
-        # define the orientation at crack tips
-        beta1 = numpy.arctan2(undeftip1.data[1],undeftip1.data[0])
-        beta2 = numpy.arctan2(undeftip2.data[1],undeftip2.data[0])
-        # compute energy release rates for crack tip 1
-        dataMatrixSideCrackTip1 = []
-        dataFiberSideCrackTip1 = []
-        for elN in range(nEl0,NELMax+DeltaEl,DeltaEl):
-            psMatrix = []
-            psFiber = []
-            if preMatrixCrackTip1Label<matrixCrackTip1Label:
-                for n in range(0,elN+1,1):
-                    # get matrix node before and after the crack tip
-                    preMatrixNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip1Label-(elN-n))
-                    postMatrixNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip1Label+n)
-                    # get matrix node before and after the crack tip
-                    preFiberNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip1Label-(elN-n)+4*N1)
-                    postFiberNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip1Label+n+4*N1)
-                    # get displacements on matrix and fiber
-                    dispPreMatrixNode = lastFrame.fieldOutputs['U'].getSubset(position=NODAL).getSubset(region=preMatrixNode).values[0]
-                    dispPreFiberNode = lastFrame.fieldOutputs['U'].getSubset(position=NODAL).getSubset(region=preFiberNode).values[0]
-                    # calculate crack face displacement
-                    xdisp = dispPreMatrixNode.data[0] - dispPreFiberNode.data[0]
-                    zdisp = dispPreMatrixNode.data[1] - dispPreFiberNode.data[1]
-                    # rotate displacements to crack tip local system
-                    rdisp = numpy.cos(beta1)*xdisp + numpy.sin(beta1)*zdisp
-                    thetadisp = -numpy.sin(beta1)*xdisp + numpy.cos(beta1)*zdisp
-                    # get stresses on matrix and fiber
-                    postMatrixStresses = getFieldOutput(odb,-1,-1,'S',postMatrixNode,3)
-                    postFiberStresses = getFieldOutput(odb,-1,-1,'S',postFiberNode,3)
-                    # define stress components on matrix
-                    sxxMatrix = postMatrixStresses.values[0].data[0]
-                    szzMatrix = postMatrixStresses.values[0].data[1]
-                    sxzMatrix = postMatrixStresses.values[0].data[3]
-                    # define stress components on matrix
-                    sxxFiber = postFiberStresses.values[0].data[0]
-                    szzFiber = postFiberStresses.values[0].data[1]
-                    sxzFiber = postFiberStresses.values[0].data[3]
-                    # rotate stress components on matrix
-                    srrMatrix = numpy.power(numpy.cos(beta1),2)*sxxMatrix + 2*numpy.sin(beta1)*numpy.cos(beta1)*sxzMatrix + numpy.power(numpy.sin(beta1),2)*szzMatrix
-                    srthetaMatrix = (sxxMatrix+szzMatrix)*numpy.cos(beta1)*numpy.sin(beta1) + sxzMatrix*(numpy.power(numpy.cos(beta1),2)-numpy.power(numpy.sin(beta1),2))
-                    # rotate stress components on fiber
-                    srrFiber = numpy.power(numpy.cos(beta1),2)*sxxFiber + 2*numpy.sin(beta1)*numpy.cos(beta1)*sxzFiber + numpy.power(numpy.sin(beta1),2)*szzFiber
-                    srthetaFiber = (sxxFiber+szzFiber)*numpy.cos(beta1)*numpy.sin(beta1) + sxzFiber*(numpy.power(numpy.cos(beta1),2)-numpy.power(numpy.sin(beta1),2))
-                    # compute products on matrix
-                    prrMatrix = srrMatrix*rdisp
-                    prthetaMatrix = srthetaMatrix*thetadisp
-                    # compute products on fiber
-                    prrFiber = srrFiber*rdisp
-                    prthetaFiber = srthetaFiber*thetadisp
-                    #save products to array
-                    psMatrix.append([prrMatrix,prthetaMatrix])
-                    psFiber.append([prrFiber,prthetaFiber])
-            else:
-                for n in range(0,elN+1,1):
-                    # get matrix node before and after the crack tip
-                    postMatrixNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip1Label-(elN-n))
-                    preMatrixNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip1Label+n)
-                    # get matrix node before and after the crack tip
-                    postFiberNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip1Label-(elN-n)+4*N1)
-                    preFiberNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip1Label+n+4*N1)
-                    # get displacements on matrix and fiber
-                    dispPreMatrixNode = lastFrame.fieldOutputs['U'].getSubset(position=NODAL).getSubset(region=preMatrixNode).values[0]
-                    dispPreFiberNode = lastFrame.fieldOutputs['U'].getSubset(position=NODAL).getSubset(region=preFiberNode).values[0]
-                    # calculate crack face displacement
-                    xdisp = dispPreMatrixNode.data[0] - dispPreFiberNode.data[0]
-                    zdisp = dispPreMatrixNode.data[1] - dispPreFiberNode.data[1]
-                    # rotate displacements to crack tip local system
-                    rdisp = numpy.cos(beta1)*xdisp + numpy.sin(beta1)*zdisp
-                    thetadisp = -numpy.sin(beta1)*xdisp + numpy.cos(beta1)*zdisp
-                    # get stresses on matrix and fiber
-                    postMatrixStresses = getFieldOutput(odb,-1,-1,'S',postMatrixNode,3)
-                    postFiberStresses = getFieldOutput(odb,-1,-1,'S',postFiberNode,3)
-                    # define stress components on matrix
-                    sxxMatrix = postMatrixStresses.values[0].data[0]
-                    szzMatrix = postMatrixStresses.values[0].data[1]
-                    sxzMatrix = postMatrixStresses.values[0].data[3]
-                    # define stress components on matrix
-                    sxxFiber = postFiberStresses.values[0].data[0]
-                    szzFiber = postFiberStresses.values[0].data[1]
-                    sxzFiber = postFiberStresses.values[0].data[3]
-                    # rotate stress components on matrix
-                    srrMatrix = numpy.power(numpy.cos(beta1),2)*sxxMatrix + 2*numpy.sin(beta1)*numpy.cos(beta1)*sxzMatrix + numpy.power(numpy.sin(beta1),2)*szzMatrix
-                    srthetaMatrix = (sxxMatrix+szzMatrix)*numpy.cos(beta1)*numpy.sin(beta1) + sxzMatrix*(numpy.power(numpy.cos(beta1),2)-numpy.power(numpy.sin(beta1),2))
-                    # rotate stress components on fiber
-                    srrFiber = numpy.power(numpy.cos(beta1),2)*sxxFiber + 2*numpy.sin(beta1)*numpy.cos(beta1)*sxzFiber + numpy.power(numpy.sin(beta1),2)*szzFiber
-                    srthetaFiber = (sxxFiber+szzFiber)*numpy.cos(beta1)*numpy.sin(beta1) + sxzFiber*(numpy.power(numpy.cos(beta1),2)-numpy.power(numpy.sin(beta1),2))
-                    # compute products on matrix
-                    prrMatrix = srrMatrix*rdisp
-                    prthetaMatrix = srthetaMatrix*thetadisp
-                    # compute products on fiber
-                    prrFiber = srrFiber*rdisp
-                    prthetaFiber = srthetaFiber*thetadisp
-                    #save products to array
-                    psMatrix.append([prrMatrix,prthetaMatrix])
-                    psFiber.append([prrFiber,prthetaFiber])
-            GI = 0
-            GII = 0
-            for e,element in enumerate(psMatrix):
-                if e>0 and e<len(psMatrix)-1:
-                    GI += 2*psMatrix[e][0]
-                    GII += 2*psMatrix[e][1]
-                else:
-                    GI += psMatrix[e][0]
-                    GII += psMatrix[e][1]
-            GI *= 0.25/elN
-            GII *= 0.25/elN
-            dataMatrixSideCrackTip1.append([elN, enrrtFactor*GI, enrrtFactor*GII, enrrtFactor*(GI+GII), enrrtFactor*GI/G0, enrrtFactor*GII/G0, enrrtFactor*(GI+GII)/G0])
-            GI = 0
-            GII = 0
-            for e,element in enumerate(psFiber):
-                if e>0 and e<len(psFiber)-1:
-                    GI += 2*psFiber[e][0]
-                    GII += 2*psFiber[e][1]
-                else:
-                    GI += psFiber[e][0]
-                    GII += psFiber[e][1]
-            GI *= 0.25/elN
-            GII *= 0.25/elN
-            dataFiberSideCrackTip1.append([elN, enrrtFactor*GI, enrrtFactor*GII, enrrtFactor*(GI+GII), enrrtFactor*GI/G0, enrrtFactor*GII/G0, enrrtFactor*(GI+GII)/G0])
-        # compute energy release rates for crack tip 2
-        dataMatrixSideCrackTip2 = []
-        dataFiberSideCrackTip2 = []
-        for elN in range(nEl0,NELMax+DeltaEl,DeltaEl):
-            psMatrix = []
-            psFiber = []
-            if preMatrixCrackTip2Label<matrixCrackTip2Label:
-                for n in range(0,elN+1,1):
-                    # get matrix node before and after the crack tip
-                    preMatrixNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip2Label-(elN-n))
-                    postMatrixNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip2Label+n)
-                    # get matrix node before and after the crack tip
-                    preFiberNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip2Label-(elN-n)+4*N1)
-                    postFiberNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip2Label+n+4*N1)
-                    # get displacements on matrix and fiber
-                    dispPreMatrixNode = lastFrame.fieldOutputs['U'].getSubset(position=NODAL).getSubset(region=preMatrixNode).values[0]
-                    dispPreFiberNode = lastFrame.fieldOutputs['U'].getSubset(position=NODAL).getSubset(region=preFiberNode).values[0]
-                    # calculate crack face displacement
-                    xdisp = dispPreMatrixNode.data[0] - dispPreFiberNode.data[0]
-                    zdisp = dispPreMatrixNode.data[1] - dispPreFiberNode.data[1]
-                    # rotate displacements to crack tip local system
-                    rdisp = numpy.cos(beta2)*xdisp + numpy.sin(beta2)*zdisp
-                    thetadisp = -numpy.sin(beta2)*xdisp + numpy.cos(beta2)*zdisp
-                    # get stresses on matrix and fiber
-                    postMatrixStresses = getFieldOutput(odb,-1,-1,'S',postMatrixNode,3)
-                    postFiberStresses = getFieldOutput(odb,-1,-1,'S',postFiberNode,3)
-                    # define stress components on matrix
-                    sxxMatrix = postMatrixStresses.values[0].data[0]
-                    szzMatrix = postMatrixStresses.values[0].data[1]
-                    sxzMatrix = postMatrixStresses.values[0].data[3]
-                    # define stress components on matrix
-                    sxxFiber = postFiberStresses.values[0].data[0]
-                    szzFiber = postFiberStresses.values[0].data[1]
-                    sxzFiber = postFiberStresses.values[0].data[3]
-                    # rotate stress components on matrix
-                    srrMatrix = numpy.power(numpy.cos(beta2),2)*sxxMatrix + 2*numpy.sin(beta2)*numpy.cos(beta2)*sxzMatrix + numpy.power(numpy.sin(beta2),2)*szzMatrix
-                    srthetaMatrix = (sxxMatrix+szzMatrix)*numpy.cos(beta2)*numpy.sin(beta2) + sxzMatrix*(numpy.power(numpy.cos(beta2),2)-numpy.power(numpy.sin(beta2),2))
-                    # rotate stress components on fiber
-                    srrFiber = numpy.power(numpy.cos(beta2),2)*sxxFiber + 2*numpy.sin(beta2)*numpy.cos(beta2)*sxzFiber + numpy.power(numpy.sin(beta2),2)*szzFiber
-                    srthetaFiber = (sxxFiber+szzFiber)*numpy.cos(beta2)*numpy.sin(beta2) + sxzFiber*(numpy.power(numpy.cos(beta2),2)-numpy.power(numpy.sin(beta2),2))
-                    # compute products on matrix
-                    prrMatrix = srrMatrix*rdisp
-                    prthetaMatrix = srthetaMatrix*thetadisp
-                    # compute products on fiber
-                    prrFiber = srrFiber*rdisp
-                    prthetaFiber = srthetaFiber*thetadisp
-                    #save products to array
-                    psMatrix.append([prrMatrix,prthetaMatrix])
-                    psFiber.append([prrFiber,prthetaFiber])
-            else:
-                for n in range(0,elN+1,1):
-                    # get matrix node before and after the crack tip
-                    postMatrixNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip2Label-(elN-n))
-                    preMatrixNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip2Label+n)
-                    # get matrix node before and after the crack tip
-                    postFiberNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip2Label-(elN-n)+4*N1)
-                    preFiberNode = odb.rootAssembly.instances['PART-1-1'].getNodeFromLabel(matrixCrackTip2Label+n+4*N1)
-                    # get displacements on matrix and fiber
-                    dispPreMatrixNode = lastFrame.fieldOutputs['U'].getSubset(position=NODAL).getSubset(region=preMatrixNode).values[0]
-                    dispPreFiberNode = lastFrame.fieldOutputs['U'].getSubset(position=NODAL).getSubset(region=preFiberNode).values[0]
-                    # calculate crack face displacement
-                    xdisp = dispPreMatrixNode.data[0] - dispPreFiberNode.data[0]
-                    zdisp = dispPreMatrixNode.data[1] - dispPreFiberNode.data[1]
-                    # rotate displacements to crack tip local system
-                    rdisp = numpy.cos(beta2)*xdisp + numpy.sin(beta2)*zdisp
-                    thetadisp = -numpy.sin(beta2)*xdisp + numpy.cos(beta2)*zdisp
-                    # get stresses on matrix and fiber
-                    postMatrixStresses = getFieldOutput(odb,-1,-1,'S',postMatrixNode,3)
-                    postFiberStresses = getFieldOutput(odb,-1,-1,'S',postFiberNode,3)
-                    # define stress components on matrix
-                    sxxMatrix = postMatrixStresses.values[0].data[0]
-                    szzMatrix = postMatrixStresses.values[0].data[1]
-                    sxzMatrix = postMatrixStresses.values[0].data[3]
-                    # define stress components on matrix
-                    sxxFiber = postFiberStresses.values[0].data[0]
-                    szzFiber = postFiberStresses.values[0].data[1]
-                    sxzFiber = postFiberStresses.values[0].data[3]
-                    # rotate stress components on matrix
-                    srrMatrix = numpy.power(numpy.cos(beta2),2)*sxxMatrix + 2*numpy.sin(beta2)*numpy.cos(beta2)*sxzMatrix + numpy.power(numpy.sin(beta2),2)*szzMatrix
-                    srthetaMatrix = (sxxMatrix+szzMatrix)*numpy.cos(beta2)*numpy.sin(beta2) + sxzMatrix*(numpy.power(numpy.cos(beta2),2)-numpy.power(numpy.sin(beta2),2))
-                    # rotate stress components on fiber
-                    srrFiber = numpy.power(numpy.cos(beta2),2)*sxxFiber + 2*numpy.sin(beta2)*numpy.cos(beta2)*sxzFiber + numpy.power(numpy.sin(beta2),2)*szzFiber
-                    srthetaFiber = (sxxFiber+szzFiber)*numpy.cos(beta2)*numpy.sin(beta2) + sxzFiber*(numpy.power(numpy.cos(beta2),2)-numpy.power(numpy.sin(beta2),2))
-                    # compute products on matrix
-                    prrMatrix = srrMatrix*rdisp
-                    prthetaMatrix = srthetaMatrix*thetadisp
-                    # compute products on fiber
-                    prrFiber = srrFiber*rdisp
-                    prthetaFiber = srthetaFiber*thetadisp
-                    #save products to array
-                    psMatrix.append([prrMatrix,prthetaMatrix])
-                    psFiber.append([prrFiber,prthetaFiber])
-            GI = 0
-            GII = 0
-            for e,element in enumerate(psMatrix):
-                if e>0 and e<len(psMatrix)-1:
-                    GI += 2*psMatrix[e][0]
-                    GII += 2*psMatrix[e][1]
-                else:
-                    GI += psMatrix[e][0]
-                    GII += psMatrix[e][1]
-            GI *= 0.25/elN
-            GII *= 0.25/elN
-            dataMatrixSideCrackTip2.append([elN, enrrtFactor*GI, enrrtFactor*GII, enrrtFactor*(GI+GII), enrrtFactor*GI/G0, enrrtFactor*GII/G0, enrrtFactor*(GI+GII)/G0])
-            GI = 0
-            GII = 0
-            for e,element in enumerate(psFiber):
-                if e>0 and e<len(psFiber)-1:
-                    GI += 2*psFiber[e][0]
-                    GII += 2*psFiber[e][1]
-                else:
-                    GI += psFiber[e][0]
-                    GII += psFiber[e][1]
-            GI *= 0.25/elN
-            GII *= 0.25/elN
-            dataFiberSideCrackTip2.append([elN, enrrtFactor*GI, enrrtFactor*GII, enrrtFactor*(GI+GII), enrrtFactor*GI/G0, enrrtFactor*GII/G0, enrrtFactor*(GI+GII)/G0])
-        
-        #print('Gs calculated')
-        
-        crackTip1 = [undeftip1.nodeLabel,
-                     lengthFactor*undeftip1.data[0], lengthFactor*undeftip1.data[1],
-                     lengthFactor*numpy.sqrt(numpy.power(undeftip1.data[0],2)+numpy.power(undeftip1.data[1],2)), numpy.arctan2(undeftip1.data[1],undeftip1.data[0])*180/numpy.pi,
-                     lengthFactor*deftip1.data[0], lengthFactor*deftip1.data[1],
-                     lengthFactor*numpy.sqrt(numpy.power(deftip1.data[0],2)+numpy.power(deftip1.data[1],2)), numpy.arctan2(deftip1.data[1],deftip1.data[0])*180/numpy.pi,
-                     num, Gm, deltaC*180/numpy.pi,
-                        epsxx*Em/(1-num*num), sigmaInf, numpy.pi*lengthFactor*Rf*(epsxx*Em/(1-num*num))*(epsxx*Em/(1-num*num))*(1+(3.0-4.0*num))/(8.0*Gm), G0]
-                                           
-        crackTip2 = [undeftip2.nodeLabel,
-                     lengthFactor*undeftip2.data[0], lengthFactor*undeftip2.data[1],
-                     lengthFactor*numpy.sqrt(numpy.power(undeftip2.data[0],2)+numpy.power(undeftip2.data[1],2)), numpy.arctan2(undeftip2.data[1],undeftip2.data[0])*180/numpy.pi,
-                     lengthFactor*deftip2.data[0], lengthFactor*deftip2.data[1],
-                     lengthFactor*numpy.sqrt(numpy.power(deftip2.data[0],2)+numpy.power(deftip2.data[1],2)), numpy.arctan2(deftip2.data[1],deftip2.data[0])*180/numpy.pi,
-                     num, Gm, deltaC*180/numpy.pi,
-                        epsxx*Em/(1-num*num), sigmaInf, numpy.pi*lengthFactor*Rf*(epsxx*Em/(1-num*num))*(epsxx*Em/(1-num*num))*(1+(3.0-4.0*num))/(8.0*Gm), G0]
-        
-        for v in range(1,len(dataMatrixSideCrackTip1[0])):
-            for data in dataMatrixSideCrackTip1:
-                crackTip1.append(data[v])
-        for v in range(1,len(dataFiberSideCrackTip1[0])):
-            for data in dataFiberSideCrackTip1:
-                crackTip1.append(data[v])
-        
-        for v in range(1,len(dataMatrixSideCrackTip2[0])):
-            for data in dataMatrixSideCrackTip2:
-                crackTip2.append(data[v])
-        for v in range(1,len(dataFiberSideCrackTip2[0])):
-            for data in dataFiberSideCrackTip2:
-                crackTip2.append(data[v])
-        
-        crackTips.append(crackTip1)
-        crackTips.append(crackTip2)
-        
-        #print('data saved in list')
-        
-        line = 'NODE LABEL, X0 [m], Y0 [m], R0 [m], THETA0 [°], X [m], Y [m], R [m], THETA [°], nu [-], mu [Pa], deltaC [°], sigma_Inf_UNDAMAGED [Pa], sigma_Inf_DAMAGED [Pa], G0_UNDAMAGED [J/m^2], G0_DAMAGED [J/m^2], '
-        secondline = ' , , , , , , , , , , , , , , , , '
-        
-        numGs = (NElMax+DeltaEl-nEl0)/DeltaEl
-        line += ', '
-        secondline += ', '
-        line += 'GI_M-SoM-VCCT [J/m^2]'
-        secondline += 'N Int El ' + str(nEl0)
-        for j in range(1,numGs):
-            secondline += ', '
-            secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
-            line += ', '
-        line += ', '
-        secondline += ', '
-        line += 'GII_M-SoM-VCCT [J/m^2]'
-        secondline += 'N Int El ' + str(nEl0)
-        for j in range(1,numGs):
-            secondline += ', '
-            secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
-            line += ', '
-        line += ', '
-        secondline += ', '
-        line += 'GTOT_M-SoM-VCCT [J/m^2]'
-        secondline += 'N Int El ' + str(nEl0)
-        for j in range(1,numGs):
-            secondline += ', '
-            secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
-            line += ', '
-        line += ', '
-        secondline += ', '
-        line += 'GI_M-SoM-VCCT/G0 [J/m^2]'
-        secondline += 'N Int El ' + str(nEl0)
-        for j in range(1,numGs):
-            secondline += ', '
-            secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
-            line += ', '
-        line += ', '
-        secondline += ', '
-        line += 'GII_M-SoM-VCCT/G0 [J/m^2]'
-        secondline += 'N Int El ' + str(nEl0)
-        for j in range(1,numGs):
-            secondline += ', '
-            secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
-            line += ', '
-        line += ', '
-        secondline += ', '
-        line += 'GTOT_M-SoM-VCCT/G0 [J/m^2]'
-        secondline += 'N Int El ' + str(nEl0)
-        for j in range(1,numGs):
-            secondline += ', '
-            secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
-            line += ', '
-        line += ', '
-        secondline += ', '
-        line += 'GI_M-SoF-VCCT [J/m^2]'
-        secondline += 'N Int El ' + str(nEl0)
-        for j in range(1,numGs):
-            secondline += ', '
-            secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
-            line += ', '
-        line += ', '
-        secondline += ', '
-        line += 'GII_M-SoF-VCCT [J/m^2]'
-        secondline += 'N Int El ' + str(nEl0)
-        for j in range(1,numGs):
-            secondline += ', '
-            secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
-            line += ', '
-        line += ', '
-        secondline += ', '
-        line += 'GTOT_M-SoF-VCCT [J/m^2]'
-        secondline += 'N Int El ' + str(nEl0)
-        for j in range(1,numGs):
-            secondline += ', '
-            secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
-            line += ', '
-        line += ', '
-        secondline += ', '
-        line += 'GI_M-SoF-VCCT/G0 [J/m^2]'
-        secondline += 'N Int El ' + str(nEl0)
-        for j in range(1,numGs):
-            secondline += ', '
-            secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
-            line += ', '
-        line += ', '
-        secondline += ', '
-        line += 'GII_M-SoF-VCCT/G0 [J/m^2]'
-        secondline += 'N Int El ' + str(nEl0)
-        for j in range(1,numGs):
-            secondline += ', '
-            secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
-            line += ', '
-        line += ', '
-        secondline += ', '
-        line += 'GTOT_M-SoF-VCCT/G0 [J/m^2]'
-        secondline += 'N Int El ' + str(nEl0)
-        for j in range(1,numGs):
-            secondline += ', '
-            secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
-            line += ', '
-        
-        with open(join(csvfolder,'ENRRTs-VCCTinStresses-Summary.csv'),'w') as csv:
             csv.write(line + '\n')
             csv.write(secondline + '\n')
             for tip in crackTips:
@@ -2651,50 +2207,36 @@ def main(argv):
                 try:
                     extractFromODBoutputSet01(workdir,proj,settings[0])
                 except Exception, e:
-                    print(Exception)
-                    print(e)
                     sys.exit()
             elif '02' in extractionset or '2' in extractionset:
                 try:
                     extractFromODBoutputSet02(workdir,proj,settings[0])
                 except Exception, e:
-                    print(Exception)
-                    print(e)
                     sys.exit()
             elif '03' in extractionset or '3' in extractionset:
                 try:
                     extractFromODBoutputSet03(workdir,proj,settings[0])
                 except Exception, e:
-                    print(Exception)
-                    print(e)
                     sys.exit()
             elif '04' in extractionset or '4' in extractionset:
                 try:
                     extractFromODBoutputSet04(workdir,proj,matfolder,1,20,1,settings[0])
                 except Exception, e:
-                    print(Exception)
-                    print(e)
                     sys.exit()
             elif '05' in extractionset or '5' in extractionset:
                 try:
                     extractFromODBoutputSet05(workdir,proj,settings[0])
                 except Exception, e:
-                    print(Exception)
-                    print(e)
                     sys.exit()
             elif '06' in extractionset or '6' in extractionset:
                 try:
                     extractFromODBoutputSet06(workdir,proj,settings[0])
                 except Exception, e:
-                    print(Exception)
-                    print(e)
                     sys.exit()
             elif '07' in extractionset or '7' in extractionset:
                 try:
                     extractFromODBoutputSet07(workdir,proj,settings[0])
                 except Exception, e:
-                    print(Exception)
-                    print(e)
                     sys.exit()
             #=======================================================================
             # update status file

@@ -1647,11 +1647,14 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
         fiberCrackTip1 = getSingleNodeSet(odb,'PART-1-1','FIBERCRACKTIP1-NODE')
         matrixCrackTip2 = getSingleNodeSet(odb,'PART-1-1','MATRIXCRACKTIP2-NODE')
         fiberCrackTip2 = getSingleNodeSet(odb,'PART-1-1','FIBERCRACKTIP2-NODE')
+        print('crack tips node sets')
         # get surface sections' node sets
         gamma2 = getSingleNodeSet(odb,'PART-1-1','GAMMA4-NODES')
+        print('gamma4 node set')
         # get crack tips' node labels
         matrixCrackTip1Label = int(lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip1).values[0].nodeLabel)
         matrixCrackTip2Label = int(lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip2).values[0].nodeLabel)
+        print('crack tips node labels')
         # get labels of nodes just before the crack tip on matrix side
         gamma2Labels = []
         for value in lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=gamma2).values:
@@ -1686,14 +1689,17 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
                 preMatrixCrackTip2Label = matrixCrackTip2Label-1
             else:
                 preMatrixCrackTip2Label = matrixCrackTip2Label+1
+        print('node labels of crack tips on matrix side')
         # get crack tips' coordinates
         undeftip1 = firstFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip1).values[0]
         deftip1 = lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip1).values[0]
         undeftip2 = firstFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip2).values[0]
         deftip2 = lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip2).values[0]
+        print('crack tips coordinates')
         # define the orientation at crack tips
         beta1 = numpy.arctan2(undeftip1.data[1],undeftip1.data[0])
         beta2 = numpy.arctan2(undeftip2.data[1],undeftip2.data[0])
+        print('direction at crack tips')
         # compute energy release rates for crack tip 1
         dataMatrixSideCrackTip1 = []
         dataFiberSideCrackTip1 = []
@@ -1810,6 +1816,7 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
             GI *= 0.25/elN
             GII *= 0.25/elN
             dataFiberSideCrackTip1.append([elN, enrrtFactor*GI, enrrtFactor*GII, enrrtFactor*(GI+GII), enrrtFactor*GI/G0, enrrtFactor*GII/G0, enrrtFactor*(GI+GII)/G0])
+        print('errt crack tip 1 calculated')
         # compute energy release rates for crack tip 2
         dataMatrixSideCrackTip2 = []
         dataFiberSideCrackTip2 = []
@@ -1926,7 +1933,7 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
             GI *= 0.25/elN
             GII *= 0.25/elN
             dataFiberSideCrackTip2.append([elN, enrrtFactor*GI, enrrtFactor*GII, enrrtFactor*(GI+GII), enrrtFactor*GI/G0, enrrtFactor*GII/G0, enrrtFactor*(GI+GII)/G0])
-        
+        print('errts crack tip  2 calculated')
         #print('Gs calculated')
         
         crackTip1 = [undeftip1.nodeLabel,
@@ -1962,7 +1969,7 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
         crackTips.append(crackTip1)
         crackTips.append(crackTip2)
         
-        #print('data saved in list')
+        print('data saved in list')
         
         line = 'NODE LABEL, X0 [m], Y0 [m], R0 [m], THETA0 [°], X [m], Y [m], R [m], THETA [°], nu [-], mu [Pa], deltaC [°], sigma_Inf_UNDAMAGED [Pa], sigma_Inf_DAMAGED [Pa], G0_UNDAMAGED [J/m^2], G0_DAMAGED [J/m^2], '
         secondline = ' , , , , , , , , , , , , , , , , '
@@ -2075,7 +2082,7 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
                         line += ','
                     line += str(value)
                 csv.write(line + '\n')
-                    
+    print('data written to file')                
     print('...done.\n')
     #=======================================================================
     # close database

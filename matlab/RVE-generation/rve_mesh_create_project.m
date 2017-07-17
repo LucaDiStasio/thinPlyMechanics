@@ -155,7 +155,7 @@ end
 %-------------------------------------------------------------------------%
 %%
 % create the filepath
-abqpath = fullfile(folder,projectName,'abqinp',strcat(projectName,'.inp'));
+abqpath = fullfile(folder,projectName,'input',strcat(projectName,'.inp'));
 
 % create the file
 abqinpID = fopen(abqpath,'w');

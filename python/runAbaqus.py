@@ -679,9 +679,9 @@ def buildAbaqusCall(wd,pname,cpus,mode,logfilename):
     try:
         with open(cmdfile,'w') as cmd:
             cmd.write('\n')
-            cmd.write('CD ' + wd + '\\' + pname + '\\abaqus\n')
+            cmd.write('CD ' + wd + '\\' + pname + '\\solver\n')
             cmd.write('\n')
-            cmd.write('abaqus job=' + pname + ' analysis input=' + wd + '\\' + pname + '\\abqinp\\' + pname + '.inp information=all ' + mode + ' cpus=' + cpus + '\n')
+            cmd.write('abaqus job=' + pname + ' analysis input=' + wd + '\\' + pname + '\\input\\' + pname + '.inp information=all ' + mode + ' cpus=' + cpus + '\n')
     except Exception,e:
         with open(logfilename,'a') as log:
             log.write('FAILED to write Windows command script.' + '\n')

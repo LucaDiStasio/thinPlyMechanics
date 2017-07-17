@@ -1281,25 +1281,23 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
     #=======================================================================
     print('\n')
     print('Get simulation''s units of measurement, material and geometry...\n')
-    with open(inpfullpath,'r') as inp:
-        lines = inp.readlines()
+    with open(join(csvfolder,project + '.csv')) as csv:
+        lines = csv.readlines()
     for l,line in enumerate(lines):
         if 'Fiber radius Rf' in line:
-            Rf = float(line.replace('\n','').replace('-','').replace('*','').split(':')[1]);
+            Rf = float(line.replace('\n','').replace('-','').replace('*','').split(',')[1]);
         elif 'Applied Axial Strain' in line:
-            epsxx = float(line.replace('\n','').replace('-','').replace('*','').split(':')[1])
+            epsxx = float(line.replace('\n','').replace('-','').replace('*','').split(',')[1])
         elif 'Matrix' in line:
-            matrixType = line.replace('\n','').replace('-','').replace('*','').split(':')[1]
+            matrixType = line.replace('\n','').replace('-','').replace('*','').split(',')[1]
         elif 'length, SI' in line:
-            lengthFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(':')[1])
+            lengthFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(',')[2])
         elif 'energy release rate, SI' in line:
-            enrrtFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(':')[1])
+            enrrtFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(',')[2])
         elif 'force, SI' in line:
-            forceFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(':')[1])
+            forceFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(',')[2])
         elif 'pressure/stress, SI' in line:
-            stressFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(':')[1])
-        elif 'LICENSE' in line:
-            break
+            stressFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(',')[2])
     print('...done.\n')
     #=======================================================================
     # compute G0

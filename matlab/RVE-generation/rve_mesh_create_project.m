@@ -136,7 +136,8 @@ projectName = '';
 
 if ~checkIndex(folder,strcat(index,'.csv'),model)
     projectName = incrementName(folder,strcat(index,'.csv'));
-    createWD(folder,projectName);
+    % createWD(path,wd,csv,dat,json,latex)
+    createWD(folder,projectName,true,false,false,false);
     fileId = fopen(fullfile(folder,strcat(index,'.csv')),'a');
     fprintf(fileId,'%s',strcat(projectName,',',model));
     fprintf(fileId,'\n');

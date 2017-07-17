@@ -1,0 +1,13 @@
+\beamer@endinputifotherversion {3.33pt}
+\beamer@sectionintoc {1}{Symbols, Models, Equations \& Reference Data}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Symbols}{4}{0}{1}
+\beamer@subsectionintoc {1}{2}{Reference Models}{6}{0}{1}
+\beamer@subsectionintoc {1}{3}{Angular discretization}{9}{0}{1}
+\beamer@subsectionintoc {1}{4}{Material properties}{10}{0}{1}
+\beamer@subsectionintoc {1}{5}{Evaluation of $G_{0}$}{11}{0}{1}
+\beamer@subsectionintoc {1}{6}{VCCT}{12}{0}{1}
+\beamer@sectionintoc {2}{Normal stress distribution at the loaded boundary}{13}{0}{2}
+\beamer@sectionintoc {3}{$\sigma _{0}$ and $G_{0}$}{17}{0}{3}
+\beamer@sectionintoc {4}{Finite strain and small strain formulations}{23}{0}{4}
+\beamer@sectionintoc {5}{Elements's aspect ratio}{33}{0}{5}
+\beamer@sectionintoc {6}{Next steps}{37}{0}{6}

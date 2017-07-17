@@ -1808,11 +1808,11 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
             GII = 0
             for e,element in enumerate(psFiber):
                 if e>0 and e<len(psFiber)-1:
-                    GI += 2*psFiber[e][0]
-                    GII += 2*psFiber[e][1]
+                    GI += 2*abs(psFiber[e][0])
+                    GII += 2*abs(psFiber[e][1])
                 else:
-                    GI += psFiber[e][0]
-                    GII += psFiber[e][1]
+                    GI += abs(psFiber[e][0])
+                    GII += abs(psFiber[e][1])
             GI *= 0.25/elN
             GII *= 0.25/elN
             dataFiberSideCrackTip1.append([elN, enrrtFactor*GI, enrrtFactor*GII, enrrtFactor*(GI+GII), enrrtFactor*GI/G0, enrrtFactor*GII/G0, enrrtFactor*(GI+GII)/G0])
@@ -1913,11 +1913,11 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
             GII = 0
             for e,element in enumerate(psMatrix):
                 if e>0 and e<len(psMatrix)-1:
-                    GI += 2*psMatrix[e][0]
-                    GII += 2*psMatrix[e][1]
+                    GI += 2*abs(psMatrix[e][0])
+                    GII += 2*abs(psMatrix[e][1])
                 else:
-                    GI += psMatrix[e][0]
-                    GII += psMatrix[e][1]
+                    GI += abs(psMatrix[e][0])
+                    GII += abs(psMatrix[e][1])
             GI *= 0.25/elN
             GII *= 0.25/elN
             dataMatrixSideCrackTip2.append([elN, enrrtFactor*GI, enrrtFactor*GII, enrrtFactor*(GI+GII), enrrtFactor*GI/G0, enrrtFactor*GII/G0, enrrtFactor*(GI+GII)/G0])
@@ -2657,60 +2657,116 @@ def main(argv):
             if '01' in extractionset or '1' in extractionset:
                 try:
                     extractFromODBoutputSet01(workdir,proj,settings[0])
+                    words[3] = 'YES'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','')  + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
                 except Exception, e:
                     print(Exception)
                     print(e)
-                    sys.exit()
+                    words[3] = 'NO'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','') + ', ' + 'An error occurred: ' + str(e) + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
             elif '02' in extractionset or '2' in extractionset:
                 try:
                     extractFromODBoutputSet02(workdir,proj,settings[0])
+                    words[3] = 'YES'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','')  + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
                 except Exception, e:
                     print(Exception)
                     print(e)
-                    sys.exit()
+                    words[3] = 'NO'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','') + ', ' + 'An error occurred: ' + str(e) + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
             elif '03' in extractionset or '3' in extractionset:
                 try:
                     extractFromODBoutputSet03(workdir,proj,settings[0])
+                    words[3] = 'YES'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','')  + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
                 except Exception, e:
                     print(Exception)
                     print(e)
-                    sys.exit()
+                    words[3] = 'NO'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','') + ', ' + 'An error occurred: ' + str(e) + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
             elif '04' in extractionset or '4' in extractionset:
                 try:
                     extractFromODBoutputSet04(workdir,proj,matfolder,1,20,1,settings[0])
+                    words[3] = 'YES'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','')  + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
                 except Exception, e:
                     print(Exception)
                     print(e)
-                    sys.exit()
+                    words[3] = 'NO'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','') + ', ' + 'An error occurred: ' + str(e) + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
             elif '05' in extractionset or '5' in extractionset:
                 try:
                     extractFromODBoutputSet05(workdir,proj,settings[0])
+                    words[3] = 'YES'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','')  + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
                 except Exception, e:
                     print(Exception)
                     print(e)
-                    sys.exit()
+                    words[3] = 'NO'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','') + ', ' + 'An error occurred: ' + str(e) + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
             elif '06' in extractionset or '6' in extractionset:
                 try:
                     extractFromODBoutputSet06(workdir,proj,settings[0])
+                    words[3] = 'YES'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','')  + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
                 except Exception, e:
                     print(Exception)
                     print(e)
-                    sys.exit()
+                    words[3] = 'NO'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','') + ', ' + 'An error occurred: ' + str(e) + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
             elif '07' in extractionset or '7' in extractionset:
                 try:
                     extractFromODBoutputSet07(workdir,proj,settings[0])
+                    words[3] = 'YES'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','')  + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
                 except Exception, e:
                     print(Exception)
                     print(e)
-                    sys.exit()
-            #=======================================================================
-            # update status file
-            #=======================================================================
-            words[3] = 'YES'
-            lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','') + '\n'
-            with open(join(workdir,statusfile),'w') as sta:
-                for li in lines:
-                    sta.write(li)
+                    words[3] = 'NO'
+                    lines[i+1] = words[0].replace(' ','').replace('\n','') + ', ' + words[1].replace(' ','').replace('\n','') + ', ' + words[2].replace(' ','').replace('\n','') + ', ' + words[3].replace(' ','').replace('\n','') + ', ' + 'An error occurred: ' + str(e) + '\n'
+                    with open(join(workdir,statusfile),'w') as sta:
+                        for li in lines:
+                            sta.write(li)
+            
 
 
 if __name__ == "__main__":

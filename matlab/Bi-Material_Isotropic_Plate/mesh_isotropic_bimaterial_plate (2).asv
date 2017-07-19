@@ -1,0 +1,301 @@
+function[allNodes,lowerHalfNodes,upperHalfNodes,lowerSWnode,lowerSEnode,lowerNEnode,lowerNWnode,...
+         lowerSOUTHsideNodes,lowerEASTsideNodes,lowerNORTHsideNodes,lowerWESTsideNodes,...
+         upperSWnode,upperSEnode,upperNEnode,upperNWnode,...
+         upperSOUTHsideNodes,upperEASTsideNodes,upperNORTHsideNodes,upperWESTsideNodes,...
+         lowerInterfaceNodes,lowerEASTboundedInterfaceNodes,lowerWESTboundedInterfaceNodes,...
+         lowerDEBONDinterfaceNodes,lowerEASTcrackTipNode,lowerWESTcrackTipNode,...
+         upperInterfaceNodes,upperEASTboundedInterfaceNodes,upperWESTboundedInterfaceNodes,...
+         upperDEBONDinterfaceNodes,upperEASTcrackTipNode,upperWESTcrackTipNode,...
+         allElements,lowerHalfElements,upperHalfElements,lowerInterfaceElements,upperInterfaceElements,...
+         lowerEASTboundedInterfaceElements,lowerWESTboundedInterfaceElements,...
+         lowerDEBONDInterfaceElements,lowerEASTcrackTipElement,lowerWESTcrackTipElement,...
+         upperEASTboundedInterfaceElements,upperWESTboundedInterfaceElements,...
+         upperDEBONDInterfaceElements,upperEASTcrackTipElement,upperWESTcrackTipElement,...
+         lowerSOUTHsideElements,upperNORTHsideElements]=mesh_isotropic_bimaterial_plate(isCohesive,x0,y0low,y0up,lx,ly,Nx,Ny,xA,deltaA)
+
+%%
+%==============================================================================
+% Copyright (c) 2016-2017 Université de Lorraine & Luleå tekniska universitet
+% Author: Luca Di Stasio <luca.distasio@gmail.com>
+%                        <luca.distasio@ingpec.eu>
+%
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions are met:
+%
+%
+% Redistributions of source code must retain the above copyright
+% notice, this list of conditions and the following disclaimer.
+% Redistributions in binary form must reproduce the above copyright
+% notice, this list of conditions and the following disclaimer in
+% the documentation and/or other materials provided with the distribution
+% Neither the name of the Universitï¿½ de Lorraine or Luleï¿½ tekniska universitet
+% nor the names of its contributors may be used to endorse or promote products
+% derived from this software without specific prior written permission.
+%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+% POSSIBILITY OF SUCH DAMAGE.
+%==============================================================================
+%
+%  DESCRIPTION
+%
+
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+%-                        Lower Half Nodes                               -%
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+
+lowerHalfNodes = gradedRectangle(x0,y0low,lx,[ly(2);ly(1)],Nx,[Ny(2);Ny(1)]);
+
+% get corners' nodes
+
+lowerSWnode = 1;
+lowerSEnode = sum(Nx)+1;
+lowerNEnode = length(lowerHalfNodes);
+lowerNWnode = (sum(Nx)+1)*sum(Ny) + 1;
+
+% get sides' nodes except corners' nodes
+
+lowerSOUTHsideNodes = (lowerSWnode:lowerSEnode)';
+lowerEASTsideNodes = (lowerSEnode:sum(Nx)+1:lowerNEnode)';
+lowerNORTHsideNodes = (lowerNEnode:-1:lowerNWnode)';
+lowerWESTsideNodes = (lowerNWnode:-(sum(Nx)+1):lowerSWnode)';
+
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+%-                         Upper Half Nodes                              -%
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+
+upperHalfNodes = gradedRectangle(x0,y0up,lx,ly,Nx,Ny);
+
+offset = length(lowerHalfNodes);
+
+% get corners' nodes
+
+upperSWnode = offset + 1;
+upperSEnode = offset + sum(Nx)+1;
+upperNEnode = offset + length(upperHalfNodes);
+upperNWnode = offset + (sum(Nx)+1)*sum(Ny) + 1;
+
+% get sides' nodes except corners' nodes
+
+upperSOUTHsideNodes = (upperSWnode:upperSEnode)';
+upperEASTsideNodes = (upperSEnode:sum(Nx)+1:upperNEnode)';
+upperNORTHsideNodes = (upperNEnode:-1:upperNWnode)';
+upperWESTsideNodes = (upperNWnode:-(sum(Nx)+1):upperSWnode)';
+
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+%-                            All Nodes                                  -%
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+
+allNodes = [lowerHalfNodes;upperHalfNodes];
+
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+%-                         Interface Nodes                               -%
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+
+% get lower interface
+
+lowerInterfaceNodes = lowerNORTHsideNodes;
+
+lowerEASTboundedInterfaceNodes = [];
+lowerWESTboundedInterfaceNodes = [];
+lowerDEBONDinterfaceNodes = [];
+
+for i=1:length(lowerInterfaceNodes)
+    if allNodes(lowerInterfaceNodes(i),1)<(xA+0.5*deltaA) && allNodes(lowerInterfaceNodes(i),1)>(xA-0.5*deltaA)
+        lowerDEBONDinterfaceNodes = [lowerDEBONDinterfaceNodes;lowerInterfaceNodes(i)];
+    elseif allNodes(lowerInterfaceNodes(i),1)>=(xA+0.5*deltaA)
+        lowerEASTboundedInterfaceNodes = [lowerEASTboundedInterfaceNodes;lowerInterfaceNodes(i)];
+    else
+        lowerWESTboundedInterfaceNodes = [lowerWESTboundedInterfaceNodes;lowerInterfaceNodes(i)];
+    end
+end
+
+if ~isempty(lowerEASTboundedInterfaceNodes)
+    lowerEASTcrackTipNode = lowerEASTboundedInterfaceNodes(end);
+else
+    lowerEASTcrackTipNode = 0;
+end
+if ~isempty(lowerWESTboundedInterfaceNodes)
+    lowerWESTcrackTipNode = lowerWESTboundedInterfaceNodes(1);
+else
+    lowerWESTcrackTipNode = 0;
+end
+
+% get upper interface
+
+upperInterfaceNodes = upperSOUTHsideNodes;upperSEnode];
+
+upperEASTboundedInterfaceNodes = [];
+upperWESTboundedInterfaceNodes = [];
+upperDEBONDinterfaceNodes = [];
+
+for i=length(upperInterfaceNodes):-1:1
+    if allNodes(upperInterfaceNodes(i),1)<(xA+0.5*deltaA) && allNodes(upperInterfaceNodes(i),1)>(xA-0.5*deltaA)
+        upperDEBONDinterfaceNodes = [upperDEBONDinterfaceNodes;upperInterfaceNodes(i)];
+    elseif allNodes(upperInterfaceNodes(i),1)>=(xA+0.5*deltaA)
+        upperEASTboundedInterfaceNodes = [upperEASTboundedInterfaceNodes;upperInterfaceNodes(i)];
+    else
+        upperWESTboundedInterfaceNodes = [upperWESTboundedInterfaceNodes;upperInterfaceNodes(i)];
+    end
+end
+
+if ~isempty(upperEASTboundedInterfaceNodes)
+    upperEASTcrackTipNode = upperEASTboundedInterfaceNodes(end);
+else
+    upperEASTcrackTipNode = 0;
+end
+if ~isempty(upperWESTboundedInterfaceNodes)
+    upperWESTcrackTipNode = upperWESTboundedInterfaceNodes(1);
+else
+    upperWESTcrackTipNode = 0;
+end
+
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+%-                       Lower Half Elements                             -%
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+
+lowerHalfElements = zeros(sum(Nx)*sum(Ny),4);
+
+for j=1:sum(Ny)
+    lowerHalfElements((j-1)*sum(Nx)+1:j*sum(Nx),1) = (j-1)*(sum(Nx)+1) + (1:sum(Nx))';
+    lowerHalfElements((j-1)*sum(Nx)+1:j*sum(Nx),2) = (j-1)*(sum(Nx)+1) + (2:sum(Nx)+1)';
+    lowerHalfElements((j-1)*sum(Nx)+1:j*sum(Nx),3) = j*(sum(Nx)+1) + (2:sum(Nx)+1)';
+    lowerHalfElements((j-1)*sum(Nx)+1:j*sum(Nx),4) = j*(sum(Nx)+1) + (1:sum(Nx))';
+end
+
+% get interface elements
+
+lowerInterfaceElements = (length(lowerHalfElements):-1:(sum(Ny)-1)*sum(Nx)+1)';
+
+% get distributed load elements
+
+lowerSOUTHsideElements = (1:sum(Nx))';
+
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+%-                       Upper Half Elements                             -%
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+
+offset = length(lowerHalfNodes);
+
+upperHalfElements = zeros(sum(Nx)*sum(Ny),4);
+
+for j=1:sum(Ny)
+    upperHalfElements((j-1)*sum(Nx)+1:j*sum(Nx),1) = offset + (j-1)*(sum(Nx)+1) + (1:sum(Nx))';
+    upperHalfElements((j-1)*sum(Nx)+1:j*sum(Nx),2) = offset + (j-1)*(sum(Nx)+1) + (2:sum(Nx)+1)';
+    upperHalfElements((j-1)*sum(Nx)+1:j*sum(Nx),3) = offset + j*(sum(Nx)+1) + (2:sum(Nx)+1)';
+    upperHalfElements((j-1)*sum(Nx)+1:j*sum(Nx),4) = offset + j*(sum(Nx)+1) + (1:sum(Nx))';
+end
+
+offset = length(lowerHalfElements);
+
+% get interface elements
+
+upperInterfaceElements = offset + (1:sum(Nx))';
+
+% get distributed load elements
+
+upperNORTHsideElements = offset + ((sum(Ny)-1)*sum(Nx)+1:length(upperHalfElements))';
+
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+%-                          All Elements                                 -%
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+
+allElements = [lowerHalfElements;upperHalfElements];
+
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+%-                      Interface Elements                               -%
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+
+% get lower interface elements
+
+lowerEASTboundedInterfaceElements = [];
+lowerWESTboundedInterfaceElements = [];
+lowerDEBONDInterfaceElements = [];
+
+for i=1:length(lowerInterfaceElements)
+    if isempty(find(lowerDEBONDinterfaceNodes==allElements(lowerInterfaceElements(i),3))) && isempty(find(lowerDEBONDinterfaceNodes==allElements(lowerInterfaceElements(i),4)))
+        if ~isempty(find(lowerEASTboundedInterfaceNodes==allElements(lowerInterfaceElements(i),3)))
+            lowerEASTboundedInterfaceElements = [lowerEASTboundedInterfaceElements;lowerInterfaceElements(i)];
+        else
+            lowerWESTboundedInterfaceElements = [lowerWESTboundedInterfaceElements;lowerInterfaceElements(i)];
+        end
+    else
+        lowerDEBONDInterfaceElements = [lowerDEBONDInterfaceElements;lowerInterfaceElements(i)];
+    end
+end
+
+if ~isempty(lowerEASTboundedInterfaceElements)
+    lowerEASTcrackTipElement = lowerEASTboundedInterfaceElements(end);
+else
+    lowerEASTcrackTipElement = 0;
+end
+if ~isempty(lowerWESTboundedInterfaceElements)
+    lowerWESTcrackTipElement = lowerWESTboundedInterfaceElements(1);
+else
+    lowerWESTcrackTipElement = 0;
+end
+
+% get upper interface elements
+
+upperEASTboundedInterfaceElements = [];
+upperWESTboundedInterfaceElements = [];
+upperDEBONDInterfaceElements = [];
+
+for i=1:length(upperInterfaceElements)
+    if isempty(find(upperDEBONDinterfaceNodes==allElements(upperInterfaceElements(i),2))) && isempty(find(upperDEBONDinterfaceNodes==allElements(upperInterfaceElements(i),1)))
+        if ~isempty(find(upperEASTboundedInterfaceNodes==allElements(upperInterfaceElements(i),2)))
+            upperEASTboundedInterfaceElements = [upperEASTboundedInterfaceElements;upperInterfaceElements(i)];
+        else
+            upperWESTboundedInterfaceElements = [upperWESTboundedInterfaceElements;upperInterfaceElements(i)];
+        end
+    else
+        upperDEBONDInterfaceElements = [upperDEBONDInterfaceElements;upperInterfaceElements(i)];
+    end
+end
+
+if ~isempty(upperEASTboundedInterfaceElements)
+    upperEASTcrackTipElement = upperEASTboundedInterfaceElements(end);
+else
+    upperEASTcrackTipElement = 0;
+end
+if ~isempty(upperWESTboundedInterfaceElements)
+    upperWESTcrackTipElement = upperWESTboundedInterfaceElements(1);
+else
+    upperWESTcrackTipElement = 0;
+end
+
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+%-                         Cohesive Layer                                -%
+%-------------------------------------------------------------------------%
+%-------------------------------------------------------------------------%
+
+if isCohesive
+    
+end
+
+return

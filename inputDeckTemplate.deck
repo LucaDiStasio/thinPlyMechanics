@@ -1,0 +1,93 @@
+# after it, everything is a comment
+# keyword START: highlights the start of a block of data to be parsed together
+# keyword END: highlights the end of a block of data to be parsed together
+# the order of data blocks is not important
+
+START: PARAMETERS SUMMARY
+TOTAL NUMBER OF PREPROCESSOR PARAMETERS: 44
+TOTAL NUMBER OF SOLVER PARAMETERS: 2
+TOTAL NUMBER OF POSTPROCESSOR PARAMETERS: 0
+ITERABLE PREPROCESSOR PARAMETERS: 1
+ITERABLE SOLVER PARAMETERS: 0
+ITERABLE POSTPROCESSOR PARAMETERS: 0
+END: PARAMETERS SUMMARY
+
+START:
+PREPROCESSOR PLATFORM: matlab
+PREPROCESSOR FUNCTION CALL: projectName=rve_mesh_create_project
+
+END:
+
+TOTAL NUMBER OF UNIT CONVERSION FACTORS: 15
+           UNIT, POSITION IN VECTOR, VALUE,     CATEGORY,     TYPE,    RANGE,                                                        DESCRIPTION,  NOTES
+     lengthUnit,                  0,    -6,   FEM Solver,  Integer, [-24;24],                     Integer exponent for unit conversion of length,
+       massUnit,                  1,     0,   FEM Solver,  Integer, [-24;24],                       Integer exponent for unit conversion of mass,
+       timeUnit,                  2,     0,   FEM Solver,  Integer, [-24;24],                       Integer exponent for unit conversion of time,
+      forceUnit,                 14,    -6,   FEM Solver,  Integer, [-24;24],                      Integer exponent for unit conversion of force,
+     elcurrUnit,                  3,     0,   FEM Solver,  Integer, [-24;24],           Integer exponent for unit conversion of electric current,
+       tempUnit,                  4,     0,   FEM Solver,  Integer, [-24;24],                Integer exponent for unit conversion of temperature,
+       moleUnit,                  5,     0,   FEM Solver,  Integer, [-24;24],             Integer exponent for unit conversion of amount of mass,
+     lumintUnit,                  6,     0,   FEM Solver,  Integer, [-24;24],         Integer exponent for unit conversion of luminous intensity,
+    densityUnit,                  7,    18,   FEM Solver,  Integer, [-24;24],                    Integer exponent for unit conversion of density,
+     stressUnit,                  8,     6,   FEM Solver,  Integer, [-24;24],                     Integer exponent for unit conversion of stress,
+   thermexpUnit,                  9,     0,   FEM Solver,  Integer, [-24;24],          Integer exponent for unit conversion of thermal expansion,
+  thermcondUnit,                 10,     0,   FEM Solver,  Integer, [-24;24],       Integer exponent for unit conversion of thermal conductivity,
+   specheatUnit,                 11,     0,   FEM Solver,  Integer, [-24;24],              Integer exponent for unit conversion of specific heat,
+ fracttoughUnit,                 12,     0,   FEM Solver,  Integer, [-24;24],        Integer exponent for unit conversion of energy release rate,
+interfstiffUnit,                 13,    12,   FEM Solver,  Integer, [-24;24],        Integer exponent for unit conversion of interface stiffness,
+END UNIT CONVERSION FACTORS
+CALLING ORDER NUMBER OF UNIT CONVERSION FACTORS: 30
+
+START PREPROCESSOR PARAMETERS
+        PARAMETER, CALLING ORDER, IS ITERABLE, ITERATION ORDER,                                                 INITIAL VALUE,  FINAL VALUE,  INCREMENT,         CATEGORY,     TYPE,                  RANGE,                                                                                 DESCRIPTION,  NOTES
+           folder,             0,          No,              -1,          H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface,             ,           ,   I/O Management,   String,         [1;2;3;4],                                              Target folder where the project will be initialized,
+      matDBfolder,             1,          No,              -1, D:\OneDrive\01_Luca\07_DocMASE\07_Data\02_Material-Properties,             ,           ,   I/O Management,   String,         [1;2;3;4],                                                            Folder with material definition files,
+            index,             2,          No,              -1,                                                 projectsIndex,             ,           ,   I/O Management,   String,         [1;2;3;4],               File containing an index of the projects created and eventually run as simulations,
+          modType,             3,          No,              -1,                                                             5,             ,           , Model Definition,  Integer,     [1;2;3;4;5;6],                    Integer value describing the type of model defined by its boundary conditions,
+ fiberArrangement,             4,          No,              -1,                                                             1,             ,           , Model Definition,  Integer,     [1;2;3;4;...],                                    Integer value describing the number and arrangement of fibers, Range still to be correctly defined
+          isInner,             5,          No,              -1,                                                             1,             ,           , Model Definition,  Boolean, True/False or 1/0,       Boolean to identify the position of the ply in the laminate (internal or at surface level),
+   isUpperBounded,             6,          No,              -1,                                                             0,             ,           , Model Definition,  Boolean, True/False or 1/0,                                                         If true an upper bounding ply is present,
+   isLowerBounded,             7,          No,              -1,                                                             0,             ,           , Model Definition,  Boolean, True/False or 1/0,                                                          If true a lower bounding ply is present,
+       isCohesive,             8,          No,              -1,                                                             0,             ,           ,  Mesh Generation,  Boolean, True/False or 1/0,                                                            If true cohesive elements are present,
+        crackType,             9,          No,              -1,                                                             1,             ,           , Model Definition,  Integer,             [1;2],                                                      1 for interface crack or 2 for matrix crack,
+          element,            10,          No,              -1,                                                             1,             ,           ,  Mesh Generation,  Integer,             [1;2],                                                          1 for quadrilaterals or 2 for triangles,
+            order,            11,          No,              -1,                                                             1,             ,           ,  Mesh Generation,  Integer,             [1;2],                                            1 for (bi)linear elements or 2 for quadratic elements,
+         optimize,            12,          No,              -1,                                                             0,             ,           ,  Mesh Generation,  Boolean, True/False or 1/0,                                                                 True to try to optimize the mesh,
+            layup,            13,          No,              -1,                                                             1,             ,           , Model Definition,  Integer,             [1;2],                                                     1 for non-symmetric or 2 for symmetric layup,
+      generalized,            14,          No,              -1,                                                             0,             ,           ,  Mesh Generation,  Boolean, True/False or 1/0,                                        Whether to use generalized plane strain (0=False, 1=True),
+     interfaceDef,            15,          No,              -1,                                                             5,             ,           ,  Mesh Generation,  Integer,       [1;2;3;4;5],                                                         Select fiber/matrix interface definition, debond (1); tied surfaces + debond (2); tied nodes + debond (3); tied surfaces + contact (4); tied nodes + contact (5)
+       strainType,            16,          No,              -1,                                                             0,             ,           , Model Definition,  Integer,             [0;1],                                       Select 0 for small strain formulation; 1 for finite strain,
+              phi,            17,          No,              -1,                                                             0,             ,           ,        Materials,     Real,  [-90 deg;90 deg],                                                                    Orientation of bounding plies,
+               Rf,            18,          No,              -1,                                                             1,             ,           , Model Definition,     Real,              [>0],                                                                                     Fiber radius,
+              Vff,            19,          No,              -1,                                                      0.000079,             ,           , Model Definition,     Real,             (0;1),                                                                            Fiber volume fraction,
+           tratio,            20,          No,              -1,                                                             1,             ,           , Model Definition,     Real,              [>0],                                                    Ratio of bounding ply thickness to RVE length,
+            theta,            21,          No,              -1,                                                             0,             ,           , Model Definition,     Real,   [0 deg;360 deg],                                                                          Debond angular position,
+       deltatheta,            22,         Yes,               0,                                                            10,          150,         10, Model Definition,     Real,   [0 deg;180 deg],                                                                                      Debond size,
+               dT,            23,          No,              -1,                                                             0,             ,           , Model Definition,     Real,             [All],                                                                                 Temperature jump,
+interfaceFriction,            24,          No,              -1,                                                             0,             ,           , Model Definition,     Real,             [>=0],                                                                               Interface friction,
+            epsxx,            25,          No,              -1,                                                          0.01,             ,           , Model Definition,     Real,             [All],                                                                                   Applied strain,
+        fiberType,            26,          No,              -1,                                                             2,             ,           ,        Materials,  Integer,             [1;2],                                                                      1 for carbon or 2 for glass,
+       matrixType,            27,          No,              -1,                                                             1,             ,           ,        Materials,  Integer,             [1;2],                                                                        1 for epoxy or 2 for HDPE,
+       matPropAlg,            28,          No,              -1,                                                             1,             ,           ,        Materials,  Integer,           [1;2;3],                                                     1 for RoM - 2 for Halpin-Tsai - 3 for Hashin,
+     solverChoice,            29,          No,              -1,                                                             1,             ,           , Solver Selection,  Integer,         [1;2;3;4], 1 for Debond growth wuth VCCT- 2 for Cohesive elements- 3 for CZM and XFEM - 4 for VCCT and XFEM,
+               f1,            31,          No,              -1,                                                          0.43,             ,           ,  Mesh Generation,     Real,             (0;1),                                               Ratio of internal mesh region side to fiber radius,
+               f2,            32,          No,              -1,                                                           0.8,             ,           ,  Mesh Generation,     Real,             (0;1),                                          Ratio of mid mesh region radius to internal region side,
+               f3,            33,          No,              -1,                                                             2,             ,           ,  Mesh Generation,     Real,              [>1],                                             Ratio of external mesh region radius to fiber radius,
+            delta,            34,          No,              -1,                                                          0.05,             ,           ,  Mesh Generation,     Real,            (0;90),                                                          Element's angular aperture at interface,
+              AR2,            35,          No,              -1,                                                             3,             ,           ,  Mesh Generation,  Integer,              [>0],                                                  Maximum elements' aspect ratio in mesh region 2,
+              AR3,            36,          No,              -1,                                                             1,             ,           ,  Mesh Generation,  Integer,              [>0],                                                  Maximum elements' aspect ratio in mesh region 3,
+              AR4,            37,          No,              -1,                                                             1,             ,           ,  Mesh Generation,  Integer,              [>0],                                                  Maximum elements' aspect ratio in mesh region 4,
+              AR5,            38,          No,              -1,                                                             3,             ,           ,  Mesh Generation,  Integer,              [>0],                                                  Maximum elements' aspect ratio in mesh region 5,
+               N6,            39,          No,              -1,                                                            20,             ,           ,  Mesh Generation,  Integer,              [>0],                                                                               Number of elements,
+       requestDAT,            40,          No,              -1,                                                             0,             ,           ,    Abaqus option,  Boolean, True/False or 1/0,                                                              True to request output to .dat file,
+       requestFIL,            41,          No,              -1,                                                             0,             ,           ,    Abaqus option,  Boolean, True/False or 1/0,                                                              True to request output to .fil file,
+       requestODB,            42,          No,              -1,                                                             1,             ,           ,    Abaqus option,  Boolean, True/False or 1/0,                                                              True to request output to .odb file,
+         nContInt,            43,          No,              -1,                                                            20,             ,           ,    Abaqus option,  Integer,              [>0],                                               Number of contours for contour integral evaluation,
+END PREPROCESSOR PARAMETERS
+
+FEM SOLVER PLATFORM: abaqus analysis
+START FEM SOLVER PARAMETERS
+PARAMETER,     IS ITERABLE, ITERATION ORDER,  INITIAL VALUE,         FINAL VALUE,        INCREMENT,      CATEGORY,    TYPE,  RANGE,                           DESCRIPTION, NOTES
+     cpus,              No,              -1,              8,                  12,                1, Abaqus option, Integer, [1;12], Number of cpus for parallel execution,
+     mode,              No,              -1,     background,                    ,                 , Abaqus option,  String,       , Run in background or interactive mode,
+END FEM SOLVER PARAMETERS

@@ -1062,102 +1062,102 @@ def joinERRTsDataOverSimsExtSet04(wd,statusfile,refdatafolder,refdatafilename,ou
     # initialize output files
     line = 'NODE LABEL, X0 [m], Y0 [m], R0 [m], THETA0 [°], X [m], Y [m], R [m], THETA [°], nu [-], mu [Pa], deltaC [°], Disp_R, Disp_theta, RF_R, RF_theta, sigma_Inf_UNDAMAGED [Pa], sigma_Inf_DAMAGED [Pa], G0_UNDAMAGED [J/m^2], G0_DAMAGED [J/m^2], GI_M-F-VCCT [J/m^2], GII_M-F-VCCT [J/m^2], GTOT_M-F-VCCT [J/m^2], GI_M-F-VCCT/G0 [-], GII_M-F-VCCT/G0 [-], GTOT_M-F-VCCT/G0 [-]'# 0-25
     secondline = ', , , , , , , , , , , , , , , , , , , , , , , , , '
-    numGs = (NElMax+DeltaEl-nEl0)/DeltaEl
+    numGs = (NElMax+DeltaEl-NEl0)/DeltaEl
     line += ', '
     secondline += ', '
     line += 'GI_M-SoM-VCCT [J/m^2]'
-    secondline += 'N Int El ' + str(nEl0)
+    secondline += 'N Int El ' + str(NEl0)
     for j in range(1,numGs):
         secondline += ', '
-        secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
+        secondline += 'N Int El ' + str(NEl0 + j*DeltaEl)
         line += ', '
     line += ', '
     secondline += ', '
     line += 'GII_M-SoM-VCCT [J/m^2]'
-    secondline += 'N Int El ' + str(nEl0)
+    secondline += 'N Int El ' + str(NEl0)
     for j in range(1,numGs):
         secondline += ', '
-        secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
+        secondline += 'N Int El ' + str(NEl0 + j*DeltaEl)
         line += ', '
     line += ', '
     secondline += ', '
     line += 'GTOT_M-SoM-VCCT [J/m^2]'
-    secondline += 'N Int El ' + str(nEl0)
+    secondline += 'N Int El ' + str(NEl0)
     for j in range(1,numGs):
         secondline += ', '
-        secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
+        secondline += 'N Int El ' + str(NEl0 + j*DeltaEl)
         line += ', '
     line += ', '
     secondline += ', '
     line += 'GI_M-SoM-VCCT/G0 [J/m^2]'
-    secondline += 'N Int El ' + str(nEl0)
+    secondline += 'N Int El ' + str(NEl0)
     for j in range(1,numGs):
         secondline += ', '
-        secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
+        secondline += 'N Int El ' + str(NEl0 + j*DeltaEl)
         line += ', '
     line += ', '
     secondline += ', '
     line += 'GII_M-SoM-VCCT/G0 [J/m^2]'
-    secondline += 'N Int El ' + str(nEl0)
+    secondline += 'N Int El ' + str(NEl0)
     for j in range(1,numGs):
         secondline += ', '
-        secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
+        secondline += 'N Int El ' + str(NEl0 + j*DeltaEl)
         line += ', '
     line += ', '
     secondline += ', '
     line += 'GTOT_M-SoM-VCCT/G0 [J/m^2]'
-    secondline += 'N Int El ' + str(nEl0)
+    secondline += 'N Int El ' + str(NEl0)
     for j in range(1,numGs):
         secondline += ', '
-        secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
+        secondline += 'N Int El ' + str(NEl0 + j*DeltaEl)
         line += ', '
     line += ', '
     secondline += ', '
     line += 'GI_M-SoF-VCCT [J/m^2]'
-    secondline += 'N Int El ' + str(nEl0)
+    secondline += 'N Int El ' + str(NEl0)
     for j in range(1,numGs):
         secondline += ', '
-        secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
+        secondline += 'N Int El ' + str(NEl0 + j*DeltaEl)
         line += ', '
     line += ', '
     secondline += ', '
     line += 'GII_M-SoF-VCCT [J/m^2]'
-    secondline += 'N Int El ' + str(nEl0)
+    secondline += 'N Int El ' + str(NEl0)
     for j in range(1,numGs):
         secondline += ', '
-        secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
+        secondline += 'N Int El ' + str(NEl0 + j*DeltaEl)
         line += ', '
     line += ', '
     secondline += ', '
     line += 'GTOT_M-SoF-VCCT [J/m^2]'
-    secondline += 'N Int El ' + str(nEl0)
+    secondline += 'N Int El ' + str(NEl0)
     for j in range(1,numGs):
         secondline += ', '
-        secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
+        secondline += 'N Int El ' + str(NEl0 + j*DeltaEl)
         line += ', '
     line += ', '
     secondline += ', '
     line += 'GI_M-SoF-VCCT/G0 [J/m^2]'
-    secondline += 'N Int El ' + str(nEl0)
+    secondline += 'N Int El ' + str(NEl0)
     for j in range(1,numGs):
         secondline += ', '
-        secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
+        secondline += 'N Int El ' + str(NEl0 + j*DeltaEl)
         line += ', '
     line += ', '
     secondline += ', '
     line += 'GII_M-SoF-VCCT/G0 [J/m^2]'
-    secondline += 'N Int El ' + str(nEl0)
+    secondline += 'N Int El ' + str(NEl0)
     for j in range(1,numGs):
         secondline += ', '
-        secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
+        secondline += 'N Int El ' + str(NEl0 + j*DeltaEl)
         line += ', '
     line += ', '
     secondline += ', '
     line += 'GTOT_M-SoF-VCCT/G0 [J/m^2]'
-    secondline += 'N Int El ' + str(nEl0)
+    secondline += 'N Int El ' + str(NEl0)
     for j in range(1,numGs):
         secondline += ', '
-        secondline += 'N Int El ' + str(nEl0 + j*DeltaEl)
+        secondline += 'N Int El ' + str(NEl0 + j*DeltaEl)
         line += ', '
     if ncontInt>-1:    
         line += ', '
@@ -1239,9 +1239,19 @@ def joinERRTsDataOverSimsExtSet04(wd,statusfile,refdatafolder,refdatafilename,ou
             for reading in readings[16:]:
                 values.append(float(reading))
             if label==globaldata[-1][0]:
-                globaldata[-1] = globaldata[-1][:25] + values + globaldata[-1][26:]
+                globaldata[-1] = globaldata[-1][:26] + values + globaldata[-1][26:]
             else:
-                globaldata[-2] = globaldata[-2][:25] + values + globaldata[-2][26:]
+                globaldata[-2] = globaldata[-2][:26] + values + globaldata[-2][26:]
+    maxlength = 0
+    for dataRow in globaldata:
+        if len(dataRow)>maxlength:
+            maxlength = len(dataRow)
+    for r,dataRow in enumerate(globaldata):
+        if len(dataRow)<maxlength:
+            values = []
+            for v in range(0,maxlength-len(dataRow)):
+                values.append(None)
+            globaldata[r] = globaldata[r][:26] + values + globaldata[r][26:]
     globaldata = np.array(globaldata)
     globaldata = globaldata[globaldata[:,4].argsort()]
     with open(join(outdir,prefix + '_Summary' + '.csv'),'a') as csv:
@@ -1467,7 +1477,7 @@ def joinERRTsDataOverSimsExtSet04(wd,statusfile,refdatafolder,refdatafilename,ou
                     'legend style={draw=white!80.0!black,font=\\fontsize{6}{6}\\selectfont},\n' \
                     'legend entries={' + legendEntries + '},\n' \
                     'legend cell align={left}\n'
-        mask1 = (globaldata[:,4] > 0) & (globaldata[:,4] < 151)  
+        mask1 = (globaldata[:,4] > 0) & (globaldata[:,4] < 151) & (globaldata[:,26] !=None)  
         data = [np.transpose(np.array([globaldata[mask1,4],globaldata[mask1,23]])),
                 np.transpose(np.array([globaldata[mask1,4],globaldata[mask1,24]])),
                 np.transpose(np.array([globaldata[mask1,4],globaldata[mask1,25]]))]
@@ -1516,7 +1526,7 @@ def joinERRTsDataOverSimsExtSet04(wd,statusfile,refdatafolder,refdatafilename,ou
                     'legend style={draw=white!80.0!black,font=\\fontsize{6}{6}\\selectfont},\n' \
                     'legend entries={' + legendEntries + '},\n' \
                     'legend cell align={left}\n'
-        mask1 = (globaldata[:,4] > 0) & (globaldata[:,4] < 151)
+        mask1 = (globaldata[:,4] > 0) & (globaldata[:,4] < 151) & (globaldata[:,26] !=None)  
         data = [np.transpose(np.array([globaldata[mask1,4],globaldata[mask1,23]])),
                 np.transpose(np.array([globaldata[mask1,4],globaldata[mask1,24]])),
                 np.transpose(np.array([globaldata[mask1,4],globaldata[mask1,25]]))]
@@ -1549,8 +1559,8 @@ def main(argv):
     #wd = 'D:/01_Luca/07_Data/03_FEM'
     #wd = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM'
     #wd = 'D:/01_Luca/07_Data/03_FEM/StraightInterface/Full'
-    wd = 'D:/01_Luca/07_Data/03_FEM/CurvedInterface'
-    #wd = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface'
+    #wd = 'D:/01_Luca/07_Data/03_FEM/CurvedInterface'
+    wd = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface'
     
     #statusfile = '2017-06-23_AbaqusParametricRun_FiniteStrain.sta'
     #statusfile = '2017-06-23_AbaqusParametricRun_SmallStrain.sta'
@@ -1559,7 +1569,7 @@ def main(argv):
 
     #prefix = '2017-06-23_AbqRunSummary_SingleFiberEqRfFiniteStrain'
     #prefix = '2017-06-23_AbqRunSummary_SingleFiberEqRfSmallStrain'
-    
+    '''
     statusfiles = ['2017-07-10_AbqRunSummary_SmallStrainD10',
                    '2017-07-10_AbqRunSummary_SmallStrainD09']
     
@@ -1572,7 +1582,7 @@ def main(argv):
                    '2017-07-10_AbqRunSummary_SmallStrainD06',
                    '2017-07-10_AbqRunSummary_SmallStrainD05',
                    '2017-07-10_AbqRunSummary_SmallStrainD04',
-                   '2017-07-10_AbqRunSummary_SmallStrainD03'
+                   '2017-07-10_AbqRunSummary_SmallStrainD03',
                    '2017-07-10_AbqRunSummary_SmallStrainD02',
                    '2017-07-10_AbqRunSummary_SmallStrainD01']
     
@@ -1584,7 +1594,7 @@ def main(argv):
                 '2017-07-20_AbqRunSummary_SmallStrain_D03',
                 '2017-07-20_AbqRunSummary_SmallStrain_D02',
                 '2017-07-20_AbqRunSummary_SmallStrain_D01']
-    '''
+    
 
     
     ncontInt = 20
@@ -1597,7 +1607,7 @@ def main(argv):
     #joinERRTsDataOverSimsExtSet04(wd,statusfile,refdatafolder,refdatafilename,outdir,prefix,ncontInt)
 
     for s,statusfile in enumerate(statusfiles):
-        joinERRTsDataOverSimsExtSet04(wd,statusfile,refdatafolder,refdatafilename,outdir,prefixes[s],ncontInt,NEl0,NElMax,DeltaEl)        
+        joinERRTsDataOverSimsExtSet04(wd,statusfile + '.sta',refdatafolder,refdatafilename,outdir,prefixes[s],ncontInt,NEl0,NElMax,DeltaEl)        
 
 if __name__ == "__main__":
     main(sys.argv[1:])

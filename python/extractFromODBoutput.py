@@ -1794,11 +1794,11 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
             GII = 0
             for e,element in enumerate(psMatrix):
                 if e>0 and e<len(psMatrix)-1:
-                    GI += 2*psMatrix[e][0]
-                    GII += 2*psMatrix[e][1]
+                    GI += 2*abs(psMatrix[e][0])
+                    GII += 2*abs(psMatrix[e][1])
                 else:
-                    GI += psMatrix[e][0]
-                    GII += psMatrix[e][1]
+                    GI += abs(psMatrix[e][0])
+                    GII += abs(psMatrix[e][1])
             GI *= 0.25/elN
             GII *= 0.25/elN
             dataMatrixSideCrackTip1.append([elN, enrrtFactor*GI, enrrtFactor*GII, enrrtFactor*(GI+GII), enrrtFactor*GI/G0, enrrtFactor*GII/G0, enrrtFactor*(GI+GII)/G0])
@@ -1923,11 +1923,11 @@ def extractFromODBoutputSet04(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
             GII = 0
             for e,element in enumerate(psFiber):
                 if e>0 and e<len(psFiber)-1:
-                    GI += 2*psFiber[e][0]
-                    GII += 2*psFiber[e][1]
+                    GI += 2*abs(psFiber[e][0])
+                    GII += 2*abs(psFiber[e][1])
                 else:
-                    GI += psFiber[e][0]
-                    GII += psFiber[e][1]
+                    GI += abs(psFiber[e][0])
+                    GII += abs(psFiber[e][1])
             GI *= 0.25/elN
             GII *= 0.25/elN
             dataFiberSideCrackTip2.append([elN, enrrtFactor*GI, enrrtFactor*GII, enrrtFactor*(GI+GII), enrrtFactor*GI/G0, enrrtFactor*GII/G0, enrrtFactor*(GI+GII)/G0])

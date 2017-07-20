@@ -1257,6 +1257,7 @@ def joinERRTsDataOverSimsExtSet04(wd,statusfile,refdatafolder,refdatafilename,ou
             csv.write(line + '\n')
     indexStartStressesVCCT = 25 + 1
     indexStartJINTs = 25 + 12*numGs + 1
+    
     try:
         axoptions = 'width=30cm,\n' \
                     'title={Applied stress $\\sigma_{0}$ as function of crack angular semi-aperture  $\\Delta\\theta$},\n' \
@@ -1548,7 +1549,8 @@ def main(argv):
     #wd = 'D:/01_Luca/07_Data/03_FEM'
     #wd = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM'
     #wd = 'D:/01_Luca/07_Data/03_FEM/StraightInterface/Full'
-    wd = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface'
+    wd = 'D:/01_Luca/07_Data/03_FEM/CurvedInterface'
+    #wd = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface'
     
     #statusfile = '2017-06-23_AbaqusParametricRun_FiniteStrain.sta'
     #statusfile = '2017-06-23_AbaqusParametricRun_SmallStrain.sta'
@@ -1558,26 +1560,44 @@ def main(argv):
     #prefix = '2017-06-23_AbqRunSummary_SingleFiberEqRfFiniteStrain'
     #prefix = '2017-06-23_AbqRunSummary_SingleFiberEqRfSmallStrain'
     
-    statusfiles = []
-    prefixes = []
+    statusfiles = ['2017-07-10_AbqRunSummary_SmallStrainD10',
+                   '2017-07-10_AbqRunSummary_SmallStrainD09']
+    
+    prefixes = ['2017-07-20_AbqRunSummary_SmallStrain_D10',
+                '2017-07-20_AbqRunSummary_SmallStrain_D09']
+    
     '''
-    for i in range(0,10):
-        statusfiles.append('2017-06-16_AbaqusParametricRun_FS-D' + str((i+1)/10.0).replace('.','-') + '.sta')
-        prefixes.append('2017-06-16_AbqRunSummary_SingleFiberEqRfFiniteStrain-D' + str((i+1)/10.0).replace('.','-'))
+    statusfiles = ['2017-07-10_AbqRunSummary_SmallStrainD08',
+                   '2017-07-10_AbqRunSummary_SmallStrainD07',
+                   '2017-07-10_AbqRunSummary_SmallStrainD06',
+                   '2017-07-10_AbqRunSummary_SmallStrainD05',
+                   '2017-07-10_AbqRunSummary_SmallStrainD04',
+                   '2017-07-10_AbqRunSummary_SmallStrainD03'
+                   '2017-07-10_AbqRunSummary_SmallStrainD02',
+                   '2017-07-10_AbqRunSummary_SmallStrainD01']
+    
+    prefixes = ['2017-07-20_AbqRunSummary_SmallStrain_D08',
+                '2017-07-20_AbqRunSummary_SmallStrain_D07',
+                '2017-07-20_AbqRunSummary_SmallStrain_D06',
+                '2017-07-20_AbqRunSummary_SmallStrain_D05',
+                '2017-07-20_AbqRunSummary_SmallStrain_D04',
+                '2017-07-20_AbqRunSummary_SmallStrain_D03',
+                '2017-07-20_AbqRunSummary_SmallStrain_D02',
+                '2017-07-20_AbqRunSummary_SmallStrain_D01']
     '''
-    for i in range(0,10):
-        statusfiles.append('2017-06-16_AbaqusParametricRun_SS-D' + str((i+1)/10.0).replace('.','-') + '.sta')
-        prefixes.append('2017-06-16_AbqRunSummary_SingleFiberEqRfSmallStrain-D' + str((i+1)/10.0).replace('.','-'))
+
     
     ncontInt = 20
-    
+    NEl0 = 1 
+    NElMax = 20
+    DeltaEl = 1
     #joinEnergyReleaseDataOverSims(wd,statusfile,matdatafolder,outdir,prefix,10)
     #joinOnlyENRRTsDataOverSims(wd,statusfile,matdatafolder,outdir,prefix)
     #joinOnlyENRRTsDataOverSiPlateSims(wd,statusfile,matdatafolder,outdir,prefix)
     #joinERRTsDataOverSimsExtSet04(wd,statusfile,refdatafolder,refdatafilename,outdir,prefix,ncontInt)
 
     for s,statusfile in enumerate(statusfiles):
-        joinERRTsDataOverSimsExtSet04(wd,statusfile,refdatafolder,refdatafilename,outdir,prefixes[s],ncontInt)        
+        joinERRTsDataOverSimsExtSet04(wd,statusfile,refdatafolder,refdatafilename,outdir,prefixes[s],ncontInt,NEl0,NElMax,DeltaEl)        
 
 if __name__ == "__main__":
     main(sys.argv[1:])

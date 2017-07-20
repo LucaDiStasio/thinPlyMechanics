@@ -1,4 +1,4 @@
-function[fiber,Nlast]=writeABQfiber(inpfileFullPath,logfilefullpath,fiber,N0,isCohesive)
+function[fiber,Nlast,Ellast]=writeABQfiber2DquadsLin(inpfileFullPath,logfilefullpath,csvfolder,csvprefix,fiber,N0,El0,isCohesive)
 %%
 %==============================================================================
 % Copyright (c) 2016 Universit� de Lorraine & Lule� tekniska universitet
@@ -38,6 +38,9 @@ function[fiber,Nlast]=writeABQfiber(inpfileFullPath,logfilefullpath,fiber,N0,isC
 %
 %  N0 is the node label of the first node
 %  Nlast is the node label of the last node written to file
+%
+%  El0 is the element label of the first element
+%  Ellast is the element label of the last element written to file
 %
 %  Output:
 %

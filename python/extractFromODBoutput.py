@@ -2615,9 +2615,9 @@ def main(argv):
     
     #workdir = 'D:/01_Luca/07_Data/03_FEM'
     #workdir = 'D:/01_Luca/07_Data/03_FEM/StraightInterface/Full'
-    workdir = 'D:/01_Luca/07_Data/03_FEM/CurvedInterface'
+    #workdir = 'D:/01_Luca/07_Data/03_FEM/CurvedInterface'
     #workdir = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM'
-    #workdir = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface'
+    workdir = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface'
     #workdir = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/StraightInterface/Full'
     #workdir = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/StraightInterface/Quarter'
     

@@ -1559,8 +1559,8 @@ def main(argv):
     #wd = 'D:/01_Luca/07_Data/03_FEM'
     #wd = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM'
     #wd = 'D:/01_Luca/07_Data/03_FEM/StraightInterface/Full'
-    #wd = 'D:/01_Luca/07_Data/03_FEM/CurvedInterface'
-    wd = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface'
+    wd = 'D:/01_Luca/07_Data/03_FEM/CurvedInterface'
+    #wd = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface'
     
     #statusfile = '2017-06-23_AbaqusParametricRun_FiniteStrain.sta'
     #statusfile = '2017-06-23_AbaqusParametricRun_SmallStrain.sta'
@@ -1569,12 +1569,12 @@ def main(argv):
 
     #prefix = '2017-06-23_AbqRunSummary_SingleFiberEqRfFiniteStrain'
     #prefix = '2017-06-23_AbqRunSummary_SingleFiberEqRfSmallStrain'
-    '''
+    
     statusfiles = ['2017-07-10_AbqRunSummary_SmallStrainD10',
                    '2017-07-10_AbqRunSummary_SmallStrainD09']
     
-    prefixes = ['2017-07-20_AbqRunSummary_SmallStrain_D10',
-                '2017-07-20_AbqRunSummary_SmallStrain_D09']
+    prefixes = ['2017-07-25_AbqRunSummary_SmallStrain_D10',
+                '2017-07-25_AbqRunSummary_SmallStrain_D09']
     
     '''
     statusfiles = ['2017-07-10_AbqRunSummary_SmallStrainD08',
@@ -1594,7 +1594,7 @@ def main(argv):
                 '2017-07-20_AbqRunSummary_SmallStrain_D03',
                 '2017-07-20_AbqRunSummary_SmallStrain_D02',
                 '2017-07-20_AbqRunSummary_SmallStrain_D01']
-    
+    '''
 
     
     ncontInt = 20

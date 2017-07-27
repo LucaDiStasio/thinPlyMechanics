@@ -166,7 +166,7 @@ do
             LINE+="1.0^{\\circ}\$}"
         fi
         echo "$LINE" >> $BEAMERINPUTFILE
-        echo "\\vspace{-0.5cm}" >> $BEAMERINPUTFILE
+        echo "\\vspace{-0.75cm}" >> $BEAMERINPUTFILE
         echo "\\centering" >> $BEAMERINPUTFILE
         echo "\\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}" >> $BEAMERINPUTFILE
         echo "\\begin{figure}[!h]" >> $BEAMERINPUTFILE
@@ -197,7 +197,7 @@ do
             LINE+="1.0^{\\circ}\$}"
         fi
         echo "$LINE" >> $BEAMERINPUTFILE
-        echo "\\vspace{-0.5cm}" >> $BEAMERINPUTFILE
+        echo "\\vspace{-0.75cm}" >> $BEAMERINPUTFILE
         echo "\\centering" >> $BEAMERINPUTFILE
         echo "\\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}" >> $BEAMERINPUTFILE
         echo "\\begin{figure}[!h]" >> $BEAMERINPUTFILE
@@ -228,7 +228,7 @@ do
             LINE+="1.0^{\\circ}\$}"
         fi
         echo "$LINE" >> $BEAMERINPUTFILE
-        echo "\\vspace{-0.5cm}" >> $BEAMERINPUTFILE
+        echo "\\vspace{-0.75cm}" >> $BEAMERINPUTFILE
         echo "\\centering" >> $BEAMERINPUTFILE
         echo "\\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}" >> $BEAMERINPUTFILE
         echo "\\begin{figure}[!h]" >> $BEAMERINPUTFILE
@@ -259,7 +259,7 @@ do
             LINE+="1.0^{\\circ}\$}"
         fi
         echo "$LINE" >> $BEAMERINPUTFILE
-        echo "\\vspace{-0.5cm}" >> $BEAMERINPUTFILE
+        echo "\\vspace{-0.75cm}" >> $BEAMERINPUTFILE
         echo "\\centering" >> $BEAMERINPUTFILE
         echo "\\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}" >> $BEAMERINPUTFILE
         echo "\\begin{figure}[!h]" >> $BEAMERINPUTFILE

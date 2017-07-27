@@ -6,15 +6,17 @@
 \beamer@subsectionintoc {1}{4}{Material properties}{10}{0}{1}
 \beamer@subsectionintoc {1}{5}{Evaluation of $G_{0}$}{11}{0}{1}
 \beamer@subsectionintoc {1}{6}{VCCT}{12}{0}{1}
-\beamer@sectionintoc {2}{Results}{14}{0}{2}
-\beamer@subsectionintoc {2}{1}{Model Data}{15}{0}{2}
-\beamer@subsectionintoc {2}{2}{$\delta =1.0^{\circ }$}{16}{0}{2}
-\beamer@subsectionintoc {2}{3}{$\delta =0.9^{\circ }$}{29}{0}{2}
-\beamer@subsectionintoc {2}{4}{$\delta =0.8^{\circ }$}{42}{0}{2}
-\beamer@subsectionintoc {2}{5}{$\delta =0.7^{\circ }$}{55}{0}{2}
-\beamer@subsectionintoc {2}{6}{$\delta =0.6^{\circ }$}{68}{0}{2}
-\beamer@subsectionintoc {2}{7}{$\delta =0.5^{\circ }$}{81}{0}{2}
-\beamer@subsectionintoc {2}{8}{$\delta =0.4^{\circ }$}{94}{0}{2}
-\beamer@subsectionintoc {2}{9}{$\delta =0.3^{\circ }$}{107}{0}{2}
-\beamer@subsectionintoc {2}{10}{$\delta =0.2^{\circ }$}{120}{0}{2}
-\beamer@subsectionintoc {2}{11}{Summary}{123}{0}{2}
+\beamer@subsectionintoc {1}{7}{VCCI}{13}{0}{1}
+\beamer@sectionintoc {2}{Results}{15}{0}{2}
+\beamer@subsectionintoc {2}{1}{Model Data}{16}{0}{2}
+\beamer@subsectionintoc {2}{2}{$\delta =1.0^{\circ }$}{17}{0}{2}
+\beamer@subsectionintoc {2}{3}{$\delta =0.9^{\circ }$}{30}{0}{2}
+\beamer@subsectionintoc {2}{4}{$\delta =0.8^{\circ }$}{43}{0}{2}
+\beamer@subsectionintoc {2}{5}{$\delta =0.7^{\circ }$}{56}{0}{2}
+\beamer@subsectionintoc {2}{6}{$\delta =0.6^{\circ }$}{69}{0}{2}
+\beamer@subsectionintoc {2}{7}{$\delta =0.5^{\circ }$}{82}{0}{2}
+\beamer@subsectionintoc {2}{8}{$\delta =0.4^{\circ }$}{95}{0}{2}
+\beamer@subsectionintoc {2}{9}{$\delta =0.3^{\circ }$}{109}{0}{2}
+\beamer@subsectionintoc {2}{10}{$\delta =0.2^{\circ }$}{123}{0}{2}
+\beamer@subsectionintoc {2}{11}{Summary}{127}{0}{2}
+\beamer@sectionintoc {3}{Summary \& Conclusion}{133}{0}{3}

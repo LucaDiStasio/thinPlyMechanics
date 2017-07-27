@@ -1,13 +1,13 @@
-% Created on jeu. 27 juil. 2017 11:55:30 CEST
-% Created on jeu. 27 juil. 2017 11:55:30 CEST
-% Created on jeu. 27 juil. 2017 11:55:30 CEST
-% Created on jeu. 27 juil. 2017 11:55:30 CEST
-% Created on jeu. 27 juil. 2017 11:55:29 CEST
-% Created on jeu. 27 juil. 2017 11:55:29 CEST
-% Created on jeu. 27 juil. 2017 11:55:29 CEST
-% Created on jeu. 27 juil. 2017 11:55:28 CEST
-% Created on jeu. 27 juil. 2017 11:55:28 CEST
-% Created on jeu. 27 juil. 2017 11:55:28 CEST
+% Created on jeu. 27 juil. 2017 12:34:30 CEST
+% Created on jeu. 27 juil. 2017 12:34:29 CEST
+% Created on jeu. 27 juil. 2017 12:34:29 CEST
+% Created on jeu. 27 juil. 2017 12:34:29 CEST
+% Created on jeu. 27 juil. 2017 12:34:29 CEST
+% Created on jeu. 27 juil. 2017 12:34:28 CEST
+% Created on jeu. 27 juil. 2017 12:34:28 CEST
+% Created on jeu. 27 juil. 2017 12:34:28 CEST
+% Created on jeu. 27 juil. 2017 12:34:28 CEST
+% Created on jeu. 27 juil. 2017 12:34:27 CEST
 %\documentclass[first,firstsupp,handout,compress,notes,navigation]{ETHclass} 
 %\documentclass[first,firstsupp,handout,lastsupp]{ETHclass} 
 \documentclass[first,firstsupp,lastsupp,handout,last,hyperref,table]{ETHclass} 
@@ -400,7 +400,7 @@ k_{m}=3-4\nu_{m}
 
 \subsection{VCCT}
 \begin{frame}
-\frametitle{\small VCCT  in Forces}
+\frametitle{\small Virtual Crack Closure Technique (Nodal Forces at Crack Tip)}
 \vspace{-0.5cm}
 \tiny
 \centering
@@ -432,12 +432,69 @@ G_{I}=\frac{1}{2}\frac{F_{r}\Delta_{r}}{R_{f}\delta}\qquad G_{II}=\frac{1}{2}\fr
 \end{equation}
 \end{frame}
 
+\subsection{VCCI}
+
 \begin{frame}
-\frametitle{\small VCCT  in Stresses}
-\vspace{-0.5cm}
+\frametitle{\small Virtual Crack Closure Integral (Stress at Surface Nodes)}
+\vspace{-0.7cm}
 \tiny
 \centering
 \captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+
+\begin{equation}
+G_{I}=\frac{1}{2\Delta A}\int_{0}^{\Delta c}\sigma_{n}\left(s\right)\delta u_{n}\left(s-\Delta c\right)ds\quad G_{II}=\frac{1}{2\Delta A}\int_{0}^{\Delta c}\tau_{sn}\left(s\right)\delta u_{s}\left(s-\Delta c\right)ds
+\end{equation}
+
+with the reference frame centered on the crack tip and rotated according to the orientation of the crack tip.
+
+\begin{equation}
+\beta=\arctan{\left(\frac{z^{matrix, undef}_{\text{crack tip}}}{x^{matrix, undef}_{\text{crack tip}}}\right)}
+\end{equation}
+
+\begin{equation}
+\Delta u^{i} =\left|\Delta u^{matrix}_{\text{i elements before crack tip}}-\Delta u^{fiber}_{\text{i elements before crack tip}}\right|
+\end{equation}
+
+\begin{equation}
+\Delta w^{i} =\left|\Delta w^{matrix}_{\text{i elements before crack tip}}-\Delta w^{fiber}_{\text{i elements before crack tip}}\right|
+\end{equation}
+
+\begin{equation}
+\Delta_{r}^{i}=\cos{\left(\beta\right)}\Delta u^{i}+\sin{\left(\beta\right)}\Delta w^{i}\qquad\Delta_{\theta}^{i}=-\sin{\left(\beta\right)}\Delta u^{i}+\cos{\left(\beta\right)}\Delta w^{i}
+\end{equation}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{\small Virtual Crack Closure Integral (Stress at Surface Nodes)}
+\vspace{-0.7cm}
+\tiny
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+
+\begin{equation}
+\sigma_{rr}^{m,i} = \sigma_{xx}^{m,\text{i elements after c.t.}}\cos^{2}{\beta}+\sigma_{zz}^{m,\text{i elements after c.t.}}\sin^{2}{\beta}+2\tau_{xz}^{m,\text{i elements after c.t.}}\sin{\beta}\cos{\beta}
+\end{equation}
+
+\begin{equation}
+\tau_{r\theta}^{m,i} = \left(\sigma_{zz}^{m,\text{i elements after crack tip}}-\sigma_{xx}^{m,\text{i elements after c.t.}}\right)\sin{\beta}\cos{\beta}+\tau_{xz}^{m,\text{i elements after c.t.}}\left(\cos^{2}{\beta}-\sin^{2}{\beta}\right)
+\end{equation}
+
+where $m$ stands for material, i.e. stresses can be extracted either on the fiber or the matrix surface.
+
+\begin{equation}
+G_{I}^{m}=\frac{1}{2 R_{f}\delta b}\sum_{i=1}^{N\ Int\ El}\frac{1}{2} R_{f}\delta\left(\sigma_{rr}^{m,i}\Delta_{r}^{i}+\sigma_{rr}^{m,i-1}\Delta_{r}^{i-1}\right)\qquad G_{II}^{m}=\frac{1}{2 R_{f}\delta b}\sum_{i=1}^{N\ Int\ El}\frac{1}{2} R_{f}\delta\left(\tau_{r\theta}^{m,i}\Delta_{\theta}^{i}+\tau_{r\theta}^{m,i-1}\Delta_{\theta}^{i-1}\right)
+\end{equation}
+
+remembering $b=1$, i.e. unit depth in the out-of-plane direction, they simplify to
+
+\begin{equation}
+G_{I}^{m}=\frac{1}{4}\left(\sigma_{rr}^{m,0}\Delta_{r}^{0}+\sum_{i=1}^{N\ Int\ El -\ 1}\left(2\sigma_{rr}^{m,i}\Delta_{r}^{i}\right)+\sigma_{rr}^{m,N\ Int\ El}\Delta_{r}^{N\ Int\ El}\right)
+\end{equation}
+
+\begin{equation}
+G_{II}^{m}=\frac{1}{4}\left(\tau_{r\theta}^{m,0}\Delta_{\theta}^{0}+\sum_{i=1}^{N\ Int\ El\ -\ 1}\left(2\tau_{r\theta}^{m,i}\Delta_{\theta}^{i}\right)+\tau_{r\theta}^{m,N\ Int\ El}\Delta_{\theta}^{N\ Int\ El}\right)
+\end{equation}
 
 \end{frame}
 
@@ -448,6 +505,23 @@ G_{I}=\frac{1}{2}\frac{F_{r}\Delta_{r}}{R_{f}\delta}\qquad G_{II}=\frac{1}{2}\fr
 \frametitle{Model Data}
 \vspace{-0.5cm}
 \centering
+
+\begin{table}[htbp]
+
+  \centering
+  %\caption{Single phase properties summary.}
+    \begin{tabular}{cc}
+    \textbf{Quantity}&\textbf{Value} \\[3pt]
+    \midrule\\[12pt]
+	$\theta \left[^{\circ}\right]$ & $0 $\\[1.5pt]
+	$\Delta\theta \left[^{\circ}\right]$ & $\in\left[10,150\right] $\\[4pt]
+	$\delta \left[^{\circ}\right]$ & $\in\left[1,0.2\right] $\\[3pt]
+	$VF_{f} \left[-\right]$ & $7.9\cdot 10^{-5}$ \\[1.5pt]
+	$\frac{L}{R_{f}} \left[-\right]$ & $\sim 100$ \\[3pt]
+	$R_{f} \left[\mu m\right]$ & $1 $ \\[1.5pt]
+    \end{tabular}%
+  \label{tab:phaseprop}%
+\end{table}%
 
 \end{frame}
 
@@ -934,6 +1008,38 @@ G_{I}=\frac{1}{2}\frac{F_{r}\Delta_{r}}{R_{f}\delta}\qquad G_{II}=\frac{1}{2}\fr
 \end{frame}
 
 \begin{frame}
+\frametitle{\small VCCT, percentual error on BEM, $\delta=0.4^{\circ}$}
+\vspace{-0.5cm}
+\scriptsize
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{table}[htbp]
+  \centering
+  %\caption{Single phase properties summary.}
+    \begin{tabular}{cccc}
+    $\Delta\theta \left[^{\circ}\right]$&$\frac{\frac{G_{I}}{G_{0}}|_{FEM}-\frac{G_{I}}{G_{0}}|_{BEM}}{\frac{G_{I}}{G_{0}}|_{BEM}}$&$\frac{\frac{G_{II}}{G_{0}}|_{FEM}-\frac{G_{II}}{G_{0}}|_{BEM}}{\frac{G_{II}}{G_{0}}|_{BEM}}$&$\frac{\frac{G_{TOT}}{G_{0}}|_{FEM}-\frac{G_{TOT}}{G_{0}}|_{BEM}}{\frac{G_{TOT}}{G_{0}}|_{BEM}}$\\
+    \midrule\\
+	$10$&$11.84\%$&$-45.09\%$&$0.06\%$\\
+	$20$&$26.79\%$&$-28.36\%$&$2.95\%$\\
+	$30$&$48.73\%$&$-19.81\%$&$4.31\%$\\
+	$40$&$77.24\%$&$-12.93\%$&$2.20\%$\\
+	$50$&$181.34\%$&$-6.75\%$&$2.04\%$\\
+	$60$&$1084.50\%$&$0.68\%$&$2.78\%$\\
+	$70$&&$3.99\%$&$3.93\%$\\
+	$80$&&$4.79\%$&$4.61\%$\\
+	$90$&&$5.62\%$&$6.07\%$\\
+	$100$&&$6.18\%$&$6.59\%$\\
+	$110$&&$3.83\%$&$5.37\%$\\
+	$120$&&$1.31\%$&$-2.40\%$\\
+	$130$&&$-4.97\%$&$-9.28\%$\\
+	$140$&&$-30.42\%$&$-29.99\%$\\
+	$150$&&$-61.36\%$&$-14.84\%$\\
+    \end{tabular}%
+  \label{tab:phaseprop}%
+\end{table}%
+\end{frame}
+
+\begin{frame}
 \frametitle{\small J-Integral and VCCT in forces, $\delta=0.4^{\circ}$}
 \vspace{-0.5cm}
 \centering
@@ -1005,6 +1111,38 @@ G_{I}=\frac{1}{2}\frac{F_{r}\Delta_{r}}{R_{f}\delta}\qquad G_{II}=\frac{1}{2}\fr
 \end{frame}
 
 \begin{frame}
+\frametitle{\small VCCT, percentual error on BEM, $\delta=0.3^{\circ}$}
+\vspace{-0.5cm}
+\scriptsize
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{table}[htbp]
+  \centering
+  %\caption{Single phase properties summary.}
+    \begin{tabular}{cccc}
+    $\Delta\theta \left[^{\circ}\right]$&$\frac{\frac{G_{I}}{G_{0}}|_{FEM}-\frac{G_{I}}{G_{0}}|_{BEM}}{\frac{G_{I}}{G_{0}}|_{BEM}}$&$\frac{\frac{G_{II}}{G_{0}}|_{FEM}-\frac{G_{II}}{G_{0}}|_{BEM}}{\frac{G_{II}}{G_{0}}|_{BEM}}$&$\frac{\frac{G_{TOT}}{G_{0}}|_{FEM}-\frac{G_{TOT}}{G_{0}}|_{BEM}}{\frac{G_{TOT}}{G_{0}}|_{BEM}}$\\
+    \midrule\\
+	$10$&$11.91\%$&$-39.86\%$&$1.23\%$\\
+	$20$&$24.60\%$&$-26.37\%$&$2.56\%$\\
+	$30$&$44.60\%$&$-16.55\%$&$4.97\%$\\
+	$40$&$73.27\%$&$-12.54\%$&$1.86\%$\\
+	$50$&$154.60\%$&$-5.10\%$&$2.35\%$\\
+	$60$&$955.70\%$&$1.01\%$&$2.87\%$\\
+	$70$&&$3.99\%$&$4.01\%$\\
+	$80$&&$4.79\%$&$4.83\%$\\
+	$90$&&$5.62\%$&$5.66\%$\\
+	$100$&&$6.18\%$&$6.22\%$\\
+	$110$&&$3.83\%$&$3.38\%$\\
+	$120$&&$1.31\%$&$-4.08\%$\\
+	$130$&&$-4.97\%$&$-10.17\%$\\
+	$140$&&$-30.42\%$&$-34.90\%$\\
+	$150$&&$-61.36\%$&$-0.52\%$\\
+    \end{tabular}%
+  \label{tab:phaseprop}%
+\end{table}%
+\end{frame}
+
+\begin{frame}
 \frametitle{\small J-Integral and VCCT in forces, $\delta=0.3^{\circ}$}
 \vspace{-0.5cm}
 \centering
@@ -1073,6 +1211,38 @@ G_{I}=\frac{1}{2}\frac{F_{r}\Delta_{r}}{R_{f}\delta}\qquad G_{II}=\frac{1}{2}\fr
   \caption{\scriptsize In green VCCT from FEM results, in black BEM results; positions of maxima highlighted by dashed lines.}
   \label{fig:res1}
 \end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT, percentual error on BEM, $\delta=0.2^{\circ}$}
+\vspace{-0.5cm}
+\scriptsize
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{table}[htbp]
+  \centering
+  %\caption{Single phase properties summary.}
+    \begin{tabular}{cccc}
+    $\Delta\theta \left[^{\circ}\right]$&$\frac{\frac{G_{I}}{G_{0}}|_{FEM}-\frac{G_{I}}{G_{0}}|_{BEM}}{\frac{G_{I}}{G_{0}}|_{BEM}}$&$\frac{\frac{G_{II}}{G_{0}}|_{FEM}-\frac{G_{II}}{G_{0}}|_{BEM}}{\frac{G_{II}}{G_{0}}|_{BEM}}$&$\frac{\frac{G_{TOT}}{G_{0}}|_{FEM}-\frac{G_{TOT}}{G_{0}}|_{BEM}}{\frac{G_{TOT}}{G_{0}}|_{BEM}}$\\
+    \midrule\\
+	$10$&$11.41\%$&$-32.33\%$&$2.44\%$\\
+	$20$&$21.51\%$&$-23.07\%$&$2.24\%$\\
+	$30$&$39.40\%$&$-13.34\%$&$5.22\%$\\
+	$40$&$62.43\%$&$-10.19\%$&$1.99\%$\\
+	$50$&$131.80\%$&$-4.28\%$&$2.06\%$\\
+	$60$&$712.56\%$&$1.64\%$&$3.03\%$\\
+	$70$&&$4.05\%$&$4.06\%$\\
+	$80$&&$5.02\%$&$5.05\%$\\
+	$90$&&$5.69\%$&$5.71\%$\\
+	$100$&&$5.83\%$&$5.86\%$\\
+	$110$&&$4.45\%$&$3.97\%$\\
+	$120$&&$1.55\%$&$-3.88\%$\\
+	$130$&&$-6.42\%$&$-11.60\%$\\
+	$140$&&$-28.46\%$&$-33.11\%$\\
+	$150$&&$-67.88\%$&$-0.52\%$\\
+    \end{tabular}%
+  \label{tab:phaseprop}%
+\end{table}%
 \end{frame}
 
 %\begin{frame}
@@ -1168,6 +1338,54 @@ G_{I}=\frac{1}{2}\frac{F_{r}\Delta_{r}}{R_{f}\delta}\qquad G_{II}=\frac{1}{2}\fr
   \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results.}
   \label{fig:res1}
 \end{figure}
+\end{frame}
+
+\section{Summary \& Conclusion}
+
+\begin{frame}
+\frametitle{\small Summary}
+\vspace{-0.5cm}
+\centering
+\begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}  
+\item Implemented Virtual Crack Closure Integral (VCCI) method for the calculation of $G_{I}$ and $G_{II}$
+\item Analysis of free infinite RVE ($\frac{L}{R_{f}}\sim 100$) for several mesh refinements $\delta\in\left[1.0^{\circ},0.2^{\circ}\right]$
+\item $G_{I}$,$G_{II}$ and $G_{TOT}$ calculated using Abaqus built-in J-Integral routine, in-house implemented VCCT and VCCI routines
+\end{list}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small Conclusion}
+\vspace{-0.5cm}
+\centering
+\begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}  
+\item Good agreement of J-Integral results with $G_{TOT}$ from BEM
+\item J-Integral convergence improves refining the mesh
+\item For $\delta=0.4^{\circ},0.3^{\circ},0.2^{\circ}$ maxima are at the right angle ($20^{\circ}$ for $G_{I}$, $60^{\circ}$ for $G_{II}$ and $G_{TOT}$) with in-house VCCT
+\item $G_{TOT}$ relative errors of VCCT over BEM are small ($\sim 5\%$ or less) for every $\Delta\theta$
+\item $G_{II}$ relative errors of VCCT over BEM are small ($\sim 5\%$ or less) for $\Delta\theta > 40^{\circ}$
+\item Results tend to converge to BEM values as the mesh is refined
+\end{list}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small Conclusion}
+\vspace{-0.5cm}
+\centering
+\begin{list}{\Huge\textcolor{red}{$\mathbf{\times}$}}{}  
+\item $G_{I}$ relative errors of VCCT over BEM are high ($>10\%$)
+\item $G_{II}$ relative errors of VCCT over BEM are high ($>10\%$) for $\Delta\theta \leq 40^{\circ}$
+\item $G_{I}$ of VCCI has correct functional form but values are overestimated (except for very small integration lengths)
+\item $G_{II}$ (and consequently $G_{TOT}$) of VCCI provides strange results
+\end{list}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small Next steps}
+\vspace{-0.5cm}
+\centering
+\begin{itemize}[label=\ding{212}]
+\item New analysis with $\delta=0.05^{\circ}$ to see if a better agreement of $G_{I}$ values is attained
+\end{itemize}
 \end{frame}
 
 %\section{Appendices \& References}

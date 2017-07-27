@@ -5,7 +5,7 @@
 \beamer@slide {fig:singleRVE-homo}{8}
 \beamer@slide {fig:angu-discr-def}{9}
 \beamer@slide {tab:phaseprop}{10}
-\beamer@slide {fig:res1}{16}
+\beamer@slide {tab:phaseprop}{16}
 \beamer@slide {fig:res1}{17}
 \beamer@slide {fig:res1}{18}
 \beamer@slide {fig:res1}{19}
@@ -88,7 +88,7 @@
 \beamer@slide {fig:res1}{96}
 \beamer@slide {fig:res1}{97}
 \beamer@slide {fig:res1}{98}
-\beamer@slide {fig:res1}{99}
+\beamer@slide {tab:phaseprop}{99}
 \beamer@slide {fig:res1}{100}
 \beamer@slide {fig:res1}{101}
 \beamer@slide {fig:res1}{102}
@@ -102,7 +102,7 @@
 \beamer@slide {fig:res1}{110}
 \beamer@slide {fig:res1}{111}
 \beamer@slide {fig:res1}{112}
-\beamer@slide {fig:res1}{113}
+\beamer@slide {tab:phaseprop}{113}
 \beamer@slide {fig:res1}{114}
 \beamer@slide {fig:res1}{115}
 \beamer@slide {fig:res1}{116}
@@ -115,6 +115,10 @@
 \beamer@slide {fig:res1}{123}
 \beamer@slide {fig:res1}{124}
 \beamer@slide {fig:res1}{125}
-\beamer@slide {fig:res1}{126}
+\beamer@slide {tab:phaseprop}{126}
 \beamer@slide {fig:res1}{127}
 \beamer@slide {fig:res1}{128}
+\beamer@slide {fig:res1}{129}
+\beamer@slide {fig:res1}{130}
+\beamer@slide {fig:res1}{131}
+\beamer@slide {fig:res1}{132}

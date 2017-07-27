@@ -9,12 +9,12 @@
 \beamer@sectionintoc {2}{Results}{14}{0}{2}
 \beamer@subsectionintoc {2}{1}{Model Data}{15}{0}{2}
 \beamer@subsectionintoc {2}{2}{$\delta =1.0^{\circ }$}{16}{0}{2}
-\beamer@subsectionintoc {2}{3}{$\delta =0.9^{\circ }$}{21}{0}{2}
-\beamer@subsectionintoc {2}{4}{$\delta =0.8^{\circ }$}{26}{0}{2}
-\beamer@subsectionintoc {2}{5}{$\delta =0.7^{\circ }$}{31}{0}{2}
-\beamer@subsectionintoc {2}{6}{$\delta =0.6^{\circ }$}{36}{0}{2}
-\beamer@subsectionintoc {2}{7}{$\delta =0.5^{\circ }$}{41}{0}{2}
-\beamer@subsectionintoc {2}{8}{$\delta =0.4^{\circ }$}{46}{0}{2}
-\beamer@subsectionintoc {2}{9}{$\delta =0.3^{\circ }$}{51}{0}{2}
-\beamer@subsectionintoc {2}{10}{$\delta =0.2^{\circ }$}{64}{0}{2}
-\beamer@subsectionintoc {2}{11}{Summary}{67}{0}{2}
+\beamer@subsectionintoc {2}{3}{$\delta =0.9^{\circ }$}{29}{0}{2}
+\beamer@subsectionintoc {2}{4}{$\delta =0.8^{\circ }$}{42}{0}{2}
+\beamer@subsectionintoc {2}{5}{$\delta =0.7^{\circ }$}{55}{0}{2}
+\beamer@subsectionintoc {2}{6}{$\delta =0.6^{\circ }$}{68}{0}{2}
+\beamer@subsectionintoc {2}{7}{$\delta =0.5^{\circ }$}{81}{0}{2}
+\beamer@subsectionintoc {2}{8}{$\delta =0.4^{\circ }$}{94}{0}{2}
+\beamer@subsectionintoc {2}{9}{$\delta =0.3^{\circ }$}{107}{0}{2}
+\beamer@subsectionintoc {2}{10}{$\delta =0.2^{\circ }$}{120}{0}{2}
+\beamer@subsectionintoc {2}{11}{Summary}{123}{0}{2}

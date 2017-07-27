@@ -20,6 +20,11 @@ NEWGLOBALTEX="$WD"
 NEWGLOBALTEX+="/Update-2017-07-27"
 NEWGLOBALTEX+=".tex"
 
+GLOBALTEXTEMP="$GLOBALTEX"
+GLOBALTEXTEMP+="_TEMP"
+NEWGLOBALTEXTEMP="$NEWGLOBALTEX"
+NEWGLOBALTEXTEMP+="_TEMP"
+
 for j in `seq 1 2`;
 
 do
@@ -272,32 +277,63 @@ do
         echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" >> $BEAMERINPUTFILE
     done
 done
+
+echo "Creating a copy of source file"
 FIRSTLINE="% Created on "
 FIRSTLINE+=$(date +%c)
-echo $FIRSTLINE > $NEWGLOBALTEX
-for i in `seq 3 10`;
+echo $FIRSTLINE > $GLOBALTEXTEMP
+while IFS= read -r line ; do
+    echo "$line" >> $GLOBALTEXTEMP
+done < $GLOBALTEX
+    
+for k in `seq 3 10`;
        
 do
     BEAMERINPUTFILE="2017-07-25_AbqRunSummary_SmallStrain_D"
-    if [ "$i" -lt 10 ]; then
+    if [ "$k" -lt 10 ]; then
         BEAMERINPUTFILE+="0"
     fi
-    BEAMERINPUTFILE+="$i"
+    BEAMERINPUTFILE+="$k"
     BEAMERINPUTFILE+="_VCCI.tex"
     STRING="% ====== > 0."
-    STRING+=$(($i-1))
-    while IFS= read -r line; do
+    STRING+=$(($k-1))
+    echo "Looking for string "
+    echo "$STRING"
+    echo "in file"
+    echo "$GLOBALTEXTEMP"
+    FIRSTLINE="% Created on "
+    FIRSTLINE+=$(date +%c)
+    echo $FIRSTLINE > $NEWGLOBALTEXTEMP
+    while IFS= read -r line ; do
         if [[ $line == *"$STRING"* ]] ; then
+            echo "found in line"
+            echo "$line"
             LINE="\\input{"
             LINE+="$BEAMERINPUTFILE"
             LINE+="}"
-            echo "$LINE" >> $NEWGLOBALTEX
-            echo "%%%" >> $NEWGLOBALTEX
-            echo "$line" >> $NEWGLOBALTEX
+            echo "prepending with"
+            echo "$LINE"
+            echo "%%%"
+            echo "$LINE" >> $NEWGLOBALTEXTEMP
+            echo "%%%" >> $NEWGLOBALTEXTEMP
+            echo "$line" >> $NEWGLOBALTEXTEMP
         else
-            echo "$line" >> $NEWGLOBALTEX
+            echo "$line" >> $NEWGLOBALTEXTEMP
         fi
-    done < $GLOBALTEX
+    done < $GLOBALTEXTEMP
+    sudo rm $GLOBALTEXTEMP
+    GLOBALTEXTEMP="$NEWGLOBALTEXTEMP"
+    NEWGLOBALTEXTEMP+="$k"
 done
+
+FIRSTLINE="% Created on "
+FIRSTLINE+=$(date +%c)
+echo $FIRSTLINE > $NEWGLOBALTEX
+while IFS= read -r line ; do
+    echo "$line" >> $NEWGLOBALTEX
+done < $GLOBALTEXTEMP
+
+sudo rm $GLOBALTEXTEMP
+#sudo rm $NEWGLOBALTEXTEMP
 
 sudo pdflatex $NEWGLOBALTEX

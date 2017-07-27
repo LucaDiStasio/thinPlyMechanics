@@ -800,7 +800,7 @@ def iteratePreprocessor(iterables,arguments,preprocessor,functionCall,wd,logfile
                         sta.write(projectname  + ', YES, NO, NO\n')
                 else:
                     isOdb = False
-                    filesInABQfolder = listdir(join(wd,projectname.replace(' ','').replace('\n','').split(':')[1],'abaqus'))
+                    filesInABQfolder = listdir(join(wd,projectname.replace(' ','').replace('\n','').split(':')[1],'solver'))
                     for file in filesInABQfolder:
                         if '.odb' in file:
                             isOdb = True
@@ -818,7 +818,7 @@ def iteratePreprocessor(iterables,arguments,preprocessor,functionCall,wd,logfile
                 sta.write(projectname  + ', YES, NO, NO\n')
         else:
             isOdb = False
-            filesInABQfolder = listdir(join(wd,projectname.replace(' ','').replace('\n','').split(':')[1],'abaqus'))
+            filesInABQfolder = listdir(join(wd,projectname.replace(' ','').replace('\n','').split(':')[1],'solver'))
             for file in filesInABQfolder:
                 if '.odb' in file:
                     isOdb = True

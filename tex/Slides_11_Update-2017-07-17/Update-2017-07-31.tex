@@ -1,0 +1,1492 @@
+% Created on jeu. 27 juil. 2017 12:34:30 CEST
+% Created on jeu. 27 juil. 2017 12:34:29 CEST
+% Created on jeu. 27 juil. 2017 12:34:29 CEST
+% Created on jeu. 27 juil. 2017 12:34:29 CEST
+% Created on jeu. 27 juil. 2017 12:34:29 CEST
+% Created on jeu. 27 juil. 2017 12:34:28 CEST
+% Created on jeu. 27 juil. 2017 12:34:28 CEST
+% Created on jeu. 27 juil. 2017 12:34:28 CEST
+% Created on jeu. 27 juil. 2017 12:34:28 CEST
+% Created on jeu. 27 juil. 2017 12:34:27 CEST
+%\documentclass[first,firstsupp,handout,compress,notes,navigation]{ETHclass} 
+%\documentclass[first,firstsupp,handout,lastsupp]{ETHclass} 
+\documentclass[first,firstsupp,lastsupp,handout,last,hyperref,table]{ETHclass} 
+%\documentclass[first,firstsupp]{ETHclass}
+\usepackage{etex}
+
+\usepackage{adjustbox}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{animate}
+\usepackage{booktabs}
+\usepackage{charter}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage{ifthen}
+\usepackage{longtable}
+\usepackage{mathrsfs}
+\usepackage{multicol}
+\usepackage{pgf}
+\usepackage{pgfplots}
+\usepackage{pifont}
+\usepackage{ragged2e}
+\usepackage{standalone}
+\usepackage[caption=false]{subfig}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\pgfplotsset{compat=1.7}
+
+\setbeamertemplate{navigation symbols}{}
+\usetikzlibrary{arrows,decorations.pathreplacing,positioning,shapes,shadows}
+
+%\usepackage[style=numeric-comp]{biblatex}
+
+%\usepackage{lipsum}
+
+%\usetikzlibrary{fit}
+\usetikzlibrary{arrows}
+\usetikzlibrary{trees}
+
+% Options for beamer:
+%
+% 9,10,11,12,13,14,17pt  Fontsizes
+% 
+% compress: navigation bar becomes smaller
+% t       : place contents of frames on top (alternative: b,c)
+% handout : handoutversion
+% notes   : show notes
+% notes=onlyslideswithnotes
+%
+%hyperref={bookmarksopen,bookmarksnumbered} : Needed for menues in
+%                                             acrobat. Also need
+%                                             pdftex as option or 
+%                                             compile with
+% pdflatex '\PassOptionsToPackage{pdftex,bookmarksopen,bookmarksnumbered}{hyperref} \input{file}'
+
+%\usepackage{beamerseminar}
+%\usepackage[accumulated]{beamerseminar}
+                                % remove ``accumulated'' option
+                                % for original behaviour
+%\usepackage{beamerbasenotes}
+%\setbeamertemplate{note page}[plain] 
+%\setbeameroption{notes on second screen}
+
+%\setbeamertemplate{note page}[plain] 
+\setbeamertemplate{note page}{\ \\[.3cm]
+\textbf{\color{blue}Notes:}\\%[0.1cm]
+{\footnotesize %\tiny
+\insertnote}}
+%\setbeameroption{notes on second screen}
+
+
+%\setbeamertemplate{navigation symbols}{} % suppresses all navigation symbols:
+ \setbeamertemplate{navigation symbols}[horizontal] % Organizes the navigation symbols horizontally.
+% \setbeamertemplate{navigation symbols}[vertical] % Organizes the navigation symbols vertically.
+% \setbeamertemplate{navigation symbols}[only frame symbol] % Shows only the navigational symbol for navigating frames.
+
+\setlayoutscale{0.5}
+\setparametertextfont{\scriptsize}
+\setlabelfont{\scriptsize}
+
+% \useoutertheme[subsection=false]{miniframes}
+% \usepackage{etoolbox}
+% \makeatletter
+% \patchcmd{\slideentry}{\advance\beamer@xpos by1\relax}{}{}{}
+% \def\beamer@subsectionentry#1#2#3#4#5{\advance\beamer@xpos by1\relax}%
+% \makeatother
+
+% \makeatletter
+%     \newenvironment{withoutheadline}{
+%        \setbeamertemplate{headline}{%
+% \vspace{15pt}
+% }
+%     }{}
+% \makeatother
+
+\makeatletter
+    \newenvironment{withoutheadline}{
+         \setbeamertemplate{headline}{%
+\vspace{35pt}
+}
+        %\def\beamer@entrycode{\vspace*{-1.5\headheight}}
+    }{}
+\makeatother
+
+\newcommand{\Cross}{$\mathbin{\tikz [x=1.4ex,y=1.4ex,line width=.2ex, red] \draw (0,0) -- (1,1) (0,1) -- (1,0);}$}%
+
+\newcommand{\Checkmark}{$\color{green}\checkmark$}
+
+\setbeamerfont{subsection in toc}{size=\tiny}
+
+\makeatletter
+\patchcmd{\beamer@sectionintoc}
+  {\vfill}
+  {\vskip1.5\itemsep}
+  {}
+  {}
+\makeatother  
+
+\setbeamertemplate{frametitle continuation}{}
+
+\setbeamertemplate{bibliography entry title}{}
+\setbeamertemplate{bibliography entry author}{}
+\setbeamertemplate{bibliography entry location}{}
+\setbeamertemplate{bibliography entry note}{}
+
+\setbeamercolor*{bibliography entry title}{fg=black}
+\setbeamercolor*{bibliography entry author}{fg=black}
+\setbeamercolor*{bibliography entry location}{fg=black}
+\setbeamercolor*{bibliography entry note}{fg=black}
+% and kill the abominable icon
+%\setbeamertemplate{bibliography item}{\color{forestgreen}$\blacktriangleright$}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+%\setbeamertemplate{bibliography item}{\theenumiv}
+
+\newcommand{\highlightred}[1]{%
+  \colorbox{red!50}{$\displaystyle#1$}}
+  
+\newcommand{\highlightyellow}[1]{%
+  \colorbox{yellow!50}{$\displaystyle#1$}}
+  
+\newcommand{\highlightgreen}[1]{%
+  \colorbox{green!50}{$\displaystyle#1$}}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{frametitle}\includegraphics[width=2ex]{freccia_trasparente_verde_foresta.png}\hspace{.5ex}~{\LARGE \textsc{\bfseries \insertsectionhead}}\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\hyphenpenalty=5000
+\tolerance=1000
+
+\graphicspath{{figures/}}
+
+\newenvironment{system}{\left\lbrace\begin{array}{@{}l@{}}}{\end{array}\right.}
+
+\newenvironment{subsystem}{\left\lgroup\begin{array}{@{}l@{}}}{\end{array}\right.}
+
+\defbeamertemplate*{title page}{customized}[1][]
+{
+\usebeamerfont{subtitle}
+\usebeamercolor[fg]{subtitle}
+
+\vspace{-1.75cm}
+
+{\center
+ \usebeamerfont{title}{\inserttitle}\par
+}
+\vspace{-.25cm}
+{\flushleft
+ \usebeamerfont{subtitle}{\small \insertsubtitle} \par
+}
+
+%\vspace{-.5cm}
+
+{\center
+\setbeamercolor{author}{bg=white,fg=Red}
+\usebeamerfont{author}{\footnotesize \insertauthor} \par}
+
+\vspace{-.2cm}
+
+{\center
+\usebeamerfont{institute}{\tiny \insertinstitute}\par }
+
+\vspace{.2cm}
+
+{\center
+\usebeamerfont{date}{\scriptsize \insertdate} \par }
+
+\vspace{0.2in}
+}
+
+
+\begin{document}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+\title{\textsc{Update 2017-07-31}}
+\author{ L. Di Stasio$^{1,2}$, Z. Ayadi$^{1}$, J. Varna$^{2}$}
+%\institute{ Science et Ing\'enierie des Mat\'eriaux et M\'etallurgie (SI2M), Institut Jean Lamour, Nancy, France\\Department of Engineering Sciences and Mathematics, Division of Materials Science, Lule\aa\ University of Technology, Lule\aa, Sweden}
+\institute{$^{1}$EEIGM, Universit\'e de Lorraine, Nancy, France\\$^{2}$Division of Materials Science, Lule\aa\ University of Technology, Lule\aa, Sweden}
+\date{July 31, 2017}
+
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
+
+\begin{withoutheadline}
+\begin{frame}
+\frametitle{Outline}
+\justifying
+\vspace*{-0.5cm}
+% \tableofcontents[hidesubsections]
+% \begin{multicols}{2}
+% \tableofcontents[hidesubsections]
+% \end{multicols}
+% \begin{columns}[t]
+%         \begin{column}{.5\textwidth}
+%             \tableofcontents[sections={1-2}]
+%         \end{column}
+%         \begin{column}{.5\textwidth}
+%             \tableofcontents[sections={3-6}]
+%         \end{column}
+%     \end{columns}
+% \end{frame}
+\tableofcontents[hidesubsections]
+\end{frame}
+\end{withoutheadline}
+
+%\note{}
+
+%\begin{frame}
+%\pagediagram
+%\end{frame}
+%% \note{}
+
+\section{Symbols, Models, Equations \& Reference Data}
+
+\subsection{Symbols}
+
+\begin{frame}
+\frametitle{\small Symbols}
+\vspace{-0.25cm}
+\footnotesize
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{table}[htbp]
+
+  \centering
+  %\caption{Single phase properties summary.}
+    \begin{tabularx}{\textwidth}{ccX}
+    \textbf{Symbol}&\textbf{Unit} & \textbf{Description} \\[3pt]
+    \midrule\\[12pt]
+	$\theta$ & $\left[^{\circ}\right]$ & Debond angular position with respect to the center of the arc defined by the debond itself\\[1.5pt]
+	$\Delta\theta$ & $\left[^{\circ}\right]$ & Debond semi-angular aperture\\[4pt]
+	$\delta$ & $\left[^{\circ}\right]$ & Angle subtended by a single element at the fiber/matrix interface\\[3pt]
+	$VF_{f}$ & $\left[-\right]$ & Fiber volume fraction\\[1.5pt]
+	$l$ & $\left[\mu m\right]$ & Ply's half-length, equal to RVE's half-length (square element)\\[3pt]
+	$u$ & $\left[\mu m\right]$ & Displacement along x\\[1.5pt]
+	$w$ & $\left[\mu m\right]$ & Displacement along z\\
+    \end{tabularx}%
+  \label{tab:phaseprop}%
+\end{table}%
+\end{frame}
+
+\begin{frame}
+\frametitle{\small Symbols}
+\vspace{-0.25cm}
+\footnotesize
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{table}[htbp]
+
+  \centering
+  %\caption{Single phase properties summary.}
+    \begin{tabularx}{\textwidth}{ccX}
+    \textbf{Symbol}&\textbf{Unit} & \textbf{Description} \\[3pt]
+    \midrule\\[12pt]
+	$\Gamma_{1}$ & $\left[-\right]$ & Bonded part of fiber surface\\[1.5pt]
+	$\Gamma_{2}$ & $\left[-\right]$ & Free (debonded) part of fiber surface\\[1.5pt]
+	$\Gamma_{3}$ & $\left[-\right]$ & Bonded part of matrix surface\\[1.5pt]
+	$\Gamma_{4}$ & $\left[-\right]$ & Free (debonded) part of matrix surface\\[1.5pt]
+    \end{tabularx}%
+  \label{tab:phaseprop}%
+\end{table}%
+\end{frame}
+
+\subsection{Reference Models}
+
+\begin{frame}
+\frametitle{\small Reference Models}
+\vspace{-0.25cm}
+\centering
+\begin{figure}
+\centering
+\includegraphics[height=0.7\textheight]{LEFM2DsRVEsFsDfreeBCULappAxialDispLR.pdf}
+\caption{\scriptsize Simple RVE, BC: free.}
+\label{fig:singleRVE-rigid}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small Reference Models}
+\vspace{-0.25cm}
+\centering
+\begin{figure}
+\centering
+\includegraphics[height=0.7\textheight]{LEFM2DsRVEsFsDdepverdispBCULappAxialDispLR.pdf}
+\caption{\scriptsize Simple RVE, BC: fixed vertical displacement.}
+\label{fig:singleRVE-rigid}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small Reference Models}
+\vspace{-0.25cm}
+\centering
+\begin{figure}
+\centering
+\includegraphics[height=0.7\textheight]{LEFM2DsRVEsFsDhomoBCULappAxialDispLR.pdf}
+\caption{\scriptsize Simple RVE, BC: fixed vertical and homogeneous horizontal displacement.}
+\label{fig:singleRVE-homo}
+\end{figure}
+\end{frame}
+
+\subsection{Angular discretization}
+
+\begin{frame}
+\frametitle{\small Angular discretization}
+\vspace{-0.7cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{mesh-disc-at-interface.pdf}
+  \caption{\scriptsize Angular discretization at fiber/matrix interface: $\delta=\frac{360^{\circ}}{4N_{\alpha}}$.}
+  \label{fig:angu-discr-def}
+\end{figure}
+\end{frame}
+
+\subsection{Material properties}
+
+\begin{frame}
+\frametitle{\small Material properties}
+\vspace{-0.7cm}
+\footnotesize
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{table}[htbp]
+
+  \centering
+  %\caption{Single phase properties summary.}
+    \begin{tabular}{cccc}
+
+    \textbf{Material} & \textbf{$E\left[GPa\right]$}\ & \textbf{$G\left[GPa\right]$} & \textbf{$\nu\left[-\right]$} \\[3pt]
+    \midrule\\[12pt]
+    Glass fiber    & 70,0  & 29,2   & 0,2  \\[16pt]
+    Epoxy    & 3,5    & 1,25   & 0,4  
+
+    \end{tabular}%
+  \label{tab:phaseprop}%
+\end{table}%
+\end{frame}
+
+\subsection{Evaluation of $G_{0}$}
+\begin{frame}
+\frametitle{\small Evaluation of $G_{0}$}
+\vspace{-0.7cm}
+\footnotesize
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{equation}
+G_{0}=\pi R_{f}\sigma^{2}_{0}\frac{1+k_{m}}{8G_{m}}
+\end{equation}
+\begin{equation}
+k_{m}=3-4\nu_{m}
+\end{equation}
+\begin{equation}
+\sigma_{0}^{undamaged}=\frac{E_{m}}{1-\nu^{2}_{m}}\varepsilon_{xx}
+\end{equation}%
+\end{frame}
+
+\subsection{VCCT}
+\begin{frame}
+\frametitle{\small Virtual Crack Closure Technique (Nodal Forces at Crack Tip)}
+\vspace{-0.5cm}
+\tiny
+\centering
+
+\begin{equation}
+\Delta u =\left|\Delta u^{matrix}_{\text{1 element before crack tip}}-\Delta u^{fiber}_{\text{1 element before crack tip}}\right|
+\end{equation}
+
+\begin{equation}
+\Delta w =\left|\Delta w^{matrix}_{\text{1 element before crack tip}}-\Delta w^{fiber}_{\text{1 element before crack tip}}\right|
+\end{equation}
+
+
+
+\begin{equation}
+\beta=\arctan{\left(\frac{z^{matrix, undef}_{\text{crack tip}}}{x^{matrix, undef}_{\text{crack tip}}}\right)}
+\end{equation}
+
+\begin{equation}
+\Delta_{r}=\cos{\left(\beta\right)}\Delta u+\sin{\left(\beta\right)}\Delta w\qquad\Delta_{\theta}=-\sin{\left(\beta\right)}\Delta u+\cos{\left(\beta\right)}\Delta w
+\end{equation}
+
+\begin{equation}
+F_{r}=\cos{\left(\beta\right)}F^{reaction}_{x}+\sin{\left(\beta\right)}F^{reaction}_{z}\qquad F_{\theta}=-\sin{\left(\beta\right)}F^{reaction}_{x}+\cos{\left(\beta\right)}F^{reaction}_{z}
+\end{equation}
+
+\begin{equation}
+G_{I}=\frac{1}{2}\frac{F_{r}\Delta_{r}}{R_{f}\delta}\qquad G_{II}=\frac{1}{2}\frac{F_{\theta}\Delta_{\theta}}{R_{f}\delta}\qquad b=1.0\leftrightarrow\Delta A = bR_{f}\delta
+\end{equation}
+\end{frame}
+
+\subsection{VCCI}
+
+\begin{frame}
+\frametitle{\small Virtual Crack Closure Integral (Stress at Surface Nodes)}
+\vspace{-0.7cm}
+\tiny
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+
+\begin{equation}
+G_{I}=\frac{1}{2\Delta A}\int_{0}^{\Delta c}\sigma_{n}\left(s\right)\delta u_{n}\left(s-\Delta c\right)ds\quad G_{II}=\frac{1}{2\Delta A}\int_{0}^{\Delta c}\tau_{sn}\left(s\right)\delta u_{s}\left(s-\Delta c\right)ds
+\end{equation}
+
+with the reference frame centered on the crack tip and rotated according to the orientation of the crack tip.
+
+\begin{equation}
+\beta=\arctan{\left(\frac{z^{matrix, undef}_{\text{crack tip}}}{x^{matrix, undef}_{\text{crack tip}}}\right)}
+\end{equation}
+
+\begin{equation}
+\Delta u^{i} =\left|\Delta u^{matrix}_{\text{i elements before crack tip}}-\Delta u^{fiber}_{\text{i elements before crack tip}}\right|
+\end{equation}
+
+\begin{equation}
+\Delta w^{i} =\left|\Delta w^{matrix}_{\text{i elements before crack tip}}-\Delta w^{fiber}_{\text{i elements before crack tip}}\right|
+\end{equation}
+
+\begin{equation}
+\Delta_{r}^{i}=\cos{\left(\beta\right)}\Delta u^{i}+\sin{\left(\beta\right)}\Delta w^{i}\qquad\Delta_{\theta}^{i}=-\sin{\left(\beta\right)}\Delta u^{i}+\cos{\left(\beta\right)}\Delta w^{i}
+\end{equation}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{\small Virtual Crack Closure Integral (Stress at Surface Nodes)}
+\vspace{-0.7cm}
+\tiny
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+
+\begin{equation}
+\sigma_{rr}^{m,i} = \sigma_{xx}^{m,\text{i elements after c.t.}}\cos^{2}{\beta}+\sigma_{zz}^{m,\text{i elements after c.t.}}\sin^{2}{\beta}+2\tau_{xz}^{m,\text{i elements after c.t.}}\sin{\beta}\cos{\beta}
+\end{equation}
+
+\begin{equation}
+\tau_{r\theta}^{m,i} = \left(\sigma_{zz}^{m,\text{i elements after crack tip}}-\sigma_{xx}^{m,\text{i elements after c.t.}}\right)\sin{\beta}\cos{\beta}+\tau_{xz}^{m,\text{i elements after c.t.}}\left(\cos^{2}{\beta}-\sin^{2}{\beta}\right)
+\end{equation}
+
+where $m$ stands for material, i.e. stresses can be extracted either on the fiber or the matrix surface.
+
+\begin{equation}
+G_{I}^{m}=\frac{1}{2 R_{f}\delta b}\sum_{i=1}^{N\ Int\ El}\frac{1}{2} R_{f}\delta\left(\sigma_{rr}^{m,i}\Delta_{r}^{i}+\sigma_{rr}^{m,i-1}\Delta_{r}^{i-1}\right)\qquad G_{II}^{m}=\frac{1}{2 R_{f}\delta b}\sum_{i=1}^{N\ Int\ El}\frac{1}{2} R_{f}\delta\left(\tau_{r\theta}^{m,i}\Delta_{\theta}^{i}+\tau_{r\theta}^{m,i-1}\Delta_{\theta}^{i-1}\right)
+\end{equation}
+
+remembering $b=1$, i.e. unit depth in the out-of-plane direction, they simplify to
+
+\begin{equation}
+G_{I}^{m}=\frac{1}{4}\left(\sigma_{rr}^{m,0}\Delta_{r}^{0}+\sum_{i=1}^{N\ Int\ El -\ 1}\left(2\sigma_{rr}^{m,i}\Delta_{r}^{i}\right)+\sigma_{rr}^{m,N\ Int\ El}\Delta_{r}^{N\ Int\ El}\right)
+\end{equation}
+
+\begin{equation}
+G_{II}^{m}=\frac{1}{4}\left(\tau_{r\theta}^{m,0}\Delta_{\theta}^{0}+\sum_{i=1}^{N\ Int\ El\ -\ 1}\left(2\tau_{r\theta}^{m,i}\Delta_{\theta}^{i}\right)+\tau_{r\theta}^{m,N\ Int\ El}\Delta_{\theta}^{N\ Int\ El}\right)
+\end{equation}
+
+\end{frame}
+
+\section{Results}
+
+\subsection{Model Data}
+\begin{frame}
+\frametitle{Model Data}
+\vspace{-0.5cm}
+\centering
+
+\begin{table}[htbp]
+
+  \centering
+  %\caption{Single phase properties summary.}
+    \begin{tabular}{cc}
+    \textbf{Quantity}&\textbf{Value} \\[3pt]
+    \midrule\\[12pt]
+	$\theta \left[^{\circ}\right]$ & $0 $\\[1.5pt]
+	$\Delta\theta \left[^{\circ}\right]$ & $\in\left[10,150\right] $\\[4pt]
+	$\delta \left[^{\circ}\right]$ & $\in\left[1,0.2\right] $\\[3pt]
+	$VF_{f} \left[-\right]$ & $7.9\cdot 10^{-5}$ \\[1.5pt]
+	$\frac{L}{R_{f}} \left[-\right]$ & $\sim 100$ \\[3pt]
+	$R_{f} \left[\mu m\right]$ & $1 $ \\[1.5pt]
+    \end{tabular}%
+  \label{tab:phaseprop}%
+\end{table}%
+
+\end{frame}
+
+% ====== > 1.0°
+
+\subsection{$\delta=1.0^{\circ}$}
+
+\begin{frame}
+\frametitle{\small $\sigma_{0}$, $\delta=1.0^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD10_sigma-inf_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{0}$, $\delta=1.0^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD10_G0_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral (Abaqus built-in routine), $\delta=1.0^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD10_J-INT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT in forces (in-house Python routine), $\delta=1.0^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD10_M-F-VCCT_Summary.pdf}
+  \caption{\scriptsize In green VCCT from FEM results, in black BEM results; positions of maxima highlighted by dashed lines.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral and VCCT in forces, $\delta=1.0^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD10_F-VCCT-JINT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, J-Integral from FEM results; in green VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\input{2017-07-25_AbqRunSummary_SmallStrain_D10_VCCI.tex}
+%%%
+% ====== > 0.9°
+
+\subsection{$\delta=0.9^{\circ}$}
+
+\begin{frame}
+\frametitle{\small $\sigma_{0}$, $\delta=0.9^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD09_sigma-inf_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{0}$, $\delta=0.9^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD09_G0_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral (Abaqus built-in routine), $\delta=0.9^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD09_J-INT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT in forces (in-house Python routine), $\delta=0.9^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD09_M-F-VCCT_Summary.pdf}
+  \caption{\scriptsize In green VCCT from FEM results, in black BEM results; positions of maxima highlighted by dashed lines.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral and VCCT in forces, $\delta=0.9^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD09_F-VCCT-JINT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, J-Integral from FEM results; in green VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\input{2017-07-25_AbqRunSummary_SmallStrain_D09_VCCI.tex}
+%%%
+% ====== > 0.8°
+
+\subsection{$\delta=0.8^{\circ}$}
+
+\begin{frame}
+\frametitle{\small $\sigma_{0}$, $\delta=0.8^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD08_sigma-inf_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{0}$, $\delta=0.8^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD08_G0_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral (Abaqus built-in routine), $\delta=0.8^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD08_J-INT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT in forces (in-house Python routine), $\delta=0.8^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD08_M-F-VCCT_Summary.pdf}
+  \caption{\scriptsize In green VCCT from FEM results, in black BEM results; positions of maxima highlighted by dashed lines.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral and VCCT in forces, $\delta=0.8^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD08_F-VCCT-JINT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, J-Integral from FEM results; in green VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\input{2017-07-25_AbqRunSummary_SmallStrain_D08_VCCI.tex}
+%%%
+% ====== > 0.7°
+
+\subsection{$\delta=0.7^{\circ}$}
+
+\begin{frame}
+\frametitle{\small $\sigma_{0}$, $\delta=0.7^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD07_sigma-inf_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{0}$, $\delta=0.7^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD07_G0_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral (Abaqus built-in routine), $\delta=0.7^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD07_J-INT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT in forces (in-house Python routine), $\delta=0.7^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD07_M-F-VCCT_Summary.pdf}
+  \caption{\scriptsize In green VCCT from FEM results, in black BEM results; positions of maxima highlighted by dashed lines.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral and VCCT in forces, $\delta=0.7^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD07_F-VCCT-JINT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, J-Integral from FEM results; in green VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\input{2017-07-25_AbqRunSummary_SmallStrain_D07_VCCI.tex}
+%%%
+% ====== > 0.6°
+
+\subsection{$\delta=0.6^{\circ}$}
+
+\begin{frame}
+\frametitle{\small $\sigma_{0}$, $\delta=0.6^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD06_sigma-inf_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{0}$, $\delta=0.6^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD06_G0_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral (Abaqus built-in routine), $\delta=0.6^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD06_J-INT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT in forces (in-house Python routine), $\delta=0.6^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD06_M-F-VCCT_Summary.pdf}
+  \caption{\scriptsize In green VCCT from FEM results, in black BEM results; positions of maxima highlighted by dashed lines.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral and VCCT in forces, $\delta=0.6^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD06_F-VCCT-JINT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, J-Integral from FEM results; in green VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\input{2017-07-25_AbqRunSummary_SmallStrain_D06_VCCI.tex}
+%%%
+% ====== > 0.5°
+
+\subsection{$\delta=0.5^{\circ}$}
+
+\begin{frame}
+\frametitle{\small $\sigma_{0}$, $\delta=0.5^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD05_sigma-inf_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{0}$, $\delta=0.5^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD05_G0_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral (Abaqus built-in routine), $\delta=0.5^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD05_J-INT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT in forces (in-house Python routine), $\delta=0.5^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD05_M-F-VCCT_Summary.pdf}
+  \caption{\scriptsize In green VCCT from FEM results, in black BEM results; positions of maxima highlighted by dashed lines.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral and VCCT in forces, $\delta=0.5^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD05_F-VCCT-JINT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, J-Integral from FEM results; in green VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\input{2017-07-25_AbqRunSummary_SmallStrain_D05_VCCI.tex}
+%%%
+% ====== > 0.4°
+
+\subsection{$\delta=0.4^{\circ}$}
+
+\begin{frame}
+\frametitle{\small $\sigma_{0}$, $\delta=0.4^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD04_sigma-inf_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{0}$, $\delta=0.4^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD04_G0_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral (Abaqus built-in routine), $\delta=0.4^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD04_J-INT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT in forces (in-house Python routine), $\delta=0.4^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD04_M-F-VCCT_Summary.pdf}
+  \caption{\scriptsize In green VCCT from FEM results, in black BEM results; positions of maxima highlighted by dashed lines.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT, percentual error on BEM, $\delta=0.4^{\circ}$}
+\vspace{-0.5cm}
+\scriptsize
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{table}[htbp]
+  \centering
+  %\caption{Single phase properties summary.}
+    \begin{tabular}{cccc}
+    $\Delta\theta \left[^{\circ}\right]$&$\frac{\frac{G_{I}}{G_{0}}|_{FEM}-\frac{G_{I}}{G_{0}}|_{BEM}}{\frac{G_{I}}{G_{0}}|_{BEM}}$&$\frac{\frac{G_{II}}{G_{0}}|_{FEM}-\frac{G_{II}}{G_{0}}|_{BEM}}{\frac{G_{II}}{G_{0}}|_{BEM}}$&$\frac{\frac{G_{TOT}}{G_{0}}|_{FEM}-\frac{G_{TOT}}{G_{0}}|_{BEM}}{\frac{G_{TOT}}{G_{0}}|_{BEM}}$\\
+    \midrule\\
+	$10$&$11.84\%$&$-45.09\%$&$0.06\%$\\
+	$20$&$26.79\%$&$-28.36\%$&$2.95\%$\\
+	$30$&$48.73\%$&$-19.81\%$&$4.31\%$\\
+	$40$&$77.24\%$&$-12.93\%$&$2.20\%$\\
+	$50$&$181.34\%$&$-6.75\%$&$2.04\%$\\
+	$60$&$1084.50\%$&$0.68\%$&$2.78\%$\\
+	$70$&&$3.99\%$&$3.93\%$\\
+	$80$&&$4.79\%$&$4.61\%$\\
+	$90$&&$5.62\%$&$6.07\%$\\
+	$100$&&$6.18\%$&$6.59\%$\\
+	$110$&&$3.83\%$&$5.37\%$\\
+	$120$&&$1.31\%$&$-2.40\%$\\
+	$130$&&$-4.97\%$&$-9.28\%$\\
+	$140$&&$-30.42\%$&$-29.99\%$\\
+	$150$&&$-61.36\%$&$-14.84\%$\\
+    \end{tabular}%
+  \label{tab:phaseprop}%
+\end{table}%
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral and VCCT in forces, $\delta=0.4^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD04_F-VCCT-JINT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, J-Integral from FEM results; in green VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\input{2017-07-25_AbqRunSummary_SmallStrain_D04_VCCI.tex}
+%%%
+% ====== > 0.3°
+
+\subsection{$\delta=0.3^{\circ}$}
+
+\begin{frame}
+\frametitle{\small $\sigma_{0}$, $\delta=0.3^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD03_sigma-inf_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{0}$, $\delta=0.3^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD03_G0_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral (Abaqus built-in routine), $\delta=0.3^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD03_J-INT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT in forces (in-house Python routine), $\delta=0.3^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD03_M-F-VCCT_Summary.pdf}
+  \caption{\scriptsize In green VCCT from FEM results, in black BEM results; positions of maxima highlighted by dashed lines.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT, percentual error on BEM, $\delta=0.3^{\circ}$}
+\vspace{-0.5cm}
+\scriptsize
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{table}[htbp]
+  \centering
+  %\caption{Single phase properties summary.}
+    \begin{tabular}{cccc}
+    $\Delta\theta \left[^{\circ}\right]$&$\frac{\frac{G_{I}}{G_{0}}|_{FEM}-\frac{G_{I}}{G_{0}}|_{BEM}}{\frac{G_{I}}{G_{0}}|_{BEM}}$&$\frac{\frac{G_{II}}{G_{0}}|_{FEM}-\frac{G_{II}}{G_{0}}|_{BEM}}{\frac{G_{II}}{G_{0}}|_{BEM}}$&$\frac{\frac{G_{TOT}}{G_{0}}|_{FEM}-\frac{G_{TOT}}{G_{0}}|_{BEM}}{\frac{G_{TOT}}{G_{0}}|_{BEM}}$\\
+    \midrule\\
+	$10$&$11.91\%$&$-39.86\%$&$1.23\%$\\
+	$20$&$24.60\%$&$-26.37\%$&$2.56\%$\\
+	$30$&$44.60\%$&$-16.55\%$&$4.97\%$\\
+	$40$&$73.27\%$&$-12.54\%$&$1.86\%$\\
+	$50$&$154.60\%$&$-5.10\%$&$2.35\%$\\
+	$60$&$955.70\%$&$1.01\%$&$2.87\%$\\
+	$70$&&$3.99\%$&$4.01\%$\\
+	$80$&&$4.79\%$&$4.83\%$\\
+	$90$&&$5.62\%$&$5.66\%$\\
+	$100$&&$6.18\%$&$6.22\%$\\
+	$110$&&$3.83\%$&$3.38\%$\\
+	$120$&&$1.31\%$&$-4.08\%$\\
+	$130$&&$-4.97\%$&$-10.17\%$\\
+	$140$&&$-30.42\%$&$-34.90\%$\\
+	$150$&&$-61.36\%$&$-0.52\%$\\
+    \end{tabular}%
+  \label{tab:phaseprop}%
+\end{table}%
+\end{frame}
+
+\begin{frame}
+\frametitle{\small J-Integral and VCCT in forces, $\delta=0.3^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD03_F-VCCT-JINT_Summary.pdf}
+  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, J-Integral from FEM results; in green VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\input{2017-07-25_AbqRunSummary_SmallStrain_D03_VCCI.tex}
+%%%
+% ====== > 0.2°
+
+\subsection{$\delta=0.2^{\circ}$}
+
+\begin{frame}
+\frametitle{\small $\sigma_{0}$, $\delta=0.2^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD02_sigma-inf_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{0}$, $\delta=0.2^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD02_G0_Summary.pdf}
+  \caption{\scriptsize In red small strain FEM, in black analytical plain strain value.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{\small J-Integral (Abaqus built-in routine), $\delta=0.2^{\circ}$}
+%\vspace{-0.5cm}
+%\centering
+%\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+%\begin{figure}[!h]
+%\centering
+%\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD02_J-INT_Summary.pdf}
+%  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, FEM results; in black BEM results.}
+%  \label{fig:res1}
+%\end{figure}
+%\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT in forces (in-house Python routine), $\delta=0.2^{\circ}$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD02_M-F-VCCT_Summary.pdf}
+  \caption{\scriptsize In green VCCT from FEM results, in black BEM results; positions of maxima highlighted by dashed lines.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small VCCT, percentual error on BEM, $\delta=0.2^{\circ}$}
+\vspace{-0.5cm}
+\scriptsize
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{table}[htbp]
+  \centering
+  %\caption{Single phase properties summary.}
+    \begin{tabular}{cccc}
+    $\Delta\theta \left[^{\circ}\right]$&$\frac{\frac{G_{I}}{G_{0}}|_{FEM}-\frac{G_{I}}{G_{0}}|_{BEM}}{\frac{G_{I}}{G_{0}}|_{BEM}}$&$\frac{\frac{G_{II}}{G_{0}}|_{FEM}-\frac{G_{II}}{G_{0}}|_{BEM}}{\frac{G_{II}}{G_{0}}|_{BEM}}$&$\frac{\frac{G_{TOT}}{G_{0}}|_{FEM}-\frac{G_{TOT}}{G_{0}}|_{BEM}}{\frac{G_{TOT}}{G_{0}}|_{BEM}}$\\
+    \midrule\\
+	$10$&$11.41\%$&$-32.33\%$&$2.44\%$\\
+	$20$&$21.51\%$&$-23.07\%$&$2.24\%$\\
+	$30$&$39.40\%$&$-13.34\%$&$5.22\%$\\
+	$40$&$62.43\%$&$-10.19\%$&$1.99\%$\\
+	$50$&$131.80\%$&$-4.28\%$&$2.06\%$\\
+	$60$&$712.56\%$&$1.64\%$&$3.03\%$\\
+	$70$&&$4.05\%$&$4.06\%$\\
+	$80$&&$5.02\%$&$5.05\%$\\
+	$90$&&$5.69\%$&$5.71\%$\\
+	$100$&&$5.83\%$&$5.86\%$\\
+	$110$&&$4.45\%$&$3.97\%$\\
+	$120$&&$1.55\%$&$-3.88\%$\\
+	$130$&&$-6.42\%$&$-11.60\%$\\
+	$140$&&$-28.46\%$&$-33.11\%$\\
+	$150$&&$-67.88\%$&$-0.52\%$\\
+    \end{tabular}%
+  \label{tab:phaseprop}%
+\end{table}%
+\end{frame}
+
+%\begin{frame}
+%\frametitle{\small J-Integral and VCCT in forces, $\delta=0.2^{\circ}$}
+%\vspace{-0.5cm}
+%\centering
+%\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+%\begin{figure}[!h]
+%\centering
+%\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrainD02_F-VCCT-JINT_Summary.pdf}
+%  \caption{\scriptsize Fading from blue to red for contours further from the crack tip, J-Integral from FEM results; in green VCCT from FEM results; in black BEM results.}
+%  \label{fig:res1}
+%\end{figure}
+%\end{frame}
+
+% =======> Summary
+
+\subsection{Summary}
+
+\begin{frame}
+\frametitle{\small $G_{I}$, VCCT in forces}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GI.pdf}
+  \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{I}$ Error with respect to BEM, VCCT in forces}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GI_ERR.pdf}
+  \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{II}$, VCCT in forces}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GII.pdf}
+  \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{II}$ Error with respect to BEM, VCCT in forces}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GII_ERR.pdf}
+  \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{TOT}$, VCCT in forces}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GTOT.pdf}
+  \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{TOT}$ Error with respect to BEM, VCCT in forces}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GTOT_ERR.pdf}
+  \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\section{Summary \& Conclusion}
+
+\begin{frame}
+\frametitle{\small Summary}
+\vspace{-0.5cm}
+\centering
+\begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}  
+\item Implemented Virtual Crack Closure Integral (VCCI) method for the calculation of $G_{I}$ and $G_{II}$
+\item Analysis of free infinite RVE ($\frac{L}{R_{f}}\sim 100$) for several mesh refinements $\delta\in\left[1.0^{\circ},0.2^{\circ}\right]$
+\item $G_{I}$,$G_{II}$ and $G_{TOT}$ calculated using Abaqus built-in J-Integral routine, in-house implemented VCCT and VCCI routines
+\end{list}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small Conclusion}
+\vspace{-0.5cm}
+\centering
+\begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}  
+\item Good agreement of J-Integral results with $G_{TOT}$ from BEM
+\item J-Integral convergence improves refining the mesh
+\item For $\delta=0.4^{\circ},0.3^{\circ},0.2^{\circ}$ maxima are at the right angle ($20^{\circ}$ for $G_{I}$, $60^{\circ}$ for $G_{II}$ and $G_{TOT}$) with in-house VCCT
+\item $G_{TOT}$ relative errors of VCCT over BEM are small ($\sim 5\%$ or less) for every $\Delta\theta$
+\item $G_{II}$ relative errors of VCCT over BEM are small ($\sim 5\%$ or less) for $\Delta\theta > 40^{\circ}$
+\item Results tend to converge to BEM values as the mesh is refined
+\end{list}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small Conclusion}
+\vspace{-0.5cm}
+\centering
+\begin{list}{\Huge\textcolor{red}{$\mathbf{\times}$}}{}  
+\item $G_{I}$ relative errors of VCCT over BEM are high ($>10\%$)
+\item $G_{II}$ relative errors of VCCT over BEM are high ($>10\%$) for $\Delta\theta \leq 40^{\circ}$
+\item $G_{I}$ of VCCI has correct functional form but values are overestimated (except for very small integration lengths)
+\item $G_{II}$ (and consequently $G_{TOT}$) of VCCI provides strange results
+\end{list}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small Next steps}
+\vspace{-0.5cm}
+\centering
+\begin{itemize}[label=\ding{212}]
+\item New analysis with $\delta=0.05^{\circ}$ to see if a better agreement of $G_{I}$ values is attained
+\end{itemize}
+\end{frame}
+
+%\section{Appendices \& References}
+%
+%\subsection{Appendices}
+%
+%
+%%\end{frame}
+%
+%\subsection{References}
+%
+%\begin{frame}[allowframebreaks]
+%  \frametitle{References}
+%    
+%  \begin{thebibliography}{10}
+%    
+%%  \beamertemplatebookbibitems
+%%  % Start with overview books.
+%%
+%%  \bibitem{Author1990}
+%%    A.~Author.
+%%    \newblock {\em Handbook of Everything}.
+%%    \newblock Some Press, 1990.
+% 
+%    
+%  \beamertemplatearticlebibitems
+%  % Followed by interesting articles. Keep the list short. 
+%
+%\bibitem{DonaldL.Flaggs1982}
+%Donald L. Flaggs, Murat H. Kural;
+%\newblock {\em Experimental Determination of the In Situ Transverse Lamina Strength in Graphite/Epoxy Laminates.}
+%\newblock Journal of Composite Materials, vol. 16, n. 2, 1982.
+%
+%\bibitem{Parvizi1978}
+%Parvizi A., Bailey J.E;
+%\newblock {\em On multiple transverse cracking in glass fibre epoxy cross-ply laminates.}
+%\newblock Journal of Materials Science, 1978; 13:2131-2136.
+%
+%\bibitem{herraez2015}
+%Miguel Herr\'aez, Diego Mora, Fernando Naya, Claudio S. Lopes, Carlos Gonz\'alez, Javier LLorca;
+%\newblock {\em Transverse cracking of cross-ply laminates: A computational micromechanics perspective.}
+%\newblock Composites Science and Technology, 2015; 110:196-204.
+%
+%\bibitem{Canal2012}
+%Luis Pablo Canal, Carlos Gonz\'alez, Javier Segurado, Javier LLorca;
+%\newblock {\em Intraply fracture of fiber-reinforced composites: Microscopic mechanisms and modeling.}
+%\newblock Composites Science and Technology, 2012; 72(11):1223-1232.
+%
+%\bibitem{StephenW.Tsai2005}
+%Stephen W. Tsai;
+%\newblock {\em Thin ply composites.}
+%\newblock JEC Magazine 18, 2005.
+%
+%
+%\bibitem{ZnedekP.Bazant2002}
+%Znedek P. Bazant;
+%\newblock {\em Size Effect Theory and its Application to Fracture of Fiber Composites and Sandwich Plates.} 
+%\newblock in Continuum Damage Mechanics of Materials and Structures, eds. O. Allix and F. Hild, 2002.
+%
+%
+%\bibitem{RobinAmacherWayneSmithClemensDransfeldJohnBotsis2014}
+%Robin Amacher, Wayne Smith, Clemens Dransfeld, John Botsis, Jo\"el Cugnoni;
+%\newblock {\em Thin Ply: from Size-Effect Characterization to Real Life Design}
+%\newblock CAMX 2014, 2014
+%
+%\bibitem{RalfCuntze}
+%Ralf Cuntze;
+%\newblock {\em The  World-Wide-Failure-Exercises -I  and - II for UD-materials.}
+%
+%
+%\bibitem{Pinho}
+%Pinho, S. T. and Pimenta, S.;
+%\newblock {\em Size Effects on the Strength and Toughness of Fibre-Reinforced Composites.}
+%
+%\bibitem{PedroP.CamanhoCarlosG.DavilaSilvestreT.PinhoLorenzoIannucci2006}
+%Pedro P. Camanho, Carlos G. D\'avila, Silvestre T. Pinho, Lorenzo Iannucci, Paul Robinson;
+%\newblock {\em Prediction of in situ strengths and matrix cracking in composites under transverse tension and in-plane shear.}
+%\newblock Composites Part A: Applied Science and Manufacturing, vol. 37, n. 2, 2006.
+%
+%\bibitem{P.P.CamanhoP.Maimi2007}
+%P.P. Camanho, P. Maim\'i, C.G. D\'avila;
+%\newblock {\em Prediction of size effects in notched laminates using continuum damage mechanics.}
+%\newblock Composites Science and Technology, vol. 67, n. 13, 2007.
+%
+%\bibitem{Nairn1992}
+%J. A. Nairn;
+%\newblock {\em The Initiation and Growth of Delaminations Induced by Matrix Microcracks in Laminated Composites.}
+%\newblock International Journal of Fracture, vol. 57, 1992.
+%
+%\bibitem{JoelCugnoniRobinAmacher2013}
+%Joel Cugnoni , Robin Amacher, John Botsis;
+%\newblock {\em Thin ply technology advantages. An overview of the TPT-TECA project.}
+%\newblock 2014.
+%
+%
+%  \end{thebibliography}
+%\end{frame}
+
+\begin{frame}[plain]
+\frametitle{}
+\end{frame}
+
+\end{document}
+

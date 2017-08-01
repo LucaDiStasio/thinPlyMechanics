@@ -1,44 +1,66 @@
 # after it, everything is a comment
-# keyword START: highlights the start of a block of data to be parsed together
-# keyword END: highlights the end of a block of data to be parsed together
+# keyword START + block name + : (with colon) highlights the start of a block of data to be parsed together
+# keyword END + block name + : (with colon) highlights the end of a block of data to be parsed together
 # the order of data blocks is not important
 
-START: PARAMETERS SUMMARY
+START SECTION: I/O MANAGEMENT
+WORKING DIRECTORY: D:/01_Luca/07_Data/03_FEM/CurvedInterface
+MATERIAL DATA FOLDER: D:/OneDrive/01_Luca/07_DocMASE/07_Data/02_Material-Properties # if not provided, it is set equal to the working directory
+POSTPROCESSING SETTINGS FOLDER: # if not provided, it is set equal to the working directory
+NOTIFICATION EMAILS SETTINGS FOLDER: D:/OneDrive/01_Luca/07_DocMASE/06_WD # if not provided, it is set equal to the working directory
+STATUS FILE: # if not provided, created by the program
+END SECTION: I/O MANAGEMENT
+
+START SECTION: SOFTWARE
+RUN PREPROCESSOR: YES
+PREPROCESSOR PLATFORM: matlab  # matlab and octave available, python and C++ to be available in future releases
+PREPROCESSOR CALL: projectName=rve_mesh_create_project
+RUN SOLVER: YES
+SOLVER PLATFORM: abaqus # abaqus available, Calculix, Ansys and Code Aster to be soon available
+SOLVER CALL: abaqus standard
+RUN POSTPROCESSOR: NO
+POSTPROCESSOR PLATFORM: abaqus python
+POSTPROCESSOR CALL: D:/OneDrive/01_Luca/07_DocMASE/06_WD/thinPlyMechanics/python/extractFromODBoutput.py
+END SECTION: SOFTWARE
+
+START SECTION: PARAMETERS SUMMARY
 TOTAL NUMBER OF PREPROCESSOR PARAMETERS: 44
 TOTAL NUMBER OF SOLVER PARAMETERS: 2
 TOTAL NUMBER OF POSTPROCESSOR PARAMETERS: 0
 ITERABLE PREPROCESSOR PARAMETERS: 1
 ITERABLE SOLVER PARAMETERS: 0
 ITERABLE POSTPROCESSOR PARAMETERS: 0
-END: PARAMETERS SUMMARY
+END SECTION: PARAMETERS SUMMARY
 
-START:
-PREPROCESSOR PLATFORM: matlab
-PREPROCESSOR FUNCTION CALL: projectName=rve_mesh_create_project
-
-END:
-
+START SECTION: UNITS OF MEASUREMENT
 TOTAL NUMBER OF UNIT CONVERSION FACTORS: 15
-           UNIT, POSITION IN VECTOR, VALUE,     CATEGORY,     TYPE,    RANGE,                                                        DESCRIPTION,  NOTES
-     lengthUnit,                  0,    -6,   FEM Solver,  Integer, [-24;24],                     Integer exponent for unit conversion of length,
-       massUnit,                  1,     0,   FEM Solver,  Integer, [-24;24],                       Integer exponent for unit conversion of mass,
-       timeUnit,                  2,     0,   FEM Solver,  Integer, [-24;24],                       Integer exponent for unit conversion of time,
-      forceUnit,                 14,    -6,   FEM Solver,  Integer, [-24;24],                      Integer exponent for unit conversion of force,
-     elcurrUnit,                  3,     0,   FEM Solver,  Integer, [-24;24],           Integer exponent for unit conversion of electric current,
-       tempUnit,                  4,     0,   FEM Solver,  Integer, [-24;24],                Integer exponent for unit conversion of temperature,
-       moleUnit,                  5,     0,   FEM Solver,  Integer, [-24;24],             Integer exponent for unit conversion of amount of mass,
-     lumintUnit,                  6,     0,   FEM Solver,  Integer, [-24;24],         Integer exponent for unit conversion of luminous intensity,
-    densityUnit,                  7,    18,   FEM Solver,  Integer, [-24;24],                    Integer exponent for unit conversion of density,
-     stressUnit,                  8,     6,   FEM Solver,  Integer, [-24;24],                     Integer exponent for unit conversion of stress,
-   thermexpUnit,                  9,     0,   FEM Solver,  Integer, [-24;24],          Integer exponent for unit conversion of thermal expansion,
-  thermcondUnit,                 10,     0,   FEM Solver,  Integer, [-24;24],       Integer exponent for unit conversion of thermal conductivity,
-   specheatUnit,                 11,     0,   FEM Solver,  Integer, [-24;24],              Integer exponent for unit conversion of specific heat,
- fracttoughUnit,                 12,     0,   FEM Solver,  Integer, [-24;24],        Integer exponent for unit conversion of energy release rate,
-interfstiffUnit,                 13,    12,   FEM Solver,  Integer, [-24;24],        Integer exponent for unit conversion of interface stiffness,
-END UNIT CONVERSION FACTORS
 CALLING ORDER NUMBER OF UNIT CONVERSION FACTORS: 30
+START TABLE: UNITS OF MEASUREMENT
+           UNIT, VALUE,     TYPE,    RANGE,                                                        DESCRIPTION,  NOTES
+     lengthUnit,    -6,  Integer, [-24;24],                     Integer exponent for unit conversion of length,
+       massUnit,     0,  Integer, [-24;24],                       Integer exponent for unit conversion of mass,
+       timeUnit,     0,  Integer, [-24;24],                       Integer exponent for unit conversion of time,
+      forceUnit,    -6,  Integer, [-24;24],                      Integer exponent for unit conversion of force,
+     elcurrUnit,     0,  Integer, [-24;24],           Integer exponent for unit conversion of electric current,
+       tempUnit,     0,  Integer, [-24;24],                Integer exponent for unit conversion of temperature,
+       moleUnit,     0,  Integer, [-24;24],             Integer exponent for unit conversion of amount of mass,
+     lumintUnit,     0,  Integer, [-24;24],         Integer exponent for unit conversion of luminous intensity,
+    densityUnit,    18,  Integer, [-24;24],                    Integer exponent for unit conversion of density,
+     stressUnit,     6,  Integer, [-24;24],                     Integer exponent for unit conversion of stress,
+   thermexpUnit,     0,  Integer, [-24;24],          Integer exponent for unit conversion of thermal expansion,
+  thermcondUnit,     0,  Integer, [-24;24],       Integer exponent for unit conversion of thermal conductivity,
+   specheatUnit,     0,  Integer, [-24;24],              Integer exponent for unit conversion of specific heat,
+ fracttoughUnit,     0,  Integer, [-24;24],        Integer exponent for unit conversion of energy release rate,
+interfstiffUnit,    12,  Integer, [-24;24],        Integer exponent for unit conversion of interface stiffness,
+END TABLE: UNITS OF MEASUREMENT
+END SECTION: UNITS OF MEASUREMENT
 
-START PREPROCESSOR PARAMETERS
+START SECTION: PREPROCESSOR DATA
+START SECTION: GEOMETRY
+START SECTION: INCLUSIONS
+
+END SECTION: INCLUSIONS
+END SECTION: GEOMETRY
         PARAMETER, CALLING ORDER, IS ITERABLE, ITERATION ORDER,                                                 INITIAL VALUE,  FINAL VALUE,  INCREMENT,         CATEGORY,     TYPE,                  RANGE,                                                                                 DESCRIPTION,  NOTES
            folder,             0,          No,              -1,          H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface,             ,           ,   I/O Management,   String,         [1;2;3;4],                                              Target folder where the project will be initialized,
       matDBfolder,             1,          No,              -1, D:\OneDrive\01_Luca\07_DocMASE\07_Data\02_Material-Properties,             ,           ,   I/O Management,   String,         [1;2;3;4],                                                            Folder with material definition files,
@@ -83,7 +105,7 @@ interfaceFriction,            24,          No,              -1,                 
        requestFIL,            41,          No,              -1,                                                             0,             ,           ,    Abaqus option,  Boolean, True/False or 1/0,                                                              True to request output to .fil file,
        requestODB,            42,          No,              -1,                                                             1,             ,           ,    Abaqus option,  Boolean, True/False or 1/0,                                                              True to request output to .odb file,
          nContInt,            43,          No,              -1,                                                            20,             ,           ,    Abaqus option,  Integer,              [>0],                                               Number of contours for contour integral evaluation,
-END PREPROCESSOR PARAMETERS
+END SECTION: PREPROCESSOR DATA
 
 FEM SOLVER PLATFORM: abaqus analysis
 START FEM SOLVER PARAMETERS

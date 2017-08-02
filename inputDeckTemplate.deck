@@ -58,8 +58,19 @@ END SECTION: UNITS OF MEASUREMENT
 START SECTION: PREPROCESSOR DATA
 START SECTION: GEOMETRY
 START SECTION: INCLUSIONS
+NUMBER OF INCLUSIONS: 2 # any integer >= 0
+START SECTION: INCLUSION
+INCLUSION NUMBER: 1
 
+END SECTION: INCLUSION
+START SECTION: INCLUSION
+INCLUSION NUMBER: 2
+
+END SECTION: INCLUSION
 END SECTION: INCLUSIONS
+START SECTION: DOMAIN
+
+END SECTION: DOMAIN
 END SECTION: GEOMETRY
         PARAMETER, CALLING ORDER, IS ITERABLE, ITERATION ORDER,                                                 INITIAL VALUE,  FINAL VALUE,  INCREMENT,         CATEGORY,     TYPE,                  RANGE,                                                                                 DESCRIPTION,  NOTES
            folder,             0,          No,              -1,          H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface,             ,           ,   I/O Management,   String,         [1;2;3;4],                                              Target folder where the project will be initialized,

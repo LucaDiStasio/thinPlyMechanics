@@ -31,8 +31,10 @@ Tested with Python 2.7 Anaconda 2.4.1 (64-bit) distribution in Windows 7.
 
 '''
 
-from os import listdir
+from os import listdir, makedirs, remove
 from os.path import isfile, join
+from shutil import copyfile
+import errno
 import sys
 import getopt
 from datetime import datetime
@@ -43,6 +45,15 @@ import math
 import subprocess
 import win32com.client
 from sendStatusEmail import *
+
+def intToPaddedString(anInteger,numOfDigits):
+    rawString = str(anInteger)
+    resString = ''
+    stringLength = len(rawString)
+    if stringLength<numOfDigits:
+        for i in range(0,numOfDigits-stringLength):
+            rawString = '0' + rawString
+    return rawString
 
 def writeLineToLogFile(logFileFullPath,mode,line,toScreen):
     with open(logFileFullPath,mode) as log:
@@ -153,6 +164,62 @@ def readSOFTdataFromInputDeck(deckFullPath):
     data = parseAndAssignToDict(lines,keys,labels)
     return data
 
+def createDeckParametricVariations(folder,prefix,deckFullPath):
+    deckparDir = join(folder,'deckpar')
+    try:
+        os.makedirs(deckparDir)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
+    rawIterables = [] # i-th element is a list: [iterationOrder,line number,list of values formatted as strings]
+    with open(deckFullPath,'r') as deck:
+        lines = deck.readlines()
+    deckparCopy = join(deckparDir,prefix + '_nosubs' + '.deckpar')
+    with open(deckparCopy,'w') as deck:
+        for l,line in enumerate(lines):
+            deck.write(line)
+            if 'LIST' in line:
+                valueList = line.replace('\n','').split('#')[0].split(',')[3].replace('[','').replace(']','').split(' ')
+                iterationOrder =int(line.replace('\n','').split('#')[0].split(',')[4])
+                iterables.append([iterationOrder,l,valueList])
+    iterables = []
+    for i in range(0,len(rawIterables)):
+        iterables.append([])
+    for iterable in rawIterables:
+        iterables[iterable[0]] = iterable[1:]
+    for i,iterable in iterables:
+        dirContents = listdir(deckparDir)
+        deckPars = []
+        for content in dirContents:
+            if isfile(content) and '.deckpar' in content:
+                deckPars.append(content)
+        for v,value in enumerate(iterable[1]): # create a copy of each file in list deckPars with the parameter at line iterables[0] substituted by value
+            for f,filename in enumerate(deckPars):
+                newFilename = prefix + '_p' + intToPaddedString(i,4) + '_v' + intToPaddedString(v,4) + '_f' + intToPaddedString(f,4) + '.deckpar'
+                with open(join(deckparDir,filename),'r') as deck:
+                    lines = deck.readlines()
+                if '#' in lines[iterable[0]]:
+                    lines[iterable[0]] = lines[iterable[0]].split(',')[0] + ',' + lines[iterable[0]].split(',')[1] + ', SINGLE, ' + value + ' # ' + lines[iterable[0]].split('#')[1]
+                else:
+                    lines[iterable[0]] = lines[iterable[0]].split(',')[0] + ',' + lines[iterable[0]].split(',')[1] + ', SINGLE, ' + value + '\n'
+                with open(join(deckparDir,newFilename),'w') as deck:
+                    for line in lines:
+                        deck.write(line)
+        for deck in deckPars:
+            remove(join(deckparDir,deck))
+    dirContents = listdir(deckparDir)
+    deckPars = []
+    for content in dirContents:
+        if isfile(content) and '.deckpar' in content:
+            deckPars.append(content)
+    numDigits = len(str(len(deckPars)))
+    for d,deck in enumerate(deckPars):
+        newFilename = prefix + '_' + intToPaddedString(d,numDigits) + '.deckpar'
+        copyfile(join(deckparDir,deck),join(deckparDir,newFilename))
+        remove(join(deckparDir,deck))
+
+def createDeckParametricVariations(folder):
+
 
 def main(argv):
 
@@ -193,10 +260,12 @@ def main(argv):
             if len(parts) > 1:
                 inputfile = arg
                 subparts = parts[0].split('_')
+                filePrefix = subparts[0] + '_FemParametricRun_'
                 logfile = subparts[0] + '_FemParametricRun_' + datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.log'
             else:
                 inputfile = arg + '.deck'
                 subparts = arg.split('_')
+                filePrefix = subparts[0] + '_FemParametricRun_'
                 logfile = subparts[0] + '_FemParametricRun_' + datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.log'
         elif opt in ("-d", "--inpdir", "--inputdirectory", "--idir"):
             if arg[-1] != '/':
@@ -283,6 +352,7 @@ def main(argv):
 
     # starting simulation pipe
     if isPreprocessorOn:
+        # sending notification email
         skipLineToLogFile(logFilePath,'a',True)
         writeLineToLogFile(logFilePath,'a','Sending notification email ...',True)
         try:
@@ -293,6 +363,7 @@ def main(argv):
         except Exception, error:
             writeErrorToLogFile(logFilePath,'a',Exception,error,True)
             sys.exc_clear()
+        # creating status file
         skipLineToLogFile(logFilePath,'a',True)
         writeLineToLogFile(logFilePath,'a','Creating status file ...',True)
         try:
@@ -305,14 +376,63 @@ def main(argv):
             skipLineToLogFile(logFilePath,'a',True)
             writeLineToLogFile(logFilePath,'a','Sending notification email ...',True)
             try:
-                subject = '[FEM PARAMETRIC RUN] Preprocessor terminated'
-                message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nPreprocessor terminated.'
+                subject = '[FEM PARAMETRIC RUN] ERROR'
+                message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nAn error occurred:\n' + str(Exception) + '\n' + str(error) + '\n\nPreprocessor terminated.'
                 sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
                 writeLineToLogFile(logFilePath,'a','...done.',True)
             except Exception, error:
                 writeErrorToLogFile(logFilePath,'a',Exception,error,True)
                 sys.exc_clear()
             sys.exit(2)
+         # reading input deck and creating its parametric variations in folder inputdir/logFolder/deckpar
+         skipLineToLogFile(logFilePath,'a',True)
+         writeLineToLogFile(logFilePath,'a','Reading input deck and creating its parametric variations in folder ' + str(join(logFolder,'deckpar')) + ' ...',True)
+         try:
+             createDeckParametricVariations(logFolder,filePrefix,inputDeckFullPath)
+             writeLineToLogFile(logFilePath,'a','...done.',True)
+         except Exception, error:
+             writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+             skipLineToLogFile(logFilePath,'a',True)
+             writeLineToLogFile(logFilePath,'a','Sending notification email ...',True)
+             try:
+                 subject = '[FEM PARAMETRIC RUN] ERROR'
+                 message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nAn error occurred:\n' + str(Exception) + '\n' + str(error) + '\n\nPreprocessor terminated.'
+                 sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+                 writeLineToLogFile(logFilePath,'a','...done.',True)
+             except Exception, error:
+                 writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+                 sys.exc_clear()
+             sys.exit(2)
+         # reading the parametric variations of the input file in folder inputdir/logFolder/deckpar and generating the random entries, if any is present
+         skipLineToLogFile(logFilePath,'a',True)
+         writeLineToLogFile(logFilePath,'a','Reading the parametric variations of the input file in folder ' + str(join(logFolder,'deckpar')) + ' and generating the random entries, if any is present ...',True)
+         try:
+             createRandomEntries(logFolder)
+             writeLineToLogFile(logFilePath,'a','...done.',True)
+         except Exception, error:
+             writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+             skipLineToLogFile(logFilePath,'a',True)
+             writeLineToLogFile(logFilePath,'a','Sending notification email ...',True)
+             try:
+                 subject = '[FEM PARAMETRIC RUN] ERROR'
+                 message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nAn error occurred:\n' + str(Exception) + '\n' + str(error) + '\n\nPreprocessor terminated.'
+                 sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+                 writeLineToLogFile(logFilePath,'a','...done.',True)
+             except Exception, error:
+                 writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+                 sys.exc_clear()
+             sys.exit(2)
+         # sending notification email
+         skipLineToLogFile(logFilePath,'a',True)
+         writeLineToLogFile(logFilePath,'a','Sending notification email ...',True)
+         try:
+             subject = '[FEM PARAMETRIC RUN] Preprocessing step completed'
+             message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nStarting preprocessor.'
+             sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+             writeLineToLogFile(logFilePath,'a','...done.',True)
+         except Exception, error:
+             writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+             sys.exc_clear()
     if isSolverOn:
         subject = '[FEM PARAMETRIC RUN] Solver starts'
         message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nStarting solver.'

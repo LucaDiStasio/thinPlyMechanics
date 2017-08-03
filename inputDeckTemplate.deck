@@ -56,22 +56,41 @@ END TABLE: UNITS OF MEASUREMENT
 END SECTION: UNITS OF MEASUREMENT
 
 START SECTION: PREPROCESSOR DATA
-START SECTION: GEOMETRY
+START SECTION: MODEL
+SPACE DIMENSION: 2D # other options are 3D, Quasi-3D
 START SECTION: INCLUSIONS
 NUMBER OF INCLUSIONS: 2 # any integer >= 0
-START SECTION: INCLUSION
-INCLUSION NUMBER: 1
+START SECTION: INCLUSION 1
+BELONGS TO DOMAIN: 1
 
-END SECTION: INCLUSION
-START SECTION: INCLUSION
-INCLUSION NUMBER: 2
+MATERIAL: GF # material name should be equal to the corresponding filename in the material data folder
+END SECTION: INCLUSION 1
+START SECTION: INCLUSION 2
+BELONGS TO DOMAIN: 1
 
-END SECTION: INCLUSION
+
+END SECTION: INCLUSION 2
 END SECTION: INCLUSIONS
-START SECTION: DOMAIN
+START SECTION: DOMAINS
+NUMBER OF DOMAINS: 2 # any integer >= 0
+START SECTION: DOMAIN 1
 
-END SECTION: DOMAIN
-END SECTION: GEOMETRY
+END SECTION: DOMAIN 1
+START SECTION: DOMAIN 2
+
+END SECTION: DOMAIN 2
+END SECTION: DOMAINS
+START SECTION: INTERFACES
+NUMBER OF INTERFACES: 2 # any integer >= 0
+START SECTION: INTERFACE 1
+
+END SECTION: INTERFACE 1
+START SECTION: INTERFACE 2
+
+END SECTION: INTERFACE 2
+END SECTION: INTERFACES
+END SECTION: MODEL
+
         PARAMETER, CALLING ORDER, IS ITERABLE, ITERATION ORDER,                                                 INITIAL VALUE,  FINAL VALUE,  INCREMENT,         CATEGORY,     TYPE,                  RANGE,                                                                                 DESCRIPTION,  NOTES
            folder,             0,          No,              -1,          H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface,             ,           ,   I/O Management,   String,         [1;2;3;4],                                              Target folder where the project will be initialized,
       matDBfolder,             1,          No,              -1, D:\OneDrive\01_Luca\07_DocMASE\07_Data\02_Material-Properties,             ,           ,   I/O Management,   String,         [1;2;3;4],                                                            Folder with material definition files,

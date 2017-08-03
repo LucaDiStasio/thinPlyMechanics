@@ -40,6 +40,7 @@ import getopt
 from datetime import datetime
 from time import strftime, sleep
 from platform import platform
+from scipy import stats
 from numpy import arange
 import math
 import subprocess
@@ -218,7 +219,58 @@ def createDeckParametricVariations(folder,prefix,deckFullPath):
         copyfile(join(deckparDir,deck),join(deckparDir,newFilename))
         remove(join(deckparDir,deck))
 
-def createDeckParametricVariations(folder):
+def createRandomEntries(folder):          # for a reminder of available probability distributions in scipy, see for example https://www.johndcook.com/blog/distributions_scipy/
+    pdfDict = {'BETA':stats.beta,
+               'BINOMIAL':stats.binom,
+               'CAUCHY':stats.cauchy,
+               'CHISQUARED':stats.chi2,
+               'EXPONENTIAL':stats.expon,
+               'F':stats.f,
+               'GAMMA':stats.gamma,
+               'GEOMETRIC':stats.geom,
+               'HYPERGEOMETRIC':stats.hypergeom,
+               'INVERSEGAMMA':stats.invgamma,
+               'LOGNORMAL':stats.lognorm,
+               'LOGISTIC':stats.logistic,
+               'NEGATIVEBINOMIAL':stats.nbinom,
+               'NORMAL':stats.norm,
+               'GAUSSIAN':stats.norm,
+               'POISSON':stats.poisson,
+               'TSTUDENT':stats.t,
+               'UNIFORM':stats.unif,
+               'WEIBULL':stats.exponweib}
+    deckparDir = join(folder,'deckpar')
+    dirContents = listdir(deckparDir)
+    deckPars = []
+    for content in dirContents:
+        if isfile(content) and '.deckpar' in content:
+            deckPars.append(content)
+    for deck in deckPars:
+        with open(join(deckparDir,deck),'r') as deck:
+            lines = deck.readlines()
+        for l,line in enumerate(lines):
+            if 'RANDOM' in line:
+                distName = line.replace('\n','').split('#')[0].split(',')[2].split('-')[1].split('(')[0].replace(' ','')
+                parameters = line.replace('\n','').split('#')[0].split(',')[2].split('-')[1].split('(')[1].replace(' ','').replace(')','').split(';')
+                minAllowed = float(line.replace('\n','').split('#')[0].split(',')[3])
+                maxAllowed = float(line.replace('\n','').split('#')[0].split(',')[4])
+                parametersDict = {}
+                for parameterPair in parameters:
+                    parametersDict[parameterPair.split('=')[0]] = float(parameterPair.split('=')[1])
+                pdf = pdfDict[distName](**parametersDict)
+                search = True
+                value = 0.0
+                while search:
+                    value = pdf.rvs()
+                    if value<=maxAllowed and value>=minAllowed:
+                        search = False
+                if '#' in line:
+                    lines[l] = line.replace('\n','').split(',')[0] + ', ' + line.replace('\n','').split(',')[1] + ', SINGLE, ' + str(value) + ' # ' + line.split('#')[1]
+                else:
+                    lines[l] = line.replace('\n','').split(',')[0] + ', ' + line.replace('\n','').split(',')[1] + ', SINGLE, ' + str(value) + '\n'
+        with open(join(deckparDir,deck),'w') as deck:
+            for line in lines:
+                deck.write(line)
 
 
 def main(argv):
@@ -422,91 +474,103 @@ def main(argv):
                  writeErrorToLogFile(logFilePath,'a',Exception,error,True)
                  sys.exc_clear()
              sys.exit(2)
+         # reading the parametric variations of the input file in folder inputdir/logFolder/deckpar and generating the preprocessor call scripts in folder inputdir/logFolder/preprocessor
+         skipLineToLogFile(logFilePath,'a',True)
+         writeLineToLogFile(logFilePath,'a','Reading the parametric variations of the input file in folder ' + str(join(logFolder,'deckpar')) + ' and generating the preprocessor call scripts  ' + str(join(logFolder,'preprocessor')) + '  ...',True)
+         try:
+             createPreprocessorScripts(logFolder,SOFTdata['preprocessorPlatform'],SOFTdata['preprocessorCall'])
+             writeLineToLogFile(logFilePath,'a','...done.',True)
+         except Exception, error:
+             writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+             skipLineToLogFile(logFilePath,'a',True)
+             writeLineToLogFile(logFilePath,'a','Sending notification email ...',True)
+             try:
+                 subject = '[FEM PARAMETRIC RUN] ERROR'
+                 message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nAn error occurred:\n' + str(Exception) + '\n' + str(error) + '\n\nPreprocessor terminated.'
+                 sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+                 writeLineToLogFile(logFilePath,'a','...done.',True)
+             except Exception, error:
+                 writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+                 sys.exc_clear()
+             sys.exit(2)
+         # reading preprocessor scripts in folder inputdir/logFolder/preprocessor and running them
+         skipLineToLogFile(logFilePath,'a',True)
+         writeLineToLogFile(logFilePath,'a','Reading the parametric variations of the input file in folder ' + str(join(logFolder,'deckpar')) + ' and generating the preprocessor call scripts ...',True)
+         try:
+             executePreprocessorScripts(logFolder,statusfilePath,SOFTdata['preprocessorPlatform'])
+             writeLineToLogFile(logFilePath,'a','...done.',True)
+         except Exception, error:
+             writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+             skipLineToLogFile(logFilePath,'a',True)
+             writeLineToLogFile(logFilePath,'a','Sending notification email ...',True)
+             try:
+                 subject = '[FEM PARAMETRIC RUN] ERROR'
+                 message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nAn error occurred:\n' + str(Exception) + '\n' + str(error) + '\n\nPreprocessor terminated.'
+                 sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+                 writeLineToLogFile(logFilePath,'a','...done.',True)
+             except Exception, error:
+                 writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+                 sys.exc_clear()
+             sys.exit(2)
          # sending notification email
          skipLineToLogFile(logFilePath,'a',True)
          writeLineToLogFile(logFilePath,'a','Sending notification email ...',True)
          try:
              subject = '[FEM PARAMETRIC RUN] Preprocessing step completed'
-             message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nStarting preprocessor.'
+             message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nPreprocessor completed.'
              sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
              writeLineToLogFile(logFilePath,'a','...done.',True)
          except Exception, error:
              writeErrorToLogFile(logFilePath,'a',Exception,error,True)
              sys.exc_clear()
     if isSolverOn:
-        subject = '[FEM PARAMETRIC RUN] Solver starts'
-        message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nStarting solver.'
-        sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+        # sending notification email
+        skipLineToLogFile(logFilePath,'a',True)
+        writeLineToLogFile(logFilePath,'a','Sending notification email ...',True)
         try:
-
+            subject = '[FEM PARAMETRIC RUN] Fem solver starts'
+            message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nStarting fem solver.'
+            sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+            writeLineToLogFile(logFilePath,'a','...done.',True)
         except Exception, error:
-            with open(logfilePath,'a') as log:
-                log.write('!!! ----------------------------------------------------------------------------------------!!!\n')
-                log.write('\n')
-                log.write('                                     AN ERROR OCCURED\n')
-                log.write('\n')
-                log.write('                                -------------------------\n')
-                log.write('\n')
-                log.write(str(Exception) + '\n')
-                log.write(str(error) + '\n')
-                log.write('\n')
-                log.write('Terminating program\n')
-                log.write('\n')
-                log.write('!!! ----------------------------------------------------------------------------------------!!!\n')
-                log.write('\n')
-            print('!!! ----------------------------------------------------------------------------------------!!!\n')
-            print('\n')
-            print('                                     AN ERROR OCCURED\n')
-            print('\n')
-            print('                                -------------------------\n')
-            print('\n')
-            print(str(Exception) + '\n')
-            print(str(error) + '\n')
-            print('\n')
-            print('Terminating program\n')
-            print('\n')
-            print('!!! ----------------------------------------------------------------------------------------!!!\n')
-            print('\n')
-        subject = '[FEM PARAMETRIC RUN] Solver terminated'
-        message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nSolver terminated.'
-        sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+            writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+            sys.exc_clear()
+
+        # sending notification email
+        skipLineToLogFile(logFilePath,'a',True)
+        writeLineToLogFile(logFilePath,'a','Sending notification email ...',True)
+        try:
+            subject = '[FEM PARAMETRIC RUN] Fem solver step completed'
+            message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nFem solver step completed.'
+            sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+            writeLineToLogFile(logFilePath,'a','...done.',True)
+        except Exception, error:
+            writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+            sys.exc_clear()
     if isPostprocessorOn:
-        subject = '[FEM PARAMETRIC RUN] Postprocessor starts'
-        message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nStarting postprocessor.'
-        sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+        # sending notification email
+        skipLineToLogFile(logFilePath,'a',True)
+        writeLineToLogFile(logFilePath,'a','Sending notification email ...',True)
         try:
-
+            subject = '[FEM PARAMETRIC RUN] Postprocessor starts'
+            message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nStarting Postprocessor.'
+            sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+            writeLineToLogFile(logFilePath,'a','...done.',True)
         except Exception, error:
-            with open(logfilePath,'a') as log:
-                log.write('!!! ----------------------------------------------------------------------------------------!!!\n')
-                log.write('\n')
-                log.write('                                     AN ERROR OCCURED\n')
-                log.write('\n')
-                log.write('                                -------------------------\n')
-                log.write('\n')
-                log.write(str(Exception) + '\n')
-                log.write(str(error) + '\n')
-                log.write('\n')
-                log.write('Terminating program\n')
-                log.write('\n')
-                log.write('!!! ----------------------------------------------------------------------------------------!!!\n')
-                log.write('\n')
-            print('!!! ----------------------------------------------------------------------------------------!!!\n')
-            print('\n')
-            print('                                     AN ERROR OCCURED\n')
-            print('\n')
-            print('                                -------------------------\n')
-            print('\n')
-            print(str(Exception) + '\n')
-            print(str(error) + '\n')
-            print('\n')
-            print('Terminating program\n')
-            print('\n')
-            print('!!! ----------------------------------------------------------------------------------------!!!\n')
-            print('\n')
-        subject = '[FEM PARAMETRIC RUN] Postprocessor terminated'
-        message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nPostprocessor terminated.'
-        sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+            writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+            sys.exc_clear()
+
+        # sending notification email
+        skipLineToLogFile(logFilePath,'a',True)
+        writeLineToLogFile(logFilePath,'a','Sending notification email ...',True)
+        try:
+            subject = '[FEM PARAMETRIC RUN] Postprocessing step completed'
+            message = 'FEM parametric run update on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nPostprocessor step completed.'
+            sendStatusEmail(emaildatadir,'logData.csv',serverFrom,emailFrom,emailTo,subject,message)
+            writeLineToLogFile(logFilePath,'a','...done.',True)
+        except Exception, error:
+            writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+            sys.exc_clear()
 
 
 

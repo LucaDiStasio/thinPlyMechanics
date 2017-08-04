@@ -2,93 +2,184 @@
 # keyword START + block name + : (with colon) highlights the start of a block of data to be parsed together
 # keyword END + block name + : (with colon) highlights the end of a block of data to be parsed together
 # the order of data blocks is not important
+# indentation can be used for readability, not necessary or relevant for parsing
+# use semi-colon ';' and not comma to separate arguments of a function
+# product: *
+# division: /
+# substraction: -
+# sum: +
+# power: **
+# angles in degrees
 
 START SECTION: I/O MANAGEMENT
-WORKING DIRECTORY: D:/01_Luca/07_Data/03_FEM/CurvedInterface
-MATERIAL DATA FOLDER: D:/OneDrive/01_Luca/07_DocMASE/07_Data/02_Material-Properties # if not provided, it is set equal to the working directory
-POSTPROCESSING SETTINGS FOLDER: # if not provided, it is set equal to the working directory
-NOTIFICATION EMAILS SETTINGS FOLDER: D:/OneDrive/01_Luca/07_DocMASE/06_WD # if not provided, it is set equal to the working directory
-STATUS FILE: # if not provided, created by the program
+    WORKING DIRECTORY: D:/01_Luca/07_Data/03_FEM/CurvedInterface
+    MATERIAL DATA FOLDER: D:/OneDrive/01_Luca/07_DocMASE/07_Data/02_Material-Properties # if not provided, it is set equal to the working directory
+    POSTPROCESSING SETTINGS FOLDER: # if not provided, it is set equal to the working directory
+    NOTIFICATION EMAILS SETTINGS FOLDER: D:/OneDrive/01_Luca/07_DocMASE/06_WD # if not provided, it is set equal to the working directory
+    STATUS FILE: # if not provided, created by the program
 END SECTION: I/O MANAGEMENT
 
 START SECTION: SOFTWARE
-RUN PREPROCESSOR: YES
-PREPROCESSOR PLATFORM: matlab  # matlab and octave available, python and C++ to be available in future releases
-PREPROCESSOR CALL: projectName=rve_mesh_create_project
-RUN SOLVER: YES
-SOLVER PLATFORM: abaqus # abaqus available, Calculix, Ansys and Code Aster to be soon available
-SOLVER CALL: abaqus standard
-RUN POSTPROCESSOR: NO
-POSTPROCESSOR PLATFORM: abaqus python
-POSTPROCESSOR CALL: D:/OneDrive/01_Luca/07_DocMASE/06_WD/thinPlyMechanics/python/extractFromODBoutput.py
+    RUN PREPROCESSOR: YES
+    PREPROCESSOR PLATFORM: matlab  # matlab and octave available, python and C++ to be available in future releases
+    PREPROCESSOR CALL: projectName=rve_mesh_create_project
+    RUN SOLVER: YES
+    SOLVER PLATFORM: abaqus # abaqus available, calculix, ansys and codeaster to be soon available
+    SOLVER CALL: abaqus standard
+    RUN POSTPROCESSOR: NO
+    POSTPROCESSOR PLATFORM: abaqus python
+    POSTPROCESSOR CALL: D:/OneDrive/01_Luca/07_DocMASE/06_WD/thinPlyMechanics/python/extractFromODBoutput.py
 END SECTION: SOFTWARE
 
 START SECTION: PARAMETERS SUMMARY
-TOTAL NUMBER OF PREPROCESSOR PARAMETERS: 44
-TOTAL NUMBER OF SOLVER PARAMETERS: 2
-TOTAL NUMBER OF POSTPROCESSOR PARAMETERS: 0
-ITERABLE PREPROCESSOR PARAMETERS: 1
-ITERABLE SOLVER PARAMETERS: 0
-ITERABLE POSTPROCESSOR PARAMETERS: 0
+    TOTAL NUMBER OF PREPROCESSOR PARAMETERS: 44
+    TOTAL NUMBER OF SOLVER PARAMETERS: 2
+    TOTAL NUMBER OF POSTPROCESSOR PARAMETERS: 0
+    ITERABLE PREPROCESSOR PARAMETERS: 1
+    ITERABLE SOLVER PARAMETERS: 0
+    ITERABLE POSTPROCESSOR PARAMETERS: 0
 END SECTION: PARAMETERS SUMMARY
 
 START SECTION: UNITS OF MEASUREMENT
-TOTAL NUMBER OF UNIT CONVERSION FACTORS: 15
-CALLING ORDER NUMBER OF UNIT CONVERSION FACTORS: 30
-START TABLE: UNITS OF MEASUREMENT
-           UNIT, VALUE,     TYPE,    RANGE,                                                        DESCRIPTION,  NOTES
-     lengthUnit,    -6,  Integer, [-24;24],                     Integer exponent for unit conversion of length,
-       massUnit,     0,  Integer, [-24;24],                       Integer exponent for unit conversion of mass,
-       timeUnit,     0,  Integer, [-24;24],                       Integer exponent for unit conversion of time,
-      forceUnit,    -6,  Integer, [-24;24],                      Integer exponent for unit conversion of force,
-     elcurrUnit,     0,  Integer, [-24;24],           Integer exponent for unit conversion of electric current,
-       tempUnit,     0,  Integer, [-24;24],                Integer exponent for unit conversion of temperature,
-       moleUnit,     0,  Integer, [-24;24],             Integer exponent for unit conversion of amount of mass,
-     lumintUnit,     0,  Integer, [-24;24],         Integer exponent for unit conversion of luminous intensity,
-    densityUnit,    18,  Integer, [-24;24],                    Integer exponent for unit conversion of density,
-     stressUnit,     6,  Integer, [-24;24],                     Integer exponent for unit conversion of stress,
-   thermexpUnit,     0,  Integer, [-24;24],          Integer exponent for unit conversion of thermal expansion,
-  thermcondUnit,     0,  Integer, [-24;24],       Integer exponent for unit conversion of thermal conductivity,
-   specheatUnit,     0,  Integer, [-24;24],              Integer exponent for unit conversion of specific heat,
- fracttoughUnit,     0,  Integer, [-24;24],        Integer exponent for unit conversion of energy release rate,
-interfstiffUnit,    12,  Integer, [-24;24],        Integer exponent for unit conversion of interface stiffness,
-END TABLE: UNITS OF MEASUREMENT
+    TOTAL NUMBER OF UNIT CONVERSION FACTORS: 15
+    CALLING ORDER NUMBER OF UNIT CONVERSION FACTORS: 30
+    START TABLE: UNITS OF MEASUREMENT
+               UNIT, VALUE,     TYPE,    RANGE,                                                        DESCRIPTION,  NOTES
+         lengthUnit,    -6,  Integer, [-24;24],                     Integer exponent for unit conversion of length,
+           massUnit,     0,  Integer, [-24;24],                       Integer exponent for unit conversion of mass,
+           timeUnit,     0,  Integer, [-24;24],                       Integer exponent for unit conversion of time,
+          forceUnit,    -6,  Integer, [-24;24],                      Integer exponent for unit conversion of force,
+         elcurrUnit,     0,  Integer, [-24;24],           Integer exponent for unit conversion of electric current,
+           tempUnit,     0,  Integer, [-24;24],                Integer exponent for unit conversion of temperature,
+           moleUnit,     0,  Integer, [-24;24],             Integer exponent for unit conversion of amount of mass,
+         lumintUnit,     0,  Integer, [-24;24],         Integer exponent for unit conversion of luminous intensity,
+        densityUnit,    18,  Integer, [-24;24],                    Integer exponent for unit conversion of density,
+         stressUnit,     6,  Integer, [-24;24],                     Integer exponent for unit conversion of stress,
+       thermexpUnit,     0,  Integer, [-24;24],          Integer exponent for unit conversion of thermal expansion,
+      thermcondUnit,     0,  Integer, [-24;24],       Integer exponent for unit conversion of thermal conductivity,
+       specheatUnit,     0,  Integer, [-24;24],              Integer exponent for unit conversion of specific heat,
+     fracttoughUnit,     0,  Integer, [-24;24],        Integer exponent for unit conversion of energy release rate,
+    interfstiffUnit,    12,  Integer, [-24;24],        Integer exponent for unit conversion of interface stiffness,
+    END TABLE: UNITS OF MEASUREMENT
 END SECTION: UNITS OF MEASUREMENT
 
 START SECTION: PREPROCESSOR DATA
-START SECTION: MODEL
-SPACE DIMENSION: 2D # other options are 3D, Quasi-3D
-START SECTION: INCLUSIONS
-NUMBER OF INCLUSIONS: 2 # any integer >= 0
-START SECTION: INCLUSION 1
-BELONGS TO DOMAIN: 1
+    START SECTION: MODEL
+        SPACE DIMENSION: 2D # other options are 3D, Quasi-3D, Cylindrical-3D
+        START SECTION: INCLUSIONS
+            NUMBER OF INCLUSIONS: 2 # any integer >= 0
+            START SECTION: INCLUSION 1
+                BELONGS TO DOMAIN: 1
+                START SECTION: GEOMETRY
+                    GEOMETRY DEFINITION: ANALYTICAL  # OPTIONS: ANALYTICAL, FROM FILE, FROM IMAGE
+                    # Vertical refers to z-direction
+                    # Horizontal means lying in the x-y plane
+                    # S-E-N-W are taking with reference to the x-y plane if used globally, otherwise to the local plane reference
+                    # The following entities need to be defined
+                    # xC - x-coordinate of the center
+                    # yC - y-coordinate of the center
+                    # zC - z-coordinate of the center, if in 3D
+                    # c1 - SW corner of the (bottom) section
+                    # c2 - SE corner of the (bottom) section
+                    # c3 - NE corner of the (bottom) section
+                    # c4 - NW corner of the (bottom) section
+                    # c5 - SW corner of the (upper) section, if in 3D
+                    # c6 - SE corner of the (upper) section, if in 3D
+                    # c7 - NE corner of the (upper) section, if in 3D
+                    # c8 - NW corner of the (upper) section, if in 3D
+                    # e1  - S edge of the (bottom horizontal) section, ordered W --> E
+                    # e2  - E edge of the (bottom horizontal) section, ordered S --> N
+                    # e3  - N edge of the (bottom horizontal) section, ordered W --> E
+                    # e4  - W edge of the (bottom horizontal) section, ordered S --> N
+                    # e5  - E edge of the (S vertical) section, ordered S --> N, if in 3D
+                    # e6  - E edge of the (E vertical) section, ordered S --> N, if in 3D
+                    # e7  - E edge of the (N vertical) section, ordered S --> N, if in 3D
+                    # e8  - E edge of the (W vertical) section, ordered S --> N, if in 3D
+                    # e9  - E edge of the (upper horizontal) section, ordered W --> E, if in 3D
+                    # e10 - E edge of the (upper horizontal) section, ordered S --> N, if in 3D
+                    # e11 - N edge of the (upper horizontal) section, ordered W --> E, if in 3D
+                    # e12 - W edge of the (upper horizontal) section, ordered S --> N, if in 3D
+                    # f1 - bottom horizontal face, if in 3D
+                    # f2 - S vertical face, if in 3D
+                    # f3 - E vertical face, if in 3D
+                    # f4 - N vertical face, if in 3D
+                    # f5 - W vertical face, if in 3D
+                    # f6 - upper horizontal face, if in 3D
+                    c1{
+                        x, FUNCTION, SINGLE, @R*cos(@phi) # note: a list of functions can be provided for a parametric study over functional forms
+                        y, FUNCTION, SINGLE, @R*sin(@phi)
+                        @R, FLOAT, SINGLE, 1.0
+                        @phi, FLOAT, SINGLE, 45.0
+                    }
+                    c2{
+                        x, FLOAT, SINGLE, 1.0 # note: a list of functions can be provided for a parametric study over functional forms
+                        y, FLOAT, SINGLE, 1.0
+                    }
+                    e1{
+                        x, FUNCTION, SINGLE, @R*cos(@phi) # note: a list of functions can be provided for a parametric study over functional forms
+                        y, FUNCTION, SINGLE, @R*sin(@phi)
+                        @R, FLOAT, SINGLE, 1.0
+                        # first syntax:
+                        @phi0, FLOAT, SINGLE, -45.0 # starting value, excluded
+                        @phiF, FLOAT, SINGLE, 45.0  # final value, excluded
+                        @phiN, INTEGER, SINGLE, 10 # number of elements, comprising starting and final value (which are nonetheless excluded from the corresponding node list)
+                        # second syntax:
+                        @phi0, FLOAT, SINGLE, -45.0 # starting value, excluded
+                        @phiF, FLOAT, SINGLE, 45.0  # final value, excluded
+                        @phiDelta, FLOAT, SINGLE, 0.1 # increment
+                        # third syntax:
+                        @phi0, FLOAT, SINGLE, -45.0 # starting value, excluded
+                        @phiDelta, FLOAT, SINGLE, 0.1  # increment
+                        @phiN, INTEGER, SINGLE, 50 # number of elements, comprising starting and final value (which are nonetheless excluded from the corresponding node list)
+                    }
+                    e2{
+                        x, FUNCTION, SINGLE, @x
+                        y, FUNCTION, SINGLE, @y
+                        @x, FLOAT, SINGLE, 1.0
+                        @y0, FLOAT, SINGLE, -1.0
+                        @yF, FLOAT, SINGLE, 1.0
+                        @yN, INTEGER, SINGLE, 10
 
-MATERIAL: GF # material name should be equal to the corresponding filename in the material data folder
-END SECTION: INCLUSION 1
-START SECTION: INCLUSION 2
-BELONGS TO DOMAIN: 1
+                    }
+                    f1{
+                       # for a surface definition, two parameters are varying
+                    }
+                END SECTION: GEOMETRY
+                START SECTION: DEBOND
+                    # a debond is a line in 2D and Quasi-3D, and a surface in 3D
+
+                END SECTION: DEBOND
+                MATERIAL: GF # material name should be equal to the corresponding filename in the material data folder
+            END SECTION: INCLUSION 1
+            START SECTION: INCLUSION 2
+                BELONGS TO DOMAIN: 1
 
 
-END SECTION: INCLUSION 2
-END SECTION: INCLUSIONS
-START SECTION: DOMAINS
-NUMBER OF DOMAINS: 2 # any integer >= 0
-START SECTION: DOMAIN 1
+            END SECTION: INCLUSION 2
+            START SECTION: INCLUSION 3
+                BELONGS TO DOMAIN: 1
 
-END SECTION: DOMAIN 1
-START SECTION: DOMAIN 2
 
-END SECTION: DOMAIN 2
-END SECTION: DOMAINS
-START SECTION: INTERFACES
-NUMBER OF INTERFACES: 2 # any integer >= 0
-START SECTION: INTERFACE 1
+            END SECTION: INCLUSION 3
+        END SECTION: INCLUSIONS
+        START SECTION: DOMAINS
+            NUMBER OF DOMAINS: 2 # any integer >= 0
+            START SECTION: DOMAIN 1
 
-END SECTION: INTERFACE 1
-START SECTION: INTERFACE 2
+            END SECTION: DOMAIN 1
+            START SECTION: DOMAIN 2
 
-END SECTION: INTERFACE 2
-END SECTION: INTERFACES
+            END SECTION: DOMAIN 2
+        END SECTION: DOMAINS
+        START SECTION: INTERFACES
+            NUMBER OF INTERFACES: 2 # any integer >= 0
+            START SECTION: INTERFACE 1
+
+            END SECTION: INTERFACE 1
+            START SECTION: INTERFACE 2
+
+            END SECTION: INTERFACE 2
+        END SECTION: INTERFACES
 END SECTION: MODEL
 
         PARAMETER, CALLING ORDER, IS ITERABLE, ITERATION ORDER,                                                 INITIAL VALUE,  FINAL VALUE,  INCREMENT,         CATEGORY,     TYPE,                  RANGE,                                                                                 DESCRIPTION,  NOTES

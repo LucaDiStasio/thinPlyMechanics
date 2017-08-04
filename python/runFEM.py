@@ -47,6 +47,18 @@ import subprocess
 import win32com.client
 from sendStatusEmail import *
 
+def createFolder(newFolder,root,logFilePath=None):
+    if logFilePath!=None:
+        writeLineToLogFile(logFilePath,'a','Creating folder: ' + newFolder + ' in folder ' + root + ' ...',True)
+    folder = join(root,newFolder)
+    try:
+        os.makedirs(folder)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
+    if logFilePath!=None:
+        writeLineToLogFile(logFilePath,'a','... done.',True)
+
 def intToPaddedString(anInteger,numOfDigits):
     rawString = str(anInteger)
     resString = ''
@@ -118,7 +130,6 @@ def writeErrorToLogFile(logFileFullPath,mode,exc,err,toScreen):
         print('!!! ----------------------------------------------------------------------------------------!!!\n')
         print('\n')
 
-
 def extractSectionFromInputDeck(deckFullPath,sectionName):
     with open(deckFullPath,'r') as f:
         lines = f.readlines()
@@ -134,6 +145,28 @@ def extractSectionFromInputDeck(deckFullPath,sectionName):
             if add:
                 section.append(line)
     return section
+
+def extractSectionFromLineList(lineList,sectionName):
+    section = []
+    add = False
+    for line in lineList:
+        if 'START SECTION:' in line and sectionName in line:
+            add = True
+        elif 'END SECTION:' in line and sectionName in line:
+            add = False
+            break
+        else:
+            if add:
+                section.append(line)
+    return section
+
+def getValueFromKeyword(lineList,keyword,sep,commentSep):  # the value is returned as a string, any conversion should be done by the caller
+    value = ''                                             # the line is supposed to be formatted as keyword <sep> value <commentSep> comment
+    for line in lineList:                                  # the line with the correct keyword is assumed to appear once in the list of lines provided
+        if keyword in line:
+            value = line.replace('\n','').split(commentSep)[0].split(sep)[1]
+            break
+    return value
 
 def parseAndAssignToDict(lineList,keyList,labelDict):
     data = {}
@@ -276,44 +309,85 @@ def createRandomEntries(folder):          # for a reminder of available probabil
             for line in lines:
                 deck.write(line)
 
-def createPreprocessorScripts(folder,platform,call):
-    extensions = {'matlab':'.m','python':'.py','cpp':'.cpp'}
-    comment = {'matlab':'%','python':'#','cpp':'//'}
-    prescriptsDir = join(folder,'preprocessor')
-    try:
-        os.makedirs(prescriptsDir)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            raise
+def createSimFolders(wd,simName,logFilePath):
+    simFolder = join(wd,simName)
+    folderPairs = [[wd,simName],   # [root,folder]
+                  [simFolder,'deck'],
+                  [simFolder,'preprocessor'],
+                  [simFolder,'input'],
+                  [simFolder,'solver'],
+                  [simFolder,'csv'],
+                  [simFolder,'latex'],
+                  [simFolder,'pdf']]
+    folderDict = {'simulation':simFolder],   # [name,folder]
+                  'deck':join(simFolder,'deck'),
+                  'preprocessor':join(simFolder,'preprocessor'),
+                  'input':join(simFolder,'input'),
+                  'solver':join(simFolder,'solver'),
+                  'csv':join(simFolder,'csv'),
+                  'latex':join(simFolder,'latex'),
+                  'pdf':join(simFolder,'pdf')}
+    for folderPair in folderPairs:
+        createFolder(folderPair[1],folderPair[0],logFilePath)
+    return folderDict
+
+
+def executePreprocessor(wd,folder,prePlatform,preCall,solPlatform,solCall,logFullPath):
+    preExtensions = {'matlab':'.m','python':'.py','cpp':'.cpp'}
+    solExtensions = {'abaqus':'.inp','calculix':'.inp'}
+    preComment = {'matlab':'%','python':'#','cpp':'//'}
+    solExtensions = {'abaqus':'**','calculix':'**'}
+    spaceDimInclusionFuncSelector = {'2D':'','3D':'','Quasi-3D':'','Cylindrical-3D':''}
+    geominputInclusionFuncSelector = {'ANALYTICAL':'','FROM FILE':'','FROM IMAGE':''}
     deckparDir = join(folder,'deckpar')
+    writeLineToLogFile(logFilePath,'a','Reading content of folder ' + deckparDir + ' and selecting .deckpar files ...',True)
     dirContents = listdir(deckparDir)
     deckPars = []
     for content in dirContents:
         if isfile(content) and '.deckpar' in content:
             deckPars.append(content)
+    writeLineToLogFile(logFilePath,'a','... done.',True)
     for deck in deckPars:
-        preprocessorFilename = deck.split('.')[0] + extensions[platform]
+        simName = deck.split('.')[0]
+        simFolders = createSimFolders(wd,simName,logFullPath)
+        deckFilename = simName + '.deck'
+        with open(join(deckparDir,deck),'r') as deck:
+            lines = deck.readlines()
+        with open(join(simFolders['deck'],deckFilename),'w') as deck:
+            deck.write('#' + ' Automatically generated by theVirtualLaboratory on ' datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n')
+            deck.write('#' + ' 2016-' + datetime.now().strftime('%Y') + ' Luca Di Stasio' + '\n')
+            for line in lines:
+                deck.write(line)
+        solverInputFilename = simName + solExtensions[solPlatform]
+        with open(join(simFolders['input'],solverinputFilename),'w') as inp:
+            inp.write(solComment[solPlatform] + ' Automatically generated by theVirtualLaboratory on ' datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n')
+            inp.write(solComment[solPlatform] + ' 2016-' + datetime.now().strftime('%Y') + ' Luca Di Stasio' + '\n')
+        preprocessorFilename = simName + preExtensions[prePlatform]
         with open(join(prescriptsDir,preprocessorFilename),'w') as pre:
-            pre.write(comment[platform] + ' Automatically generated by theVirtualLaboratory on ' datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n')
-            pre.write(comment[platform] + ' 2016-' + datetime.now().strftime('%Y') + ' Luca Di Stasio' + '\n')
+            pre.write(preComment[prePlatform] + ' Automatically generated by theVirtualLaboratory on ' datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n')
+            pre.write(preComment[prePlatform] + ' 2016-' + datetime.now().strftime('%Y') + ' Luca Di Stasio' + '\n')
         inputGeom = extractSectionFromInputDeck(join(deckparDir,deck),'MODEL')
-        for line in inputGeom:
-            if 'NUMBER OF INCLUSIONS' in line:
-                numInclusions = int(line.replace('\n','').split('#')[0].split(':')[1])
-            elif 'NUMBER OF DOMAINS' in line:
-                numDomains = int(line.replace('\n','').split('#')[0].split(':')[1])
-            elif 'NUMBER OF INTERFACES' in line:
-                numInterfaces = int(line.replace('\n','').split('#')[0].split(':')[1])
-            elif 'SPACE DIMENSION' in line:
-                spaceDim = line.replace('\n','').split('#')[0].split(':')[1]
+        numInclusions = int(getValueFromKeyword(inputGeom,'NUMBER OF INCLUSIONS',':','#'))
+        numDomains = int(getValueFromKeyword(inputGeom,'NUMBER OF DOMAINS',':','#'))
+        numInterfaces = int(getValueFromKeyword(inputGeom,'NUMBER OF INTERFACES',':','#'))
+        spaceDim = getValueFromKeyword(inputGeom,'SPACE DIMENSION',':','#')
+        inclusions = []
         for i in range(0,numInclusions):
-            inclusion = extractSectionFromInputDeck(join(deckparDir,deck),'INCLUSION ' + str(i+1))
-
+            inclusionData = {}
+            inclusion = extractSectionFromLineList(inputGeom,'INCLUSION ' + str(i+1))
+            geometry = extractSectionFromLineList(inclusion,'GEOMETRY')
+            debond = extractSectionFromLineList(inclusion,'DEBOND')
+            geomDef = getValueFromKeyword(geometry,'GEOMETRY DEFINITION',':','#')
+            inclusionData['toDomain'] = int(getValueFromKeyword(inputGeom,'BELONGS TO DOMAIN',':','#'))
+            inclusionData['material'] = getValueFromKeyword(inputGeom,'MATERIAL',':','#')
+            inclusions.append(inclusionData)
+        domains = []
         for i in range(0,numDomains):
-            domain = extractSectionFromInputDeck(join(deckparDir,deck),'DOMAIN ' + str(i+1))
+            domain = extractSectionFromLineList(inputGeom,'DOMAIN ' + str(i+1))
 
+        interfaces = []
         for i in range(0,numInterfaces):
-            interface = extractSectionFromInputDeck(join(deckparDir,deck),'INTERFACE ' + str(i+1))
+            interface = extractSectionFromLineList(inputGeom,'INTERFACE ' + str(i+1))
 
 
 

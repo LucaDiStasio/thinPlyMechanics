@@ -1,5 +1,34 @@
 #!/bin/bash
 
+: '
+=====================================================================================
+
+Copyright (c) 2016 - 2017 Luca Di Stasio
+Author: Luca Di Stasio <luca.distasio@gmail.com>
+                       <luca.distasio@ingpec.eu>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+=====================================================================================
+
+DESCRIPTION
+
+Generate .tex beamer source code from data in several .tex files.
+
+Tested in Ubuntu 14.04
+'
+
 clear
 
 WD="/home/luca/WD/thinPlyMechanics/tex/Slides_11_Update-2017-07-17"
@@ -92,12 +121,12 @@ do
         echo "from folder"
         echo $FOLDER
         echo "to files"
-        echo $GI 
+        echo $GI
         echo $GII
         echo $GTOT
         FIRSTLINE="%"
         FIRSTLINE+=$(date +%c)
-        echo $FIRSTLINE > $DEST1 
+        echo $FIRSTLINE > $DEST1
         echo $FIRSTLINE > $DEST2
         echo $FIRSTLINE > $DEST3
         ADDALL=true
@@ -158,7 +187,7 @@ do
             echo "\\begin{frame}" >> $BEAMERINPUTFILE
             LINE+="matrix surface, \$\\delta="
         fi
-        
+
         if [ "$i" -lt 10 ]; then
             LINE+="$i"
             LINE+=".0^{\\circ}\$}"
@@ -189,7 +218,7 @@ do
         else
             LINE+="matrix surface, \$\\delta="
         fi
-        
+
         if [ "$i" -lt 10 ]; then
             LINE+="$i"
             LINE+=".0^{\\circ}\$}"
@@ -220,7 +249,7 @@ do
         else
             LINE+="matrix surface, \$\\delta="
         fi
-        
+
         if [ "$i" -lt 10 ]; then
             LINE+="$i"
             LINE+=".0^{\\circ}\$}"
@@ -251,7 +280,7 @@ do
         else
             LINE+="matrix surface, \$\\delta="
         fi
-        
+
         if [ "$i" -lt 10 ]; then
             LINE+="$i"
             LINE+=".0^{\\circ}\$}"
@@ -285,9 +314,9 @@ echo $FIRSTLINE > $GLOBALTEXTEMP
 while IFS= read -r line ; do
     echo "$line" >> $GLOBALTEXTEMP
 done < $GLOBALTEX
-    
+
 for k in `seq 3 10`;
-       
+
 do
     BEAMERINPUTFILE="2017-07-25_AbqRunSummary_SmallStrain_D"
     if [ "$k" -lt 10 ]; then

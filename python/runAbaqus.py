@@ -841,7 +841,7 @@ def iterateFemSolver(wd,solverInputs,logfilename,statusfilename):
     if cpunum is None:
         cpunum = '8'
     if mode is None:
-        mode = 'background'
+        mode = 'interactive'
     with open(statusfilename,'r') as sta:
         lines = sta.readlines()
     count = 0

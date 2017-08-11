@@ -741,9 +741,9 @@ def runAbaqusSolver(wd,projectName,cpus,runmode,logfilename,statusfilename):
     with open(logfilename,'a') as log:
         log.write('SUCCESS. Abaqus simulation started.\n')
         log.write('\n')
-    sleep(60)
+    sleep(600)
     while isfile(join(wd,projectName,'abaqus',projectName+'.lck')):
-        sleep(30)
+        sleep(120)
     print('\n')
     print('=====================================================================\n')
     print('\n')

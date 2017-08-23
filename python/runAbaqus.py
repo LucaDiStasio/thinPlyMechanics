@@ -420,7 +420,7 @@ def buildPostProcessorCall(wd,pname,ppsettingsfile,extractionSet,logfilename):
     print('SUCCESS. Windows command script written.' + '\n')
     print('\n')
     return cmdfile
-    
+
 def buildPreprocessorCall(preprocessor,functionCall,args,wd,logfilename):
     call = functionCall + '('
     for i,arg in enumerate(args):
@@ -523,7 +523,7 @@ def buildPreprocessorCall(preprocessor,functionCall,args,wd,logfilename):
         sendStatusEmail('D:/OneDrive/01_Luca/07_DocMASE/06_WD','logData.csv','smtp.univ-lorraine.fr','luca.di-stasio@univ-lorraine.fr','luca.distasio@gmail.com','ABAQUS PARAMETRIC RUN INTERRUPTED','Abaqus parametric run interrupted on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\n An error occurred. Details:\n' + str(e)+ '\n\n View log file for further info.')
         sys.exit()
     return preprocessorFile
-        
+
 
 def runPreprocessor(preprocessor,functionCall,args,wd,logfilename):
     print('\n')
@@ -668,7 +668,7 @@ def runPreprocessor(preprocessor,functionCall,args,wd,logfilename):
     return result
 
 
-    
+
 def buildAbaqusCall(wd,pname,cpus,mode,logfilename):
     cmdfile = join(wd,'runabaqusjob.cmd')
     with open(logfilename,'a') as log:
@@ -696,8 +696,8 @@ def buildAbaqusCall(wd,pname,cpus,mode,logfilename):
     print('SUCCESS. Windows command script written.' + '\n')
     print('\n')
     return cmdfile
-    
-    
+
+
 def runAbaqusSolver(wd,projectName,cpus,runmode,logfilename,statusfilename):
     print('\n')
     print('=====================================================================\n')
@@ -742,8 +742,8 @@ def runAbaqusSolver(wd,projectName,cpus,runmode,logfilename,statusfilename):
         log.write('SUCCESS. Abaqus simulation started.\n')
         log.write('\n')
     sleep(600)
-    while isfile(join(wd,projectName,'abaqus',projectName+'.lck')):
-        sleep(120)
+    while isfile(join(wd,projectName,'solver',projectName+'.lck')) or isfile(join(wd,projectName,'solver',projectName+'.023')):
+        sleep(300)
     print('\n')
     print('=====================================================================\n')
     print('\n')
@@ -829,7 +829,7 @@ def iteratePreprocessor(iterables,arguments,preprocessor,functionCall,wd,logfile
             else:
                 with open(statusfilename,'a') as sta:
                     sta.write(projectname  + ', YES, NO, NO\n')
-        
+
 def iterateFemSolver(wd,solverInputs,logfilename,statusfilename):
     cpunum = None
     mode = None
@@ -963,7 +963,7 @@ def readInputDeck(inpFile,inpDir,logfilename):
         elif 'TOTAL NUMBER OF UNIT CONVERSION FACTORS' in line:
             [name,param] = line.split(':')
             unitConvFactors = [None]*int(param)
-            lineStartUnitConv = i + 1 
+            lineStartUnitConv = i + 1
             with open(logfilename,'a') as log:
                 log.write('TOTAL NUMBER OF UNIT CONVERSION FACTORS: ' + str(len(unitConvFactors)) + '\n')
                 log.write('\n')
@@ -1017,7 +1017,7 @@ def readInputDeck(inpFile,inpDir,logfilename):
             if 'Yes' in parts[2]:
                 iterablePreParams[int(parts[3])] = [int(parts[1]),factor*float(parts[4]),factor*float(parts[5]),factor*float(parts[6]),'Real']
         else:
-            preprocessorInputs[int(parts[1])] = [parts[4].replace(' ','').replace('\n','').replace('\t',''),parts[8].replace(' ','').replace('\n','').replace('\t','')]    
+            preprocessorInputs[int(parts[1])] = [parts[4].replace(' ','').replace('\n','').replace('\t',''),parts[8].replace(' ','').replace('\n','').replace('\t','')]
     for i in range(lineStartSolPar+1,lineStopSolPar):
         line = lines[i]
         parts = line.split(',')
@@ -1040,7 +1040,7 @@ def readInputDeck(inpFile,inpDir,logfilename):
     print('Assignment step COMPLETED\n')
     print('\n')
     return preprocessorPlatform,preprocessorFunction,solver,solverInputs,preprocessorInputs,unitConvFactors,iterablePreParams,iterableSolverParams
-    
+
 
 
 def main(argv):
@@ -1126,7 +1126,7 @@ def main(argv):
         abqonly = False
     if 'preonly' not in locals():
         preonly = False
-    
+
     logfilePath = join(workdir,logfile)
     with open(logfilePath,'w') as log:
         log.write('===============================================================================================\n')
@@ -1153,38 +1153,38 @@ def main(argv):
     print('===============================================================================================\n')
     print('===============================================================================================\n')
     print('\n')
-    
+
     statusfilePath = join(workdir,statusfile)
 
     if abqonly:
         sendStatusEmail('D:/OneDrive/01_Luca/07_DocMASE/06_WD','logData.csv','smtp.univ-lorraine.fr','luca.di-stasio@univ-lorraine.fr','luca.distasio@gmail.com','ABAQUS PARAMETRIC RUN','Abaqus parametric run starting on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nPreprocessor: none (Abaqus only)')
-        
+
         iterateFemSolver(workdir,[],logfilePath,statusfilePath)
     elif preonly:
         with open(statusfilePath,'w') as sta:
             sta.write('PROJECT NAME, PREPROCESSING, FEM SOLVER, POST PROCESSING\n')
-            
+
         preprocessorPlatform,preprocessorFunction,solver,solvInputs,preprocessorInputs,unitConvFactors,iterablePreParams,iterableSolverParams = readInputDeck(inputfile,inputdir,logfilePath)
-        
+
         sendStatusEmail('D:/OneDrive/01_Luca/07_DocMASE/06_WD','logData.csv','smtp.univ-lorraine.fr','luca.di-stasio@univ-lorraine.fr','luca.distasio@gmail.com','ABAQUS PARAMETRIC RUN','Abaqus parametric run starting on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nPreprocessor: '+ preprocessorPlatform)
-        
+
         iteratePreprocessor(iterablePreParams,preprocessorInputs,preprocessorPlatform,preprocessorFunction,workdir,logfilePath,statusfilePath)
-        
+
         sendStatusEmail('D:/OneDrive/01_Luca/07_DocMASE/06_WD','logData.csv','smtp.univ-lorraine.fr','luca.di-stasio@univ-lorraine.fr','luca.distasio@gmail.com','ABAQUS PARAMETRIC RUN','Pre-processing successfully completed on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '.')
     else:
         with open(statusfilePath,'w') as sta:
             sta.write('PROJECT NAME, PREPROCESSING, FEM SOLVER, POST PROCESSING\n')
-            
+
         preprocessorPlatform,preprocessorFunction,solver,solvInputs,preprocessorInputs,unitConvFactors,iterablePreParams,iterableSolverParams = readInputDeck(inputfile,inputdir,logfilePath)
-        
+
         sendStatusEmail('D:/OneDrive/01_Luca/07_DocMASE/06_WD','logData.csv','smtp.univ-lorraine.fr','luca.di-stasio@univ-lorraine.fr','luca.distasio@gmail.com','ABAQUS PARAMETRIC RUN','Abaqus parametric run starting on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n\nPreprocessor: '+ preprocessorPlatform)
-        
+
         iteratePreprocessor(iterablePreParams,preprocessorInputs,preprocessorPlatform,preprocessorFunction,workdir,logfilePath,statusfilePath)
-        
+
         sendStatusEmail('D:/OneDrive/01_Luca/07_DocMASE/06_WD','logData.csv','smtp.univ-lorraine.fr','luca.di-stasio@univ-lorraine.fr','luca.distasio@gmail.com','ABAQUS PARAMETRIC RUN','Pre-processing successfully completed on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S') + '. Starting Abaqus simulations.')
-        
+
         iterateFemSolver(workdir,solvInputs,logfilePath,statusfilePath)
-        
+
         sendStatusEmail('D:/OneDrive/01_Luca/07_DocMASE/06_WD','logData.csv','smtp.univ-lorraine.fr','luca.di-stasio@univ-lorraine.fr','luca.distasio@gmail.com','ABAQUS PARAMETRIC RUN','Abaqus simulations completed on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S'))
 
 

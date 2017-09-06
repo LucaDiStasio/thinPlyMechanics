@@ -1,0 +1,17 @@
+\beamer@endinputifotherversion {3.33pt}
+\beamer@sectionintoc {1}{The Fiber-Matrix Interface Problem in Fiber Reinforced Polymer Laminates}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{The Fiber-Matrix Interface Problem}{4}{0}{1}
+\beamer@subsectionintoc {1}{2}{Intralaminar Transverse Cracking}{4}{0}{1}
+\beamer@sectionintoc {2}{Objectives \& Approach}{6}{0}{2}
+\beamer@sectionintoc {3}{Micromechanical modeling}{8}{0}{3}
+\beamer@subsectionintoc {3}{1}{Representative Volume Elements' (RVEs) Design}{9}{0}{3}
+\beamer@subsectionintoc {3}{2}{Mesh Design and Generation}{11}{0}{3}
+\beamer@subsectionintoc {3}{3}{Finite Element Model in Abaqus}{13}{0}{3}
+\beamer@subsectionintoc {3}{4}{Numerical Evaluation of Energy Release Rate}{13}{0}{3}
+\beamer@sectionintoc {4}{Preliminary Results \& Perspectives}{15}{0}{4}
+\beamer@subsectionintoc {4}{1}{$\sigma _{0}$ and $G_{0}$}{16}{0}{4}
+\beamer@subsectionintoc {4}{2}{Finite strain and small strain formulations}{20}{0}{4}
+\beamer@sectionintoc {5}{Conclusions \& Outlook}{25}{0}{5}
+\beamer@sectionintoc {6}{Appendices \& References}{27}{0}{6}
+\beamer@subsectionintoc {6}{1}{Appendices}{28}{0}{6}
+\beamer@subsectionintoc {6}{2}{References}{37}{0}{6}

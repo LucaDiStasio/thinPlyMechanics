@@ -1,6 +1,6 @@
-%\documentclass[first,firstsupp,handout,compress,notes,navigation]{ETHclass} 
-%\documentclass[first,firstsupp,handout,lastsupp]{ETHclass} 
-\documentclass[first,firstsupp,lastsupp,handout,last,hyperref,table]{ETHclass} 
+%\documentclass[first,firstsupp,handout,compress,notes,navigation]{ETHclass}
+%\documentclass[first,firstsupp,handout,lastsupp]{ETHclass}
+\documentclass[first,firstsupp,lastsupp,handout,last,hyperref,table]{ETHclass}
 %\documentclass[first,firstsupp]{ETHclass}
 \usepackage{etex}
 
@@ -10,6 +10,7 @@
 \usepackage{animate}
 \usepackage{booktabs}
 \usepackage{charter}
+\usepackage{enumitem}
 \usepackage{etoolbox}
 \usepackage{ifthen}
 \usepackage{longtable}
@@ -27,7 +28,7 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 
-
+\pgfplotsset{compat=1.7}
 
 \setbeamertemplate{navigation symbols}{}
 \usetikzlibrary{arrows,decorations.pathreplacing,positioning,shapes,shadows}
@@ -43,7 +44,7 @@
 % Options for beamer:
 %
 % 9,10,11,12,13,14,17pt  Fontsizes
-% 
+%
 % compress: navigation bar becomes smaller
 % t       : place contents of frames on top (alternative: b,c)
 % handout : handoutversion
@@ -52,7 +53,7 @@
 %
 %hyperref={bookmarksopen,bookmarksnumbered} : Needed for menues in
 %                                             acrobat. Also need
-%                                             pdftex as option or 
+%                                             pdftex as option or
 %                                             compile with
 % pdflatex '\PassOptionsToPackage{pdftex,bookmarksopen,bookmarksnumbered}{hyperref} \input{file}'
 
@@ -61,10 +62,10 @@
                                 % remove ``accumulated'' option
                                 % for original behaviour
 %\usepackage{beamerbasenotes}
-%\setbeamertemplate{note page}[plain] 
+%\setbeamertemplate{note page}[plain]
 %\setbeameroption{notes on second screen}
 
-%\setbeamertemplate{note page}[plain] 
+%\setbeamertemplate{note page}[plain]
 \setbeamertemplate{note page}{\ \\[.3cm]
 \textbf{\color{blue}Notes:}\\%[0.1cm]
 {\footnotesize %\tiny
@@ -117,7 +118,7 @@
   {\vskip1.5\itemsep}
   {}
   {}
-\makeatother  
+\makeatother
 
 \setbeamertemplate{frametitle continuation}{}
 
@@ -137,10 +138,10 @@
 
 \newcommand{\highlightred}[1]{%
   \colorbox{red!50}{$\displaystyle#1$}}
-  
+
 \newcommand{\highlightyellow}[1]{%
   \colorbox{yellow!50}{$\displaystyle#1$}}
-  
+
 \newcommand{\highlightgreen}[1]{%
   \colorbox{green!50}{$\displaystyle#1$}}
 
@@ -243,9 +244,7 @@
 
 \section[The Fiber-Matrix Interface Problem in FRPC]{The Fiber-Matrix Interface Problem in Fiber Reinforced Polymer Laminates}
 
-\subsection{The Fiber-Matrix Interface Problem}
-
-\subsection{Intralaminar Transverse Cracking}
+\subsection[Cracking in FRPC]{Intralaminar Transverse Cracking}
 
 \begin{frame}
 \frametitle{Intralaminar Transverse Cracking}
@@ -261,11 +260,51 @@
 \end{figure}
 \end{frame}
 
+\subsection[Characterization]{Characterization of the Fracture Process}
+
 \begin{frame}
 \frametitle{Characterization of the Fracture Process}
-\vspace{-0.5cm}
+\vspace{-0.7cm}
 \centering
+\footnotesize
+\begin{equation*}
+G_{m}=G_{m}\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad G=\frac{\partial W}{\partial A} - \left(\frac{\partial U}{\partial A}+\frac{\partial E_{k}}{\partial A}\right)
+\end{equation*}
+\begin{equation*}
+K_{m}=K_{m}\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad \sigma_{m}\sim K_{m}\frac{\alpha}{\left(x-a\right)^{\beta}}, \alpha,\beta>0
+\end{equation*}
+\begin{equation*}
+J=J\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad J=\int_{\Gamma}Wd\eta-\mathbf{T}\frac{\partial\mathbf{u}}{\partial\varepsilon}ds
+\end{equation*}
+\begin{equation*}
+COD=COD\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{and}\quad CSD=CSD\left(p_{1},\dots,p_{i},\dots,p_{n}\right)
+\end{equation*}
+\vspace{10pt}
+\begin{equation*}
+p_{i}\in\left\{\text{geometry},\text{materials},\text{boundary conditions},\text{loading mode},\text{scale}\right\}
+\end{equation*}
+\begin{equation*}
+m\in\left\{I,II,III,I/II,I/III,II/III\right\}
+\end{equation*}
+\end{frame}
 
+\subsection[Evaluation]{Evaluation of Fracture Parameters}
+
+\begin{frame}
+\frametitle{Evaluation of the Fracture Process}
+\vspace{-0.7cm}
+\centering
+\begin{itemize}[label=\ding{212}]
+\item Analytical
+\begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}
+\item Closed form
+\end{list}
+\begin{list}{\Huge\textcolor{red}{$\mathbf{\times}$}}{}
+\item Available only for particular configurations
+\end{list}
+\item Experimental
+\item Numerical
+\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -275,414 +314,8 @@
 
 \end{frame}
 
-\section{Objectives \& Approach}
-
-\begin{frame}
-\frametitle{Objectives \& Approach}
-\vspace{-0.25cm}
-\centering
-\scriptsize
-\begin{alertblock}{\small \bf{Objectives}}
-\begin{itemize}
-    \item Investigate the influence of volume fraction, thin ply thickness and bounding plies' thicknesses on crack initiation 
-    \item To infere a relationship like
-	\begin{equation*}
-		G_{*c}=G_{*c}\left(\theta_{debond},\Delta\theta_{debond}, E_{\left(\cdot\cdot\right)}, \nu_{\left(\cdot\cdot\right)}, G_{\left(\right)},VF_{f}, t_{ply}, \frac{t_{ply}}{t_{bounding\ plies}}\right)
-	\end{equation*}
-\end{itemize}
-\end{alertblock}
-\begin{alertblock}{\small \bf{Approach}}
-\begin{itemize}
-    \item Design and categorization of different Representative Volume Elements (RVEs)
-    \item Automated generation of RVEs geometry and FEM model
-    \item Finite Element Simulation (in Abaqus)
-\end{itemize}
-\end{alertblock}
-\end{frame}
-
-\section{Micromechanical modeling}
-
-\subsection[RVEs' Design]{Representative Volume Elements' (RVEs) Design}
-
-\begin{frame}
-\frametitle{From macro to micro}
-\vspace{-1cm}
-\centering
-\begin{figure}
-\centering
-\includegraphics[height=0.85\textheight]{laminate-section.pdf}
-%\caption{}
-\label{fig:spread-tow-schematic}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{Representative Volume Elements (RVEs)}
-\vspace{-0.75cm}
-\centering
-\begin{figure}
-\centering
-\includegraphics[height=0.8\textheight]{periodicRVE_cc.pdf}
-%\caption{\scriptsize Visualization of reference RVE inside a periodic square-array structure.}
-\label{fig:periodicRVE}
-\end{figure}
-\end{frame}
-
-\subsection[Mesh Design]{Mesh Design and Generation}
-
-\begin{frame}
-\frametitle{\vspace*{0.25cm}\small Mesh Design and Generation}
-\vspace{-0.5cm}
-\centering
-\tiny
-\begin{alertblock}{\scriptsize \bf{Why a good mesh is fundamental}}
-\begin{enumerate}
-\item Geometric discretization has a strong effect on non-linear FEM simulations 
-\item Damage is a process that implies changes in geometry, i.e. generation of surfaces and domain splitting
-\item Fracture mechanics quantities depends on the local mesh topology and refinement 
-\end{enumerate}
-\end{alertblock}
-\begin{alertblock}{\scriptsize \bf{4-step procedure for mesh generation}}
-\begin{enumerate}
-\item The boundary is generated patching analytical parameterizations
-\item The boundary is split into a set of 4 corners ($c_{i}$) and 4 edges ($e_{i}$)
-\item Interior nodes are created applying transfinite interpolation using multi-dimensional linear Lagrangian interpolants
-
-\begin{equation*}
-P_{1}(x,p_{j})=\sum_{j=1}^{n}p_{j}\prod_{k=1\ k\neq j}^{n}\frac{x-x_{k}}{x_{j}-x_{k}}\quad P_{2}(x,y,p_{j},q_{j})=P_{1}(x,p_{j})\otimes P_{1}(y,q_{j})
-\end{equation*}
-
-\begin{equation*}
-r(\xi,\eta)=P_{1}(\xi,e_{2},e_{4})+P_{1}(\eta,e_{1},e_{3})- P_{2}(\xi,\eta,c_{1},c_{2},c_{3},c_{4})
-\end{equation*}
-
-\item The mesh is smoothed applying elliptic mesh generation
-
-\begin{equation*}
-g^{11}\underline{r}_{,\xi\xi}+2g^{12}\underline{r}_{,\xi\eta}+g^{22}\underline{r}_{,\eta\eta}=0
-\end{equation*}
-
-\end{enumerate}
-\end{alertblock}
-\end{frame}
 
 
-\begin{frame}
-\frametitle{Angular discretization}
-\vspace{-0.7cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{mesh-disc-at-interface.pdf}
-  \caption{Angular discretization at fiber/matrix interface: $\delta=\frac{360^{\circ}}{4N_{\alpha}}$.}
-  \label{fig:angu-discr-def}
-\end{figure}
-\end{frame}
-
-\subsection[FEM Model]{Finite Element Model in Abaqus}
-
-\subsection[$G_{c}$ Numerical Evaluation]{Numerical Evaluation of Energy Release Rate}
-
-\begin{frame}
-\frametitle{Virtual Crack Closure Technique (VCCT)}
-\vspace{-1.5cm}
-\centering
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.6\textheight]{VCCT.pdf}
- % \caption{Angular discretization at fiber/matrix interface.}
-  \label{fig:vcct}
-\end{figure}
-\begin{equation*}
-G_{I}=\frac{Z_{C}\Delta w_{C}}{2B\Delta a}\quad G_{II}=\frac{X_{C}\Delta u_{C}}{2B\Delta a}\quad\Longleftrightarrow\quad\text{In-house routine and Abaqus built-in *DEBOND function}
-\end{equation*}
-\end{frame}
-
-\begin{frame}
-\frametitle{J-integral evaluation}
-\vspace{-0.75cm}
-\centering
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.6\textheight]{J-integral.pdf}
- % \caption{Angular discretization at fiber/matrix interface.}
-  \label{fig:jintegral}
-\end{figure}
-\scriptsize
-\begin{equation*}
-J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\right)n_{i}-n_{j}\sigma_{jk}\frac{\partial u_{k}\left(\Gamma,x_{i}\right)}{\partial x_{i}}\right)d\Gamma\Longleftrightarrow\text{*CONTOUR INTEGRAL in Abaqus}
-\end{equation*}
-\end{frame}
-
-\section[Results]{Preliminary Results \& Perspectives}
-
-\subsection{$\sigma_{0}$ and $G_{0}$}
-
-\begin{frame}
-\frametitle{\small $\sigma_{0}$ for $Vf_{f}=0.001$, $\frac{L}{R_{f}}\sim28$ and $\delta=0.4^{\circ}$}
-\vspace{-0.5cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{2017-06-23_AbqRunSummary_SingleFiberEqRfSmallFiniteStrain_sigma-inf_Summary.pdf}
-  \caption{\scriptsize In red small strain FEM, in green finite strain FEM, in black $\sigma_{0}=\frac{E}{1-\nu^{2}}\varepsilon$.}
-  \label{fig:res1}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{\small $G_{0}$ for $Vf_{f}=0.001$, $\frac{L}{R_{f}}\sim28$ and $\delta=0.4^{\circ}$}
-\vspace{-0.5cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{2017-06-23_AbqRunSummary_SingleFiberEqRfSmallFiniteStrain_G0_Summary.pdf}
-  \caption{\scriptsize In red small strain FEM, in green finite strain FEM, in black $G_{0}$ calculated assuming $\sigma_{0}=\frac{E}{1-\nu^{2}}\varepsilon$.}
-  \label{fig:res1}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{\small $\sigma_{0}$ for $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim100$ and $\delta=0.4^{\circ}$}
-\vspace{-0.5cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{2017-06-16_AbqRunSummary_SingleFiberEqRfSmallStrain-D0-4_sigma-inf_Summary.pdf}
-  \caption{\scriptsize In red small strain FEM, in black $\sigma_{0}=\frac{E}{1-\nu^{2}}\varepsilon$.}
-  \label{fig:res1}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{\small $G_{0}$ for $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim100$ and $\delta=0.4^{\circ}$}
-\vspace{-0.5cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{2017-06-16_AbqRunSummary_SingleFiberEqRfSmallStrain-D0-4_G0_Summary.pdf}
-  \caption{\scriptsize In red small strain FEM, in black $G_{0}$ calculated assuming $\sigma_{0}=\frac{E}{1-\nu^{2}}\varepsilon$.}
-  \label{fig:res1}
-\end{figure}
-\end{frame}
-
-%\begin{frame}
-%\frametitle{\small Conclusions}
-%\vspace{-0.5cm}
-%\centering
-%\begin{itemize}[label=\ding{212}]
-%\item $\sigma_{0}$ and $G_{0}$ depend on $\Delta\theta$ for finite sizes of the RVE
-%\item As the RVE size $\rightarrow\infty$, i.e. $\frac{L}{R_{f}}\rightarrow \infty$ ($\sim 100$), $\sigma_{0}$ and $G_{0}$ tend to the theoretical undamaged value given by $\sigma_{0}=\frac{E_{m}}{1-\nu_{m}^{2}}\varepsilon_{0}$
-%\item $\sigma_{0}$ and $G_{0}$ might be taken as a good measure of "infinetess" for strain-/displacement-controlled simulations
-%\item By selecting $\Delta\theta=10^{\circ}$ and running a parametric study with a comparatevely coarse mesh the minimum ratio  $\frac{L}{R_{f}}$ or equivalently maximum $Vf_{f}$ volume to have an infinite RVE could be found
-%\end{itemize}
-%\end{frame}
-
-\subsection{Finite strain and small strain formulations}
-
-\begin{frame}
-\frametitle{\small $\frac{G_{\left(\cdot\cdot\right)}}{G_{0}}$ for $V_{f}=0.001$, $\frac{L}{R_{f}}\sim28$ and $\delta=0.4^{\circ}$}
-\vspace{-0.5cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{2017-06-23_AbqRunSummary_SingleFiberEqRfSmallFiniteStrain_M-VCCT_Summary.pdf}
-  \caption{\scriptsize In red small strain FEM, in green finite strain FEM, in black BEM results.}
-  \label{fig:res1}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{\small $\frac{G_{\left(\cdot\cdot\right)}}{G_{0}}$ for $V_{f}=0.001$, $\frac{L}{R_{f}}\sim28$ and $\delta=0.4^{\circ}$, small strain formulation}
-\vspace{-0.5cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{2017-06-23_AbqRunSummary_SingleFiberEqRfSmallStrain_J-INT_Summary.pdf}
-  \caption{\scriptsize Fading from blue to red J-Integrals evaluated at contours at increasing distance from the crack tip, in black BEM results.}
-  \label{fig:res1}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{\small $\frac{G_{\left(\cdot\cdot\right)}}{G_{0}}$ for $V_{f}=0.001$, $\frac{L}{R_{f}}\sim28$ and $\delta=0.4^{\circ}$, small strain formulation}
-\vspace{-0.5cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{2017-06-23_AbqRunSummary_SingleFiberEqRfSmallStrain_VCCT-JINT_Summary.pdf}
-  \caption{\scriptsize Fading from blue to red J-Integrals evaluated at contours at increasing distance from the crack tip, in green evaluation with in-house VCCT routine, in black BEM results.}
-  \label{fig:res1}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{\small $\frac{G_{\left(\cdot\cdot\right)}}{G_{0}}$ for $V_{f}=0.001$, $\frac{L}{R_{f}}\sim28$ and $\delta=0.4^{\circ}$, finite strain formulation}
-\vspace{-0.5cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{2017-06-23_AbqRunSummary_SingleFiberEqRfFiniteStrain_J-INT_Summary.pdf}
-  \caption{\scriptsize Fading from blue to red J-Integrals evaluated at contours at increasing distance from the crack tip, in black BEM results.}
-  \label{fig:res1}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{\small $\frac{G_{\left(\cdot\cdot\right)}}{G_{0}}$ for $V_{f}=0.001$, $\frac{L}{R_{f}}\sim28$ and $\delta=0.4^{\circ}$, finite strain formulation}
-\vspace{-0.5cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{2017-06-23_AbqRunSummary_SingleFiberEqRfFiniteStrain_VCCT-JINT_Summary.pdf}
-  \caption{\scriptsize Fading from blue to red J-Integrals evaluated at contours at increasing distance from the crack tip, in green evaluation with in-house VCCT routine, in black BEM results.}
-  \label{fig:res1}
-\end{figure}
-\end{frame}
-
-%\begin{frame}
-%\frametitle{\small Conclusions}
-%\vspace{-0.5cm}
-%\centering
-%\begin{itemize}[label=\ding{212}]
-%\item For both small and finite strain formulations, J-integrals are already in good agreement with $\frac{G_{TOT}}{G_{0}}$ from BEM, i.e. no sizeable finite size effect already at $\frac{L}{R_{f}}\sim 28$
-%\item For both small and finite strain formulations, J-integrals correct measure the peak value of $\frac{G_{TOT}}{G_{0}}$ at $60^{\circ}$
-%\item J-Integrals in small strain slightly overestimate the BEM result
-%\item J-integrals in small strain shows poor convergence in the range $50^{\circ}-80^{\circ}$
-%\item J-Integrals in finite strain slightly underestimate the BEM result
-%\item J-integrals in finite strain shows very good convergence in all the range $10^{\circ}-150^{\circ}$
-%\end{itemize}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{\small Conclusions}
-%\vspace{-0.5cm}
-%\centering
-%\begin{itemize}[label=\ding{212}]
-%\item $\frac{G_{TOT}}{G_{0}}$ is correctly calculated by the VCCT in small strain, in good agreement with BEM results
-%\item $\frac{G_{TOT}}{G_{0}}$ is wrongly calculated by the VCCT in finite strain, with a peak at $65^{\circ}-70^{\circ}$
-%\item Small strain VCCT shows better results than finite strain VCCT
-%\item Mode ratio is still not correct, i.e. probably finite size effect
-%\end{itemize}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{\small Observations \& Questions}
-%\vspace{-0.45cm}
-%\centering
-%\begin{itemize}[label=\ding{212}]
-%\item J-Integral is a far-field technique, using stresses, strain and displacements far from the crack tip; convergence is in fact far from crack tip (at least 10 contours, i.e. 10 ring of elements)
-%\item VCCT is a local technique, using forces and displacements at the crack tip
-%\item The difference between small and finite strain results rests mainly in the displacements
-%\item Previously, we observed that changing the formulation of the bonded interface, all other parameters equal, the result doesn't change
-%\item All the convergence problem reduces to the correct evaluation of displacements of debonded surfaces close to the crack tip
-%\item Displacements of debonded surfaces close to the crack tip are influenced by RVE size
-%\end{itemize}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{\small Observations \& Questions}
-%\vspace{-0.25cm}
-%\centering
-%\begin{itemize}[label=\ding{212}]
-%\item Small strain shows (correctly) better results than finite strain formulation with respect to infinite reference values
-%\item However, Abaqus documentation suggests that, if contact between surfaces is present in the model, finite strain formulation (nonlinear geometry) should be used
-%\item For finite sizes of RVE, which formulation should be chosen?
-%\end{itemize}
-%\end{frame}
-
-%\subsection{Elements's aspect ratio}
-%
-%\begin{frame}
-%\frametitle{\small $\frac{G_{\left(\cdot\cdot\right)}}{G_{0}}$ for  $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim100$ and $\delta=1.0^{\circ}$, small strain formulation}
-%\vspace{-0.5cm}
-%\centering
-%\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-%\begin{figure}[!h]
-%\centering
-%\includegraphics[height=0.7\textheight]{2017-06-16_AbqRunSummary_SingleFiberEqRfSmallStrain-D1-0_VCCT-JINT_Summary.pdf}
-%  \caption{\scriptsize Fading from blue to red J-Integrals evaluated at contours at increasing distance from the crack tip, in green evaluation with in-house VCCT routine, in black BEM results.}
-%  \label{fig:res1}
-%\end{figure}
-%\end{frame}
-%
-%\begin{frame}
-%\frametitle{\small $\frac{G_{\left(\cdot\cdot\right)}}{G_{0}}$ for  $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim100$ and $\delta=0.4^{\circ}$, small strain formulation}
-%\vspace{-0.5cm}
-%\centering
-%\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-%\begin{figure}[!h]
-%\centering
-%\includegraphics[height=0.7\textheight]{2017-06-16_AbqRunSummary_SingleFiberEqRfSmallStrain-D0-4_VCCT-JINT_Summary.pdf}
-%  \caption{\scriptsize Fading from blue to red J-Integrals evaluated at contours at increasing distance from the crack tip, in green evaluation with in-house VCCT routine, in black BEM results.}
-%  \label{fig:res1}
-%\end{figure}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{\small Conclusions}
-%\vspace{-0.5cm}
-%\centering
-%\begin{itemize}[label=\ding{212}]
-%\item Elements' aspect ratio (maximum side length/minimum side length) was very high in the exterior part of the matrix in this set of simulations
-%\item Spurious stresses adn deformations were created at $45^{\circ},135^{\circ},225^{\circ},315^{\circ}$
-%\item Results are badly affected by this in the range  $40^{\circ} - 70^{\circ}$ with a marked oscillation between $40^{\circ} - 50^{\circ}$
-%\item Elements' aspect ratio in the matrix is more important than the elements' size at the fiber/matrix interface
-%\item Program has already been changed to receive aspect ratios as input instead of number of elements
-%\item Results from previous sections were calculated with meshes with controlled aspect ratios
-%\end{itemize}
-%\end{frame}
-
-
-
-%\begin{frame}
-%\frametitle{$\sigma_{xx}$ along radial sections}
-%\vspace{-0.35cm}
-%\centering
-%\captionsetup[subfigure]{font=scriptsize,labelfont=scriptsize}
-%\begin{figure}[!h]
-%\centering
-%\includegraphics[height=0.7\textheight]{AllRadialSections-S11.pdf}
-% \caption{$\Delta\theta=5^{\circ},\delta=0.4^{\circ},VF_{f}=0.001,\frac{l}{R_{f}}\approx28$}
-%  \label{fig:allradialS11}
-%\end{figure}
-%\end{frame}
-%
-%\begin{frame}
-%\frametitle{$\sigma_{zz}$ along radial sections}
-%\vspace{-0.35cm}
-%\centering
-%\captionsetup[subfigure]{font=scriptsize,labelfont=scriptsize}
-%\begin{figure}[!h]
-%\centering
-%\includegraphics[height=0.7\textheight]{AllRadialSections-S22.pdf}
-% \caption{$\Delta\theta=5^{\circ},\delta=0.4^{\circ},VF_{f}=0.001,\frac{l}{R_{f}}\approx28$}
-%  \label{fig:allradialS22}
-%\end{figure}
-%\end{frame}
-%
-%\begin{frame}
-%\frametitle{$\tau_{xz}$ along radial sections}
-%\vspace{-0.35cm}
-%\centering
-%\captionsetup[subfigure]{font=scriptsize,labelfont=scriptsize}
-%\begin{figure}[!h]
-%\centering
-%\includegraphics[height=0.7\textheight]{AllRadialSections-S12.pdf}
-% \caption{$\Delta\theta=5^{\circ},\delta=0.4^{\circ},VF_{f}=0.001,\frac{l}{R_{f}}\approx28$}
-%  \label{fig:allradialS12}
-%\end{figure}
-%\end{frame}
 
 \section[Conclusions]{Conclusions \& Outlook}
 
@@ -715,137 +348,7 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 %\frametitle{}
 %\end{frame}
 
-\begin{frame}
-\frametitle{Spread Tow Technology: Implications}
-\vspace{-0.75cm}
-\centering
-\begin{itemize}
-	\item Strong reduction in ply's thickness and weight
-	\item Reduction in laminate's thickness and weight
-	\item Higher fiber volume fraction and more homogeneous fiber distribution
-	\item Ply thickness to fiber diameter ratio decreases of at least 1 order of magnitude, from $>100$ to $\leq10$
-	\item Increased load at damage onset and increased ultimate strength, in particular for transverse cracking
-\end{itemize}
-\end{frame}
 
-\begin{frame}
-\frametitle{RVEs: Variations on a Theme}
-\vspace{-0.75cm}
-\centering
-\begin{figure}[!h]
-\centering
-\subfloat{\includegraphics[height=0.4\textheight]{SingleRVEs.pdf}}\quad
-\subfloat{\includegraphics[height=0.4\textheight]{boundedRVE_cc.pdf}}\quad
-\subfloat{\includegraphics[height=0.4\textheight]{periodicRVE_cc.pdf}}
-  %\caption{Single RVE model.}
-  \label{fig:RVEs-variations}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{RVEs: First Variation on a Theme}
-\vspace{-0.25cm}
-\centering
-\begin{figure}
-\centering
-\includegraphics[height=0.7\textheight]{LEFM2DsRVEsFsDdepverdispBCULappAxialDispLR.pdf}
-\caption{\scriptsize Isolated RVE with zero vertical displacement BC.}
-\label{fig:singleRVE-rigid}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{RVEs: Second Variation on a Theme}
-\vspace{-0.25cm}
-\centering
-\begin{figure}
-\centering
-\includegraphics[height=0.7\textheight]{LEFM2DsRVEsFsDhomoBCULappAxialDispLR.pdf}
-\caption{\scriptsize Isolated RVE with homogeneous displacement BC.}
-\label{fig:singleRVE-homo}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{RVEs: Third Variation on a Theme}
-\vspace{-0.25cm}
-\centering
-\begin{figure}
-\centering
-\includegraphics[height=0.7\textheight]{boundedRVE_cc.pdf}
-\caption{\scriptsize Bounded RVE.}
-\label{fig:boundedRVE}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{Topological transformation}
-\vspace{-1cm}
-\centering
-\captionsetup[subfigure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\subfloat[]{\includegraphics[height=0.4\textheight]{mesh_regions.pdf}}\qquad
-\subfloat[]{\includegraphics[height=0.4\textheight]{opening1.pdf}}\\
-\subfloat[]{\includegraphics[height=0.3\textheight]{opening2.pdf}}\qquad
-\subfloat[]{\includegraphics[width=0.6\textwidth]{opening3.pdf}}
-  %\caption{Single RVE model.}
-  \label{fig:topological-geom-transf}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{Mesh parameters}
-\vspace{-0.7cm}
-\centering
-\captionsetup[subfigure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\subfloat{\includegraphics[height=0.75\textheight]{mesh_parameters_single.pdf}}\qquad
-\subfloat{\includegraphics[height=0.75\textheight]{mesh_parameters_bounded.pdf}}
-  %\caption{Single RVE model.}
-  \label{fig:mesh-params}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{Finite Element Model in Abaqus}
-\vspace{-0.7cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{table}[h!]
-\scriptsize
-  \centering
-  %\caption{Analysis methods summary.}
-    \begin{tabularx}{\textwidth}{X}
-    \toprule
-    \midrule    
-    \textbf{Method}\\
-    ABAQUS/STD static analysis + VCCT + J-integral.\\
-    \midrule
-    \textbf{Type}\\
-    Static, i.e. no inertial effects. Relaxation until equilibrium.\\
-    \midrule
-    \textbf{Elements}\\
-    CPE4/CPE8\\
-    \midrule
-    \textbf{Interface}\\
-    Tied surface constraint \& contact mechanics\\
-    \midrule
-   \textbf{Input variables}\\
-    $R_{f}$, $V_{f}$, material properties, interface properties.\\
-    \midrule
-    \textbf{Control variables}\\
-    $\theta$, $\Delta\theta$, $\bar{\varepsilon}_{x}$.\\
-    \midrule
- \textbf{Output variables} \\
-  Stress field, crack tip stress, stress intensity factors, energy release rates, $a$.\\
-  \midrule
-    \bottomrule
-    \end{tabularx}%
-  \label{tab:analysis_tab}%
-\end{table}
-\end{frame}
 
 \begin{frame}
 \frametitle{\small Evaluation of $G_{0}$}
@@ -884,9 +387,9 @@ k_{m}=3-4\nu_{m}
 
 \begin{frame}[allowframebreaks]
   \frametitle{References}
-    
+
   \begin{thebibliography}{10}
-    
+
 %  \beamertemplatebookbibitems
 %  % Start with overview books.
 %
@@ -894,10 +397,10 @@ k_{m}=3-4\nu_{m}
 %    A.~Author.
 %    \newblock {\em Handbook of Everything}.
 %    \newblock Some Press, 1990.
- 
-    
+
+
   \beamertemplatearticlebibitems
-  % Followed by interesting articles. Keep the list short. 
+  % Followed by interesting articles. Keep the list short.
 
 \bibitem{DonaldL.Flaggs1982}
 Donald L. Flaggs, Murat H. Kural;
@@ -927,7 +430,7 @@ Stephen W. Tsai;
 
 \bibitem{ZnedekP.Bazant2002}
 Znedek P. Bazant;
-\newblock {\em Size Effect Theory and its Application to Fracture of Fiber Composites and Sandwich Plates.} 
+\newblock {\em Size Effect Theory and its Application to Fracture of Fiber Composites and Sandwich Plates.}
 \newblock in Continuum Damage Mechanics of Materials and Structures, eds. O. Allix and F. Hild, 2002.
 
 
@@ -978,4 +481,3 @@ Donald L. Flaggs, Murat H. Kural;
 \end{frame}
 
 \end{document}
-

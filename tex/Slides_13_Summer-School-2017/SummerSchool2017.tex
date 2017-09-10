@@ -242,12 +242,13 @@
 %\end{frame}
 %% \note{}
 
-\section[The Fiber-Matrix Interface Problem in FRPC]{The Fiber-Matrix Interface Problem in Fiber Reinforced Polymer Laminates}
+\section[Characterization of Fracture in FRPC]{Characterization of Fracture in FRPC Laminates}
 
-\subsection[Cracking in FRPC]{Intralaminar Transverse Cracking}
+\subsection[Damage in FRPC]{Damage Onset and Propagation in FRPC Laminates}
 
 \begin{frame}
-\frametitle{Intralaminar Transverse Cracking}
+%\vspace*{-1cm}
+\frametitle{\small Damage Onset and Propagation in FRPC Laminates}
 \vspace{-0.75cm}
 \centering
 \captionsetup[subfigure]{labelfont=footnotesize}
@@ -263,23 +264,30 @@
 \subsection[Characterization]{Characterization of the Fracture Process}
 
 \begin{frame}
-\frametitle{Characterization of the Fracture Process}
-\vspace{-0.7cm}
+%\vspace{-0.5cm}
+\frametitle{\small Characterization of the Fracture Process}
+\vspace{-0.25cm}
 \centering
-\footnotesize
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item Energy Release Rate
 \begin{equation*}
 G_{m}=G_{m}\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad G=\frac{\partial W}{\partial A} - \left(\frac{\partial U}{\partial A}+\frac{\partial E_{k}}{\partial A}\right)
 \end{equation*}
+\item Stress Intensity Factor
 \begin{equation*}
 K_{m}=K_{m}\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad \sigma_{m}\sim K_{m}\frac{\alpha}{\left(x-a\right)^{\beta}}, \alpha,\beta>0
 \end{equation*}
+\item J-Integral
 \begin{equation*}
-J=J\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad J=\int_{\Gamma}Wd\eta-\mathbf{T}\frac{\partial\mathbf{u}}{\partial\varepsilon}ds
+J=J\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad J=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\right)n_{i}-n_{j}\sigma_{jk}\frac{\partial u_{k}\left(\Gamma,x_{i}\right)}{\partial x_{i}}\right)d\Gamma
 \end{equation*}
+\item Crack Opening \& Shear Displacement
 \begin{equation*}
 COD=COD\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{and}\quad CSD=CSD\left(p_{1},\dots,p_{i},\dots,p_{n}\right)
 \end{equation*}
-\vspace{10pt}
+\end{itemize}
+\vspace{5pt}
 \begin{equation*}
 p_{i}\in\left\{\text{geometry},\text{materials},\text{boundary conditions},\text{loading mode},\text{scale}\right\}
 \end{equation*}
@@ -291,27 +299,97 @@ m\in\left\{I,II,III,I/II,I/III,II/III\right\}
 \subsection[Evaluation]{Evaluation of Fracture Parameters}
 
 \begin{frame}
-\frametitle{Evaluation of the Fracture Process}
-\vspace{-0.7cm}
+\frametitle{\small Evaluation of Fracture Parameters}
+\vspace{-0.4cm}
 \centering
+\scriptsize
 \begin{itemize}[label=\ding{212}]
 \item Analytical
 \begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}
 \item Closed form
+\item Every material scale can be studied
 \end{list}
 \begin{list}{\Huge\textcolor{red}{$\mathbf{\times}$}}{}
 \item Available only for particular configurations
 \end{list}
 \item Experimental
+\begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}
+\item Complex geometries can be studied
+\end{list}
+\begin{list}{\Huge\textcolor{red}{$\mathbf{\times}$}}{}
+\item Not every material scale is accessible
+\end{list}
 \item Numerical
+\begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}
+\item Complex geometries can be studied
+\item Every material can be studied
+\end{list}
+\begin{list}{\Huge\textcolor{red}{$\mathbf{\times}$}}{}
+\item Discretization
+\item Finite domains
+\end{list}
 \end{itemize}
 \end{frame}
 
+\subsection[Numerical Estimation]{Numerical Estimation of Energy Release Rates}
+
 \begin{frame}
-\frametitle{The Fiber-Matrix Interface Crack}
+\frametitle{\small Numerical Estimation of Energy Release Rates}
+\vspace{-0.4cm}
+\centering
+\scriptsize
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{itemize}[label=\ding{212}]
+\item Virtual Crack Closure Technique (VCCT)
+
+\begin{figure}
+\includegraphics[width=0.9\columnwidth]{VCCT.pdf}
+ % \caption{VCCT}
+  \label{fig:vcct}
+\end{figure}
+
+\begin{equation*}
+G_{I}=\frac{Z_{C}\Delta w_{C}}{2B\Delta a}\quad G_{II}=\frac{X_{C}\Delta u_{C}}{2B\Delta a}
+\end{equation*}
+
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{itemize}[label=\ding{212}]
+\item J-Integral
+
+\begin{figure}
+\includegraphics[width=0.9\columnwidth]{J-integral.pdf}
+ % \caption{Angular discretization at fiber/matrix interface.}
+  \label{fig:jintegral}
+\end{figure}
+
+\begin{equation*}
+J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\right)n_{i}-n_{j}\sigma_{jk}\frac{\partial u_{k}\left(\Gamma,x_{i}\right)}{\partial x_{i}}\right)d\Gamma
+\end{equation*}
+
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section[The Fiber-Matrix Interface Problem in FRPC]{The Fiber-Matrix Interface Problem in Fiber Reinforced Polymer Laminates}
+
+\begin{frame}
+\frametitle{\small The Fiber-Matrix Interface Crack}
 \vspace{-0.5cm}
 \centering
+\begin{columns}
+\begin{column}{0.5\textwidth}
 
+\end{column}
+\begin{column}{0.5\textwidth}
+
+\end{column}
+\end{columns}
 \end{frame}
 
 

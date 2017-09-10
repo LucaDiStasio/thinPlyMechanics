@@ -261,7 +261,7 @@
 \end{figure}
 \end{frame}
 
-\subsection[Characterization]{Characterization of the Fracture Process}
+\subsection[Characterization of the Fracture Process]{Characterization of the Fracture Process}
 
 \begin{frame}
 %\vspace{-0.5cm}
@@ -276,7 +276,7 @@ G_{m}=G_{m}\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad G=\f
 \end{equation*}
 \item Stress Intensity Factor
 \begin{equation*}
-K_{m}=K_{m}\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad \sigma_{m}\sim K_{m}\frac{\alpha}{\left(x-a\right)^{\beta}}, \alpha,\beta>0
+K_{m}=K_{m}\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad \sigma_{m}\sim K_{m}\frac{\alpha}{\left(x-a\right)^{\beta}}\quad\alpha,\beta>0
 \end{equation*}
 \item J-Integral
 \begin{equation*}
@@ -296,7 +296,7 @@ m\in\left\{I,II,III,I/II,I/III,II/III\right\}
 \end{equation*}
 \end{frame}
 
-\subsection[Evaluation]{Evaluation of Fracture Parameters}
+\subsection[Evaluation  of Fracture Parameters]{Evaluation of Fracture Parameters}
 
 \begin{frame}
 \frametitle{\small Evaluation of Fracture Parameters}
@@ -341,11 +341,11 @@ m\in\left\{I,II,III,I/II,I/III,II/III\right\}
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \centering
+\vspace*{-1.4cm}
 \begin{itemize}[label=\ding{212}]
 \item Virtual Crack Closure Technique (VCCT)
-
 \begin{figure}
-\includegraphics[width=0.9\columnwidth]{VCCT.pdf}
+\includegraphics[width=\columnwidth]{VCCT.pdf}
  % \caption{VCCT}
   \label{fig:vcct}
 \end{figure}
@@ -362,7 +362,7 @@ G_{I}=\frac{Z_{C}\Delta w_{C}}{2B\Delta a}\quad G_{II}=\frac{X_{C}\Delta u_{C}}{
 \item J-Integral
 
 \begin{figure}
-\includegraphics[width=0.9\columnwidth]{J-integral.pdf}
+\includegraphics[width=\columnwidth]{J-integral.pdf}
  % \caption{Angular discretization at fiber/matrix interface.}
   \label{fig:jintegral}
 \end{figure}
@@ -378,22 +378,90 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 
 \section[The Fiber-Matrix Interface Problem in FRPC]{The Fiber-Matrix Interface Problem in Fiber Reinforced Polymer Laminates}
 
+\subsection{From macro to micro}
+
 \begin{frame}
-\frametitle{\small The Fiber-Matrix Interface Crack}
+\frametitle{From macro to micro}
+\vspace{-1cm}
+\centering
+\begin{figure}
+\centering
+\includegraphics[height=0.8\textheight]{laminate-section.pdf}
+%\caption{}
+\label{fig:spread-tow-schematic}
+\end{figure}
+\end{frame}
+
+\subsection{The Fiber-Matrix Interface Crack Problem}
+
+\begin{frame}
+\frametitle{\small The Fiber-Matrix Interface Crack Problem}
 \vspace{-0.5cm}
 \centering
 \begin{columns}
-\begin{column}{0.5\textwidth}
-
+\begin{column}{0.4\textwidth}
+\begin{figure}
+\includegraphics[width=\columnwidth]{fiberMatrixInterfaceProblem.pdf}
+ % \caption{Angular discretization at fiber/matrix interface.}
+  \label{fig:jintegral}
+\end{figure}
 \end{column}
-\begin{column}{0.5\textwidth}
-
+\begin{column}{0.6\textwidth}
+\footnotesize
+\begin{table}
+\begin{tabularx}{\columnwidth}{XXX}
+&{\tiny \bf{Analytical}}&{\tiny \bf{Numerical}}\\
+\midrule
+{\tiny \textit{Method}}&{\tiny Analytical (complex) functions}&{\tiny FEM}\\
+\midrule
+{\tiny \textit{Domain Type}}&{\tiny Continuous}&{\tiny Discrete}\\
+{\tiny \textit{Domain Size}}&{\tiny Infinite}&{\tiny Finite}\\
+\midrule
+{\tiny \textit{Natural variable}}&{\tiny Stress (stress function)}&{\tiny Displacement field}\\
+{\tiny \textit{Conjugate variable}}&{\tiny Displacement}&{\tiny Stress}\\
+\midrule
+{\tiny \textit{Dirichlet BC}}&{\tiny Stress}&{\tiny Displacement}\\
+{\tiny \textit{Loading process}}&{\tiny Force-controlled}&{\tiny Displacement-controlled}\\
+\end{tabularx}
+\end{table}
 \end{column}
 \end{columns}
 \end{frame}
 
+\subsection{FEM Model of the Fiber-Matrix Interface Crack}
 
+\begin{frame}
+\frametitle{\small FEM Model of the Fiber-Matrix Interface Crack}
+\vspace{-0.5cm}
+\centering
+\begin{columns}
+\begin{column}{0.7\textwidth}
+\begin{figure}
+\includegraphics[width=\columnwidth]{FEMfiberMatrixInterfaceProblem.pdf}
+ % \caption{Angular discretization at fiber/matrix interface.}
+  \label{fig:jintegral}
+\end{figure}
+\end{column}
+\begin{column}{0.3\textwidth}
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item 2D space
+\item Linear elastic materials
+\item Displacement-controlled
+\item Dirichlet-type BC
+\item LEFM
+\item Contact interaction
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
 
+\section[Mesh \& Domain Size]{Effects of Mesh Refinement \& Domain Size}
+
+\begin{frame}
+\frametitle{\small Effects of Mesh Refinement \& Domain Size}
+
+\end{frame}
 
 \section[Conclusions]{Conclusions \& Outlook}
 
@@ -418,9 +486,9 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 \end{alertblock}
 \end{frame}
 
-\section{Appendices \& References}
+%\section{Appendices \& References}
 
-\subsection{Appendices}
+%\subsection{Appendices}
 
 %\begin{frame}[label=]
 %\frametitle{}
@@ -428,22 +496,22 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 
 
 
-\begin{frame}
-\frametitle{\small Evaluation of $G_{0}$}
-\vspace{-0.7cm}
-\footnotesize
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{equation}
-G_{0}=\pi R_{f}\sigma^{2}_{0}\frac{1+k_{m}}{8G_{m}}
-\end{equation}
-\begin{equation}
-k_{m}=3-4\nu_{m}
-\end{equation}
-\begin{equation}
-\sigma_{0}^{undamaged}=\frac{E_{m}}{1-\nu^{2}_{m}}\varepsilon_{xx}
-\end{equation}%
-\end{frame}
+%\begin{frame}
+%\frametitle{\small Evaluation of $G_{0}$}
+%\vspace{-0.7cm}
+%\footnotesize
+%\centering
+%\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+%\begin{equation}
+%G_{0}=\pi R_{f}\sigma^{2}_{0}\frac{1+k_{m}}{8G_{m}}
+%\end{equation}
+%\begin{equation}
+%k_{m}=3-4\nu_{m}
+%\end{equation}
+%\begin{equation}
+%\sigma_{0}^{undamaged}=\frac{E_{m}}{1-\nu^{2}_{m}}\varepsilon_{xx}
+%\end{equation}%
+%\end{frame}
 
 
 %\section{References}
@@ -461,12 +529,12 @@ k_{m}=3-4\nu_{m}
         %\bibliography{/auto.mounter/home/lucadistasio/Documents/ETH/Research_material/References/fsi_references_kbib.bib}
 %\end{frame}
 
-\subsection{References}
+%\subsection{References}
 
-\begin{frame}[allowframebreaks]
-  \frametitle{References}
+%\begin{frame}[allowframebreaks]
+%  \frametitle{References}
 
-  \begin{thebibliography}{10}
+%  \begin{thebibliography}{10}
 
 %  \beamertemplatebookbibitems
 %  % Start with overview books.
@@ -477,82 +545,12 @@ k_{m}=3-4\nu_{m}
 %    \newblock Some Press, 1990.
 
 
-  \beamertemplatearticlebibitems
+%  \beamertemplatearticlebibitems
   % Followed by interesting articles. Keep the list short.
 
-\bibitem{DonaldL.Flaggs1982}
-Donald L. Flaggs, Murat H. Kural;
-\newblock {\em Experimental Determination of the In Situ Transverse Lamina Strength in Graphite/Epoxy Laminates.}
-\newblock Journal of Composite Materials, vol. 16, n. 2, 1982.
 
-\bibitem{Parvizi1978}
-Parvizi A., Bailey J.E;
-\newblock {\em On multiple transverse cracking in glass fibre epoxy cross-ply laminates.}
-\newblock Journal of Materials Science, 1978; 13:2131-2136.
-
-\bibitem{herraez2015}
-Miguel Herr\'aez, Diego Mora, Fernando Naya, Claudio S. Lopes, Carlos Gonz\'alez, Javier LLorca;
-\newblock {\em Transverse cracking of cross-ply laminates: A computational micromechanics perspective.}
-\newblock Composites Science and Technology, 2015; 110:196-204.
-
-\bibitem{Canal2012}
-Luis Pablo Canal, Carlos Gonz\'alez, Javier Segurado, Javier LLorca;
-\newblock {\em Intraply fracture of fiber-reinforced composites: Microscopic mechanisms and modeling.}
-\newblock Composites Science and Technology, 2012; 72(11):1223-1232.
-
-\bibitem{StephenW.Tsai2005}
-Stephen W. Tsai;
-\newblock {\em Thin ply composites.}
-\newblock JEC Magazine 18, 2005.
-
-
-\bibitem{ZnedekP.Bazant2002}
-Znedek P. Bazant;
-\newblock {\em Size Effect Theory and its Application to Fracture of Fiber Composites and Sandwich Plates.}
-\newblock in Continuum Damage Mechanics of Materials and Structures, eds. O. Allix and F. Hild, 2002.
-
-
-\bibitem{RobinAmacherWayneSmithClemensDransfeldJohnBotsis2014}
-Robin Amacher, Wayne Smith, Clemens Dransfeld, John Botsis, Jo\"el Cugnoni;
-\newblock {\em Thin Ply: from Size-Effect Characterization to Real Life Design}
-\newblock CAMX 2014, 2014
-
-\bibitem{RalfCuntze}
-Ralf Cuntze;
-\newblock {\em The  World-Wide-Failure-Exercises -I  and - II for UD-materials.}
-
-
-\bibitem{Pinho}
-Pinho, S. T. and Pimenta, S.;
-\newblock {\em Size Effects on the Strength and Toughness of Fibre-Reinforced Composites.}
-
-\bibitem{PedroP.CamanhoCarlosG.DavilaSilvestreT.PinhoLorenzoIannucci2006}
-Pedro P. Camanho, Carlos G. D\'avila, Silvestre T. Pinho, Lorenzo Iannucci, Paul Robinson;
-\newblock {\em Prediction of in situ strengths and matrix cracking in composites under transverse tension and in-plane shear.}
-\newblock Composites Part A: Applied Science and Manufacturing, vol. 37, n. 2, 2006.
-
-\bibitem{P.P.CamanhoP.Maimi2007}
-P.P. Camanho, P. Maim\'i, C.G. D\'avila;
-\newblock {\em Prediction of size effects in notched laminates using continuum damage mechanics.}
-\newblock Composites Science and Technology, vol. 67, n. 13, 2007.
-
-\bibitem{Nairn1992}
-J. A. Nairn;
-\newblock {\em The Initiation and Growth of Delaminations Induced by Matrix Microcracks in Laminated Composites.}
-\newblock International Journal of Fracture, vol. 57, 1992.
-
-\bibitem{JoelCugnoniRobinAmacher2013}
-Joel Cugnoni , Robin Amacher, John Botsis;
-\newblock {\em Thin ply technology advantages. An overview of the TPT-TECA project.}
-\newblock 2014.
-
-\bibitem{DonaldL.Flaggs1982}
-Donald L. Flaggs, Murat H. Kural;
-\newblock {\em Experimental Determination of the In Situ Transverse Lamina Strength in Graphite/Epoxy Laminates.}
-\newblock Journal of Composite Materials, vol. 16, n. 2, 1982.
-
-  \end{thebibliography}
-\end{frame}
+%  \end{thebibliography}
+%\end{frame}
 
 \begin{frame}[plain]
 \frametitle{}

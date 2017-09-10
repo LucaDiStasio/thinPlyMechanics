@@ -5,7 +5,8 @@
 \beamer@subsectionintoc {1}{3}{Evaluation of Fracture Parameters}{6}{0}{1}
 \beamer@subsectionintoc {1}{4}{Numerical Estimation of Energy Release Rates}{7}{0}{1}
 \beamer@sectionintoc {2}{The Fiber-Matrix Interface Problem in Fiber Reinforced Polymer Laminates}{8}{0}{2}
-\beamer@sectionintoc {3}{Conclusions \& Outlook}{10}{0}{3}
-\beamer@sectionintoc {4}{Appendices \& References}{12}{0}{4}
-\beamer@subsectionintoc {4}{1}{Appendices}{13}{0}{4}
-\beamer@subsectionintoc {4}{2}{References}{14}{0}{4}
+\beamer@subsectionintoc {2}{1}{From macro to micro}{9}{0}{2}
+\beamer@subsectionintoc {2}{2}{The Fiber-Matrix Interface Crack Problem}{10}{0}{2}
+\beamer@subsectionintoc {2}{3}{FEM Model of the Fiber-Matrix Interface Crack}{11}{0}{2}
+\beamer@sectionintoc {3}{Effects of Mesh Refinement \& Domain Size}{12}{0}{3}
+\beamer@sectionintoc {4}{Conclusions \& Outlook}{14}{0}{4}

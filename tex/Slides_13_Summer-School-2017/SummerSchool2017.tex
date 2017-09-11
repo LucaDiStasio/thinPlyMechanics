@@ -451,6 +451,7 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 \item Dirichlet-type BC
 \item LEFM
 \item Contact interaction
+\item Bi-linear quadrilateral elements
 \end{itemize}
 \end{column}
 \end{columns}
@@ -458,9 +459,67 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 
 \section[Mesh \& Domain Size]{Effects of Mesh Refinement \& Domain Size}
 
-\begin{frame}
-\frametitle{\small Effects of Mesh Refinement \& Domain Size}
+\subsection{Domain size effect on $G_{0}$}
 
+\begin{frame}
+\frametitle{\small $G_{0}$ for $Vf_{f}=0.001$, $\frac{L}{R_{f}}\sim 28$, $\delta=0.4^{\circ}$}
+\vspace{-0.5cm}
+\begin{figure}
+\includegraphics[height=0.7\textheight]{2017-06-23_AbqRunSummary_SingleFiberEqRfSmallFiniteStrain_G0_Summary.pdf}
+ \caption{In red small strain FEM, in green finite strain FEM, in black $G_{0}$ calculated assuming $\sigma_{0}=\frac{E}{1-\nu^ 2}\varepsilon$.}
+  \label{fig:jintegral}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{0}$ for $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$, $\delta=0.4^{\circ}$}
+\vspace{-0.5cm}
+\begin{figure}
+\includegraphics[height=0.7\textheight]{2017-06-16_AbqRunSummary_SingleFiberEqRfSmallStrain-D0-4_G0_Summary.pdf}
+ \caption{In red small strain FEM, in green finite strain FEM, in black $G_{0}$ calculated assuming $\sigma_{0}=\frac{E}{1-\nu^ 2}\varepsilon$.}
+  \label{fig:jintegral}
+\end{figure}
+\end{frame}
+
+\subsection{Mesh refinement effect on mode ratio}
+
+\begin{frame}
+\frametitle{\small $G_{I}$, VCCT, $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GI.pdf}
+  \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{II}$, VCCT, $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GII.pdf}
+  \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small $G_{TOT}$, VCCT, $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$}
+\vspace{-0.5cm}
+\centering
+\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GTOT.pdf}
+  \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
+  \label{fig:res1}
+\end{figure}
 \end{frame}
 
 \section[Conclusions]{Conclusions \& Outlook}
@@ -471,17 +530,16 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 \centering
 \scriptsize
 \begin{alertblock}{\footnotesize \bf{Conclusions}}
-\begin{itemize}
-   	\item 2D micromechanical models have been developed to investigate crack initiation in thin ply laminates
-	\item A numerical procedure has been devised and implemented to automatize the creation of FEM models
-	\item Analyses for $VF_{f}\to 0$ (matrix dominated RVE) conducted to validate the model with respect to previous literature
+\begin{itemize}[label=\ding{212}]
+  \item Domain size is a fundamental parameter in determining the RVE behaviour between finite and efffectively infinite size
+	\item Mesh refinement affects directly mode ratio, increasing mode I with respect to mode II
 \end{itemize}
 \end{alertblock}
 \begin{alertblock}{\footnotesize \bf{Outlook}}
-\begin{itemize}
-	\item Investigate the dependence on $VF_{f}$, $t_{ply}$, $\frac{t_{ply}}{t_{bounding\ plies}}$ and different material systems\\[9pt]
-	\item Study numerical performances with respect to model's parameters\\[9pt]
-	\item Repeat for different RVEs and compare
+\begin{itemize}[label=\ding{212}]
+	\item Analyze the dependence on $\delta$ for $\frac{L}{R_{f}}=200,300,\dots$\\[9pt]
+	\item Analyze the dependence on $\frac{L}{R_{f}}$ for constant $\delta$\\[9pt]
+	\item Study finite size effects
 \end{itemize}
 \end{alertblock}
 \end{frame}

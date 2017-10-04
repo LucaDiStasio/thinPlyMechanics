@@ -1,6 +1,0 @@
-\beamer@endinputifotherversion {3.24pt}
-\beamer@sectionintoc {1}{Rappels d'organisation}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{Contacts}{4}{0}{1}
-\beamer@subsectionintoc {1}{2}{Pr\'esence aux TDs}{5}{0}{1}
-\beamer@sectionintoc {2}{Probl\`eme 1}{6}{0}{2}
-\beamer@subsectionintoc {2}{1}{Enonce}{7}{0}{2}

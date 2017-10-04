@@ -1,0 +1,19 @@
+\beamer@endinputifotherversion {3.33pt}
+\beamer@sectionintoc {1}{Thin Ply Fiber Reinforced Polymer Laminates}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Spread Tow Technology}{4}{0}{1}
+\beamer@subsectionintoc {1}{2}{Thin ply effect in transverse cracking}{6}{0}{1}
+\beamer@sectionintoc {2}{Objectives \& Approach}{8}{0}{2}
+\beamer@sectionintoc {3}{Micromechanical modeling}{10}{0}{3}
+\beamer@subsectionintoc {3}{1}{Representative Volume Elements' (RVEs) Design}{11}{0}{3}
+\beamer@subsectionintoc {3}{2}{Mesh Design and Generation}{13}{0}{3}
+\beamer@subsectionintoc {3}{3}{Finite Element Model in Abaqus}{15}{0}{3}
+\beamer@subsectionintoc {3}{4}{Numerical Evaluation of Energy Release Rate}{15}{0}{3}
+\beamer@sectionintoc {4}{Preliminary Results \& Validation}{17}{0}{4}
+\beamer@subsectionintoc {4}{1}{Numerical Crack Shape}{18}{0}{4}
+\beamer@subsectionintoc {4}{2}{Computation of Energy Release Rates}{20}{0}{4}
+\beamer@subsectionintoc {4}{3}{Numerical performances}{21}{0}{4}
+\beamer@sectionintoc {5}{Conclusions \& Outlook}{22}{0}{5}
+\beamer@sectionintoc {6}{Appendices \& References}{24}{0}{6}
+\beamer@subsectionintoc {6}{1}{Appendices}{25}{0}{6}
+\beamer@subsectionintoc {6}{2}{Stresses at the interface and across the domain}{35}{0}{6}
+\beamer@subsectionintoc {6}{3}{References}{39}{0}{6}

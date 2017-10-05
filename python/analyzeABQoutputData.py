@@ -115,6 +115,16 @@ def writeErrorToLogFile(logFileFullPath,mode,exc,err,toScreen):
         print('!!! ----------------------------------------------------------------------------------------!!!\n')
         print('\n')
 
+def readSettingsFile(filepath):
+    settingsDict = {}
+    with open(filepath,'r') as f:
+        lines = f.readlines()
+    for line in lines:
+        if '#' not in line:
+            parts = line.replace('\n','').split(',')
+            settingsDict[parts[0]] = parts[1]
+    return settingsDict
+
 def buildPostprocessorCall(codeDir,wd,logfile):
     templateFile = join(codeDir,'python','templateAnalyzeABQoutputData.py')
     postprocessor = join(wd,'postprocessor.py')
@@ -266,7 +276,51 @@ def main(argv):
 
     # create log file
     writeTitleSecToLogFile(logFilePath,'w','ABAQUS RESULTS ANALYSIS',True)
+    
+    skipLineToLogFile(logFilePath,'a',True)
+    writeLineToLogFile(logFilePath,'a','Reading settings ...',True)
+    settings = readSettingsFile(settingsfile)
+    writeLineToLogFile(logFilePath,'a','... done.',True)
+    
+    subject = '[ABAQUS RESULTS ANALYSIS] Starting analysis'
+    message = 'Abaqus results analysis starting on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S').'
+    sendStatusEmail(settings['emailDataDir'],'logData.csv',settings['serverFrom'],settings['emailFrom'],settings['emailTo'],subject,message)
+    
+    skipLineToLogFile(logFilePath,'a',True)
+    writeLineToLogFile(logFilePath,'a','Starting reading list of simulations from status file ...',True)
+    with open(statusfilepath,'r') as sta:
+        lines = sta.readlines()
+    writeLineToLogFile(logFilePath,'a','... done.',True)
+    
+    for line in lines[1:]:
+        simData = line.replace('\n','').split(',')
+        simName = simData[0]
+        isPreprocessed = simData[1]
+        isSimCompleted = simData[2]
+        isPostprocessed = simData[3]
+        skipLineToLogFile(logFilePath,'a',True)
+        writeLineToLogFile(logFilePath,'a','For simulation: ' + simName,True)
+        writeLineToLogFile(logFilePath,'a','    --> has the preprocessing stage been completed? ' + isPreprocessed,True)
+        writeLineToLogFile(logFilePath,'a','    --> has the simulation stage been completed? ' + isSimCompleted,True)
+        writeLineToLogFile(logFilePath,'a','    --> has the postprocessing stage been completed? ' + isPostprocessed,True)
+        if isPreprocessed=='YES' and isSimComplted=='YES' and isPostprocessed=='NO':
+            writeLineToLogFile(logFilePath,'a','    ooo PREPROCESSING AND SIMULATION STAGES ALREADY EXECUTED, POSTPROCESSING STILL TO BE DONE ooo',True)
+            skipLineToLogFile(logFilePath,'a',True)
+            writeLineToLogFile(logFilePath,'a','Starting postprocessing on simulation ' + simName,True)
             
+        elif isPreprocessed=='NO':
+            writeLineToLogFile(logFilePath,'a','    ==> PREPROCESSING AND SIMULATION STAGES STILL NEED TO BE EXECUTED <==',True)
+            writeLineToLogFile(logFilePath,'a','    Moving on to the next.',True)
+        elif isPreprocessed=='YES' and isSimComplted=='NO':
+            writeLineToLogFile(logFilePath,'a','    ==> SIMULATION STAGE STILL NEED TO BE EXECUTED <==',True)
+            writeLineToLogFile(logFilePath,'a','    Moving on to the next.',True)
+        elif isPreprocessed=='YES' and isSimComplted=='YES' and isPostprocessed=='YES':
+            writeLineToLogFile(logFilePath,'a','    ==> POSTPROCESSING STAGE ALREADY EXECUTED <==',True)
+            writeLineToLogFile(logFilePath,'a','    Moving on to the next.',True)
+        else:
+            writeLineToLogFile(logFilePath,'a','    !!! UNKNOWN ERROR WHILE PARSING LINE OF DATA !!!',True)
+            writeLineToLogFile(logFilePath,'a','    Moving on to the next.',True)
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])

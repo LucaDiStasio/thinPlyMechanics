@@ -31,7 +31,7 @@ Tested with Python 2.7 Anaconda 2.4.1 (64-bit) distribution in Windows 7.
 
 '''
 
-from os import listdir
+from os import listdir, remove
 from os.path import isfile, join
 import sys
 import getopt
@@ -139,6 +139,7 @@ def buildPostprocessorCall(codeDir,wd,logfile):
         post.write('' + '\n')
         post.write('if __name__ == "__main__":' + '\n')
         post.write('    main(sys.argv[1:])' + '\n')
+    return postprocessor
     
 def runPostprocessor(preprocessor,functionCall,args,wd,logfilename):
     
@@ -303,11 +304,44 @@ def main(argv):
         writeLineToLogFile(logFilePath,'a','    --> has the preprocessing stage been completed? ' + isPreprocessed,True)
         writeLineToLogFile(logFilePath,'a','    --> has the simulation stage been completed? ' + isSimCompleted,True)
         writeLineToLogFile(logFilePath,'a','    --> has the postprocessing stage been completed? ' + isPostprocessed,True)
-        if isPreprocessed=='YES' and isSimComplted=='YES' and isPostprocessed=='NO':
+        if isPreprocessed=='YES' and isSimCompleted=='YES' and isPostprocessed=='NO':
             writeLineToLogFile(logFilePath,'a','    ooo PREPROCESSING AND SIMULATION STAGES ALREADY EXECUTED, POSTPROCESSING STILL TO BE DONE ooo',True)
             skipLineToLogFile(logFilePath,'a',True)
-            writeLineToLogFile(logFilePath,'a','Starting postprocessing on simulation ' + simName,True)
-            
+            writeLineToLogFile(logFilePath,'a','Starting postprocessing on simulation ' + simName + ' ...',True)
+            writeLineToLogFile(logFilePath,'a','Calling function: buildPostProcessorCall ...',True)
+            try:
+                postProcessorFile = buildPostprocessorCall(codeDir,wd,logfile)
+            except Exception, error:
+                writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+                writeLineToLogFile(logFilePath,'a','Moving on to the next.',True)
+                sys.exc_clear()
+                continue
+            writeLineToLogFile(logFilePath,'a','... done.',True)
+            writeLineToLogFile(logFilePath,'a','Calling function: runPostprocessor ...',True)
+            try:
+                runPostprocessor(preprocessor,functionCall,args,wd,logfilename)
+            except Exception, error:
+                writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+                writeLineToLogFile(logFilePath,'a','Moving on to the next.',True)
+                sys.exc_clear()
+                continue
+            writeLineToLogFile(logFilePath,'a','... done.',True)
+            if clearFiles:
+                writeLineToLogFile(logFilePath,'a','Proceeding to clear files in ' + str(join(wd,simName,'solver')) + ' ...',True)
+                fileList = listdir(join(wd,simName,'solver'))
+                for filename in fileList:
+                    if isfile(join(wd,simName,'solver',filename)) and filename.split('.')[1] in filesToClear:
+                        writeLineToLogFile(logFilePath,'a','File ' + filename + ' needs to be removed ...',True)
+                        try:
+                            remove(join(wd,simName,'solver',filename))
+                        except Exception, error:
+                            writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+                            writeLineToLogFile(logFilePath,'a','Moving on to the next.',True)
+                            sys.exc_clear()
+                            continue
+                        writeLineToLogFile(logFilePath,'a','... done.',True)
+                writeLineToLogFile(logFilePath,'a','... done.',True)
+            writeLineToLogFile(logFilePath,'a','... done.',True)
         elif isPreprocessed=='NO':
             writeLineToLogFile(logFilePath,'a','    ==> PREPROCESSING AND SIMULATION STAGES STILL NEED TO BE EXECUTED <==',True)
             writeLineToLogFile(logFilePath,'a','    Moving on to the next.',True)

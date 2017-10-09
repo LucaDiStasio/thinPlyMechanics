@@ -1,0 +1,38 @@
+# BEGIN SETTINGS
+emailDataDir, D:/OneDrive/01_Luca/07_DocMASE/06_WD
+serverFrom, smtp.univ-lorraine.fr
+emailFrom, luca.di-stasio@univ-lorraine.fr
+emailTo, luca.distasio@gmail.com
+NEl0, 1
+NElMax, 20
+DeltaEl, 1
+deltapsi, 10
+nl, 10
+nSegsOnPath, 1000
+tol, 1e-16
+# END SETTINGS
+# BEGIN ANALYSIS SECTIONS
+extract performances, YES
+open odb, YES
+get first and last frame, YES
+get deformed nodes, YES
+get undeformed nodes, YES
+get fiber and matrix elements and nodes subsets, YES
+get displacements, YES
+get strains, YES
+get stresses, YES
+get displacement and reaction force at boundary, YES
+get interfaces, YES
+get stresses at interface (on slave and master), YES
+get displacements at interface (on slave only), YES
+get stresses at boundaries, YES
+get simulation units of measurement, material and geometry, YES
+compute G0, YES
+get J-integrals, YES
+VCCT in forces, YES
+VCCI in stresses (trapezoidal integration for elements of equal length at the interface in the undeformed configuration), YES
+get Rf and l in the deformed configuration, YES
+get stresses and strains along radial paths, YES
+get stresses and strains along circumferential paths, YES
+close database, YES
+# END ANALYSIS SECTIONS

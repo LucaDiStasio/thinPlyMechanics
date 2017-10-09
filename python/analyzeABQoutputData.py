@@ -117,24 +117,57 @@ def writeErrorToLogFile(logFileFullPath,mode,exc,err,toScreen):
 
 def readSettingsFile(filepath):
     settingsDict = {}
+    analysisDict = {}
+    analysisList = []
     with open(filepath,'r') as f:
         lines = f.readlines()
-    for line in lines:
+    startSettingsLines = 0
+    endSettingsLines = 0
+    startAnalysisLines = 0
+    endAnalysisLines = 0
+    for l,line in enumerate(lines):
+        if 'BEGIN SETTINGS' in line:
+            startSettingsLines = l
+        elif 'END SETTINGS' in line:
+            endSettingsLines = l
+        elif 'BEGIN ANALYSIS SECTIONS' in line:
+            startAnalysisLines = l
+        elif 'END ANALYSIS SECTIONS' in line:
+            endAnalysisLines = l
+    for line in lines[startSettingsLines,endSettingsLines]:
         if '#' not in line:
             parts = line.replace('\n','').split(',')
             settingsDict[parts[0]] = parts[1]
-    return settingsDict
+    for line in lines[startAnalysisLines,endAnalysisLines]:
+        if '#' not in line:
+            parts = line.replace('\n','').split(',')
+            analysisList.append(parts[0])
+            if 'YES' in parts[1]:
+                analysisDict[parts[0]] = 1
+            else:
+                analysisDict[parts[0]] = 0
+    return settingsDict,analysisList,analysisDict
 
-def buildPostprocessorCall(params,extSet,sim,codeDir,wd,matfolder,logfile):
+def buildPostprocessorCall(params,analysisList,analysisDict,extSet,sim,codeDir,wd,matfolder,logfile):
     templateFile = join(codeDir,'python','templateAnalyzeABQoutputData.py')
     postprocessor = join(wd,'postprocessor.py')
     skipLineToLogFile(logFilePath,'a',True)
     writeLineToLogFile(logFilePath,'a','Reading template file ' + templateFile,True)
     with open(templateFile,'r') as template:
         lines = template.readlines()
+    writeToPost = True
     with open(postprocessor,'w') as post:
         for line in lines:
-            post.write(line)
+            if '#' in line and 'BEGIN' in line:
+                sectionName = line.replace('\n').split('-')[1].strip()
+                if analysisDict[sectionName]:
+                    writeToPost = True
+                else:
+                    writeToPost = False
+            elif '#' in line and 'END' in line:
+                writeToPost = True
+            if writeToPost:
+                post.write(line)
         post.write('' + '\n')
         post.write('' + '\n')
         post.write('def main(argv):' + '\n')
@@ -325,7 +358,7 @@ def main(argv):
     
     skipLineToLogFile(logFilePath,'a',True)
     writeLineToLogFile(logFilePath,'a','Reading settings ...',True)
-    settings = readSettingsFile(settingsfile)
+    settings,sectionList,sectionsToExec = readSettingsFile(settingsfile)
     writeLineToLogFile(logFilePath,'a','... done.',True)
     
     subject = '[ABAQUS RESULTS ANALYSIS] Starting analysis'
@@ -355,7 +388,7 @@ def main(argv):
             writeLineToLogFile(logFilePath,'a','Starting postprocessing on simulation ' + simName + ' ...',True)
             writeLineToLogFile(logFilePath,'a','Calling function: buildPostProcessorCall ...',True)
             try:
-                postProcessorFile = buildPostprocessorCall(settings,extractionSet,simName,codedir,workdir,matdir,logFilePath)
+                postProcessorFile = buildPostprocessorCall(settings,sectionList,sectionsToExec,extractionSet,simName,codedir,workdir,matdir,logFilePath)
             except Exception, error:
                 writeErrorToLogFile(logFilePath,'a',Exception,error,True)
                 writeLineToLogFile(logFilePath,'a','Moving on to the next.',True)

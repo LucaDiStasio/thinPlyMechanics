@@ -497,14 +497,14 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     # END - get undeformed nodes
     #=======================================================================
     #=======================================================================
-    # BEGIN - get fiber and matrix elements' and nodes' subsets
+    # BEGIN - get fiber and matrix elements and nodes subsets
     #=======================================================================
     fiberNodes = getSingleNodeSet(odb,'PART-1-1','FIBER-NODES')
     matrixNodes = getSingleNodeSet(odb,'PART-1-1','MATRIX-NODES')
     fiberElements = getSingleElementSet(odb,'PART-1-1','FIBER-ELEMENTS')
     matrixElements = getSingleElementSet(odb,'PART-1-1','MATRIX-ELEMENTS')
     #=======================================================================
-    # END - get fiber and matrix elements' and nodes' subsets
+    # END - get fiber and matrix elements and nodes subsets
     #=======================================================================
     #=======================================================================
     # BEGIN - get displacements
@@ -859,7 +859,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     # END - get stresses at boundaries
     #=======================================================================
     #=======================================================================
-    # BEGIN - get simulation's units of measurement, material and geometry
+    # BEGIN - get simulation units of measurement, material and geometry
     #=======================================================================
     print('\n')
     print('Get simulation''s units of measurement, material and geometry...\n')
@@ -882,7 +882,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
             stressFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(',')[2])
     print('...done.\n')
     #=======================================================================
-    # END - get simulation's units of measurement, material and geometry
+    # END - get simulation units of measurement, material and geometry
     #=======================================================================
     #=======================================================================
     # BEGIN - compute G0
@@ -1226,7 +1226,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     # END - VCCT in forces
     #=======================================================================
     #=======================================================================
-    # BEGIN - VCCT in stresses (trapezoidal integration for elements of equal length at the interface in the undeformed configuration)
+    # BEGIN - VCCI in stresses (trapezoidal integration for elements of equal length at the interface in the undeformed configuration)
     #=======================================================================
     print('\n')
     print('Compute energy release rates with VCCT in stresses...\n')

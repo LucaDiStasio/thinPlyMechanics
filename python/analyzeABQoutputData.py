@@ -125,14 +125,18 @@ def readSettingsFile(filepath):
             settingsDict[parts[0]] = parts[1]
     return settingsDict
 
-def buildPostprocessorCall(codeDir,wd,logfile):
+def buildPostprocessorCall(params,codeDir,wd,logfile):
     templateFile = join(codeDir,'python','templateAnalyzeABQoutputData.py')
     postprocessor = join(wd,'postprocessor.py')
+    skipLineToLogFile(logFilePath,'a',True)
+    writeLineToLogFile(logFilePath,'a','Reading template file ' + templateFile,True)
     with open(templateFile,'r') as template:
         lines = template.readlines()
     with open(postprocessor,'w') as post:
         for line in lines:
             post.write(line)
+        post.write('' + '\n')
+        post.write('' + '\n')
         post.write('def main(argv):' + '\n')
         post.write('' + '\n')
         post.write('    extractFromODBoutputSet04(workdir,proj,matfolder,1,20,1,settings[0])' + '\n')
@@ -310,7 +314,7 @@ def main(argv):
             writeLineToLogFile(logFilePath,'a','Starting postprocessing on simulation ' + simName + ' ...',True)
             writeLineToLogFile(logFilePath,'a','Calling function: buildPostProcessorCall ...',True)
             try:
-                postProcessorFile = buildPostprocessorCall(codeDir,wd,logfile)
+                postProcessorFile = buildPostprocessorCall(settings,codedir,workdir,logFilePath)
             except Exception, error:
                 writeErrorToLogFile(logFilePath,'a',Exception,error,True)
                 writeLineToLogFile(logFilePath,'a','Moving on to the next.',True)

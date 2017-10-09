@@ -50,6 +50,98 @@ import re
 #===============================================================================#
 #===============================================================================#
 
+def getPerfs(wd,sims):
+    perf = []
+    perf.append(['PROJECT NAME','DEBOND [°]','NUMBER OF CPUS [-]','USER TIME [s]','SYSTEM TIME [s]','USER TIME/TOTAL CPU TIME [%]','SYSTEM TIME/TOTAL CPU TIME [%]','TOTAL CPU TIME [s]','WALLCLOCK TIME [s]','WALLCLOCK TIME [m]','WALLCLOCK TIME [h]','WALLCLOCK TIME/TOTAL CPU TIME [%]','ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-]','MINIMUM REQUIRED MEMORY [MB]','MEMORY TO MINIMIZE I/O [MB]','TOTAL NUMBER OF ELEMENTS [-]','NUMBER OF ELEMENTS DEFINED BY THE USER [-]','NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-]','TOTAL NUMBER OF NODES [-]','NUMBER OF NODES DEFINED BY THE USER [-]','NUMBER OF NODES DEFINED BY THE PROGRAM [-]','TOTAL NUMBER OF VARIABLES [-]'])
+    print('')
+    for sim in sims:
+        print('Extracting data from project: ' + sim)
+        usertime = 0
+        systemtime = 0
+        totalcpu = 0
+        wallclock = 0
+        floatops = 0
+        minMemory = 0
+        minIOmemory = 0
+        totEl = 0
+        userEl = 0
+        progEl = 0
+        totN = 0
+        userN = 0
+        progN = 0
+        totVar = 0
+        cpus = 0
+        debond = 0
+        if exists(join(wd,sim,'abaqus',sim+'.dat')):
+            with open(join(wd,sim,'abaqus',sim+'.dat'),'r') as dat:
+                lines = dat.readlines()
+            for l,line in enumerate(lines):
+                if 'JOB TIME SUMMARY' in line:
+                    for subline in lines[l:]:
+                        if 'USER TIME' in subline:
+                            usertime = float(subline.split('=')[1])
+                        elif 'SYSTEM TIME' in subline:
+                            systemtime = float(subline.split('=')[1])
+                        elif 'TOTAL CPU TIME' in subline:
+                            totalcpu = float(subline.split('=')[1])
+                        elif 'WALLCLOCK TIME' in subline:
+                            wallclock = float(subline.split('=')[1])
+                elif 'M E M O R Y   E S T I M A T E' in line:
+                    values = lines[l+6].replace('\n','').split(' ')
+                    while '' in values: values.remove('')
+                    floatops = float(values[1])
+                    minMemory = float(values[2])
+                    minIOmemory = float(values[3])
+                elif 'P R O B L E M   S I Z E' in line:
+                    words = lines[l+3].replace('\n','').split(' ')
+                    while '' in words: words.remove('')
+                    totEl = int(words[-1])
+                    words = lines[l+4].split(' ')
+                    while '' in words: words.remove('')
+                    userEl = int(words[-1])
+                    words = lines[l+5].split(' ')
+                    while '' in words: words.remove('')
+                    progEl = int(words[-1])
+                    words = lines[l+6].split(' ')
+                    while '' in words: words.remove('')
+                    totN = int(words[-1])
+                    words = lines[l+7].split(' ')
+                    while '' in words: words.remove('')
+                    userN = int(words[-1])
+                    words = lines[l+8].split(' ')
+                    while '' in words: words.remove('')
+                    progN = int(words[-1])
+                    words = lines[l+9].split(' ')
+                    while '' in words: words.remove('')
+                    totVar = int(words[-1])
+        if exists(join(wd,sim,'abaqus',sim+'.msg')):
+            with open(join(wd,sim,'abaqus',sim+'.msg'),'r') as msg:
+                lines = msg.readlines()
+                for line in lines:
+                    if 'USING THE DIRECT SOLVER WITH' in line:
+                        words = line.replace('\n','').split(' ')
+                        while '' in words: words.remove('')
+                        cpus = int(words[words.index('PROCESSORS')-1])
+        if exists(join(wd,sim,'abqinp',sim+'.inp')):
+            with open(join(wd,sim,'abqinp',sim+'.inp'),'r') as inp:
+                lines = inp.readlines()
+            for line in lines:
+                 if 'Crack Angular Aperture' in line:
+                     debond = np.round(float(line.replace('\n','').replace('*','').replace('-','').split(':')[-1].replace('deg','')))
+                     break
+        perf.append([sim,debond,cpus,usertime,systemtime,usertime/totalcpu,systemtime/totalcpu,totalcpu,wallclock,wallclock/60.,wallclock/3600.,wallclock/totalcpu,floatops,minMemory,minIOmemory,totEl,userEl,progEl,totN,userN,progN,totVar])
+    return perf
+
+def writePerfToFile(od,outfile,performanceslist):
+    with open(join(od,outfile),'w') as csv:
+        for performances in performanceslist:
+            line = ''
+            for i,performance in enumerate(performances):
+                if i>0:
+                    line += ','
+                line += str(performance)
+            csv.write(line + '\n')
+            
 def getFrame(odbObj,step,frame):
     return odbObj.steps[odbObj.steps.keys()[step]].frames[frame]
 
@@ -306,6 +398,9 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
         sys.exc_clear()
         return
     print('...done.\n')
+    #=======================================================================
+    # extract performances
+    #=======================================================================
     #=======================================================================
     # get first and last frame
     #=======================================================================

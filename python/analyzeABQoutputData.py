@@ -37,7 +37,7 @@ import sys
 import getopt
 from datetime import datetime
 from time import strftime, sleep
-from platform import platform
+from platform import platform,system
 from numpy import arange
 import math
 import subprocess
@@ -125,7 +125,7 @@ def readSettingsFile(filepath):
             settingsDict[parts[0]] = parts[1]
     return settingsDict
 
-def buildPostprocessorCall(params,codeDir,wd,logfile):
+def buildPostprocessorCall(params,extSet,sim,codeDir,wd,matfolder,logfile):
     templateFile = join(codeDir,'python','templateAnalyzeABQoutputData.py')
     postprocessor = join(wd,'postprocessor.py')
     skipLineToLogFile(logFilePath,'a',True)
@@ -139,13 +139,54 @@ def buildPostprocessorCall(params,codeDir,wd,logfile):
         post.write('' + '\n')
         post.write('def main(argv):' + '\n')
         post.write('' + '\n')
-        post.write('    extractFromODBoutputSet04(workdir,proj,matfolder,1,20,1,settings[0])' + '\n')
+        post.write('    settingsData = {}' + '\n')
+        post.write('    settingsData[\'nEl0\'] = ' + str(params['nEl0']) + '\n')
+        post.write('    settingsData[\'NElMax\'] = ' + str(params['NElMax']) + '\n')
+        post.write('    settingsData[\'DeltaEl\'] = ' + str(params['DeltaEl']) + '\n')
+        post.write('    settingsData[\'deltapsi\'] = ' + str(params['deltapsi']) + '\n')
+        post.write('    settingsData[\'nl\'] = ' + str(params['nl']) + '\n')
+        post.write('    settingsData[\'nSegsOnPath\'] = ' + str(params['nSegsOnPath']) + '\n')
+        post.write('    settingsData[\'tol\'] = ' + str(params['tol']) + '\n')
+        post.write('' + '\n')
+        post.write('    extractFromODBoutputSet' + extSet.zfill(2) + '(' + wd + ',' + sim + ',' + matfolder + ',settingsData)' + '\n')
         post.write('' + '\n')
         post.write('if __name__ == "__main__":' + '\n')
         post.write('    main(sys.argv[1:])' + '\n')
     return postprocessor
     
-def runPostprocessor(preprocessor,functionCall,args,wd,logfilename):
+def runPostprocessor(wd,postprocessor,call,logfilename):
+    skipLineToLogFile(logFilePath,'a',True)
+    if 'Windows' in system():
+        cmdfile = wd + 'runpostprocessor.cmd'
+        writeLineToLogFile(logFilePath,'a','Working in Windows',True)
+        writeLineToLogFile(logFilePath,'a','Writing Windows command file ' + cmdfile + ' ...',True)
+        with open(cmdfile,'w') as cmd:
+            cmd.write('\n')
+            cmd.write('CD ' + wd + '\n')
+            cmd.write('\n')
+            cmd.write('abaqus python ' + postprocessor + '\n')
+        writeLineToLogFile(logFilePath,'a','... done.',True)
+        writeLineToLogFile(logFilePath,'a','Running postprocessor ... ',True)
+        subprocess.call('cmd.exe /C ' + cmdfile,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        writeLineToLogFile(logFilePath,'a','... done.',True)
+    elif 'Linux' in system():
+        bashfile = wd + 'runpostprocessor.sh'
+        writeLineToLogFile(logFilePath,'a','Working in Linux',True)
+        writeLineToLogFile(logFilePath,'a','Writing bash file ' + bashfile + ' ...',True)
+        with open(bashfile,'w') as bash:
+            bash.write('#!/bin/bash\n')
+            bash.write('\n')
+            bash.write('cd ' + wd + '\n')
+            bash.write('\n')
+            bash.write('abaqus python ' + postprocessor + '\n')
+        writeLineToLogFile(logFilePath,'a','... done.',True)
+        writeLineToLogFile(logFilePath,'a','Changing permissions to ' + bashfile + ' ...',True)
+        os.chmod(bashfile, 0o755)
+        writeLineToLogFile(logFilePath,'a','... done.',True)
+        writeLineToLogFile(logFilePath,'a','Running postprocessor ... ',True)
+        rc = call('.' + bashfile)
+        writeLineToLogFile(logFilePath,'a','... done.',True)
+    
     
 def main(argv):
 
@@ -314,7 +355,7 @@ def main(argv):
             writeLineToLogFile(logFilePath,'a','Starting postprocessing on simulation ' + simName + ' ...',True)
             writeLineToLogFile(logFilePath,'a','Calling function: buildPostProcessorCall ...',True)
             try:
-                postProcessorFile = buildPostprocessorCall(settings,codedir,workdir,logFilePath)
+                postProcessorFile = buildPostprocessorCall(settings,extractionSet,simName,codedir,workdir,matdir,logFilePath)
             except Exception, error:
                 writeErrorToLogFile(logFilePath,'a',Exception,error,True)
                 writeLineToLogFile(logFilePath,'a','Moving on to the next.',True)

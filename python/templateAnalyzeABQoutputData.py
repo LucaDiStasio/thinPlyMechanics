@@ -72,8 +72,8 @@ def getPerfs(wd,sims):
         totVar = 0
         cpus = 0
         debond = 0
-        if exists(join(wd,sim,'abaqus',sim+'.dat')):
-            with open(join(wd,sim,'abaqus',sim+'.dat'),'r') as dat:
+        if exists(join(wd,sim,'solver',sim+'.dat')):
+            with open(join(wd,sim,'solver',sim+'.dat'),'r') as dat:
                 lines = dat.readlines()
             for l,line in enumerate(lines):
                 if 'JOB TIME SUMMARY' in line:
@@ -114,16 +114,16 @@ def getPerfs(wd,sims):
                     words = lines[l+9].split(' ')
                     while '' in words: words.remove('')
                     totVar = int(words[-1])
-        if exists(join(wd,sim,'abaqus',sim+'.msg')):
-            with open(join(wd,sim,'abaqus',sim+'.msg'),'r') as msg:
+        if exists(join(wd,sim,'solver',sim+'.msg')):
+            with open(join(wd,sim,'solver',sim+'.msg'),'r') as msg:
                 lines = msg.readlines()
                 for line in lines:
                     if 'USING THE DIRECT SOLVER WITH' in line:
                         words = line.replace('\n','').split(' ')
                         while '' in words: words.remove('')
                         cpus = int(words[words.index('PROCESSORS')-1])
-        if exists(join(wd,sim,'abqinp',sim+'.inp')):
-            with open(join(wd,sim,'abqinp',sim+'.inp'),'r') as inp:
+        if exists(join(wd,sim,'input',sim+'.inp')):
+            with open(join(wd,sim,'input',sim+'.inp'),'r') as inp:
                 lines = inp.readlines()
             for line in lines:
                  if 'Crack Angular Aperture' in line:
@@ -377,7 +377,14 @@ def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
 #
 #===============================================================================#
 
-def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
+def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
+    nEl0 = int(settings['nEl0'])
+    NElMax = int(settings['NElMax'])
+    DeltaEl = int(settings['DeltaEl'])
+    deltapsi = float(settings['deltapsi'])
+    nl = int(settings['nl'])
+    nSegsOnPath = int(settings['nSegsOnPath'])
+    tol = float(settings['tol'])
     print('Starting post-processing on project ' + project + '\n')
     # define database name
     odbname = project + '.odb'
@@ -385,9 +392,33 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
     # define input file name
     inpname = project + '.inp'
     inpfullpath = join(wd,project,'abqinp',inpname)
-    # define csv output folder
+    # define csv output folder and create if it does not exist
     csvfolder = join(wd,project,'csv')
-    # open odb
+        try:
+            os.makedirs(csvfolder)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+    # define dat output folder and create if it does not exist
+    datfolder = join(wd,project,'dat')
+        try:
+            os.makedirs(datfolder)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+    #=======================================================================
+    # BEGIN - extract performances
+    #=======================================================================
+    print('\n')
+    print('Get first and last frame...\n')
+    writePerfToFile(csvfolder,'performances.csv',getPerfs(wd,[project]))
+    print('...done.\n')
+    #=======================================================================
+    # END - extract performances
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - open odb
+    #=======================================================================
     print('Open odb ' + odbname + ' in folder ' + join(wd,project,'abaqus') + ' ...\n')
     try:
         odb = openOdb(path=odbfullpath)
@@ -397,19 +428,22 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
         print(str(e))
         sys.exc_clear()
         return
-    print('...done.\n')
+    print('...done.\n')    
     #=======================================================================
-    # extract performances
+    # END - open odb
     #=======================================================================
     #=======================================================================
-    # get first and last frame
+    # BEGIN - get first and last frame
     #=======================================================================
     print('\n')
     print('Get first and last frame...\n')
     firstFrame,lastFrame = getFirstAndLastFrameLastStep(odb)
     print('...done.\n')
     #=======================================================================
-    # get deformed nodes
+    # END - get first and last frame
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get deformed nodes
     #=======================================================================
     print('\n')
     print('Get deformed nodes...\n')
@@ -433,7 +467,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
     
     print('...done.\n')
     #=======================================================================
-    # get undeformed nodes
+    # END - get deformed nodes
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get undeformed nodes
     #=======================================================================
     print('\n')
     print('Get undeformed nodes...\n')
@@ -457,14 +494,20 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
     
     print('...done.\n')
     #=======================================================================
-    # get fiber and matrix elements' and nodes' subsets
+    # END - get undeformed nodes
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get fiber and matrix elements' and nodes' subsets
     #=======================================================================
     fiberNodes = getSingleNodeSet(odb,'PART-1-1','FIBER-NODES')
     matrixNodes = getSingleNodeSet(odb,'PART-1-1','MATRIX-NODES')
     fiberElements = getSingleElementSet(odb,'PART-1-1','FIBER-ELEMENTS')
     matrixElements = getSingleElementSet(odb,'PART-1-1','MATRIX-ELEMENTS')
     #=======================================================================
-    # get displacements
+    # END - get fiber and matrix elements' and nodes' subsets
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get displacements
     #=======================================================================
     print('\n')
     print('Get displacements in the entire model...\n')
@@ -485,7 +528,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
       
     print('...done.\n')
     #=======================================================================
-    # get strains
+    # END - get displacements
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get strains
     #=======================================================================
     print('\n')
     print('Get strains in the entire model...\n')
@@ -506,7 +552,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
     
     print('...done.\n')
     #=======================================================================
-    # get stresses 
+    # END - get strains
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get stresses 
     #=======================================================================
     print('\n')
     print('Get stresses in the entire model...\n')
@@ -527,7 +576,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
     
     print('...done.\n')
     #=======================================================================
-    # get displacement and reaction force at boundary
+    # END - get stresses 
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get displacement and reaction force at boundary
     #=======================================================================
     print('\n')
     print('Get displacement and reaction force at boundary...\n')
@@ -544,7 +596,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
         
     print('...done.\n')
     #=======================================================================
-    # get interfaces
+    # END - get displacement and reaction force at boundary
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get interfaces
     #=======================================================================
     print('\n')
     print('Get interfaces...\n')
@@ -552,7 +607,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
     slave = getSingleNodeSet(odb,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES')
     print('...done.\n')
     #=======================================================================
-    # get stresses at interface (on slave and master)
+    # END - get interfaces
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get stresses at interface (on slave and master)
     #=======================================================================
     print('\n')
     print('Get stresses at interface (on slave and master)...\n')
@@ -711,7 +769,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
     
     print('...done.\n')
     #=======================================================================
-    # get displacements at interface (on slave only)
+    # END - get stresses at interface (on slave and master)
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get displacements at interface (on slave only)
     #=======================================================================
     print('\n')
     print('Get displacements at interface (on slave only)...\n')
@@ -755,7 +816,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
     
     print('...done.\n')
     #=======================================================================
-    # get stresses at boundaries
+    # END - get displacements at interface (on slave only)
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get stresses at boundaries
     #=======================================================================
     print('\n')
     print('Get stresses at boundaries...\n')
@@ -792,7 +856,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
     sigmaInf = 0.5*(meanRight+meanLeft)
     print('...done.\n')
     #=======================================================================
-    # get simulation's units of measurement, material and geometry
+    # END - get stresses at boundaries
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get simulation's units of measurement, material and geometry
     #=======================================================================
     print('\n')
     print('Get simulation''s units of measurement, material and geometry...\n')
@@ -815,7 +882,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
             stressFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(',')[2])
     print('...done.\n')
     #=======================================================================
-    # compute G0
+    # END - get simulation's units of measurement, material and geometry
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - compute G0
     #=======================================================================
     print('\n')
     print('Compute G0...\n')
@@ -835,7 +905,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
     G0 = numpy.pi*Rf*sigmaInf*sigmaInf*(1+(3.0-4.0*num))/(8.0*Gm)
     print('...done.\n')
     #=======================================================================
-    # get J-integrals
+    # END - compute G0
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get J-integrals
     #=======================================================================
     print('\n')
     print('Get J-integrals...\n')
@@ -887,7 +960,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
                 JINToverG0s.append(valuesOverG0)
     print('...done.\n')
     #=======================================================================
-    # VCCT in forces
+    # END - get J-integrals
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - VCCT in forces
     #=======================================================================
     print('\n')
     print('Compute energy release rates with VCCT in forces...\n')
@@ -1147,7 +1223,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
                     
     print('...done.\n')
     #=======================================================================
-    # VCCT in stresses (trapezoidal integration for elements of equal length at the interface in the undeformed configuration)
+    # END - VCCT in forces
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - VCCT in stresses (trapezoidal integration for elements of equal length at the interface in the undeformed configuration)
     #=======================================================================
     print('\n')
     print('Compute energy release rates with VCCT in stresses...\n')
@@ -1598,9 +1677,158 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,nEl0,NElMax,DeltaEl,tol):
     #print('data written to file')                
     print('...done.\n')
     #=======================================================================
-    # close database
+    # END - VCCT in stresses (trapezoidal integration for elements of equal length at the interface in the undeformed configuration)
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get Rf and l in the deformed configuration
+    #=======================================================================
+    print('\n')
+    print('Get Rf and l in the deformed configuration...\n')
+    nodesCoords = lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL)
+    defSW = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','SW-CORNERNODE'))
+    defSE = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','SE-CORNERNODE'))
+    defNE = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','NE-CORNERNODE'))
+    defNW = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','NW-CORNERNODE'))
+    defLowerSideNoCorn = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','LOWERSIDE-NODES-WITHOUT-CORNERS'))
+    defRightSideNoCorn = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','RIGHTSIDE-NODES-WITHOUT-CORNERS'))
+    defUpperSideNoCorn = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','UPPERSIDE-NODES-WITHOUT-CORNERS'))
+    defLeftSideNoCorn  = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','LEFTSIDE-NODES-WITHOUT-CORNERS'))
+    defFiberSurf = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','FIBERSURFACE-NODES'))
+    defMatrixSurfAtFiberInter = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES'))
+    meanDefRf = 0
+    countRf = 0
+    for value in defFiberSurf.values:
+        countRf += 1
+        meanDefRf += numpy.sqrt(numpy.power(value.data[0],2)+numpy.power(value.data[1],2))
+    meanDefRf /= countRf
+    minL = numpy.minimum(numpy.abs(defSW.values[0].data[0]),numpy.abs(defSW.values[0].data[1]))
+    for value in defSW.values:
+        if numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))<minL:
+            minL = numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))
+    for value in defLowerSideNoCorn.values:
+        if numpy.abs(value.data[1])<minL:
+            minL = numpy.abs(value.data[1])
+    for value in defSE.values:
+        if numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))<minL:
+            minL = numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))
+    for value in defRightSideNoCorn.values:
+        if numpy.abs(value.data[0])<minL:
+            minL = numpy.abs(value.data[0])
+    for value in defNE.values:
+        if numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))<minL:
+            minL = numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))
+    for value in defUpperSideNoCorn.values:
+        if numpy.abs(value.data[1])<minL:
+            minL = numpy.abs(value.data[1])
+    for value in defNW.values:
+        if numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))<minL:
+            minL = numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))
+    for value in defLeftSideNoCorn.values:
+        if numpy.abs(value.data[0])<minL:
+            minL = numpy.abs(value.data[0])
+    print('...done.\n')
+    #=======================================================================
+    # END - get Rf and l in the deformed configuration
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get stresses and strains along radial paths
+    #=======================================================================
+    print('\n')
+    print('Get stresses and strains along radial paths...\n')
+    sessionOdb = session.openOdb(name=odbfullpath)
+    session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
+    psis = numpy.arange(0,360,deltapsi)
+    with open(join(csvfolder,'radialpaths.csv'),'w') as csv:
+        csv.write('VARIABLE, angle [°], Ri, Rf, FOLDER, FILENAME\n')
+    for j,psi in enumerate(psis):
+        session.Path(name='Radius-' + str(j+1), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (minL,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, radialAngle=psi, startRadius=0, endRadius=CIRCLE_RADIUS)
+        radpath = session.paths['Radius-' + str(j+1)]
+        # sigmaxx
+        sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+        session.writeXYReport(fileName=join(wd,project,'dat','sigmaxx-Radius-' + str(j+1) + '.dat'),xyData=sigmaxx,appendMode=OFF)
+        with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
+            csv.write('S11' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'sigmaxx-Radius-' + str(j+1) + '.dat' + '\n')
+        # sigmayy
+        sigmayy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+        session.writeXYReport(fileName=join(wd,project,'dat','sigmayy-Radius-' + str(j+1) + '.dat'),xyData=sigmayy,appendMode=OFF)
+        with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
+            csv.write('S22' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'sigmayy-Radius-' + str(j+1) + '.dat' + '\n')
+        # sigmaxy
+        sigmaxy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+        session.writeXYReport(fileName=join(wd,project,'dat','sigmaxy-Radius-' + str(j+1) + '.dat'),xyData=sigmaxy,appendMode=OFF)
+        with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
+            csv.write('S12' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'sigmaxy-Radius-' + str(j+1) + '.dat' + '\n')
+        # epsxx
+        epsxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('EE',INTEGRATION_POINT, ( (COMPONENT, 'EE11' ), ), ))
+        session.writeXYReport(fileName=join(wd,project,'dat','epsxx-Radius-' + str(j+1) + '.dat'),xyData=epsxx,appendMode=OFF)
+        with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
+            csv.write('EE11' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsxx-Radius-' + str(j+1) + '.dat' + '\n')
+        # epsyy
+        epsyy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('EE',INTEGRATION_POINT, ( (COMPONENT, 'EE22' ), ), ))
+        session.writeXYReport(fileName=join(wd,project,'dat','epsyy-Radius-' + str(j+1) + '.dat'),xyData=epsyy,appendMode=OFF)
+        with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
+            csv.write('EE22' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsyy-Radius-' + str(j+1) + '.dat' + '\n')
+        # epsxy
+        epsxy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('EE',INTEGRATION_POINT, ( (COMPONENT, 'EE12' ), ), ))
+        session.writeXYReport(fileName=join(wd,project,'dat','epsxy-Radius-' + str(j+1) + '.dat'),xyData=epsxy,appendMode=OFF)
+        with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
+            csv.write('EE12' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsxy-Radius-' + str(j+1) + '.dat' + '\n')
+    print('...done.\n')
+    #=======================================================================
+    # END - get stresses and strains along radial paths
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - get stresses and strains along circumferential paths
+    #=======================================================================
+    print('\n')
+    print('Get stresses and strains along circumferential paths...\n')
+    rs = numpy.concatenate((numpy.linspace(0,meanDefRf,nl+1,endpoint=False)[1:],numpy.linspace(meanDefRf,minL,nl+1)[1:]),axis=0)
+    with open(join(csvfolder,'circumpaths.csv'),'w') as csv:
+        csv.write('VARIABLE, R, phi_i [°], phi_f [°], FOLDER, FILENAME\n')
+    for j,r in enumerate(rs):
+        session.Path(name='Circle-' + str(j+1), type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (r, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=0, endAngle=360, radius=CIRCLE_RADIUS)
+        circpath = session.paths['Circle-' + str(j+1)]
+        # sigmaxx
+        sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+        session.writeXYReport(fileName=join(wd,project,'dat','sigmaxx-Circle-' + str(j+1) + '.dat'),xyData=sigmaxx,appendMode=OFF)
+        with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
+            csv.write('S11' + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'sigmaxx-Circle-' + str(j+1) + '.dat' + '\n')
+        # sigmayy
+        sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+        session.writeXYReport(fileName=join(wd,project,'dat','sigmayy-Circle-' + str(j+1) + '.dat'),xyData=sigmayy,appendMode=OFF)
+        with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
+            csv.write('S22'  + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'sigmayy-Circle-' + str(j+1) + '.dat' + '\n')
+        # sigmaxy
+        sigmaxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+        session.writeXYReport(fileName=join(wd,project,'dat','sigmaxy-Circle-' + str(j+1) + '.dat'),xyData=sigmaxy,appendMode=OFF)
+        with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
+            csv.write('S12'  + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'sigmaxy-Circle-' + str(j+1) + '.dat' + '\n')
+        # epsxx
+        epsxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('EE',INTEGRATION_POINT, ( (COMPONENT, 'EE11' ), ), ))
+        session.writeXYReport(fileName=join(wd,project,'dat','epsxx-Circle-' + str(j+1) + '.dat'),xyData=epsxx,appendMode=OFF)
+        with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
+            csv.write('EE11'  + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsxx-Circle-' + str(j+1) + '.dat' + '\n')
+        # epsyy
+        epsyy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('EE',INTEGRATION_POINT, ( (COMPONENT, 'EE22' ), ), ))
+        session.writeXYReport(fileName=join(wd,project,'dat','epsyy-Circle-' + str(j+1) + '.dat'),xyData=epsyy,appendMode=OFF)
+        with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
+            csv.write('EE22'  + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsyy-Circle-' + str(j+1) + '.dat' + '\n')
+        # epsxy
+        epsxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('EE',INTEGRATION_POINT, ( (COMPONENT, 'EE12' ), ), ))
+        session.writeXYReport(fileName=join(wd,project,'dat','epsxy-Circle-' + str(j+1) + '.dat'),xyData=epsxy,appendMode=OFF)
+        with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
+            csv.write('EE12'  + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsxy-Circle-' + str(j+1) + '.dat' + '\n')
+    print('...done.\n')
+    #=======================================================================
+    # END - get stresses and strains along circumferential paths
+    #=======================================================================
+    #=======================================================================
+    # BEGIN - close database
     #=======================================================================
     print('\n')
     print('Close database...\n')
     odb.close()
     print('...done.\n')
+    #=======================================================================
+    # END - close database
+    #=======================================================================

@@ -186,7 +186,7 @@ def buildPostprocessorCall(params,analysisList,analysisDict,extSet,sim,codeDir,w
         post.write('    skipLineToLogFile(logfilePath,\'a\',True)' + '\n')
         post.write('    writeLineToLogFile(logfilePath,\'a\',\'Calling function extractFromODBoutputSet' + extSet.zfill(2) + ' ...\',True)' + '\n')
         post.write('    try:' + '\n')
-        post.write('        extractFromODBoutputSet' + extSet.zfill(2) + '(\'' + wd + '\',\'' + sim + '\',\'' + matfolder + '\',settingsData,logFilePath)' + '\n')
+        post.write('        extractFromODBoutputSet' + extSet.zfill(2) + '(\'' + wd + '\',\'' + sim + '\',\'' + matfolder + '\',settingsData,logfilePath)' + '\n')
         post.write('    except Exception, error:' + '\n')
         post.write('        writeErrorToLogFile(logfilePath,\'a\',Exception,error,True)' + '\n')
         post.write('' + '\n')

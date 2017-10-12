@@ -3,7 +3,8 @@ emailDataDir, D:/OneDrive/01_Luca/07_DocMASE/06_WD
 serverFrom, smtp.univ-lorraine.fr
 emailFrom, luca.di-stasio@univ-lorraine.fr
 emailTo, luca.distasio@gmail.com
-NEl0, 1
+functionCall, abaqus python
+nEl0, 1
 NElMax, 20
 DeltaEl, 1
 deltapsi, 10
@@ -26,9 +27,9 @@ get interfaces, YES
 get stresses at interface (on slave and master), YES
 get displacements at interface (on slave only), YES
 get stresses at boundaries, YES
-get simulation units of measurement, material and geometry, YES
+get simulation units of measurement and material and geometry, YES
 compute G0, YES
-get J-integrals, YES
+get J integrals, YES
 VCCT in forces, YES
 VCCI in stresses (trapezoidal integration for elements of equal length at the interface in the undeformed configuration), YES
 get Rf and l in the deformed configuration, YES

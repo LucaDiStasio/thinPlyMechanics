@@ -134,11 +134,11 @@ def readSettingsFile(filepath):
             startAnalysisLines = l
         elif 'END ANALYSIS SECTIONS' in line:
             endAnalysisLines = l
-    for line in lines[startSettingsLines,endSettingsLines]:
+    for line in lines[startSettingsLines:endSettingsLines]:
         if '#' not in line:
             parts = line.replace('\n','').split(',')
             settingsDict[parts[0]] = parts[1]
-    for line in lines[startAnalysisLines,endAnalysisLines]:
+    for line in lines[startAnalysisLines:endAnalysisLines]:
         if '#' not in line:
             parts = line.replace('\n','').split(',')
             analysisList.append(parts[0])
@@ -149,17 +149,17 @@ def readSettingsFile(filepath):
     return settingsDict,analysisList,analysisDict
 
 def buildPostprocessorCall(params,analysisList,analysisDict,extSet,sim,codeDir,wd,matfolder,logfile):
-    templateFile = join(codeDir,'python','templateAnalyzeABQoutputData.py')
+    templateFile = join(codeDir,'templateAnalyzeABQoutputData.py')
     postprocessor = join(wd,'postprocessor.py')
-    skipLineToLogFile(logFilePath,'a',True)
-    writeLineToLogFile(logFilePath,'a','Reading template file ' + templateFile,True)
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Reading template file ' + templateFile,True)
     with open(templateFile,'r') as template:
         lines = template.readlines()
     writeToPost = True
     with open(postprocessor,'w') as post:
         for line in lines:
             if '#' in line and 'BEGIN' in line:
-                sectionName = line.replace('\n').split('-')[1].strip()
+                sectionName = line.replace('\n','').split('-')[1].strip()
                 if analysisDict[sectionName]:
                     writeToPost = True
                 else:
@@ -172,6 +172,8 @@ def buildPostprocessorCall(params,analysisList,analysisDict,extSet,sim,codeDir,w
         post.write('' + '\n')
         post.write('def main(argv):' + '\n')
         post.write('' + '\n')
+        post.write('    logfilePath = \'' + logfile + '\'' + '\n')
+        post.write('' + '\n')
         post.write('    settingsData = {}' + '\n')
         post.write('    settingsData[\'nEl0\'] = ' + str(params['nEl0']) + '\n')
         post.write('    settingsData[\'NElMax\'] = ' + str(params['NElMax']) + '\n')
@@ -181,54 +183,65 @@ def buildPostprocessorCall(params,analysisList,analysisDict,extSet,sim,codeDir,w
         post.write('    settingsData[\'nSegsOnPath\'] = ' + str(params['nSegsOnPath']) + '\n')
         post.write('    settingsData[\'tol\'] = ' + str(params['tol']) + '\n')
         post.write('' + '\n')
-        post.write('    extractFromODBoutputSet' + extSet.zfill(2) + '(' + wd + ',' + sim + ',' + matfolder + ',settingsData)' + '\n')
+        post.write('    try:' + '\n')
+        post.write('        extractFromODBoutputSet' + extSet.zfill(2) + '(\'' + wd + '\',\'' + sim + '\',\'' + matfolder + '\',settingsData)' + '\n')
+        post.write('    except Exception, error:' + '\n')
+        post.write('        with open(logfilePath,\'a\') as log:' + '\n')
+        post.write('            log.write(\'An error occurred:\' + \'\\n\')' + '\n')
+        post.write('            log.write(\'    \' + str(Exception) + \'\\n\')' + '\n')
+        post.write('            log.write(\'    \' + str(error) + \'\\n\')' + '\n')
         post.write('' + '\n')
         post.write('if __name__ == "__main__":' + '\n')
         post.write('    main(sys.argv[1:])' + '\n')
     return postprocessor
     
 def runPostprocessor(wd,postprocessor,call,logfilename):
-    skipLineToLogFile(logFilePath,'a',True)
+    skipLineToLogFile(logfilename,'a',True)
     if 'Windows' in system():
-        cmdfile = wd + 'runpostprocessor.cmd'
-        writeLineToLogFile(logFilePath,'a','Working in Windows',True)
-        writeLineToLogFile(logFilePath,'a','Writing Windows command file ' + cmdfile + ' ...',True)
+        cmdfile = join(wd,'runpostprocessor.cmd')
+        writeLineToLogFile(logfilename,'a','Working in Windows',True)
+        writeLineToLogFile(logfilename,'a','Writing Windows command file ' + cmdfile + ' ...',True)
         with open(cmdfile,'w') as cmd:
             cmd.write('\n')
             cmd.write('CD ' + wd + '\n')
             cmd.write('\n')
-            cmd.write('abaqus python ' + postprocessor + '\n')
-        writeLineToLogFile(logFilePath,'a','... done.',True)
-        writeLineToLogFile(logFilePath,'a','Running postprocessor ... ',True)
-        subprocess.call('cmd.exe /C ' + cmdfile,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-        writeLineToLogFile(logFilePath,'a','... done.',True)
+            cmd.write(call.strip() + ' ' + postprocessor + '\n')
+        writeLineToLogFile(logfilename,'a','... done.',True)
+        writeLineToLogFile(logfilename,'a','Running postprocessor ... ',True)
+        try:
+            subprocess.call('cmd.exe /C ' + cmdfile,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        except Exception, error:
+            writeErrorToLogFile(logfilename,'a',Exception,error,True)
+            sys.exc_clear()
+        writeLineToLogFile(logfilename,'a','... done.',True)
     elif 'Linux' in system():
-        bashfile = wd + 'runpostprocessor.sh'
-        writeLineToLogFile(logFilePath,'a','Working in Linux',True)
-        writeLineToLogFile(logFilePath,'a','Writing bash file ' + bashfile + ' ...',True)
+        bashfile = join(wd,'runpostprocessor.sh')
+        writeLineToLogFile(logfilename,'a','Working in Linux',True)
+        writeLineToLogFile(logfilename,'a','Writing bash file ' + bashfile + ' ...',True)
         with open(bashfile,'w') as bash:
             bash.write('#!/bin/bash\n')
             bash.write('\n')
             bash.write('cd ' + wd + '\n')
             bash.write('\n')
-            bash.write('abaqus python ' + postprocessor + '\n')
-        writeLineToLogFile(logFilePath,'a','... done.',True)
-        writeLineToLogFile(logFilePath,'a','Changing permissions to ' + bashfile + ' ...',True)
+            bash.write(call.strip() + ' ' + postprocessor + '\n')
+        writeLineToLogFile(logfilename,'a','... done.',True)
+        writeLineToLogFile(logfilename,'a','Changing permissions to ' + bashfile + ' ...',True)
         os.chmod(bashfile, 0o755)
-        writeLineToLogFile(logFilePath,'a','... done.',True)
-        writeLineToLogFile(logFilePath,'a','Running postprocessor ... ',True)
+        writeLineToLogFile(logfilename,'a','... done.',True)
+        writeLineToLogFile(logfilename,'a','Running postprocessor ... ',True)
         rc = call('.' + bashfile)
-        writeLineToLogFile(logFilePath,'a','... done.',True)
+        writeLineToLogFile(logfilename,'a','... done.',True)
     
     
 def main(argv):
 
     # Read the command line, throw error if not option is provided
     try:
-        opts, args = getopt.getopt(argv,'h:m:p:e:w:s:',["help","Help","parametersfile", "settingsfile","matdir", "materialdirectory", "mdir","workdir", "workdirectory", "wdir","extractionset","statusfile","clear"])
+        opts, args = getopt.getopt(argv,'hb:m:p:e:w:s:c:',["help","Help","codebase","parametersfile", "settingsfile","matdir", "materialdirectory", "mdir","workdir", "workdirectory", "wdir","extractionset","statusfile","clear"])
     except getopt.GetoptError:
         print(' ')
-        print('analyzeABQoutputData.py -m <material folder> -p <parameter settings file> -e <extraction set> -w <working directory> -s <status file(s)>')
+        print('analyzeABQoutputData.py -b <codebase> -m <material folder> -p <parameter settings file> -e <extraction set>')
+        print('                        -w <working directory> -s <status file(s)> -c <files to clear>')
         print(' ')
         print('analyzeABQoutputData.py -h --help --Help for help on this program')
         print(' ')
@@ -251,9 +264,13 @@ def main(argv):
             print('*****************************************************************************************************')
             print(' ')
             print('Program syntax:')
-            print('analyzeABQoutputData.py -b <codebase> -m <material folder> -p <parameter settings file> -e <extraction set> -w <working directory> -s <status file(s)> -c <files to clear>')
+            print(' ')
+            print('analyzeABQoutputData.py -b <codebase> -m <material folder> -p <parameter settings file> -e <extraction set>')
+            print('                        -w <working directory> -s <status file(s)> -c <files to clear>')
+            print(' ')
             print(' ')
             print('Mandatory arguments:')
+            print(' ')
             print('-b <codebase>                     ===> full/path/to/folder/without/closing/slash')
             print('-m <material folder>              ===> full/path/to/folder/without/closing/slash')
             print('-p <parameter settings file>      ===> full/path/to/file/with/extension')
@@ -263,16 +280,22 @@ def main(argv):
             print('                                       if multiple files are provided, they must be separated by a ;, for example:')
             print('                                          statusOne.sta;statusTwo.sta;statusThree.sta')
             print(' ')
+            print(' ')
             print('Optional arguments:')
+            print(' ')
             print('-c <files to clear>')
             print(' ')
+            print(' ')
             print('Default values:')
+            print(' ')
             print('-c <files to clear>                ===> no file is cleared')
             print('                                        file extensions must be provided without leading dots')
             print('                                        if multiple file extensions are provided, they must be separated by a ;, for example:')
             print('                                           ext1;ext2;ext3')
             print(' ')
+            print(' ')
             print('Available extraction sets:')
+            print(' ')
             print('    01 - 2D LEFM single fiber, single debond, full extraction')
             print(' ')
             print(' ')
@@ -351,7 +374,7 @@ def main(argv):
     
     
     logfile = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_ABQdataAnalysis' + '.log'        
-    logfilePath = join(workdir,logfile)
+    logFilePath = join(workdir,logfile)
 
     # create log file
     writeTitleSecToLogFile(logFilePath,'w','ABAQUS RESULTS ANALYSIS',True)
@@ -362,7 +385,7 @@ def main(argv):
     writeLineToLogFile(logFilePath,'a','... done.',True)
     
     subject = '[ABAQUS RESULTS ANALYSIS] Starting analysis'
-    message = 'Abaqus results analysis starting on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S').'
+    message = 'Abaqus results analysis starting on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S')
     sendStatusEmail(settings['emailDataDir'],'logData.csv',settings['serverFrom'],settings['emailFrom'],settings['emailTo'],subject,message)
     
     skipLineToLogFile(logFilePath,'a',True)
@@ -373,10 +396,10 @@ def main(argv):
     
     for line in lines[1:]:
         simData = line.replace('\n','').split(',')
-        simName = simData[0]
-        isPreprocessed = simData[1]
-        isSimCompleted = simData[2]
-        isPostprocessed = simData[3]
+        simName = simData[0].strip()
+        isPreprocessed = simData[1].strip()
+        isSimCompleted = simData[2].strip()
+        isPostprocessed = simData[3].strip()
         skipLineToLogFile(logFilePath,'a',True)
         writeLineToLogFile(logFilePath,'a','For simulation: ' + simName,True)
         writeLineToLogFile(logFilePath,'a','    --> has the preprocessing stage been completed? ' + isPreprocessed,True)
@@ -397,7 +420,7 @@ def main(argv):
             writeLineToLogFile(logFilePath,'a','... done.',True)
             writeLineToLogFile(logFilePath,'a','Calling function: runPostprocessor ...',True)
             try:
-                runPostprocessor(preprocessor,functionCall,args,wd,logfilename)
+                runPostprocessor(workdir,postProcessorFile,settings['functionCall'],logFilePath)
             except Exception, error:
                 writeErrorToLogFile(logFilePath,'a',Exception,error,True)
                 writeLineToLogFile(logFilePath,'a','Moving on to the next.',True)

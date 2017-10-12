@@ -127,7 +127,7 @@ def getPerfs(wd,sims):
                 lines = inp.readlines()
             for line in lines:
                  if 'Crack Angular Aperture' in line:
-                     debond = np.round(float(line.replace('\n','').replace('*','').replace('-','').split(':')[-1].replace('deg','')))
+                     debond = numpy.round(float(line.replace('\n','').replace('*','').replace('-','').split(':')[-1].replace('deg','')))
                      break
         perf.append([sim,debond,cpus,usertime,systemtime,usertime/totalcpu,systemtime/totalcpu,totalcpu,wallclock,wallclock/60.,wallclock/3600.,wallclock/totalcpu,floatops,minMemory,minIOmemory,totEl,userEl,progEl,totN,userN,progN,totVar])
     return perf
@@ -388,30 +388,30 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     print('Starting post-processing on project ' + project + '\n')
     # define database name
     odbname = project + '.odb'
-    odbfullpath = join(wd,project,'abaqus',odbname)
+    odbfullpath = join(wd,project,'solver',odbname)
     # define input file name
     inpname = project + '.inp'
-    inpfullpath = join(wd,project,'abqinp',inpname)
+    inpfullpath = join(wd,project,'input',inpname)
     # define csv output folder and create if it does not exist
     csvfolder = join(wd,project,'csv')
-        try:
-            os.makedirs(csvfolder)
-        except OSError as e:
-            if e.errno != errno.EEXIST:
-                raise
+    if not os.path.exists(csvfolder):
+        os.makedirs(csvfolder)
     # define dat output folder and create if it does not exist
     datfolder = join(wd,project,'dat')
-        try:
-            os.makedirs(datfolder)
-        except OSError as e:
-            if e.errno != errno.EEXIST:
-                raise
+    if not os.path.exists(datfolder):
+        os.makedirs(datfolder)
     #=======================================================================
     # BEGIN - extract performances
     #=======================================================================
     print('\n')
-    print('Get first and last frame...\n')
-    writePerfToFile(csvfolder,'performances.csv',getPerfs(wd,[project]))
+    print('Extract performances...\n')
+    try:
+        writePerfToFile(csvfolder,'performances.csv',getPerfs(wd,[project]))
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
     print('...done.\n')
     #=======================================================================
     # END - extract performances
@@ -419,7 +419,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     #=======================================================================
     # BEGIN - open odb
     #=======================================================================
-    print('Open odb ' + odbname + ' in folder ' + join(wd,project,'abaqus') + ' ...\n')
+    print('Open odb ' + odbname + ' in folder ' + join(wd,project,'solver') + ' ...\n')
     try:
         odb = openOdb(path=odbfullpath)
     except Exception,e:
@@ -448,8 +448,22 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     print('\n')
     print('Get deformed nodes...\n')
     
-    nodes = getAndSaveAllNodes(odb,-1,-1,csvfolder,'defnodesCoords','.csv')
-    intpoints = getAndSaveAllIntPoints(odb,-1,-1,csvfolder,'defintpointCoords','.csv')
+    try:
+        nodes = getAndSaveAllNodes(odb,-1,-1,csvfolder,'defnodesCoords','.csv')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+    try:
+        intpoints = getAndSaveAllIntPoints(odb,-1,-1,csvfolder,'defintpointCoords','.csv')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     boundaryNodeSetsData = [[-1,-1,'PART-1-1','SW-CORNERNODE'],
                             [-1,-1,'PART-1-1','SE-CORNERNODE'],
@@ -459,11 +473,25 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
                             [-1,-1,'PART-1-1','RIGHTSIDE-NODES-WITHOUT-CORNERS'],
                             [-1,-1,'PART-1-1','UPPERSIDE-NODES-WITHOUT-CORNERS'],
                             [-1,-1,'PART-1-1','LEFTSIDE-NODES-WITHOUT-CORNERS']]
-    extractAndSaveNodesCoordinates(odb,boundaryNodeSetsData,csvfolder,'defboundaryNodesCoords','.csv')
+    try:
+        extractAndSaveNodesCoordinates(odb,boundaryNodeSetsData,csvfolder,'defboundaryNodesCoords','.csv')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     interfaceNodeSetsData = [[-1,-1,'PART-1-1','FIBERSURFACE-NODES'],
                             [-1,-1,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES']]
-    extractAndSaveNodesCoordinates(odb,interfaceNodeSetsData,csvfolder,'deffiberInterfaceNodesCoords','.csv')
+    try:
+        extractAndSaveNodesCoordinates(odb,interfaceNodeSetsData,csvfolder,'deffiberInterfaceNodesCoords','.csv')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     print('...done.\n')
     #=======================================================================
@@ -475,8 +503,23 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     print('\n')
     print('Get undeformed nodes...\n')
     
-    undefNodes = getAndSaveAllNodes(odb,-1,0,csvfolder,'undefnodesCoords','.csv')
-    undefIntpoints = getAndSaveAllIntPoints(odb,-1,0,csvfolder,'undefintpointCoords','.csv')
+    try:
+        undefNodes = getAndSaveAllNodes(odb,-1,0,csvfolder,'undefnodesCoords','.csv')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+    
+    try:
+        undefIntpoints = getAndSaveAllIntPoints(odb,-1,0,csvfolder,'undefintpointCoords','.csv')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     undefBoundaryNodeSetsData = [[-1,0,'PART-1-1','SW-CORNERNODE'],
                             [-1,0,'PART-1-1','SE-CORNERNODE'],
@@ -486,11 +529,26 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
                             [-1,0,'PART-1-1','RIGHTSIDE-NODES-WITHOUT-CORNERS'],
                             [-1,0,'PART-1-1','UPPERSIDE-NODES-WITHOUT-CORNERS'],
                             [-1,0,'PART-1-1','LEFTSIDE-NODES-WITHOUT-CORNERS']]
-    extractAndSaveNodesCoordinates(odb,undefBoundaryNodeSetsData,csvfolder,'undefboundaryNodesCoords','.csv')
+    
+    try:
+        extractAndSaveNodesCoordinates(odb,undefBoundaryNodeSetsData,csvfolder,'undefboundaryNodesCoords','.csv')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     undefInterfaceNodeSetsData = [[-1,0,'PART-1-1','FIBERSURFACE-NODES'],
                                   [-1,0,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES']]
-    extractAndSaveNodesCoordinates(odb,undefInterfaceNodeSetsData,csvfolder,'undeffiberInterfaceNodesCoords','.csv')
+    try:
+        extractAndSaveNodesCoordinates(odb,undefInterfaceNodeSetsData,csvfolder,'undeffiberInterfaceNodesCoords','.csv')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     print('...done.\n')
     #=======================================================================
@@ -499,10 +557,38 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     #=======================================================================
     # BEGIN - get fiber and matrix elements and nodes subsets
     #=======================================================================
-    fiberNodes = getSingleNodeSet(odb,'PART-1-1','FIBER-NODES')
-    matrixNodes = getSingleNodeSet(odb,'PART-1-1','MATRIX-NODES')
-    fiberElements = getSingleElementSet(odb,'PART-1-1','FIBER-ELEMENTS')
-    matrixElements = getSingleElementSet(odb,'PART-1-1','MATRIX-ELEMENTS')
+    try:
+        fiberNodes = getSingleNodeSet(odb,'PART-1-1','FIBER-NODES')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+    try:
+        matrixNodes = getSingleNodeSet(odb,'PART-1-1','MATRIX-NODES')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+    try:
+        fiberElements = getSingleElementSet(odb,'PART-1-1','FIBER-ELEMENTS')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+    try:
+        matrixElements = getSingleElementSet(odb,'PART-1-1','MATRIX-ELEMENTS')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     #=======================================================================
     # END - get fiber and matrix elements and nodes subsets
     #=======================================================================
@@ -512,19 +598,40 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     print('\n')
     print('Get displacements in the entire model...\n')
     
-    extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-displacements','.csv','U')
-    
+    try:
+        extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-displacements','.csv','U')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+        
     print('...done.\n')
     print('\n')
     print('Get displacements in fiber subset...\n')
     
-    extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'fibersubset-displacements','.csv','U',fiberNodes)
-       
+    try:
+        extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'fibersubset-displacements','.csv','U',fiberNodes)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+           
     print('...done.\n')
     print('\n')
     print('Get displacements in matrix subset...\n')
     
-    extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'matrixsubset-displacements','.csv','U',matrixNodes)
+    try:
+        extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'matrixsubset-displacements','.csv','U',matrixNodes)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
       
     print('...done.\n')
     #=======================================================================
@@ -536,19 +643,40 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     print('\n')
     print('Get strains in the entire model...\n')
     
-    extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-elasticstrains','.csv','EE')
+    try:
+        extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-elasticstrains','.csv','EE')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     print('...done.\n')
     print('\n')
     print('Get strains in fiber subset...\n')
     
-    extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'fibersubset-elasticstrains','.csv','EE',fiberElements)
+    try:
+        extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'fibersubset-elasticstrains','.csv','EE',fiberElements)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     print('...done.\n')
     print('\n')
     print('Get strains in matrix subset...\n')
     
-    extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'matrixsubset-elasticstrains','.csv','EE',matrixElements)
+    try:
+        extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'matrixsubset-elasticstrains','.csv','EE',matrixElements)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     print('...done.\n')
     #=======================================================================
@@ -560,19 +688,40 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     print('\n')
     print('Get stresses in the entire model...\n')
     
-    extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-elasticstresses','.csv','S')
+    try:
+        extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-elasticstresses','.csv','S')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     print('...done.\n')
     print('\n')
     print('Get stresses in fiber subset...\n')
     
-    extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'fibersubset-elasticstresses','.csv','S',fiberElements)
+    try:
+        extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'fibersubset-elasticstresses','.csv','S',fiberElements)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     print('...done.\n')
     print('\n')
     print('Get stresses in matrix subset...\n')
     
-    extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'matrixsubset-elasticstresses','.csv','S',matrixElements)
+    try:
+        extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'matrixsubset-elasticstresses','.csv','S',matrixElements)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     print('...done.\n')
     #=======================================================================
@@ -584,9 +733,23 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     print('\n')
     print('Get displacement and reaction force at boundary...\n')
     
-    meanleftdisp,totalleftforce = getDispVsReactionOnBoundarySubset(odb,-1,-1,'PART-1-1','LEFTSIDE-NODES-WITH-CORNERS',0)
+    try:
+        meanleftdisp,totalleftforce = getDispVsReactionOnBoundarySubset(odb,-1,-1,'PART-1-1','LEFTSIDE-NODES-WITH-CORNERS',0)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
-    meanrightdisp,totalrightforce = getDispVsReactionOnBoundarySubset(odb,-1,-1,'PART-1-1','RIGHTSIDE-NODES-WITH-CORNERS',0)
+    try:
+        meanrightdisp,totalrightforce = getDispVsReactionOnBoundarySubset(odb,-1,-1,'PART-1-1','RIGHTSIDE-NODES-WITH-CORNERS',0)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
         
     with open(join(csvfolder,'dispVSreactionforce.csv'),'w') as csv:
         csv.write('TABLE\n')
@@ -603,8 +766,22 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     #=======================================================================
     print('\n')
     print('Get interfaces...\n')
-    master = getSingleNodeSet(odb,'PART-1-1','FIBERSURFACE-NODES')
-    slave = getSingleNodeSet(odb,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES')
+    try:
+        master = getSingleNodeSet(odb,'PART-1-1','FIBERSURFACE-NODES')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+    try:
+        slave = getSingleNodeSet(odb,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES')
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     print('...done.\n')
     #=======================================================================
     # END - get interfaces
@@ -620,10 +797,38 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     print('...on master...\n')
     
     # get values
-    cstatusOnMaster = getFieldOutput(odb,-1,-1,'CSTATUS',master)
-    cpressOnMaster  = getFieldOutput(odb,-1,-1,'CPRESS',master)
-    cshearOnMaster  = getFieldOutput(odb,-1,-1,'CSHEARF',master)
-    cshearfOnMaster  = getFieldOutput(odb,-1,-1,'CSHEAR1',master)
+    try:
+        cstatusOnMaster = getFieldOutput(odb,-1,-1,'CSTATUS',master)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+    try:
+        cpressOnMaster  = getFieldOutput(odb,-1,-1,'CPRESS',master)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+    try:
+        cshearOnMaster  = getFieldOutput(odb,-1,-1,'CSHEARF',master)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+    try:
+        cshearfOnMaster  = getFieldOutput(odb,-1,-1,'CSHEAR1',master)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     # write to file
     toWrite = []
@@ -697,10 +902,38 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     print('...on slave...\n')
     
     # get values
-    cstatusOnSlave = getFieldOutput(odb,-1,-1,'CSTATUS',slave)
-    cpressOnSlave  = getFieldOutput(odb,-1,-1,'CPRESS',slave)
-    cshearOnSlave  = getFieldOutput(odb,-1,-1,'CSHEARF',slave)
-    cshearfOnSlave  = getFieldOutput(odb,-1,-1,'CSHEAR1',slave)
+    try:
+        cstatusOnSlave = getFieldOutput(odb,-1,-1,'CSTATUS',slave)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+    try:
+        cpressOnSlave  = getFieldOutput(odb,-1,-1,'CPRESS',slave)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+    try:
+        cshearOnSlave  = getFieldOutput(odb,-1,-1,'CSHEARF',slave)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
+    try:
+        cshearfOnSlave  = getFieldOutput(odb,-1,-1,'CSHEAR1',slave)
+    except Exception,e:
+        print('An error occurred:')
+        print(str(Exception))
+        print(str(e))
+        sys.exc_clear()
+        return
     
     # write to file
     toWrite = []
@@ -859,7 +1092,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     # END - get stresses at boundaries
     #=======================================================================
     #=======================================================================
-    # BEGIN - get simulation units of measurement, material and geometry
+    # BEGIN - get simulation units of measurement and material and geometry
     #=======================================================================
     print('\n')
     print('Get simulation''s units of measurement, material and geometry...\n')
@@ -882,7 +1115,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
             stressFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(',')[2])
     print('...done.\n')
     #=======================================================================
-    # END - get simulation units of measurement, material and geometry
+    # END - get simulation units of measurement and material and geometry
     #=======================================================================
     #=======================================================================
     # BEGIN - compute G0
@@ -908,7 +1141,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     # END - compute G0
     #=======================================================================
     #=======================================================================
-    # BEGIN - get J-integrals
+    # BEGIN - get J integrals
     #=======================================================================
     print('\n')
     print('Get J-integrals...\n')
@@ -960,7 +1193,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
                 JINToverG0s.append(valuesOverG0)
     print('...done.\n')
     #=======================================================================
-    # END - get J-integrals
+    # END - get J integrals
     #=======================================================================
     #=======================================================================
     # BEGIN - VCCT in forces

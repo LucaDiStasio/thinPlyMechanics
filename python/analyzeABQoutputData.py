@@ -393,7 +393,7 @@ def main(argv):
         lines = sta.readlines()
     writeLineToLogFile(logFilePath,'a','... done.',True)
     
-    for line in lines[1:]:
+    for l,line in enumerate(lines[1:]):
         simData = line.replace('\n','').split(',')
         simName = simData[0].strip()
         isPreprocessed = simData[1].strip()
@@ -426,6 +426,11 @@ def main(argv):
                 sys.exc_clear()
                 continue
             writeLineToLogFile(logFilePath,'a','... done.',True)
+            simData[3] = 'YES'
+            lines[l+1] = simData[0] + ', ' + simData[1] + ', ' + simData[2] + ', ' + simData[3] + '\n'
+            with open(statusfilepath,'w') as sta:
+                for li in lines:
+                    sta.write(li)
             if clearFiles:
                 writeLineToLogFile(logFilePath,'a','Proceeding to clear files in ' + str(join(wd,simName,'solver')) + ' ...',True)
                 fileList = listdir(join(wd,simName,'solver'))

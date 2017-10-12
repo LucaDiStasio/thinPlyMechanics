@@ -50,6 +50,68 @@ import re
 #===============================================================================#
 #===============================================================================#
 
+def writeLineToLogFile(logFileFullPath,mode,line,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write(line + '\n')
+    if toScreen:
+        print(line + '\n')
+
+def skipLineToLogFile(logFileFullPath,mode,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write('\n')
+    if toScreen:
+        print('\n')
+
+def writeTitleSepLineToLogFile(logFileFullPath,mode,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write('===============================================================================================\n')
+    if toScreen:
+        print('===============================================================================================\n')
+
+def writeTitleSecToLogFile(logFileFullPath,mode,title,toScreen):
+    writeTitleSepLineToLogFile(logFileFullPath,mode,toScreen)
+    writeTitleSepLineToLogFile(logFileFullPath,'a',toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+    writeLineToLogFile(logFileFullPath,'a',title,toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+    writeLineToLogFile(logFileFullPath,'a','Starting on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S'),toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+    writeLineToLogFile(logFileFullPath,'a','Platform: ' + platform(),toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+    writeTitleSepLineToLogFile(logFileFullPath,'a',toScreen)
+    writeTitleSepLineToLogFile(logFileFullPath,'a',toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+
+def writeErrorToLogFile(logFileFullPath,mode,exc,err,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write('!!! ----------------------------------------------------------------------------------------!!!\n')
+        log.write('\n')
+        log.write('                                     AN ERROR OCCURED\n')
+        log.write('\n')
+        log.write('                                -------------------------\n')
+        log.write('\n')
+        log.write(str(exc) + '\n')
+        log.write(str(err) + '\n')
+        log.write('\n')
+        log.write('Terminating program\n')
+        log.write('\n')
+        log.write('!!! ----------------------------------------------------------------------------------------!!!\n')
+        log.write('\n')
+    if toScreen:
+        print('!!! ----------------------------------------------------------------------------------------!!!\n')
+        print('\n')
+        print('                                     AN ERROR OCCURED\n')
+        print('\n')
+        print('                                -------------------------\n')
+        print('\n')
+        print(str(exc) + '\n')
+        print(str(err) + '\n')
+        print('\n')
+        print('Terminating program\n')
+        print('\n')
+        print('!!! ----------------------------------------------------------------------------------------!!!\n')
+        print('\n')
+        
 def getPerfs(wd,sims):
     perf = []
     perf.append(['PROJECT NAME','DEBOND [°]','NUMBER OF CPUS [-]','USER TIME [s]','SYSTEM TIME [s]','USER TIME/TOTAL CPU TIME [%]','SYSTEM TIME/TOTAL CPU TIME [%]','TOTAL CPU TIME [s]','WALLCLOCK TIME [s]','WALLCLOCK TIME [m]','WALLCLOCK TIME [h]','WALLCLOCK TIME/TOTAL CPU TIME [%]','ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-]','MINIMUM REQUIRED MEMORY [MB]','MEMORY TO MINIMIZE I/O [MB]','TOTAL NUMBER OF ELEMENTS [-]','NUMBER OF ELEMENTS DEFINED BY THE USER [-]','NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-]','TOTAL NUMBER OF NODES [-]','NUMBER OF NODES DEFINED BY THE USER [-]','NUMBER OF NODES DEFINED BY THE PROGRAM [-]','TOTAL NUMBER OF VARIABLES [-]'])
@@ -377,7 +439,9 @@ def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
 #
 #===============================================================================#
 
-def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
+def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Reading settings and assigning to variables...',True)
     nEl0 = int(settings['nEl0'])
     NElMax = int(settings['NElMax'])
     DeltaEl = int(settings['DeltaEl'])
@@ -385,85 +449,85 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     nl = int(settings['nl'])
     nSegsOnPath = int(settings['nSegsOnPath'])
     tol = float(settings['tol'])
-    print('Starting post-processing on project ' + project + '\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Starting post-processing on simulation ' + project,True)
+    skipLineToLogFile(logfile,'a',True)
     # define database name
     odbname = project + '.odb'
     odbfullpath = join(wd,project,'solver',odbname)
+    writeLineToLogFile(logfile,'a','ODB: ' + odbfullpath,True)
     # define input file name
     inpname = project + '.inp'
     inpfullpath = join(wd,project,'input',inpname)
+    writeLineToLogFile(logfile,'a','INPUT file: ' + inpfullpath,True)
     # define csv output folder and create if it does not exist
     csvfolder = join(wd,project,'csv')
     if not os.path.exists(csvfolder):
         os.makedirs(csvfolder)
+    writeLineToLogFile(logfile,'a','CSV folder: ' + csvfolder,True)
     # define dat output folder and create if it does not exist
     datfolder = join(wd,project,'dat')
     if not os.path.exists(datfolder):
         os.makedirs(datfolder)
+    writeLineToLogFile(logfile,'a','DAT folder: ' + datfolder,True)
     #=======================================================================
     # BEGIN - extract performances
     #=======================================================================
-    print('\n')
-    print('Extract performances...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Extract performances...',True)
     try:
         writePerfToFile(csvfolder,'performances.csv',getPerfs(wd,[project]))
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - extract performances
     #=======================================================================
     #=======================================================================
     # BEGIN - open odb
     #=======================================================================
-    print('Open odb ' + odbname + ' in folder ' + join(wd,project,'solver') + ' ...\n')
+    writeLineToLogFile(logfile,'a','Open odb ' + odbname + ' in folder ' + join(wd,project,'solver') + ' ...',True)
     try:
         odb = openOdb(path=odbfullpath)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    print('...done.\n')    
+    writeLineToLogFile(logfile,'a','... done.',True)    
     #=======================================================================
     # END - open odb
     #=======================================================================
     #=======================================================================
     # BEGIN - get first and last frame
     #=======================================================================
-    print('\n')
-    print('Get first and last frame...\n')
-    firstFrame,lastFrame = getFirstAndLastFrameLastStep(odb)
-    print('...done.\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get first and last frame...',True)
+    try:
+        firstFrame,lastFrame = getFirstAndLastFrameLastStep(odb)
+    except Exception,e:
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
+        sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get first and last frame
     #=======================================================================
     #=======================================================================
     # BEGIN - get deformed nodes
     #=======================================================================
-    print('\n')
-    print('Get deformed nodes...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get deformed nodes...',True)
     
     try:
         nodes = getAndSaveAllNodes(odb,-1,-1,csvfolder,'defnodesCoords','.csv')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     try:
         intpoints = getAndSaveAllIntPoints(odb,-1,-1,csvfolder,'defintpointCoords','.csv')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     
     boundaryNodeSetsData = [[-1,-1,'PART-1-1','SW-CORNERNODE'],
                             [-1,-1,'PART-1-1','SE-CORNERNODE'],
@@ -476,51 +540,37 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     try:
         extractAndSaveNodesCoordinates(odb,boundaryNodeSetsData,csvfolder,'defboundaryNodesCoords','.csv')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     
     interfaceNodeSetsData = [[-1,-1,'PART-1-1','FIBERSURFACE-NODES'],
                             [-1,-1,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES']]
     try:
         extractAndSaveNodesCoordinates(odb,interfaceNodeSetsData,csvfolder,'deffiberInterfaceNodesCoords','.csv')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get deformed nodes
     #=======================================================================
     #=======================================================================
     # BEGIN - get undeformed nodes
     #=======================================================================
-    print('\n')
-    print('Get undeformed nodes...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get undeformed nodes...',True)
     
     try:
         undefNodes = getAndSaveAllNodes(odb,-1,0,csvfolder,'undefnodesCoords','.csv')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    
     try:
         undefIntpoints = getAndSaveAllIntPoints(odb,-1,0,csvfolder,'undefintpointCoords','.csv')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    
     undefBoundaryNodeSetsData = [[-1,0,'PART-1-1','SW-CORNERNODE'],
                             [-1,0,'PART-1-1','SE-CORNERNODE'],
                             [-1,0,'PART-1-1','NE-CORNERNODE'],
@@ -533,24 +583,16 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     try:
         extractAndSaveNodesCoordinates(odb,undefBoundaryNodeSetsData,csvfolder,'undefboundaryNodesCoords','.csv')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    
     undefInterfaceNodeSetsData = [[-1,0,'PART-1-1','FIBERSURFACE-NODES'],
                                   [-1,0,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES']]
     try:
         extractAndSaveNodesCoordinates(odb,undefInterfaceNodeSetsData,csvfolder,'undeffiberInterfaceNodesCoords','.csv')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get undeformed nodes
     #=======================================================================
@@ -560,275 +602,201 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     try:
         fiberNodes = getSingleNodeSet(odb,'PART-1-1','FIBER-NODES')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     try:
         matrixNodes = getSingleNodeSet(odb,'PART-1-1','MATRIX-NODES')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     try:
         fiberElements = getSingleElementSet(odb,'PART-1-1','FIBER-ELEMENTS')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     try:
         matrixElements = getSingleElementSet(odb,'PART-1-1','MATRIX-ELEMENTS')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     #=======================================================================
     # END - get fiber and matrix elements and nodes subsets
     #=======================================================================
     #=======================================================================
     # BEGIN - get displacements
     #=======================================================================
-    print('\n')
-    print('Get displacements in the entire model...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get displacements in the entire model...',True)
     
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-displacements','.csv','U')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-        
-    print('...done.\n')
-    print('\n')
-    print('Get displacements in fiber subset...\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get displacements in fiber subset...',True)
     
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'fibersubset-displacements','.csv','U',fiberNodes)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-           
-    print('...done.\n')
-    print('\n')
-    print('Get displacements in matrix subset...\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get displacements in matrix subset...',True)
     
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'matrixsubset-displacements','.csv','U',matrixNodes)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-      
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get displacements
     #=======================================================================
     #=======================================================================
     # BEGIN - get strains
     #=======================================================================
-    print('\n')
-    print('Get strains in the entire model...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get strains in the entire model...',True)
     
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-elasticstrains','.csv','EE')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    
-    print('...done.\n')
-    print('\n')
-    print('Get strains in fiber subset...\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get strains in fiber subset...',True)
     
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'fibersubset-elasticstrains','.csv','EE',fiberElements)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    
-    print('...done.\n')
-    print('\n')
-    print('Get strains in matrix subset...\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get strains in matrix subset...',True)
     
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'matrixsubset-elasticstrains','.csv','EE',matrixElements)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get strains
     #=======================================================================
     #=======================================================================
     # BEGIN - get stresses 
     #=======================================================================
-    print('\n')
-    print('Get stresses in the entire model...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get stresses in the entire model...',True)
     
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-elasticstresses','.csv','S')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    
-    print('...done.\n')
-    print('\n')
-    print('Get stresses in fiber subset...\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get stresses in fiber subset...',True)
     
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'fibersubset-elasticstresses','.csv','S',fiberElements)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    
-    print('...done.\n')
-    print('\n')
-    print('Get stresses in matrix subset...\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get stresses in matrix subset...',True)
     
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'matrixsubset-elasticstresses','.csv','S',matrixElements)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get stresses 
     #=======================================================================
     #=======================================================================
     # BEGIN - get displacement and reaction force at boundary
     #=======================================================================
-    print('\n')
-    print('Get displacement and reaction force at boundary...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get displacement and reaction force at boundary...',True)
     
     try:
         meanleftdisp,totalleftforce = getDispVsReactionOnBoundarySubset(odb,-1,-1,'PART-1-1','LEFTSIDE-NODES-WITH-CORNERS',0)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    
     try:
         meanrightdisp,totalrightforce = getDispVsReactionOnBoundarySubset(odb,-1,-1,'PART-1-1','RIGHTSIDE-NODES-WITH-CORNERS',0)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-        
     with open(join(csvfolder,'dispVSreactionforce.csv'),'w') as csv:
         csv.write('TABLE\n')
         csv.write('SIDE, U1, RF1\n')
         csv.write('RIGHT, ' + str(meanrightdisp) + ', ' + str(totalrightforce) + '\n')
         csv.write('LEFT, ' + str(meanleftdisp) + ', ' + str(totalleftforce) + '\n')
         
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get displacement and reaction force at boundary
     #=======================================================================
     #=======================================================================
     # BEGIN - get interfaces
     #=======================================================================
-    print('\n')
-    print('Get interfaces...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get interfaces...',True)
     try:
         master = getSingleNodeSet(odb,'PART-1-1','FIBERSURFACE-NODES')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     try:
         slave = getSingleNodeSet(odb,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES')
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get interfaces
     #=======================================================================
     #=======================================================================
     # BEGIN - get stresses at interface (on slave and master)
     #=======================================================================
-    print('\n')
-    print('Get stresses at interface (on slave and master)...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get stresses at interface (on slave and master)...',True)
     
     # on master
-    print('\n')
-    print('...on master...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','...on master...',True)
     
     # get values
     try:
         cstatusOnMaster = getFieldOutput(odb,-1,-1,'CSTATUS',master)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     try:
         cpressOnMaster  = getFieldOutput(odb,-1,-1,'CPRESS',master)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     try:
         cshearOnMaster  = getFieldOutput(odb,-1,-1,'CSHEARF',master)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     try:
         cshearfOnMaster  = getFieldOutput(odb,-1,-1,'CSHEAR1',master)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     
     # write to file
     toWrite = []
@@ -895,45 +863,33 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
         for item in toWrite:
             csv.write(item[0] + ', ' + item[1] + ', ' + item[2] + ', ' + item[3] + ', ' + item[4] + ', ' + item[5] + ', ' + item[6] + ', ' + item[7] + ', ' + item[8] + ', ' + item[9] + ', ' + item[10] + '\n')
     
-    print('...done...\n')
+    writeLineToLogFile(logfile,'a','...done...',True)
     
     # on slave
-    print('\n')
-    print('...on slave...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','...on slave...',True)
     
     # get values
     try:
         cstatusOnSlave = getFieldOutput(odb,-1,-1,'CSTATUS',slave)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     try:
         cpressOnSlave  = getFieldOutput(odb,-1,-1,'CPRESS',slave)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     try:
         cshearOnSlave  = getFieldOutput(odb,-1,-1,'CSHEARF',slave)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     try:
         cshearfOnSlave  = getFieldOutput(odb,-1,-1,'CSHEAR1',slave)
     except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
+        # writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-        return
     
     # write to file
     toWrite = []
@@ -1000,15 +956,15 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
         for item in toWrite:
             csv.write(item[0] + ', ' + item[1] + ', ' + item[2] + ', ' + item[3] + ', ' + item[4] + ', ' + item[5] + ', ' + item[6] + ', ' + item[7] + ', ' + item[8] + ', ' + item[9] + ', ' + item[10] + '\n')
     
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get stresses at interface (on slave and master)
     #=======================================================================
     #=======================================================================
     # BEGIN - get displacements at interface (on slave only)
     #=======================================================================
-    print('\n')
-    print('Get displacements at interface (on slave only)...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get displacements at interface (on slave only)...',True)
     
     # get values
     copenOnSlave = getFieldOutput(odb,-1,-1,'COPEN',slave)
@@ -1047,15 +1003,15 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
             csv.write(item[0] + ', ' + item[1] + ', ' + item[2] + ', ' + item[3] + ', ' + item[4] + ', ' + item[5] + ', ' + item[6] + ', ' + item[7] + '\n')
     toWrite = []
     
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get displacements at interface (on slave only)
     #=======================================================================
     #=======================================================================
     # BEGIN - get stresses at boundaries
     #=======================================================================
-    print('\n')
-    print('Get stresses at boundaries...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get stresses at boundaries...',True)
     leftSide = getSingleNodeSet(odb,'PART-1-1','LEFTSIDE-NODES-WITH-CORNERS')
     rightSide = getSingleNodeSet(odb,'PART-1-1','RIGHTSIDE-NODES-WITH-CORNERS')
     extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'StressesOnRightSide','.csv','S',rightSide,3)
@@ -1087,15 +1043,15 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
         countLeft += 1
     meanLeft /=countLeft
     sigmaInf = 0.5*(meanRight+meanLeft)
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get stresses at boundaries
     #=======================================================================
     #=======================================================================
     # BEGIN - get simulation units of measurement and material and geometry
     #=======================================================================
-    print('\n')
-    print('Get simulation''s units of measurement, material and geometry...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get simulation''s units of measurement, material and geometry...',True)
     with open(join(csvfolder,project + '.csv')) as csv:
         lines = csv.readlines()
     for l,line in enumerate(lines):
@@ -1113,15 +1069,15 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
             forceFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(',')[2])
         elif 'pressure/stress, SI' in line:
             stressFactor = 1.0/float(line.replace('**','').replace('--','').replace('\n','').split(',')[2])
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get simulation units of measurement and material and geometry
     #=======================================================================
     #=======================================================================
     # BEGIN - compute G0
     #=======================================================================
-    print('\n')
-    print('Compute G0...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Compute G0...',True)
     if 'Epoxy' in matrixType:
         matrix = 'EP'
     elif 'HDPE' in matrixType:
@@ -1136,15 +1092,15 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     Rf *= lengthFactor #recast in SI units
     sigmaInf *= stressFactor  #recast in SI units
     G0 = numpy.pi*Rf*sigmaInf*sigmaInf*(1+(3.0-4.0*num))/(8.0*Gm)
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - compute G0
     #=======================================================================
     #=======================================================================
     # BEGIN - get J integrals
     #=======================================================================
-    print('\n')
-    print('Get J-integrals...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get J-integrals...',True)
     isJINTcomputed = False
     with open(join(wd,project,'abaqus',project + '.dat'),'r') as dat:
         lines = dat.readlines()
@@ -1191,15 +1147,15 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
                     valuesOverG0.append(enrrtFactor*float(value)/G0)
                 JINTs.append(values)
                 JINToverG0s.append(valuesOverG0)
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get J integrals
     #=======================================================================
     #=======================================================================
     # BEGIN - VCCT in forces
     #=======================================================================
-    print('\n')
-    print('Compute energy release rates with VCCT in forces...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Compute energy release rates with VCCT in forces...',True)
     
     crackTips = []
     
@@ -1294,7 +1250,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
         beta1 = numpy.arctan2(undeftip1.data[1],undeftip1.data[0])
         beta2 = numpy.arctan2(undeftip2.data[1],undeftip2.data[0])
         
-        #print('orientation defined')
+        #writeLineToLogFile(logfile,'a','orientation defined')
         '''
         xdispcracktip1 = (defmatrixpretip1.data[0]-undefmatrixpretip1.data[0]) - (deffiberpretip1.data[0]-undeffiberpretip1.data[0])
         zdispcracktip1 = (defmatrixpretip1.data[1]-undefmatrixpretip1.data[1]) - (deffiberpretip1.data[1]-undeffiberpretip1.data[1])
@@ -1314,15 +1270,15 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
         
         rdispcracktip2 = numpy.cos(beta2)*xdispcracktip2 + numpy.sin(beta2)*zdispcracktip2
         thetadispcracktip2 = -numpy.sin(beta2)*xdispcracktip2 + numpy.cos(beta2)*zdispcracktip2
-        #print('disps rotated:')
+        #writeLineToLogFile(logfile,'a','disps rotated:')
         
         try:
             dummy1Node = odb.rootAssembly.instances['PART-1-1'].nodeSets['DUMMY1-NODE']
             dummy2Node = odb.rootAssembly.instances['PART-1-1'].nodeSets['DUMMY2-NODE']
             isDummy = True
-            #print('is dummy')
+            #writeLineToLogFile(logfile,'a','is dummy')
         except Exception,error:
-            #print(str(Exception))
+            #writeLineToLogFile(logfile,'a',str(Exception))
             #print(str(error))
             isDummy = False
             #print('is not dummy')
@@ -1375,14 +1331,14 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
         
         rRFcracktip2 = numpy.cos(beta2)*xRFcracktip2 + numpy.sin(beta2)*zRFcracktip2
         thetaRFcracktip2 = -numpy.sin(beta2)*xRFcracktip2 + numpy.cos(beta2)*zRFcracktip2
-        #print('forces rotated')
+        #writeLineToLogFile(logfile,'a','forces rotated')
         
         G1cracktip1 = enrrtFactor*numpy.abs(0.5*(rRFcracktip1*rdispcracktip1)/(Rf*deltaC))
         G2cracktip1 = enrrtFactor*numpy.abs(0.5*(thetaRFcracktip1*thetadispcracktip1)/(Rf*deltaC))
         G1cracktip2 = enrrtFactor*numpy.abs(0.5*(rRFcracktip2*rdispcracktip2)/(Rf*deltaC))
         G2cracktip2 = enrrtFactor*numpy.abs(0.5*(thetaRFcracktip2*thetadispcracktip2)/(Rf*deltaC))
         
-        #print('Gs calculated')
+        #writeLineToLogFile(logfile,'a','Gs calculated')
         
         crackTip1 = [undeftip1.nodeLabel,
                         lengthFactor*undeftip1.data[0], lengthFactor*undeftip1.data[1],
@@ -1419,7 +1375,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
         crackTips.append(crackTip1)
         crackTips.append(crackTip2)
         
-        print('data saved in list')
+        writeLineToLogFile(logfile,'a','data saved in list')
         
         line = 'NODE LABEL, X0 [m], Y0 [m], R0 [m], THETA0 [°], X [m], Y [m], R [m], THETA [°], nu [-], mu [Pa], deltaC [°], Disp_R, Disp_theta, RF_R, RF_theta, sigma_Inf_UNDAMAGED [Pa], sigma_Inf_DAMAGED [Pa], G0_UNDAMAGED [J/m^2], G0_DAMAGED [J/m^2], GI_M-VCCT [J/m^2], GII_M-VCCT [J/m^2], GTOT_M-VCCT [J/m^2], GI_M-VCCT/G0 [-], GII_M-VCCT/G0 [-], GTOT_M-VCCT/G0 [-]' 
         
@@ -1454,15 +1410,15 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
                     line += str(value)
                 csv.write(line + '\n')
                     
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - VCCT in forces
     #=======================================================================
     #=======================================================================
     # BEGIN - VCCI in stresses (trapezoidal integration for elements of equal length at the interface in the undeformed configuration)
     #=======================================================================
-    print('\n')
-    print('Compute energy release rates with VCCT in stresses...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Compute energy release rates with VCCT in stresses...',True)
     
     crackTips = []
     
@@ -1472,14 +1428,14 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
         fiberCrackTip1 = getSingleNodeSet(odb,'PART-1-1','FIBERCRACKTIP1-NODE')
         matrixCrackTip2 = getSingleNodeSet(odb,'PART-1-1','MATRIXCRACKTIP2-NODE')
         fiberCrackTip2 = getSingleNodeSet(odb,'PART-1-1','FIBERCRACKTIP2-NODE')
-        #print('crack tips node sets')
+        #writeLineToLogFile(logfile,'a','crack tips node sets')
         # get surface sections' node sets
         gamma2 = getSingleNodeSet(odb,'PART-1-1','GAMMA4-NODES')
-        #print('gamma4 node set')
+        #writeLineToLogFile(logfile,'a','gamma4 node set')
         # get crack tips' node labels
         matrixCrackTip1Label = int(lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip1).values[0].nodeLabel)
         matrixCrackTip2Label = int(lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip2).values[0].nodeLabel)
-        #print('crack tips node labels')
+        #writeLineToLogFile(logfile,'a','crack tips node labels')
         # get labels of nodes just before the crack tip on matrix side
         gamma2Labels = []
         for value in lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=gamma2).values:
@@ -1514,17 +1470,17 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
                 preMatrixCrackTip2Label = matrixCrackTip2Label-1
             else:
                 preMatrixCrackTip2Label = matrixCrackTip2Label+1
-        #print('node labels of crack tips on matrix side')
+        #writeLineToLogFile(logfile,'a','node labels of crack tips on matrix side')
         # get crack tips' coordinates
         undeftip1 = firstFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip1).values[0]
         deftip1 = lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip1).values[0]
         undeftip2 = firstFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip2).values[0]
         deftip2 = lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip2).values[0]
-        #print('crack tips coordinates')
+        #writeLineToLogFile(logfile,'a','crack tips coordinates')
         # define the orientation at crack tips
         beta1 = numpy.arctan2(undeftip1.data[1],undeftip1.data[0])
         beta2 = numpy.arctan2(undeftip2.data[1],undeftip2.data[0])
-        #print('direction at crack tips')
+        #writeLineToLogFile(logfile,'a','direction at crack tips')
         # compute energy release rates for crack tip 1
         dataMatrixSideCrackTip1 = []
         dataFiberSideCrackTip1 = []
@@ -1641,7 +1597,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
             GI *= 0.25/elN
             GII *= 0.25/elN
             dataFiberSideCrackTip1.append([elN, enrrtFactor*GI, enrrtFactor*GII, enrrtFactor*(GI+GII), enrrtFactor*GI/G0, enrrtFactor*GII/G0, enrrtFactor*(GI+GII)/G0])
-        #print('errt crack tip 1 calculated')
+        #writeLineToLogFile(logfile,'a','errt crack tip 1 calculated')
         # compute energy release rates for crack tip 2
         dataMatrixSideCrackTip2 = []
         dataFiberSideCrackTip2 = []
@@ -1758,8 +1714,8 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
             GI *= 0.25/elN
             GII *= 0.25/elN
             dataFiberSideCrackTip2.append([elN, enrrtFactor*GI, enrrtFactor*GII, enrrtFactor*(GI+GII), enrrtFactor*GI/G0, enrrtFactor*GII/G0, enrrtFactor*(GI+GII)/G0])
-        #print('errts crack tip  2 calculated')
-        #print('Gs calculated')
+        #writeLineToLogFile(logfile,'a','errts crack tip  2 calculated')
+        #writeLineToLogFile(logfile,'a','Gs calculated')
         
         crackTip1 = [undeftip1.nodeLabel,
                      lengthFactor*undeftip1.data[0], lengthFactor*undeftip1.data[1],
@@ -1794,7 +1750,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
         crackTips.append(crackTip1)
         crackTips.append(crackTip2)
         
-        #print('data saved in list')
+        #writeLineToLogFile(logfile,'a','data saved in list')
         
         line = 'NODE LABEL, X0 [m], Y0 [m], R0 [m], THETA0 [°], X [m], Y [m], R [m], THETA [°], nu [-], mu [Pa], deltaC [°], sigma_Inf_UNDAMAGED [Pa], sigma_Inf_DAMAGED [Pa], G0_UNDAMAGED [J/m^2], G0_DAMAGED [J/m^2], '
         secondline = ' , , , , , , , , , , , , , , , , '
@@ -1907,16 +1863,16 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
                         line += ','
                     line += str(value)
                 csv.write(line + '\n')
-    #print('data written to file')                
-    print('...done.\n')
+    #writeLineToLogFile(logfile,'a','data written to file')                
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - VCCT in stresses (trapezoidal integration for elements of equal length at the interface in the undeformed configuration)
     #=======================================================================
     #=======================================================================
     # BEGIN - get Rf and l in the deformed configuration
     #=======================================================================
-    print('\n')
-    print('Get Rf and l in the deformed configuration...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get Rf and l in the deformed configuration...',True)
     nodesCoords = lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL)
     defSW = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','SW-CORNERNODE'))
     defSE = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','SE-CORNERNODE'))
@@ -1959,15 +1915,15 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
     for value in defLeftSideNoCorn.values:
         if numpy.abs(value.data[0])<minL:
             minL = numpy.abs(value.data[0])
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get Rf and l in the deformed configuration
     #=======================================================================
     #=======================================================================
     # BEGIN - get stresses and strains along radial paths
     #=======================================================================
-    print('\n')
-    print('Get stresses and strains along radial paths...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get stresses and strains along radial paths...',True)
     sessionOdb = session.openOdb(name=odbfullpath)
     session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
     psis = numpy.arange(0,360,deltapsi)
@@ -2006,15 +1962,15 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
         session.writeXYReport(fileName=join(wd,project,'dat','epsxy-Radius-' + str(j+1) + '.dat'),xyData=epsxy,appendMode=OFF)
         with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
             csv.write('EE12' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsxy-Radius-' + str(j+1) + '.dat' + '\n')
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get stresses and strains along radial paths
     #=======================================================================
     #=======================================================================
     # BEGIN - get stresses and strains along circumferential paths
     #=======================================================================
-    print('\n')
-    print('Get stresses and strains along circumferential paths...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get stresses and strains along circumferential paths...',True)
     rs = numpy.concatenate((numpy.linspace(0,meanDefRf,nl+1,endpoint=False)[1:],numpy.linspace(meanDefRf,minL,nl+1)[1:]),axis=0)
     with open(join(csvfolder,'circumpaths.csv'),'w') as csv:
         csv.write('VARIABLE, R, phi_i [°], phi_f [°], FOLDER, FILENAME\n')
@@ -2051,17 +2007,17 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings):
         session.writeXYReport(fileName=join(wd,project,'dat','epsxy-Circle-' + str(j+1) + '.dat'),xyData=epsxy,appendMode=OFF)
         with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
             csv.write('EE12'  + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsxy-Circle-' + str(j+1) + '.dat' + '\n')
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get stresses and strains along circumferential paths
     #=======================================================================
     #=======================================================================
     # BEGIN - close database
     #=======================================================================
-    print('\n')
-    print('Close database...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Close database...',True)
     odb.close()
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - close database
     #=======================================================================

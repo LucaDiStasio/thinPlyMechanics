@@ -517,18 +517,20 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     #=======================================================================
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get deformed nodes...',True)
-    
+    writeLineToLogFile(logfile,'a','Get deformed nodes ..',True)
     try:
         nodes = getAndSaveAllNodes(odb,-1,-1,csvfolder,'defnodesCoords','.csv')
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True) 
+    writeLineToLogFile(logfile,'a','Get deformed integration points ...',True)
     try:
         intpoints = getAndSaveAllIntPoints(odb,-1,-1,csvfolder,'defintpointCoords','.csv')
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-    
+    writeLineToLogFile(logfile,'a','... done.',True) 
     boundaryNodeSetsData = [[-1,-1,'PART-1-1','SW-CORNERNODE'],
                             [-1,-1,'PART-1-1','SE-CORNERNODE'],
                             [-1,-1,'PART-1-1','NE-CORNERNODE'],
@@ -537,20 +539,22 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
                             [-1,-1,'PART-1-1','RIGHTSIDE-NODES-WITHOUT-CORNERS'],
                             [-1,-1,'PART-1-1','UPPERSIDE-NODES-WITHOUT-CORNERS'],
                             [-1,-1,'PART-1-1','LEFTSIDE-NODES-WITHOUT-CORNERS']]
+    writeLineToLogFile(logfile,'a','Extract and save deformed nodes coordinates at the boundary...',True)
     try:
         extractAndSaveNodesCoordinates(odb,boundaryNodeSetsData,csvfolder,'defboundaryNodesCoords','.csv')
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-    
+    writeLineToLogFile(logfile,'a','... done.',True) 
     interfaceNodeSetsData = [[-1,-1,'PART-1-1','FIBERSURFACE-NODES'],
                             [-1,-1,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES']]
+    writeLineToLogFile(logfile,'a','Extract and save deformed nodes coordinates at the interface...',True)
     try:
         extractAndSaveNodesCoordinates(odb,interfaceNodeSetsData,csvfolder,'deffiberInterfaceNodesCoords','.csv')
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-    
+    writeLineToLogFile(logfile,'a','... done.',True) 
     writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get deformed nodes

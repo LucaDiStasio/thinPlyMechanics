@@ -172,7 +172,7 @@ def buildPostprocessorCall(params,analysisList,analysisDict,extSet,sim,codeDir,w
         post.write('' + '\n')
         post.write('def main(argv):' + '\n')
         post.write('' + '\n')
-        post.write('    logfilePath = \'' + logfile + '\'' + '\n')
+        post.write('    logfilePath = join(\'' + wd + '\',\'' + logfile + '\')' + '\n')
         post.write('' + '\n')
         post.write('    settingsData = {}' + '\n')
         post.write('    settingsData[\'nEl0\'] = ' + str(params['nEl0']) + '\n')

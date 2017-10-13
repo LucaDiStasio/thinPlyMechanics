@@ -239,11 +239,11 @@ def getMultipleSetsNodeCoordinates(odbObj,nodeSets):
 def extractAndSaveNodesCoordinates(odbObj,nodeSetsData,folder,filename,ext):
     nodeSets = getMultipleSetsNodeCoordinates(odbObj,nodeSetsData)
     with open(join(folder,filename + ext),'w') as csv:
-        if len(nodeSets[set[3]].values[0].data)==1:
+        if len(nodeSets[nodeSetsData[0][3]].values[0].data)==1:
             string = 'X'
-        elif len(nodeSets[set[3]].values[0].data)==2:
+        elif len(nodeSets[nodeSetsData[0][3]].values[0].data)==2:
             string = 'X, Y'
-        elif len(nodeSets[set[3]].values[0].data)==3:
+        elif len(nodeSets[nodeSetsData[0][3]].values[0].data)==3:
             string = 'X, Y, Z'
         csv.write('DATA\n')
         csv.write('NODE SET' + ', ' + 'NODE TYPE, NODE LABEL, ' + string + '\n')

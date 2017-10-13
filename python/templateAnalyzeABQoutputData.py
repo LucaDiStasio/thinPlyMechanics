@@ -1913,7 +1913,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,codedir,settings,logfile,
     writeLineToLogFile(logfile,'a','... done.',True)
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Writing file for path extraction:' + extractor,True)
-    with open(postprocessor,'w') as post:
+    with open(extractor,'w') as post:
         for line in lines:
             post.write(line)
         post.write('' + '\n')

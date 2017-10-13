@@ -35,10 +35,9 @@ from os.path import isfile, join, exists
 from os import makedirs
 from datetime import datetime
 from time import strftime, sleep
-from platform import platform
+from platform import platform,system
 import getopt
 import numpy
-import xyPlot
 from odbAccess import *
 from abaqusConstants import *
 from odbMaterial import *
@@ -440,7 +439,7 @@ def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
 #
 #===============================================================================#
 
-def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
+def extractFromODBoutputSet01(wd,project,matdatafolder,codedir,settings,logfile,logfilename):
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Reading settings and assigning to variables...',True)
     nEl0 = int(settings['nEl0'])
@@ -1903,147 +1902,94 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     # END - VCCT in stresses (trapezoidal integration for elements of equal length at the interface in the undeformed configuration)
     #=======================================================================
     #=======================================================================
-    # BEGIN - get Rf and l in the deformed configuration
+    # BEGIN - extract data on paths
     #=======================================================================
+    templateFile = join(codedir,'templateExtractABQpathData.py')
+    extractor = join(wd,'pathextractor.py')
     skipLineToLogFile(logfile,'a',True)
-    writeLineToLogFile(logfile,'a','Get Rf and l in the deformed configuration...',True)
-    nodesCoords = lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL)
-    defSW = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','SW-CORNERNODE'))
-    defSE = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','SE-CORNERNODE'))
-    defNE = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','NE-CORNERNODE'))
-    defNW = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','NW-CORNERNODE'))
-    defLowerSideNoCorn = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','LOWERSIDE-NODES-WITHOUT-CORNERS'))
-    defRightSideNoCorn = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','RIGHTSIDE-NODES-WITHOUT-CORNERS'))
-    defUpperSideNoCorn = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','UPPERSIDE-NODES-WITHOUT-CORNERS'))
-    defLeftSideNoCorn  = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','LEFTSIDE-NODES-WITHOUT-CORNERS'))
-    defFiberSurf = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','FIBERSURFACE-NODES'))
-    defMatrixSurfAtFiberInter = nodesCoords.getSubset(region=getSingleNodeSet(odb,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES'))
-    meanDefRf = 0
-    countRf = 0
-    for value in defFiberSurf.values:
-        countRf += 1
-        meanDefRf += numpy.sqrt(numpy.power(value.data[0],2)+numpy.power(value.data[1],2))
-    meanDefRf /= countRf
-    minL = numpy.minimum(numpy.abs(defSW.values[0].data[0]),numpy.abs(defSW.values[0].data[1]))
-    for value in defSW.values:
-        if numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))<minL:
-            minL = numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))
-    for value in defLowerSideNoCorn.values:
-        if numpy.abs(value.data[1])<minL:
-            minL = numpy.abs(value.data[1])
-    for value in defSE.values:
-        if numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))<minL:
-            minL = numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))
-    for value in defRightSideNoCorn.values:
-        if numpy.abs(value.data[0])<minL:
-            minL = numpy.abs(value.data[0])
-    for value in defNE.values:
-        if numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))<minL:
-            minL = numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))
-    for value in defUpperSideNoCorn.values:
-        if numpy.abs(value.data[1])<minL:
-            minL = numpy.abs(value.data[1])
-    for value in defNW.values:
-        if numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))<minL:
-            minL = numpy.minimum(numpy.abs(value.data[0]),numpy.abs(value.data[1]))
-    for value in defLeftSideNoCorn.values:
-        if numpy.abs(value.data[0])<minL:
-            minL = numpy.abs(value.data[0])
+    writeLineToLogFile(logfile,'a','Reading template file ' + templateFile,True)
+    with open(templateFile,'r') as template:
+        lines = template.readlines()
     writeLineToLogFile(logfile,'a','... done.',True)
-    #=======================================================================
-    # END - get Rf and l in the deformed configuration
-    #=======================================================================
-    #=======================================================================
-    # BEGIN - get stresses and strains along radial paths
-    #=======================================================================
     skipLineToLogFile(logfile,'a',True)
-    writeLineToLogFile(logfile,'a','Get stresses and strains along radial paths...',True)
-    sessionOdb = session.openOdb(name=odbfullpath)
-    session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
-    psis = numpy.arange(0,360,deltapsi)
-    with open(join(csvfolder,'radialpaths.csv'),'w') as csv:
-        csv.write('VARIABLE, angle [°], Ri, Rf, FOLDER, FILENAME\n')
-    for j,psi in enumerate(psis):
-        session.Path(name='Radius-' + str(j+1), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (minL,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, radialAngle=psi, startRadius=0, endRadius=CIRCLE_RADIUS)
-        radpath = session.paths['Radius-' + str(j+1)]
-        # sigmaxx
-        sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
-        session.writeXYReport(fileName=join(wd,project,'dat','sigmaxx-Radius-' + str(j+1) + '.dat'),xyData=sigmaxx,appendMode=OFF)
-        with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
-            csv.write('S11' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'sigmaxx-Radius-' + str(j+1) + '.dat' + '\n')
-        # sigmayy
-        sigmayy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
-        session.writeXYReport(fileName=join(wd,project,'dat','sigmayy-Radius-' + str(j+1) + '.dat'),xyData=sigmayy,appendMode=OFF)
-        with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
-            csv.write('S22' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'sigmayy-Radius-' + str(j+1) + '.dat' + '\n')
-        # sigmaxy
-        sigmaxy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
-        session.writeXYReport(fileName=join(wd,project,'dat','sigmaxy-Radius-' + str(j+1) + '.dat'),xyData=sigmaxy,appendMode=OFF)
-        with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
-            csv.write('S12' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'sigmaxy-Radius-' + str(j+1) + '.dat' + '\n')
-        # epsxx
-        epsxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('EE',INTEGRATION_POINT, ( (COMPONENT, 'EE11' ), ), ))
-        session.writeXYReport(fileName=join(wd,project,'dat','epsxx-Radius-' + str(j+1) + '.dat'),xyData=epsxx,appendMode=OFF)
-        with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
-            csv.write('EE11' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsxx-Radius-' + str(j+1) + '.dat' + '\n')
-        # epsyy
-        epsyy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('EE',INTEGRATION_POINT, ( (COMPONENT, 'EE22' ), ), ))
-        session.writeXYReport(fileName=join(wd,project,'dat','epsyy-Radius-' + str(j+1) + '.dat'),xyData=epsyy,appendMode=OFF)
-        with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
-            csv.write('EE22' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsyy-Radius-' + str(j+1) + '.dat' + '\n')
-        # epsxy
-        epsxy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('EE',INTEGRATION_POINT, ( (COMPONENT, 'EE12' ), ), ))
-        session.writeXYReport(fileName=join(wd,project,'dat','epsxy-Radius-' + str(j+1) + '.dat'),xyData=epsxy,appendMode=OFF)
-        with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
-            csv.write('EE12' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsxy-Radius-' + str(j+1) + '.dat' + '\n')
+    writeLineToLogFile(logfile,'a','Writing file for path extraction:' + extractor,True)
+    with open(postprocessor,'w') as post:
+        for line in lines:
+            post.write(line)
+        post.write('' + '\n')
+        post.write('' + '\n')
+        post.write('def main(argv):' + '\n')
+        post.write('' + '\n')
+        post.write('    workdir = \'' + wd + '\'' + '\n')
+        post.write('    matdir = \'' + matdatafolder + '\'' + '\n')
+        post.write('    proj = \'' + project + '\'' + '\n')
+        post.write('    logfile = \'' + logfilename + '\'' + '\n')
+        post.write('    logfilePath = join(workdir,logfile)' + '\n')
+        post.write('' + '\n')
+        post.write('    settingsData = {}' + '\n')
+        post.write('    settingsData[\'nEl0\'] = ' + str(params['nEl0']) + '\n')
+        post.write('    settingsData[\'NElMax\'] = ' + str(params['NElMax']) + '\n')
+        post.write('    settingsData[\'DeltaEl\'] = ' + str(params['DeltaEl']) + '\n')
+        post.write('    settingsData[\'deltapsi\'] = ' + str(params['deltapsi']) + '\n')
+        post.write('    settingsData[\'nl\'] = ' + str(params['nl']) + '\n')
+        post.write('    settingsData[\'nSegsOnPath\'] = ' + str(params['nSegsOnPath']) + '\n')
+        post.write('    settingsData[\'tol\'] = ' + str(params['tol']) + '\n')
+        post.write('' + '\n')
+        post.write('    skipLineToLogFile(logfilePath,\'a\',True)' + '\n')
+        post.write('    writeLineToLogFile(logfilePath,\'a\',\'Calling function extractFromODBoutputSet' + extSet.zfill(2) + ' ...\',True)' + '\n')
+        post.write('    try:' + '\n')
+        post.write('        extractPathsfromODBoutputSet01(workdir,proj,float(settingsData[\'deltapsi\']),int(settingsData[\'nl\']),int(settingsData[\'nSegsOnPath\']),float(settingsData[\'tol\']))' + '\n')
+        post.write('    except Exception, error:' + '\n')
+        post.write('        writeErrorToLogFile(logfilePath,\'a\',Exception,error,True)' + '\n')
+        post.write('' + '\n')
+        post.write('if __name__ == "__main__":' + '\n')
+        post.write('    main(sys.argv[1:])' + '\n')
     writeLineToLogFile(logfile,'a','... done.',True)
+    skipLineToLogFile(logfilename,'a',True)
+    if 'Windows' in system():
+        cmdfile = join(wd,'runextractor.cmd')
+        writeLineToLogFile(logfilename,'a','Working in Windows',True)
+        writeLineToLogFile(logfilename,'a','Writing Windows command file ' + cmdfile + ' ...',True)
+        with open(cmdfile,'w') as cmd:
+            cmd.write('\n')
+            cmd.write('CD ' + wd + '\n')
+            cmd.write('\n')
+            cmd.write('abaqus viewer nogui script=' + extractor + '\n')
+        writeLineToLogFile(logfilename,'a','... done.',True)
+        writeLineToLogFile(logfilename,'a','Running extractor ... ',True)
+        try:
+            #subprocess.call('cmd.exe /C ' + cmdfile,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            p = subprocess.Popen(cmdfile,shell=True,stderr=subprocess.PIPE)
+            while True:
+                output = p.stderr.read(1)
+                if output == '' and p.poll()!= None:
+                    break
+                if out != '':
+                    sys.stdout.write(output)
+                    sys.stdout.flush()
+        except Exception, error:
+            writeErrorToLogFile(logfilename,'a',Exception,error,True)
+            sys.exc_clear()
+        writeLineToLogFile(logfilename,'a','... done.',True)
+    elif 'Linux' in system():
+        bashfile = join(wd,'runextractor.sh')
+        writeLineToLogFile(logfilename,'a','Working in Linux',True)
+        writeLineToLogFile(logfilename,'a','Writing bash file ' + bashfile + ' ...',True)
+        with open(bashfile,'w') as bash:
+            bash.write('#!/bin/bash\n')
+            bash.write('\n')
+            bash.write('cd ' + wd + '\n')
+            bash.write('\n')
+            bash.write('abaqus viewer nogui script=' + extractor + '\n')
+        writeLineToLogFile(logfilename,'a','... done.',True)
+        writeLineToLogFile(logfilename,'a','Changing permissions to ' + bashfile + ' ...',True)
+        os.chmod(bashfile, 0o755)
+        writeLineToLogFile(logfilename,'a','... done.',True)
+        writeLineToLogFile(logfilename,'a','Running extractor ... ',True)
+        rc = call('.' + bashfile)
+        writeLineToLogFile(logfilename,'a','... done.',True)    
     #=======================================================================
-    # END - get stresses and strains along radial paths
-    #=======================================================================
-    #=======================================================================
-    # BEGIN - get stresses and strains along circumferential paths
-    #=======================================================================
-    skipLineToLogFile(logfile,'a',True)
-    writeLineToLogFile(logfile,'a','Get stresses and strains along circumferential paths...',True)
-    rs = numpy.concatenate((numpy.linspace(0,meanDefRf,nl+1,endpoint=False)[1:],numpy.linspace(meanDefRf,minL,nl+1)[1:]),axis=0)
-    with open(join(csvfolder,'circumpaths.csv'),'w') as csv:
-        csv.write('VARIABLE, R, phi_i [°], phi_f [°], FOLDER, FILENAME\n')
-    for j,r in enumerate(rs):
-        session.Path(name='Circle-' + str(j+1), type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (r, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=0, endAngle=360, radius=CIRCLE_RADIUS)
-        circpath = session.paths['Circle-' + str(j+1)]
-        # sigmaxx
-        sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
-        session.writeXYReport(fileName=join(wd,project,'dat','sigmaxx-Circle-' + str(j+1) + '.dat'),xyData=sigmaxx,appendMode=OFF)
-        with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
-            csv.write('S11' + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'sigmaxx-Circle-' + str(j+1) + '.dat' + '\n')
-        # sigmayy
-        sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
-        session.writeXYReport(fileName=join(wd,project,'dat','sigmayy-Circle-' + str(j+1) + '.dat'),xyData=sigmayy,appendMode=OFF)
-        with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
-            csv.write('S22'  + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'sigmayy-Circle-' + str(j+1) + '.dat' + '\n')
-        # sigmaxy
-        sigmaxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
-        session.writeXYReport(fileName=join(wd,project,'dat','sigmaxy-Circle-' + str(j+1) + '.dat'),xyData=sigmaxy,appendMode=OFF)
-        with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
-            csv.write('S12'  + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'sigmaxy-Circle-' + str(j+1) + '.dat' + '\n')
-        # epsxx
-        epsxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('EE',INTEGRATION_POINT, ( (COMPONENT, 'EE11' ), ), ))
-        session.writeXYReport(fileName=join(wd,project,'dat','epsxx-Circle-' + str(j+1) + '.dat'),xyData=epsxx,appendMode=OFF)
-        with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
-            csv.write('EE11'  + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsxx-Circle-' + str(j+1) + '.dat' + '\n')
-        # epsyy
-        epsyy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('EE',INTEGRATION_POINT, ( (COMPONENT, 'EE22' ), ), ))
-        session.writeXYReport(fileName=join(wd,project,'dat','epsyy-Circle-' + str(j+1) + '.dat'),xyData=epsyy,appendMode=OFF)
-        with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
-            csv.write('EE22'  + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsyy-Circle-' + str(j+1) + '.dat' + '\n')
-        # epsxy
-        epsxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('EE',INTEGRATION_POINT, ( (COMPONENT, 'EE12' ), ), ))
-        session.writeXYReport(fileName=join(wd,project,'dat','epsxy-Circle-' + str(j+1) + '.dat'),xyData=epsxy,appendMode=OFF)
-        with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
-            csv.write('EE12'  + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsxy-Circle-' + str(j+1) + '.dat' + '\n')
-    writeLineToLogFile(logfile,'a','... done.',True)
-    #=======================================================================
-    # END - get stresses and strains along circumferential paths
+    # END - extract data on paths
     #=======================================================================
     #=======================================================================
     # BEGIN - close database

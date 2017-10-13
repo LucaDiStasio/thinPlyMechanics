@@ -38,7 +38,6 @@ from time import strftime, sleep
 from platform import platform
 import getopt
 import numpy
-import visualization
 import xyPlot
 from odbAccess import *
 from abaqusConstants import *

@@ -432,32 +432,31 @@ def main(argv):
             writeLineToLogFile(logFilePath,'a','Calling function: runPostprocessor ...',True)
             try:
                 runPostprocessor(workdir,postProcessorFile,settings['functionCall'],logFilePath)
+                simData[3] = 'YES'
+                lines[l+1] = simData[0].strip() + ', ' + simData[1].strip() + ', ' + simData[2].strip() + ', ' + simData[3] + '\n'
+                with open(statusfilepath,'w') as sta:
+                    for li in lines:
+                        sta.write(li)
+                if clearFiles:
+                    writeLineToLogFile(logFilePath,'a','Proceeding to clear files in ' + str(join(wd,simName,'solver')) + ' ...',True)
+                    fileList = listdir(join(wd,simName,'solver'))
+                    for filename in fileList:
+                        if isfile(join(wd,simName,'solver',filename)) and filename.split('.')[1] in filesToClear:
+                            writeLineToLogFile(logFilePath,'a','File ' + filename + ' needs to be removed ...',True)
+                            try:
+                                remove(join(wd,simName,'solver',filename))
+                            except Exception, error:
+                                writeErrorToLogFile(logFilePath,'a',Exception,error,True)
+                                writeLineToLogFile(logFilePath,'a','Moving on to the next.',True)
+                                sys.exc_clear()
+                                continue
+                            writeLineToLogFile(logFilePath,'a','... done.',True)
+                    writeLineToLogFile(logFilePath,'a','... done.',True)
             except Exception, error:
                 writeErrorToLogFile(logFilePath,'a',Exception,error,True)
                 writeLineToLogFile(logFilePath,'a','Moving on to the next.',True)
                 sys.exc_clear()
                 continue
-            writeLineToLogFile(logFilePath,'a','... done.',True)
-            simData[3] = 'YES'
-            lines[l+1] = simData[0].strip() + ', ' + simData[1].strip() + ', ' + simData[2].strip() + ', ' + simData[3] + '\n'
-            with open(statusfilepath,'w') as sta:
-                for li in lines:
-                    sta.write(li)
-            if clearFiles:
-                writeLineToLogFile(logFilePath,'a','Proceeding to clear files in ' + str(join(wd,simName,'solver')) + ' ...',True)
-                fileList = listdir(join(wd,simName,'solver'))
-                for filename in fileList:
-                    if isfile(join(wd,simName,'solver',filename)) and filename.split('.')[1] in filesToClear:
-                        writeLineToLogFile(logFilePath,'a','File ' + filename + ' needs to be removed ...',True)
-                        try:
-                            remove(join(wd,simName,'solver',filename))
-                        except Exception, error:
-                            writeErrorToLogFile(logFilePath,'a',Exception,error,True)
-                            writeLineToLogFile(logFilePath,'a','Moving on to the next.',True)
-                            sys.exc_clear()
-                            continue
-                        writeLineToLogFile(logFilePath,'a','... done.',True)
-                writeLineToLogFile(logFilePath,'a','... done.',True)
             writeLineToLogFile(logFilePath,'a','... done.',True)
         elif isPreprocessed=='NO':
             writeLineToLogFile(logFilePath,'a','    ==> PREPROCESSING AND SIMULATION STAGES STILL NEED TO BE EXECUTED <==',True)

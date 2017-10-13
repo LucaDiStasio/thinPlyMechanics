@@ -439,7 +439,7 @@ def main(argv):
                 continue
             writeLineToLogFile(logFilePath,'a','... done.',True)
             simData[3] = 'YES'
-            lines[l+1] = simData[0] + ', ' + simData[1] + ', ' + simData[2] + ', ' + simData[3] + '\n'
+            lines[l+1] = simData[0].strip() + ', ' + simData[1].strip() + ', ' + simData[2].strip() + ', ' + simData[3] + '\n'
             with open(statusfilepath,'w') as sta:
                 for li in lines:
                     sta.write(li)

@@ -1408,7 +1408,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
         crackTips.append(crackTip1)
         crackTips.append(crackTip2)
         
-        writeLineToLogFile(logfile,'a','data saved in list')
+        writeLineToLogFile(logfile,'a','data saved in list',True)
         
         line = 'NODE LABEL, X0 [m], Y0 [m], R0 [m], THETA0 [°], X [m], Y [m], R [m], THETA [°], nu [-], mu [Pa], deltaC [°], Disp_R, Disp_theta, RF_R, RF_theta, sigma_Inf_UNDAMAGED [Pa], sigma_Inf_DAMAGED [Pa], G0_UNDAMAGED [J/m^2], G0_DAMAGED [J/m^2], GI_M-VCCT [J/m^2], GII_M-VCCT [J/m^2], GTOT_M-VCCT [J/m^2], GI_M-VCCT/G0 [-], GII_M-VCCT/G0 [-], GTOT_M-VCCT/G0 [-]' 
         

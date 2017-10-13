@@ -223,7 +223,7 @@ def getSingleElementSet(odbObj,part,set):
 def getSingleSetNodeCoordinates(odbObj,step,frame,part,nodeSet):
     frameObj = getFrame(odbObj,step,frame)
     allCoords = frameObj.fieldOutputs['COORD'].getSubset(position=NODAL)
-    coords = nodesCoords.getSubset(region=odbObj.rootAssembly.instances[part].nodeSets[nodeSet])
+    coords = allCoords.getSubset(region=odbObj.rootAssembly.instances[part].nodeSets[nodeSet])
     return coords
 
 def getMultipleSetsNodeCoordinates(odbObj,nodeSets):
@@ -516,7 +516,6 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     # BEGIN - get deformed nodes
     #=======================================================================
     skipLineToLogFile(logfile,'a',True)
-    writeLineToLogFile(logfile,'a','Get deformed nodes...',True)
     writeLineToLogFile(logfile,'a','Get deformed nodes ..',True)
     try:
         nodes = getAndSaveAllNodes(odb,-1,-1,csvfolder,'defnodesCoords','.csv')
@@ -564,17 +563,19 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     #=======================================================================
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get undeformed nodes...',True)
-    
     try:
         undefNodes = getAndSaveAllNodes(odb,-1,0,csvfolder,'undefnodesCoords','.csv')
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True) 
+    
     try:
         undefIntpoints = getAndSaveAllIntPoints(odb,-1,0,csvfolder,'undefintpointCoords','.csv')
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True) 
     undefBoundaryNodeSetsData = [[-1,0,'PART-1-1','SW-CORNERNODE'],
                             [-1,0,'PART-1-1','SE-CORNERNODE'],
                             [-1,0,'PART-1-1','NE-CORNERNODE'],
@@ -589,8 +590,10 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True) 
     undefInterfaceNodeSetsData = [[-1,0,'PART-1-1','FIBERSURFACE-NODES'],
                                   [-1,0,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES']]
+    
     try:
         extractAndSaveNodesCoordinates(odb,undefInterfaceNodeSetsData,csvfolder,'undeffiberInterfaceNodesCoords','.csv')
     except Exception,e:
@@ -603,26 +606,31 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     #=======================================================================
     # BEGIN - get fiber and matrix elements and nodes subsets
     #=======================================================================
+    writeLineToLogFile(logfile,'a','... done.',True) 
     try:
         fiberNodes = getSingleNodeSet(odb,'PART-1-1','FIBER-NODES')
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True) 
     try:
         matrixNodes = getSingleNodeSet(odb,'PART-1-1','MATRIX-NODES')
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True) 
     try:
         fiberElements = getSingleElementSet(odb,'PART-1-1','FIBER-ELEMENTS')
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True) 
     try:
         matrixElements = getSingleElementSet(odb,'PART-1-1','MATRIX-ELEMENTS')
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True) 
     #=======================================================================
     # END - get fiber and matrix elements and nodes subsets
     #=======================================================================
@@ -631,7 +639,6 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     #=======================================================================
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get displacements in the entire model...',True)
-    
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-displacements','.csv','U')
     except Exception,e:
@@ -640,7 +647,6 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     writeLineToLogFile(logfile,'a','... done.',True)
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get displacements in fiber subset...',True)
-    
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'fibersubset-displacements','.csv','U',fiberNodes)
     except Exception,e:
@@ -649,13 +655,12 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     writeLineToLogFile(logfile,'a','... done.',True)
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get displacements in matrix subset...',True)
-    
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'matrixsubset-displacements','.csv','U',matrixNodes)
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-    writeLineToLogFile(logfile,'a','... done.',True)
+    writeLineToLogFile(logfile,'a','... done.',True) 
     #=======================================================================
     # END - get displacements
     #=======================================================================
@@ -664,7 +669,6 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     #=======================================================================
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get strains in the entire model...',True)
-    
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-elasticstrains','.csv','EE')
     except Exception,e:
@@ -673,7 +677,6 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     writeLineToLogFile(logfile,'a','... done.',True)
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get strains in fiber subset...',True)
-    
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'fibersubset-elasticstrains','.csv','EE',fiberElements)
     except Exception,e:
@@ -682,7 +685,6 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     writeLineToLogFile(logfile,'a','... done.',True)
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get strains in matrix subset...',True)
-    
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'matrixsubset-elasticstrains','.csv','EE',matrixElements)
     except Exception,e:
@@ -697,7 +699,6 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     #=======================================================================
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get stresses in the entire model...',True)
-    
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-elasticstresses','.csv','S')
     except Exception,e:
@@ -706,7 +707,6 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     writeLineToLogFile(logfile,'a','... done.',True)
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get stresses in fiber subset...',True)
-    
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'fibersubset-elasticstresses','.csv','S',fiberElements)
     except Exception,e:
@@ -715,7 +715,6 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     writeLineToLogFile(logfile,'a','... done.',True)
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get stresses in matrix subset...',True)
-    
     try:
         extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'matrixsubset-elasticstresses','.csv','S',matrixElements)
     except Exception,e:
@@ -730,23 +729,29 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     #=======================================================================
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get displacement and reaction force at boundary...',True)
-    
     try:
         meanleftdisp,totalleftforce = getDispVsReactionOnBoundarySubset(odb,-1,-1,'PART-1-1','LEFTSIDE-NODES-WITH-CORNERS',0)
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True) 
+    
     try:
         meanrightdisp,totalrightforce = getDispVsReactionOnBoundarySubset(odb,-1,-1,'PART-1-1','RIGHTSIDE-NODES-WITH-CORNERS',0)
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-    with open(join(csvfolder,'dispVSreactionforce.csv'),'w') as csv:
-        csv.write('TABLE\n')
-        csv.write('SIDE, U1, RF1\n')
-        csv.write('RIGHT, ' + str(meanrightdisp) + ', ' + str(totalrightforce) + '\n')
-        csv.write('LEFT, ' + str(meanleftdisp) + ', ' + str(totalleftforce) + '\n')
-        
+    writeLineToLogFile(logfile,'a','... done.',True) 
+    
+    try:
+        with open(join(csvfolder,'dispVSreactionforce.csv'),'w') as csv:
+            csv.write('TABLE\n')
+            csv.write('SIDE, U1, RF1\n')
+            csv.write('RIGHT, ' + str(meanrightdisp) + ', ' + str(totalrightforce) + '\n')
+            csv.write('LEFT, ' + str(meanleftdisp) + ', ' + str(totalleftforce) + '\n')
+    except Exception,e:
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
+        sys.exc_clear()
     writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # END - get displacement and reaction force at boundary
@@ -761,6 +766,8 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True)
+    
     try:
         slave = getSingleNodeSet(odb,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES')
     except Exception,e:
@@ -781,92 +788,102 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     writeLineToLogFile(logfile,'a','...on master...',True)
     
     # get values
+    
     try:
         cstatusOnMaster = getFieldOutput(odb,-1,-1,'CSTATUS',master)
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True)
+    
     try:
         cpressOnMaster  = getFieldOutput(odb,-1,-1,'CPRESS',master)
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True)
+    
     try:
         cshearOnMaster  = getFieldOutput(odb,-1,-1,'CSHEARF',master)
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','... done.',True)
+    
     try:
         cshearfOnMaster  = getFieldOutput(odb,-1,-1,'CSHEAR1',master)
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
-    
+    writeLineToLogFile(logfile,'a','... done.',True)
     # write to file
-    toWrite = []
-    for value in cstatusOnMaster.values:
-        if 'NODAL' in str(value.position):
-            pos = nodes
-            typeOfVar = 'NODAL'
-        elif 'INTEGRATION_POINT' in str(value.position):
-            pos = intpoints
-            typeOfVar = 'INTEGRATION_POINT'
-        toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),str(value.data),'0','0','0','0'])
-    for value in cpressOnMaster.values:
-        posit = -1
-        for k,item in enumerate(toWrite):
-            if item[1]==str(value.nodeLabel):
-                posit = k
-                break
-        if posit>-1:
-            toWrite[posit][7] = str(value.data)
-        else:
+    try:
+        toWrite = []
+        for value in cstatusOnMaster.values:
             if 'NODAL' in str(value.position):
                 pos = nodes
                 typeOfVar = 'NODAL'
             elif 'INTEGRATION_POINT' in str(value.position):
                 pos = intpoints
                 typeOfVar = 'INTEGRATION_POINT'
-            toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),'0',str(value.data),'0','0','0'])
-    for value in cshearOnMaster.values:
-        posit = -1
-        for k,item in enumerate(toWrite):
-            if item[1]==str(value.nodeLabel):
-                posit = k
-                break
-        if posit>-1:
-            toWrite[posit][8] = str(value.data[0])
-            toWrite[posit][9] = str(value.data[1])
-        else:
-            if 'NODAL' in str(value.position):
-                pos = nodes
-                typeOfVar = 'NODAL'
-            elif 'INTEGRATION_POINT' in str(value.position):
-                pos = intpoints
-                typeOfVar = 'INTEGRATION_POINT'
-            toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),'0','0',str(value.data[0]),str(value.data[1]),'0'])
-    for value in cshearfOnMaster.values:
-        posit = -1
-        for k,item in enumerate(toWrite):
-            if item[1]==str(value.nodeLabel):
-                posit = k
-                break
-        if posit>-1:
-            toWrite[posit][10] = str(value.data)
-        else:
-            if 'NODAL' in str(value.position):
-                pos = nodes
-                typeOfVar = 'NODAL'
-            elif 'INTEGRATION_POINT' in str(value.position):
-                pos = intpoints
-                typeOfVar = 'INTEGRATION_POINT'
-            toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),'0','0','0','0',str(value.data)])
-    with open(join(csvfolder,'stressesOnMaster.csv'),'w') as csv:
-        csv.write('SCATTER PLOT\n')
-        csv.write('NODE TYPE, NODE LABEL, X, Y, R, THETA [°], CSTATUS, CPRESS, CSHEAR1, CSHEAR2, CSHEARFRIC1\n')
-        for item in toWrite:
-            csv.write(item[0] + ', ' + item[1] + ', ' + item[2] + ', ' + item[3] + ', ' + item[4] + ', ' + item[5] + ', ' + item[6] + ', ' + item[7] + ', ' + item[8] + ', ' + item[9] + ', ' + item[10] + '\n')
-    
+            toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),str(value.data),'0','0','0','0'])
+        for value in cpressOnMaster.values:
+            posit = -1
+            for k,item in enumerate(toWrite):
+                if item[1]==str(value.nodeLabel):
+                    posit = k
+                    break
+            if posit>-1:
+                toWrite[posit][7] = str(value.data)
+            else:
+                if 'NODAL' in str(value.position):
+                    pos = nodes
+                    typeOfVar = 'NODAL'
+                elif 'INTEGRATION_POINT' in str(value.position):
+                    pos = intpoints
+                    typeOfVar = 'INTEGRATION_POINT'
+                toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),'0',str(value.data),'0','0','0'])
+        for value in cshearOnMaster.values:
+            posit = -1
+            for k,item in enumerate(toWrite):
+                if item[1]==str(value.nodeLabel):
+                    posit = k
+                    break
+            if posit>-1:
+                toWrite[posit][8] = str(value.data[0])
+                toWrite[posit][9] = str(value.data[1])
+            else:
+                if 'NODAL' in str(value.position):
+                    pos = nodes
+                    typeOfVar = 'NODAL'
+                elif 'INTEGRATION_POINT' in str(value.position):
+                    pos = intpoints
+                    typeOfVar = 'INTEGRATION_POINT'
+                toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),'0','0',str(value.data[0]),str(value.data[1]),'0'])
+        for value in cshearfOnMaster.values:
+            posit = -1
+            for k,item in enumerate(toWrite):
+                if item[1]==str(value.nodeLabel):
+                    posit = k
+                    break
+            if posit>-1:
+                toWrite[posit][10] = str(value.data)
+            else:
+                if 'NODAL' in str(value.position):
+                    pos = nodes
+                    typeOfVar = 'NODAL'
+                elif 'INTEGRATION_POINT' in str(value.position):
+                    pos = intpoints
+                    typeOfVar = 'INTEGRATION_POINT'
+                toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),'0','0','0','0',str(value.data)])
+        with open(join(csvfolder,'stressesOnMaster.csv'),'w') as csv:
+            csv.write('SCATTER PLOT\n')
+            csv.write('NODE TYPE, NODE LABEL, X, Y, R, THETA [°], CSTATUS, CPRESS, CSHEAR1, CSHEAR2, CSHEARFRIC1\n')
+            for item in toWrite:
+                csv.write(item[0] + ', ' + item[1] + ', ' + item[2] + ', ' + item[3] + ', ' + item[4] + ', ' + item[5] + ', ' + item[6] + ', ' + item[7] + ', ' + item[8] + ', ' + item[9] + ', ' + item[10] + '\n')
+    except Exception,e:
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
+        sys.exc_clear()
     writeLineToLogFile(logfile,'a','...done...',True)
     
     # on slave
@@ -874,91 +891,103 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     writeLineToLogFile(logfile,'a','...on slave...',True)
     
     # get values
+    
     try:
         cstatusOnSlave = getFieldOutput(odb,-1,-1,'CSTATUS',slave)
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','...done...',True)
+    
     try:
         cpressOnSlave  = getFieldOutput(odb,-1,-1,'CPRESS',slave)
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','...done...',True)
+    
     try:
         cshearOnSlave  = getFieldOutput(odb,-1,-1,'CSHEARF',slave)
     except Exception,e:
         writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','...done...',True)
+    
     try:
         cshearfOnSlave  = getFieldOutput(odb,-1,-1,'CSHEAR1',slave)
     except Exception,e:
-        # writeErrorToLogFile(logfile,'a',Exception,e,True)
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
         sys.exc_clear()
+    writeLineToLogFile(logfile,'a','...done...',True)
     
     # write to file
-    toWrite = []
-    for value in cstatusOnSlave.values:
-        if 'NODAL' in str(value.position):
-            pos = nodes
-            typeOfVar = 'NODAL'
-        elif 'INTEGRATION_POINT' in str(value.position):
-            pos = intpoints
-            typeOfVar = 'INTEGRATION_POINT'
-        toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),str(value.data),'0','0','0','0'])
-    for value in cpressOnSlave.values:
-        posit = -1
-        for k,item in enumerate(toWrite):
-            if item[1]==str(value.nodeLabel):
-                posit = k
-                break
-        if posit>-1:
-            toWrite[posit][7] = str(value.data)
-        else:
+    try:
+        toWrite = []
+        for value in cstatusOnSlave.values:
             if 'NODAL' in str(value.position):
                 pos = nodes
                 typeOfVar = 'NODAL'
             elif 'INTEGRATION_POINT' in str(value.position):
                 pos = intpoints
                 typeOfVar = 'INTEGRATION_POINT'
-            toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),'0',str(value.data),'0','0','0'])
-    for value in cshearOnSlave.values:
-        posit = -1
-        for k,item in enumerate(toWrite):
-            if item[1]==str(value.nodeLabel):
-                posit = k
-                break
-        if posit>-1:
-            toWrite[posit][8] = str(value.data[0])
-            toWrite[posit][9] = str(value.data[1])
-        else:
-            if 'NODAL' in str(value.position):
-                pos = nodes
-                typeOfVar = 'NODAL'
-            elif 'INTEGRATION_POINT' in str(value.position):
-                pos = intpoints
-                typeOfVar = 'INTEGRATION_POINT'
-            toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),'0','0',str(value.data[0]),str(value.data[1]),'0'])
-    for value in cshearfOnSlave.values:
-        posit = -1
-        for k,item in enumerate(toWrite):
-            if item[1]==str(value.nodeLabel):
-                posit = k
-                break
-        if posit>-1:
-            toWrite[posit][10] = str(value.data)
-        else:
-            if 'NODAL' in str(value.position):
-                pos = nodes
-                typeOfVar = 'NODAL'
-            elif 'INTEGRATION_POINT' in str(value.position):
-                pos = intpoints
-                typeOfVar = 'INTEGRATION_POINT'
-            toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),'0','0','0','0',str(value.data)])
-    with open(join(csvfolder,'stressesOnSlave.csv'),'w') as csv:
-        csv.write('SCATTER PLOT\n')
-        csv.write('NODE TYPE, NODE LABEL, X, Y, R, THETA [°], CSTATUS, CPRESS, CSHEAR1, CSHEAR2, CSHEARFRIC1\n')
-        for item in toWrite:
-            csv.write(item[0] + ', ' + item[1] + ', ' + item[2] + ', ' + item[3] + ', ' + item[4] + ', ' + item[5] + ', ' + item[6] + ', ' + item[7] + ', ' + item[8] + ', ' + item[9] + ', ' + item[10] + '\n')
+            toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),str(value.data),'0','0','0','0'])
+        for value in cpressOnSlave.values:
+            posit = -1
+            for k,item in enumerate(toWrite):
+                if item[1]==str(value.nodeLabel):
+                    posit = k
+                    break
+            if posit>-1:
+                toWrite[posit][7] = str(value.data)
+            else:
+                if 'NODAL' in str(value.position):
+                    pos = nodes
+                    typeOfVar = 'NODAL'
+                elif 'INTEGRATION_POINT' in str(value.position):
+                    pos = intpoints
+                    typeOfVar = 'INTEGRATION_POINT'
+                toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),'0',str(value.data),'0','0','0'])
+        for value in cshearOnSlave.values:
+            posit = -1
+            for k,item in enumerate(toWrite):
+                if item[1]==str(value.nodeLabel):
+                    posit = k
+                    break
+            if posit>-1:
+                toWrite[posit][8] = str(value.data[0])
+                toWrite[posit][9] = str(value.data[1])
+            else:
+                if 'NODAL' in str(value.position):
+                    pos = nodes
+                    typeOfVar = 'NODAL'
+                elif 'INTEGRATION_POINT' in str(value.position):
+                    pos = intpoints
+                    typeOfVar = 'INTEGRATION_POINT'
+                toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),'0','0',str(value.data[0]),str(value.data[1]),'0'])
+        for value in cshearfOnSlave.values:
+            posit = -1
+            for k,item in enumerate(toWrite):
+                if item[1]==str(value.nodeLabel):
+                    posit = k
+                    break
+            if posit>-1:
+                toWrite[posit][10] = str(value.data)
+            else:
+                if 'NODAL' in str(value.position):
+                    pos = nodes
+                    typeOfVar = 'NODAL'
+                elif 'INTEGRATION_POINT' in str(value.position):
+                    pos = intpoints
+                    typeOfVar = 'INTEGRATION_POINT'
+                toWrite.append([typeOfVar,str(value.nodeLabel),str(pos[str(value.nodeLabel)][0]),str(pos[str(value.nodeLabel)][1]),str(numpy.sqrt(numpy.power(pos[str(value.nodeLabel)][0],2)+numpy.power(pos[str(value.nodeLabel)][1],2))),str(numpy.arctan2(pos[str(value.nodeLabel)][1],pos[str(value.nodeLabel)][0])* 180/numpy.pi),'0','0','0','0',str(value.data)])
+        with open(join(csvfolder,'stressesOnSlave.csv'),'w') as csv:
+            csv.write('SCATTER PLOT\n')
+            csv.write('NODE TYPE, NODE LABEL, X, Y, R, THETA [°], CSTATUS, CPRESS, CSHEAR1, CSHEAR2, CSHEARFRIC1\n')
+            for item in toWrite:
+                csv.write(item[0] + ', ' + item[1] + ', ' + item[2] + ', ' + item[3] + ', ' + item[4] + ', ' + item[5] + ', ' + item[6] + ', ' + item[7] + ', ' + item[8] + ', ' + item[9] + ', ' + item[10] + '\n')
+    except Exception,e:
+        writeErrorToLogFile(logfile,'a',Exception,e,True)
+        sys.exc_clear()
     
     writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
@@ -1106,7 +1135,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,settings,logfile):
     skipLineToLogFile(logfile,'a',True)
     writeLineToLogFile(logfile,'a','Get J-integrals...',True)
     isJINTcomputed = False
-    with open(join(wd,project,'abaqus',project + '.dat'),'r') as dat:
+    with open(join(wd,project,'solver',project + '.dat'),'r') as dat:
         lines = dat.readlines()
     lineIndex = 0
     for l,line in enumerate(lines):

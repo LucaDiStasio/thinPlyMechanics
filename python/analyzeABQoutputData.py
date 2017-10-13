@@ -148,7 +148,7 @@ def readSettingsFile(filepath):
                 analysisDict[parts[0]] = 0
     return settingsDict,analysisList,analysisDict
 
-def buildPostprocessorCall(params,analysisList,analysisDict,extSet,sim,codeDir,wd,matfolder,logfile):
+def buildPostprocessorCall(params,analysisList,analysisDict,extSet,sim,codeDir,wd,matfolder,logfile,logfilename):
     templateFile = join(codeDir,'templateAnalyzeABQoutputData.py')
     postprocessor = join(wd,'postprocessor.py')
     skipLineToLogFile(logfile,'a',True)
@@ -172,7 +172,11 @@ def buildPostprocessorCall(params,analysisList,analysisDict,extSet,sim,codeDir,w
         post.write('' + '\n')
         post.write('def main(argv):' + '\n')
         post.write('' + '\n')
-        post.write('    logfilePath = join(\'' + wd + '\',\'' + logfile + '\')' + '\n')
+        post.write('    workdir = \'' + wd + '\'' + '\n')
+        post.write('    matdir = \'' + matfolder + '\'' + '\n')
+        post.write('    proj = \'' + sim + '\'' + '\n')
+        post.write('    logfile = \'' + logfilename + '\'' + '\n')
+        post.write('    logfilePath = join(workdir,logfile)' + '\n')
         post.write('' + '\n')
         post.write('    settingsData = {}' + '\n')
         post.write('    settingsData[\'nEl0\'] = ' + str(params['nEl0']) + '\n')
@@ -186,7 +190,7 @@ def buildPostprocessorCall(params,analysisList,analysisDict,extSet,sim,codeDir,w
         post.write('    skipLineToLogFile(logfilePath,\'a\',True)' + '\n')
         post.write('    writeLineToLogFile(logfilePath,\'a\',\'Calling function extractFromODBoutputSet' + extSet.zfill(2) + ' ...\',True)' + '\n')
         post.write('    try:' + '\n')
-        post.write('        extractFromODBoutputSet' + extSet.zfill(2) + '(\'' + wd + '\',\'' + sim + '\',\'' + matfolder + '\',settingsData,logfilePath)' + '\n')
+        post.write('        extractFromODBoutputSet' + extSet.zfill(2) + '(workdir,proj,matdir,settingsData,logfilePath)' + '\n')
         post.write('    except Exception, error:' + '\n')
         post.write('        writeErrorToLogFile(logfilePath,\'a\',Exception,error,True)' + '\n')
         post.write('' + '\n')
@@ -208,7 +212,15 @@ def runPostprocessor(wd,postprocessor,call,logfilename):
         writeLineToLogFile(logfilename,'a','... done.',True)
         writeLineToLogFile(logfilename,'a','Running postprocessor ... ',True)
         try:
-            subprocess.call('cmd.exe /C ' + cmdfile,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            #subprocess.call('cmd.exe /C ' + cmdfile,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            p = subprocess.Popen(cmdfile,shell=True,stderr=subprocess.PIPE)
+            while True:
+                output = p.stderr.read(1)
+                if output == '' and p.poll()!= None:
+                    break
+                if out != '':
+                    sys.stdout.write(output)
+                    sys.stdout.flush()
         except Exception, error:
             writeErrorToLogFile(logfilename,'a',Exception,error,True)
             sys.exc_clear()
@@ -410,7 +422,7 @@ def main(argv):
             writeLineToLogFile(logFilePath,'a','Starting postprocessing on simulation ' + simName + ' ...',True)
             writeLineToLogFile(logFilePath,'a','Calling function: buildPostProcessorCall ...',True)
             try:
-                postProcessorFile = buildPostprocessorCall(settings,sectionList,sectionsToExec,extractionSet,simName,codedir,workdir,matdir,logFilePath)
+                postProcessorFile = buildPostprocessorCall(settings,sectionList,sectionsToExec,extractionSet,simName,codedir,workdir,matdir,logFilePath,logfile)
             except Exception, error:
                 writeErrorToLogFile(logFilePath,'a',Exception,error,True)
                 writeLineToLogFile(logFilePath,'a','Moving on to the next.',True)

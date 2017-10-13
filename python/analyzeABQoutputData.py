@@ -462,10 +462,10 @@ def main(argv):
         elif isPreprocessed=='NO':
             writeLineToLogFile(logFilePath,'a','    ==> PREPROCESSING AND SIMULATION STAGES STILL NEED TO BE EXECUTED <==',True)
             writeLineToLogFile(logFilePath,'a','    Moving on to the next.',True)
-        elif isPreprocessed=='YES' and isSimComplted=='NO':
+        elif isPreprocessed=='YES' and isSimCompleted=='NO':
             writeLineToLogFile(logFilePath,'a','    ==> SIMULATION STAGE STILL NEED TO BE EXECUTED <==',True)
             writeLineToLogFile(logFilePath,'a','    Moving on to the next.',True)
-        elif isPreprocessed=='YES' and isSimComplted=='YES' and isPostprocessed=='YES':
+        elif isPreprocessed=='YES' and isSimCompleted=='YES' and isPostprocessed=='YES':
             writeLineToLogFile(logFilePath,'a','    ==> POSTPROCESSING STAGE ALREADY EXECUTED <==',True)
             writeLineToLogFile(logFilePath,'a','    Moving on to the next.',True)
         else:

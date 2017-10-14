@@ -1936,7 +1936,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,codedir,settings,logfile,
         post.write('    settingsData[\'tol\'] = ' + str(settings['tol']) + '\n')
         post.write('' + '\n')
         post.write('    skipLineToLogFile(logfilePath,\'a\',True)' + '\n')
-        post.write('    writeLineToLogFile(logfilePath,\'a\',\'Calling function extractFromODBoutputSet' + extSet.zfill(2) + ' ...\',True)' + '\n')
+        post.write('    writeLineToLogFile(logfilePath,\'a\',\'Calling function  extractPathsfromODBoutputSet01 ...\',True)' + '\n')
         post.write('    try:' + '\n')
         post.write('        extractPathsfromODBoutputSet01(workdir,proj,float(settingsData[\'deltapsi\']),int(settingsData[\'nl\']),int(settingsData[\'nSegsOnPath\']),float(settingsData[\'tol\']))' + '\n')
         post.write('    except Exception, error:' + '\n')

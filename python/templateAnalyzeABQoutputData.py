@@ -37,6 +37,7 @@ from datetime import datetime
 from time import strftime, sleep
 from platform import platform,system
 import getopt
+import subprocess
 import numpy
 from odbAccess import *
 from abaqusConstants import *

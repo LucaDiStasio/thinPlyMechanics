@@ -1955,7 +1955,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,codedir,settings,logfile,
             cmd.write('\n')
             cmd.write('CD ' + wd + '\n')
             cmd.write('\n')
-            cmd.write('abaqus viewer nogui script=' + extractor + '\n')
+            cmd.write('abaqus viewer noGUI=' + extractor + '\n')
         writeLineToLogFile(logfilename,'a','... done.',True)
         writeLineToLogFile(logfilename,'a','Running extractor ... ',True)
         try:

@@ -1981,7 +1981,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,codedir,settings,logfile,
             bash.write('\n')
             bash.write('cd ' + wd + '\n')
             bash.write('\n')
-            bash.write('abaqus viewer nogui script=' + extractor + '\n')
+            bash.write('abaqus viewer noGUI=' + extractor + '\n')
         writeLineToLogFile(logfilename,'a','... done.',True)
         writeLineToLogFile(logfilename,'a','Changing permissions to ' + bashfile + ' ...',True)
         os.chmod(bashfile, 0o755)

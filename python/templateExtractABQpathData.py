@@ -56,6 +56,80 @@ from odbMaterial import *
 from odbSection import *
 import re
 
+#===============================================================================#
+#===============================================================================#
+#                             Functions
+#===============================================================================#
+#===============================================================================#
+
+def writeLineToLogFile(logFileFullPath,mode,line,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write(line + '\n')
+    if toScreen:
+        print(line + '\n')
+
+def skipLineToLogFile(logFileFullPath,mode,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write('\n')
+    if toScreen:
+        print('\n')
+
+def writeTitleSepLineToLogFile(logFileFullPath,mode,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write('===============================================================================================\n')
+    if toScreen:
+        print('===============================================================================================\n')
+
+def writeTitleSecToLogFile(logFileFullPath,mode,title,toScreen):
+    writeTitleSepLineToLogFile(logFileFullPath,mode,toScreen)
+    writeTitleSepLineToLogFile(logFileFullPath,'a',toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+    writeLineToLogFile(logFileFullPath,'a',title,toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+    writeLineToLogFile(logFileFullPath,'a','Starting on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S'),toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+    writeLineToLogFile(logFileFullPath,'a','Platform: ' + platform(),toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+    writeTitleSepLineToLogFile(logFileFullPath,'a',toScreen)
+    writeTitleSepLineToLogFile(logFileFullPath,'a',toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+
+def writeErrorToLogFile(logFileFullPath,mode,exc,err,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write('!!! ----------------------------------------------------------------------------------------!!!\n')
+        log.write('\n')
+        log.write('                                     AN ERROR OCCURED\n')
+        log.write('\n')
+        log.write('                                -------------------------\n')
+        log.write('\n')
+        log.write(str(exc) + '\n')
+        log.write(str(err) + '\n')
+        log.write('\n')
+        log.write('Terminating program\n')
+        log.write('\n')
+        log.write('!!! ----------------------------------------------------------------------------------------!!!\n')
+        log.write('\n')
+    if toScreen:
+        print('!!! ----------------------------------------------------------------------------------------!!!\n')
+        print('\n')
+        print('                                     AN ERROR OCCURED\n')
+        print('\n')
+        print('                                -------------------------\n')
+        print('\n')
+        print(str(exc) + '\n')
+        print(str(err) + '\n')
+        print('\n')
+        print('Terminating program\n')
+        print('\n')
+        print('!!! ----------------------------------------------------------------------------------------!!!\n')
+        print('\n')
+
+#===============================================================================#
+#===============================================================================#
+#                       Data extraction sets
+#===============================================================================#
+#===============================================================================#
+        
 def extractPathsfromODBoutputSet01(wd,project,deltapsi,nl,nSegsOnPath,tol):
     print('Starting path extraction on project ' + project + '\n')
     # define database name

@@ -1939,7 +1939,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,codedir,settings,logfile,
         post.write('    skipLineToLogFile(logfilePath,\'a\',True)' + '\n')
         post.write('    writeLineToLogFile(logfilePath,\'a\',\'Calling function  extractPathsfromODBoutputSet01 ...\',True)' + '\n')
         post.write('    try:' + '\n')
-        post.write('        extractPathsfromODBoutputSet01(workdir,proj,float(settingsData[\'deltapsi\']),int(settingsData[\'nl\']),int(settingsData[\'nSegsOnPath\']),float(settingsData[\'tol\']))' + '\n')
+        post.write('        extractPathsfromODBoutputSet01(workdir,proj,float(settingsData[\'deltapsi\']),int(settingsData[\'nl\']),int(settingsData[\'nSegsOnPath\']),float(settingsData[\'tol\']),logfilePath)' + '\n')
         post.write('    except Exception, error:' + '\n')
         post.write('        writeErrorToLogFile(logfilePath,\'a\',Exception,error,True)' + '\n')
         post.write('' + '\n')

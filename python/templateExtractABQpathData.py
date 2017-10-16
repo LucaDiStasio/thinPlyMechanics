@@ -130,33 +130,33 @@ def writeErrorToLogFile(logFileFullPath,mode,exc,err,toScreen):
 #===============================================================================#
 #===============================================================================#
         
-def extractPathsfromODBoutputSet01(wd,project,deltapsi,nl,nSegsOnPath,tol):
-    print('Starting path extraction on project ' + project + '\n')
+def extractPathsfromODBoutputSet01(wd,project,deltapsi,nl,nSegsOnPath,tol,logfile):
+    writeLineToLogFile(logfile,'a','Starting path extraction on project ' + project + '\n',True)
     # define database name
     odbname = project + '.odb'
-    odbfullpath = join(wd,project,'abaqus',odbname)
+    odbfullpath = join(wd,project,'solver',odbname)
     # define input file name
     inpname = project + '.inp'
-    inpfullpath = join(wd,project,'abqinp',inpname)
+    inpfullpath = join(wd,project,'input',inpname)
     # define csv output folder
     csvfolder = join(wd,project,'csv')
     # open odb
-    print('Open odb ' + odbname + ' in folder ' + join(wd,project,'abaqus') + ' ...\n')
+    writeLineToLogFile(logfile,'a','Open odb ' + odbname + ' in folder ' + join(wd,project,'solver') + ' ...\n',True)
     odb = openOdb(path=odbfullpath)
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # get first and last frame
     #=======================================================================
-    print('\n')
-    print('Get first and last frame...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get first and last frame...\n',True)
     firstFrame = odb.steps[odb.steps.keys()[-1]].frames[0]
     lastFrame = odb.steps[odb.steps.keys()[-1]].frames[-1]
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # get deformed nodes
     #=======================================================================
-    print('\n')
-    print('Get deformed nodes...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get deformed nodes...\n',True)
     nodes = {}
     intpoints = {}
     nodesCoords = lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL)
@@ -217,12 +217,12 @@ def extractPathsfromODBoutputSet01(wd,project,deltapsi,nl,nSegsOnPath,tol):
             csv.write('FIBERSURFACE-NODES' + ', ' + 'NODAL' + ', ' + str(value.nodeLabel) + ', ' + str(value.data[0]) + ', ' + str(value.data[1]) + '\n')
         for value in defMatrixSurfAtFiberInter.values:
             csv.write('MATRIXSURFACEATFIBERINTERFACE-NODES' + ', ' + 'NODAL' + ', ' + str(value.nodeLabel) + ', ' + str(value.data[0]) + ', ' + str(value.data[1]) + '\n')
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # get Rf and l in the deformed configuration
     #=======================================================================
-    print('\n')
-    print('Get Rf and l in the deformed configuration...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get Rf and l in the deformed configuration...\n',True)
     meanDefRf = 0
     countRf = 0
     for value in defFiberSurf.values:
@@ -254,12 +254,12 @@ def extractPathsfromODBoutputSet01(wd,project,deltapsi,nl,nSegsOnPath,tol):
     for value in defLeftSideNoCorn.values:
         if numpy.abs(value.data[0])<minL:
             minL = numpy.abs(value.data[0])
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # get stresses and strains along radial paths
     #=======================================================================
-    print('\n')
-    print('Get stresses and strains along radial paths...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get stresses and strains along radial paths...\n',True)
     sessionOdb = session.openOdb(name=odbfullpath)
     session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
     psis = numpy.arange(0,360,deltapsi)
@@ -298,12 +298,12 @@ def extractPathsfromODBoutputSet01(wd,project,deltapsi,nl,nSegsOnPath,tol):
         session.writeXYReport(fileName=join(wd,project,'dat','epsxy-Radius-' + str(j+1) + '.dat'),xyData=epsxy,appendMode=OFF)
         with open(join(csvfolder,'radialpaths.csv'),'a') as csv:
             csv.write('EE12' + ', ' + str(psi) + ', ' + '0' + ', ' + str(minL) + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsxy-Radius-' + str(j+1) + '.dat' + '\n')
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # get stresses and strains along circumferential paths
     #=======================================================================
-    print('\n')
-    print('Get stresses and strains along circumferential paths...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Get stresses and strains along circumferential paths...\n',True)
     rs = numpy.concatenate((numpy.linspace(0,meanDefRf,nl+1,endpoint=False)[1:],numpy.linspace(meanDefRf,minL,nl+1)[1:]),axis=0)
     with open(join(csvfolder,'circumpaths.csv'),'w') as csv:
         csv.write('VARIABLE, R, phi_i [°], phi_f [°], FOLDER, FILENAME\n')
@@ -340,11 +340,11 @@ def extractPathsfromODBoutputSet01(wd,project,deltapsi,nl,nSegsOnPath,tol):
         session.writeXYReport(fileName=join(wd,project,'dat','epsxy-Circle-' + str(j+1) + '.dat'),xyData=epsxy,appendMode=OFF)
         with open(join(csvfolder,'circumpaths.csv'),'a') as csv:
             csv.write('EE12'  + ', ' + str(r) + ', ' + '0' + ', ' + '360' + ', ' + str(join(wd,project,'dat')) + ', ' + 'epsxy-Circle-' + str(j+1) + '.dat' + '\n')
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)
     #=======================================================================
     # close database
     #=======================================================================
-    print('\n')
-    print('Close database...\n')
+    skipLineToLogFile(logfile,'a',True)
+    writeLineToLogFile(logfile,'a','Close database...\n',True)
     odb.close()
-    print('...done.\n')
+    writeLineToLogFile(logfile,'a','... done.',True)

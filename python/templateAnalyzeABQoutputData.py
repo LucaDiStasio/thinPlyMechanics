@@ -1965,7 +1965,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,codedir,settings,logfile,
                 output = p.stderr.read(1)
                 if output == '' and p.poll()!= None:
                     break
-                if out != '':
+                if output != '':
                     sys.stdout.write(output)
                     sys.stdout.flush()
         except Exception, error:

@@ -439,7 +439,7 @@ def main(argv):
                     for li in lines:
                         sta.write(li)
                 if clearFiles:
-                    writeLineToLogFile(logFilePath,'a','Proceeding to clear files in ' + str(join(wd,simName,'solver')) + ' ...',True)
+                    writeLineToLogFile(logFilePath,'a','Proceeding to clear files in ' + str(join(workdir,simName,'solver')) + ' ...',True)
                     fileList = listdir(join(workdir,simName,'solver'))
                     for filename in fileList:
                         if isfile(join(workdir,simName,'solver',filename)) and filename.split('.')[1] in filesToClear:

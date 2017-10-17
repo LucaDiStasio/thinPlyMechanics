@@ -440,12 +440,12 @@ def main(argv):
                         sta.write(li)
                 if clearFiles:
                     writeLineToLogFile(logFilePath,'a','Proceeding to clear files in ' + str(join(wd,simName,'solver')) + ' ...',True)
-                    fileList = listdir(join(wd,simName,'solver'))
+                    fileList = listdir(join(workdir,simName,'solver'))
                     for filename in fileList:
-                        if isfile(join(wd,simName,'solver',filename)) and filename.split('.')[1] in filesToClear:
+                        if isfile(join(workdir,simName,'solver',filename)) and filename.split('.')[1] in filesToClear:
                             writeLineToLogFile(logFilePath,'a','File ' + filename + ' needs to be removed ...',True)
                             try:
-                                remove(join(wd,simName,'solver',filename))
+                                remove(join(workdir,simName,'solver',filename))
                             except Exception, error:
                                 writeErrorToLogFile(logFilePath,'a',Exception,error,True)
                                 writeLineToLogFile(logFilePath,'a','Moving on to the next.',True)

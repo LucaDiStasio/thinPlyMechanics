@@ -1,0 +1,32 @@
+\begin{table}[h!]
+\scriptsize
+  \centering
+  %\caption{Analysis methods summary.}
+    \begin{tabularx}{\textwidth}{X}
+    \toprule
+    \midrule    
+    \textbf{Method}\\
+    ABAQUS/STD static analysis + VCCT + J-integral.\\
+    \midrule
+    \textbf{Type}\\
+    Static, i.e. no inertial effects. Relaxation until equilibrium.\\
+    \midrule
+    \textbf{Elements}\\
+    CPE4/CPE8\\
+    \midrule
+    \textbf{Interface}\\
+    Tied surface constraint \& contact mechanics\\
+    \midrule
+   \textbf{Input variables}\\
+    $R_{f}$, $V_{f}$, material properties, interface properties.\\
+    \midrule
+    \textbf{Control variables}\\
+    $\theta$, $\Delta\theta$, $\bar{\varepsilon}_{x}$.\\
+    \midrule
+ \textbf{Output variables} \\
+  Stress field, crack tip stress, stress intensity factors, energy release rates, $a$.\\
+  \midrule
+    \bottomrule
+    \end{tabularx}%
+  \label{tab:analysis_tab}%
+\end{table}%

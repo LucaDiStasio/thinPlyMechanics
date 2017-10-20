@@ -1,0 +1,54 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+
+\usetikzlibrary{arrows}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+\begin{document}
+
+\begin{tikzpicture}[scale=4.5,cap=round,x=1cm,y=1cm]
+
+
+\draw [black,thick] plot [smooth, tension=1] coordinates { (0,0) (1,1.1) (2,1.5)};
+\draw [black,thick] plot [smooth, tension=1] coordinates { (2,1.5) (1.75,2.15) (1.25,2.25)};
+\draw [black,thick] plot [smooth, tension=1] coordinates { (1.25,2.25) (0.45,1.6) (-1.0,1.0)};
+\draw [black,thick] plot [smooth, tension=1] coordinates { (-1.0,1.0)(-0.5,0.25)(0,0)};
+
+\draw[fill=black] (0,0) circle (0.015cm);
+\draw[fill=black] (2,1.5) circle (0.015cm);
+\draw[fill=black] (1.25,2.25) circle (0.015cm);
+\draw[fill=black] (-1.0,1.0) circle (0.015cm);
+\draw[fill=black] (1,1.1) circle (0.015cm);
+\draw[fill=black] (1.75,2.15) circle (0.015cm);
+\draw[fill=black] (0.45,1.6) circle (0.015cm);
+\draw[fill=black] (-0.5,0.25)  circle (0.015cm);
+
+\draw (0,0) node[black,below] {$A$};
+\draw (2,1.5) node[black,below] {$B$};
+\draw (1.25,2.25) node[black,above] {$C$};
+\draw (-1.0,1.0) node[black,left] {$D$};
+\draw (1,1.1) node[black,below] {$E$};
+\draw (1.75,2.15) node[black,right] {$F$};
+\draw (0.45,1.6) node[black,above] {$G$};
+\draw (-0.5,0.25) node[black,left] {$H$};
+
+\draw[->][thick] (0.4,1.1) arc (-140:140:0.175);
+
+
+\end{tikzpicture}
+
+\end{document}

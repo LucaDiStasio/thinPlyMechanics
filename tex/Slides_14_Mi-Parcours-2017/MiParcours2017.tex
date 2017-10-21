@@ -205,11 +205,11 @@
 \begin{document}
 \setbeamertemplate{caption}{\raggedright\insertcaption\par}
 
-\title[\textsc{FEM \& the Fiber-Matrix Interface Crack}]{\textsc{Finite Elements Solution of the Fiber-Matrix Interface Crack: Effects of Mesh Refinement and Domain Size}}
-\author{ L. Di Stasio$^{1,2}$, Z. Ayadi$^{1}$, J. Varna$^{2}$}
+\title[\textsc{FEM \& the Fiber-Matrix Interface Crack}]{\textsc{The Fiber-Matrix Interface Crack Problem and its Solution by the Finite Element Method}}
+\author{ \underline{L. Di Stasio}$^{1,2}$, Z. Ayadi$^{1}$, J. Varna$^{2}$}
 %\institute{ Science et Ing\'enierie des Mat\'eriaux et M\'etallurgie (SI2M), Institut Jean Lamour, Nancy, France\\Department of Engineering Sciences and Mathematics, Division of Materials Science, Lule\aa\ University of Technology, Lule\aa, Sweden}
-\institute{$^{1}$EEIGM, Universit\'e de Lorraine, Nancy, France\\$^{2}$Division of Materials Science, Lule\aa\ University of Technology, Lule\aa, Sweden}
-\date{DocMASE Summer School, Sarrebr\"ucken (DE) - Nancy (FR), September 11 - 15, 2017}
+\institute{$^{1}$EEIGM \& IJL, Universit\'e de Lorraine, Nancy, France\\$^{2}$Division of Materials Science, Lule\aa\ University of Technology, Lule\aa, Sweden}
+\date{Mid-Term Defence - Nancy (FR), October 24, 2017}
 
 \begin{frame}[plain]
     \titlepage
@@ -245,13 +245,44 @@
 %\end{frame}
 %% \note{}
 
-\section[Characterization of Fracture in FRPC]{Characterization of Fracture in FRPC Laminates}
+\section[Damage in Thin Ply FRPC]{Damage Mechanisms in Thin Ply Fiber Reinforced Polymer Laminates}
 
-\subsection[Damage in FRPC]{Damage Onset and Propagation in FRPC Laminates}
+\subsection{Spread Tow Technology}
 
 \begin{frame}
-%\vspace*{-1cm}
-\frametitle{\small Damage Onset and Propagation in FRPC Laminates}
+\frametitle{\small Spread Tow Technology: Introduction}
+\vspace{-0.25cm}
+\centering
+\begin{itemize}[label=\ding{212}]
+	\item {\small Firstly developed for commercial use in Japan between 1995 and 1998 (Kawabe, Tomoda et al. 1997 [1], 2003 [2], 2008 [3], 2009 [4])}
+	\item {\small In the last decade its use has been spreading, from sports' equipments to mission-critical applications as in the \textit{Solar Impulse 2}}
+	\item {\small Only a few producers wolrdwide: NTPT (USA-CH) [5], Oxeon (SE) [6], Chomarat (FR), Hexcel (USA), Technomax (JP)}
+\end{itemize}
+\begin{figure}[!h]
+\centering
+\subfloat[\scriptsize By North Thin Ply Technology.\label{fig:solar_impulse}]{\includegraphics[height=0.25\textheight,width=0.45\textwidth]{ntpt_solar-impulse-1.jpg}}\quad
+\subfloat[\scriptsize By TeXtreme.\label{fig:solar_car}]{\includegraphics[height=0.25\textheight,width=0.45\textwidth]{textreme_solar_car.jpg}}
+  %\caption{Single RVE model.}
+  \label{fig:thin-ply-examples}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small Spread Tow Technology: Foundations}
+\vspace{-0.5cm}
+\centering
+\begin{figure}
+\centering
+\includegraphics[height=0.85\textheight]{spread-tow-tech.pdf}
+%\caption{}
+\label{fig:spread-tow-schematic}
+\end{figure}
+\end{frame}
+
+\subsection{Thin ply effect in transverse cracking}
+
+\begin{frame}
+\frametitle{\small Damage Onset and Propagation}
 \vspace{-0.75cm}
 \centering
 \captionsetup[subfigure]{labelfont=footnotesize}
@@ -259,12 +290,24 @@
 \centering
 \subfloat[\scriptsize By Dr. R. Olsson, Swerea, SE.\label{fig:all-cracks}]{\includegraphics[width=0.46\textwidth]{all-cracks.png}}\quad
 \subfloat[\scriptsize By Prof. Dr. E. K. Gamstedt, KTH, SE.\label{fig:transverse-cracks}]{\includegraphics[width=0.5\textwidth]{intralaminar-cracks.png}}
- \caption{A visual definition of intralaminar transverse cracking.}
+ \caption{For a visual definition of intralaminar transverse cracking.}
   \label{fig:intralaminar-cracks}
 \end{figure}
 \end{frame}
 
-\subsection[Characterization of the Fracture Process]{Characterization of the Fracture Process}
+\begin{frame}
+\frametitle{\small The Thin Ply Effect}
+\vspace{-0.5cm}
+\centering
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.75\textheight]{Flaggs-Kural_InSituTransverseStrength.pdf}
+\caption{\tiny Measurements of in-situ transverse strength from D. L. Flaggs \& M. H. Kural, 1982 [7].}
+ \label{fig:in-situ-strength}
+\end{figure}
+\end{frame}
+
+\subsection[Characterization of Fracture in FRPC]{Characterization of Fracture in FRPC Laminates}
 
 \begin{frame}
 %\vspace{-0.5cm}
@@ -283,7 +326,7 @@ K_{m}=K_{m}\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad \sig
 \end{equation*}
 \item J-Integral
 \begin{equation*}
-J=J\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad J=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\right)n_{i}-n_{j}\sigma_{jk}\frac{\partial u_{k}\left(\Gamma,x_{i}\right)}{\partial x_{i}}\right)d\Gamma
+J=J\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad J=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\right)n_{i}-n_{j}\sigma_{jk}\frac{\partial u_{k}\left(\Gamma,x_{i}\right)}{\partial x_{i}}\right)d\Gamma = G
 \end{equation*}
 \item Crack Opening \& Shear Displacement
 \begin{equation*}
@@ -299,13 +342,12 @@ m\in\left\{I,II,III,I/II,I/III,II/III\right\}
 \end{equation*}
 \end{frame}
 
-\subsection[Evaluation  of Fracture Parameters]{Evaluation of Fracture Parameters}
 
 \begin{frame}
 \frametitle{\small Evaluation of Fracture Parameters}
 \vspace{-0.4cm}
 \centering
-\scriptsize
+\tiny
 \begin{itemize}[label=\ding{212}]
 \item Analytical
 \begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}
@@ -313,7 +355,8 @@ m\in\left\{I,II,III,I/II,I/III,II/III\right\}
 \item Every material scale can be studied
 \end{list}
 \begin{list}{\Huge\textcolor{red}{$\mathbf{\times}$}}{}
-\item Available only for particular configurations
+\item Available only for particular configurations, often infinite in size
+\item Complex geometries cannot be studied
 \end{list}
 \item Experimental
 \begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}
@@ -325,7 +368,7 @@ m\in\left\{I,II,III,I/II,I/III,II/III\right\}
 \item Numerical
 \begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}
 \item Complex geometries can be studied
-\item Every material can be studied
+\item Every material scale can be studied
 \end{list}
 \begin{list}{\Huge\textcolor{red}{$\mathbf{\times}$}}{}
 \item Discretization
@@ -333,8 +376,6 @@ m\in\left\{I,II,III,I/II,I/III,II/III\right\}
 \end{list}
 \end{itemize}
 \end{frame}
-
-\subsection[Numerical Estimation]{Numerical Estimation of Energy Release Rates}
 
 \begin{frame}
 \frametitle{\small Numerical Estimation of Energy Release Rates}
@@ -357,6 +398,7 @@ m\in\left\{I,II,III,I/II,I/III,II/III\right\}
 G_{I}=\frac{Z_{C}\Delta w_{C}}{2B\Delta a}\quad G_{II}=\frac{X_{C}\Delta u_{C}}{2B\Delta a}
 \end{equation*}
 
+Krueger, 2004
 \end{itemize}
 \end{column}
 \begin{column}{0.5\textwidth}
@@ -374,6 +416,7 @@ G_{I}=\frac{Z_{C}\Delta w_{C}}{2B\Delta a}\quad G_{II}=\frac{X_{C}\Delta u_{C}}{
 J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\right)n_{i}-n_{j}\sigma_{jk}\frac{\partial u_{k}\left(\Gamma,x_{i}\right)}{\partial x_{i}}\right)d\Gamma
 \end{equation*}
 
+Rice, 1968
 \end{itemize}
 \end{column}
 \end{columns}
@@ -381,10 +424,10 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 
 \section[The Fiber-Matrix Interface Problem in FRPC]{The Fiber-Matrix Interface Problem in Fiber Reinforced Polymer Laminates}
 
-\subsection{From macro to micro}
+\subsection{Multi-Scale Decomposition}
 
 \begin{frame}
-\frametitle{From macro to micro}
+\frametitle{\small Multi-scale Decomposition of Fiber Reinforced Polymer Laminates}
 \vspace{-1cm}
 \centering
 \begin{figure}
@@ -398,43 +441,7 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 \subsection{The Fiber-Matrix Interface Crack Problem}
 
 \begin{frame}
-\frametitle{\small The Fiber-Matrix Interface Crack Problem}
-\vspace{-0.5cm}
-\centering
-\begin{columns}
-\begin{column}{0.4\textwidth}
-\begin{figure}
-\includegraphics[width=\columnwidth]{fiberMatrixInterfaceProblem.pdf}
- % \caption{Angular discretization at fiber/matrix interface.}
-  \label{fig:jintegral}
-\end{figure}
-\end{column}
-\begin{column}{0.6\textwidth}
-\footnotesize
-\begin{table}
-\begin{tabularx}{\columnwidth}{XXX}
-&{\tiny \bf{Analytical}}&{\tiny \bf{Numerical}}\\
-\midrule
-{\tiny \textit{Method}}&{\tiny Analytical (complex) functions}&{\tiny FEM}\\
-\midrule
-{\tiny \textit{Domain Type}}&{\tiny Continuous}&{\tiny Discrete}\\
-{\tiny \textit{Domain Size}}&{\tiny Infinite}&{\tiny Finite}\\
-\midrule
-{\tiny \textit{Natural variable}}&{\tiny Stress (stress function)}&{\tiny Displacement field}\\
-{\tiny \textit{Conjugate variable}}&{\tiny Displacement}&{\tiny Stress}\\
-\midrule
-{\tiny \textit{Dirichlet BC}}&{\tiny Stress}&{\tiny Displacement}\\
-{\tiny \textit{Loading process}}&{\tiny Force-controlled}&{\tiny Displacement-controlled}\\
-\end{tabularx}
-\end{table}
-\end{column}
-\end{columns}
-\end{frame}
-
-\subsection{FEM Model of the Fiber-Matrix Interface Crack}
-
-\begin{frame}
-\frametitle{\small FEM Model of the Fiber-Matrix Interface Crack}
+\frametitle{\small The Fiber-Matrix Interface Crack Problem: Statement}
 \vspace{-0.5cm}
 \centering
 \begin{columns}
@@ -449,83 +456,189 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 \scriptsize
 \begin{itemize}[label=\ding{212}]
 \item 2D space
-\item Linear elastic materials
-\item Displacement-controlled
+\item Linear elastic homogeneous isotropic materials
+\item Mismatching elastic properties
+\item Plane state (strain or stress)
+%\item Displacement-controlled
 \item Dirichlet-type BC
-\item LEFM
+\item Linear Fracture Mechanics
 \item Contact interaction
-\item Bi-linear quadrilateral elements
+\item Applied uniaxial traction
+%\item Bi-linear quadrilateral elements
+\end{itemize}
+\begin{itemize}[label=?]
+\item SIF, ERR, mode ratio, stress and displacement distribution at the interface
 \end{itemize}
 \end{column}
 \end{columns}
 \end{frame}
 
-\section[Mesh \& Domain Size]{Effects of Mesh Refinement \& Domain Size}
-
-\subsection{Domain size effect on $G_{0}$}
-
 \begin{frame}
-\frametitle{\small $G_{0}$ for $Vf_{f}=0.001$, $\frac{L}{R_{f}}\sim 28$, $\delta=0.4^{\circ}$}
+\frametitle{\small The Fiber-Matrix Interface Crack Problem: Solution}
 \vspace{-0.5cm}
-\begin{figure}
-\includegraphics[height=0.7\textheight]{2017-06-23_AbqRunSummary_SingleFiberEqRfSmallFiniteStrain_G0_Summary.pdf}
- \caption{In red small strain FEM, in green finite strain FEM, in black $G_{0}$ calculated assuming $\sigma_{0}=\frac{E}{1-\nu^ 2}\varepsilon$.}
-  \label{fig:jintegral}
-\end{figure}
+\centering
+\footnotesize
+\begin{table}
+\begin{tabularx}{\columnwidth}{p{0.2\textwidth}Xp{0.3\textwidth}XX}
+{\tiny \bf{Method}}&{\tiny \bf{Domain}}&{\tiny \bf{Natural Variable}}&{\tiny \bf{Conjugate Variable}}&{\tiny \bf{Dirichlet BC}}\\
+\toprule
+{\tiny Analytical (complex) functions}&{\tiny 2D, continuous, infinite}&{\tiny Airy stress potential \& stress}&{\tiny Displacement \& strain}&{\tiny In stress}\\[10pt]
+\cline{2-5}\\[-10pt]
+&\multicolumn{4}{p{0.7\textwidth}}{\tiny M. Toya (1975), A Crack Along the Interface of a Circular Inclusion Embedded in an Infinite Solid [10].}\\
+\bottomrule
+{\tiny Boundary Element Method (BEM)}&{\tiny 1D, discrete, finite}&{\tiny Stress, by using Green's potentials or Betti's influence functions}&{\tiny Displacement \& strain}&{\tiny In stress}\\[10pt]
+\cline{2-5}\\[-10pt]
+&\multicolumn{4}{p{0.7\textwidth}}{\tiny F. Par\'is et al. (1996), The fiber-matrix interface crack - A numerical analysis using Boundary Elements [11].}\\
+\bottomrule
+{\tiny Finite Element Method (FEM)}&{\tiny 2D, discrete, finite}&{\tiny Displacement}&{\tiny Stress}&{\tiny In displacement}\\[10pt]
+\bottomrule
+\end{tabularx}
+\end{table}
 \end{frame}
 
+\section[Analysis of the Infinite RVE]{Analysis of the Infinite Reference Volume Element (RVE)}
+
+\subsection{The Finite Element Model}
+
 \begin{frame}
-\frametitle{\small $G_{0}$ for $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$, $\delta=0.4^{\circ}$}
+\frametitle{\small The Finite Element Model}
 \vspace{-0.5cm}
+\centering
+\begin{columns}
+\begin{column}{0.6\textwidth}
 \begin{figure}
-\includegraphics[height=0.7\textheight]{2017-06-16_AbqRunSummary_SingleFiberEqRfSmallStrain-D0-4_G0_Summary.pdf}
- \caption{In red small strain FEM, in green finite strain FEM, in black $G_{0}$ calculated assuming $\sigma_{0}=\frac{E}{1-\nu^ 2}\varepsilon$.}
+\includegraphics[width=\columnwidth]{FEMfiberMatrixInterfaceProblem.pdf}
+ % \caption{Angular discretization at fiber/matrix interface.}
   \label{fig:jintegral}
 \end{figure}
+\end{column}
+\begin{column}{0.4\textwidth}
+\tiny
+\begin{itemize}[label=\ding{212}]
+\item $\theta\left[^{\circ}\right]=0$, angular position of debond's center\\[5pt]
+\item $2\Delta\theta\left[^{\circ}\right]$, debond's angular size\\[5pt]
+\item $\delta\left[^{\circ}\right]$, angle subtended by an element at the fiber/matrix interface\\[5pt]
+\item $VF_{f}\left[-\right]$, fiber volume fraction\\[5pt]
+\item $2L\left[\mu m\right]$, RVE's side length\\[5pt]
+\item $R_{F}\left[\mu m\right]$, fiber radius\\[5pt]
+\item $\frac{L}{R_{f}}=\frac{1}{2}\sqrt{\frac{\pi}{VF_{f}}}\left[-\right]$, RVE's aspect ratio\\[5pt]
+\item $\sigma_{0}\left[MPa\right]=\frac{E_{m}}{1-\nu_{m}^{2}}\varepsilon_{xx}$, reaction stress of undamaged infinite RVE\\[5pt]
+\item $G_{0}\left[\frac{J}{m^{2}}\right]=\pi R_{f}\sigma_{R}^{2}\frac{1+\left(3-4 nu_{m}\right)}{8 G_{m}}$, normalization $G$ following Toya [10] and Par\'is [11]\\[5pt]
+\item Small displacement formulation
+\end{itemize}
+\end{column}
+\end{columns}
 \end{frame}
 
-\subsection{Mesh refinement effect on mode ratio}
+\subsection{Reaction Stress at the Boundary}
 
 \begin{frame}
-\frametitle{\small $G_{I}$, VCCT, $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$}
+\frametitle{\small Reaction Stress at the Boundary}
+\vspace{-0.5cm}
+\centering
+\begin{columns}
+\begin{column}{0.55\textwidth}
+\begin{figure}
+\includegraphics[width=\columnwidth]{2017-06-23_AbqRunSummary_SingleFiberEqRfFiniteStrain_sigmaatboundary_Summary.pdf}
+\caption{\scriptsize $VF_{f}=0.001$, $\frac{L}{R_{f}}\sim 28$, $\delta = 0.4^{\circ}$, $\frac{\sigma_{max}-\sigma_{mean}}{\sigma_{mean}}=0.34\%$}
+%  \label{fig:jintegral}
+\end{figure}
+\end{column}
+\begin{column}{0.55\textwidth}
+\begin{figure}
+\includegraphics[width=\columnwidth]{2017-06-16_AbqRunSummary_SingleFiberEqRfSmallStrain-D0-4_sigmaatboundary_Summary.pdf}
+\caption{\scriptsize  $VF_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$, $\delta = 0.4^{\circ}$, $\frac{\sigma_{max}-\sigma_{mean}}{\sigma_{mean}}=0.03\%$}
+%  \label{fig:jintegral}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Normalization $G_{0}$}
+
+\begin{frame}
+\frametitle{\small Normalization $G_{0}$ as a function of $\Delta\theta$}
+\vspace{-0.5cm}
+\centering
+\begin{columns}
+\begin{column}{0.55\textwidth}
+\begin{figure}
+\includegraphics[width=\columnwidth]{2017-06-23_AbqRunSummary_SingleFiberEqRfSmallFiniteStrain_G0_Summary.pdf}
+\caption{\scriptsize $VF_{f}=0.001$, $\frac{L}{R_{f}}\sim 28$, $\delta = 0.4^{\circ}$}
+%  \label{fig:jintegral}
+\end{figure}
+\end{column}
+\begin{column}{0.55\textwidth}
+\begin{figure}
+\includegraphics[width=\columnwidth]{2017-06-16_AbqRunSummary_SingleFiberEqRfSmallStrain-D0-4_G0_Summary.pdf}
+\caption{\scriptsize  $VF_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$, $\delta = 0.4^{\circ}$}
+%  \label{fig:jintegral}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Energy Release Rates}
+
+\begin{frame}
+\frametitle{\small Mode I Energy Release Rate $G_{I}$ from VCCT}
 \vspace{-0.5cm}
 \centering
 \captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
 \begin{figure}[!h]
 \centering
 \includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GI.pdf}
-  \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
+  \caption{\scriptsize $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$; fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
   \label{fig:res1}
 \end{figure}
 \end{frame}
 
 \begin{frame}
-\frametitle{\small $G_{II}$, VCCT, $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$}
+\frametitle{\small Mode II Energy Release Rate $G_{II}$ from VCCT}
 \vspace{-0.5cm}
 \centering
 \captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
 \begin{figure}[!h]
 \centering
 \includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GII.pdf}
-  \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
+  \caption{\scriptsize $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$; fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
   \label{fig:res1}
 \end{figure}
 \end{frame}
 
 \begin{frame}
-\frametitle{\small $G_{TOT}$, VCCT, $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$}
+\frametitle{\small Total Energy Release Rate $G_{TOT}$ from VCCT}
 \vspace{-0.5cm}
 \centering
 \captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
 \begin{figure}[!h]
 \centering
 \includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GTOT.pdf}
-  \caption{\scriptsize Fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
+  \caption{\scriptsize $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$; fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
   \label{fig:res1}
 \end{figure}
 \end{frame}
 
-\section[Conclusions]{Conclusions \& Outlook}
+\section[Conclusions]{Timeline, Conclusions \& Outlook}
+
+\begin{frame}
+\frametitle{\vspace*{0.5cm} Timeline}
+\vspace{-0.75cm}
+\centering
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item Oct. 2015 - Dec. 2017: research in Nancy
+\item Jan. 2018 - Dec. 2019: research in Lule\aa\\[20pt]
+\item May - June 2016: DocMASE Summer School 2016, Lule\aa; presentation
+\item June 2016: quarter-term auto-evaluation report, Nancy
+\item April 2017: International Materials Research Meeting of the Greater Region, Sarrebr\"ucken; presentation
+\item May 2017: EMMA doctoral school seminar, Nancy; poster
+\item July 2017: seminar day of the Research Group 304, presentation (in French)
+\item October 2017: mid-term defence, Nancy
+\item September 2018: mid-term defence, Lule\aa
+\item December 2019: doctoral defence, Nancy - Lule\aa
+\end{itemize}
+\end{frame}
 
 \begin{frame}
 \frametitle{\vspace*{0.5cm} Conclusions \& Outlook}
@@ -534,15 +647,16 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 \scriptsize
 \begin{alertblock}{\footnotesize \bf{Conclusions}}
 \begin{itemize}[label=\ding{212}]
-  \item Domain size is a fundamental parameter in determining the RVE behaviour between finite and efffectively infinite size
-	\item Mesh refinement affects directly mode ratio, increasing mode I with respect to mode II
+  \item There is a limiting value of $\frac{L}{R_{f}}$ after which models are effectively infinite
+	\item For models larger than this value, domain size and mesh refinement at the interface has a similar effect on the energy release rate
+  \item The discrepancy in modes with the use of linear elements might be linked to the deformed shape of crack faces
 \end{itemize}
 \end{alertblock}
 \begin{alertblock}{\footnotesize \bf{Outlook}}
 \begin{itemize}[label=\ding{212}]
-	\item Analyze the dependence on $\delta$ for $\frac{L}{R_{f}}=200,300,\dots$\\[9pt]
-	\item Analyze the dependence on $\frac{L}{R_{f}}$ for constant $\delta$\\[9pt]
-	\item Study finite size effects
+	\item Modeling extreme ply geometries, for example a ply with a single layer of fibers bounded by stiffer plies\\[9pt]
+	\item Investigate the effect of clusters of fibers in thin plies\\[9pt]
+	\item Analyzing the effect of complex stress and deformation states, thermal loads, different sets of boundary conditions
 \end{itemize}
 \end{alertblock}
 \end{frame}
@@ -575,27 +689,12 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 %\end{frame}
 
 
-%\section{References}
+\section{References}
 
-%\begin{frame}[t,label=references,allowframebreaks]
-%       \frametitle{References}
-%	\begin{itemize}
-%%	\item Loading rate effects on delamination:\\[10pt] \textit{Loading\_rate\_effects\_on\_CFRP.bib}\\[30pt]
-%	\item Body-fitted grids for FSI modeling with LBM:\\[10pt] %\textit{Fluid\_structure\_interaction\_on\_deformable\_surfaces.bib}
-%	\end{itemize}
-%        \bibliographystyle{amsalpha}
-%        {\footnotesize
-%          \bibliography{PSI_talk.bib}
-%        }
-        %\bibliography{/auto.mounter/home/lucadistasio/Documents/ETH/Research_material/References/fsi_references_kbib.bib}
-%\end{frame}
+\begin{frame}[allowframebreaks]
+  \frametitle{References}
 
-%\subsection{References}
-
-%\begin{frame}[allowframebreaks]
-%  \frametitle{References}
-
-%  \begin{thebibliography}{10}
+  \begin{thebibliography}{10}
 
 %  \beamertemplatebookbibitems
 %  % Start with overview books.
@@ -606,12 +705,65 @@ J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\righ
 %    \newblock Some Press, 1990.
 
 
-%  \beamertemplatearticlebibitems
+  \beamertemplatearticlebibitems
   % Followed by interesting articles. Keep the list short.
 
+\bibitem{KawabeTomodaMatsuo:1997} %1
+Kawabe K., Tomoda S. and Matsuo T.;
+\newblock {\em A pneumatic process for spreading reinforcing fiber tow}
+\newblock {\it Proc. 42nd Int. SAMPE USA (Anaheim, CA, USA)} 65–76, 1997.
 
-%  \end{thebibliography}
-%\end{frame}
+\bibitem{spreadtowpatent:2003} %2
+Kawabe K., Tomoda S.;
+\newblock {\em Method of producing a spread multi-filament bundle and an apparatus used in the same.}
+\newblock Japan: Fukui Prefectural Government; 2003. JP 2003-193895, 2003.
+
+\bibitem{Kawabe:2008} %3
+Kawabe K.;
+\newblock {\em New Spreading Technology for Carbon Fiber Tow and Its Application to Composite Materials}
+\newblock {\it Sen'i Gakkaishi} {\bf 64} (8) 262--267, 2008 [in Japanese].
+
+\bibitem{SasayamaTomoda:2009} %4
+Sasayama H. and Tomoda S.;
+\newblock {\em New Carbon Fiber Tow-Spread Technology and Applications to Advanced Composite Materials}
+\newblock {\it S.A.M.P.E. journal} {\bf 45} (2) 6--17, 2009.
+
+\bibitem{ntpt} %5
+Meijer A.;
+\newblock {\em NTPT makes world’s thinnest prepeg even thinner [Internet] [cited 30 April 2017] }
+\newblock North Thin Ply Technology (NTPT) press release 2015. Available from http://www.thinplytechnology.com/mesimages/Press\_Release\_NTPT-16JUN2015.pdf.
+
+\bibitem{oxeon} %6
+\newblock {\em oXeon TECHNOLOGIES 2014 [Internet] [cited 30 April 2017]}
+\newblock Available from http://oxeon.se/technologies/.
+
+\bibitem{DonaldL.Flaggs1982}  %7
+Donald L. Flaggs, Murat H. Kural;
+\newblock {\em Experimental Determination of the In Situ Transverse Lamina Strength in Graphite/Epoxy Laminates.}
+\newblock {\it J. Comp. Mat.} {\bf 16} 2, 1982.
+
+\bibitem{Krueger:2004}  %8
+Krueger R.;
+\newblock {\em Virtual crack closure technique: History, approach, and applications}
+\newblock {\it Appl. Mech. Rev.} {\bf 57} (2) 109--143, 2004.
+
+\bibitem{Rice:1968}  %9
+Rice J. R.;
+\newblock {\em A Path Independent Integral and the Approximate Analysis of Strain Concentration by Notches and Cracks}
+\newblock {\it J. Appl. Mech.} {\bf 35} 379--386, 1968.
+
+\bibitem{Toya:1975}  %10
+Toya M.;
+\newblock {\em A Crack Along the Interface of a Circular Inclusion Embedded in an Infinite Solid}
+\newblock {\it J. Mech. Phys.} {\bf 22} 325--348, 1975.
+
+\bibitem{Paris:1996}  %11
+Par\'is F., Ca\~no J. C., Varna J.;
+\newblock {\em The fiber-matrix interface crack — A numerical analysis using Boundary Elements}
+\newblock {\it Int. J. Fract.} {\bf 82} 1 11--29, 1996.
+
+  \end{thebibliography}
+\end{frame}
 
 \begin{frame}[plain]
 \frametitle{}

@@ -11,5 +11,8 @@
 \beamer@subsectionintoc {3}{2}{Reaction Stress at the Boundary}{17}{0}{3}
 \beamer@subsectionintoc {3}{3}{Normalization $G_{0}$}{18}{0}{3}
 \beamer@subsectionintoc {3}{4}{Energy Release Rates}{19}{0}{3}
-\beamer@sectionintoc {4}{Timeline, Conclusions \& Outlook}{22}{0}{4}
-\beamer@sectionintoc {5}{References}{25}{0}{5}
+\beamer@sectionintoc {4}{Conclusions \& Outlook}{22}{0}{4}
+\beamer@sectionintoc {5}{Appendices}{24}{0}{5}
+\beamer@subsectionintoc {5}{1}{Timeline}{25}{0}{5}
+\beamer@subsectionintoc {5}{2}{Courses \& Training}{26}{0}{5}
+\beamer@subsectionintoc {5}{3}{References}{27}{0}{5}

@@ -19,7 +19,7 @@
 
 \begin{document}
 
-\begin{tikzpicture}[scale=4.5]
+\begin{tikzpicture}[scale=2]
 %[scale=4.5,cap=round,x=1cm,y=1cm]
 
 %----------------------------------------------------------------------------------------------%
@@ -34,7 +34,7 @@
 %----------------------------------------------------------------------------------------------%
 
 \newcommand{\refSystem}[9]{
-	
+
 	\def\xO{#1}
 	\def\xlow{#2}
 	\def\xup{#3}
@@ -43,8 +43,8 @@
 	\def\zup{#6}
 	\def\ylow{#7}
 	\def\yup{#8}
-	
-	
+
+
 	\pgfmathsetmacro\cosphi{cos(30)}
 	\pgfmathsetmacro\sinphi{sin(30)}
 
@@ -73,15 +73,15 @@
 	\def\dtheta{#3}
 	\def\x{#5}
 	\def\y{#6}
-	
+
 	\pgfmathsetmacro\costhetaup{cos(\thetavalue+\dtheta)}
 	\pgfmathsetmacro\sinthetaup{sin(\thetavalue+\dtheta)}
-	
+
 	\pgfmathsetmacro\costhetabot{cos(\thetavalue-\dtheta)}
 	\pgfmathsetmacro\sinthetabot{sin(\thetavalue-\dtheta)}
-	
+
 	\def\thetaround{360+\thetavalue-\dtheta}
-	
+
 	%draw fiber surface
 	\draw[draw=#4] (\x+\R*\costhetaup,\y+\R*\sinthetaup)arc (\thetavalue+\dtheta:\thetaround:\R);
 	%draw radius

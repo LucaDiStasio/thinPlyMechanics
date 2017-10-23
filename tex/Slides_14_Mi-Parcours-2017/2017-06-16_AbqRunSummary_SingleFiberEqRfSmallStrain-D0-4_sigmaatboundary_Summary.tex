@@ -25,24 +25,25 @@
 %Tikz axis starts%
 
 \begin{axis}[width=30cm,
-title={Normal stress $\sigma_{xx}$ along the loaded boundary (right side of RVE)},
-title style={font=\fontsize{16}{8}\selectfont},
-xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\fontsize{16}{8}\selectfont},
-ylabel style={at={(axis description cs:-0.01,.5)},anchor=south,font=\fontsize{16}{8}\selectfont},
-xlabel={$z\left[\mu m\right]$},ylabel={$\sigma_{xx}\left[MPa\right]$},
+title={\bf{Normal stress $\sigma_{xx}$ along the loaded boundary (right side of RVE)}},
+title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\fontsize{44}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\fontsize{44}{40}\selectfont},
+xlabel={$\mathbf{z\left[\mu m\right]}$},ylabel={$\mathbf{\sigma_{xx}\left[MPa\right]}$},
 xmin=-100,
 xmax=100,
-ymin=41.0,
-ymax=42.0,
+ymin=41.55,
+ymax=41.88,
 tick align=outside,
-tick label style={font=\normalsize},
+tick label style={font=\huge},
 xmajorgrids,
 x grid style={lightgray!92.026143790849673!black},
 ymajorgrids,
 y grid style={lightgray!92.026143790849673!black},
-line width=0.35mm,
-legend style={draw=white!80.0!black,font=\fontsize{16}{12}\selectfont},
-legend entries={{Small Strain}},
+line width=1.25mm,
+legend style={draw=white!80.0!black,font=\fontsize{28}{24}\selectfont,row sep=15pt},
+legend entries={{$\sigma_{0}=\frac{E_{m}}{1-\nu_{m}^{2}}\varepsilon_{xx}$},{Small strain FEM}},
+legend image post style={xscale=2},
 legend cell align={left}
 ]
 
@@ -52,7 +53,7 @@ table{
 99.7083 41.6666666667
 };
 
-\addplot[red,smooth,mark=*]
+\addplot[red,smooth]
 table{
  -99.7083	 41.6585
  -99.7083	 41.6589

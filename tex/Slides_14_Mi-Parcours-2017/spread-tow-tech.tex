@@ -12,6 +12,10 @@
 
 \usetikzlibrary{arrows}
 
+
+\tikzset{
+  font={\fontsize{36pt}{32}\selectfont}}
+
 %----------------------------------------------------------------------------------------------%
 %----------------------------------------------------------------------------------------------%
 %                                            DOCUMENT STARTS
@@ -35,7 +39,7 @@
 %----------------------------------------------------------------------------------------------%
 
 \newcommand{\refSystem}[5]{
-	
+
 	\def\xlow{#1}
 	\def\xup{#2}
 	\def\ylow{#3}
@@ -62,17 +66,17 @@
 	\def\dtheta{#3}
 	\def\x{#5}
 	\def\y{#6}
-	
+
 	\pgfmathsetmacro\costhetaup{cos(\thetavalue+\dtheta)}
 	\pgfmathsetmacro\sinthetaup{sin(\thetavalue+\dtheta)}
-	
+
 	\pgfmathsetmacro\costhetabot{cos(\thetavalue-\dtheta)}
 	\pgfmathsetmacro\sinthetabot{sin(\thetavalue-\dtheta)}
-	
+
 	\def\thetaround{360+\thetavalue-\dtheta}
-	
+
 	%draw fiber surface
-	\draw[draw=#4] (\x+\R*\costhetaup,\y+\R*\sinthetaup)arc (\thetavalue+\dtheta:\thetaround:\R);
+	\draw[line width=1.25mm,draw=#4] (\x+\R*\costhetaup,\y+\R*\sinthetaup)arc (\thetavalue+\dtheta:\thetaround:\R);
 	%draw radius
 	%\draw[dashed](0,0)--(-\costhetabot,\sinthetabot);
 
@@ -92,12 +96,12 @@
 	\drawFiber{\Rf}{0}{360}{black}{\n*2*\Rf+\Rf}{\Rf-\transl};
 }
 
-\draw(-31*2*\Rf,-2.25*\Rf-\transl) -- (31.5*2*\Rf,-2.25*\Rf-\transl) --  (31.5*2*\Rf+10*\Rf*\cosproj,-2.25*\Rf-\transl+10*\Rf*\sinproj)  ;
-\draw(-31*2*\Rf,2.25*\Rf-\transl) -- (31.5*2*\Rf,2.25*\Rf-\transl) --  (31.5*2*\Rf+10*\Rf*\cosproj,2.25*\Rf-\transl+10*\Rf*\sinproj)  ;
-\draw[line width=0.75mm](-31*2*\Rf,-10*\Rf-\transl) -- (-31*2*\Rf,10*\Rf-\transl) --  (-31.5*2*\Rf+10*\Rf*\cosproj,10*\Rf-\transl+10*\Rf*\sinproj)  ;
-\draw[line width=0.75mm](31.5*2*\Rf,-10*\Rf-\transl) -- (31.5*2*\Rf,10*\Rf-\transl) -- (31.5*2*\Rf+10*\Rf*\cosproj,10*\Rf-\transl+10*\Rf*\sinproj)  ;
-\draw[line width=0.75mm](-31*2*\Rf,-10*\Rf-\transl) -- (31.5*2*\Rf,-10*\Rf-\transl) -- (31.5*2*\Rf+10*\Rf*\cosproj,-10*\Rf-\transl+10*\Rf*\sinproj)  ;
-\draw[line width=0.75mm](-31*2*\Rf,10*\Rf-\transl) -- (31.5*2*\Rf,10*\Rf-\transl) ;
+\draw[line width=1.25mm](-31*2*\Rf,-2.25*\Rf-\transl) -- (31.5*2*\Rf,-2.25*\Rf-\transl) --  (31.5*2*\Rf+10*\Rf*\cosproj,-2.25*\Rf-\transl+10*\Rf*\sinproj)  ;
+\draw[line width=1.25mm](-31*2*\Rf,2.25*\Rf-\transl) -- (31.5*2*\Rf,2.25*\Rf-\transl) --  (31.5*2*\Rf+10*\Rf*\cosproj,2.25*\Rf-\transl+10*\Rf*\sinproj)  ;
+\draw[line width=1.5mm](-31*2*\Rf,-10*\Rf-\transl) -- (-31*2*\Rf,10*\Rf-\transl) --  (-31.5*2*\Rf+10*\Rf*\cosproj,10*\Rf-\transl+10*\Rf*\sinproj)  ;
+\draw[line width=1.5mm](31.5*2*\Rf,-10*\Rf-\transl) -- (31.5*2*\Rf,10*\Rf-\transl) -- (31.5*2*\Rf+10*\Rf*\cosproj,10*\Rf-\transl+10*\Rf*\sinproj)  ;
+\draw[line width=1.5mm](-31*2*\Rf,-10*\Rf-\transl) -- (31.5*2*\Rf,-10*\Rf-\transl) -- (31.5*2*\Rf+10*\Rf*\cosproj,-10*\Rf-\transl+10*\Rf*\sinproj)  ;
+\draw[line width=1.5mm](-31*2*\Rf,10*\Rf-\transl) -- (31.5*2*\Rf,10*\Rf-\transl) ;
 
 \node[rotate=90,anchor=south] at (-32*2*\Rf,-\transl) {\Huge \bf{THIN PLY LAMINATE}};
 \node[rotate=90,anchor=south] at (-34*2*\Rf,-\transl) {};
@@ -170,8 +174,8 @@
 	\drawFiber{\Rf}{0}{360}{black}{\xt+0.85*\Rt*\cospsi}{\yt+0.85*\Rt*\sinpsi};
 }
 
-\draw[line width=0.35mm,dashed](\xt+\Rt,\yt) -- (\xt+\Rt+8*\Rf,2.25*\Rf-\transl);
-\draw[line width=0.35mm,dashed](\xt-\Rt,\yt) -- (\xt-\Rt-8*\Rf,2.25*\Rf-\transl);
+\draw[line width=1.25mm,dashed](\xt+\Rt,\yt) -- (\xt+\Rt+8*\Rf,2.25*\Rf-\transl);
+\draw[line width=1.25mm,dashed](\xt-\Rt,\yt) -- (\xt-\Rt-8*\Rf,2.25*\Rf-\transl);
 
 \def\n{1}
 \pgfmathsetmacro\xt{\n*2*\Rt}
@@ -220,15 +224,15 @@
 \pgfmathsetmacro\ylow{0.99*3*\Rt-\Rt}
 \pgfmathsetmacro\yup{1.01*3*\Rt+\Rt}
 \pgfmathsetmacro\lamthick{20*\Rf}
-\draw(-31*2*\Rf,\ylow) -- (31.5*2*\Rf,\ylow) --  (31.5*2*\Rf+10*\Rf*\cosproj,\ylow+10*\Rf*\sinproj)  ;
-\draw(-31*2*\Rf,\yup) -- (31.5*2*\Rf,\yup) --  (31.5*2*\Rf+10*\Rf*\cosproj,\yup+10*\Rf*\sinproj)  ;
-\draw[line width=0.75mm](-31*2*\Rf,\ylow-\lamthick) -- (-31*2*\Rf,\yup+\lamthick) --  (-31.5*2*\Rf+10*\Rf*\cosproj,\yup+\lamthick+10*\Rf*\sinproj)  ;
-\draw[line width=0.75mm](31.5*2*\Rf,\ylow-\lamthick) -- (31.5*2*\Rf,\yup+\lamthick) -- (31.5*2*\Rf+10*\Rf*\cosproj,\yup+\lamthick+10*\Rf*\sinproj)  ;
-\draw[line width=0.75mm](-31*2*\Rf,\ylow-\lamthick) -- (31.5*2*\Rf,\ylow-\lamthick) -- (31.5*2*\Rf+10*\Rf*\cosproj,\ylow-\lamthick+10*\Rf*\sinproj)  ;
-\draw[line width=0.75mm](-31*2*\Rf,\yup+\lamthick) -- (31.5*2*\Rf,\yup+\lamthick) ;
+\draw[line width=1.25mm](-31*2*\Rf,\ylow) -- (31.5*2*\Rf,\ylow) --  (31.5*2*\Rf+10*\Rf*\cosproj,\ylow+10*\Rf*\sinproj)  ;
+\draw[line width=1.25mm](-31*2*\Rf,\yup) -- (31.5*2*\Rf,\yup) --  (31.5*2*\Rf+10*\Rf*\cosproj,\yup+10*\Rf*\sinproj)  ;
+\draw[line width=1.5mm](-31*2*\Rf,\ylow-\lamthick) -- (-31*2*\Rf,\yup+\lamthick) --  (-31.5*2*\Rf+10*\Rf*\cosproj,\yup+\lamthick+10*\Rf*\sinproj)  ;
+\draw[line width=1.5mm](31.5*2*\Rf,\ylow-\lamthick) -- (31.5*2*\Rf,\yup+\lamthick) -- (31.5*2*\Rf+10*\Rf*\cosproj,\yup+\lamthick+10*\Rf*\sinproj)  ;
+\draw[line width=1.5mm](-31*2*\Rf,\ylow-\lamthick) -- (31.5*2*\Rf,\ylow-\lamthick) -- (31.5*2*\Rf+10*\Rf*\cosproj,\ylow-\lamthick+10*\Rf*\sinproj)  ;
+\draw[line width=1.5mm](-31*2*\Rf,\yup+\lamthick) -- (31.5*2*\Rf,\yup+\lamthick) ;
 
-\draw[line width=0.75mm,dashed](12*\Rf,5*\Rt) -- (0,4*\Rt);
-\node[anchor=south west] at (12*\Rf,5*\Rt) {\Huge \bf{TOW $\approx12/24k$ fibers}};
+\draw[line width=1.25mm,dashed](12*\Rf,5*\Rt) -- (0,4*\Rt);
+\node[anchor=south west] at (12*\Rf,5*\Rt) {\Huge \bf{TOW $\mathbf{\approx12/24k}$ fibers}};
 
 \node[rotate=90,anchor=south] at (-32*2*\Rf,3*\Rt) {\Huge \bf{CONVENTIONAL LAMINATE}};
 \node[rotate=90,anchor=north] at (34*2*\Rf+10*\Rf*\cosproj,-\transl) {};

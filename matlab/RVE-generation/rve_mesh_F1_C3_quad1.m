@@ -1,23 +1,23 @@
 function[nodes,edges,elements]=rve_mesh_F1_C1_quad1(isUpperBounded,isLowerBounded,isCohesive,Rf,Vff,tratio,theta,deltatheta,f1,f2,f3,N1,N2,N3,N4,N5,N6)
 %%
 %==============================================================================
-% Copyright (c) 2016 Université de Lorraine & Luleå tekniska universitet
+% Copyright (c) 2016 Universitï¿½ de Lorraine & Luleï¿½ tekniska universitet
 % Author: Luca Di Stasio <luca.distasio@gmail.com>
 %                        <luca.distasio@ingpec.eu>
 %
 % Redistribution and use in source and binary forms, with or without
 % modification, are permitted provided that the following conditions are met:
-% 
-% 
+%
+%
 % Redistributions of source code must retain the above copyright
 % notice, this list of conditions and the following disclaimer.
 % Redistributions in binary form must reproduce the above copyright
 % notice, this list of conditions and the following disclaimer in
 % the documentation and/or other materials provided with the distribution
-% Neither the name of the Université de Lorraine or Luleå tekniska universitet
+% Neither the name of the Universitï¿½ de Lorraine or Luleï¿½ tekniska universitet
 % nor the names of its contributors may be used to endorse or promote products
 % derived from this software without specific prior written permission.
-% 
+%
 % THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 % AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 % IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -32,33 +32,33 @@ function[nodes,edges,elements]=rve_mesh_F1_C1_quad1(isUpperBounded,isLowerBounde
 %==============================================================================
 %
 %  DESCRIPTION
-%  
-%  A function to perform 
+%
+%  A function to perform
 %
 %  Input: isBounded = true; % flag for model type
-% 
-% Rf = 1; %[10^-6 m] Fiber diameter in micrometers. 
-%         % Carbon fibers have a tipical diameter between 5 and 10 
+%
+% Rf = 1; %[10^-6 m] Fiber diameter in micrometers.
+%         % Carbon fibers have a tipical diameter between 5 and 10
 %         % micrometers, glass fibers between 3 and 20
 % Vff = 0.6; %[-] Fiber volume fraction
-% tratio = 0.6; % [-] ratio of [0°] ply thickness to [90°] ply thickness
-% theta = 30; %[°] angular position of crack
+% tratio = 0.6; % [-] ratio of [0ï¿½] ply thickness to [90ï¿½] ply thickness
+% theta = 30; %[ï¿½] angular position of crack
 % theta = theta*pi/180;
-% deltatheta = 10; %[°] angular aperture of crack
+% deltatheta = 10; %[ï¿½] angular aperture of crack
 % deltatheta = deltatheta*pi/180;
-% 
+%
 % f1 = 0.5; %[-] Innermost square mesh region side defined by 2*f1*Rf
 % f2 = 0.77; %[-] Inner circular mesh region radius defined by f2*Rf
 % f3 = 1.05; %[-] Outer circular mesh region radius defined by f2*Rf
-% 
+%
 % %Number of elements:
-% N1 = 20; %[-] Notice that angular resolution is equal to 90°/N1
-% N2 = 10; %[-] 
-% N3 = 8; %[-] 
-% N4 = 5; %[-] 
-% N5 = 20; %[-] 
-% N6 = 20; %[-] 
-%  Output: 
+% N1 = 20; %[-] Notice that angular resolution is equal to 90ï¿½/N1
+% N2 = 10; %[-]
+% N3 = 8; %[-]
+% N4 = 5; %[-]
+% N5 = 20; %[-]
+% N6 = 20; %[-]
+%  Output:
 %
 %%
 
@@ -101,7 +101,7 @@ c1 = zeros(1,8);
 c2 = zeros(1,8);
 c3 = zeros(1,8);
 c4 = zeros(1,8);
- 
+
 c1(1,1:2) = A;
 c2(1,1:2) = B;
 c3(1,1:2) = C;
@@ -235,7 +235,7 @@ c1 = zeros(1,8);
 c2 = zeros(1,8);
 c3 = zeros(1,8);
 c4 = zeros(1,8);
- 
+
 c1(1,1:2) = A;
 c2(1,1:2) = B;
 c3(1,1:2) = C;
@@ -291,7 +291,7 @@ for i=1:N5
 end
 
 %-------------------------------------------------------------------------%
-%-            Section 6 (bounding 0° layer, if present)                  -%
+%-            Section 6 (bounding 0ï¿½ layer, if present)                  -%
 %-------------------------------------------------------------------------%
 
 if isUpperBounded && isLowerBounded
@@ -317,7 +317,7 @@ nodes = [part5;...
             part3;...
             part2;...
             part1];
-        
+
 if isUpperBounded || isLowerBounded
     nodes = [nodes;...
             part6];
@@ -406,7 +406,7 @@ if isCohesive
     cohesiveEl(1:end-1,3) = 4*N1*(N5+N4+1) + (2:4*N1);
     cohesiveEl(end,3) = 4*N1*(N5+N4+1) + 1;
     cohesiveEl(:,4) = 4*N1*(N5+N4+1) + (1:4*N1);
-    
+
     cohesiveEd = zeros(4*N1,2);
     cohesiveEd(1:4*N1,1) = cohesiveEl(1:4*N1,1);
     cohesiveEd(1:4*N1,2) = cohesiveEl(1:4*N1,4);
@@ -436,17 +436,17 @@ if isUpperBounded && isLowerBounded
         boundedBot((j-1)*N1+1:j*N1,2) = 4*N1*(N5+N4+1) + 4*N1*(N3+N2) + (N1+1)*(N1+1) + (j-1)*(N1+1) + (2:N1+1)';
         boundedBot((j-1)*N1+1:j*N1,3) = 4*N1*(N5+N4+1) + 4*N1*(N3+N2) + (N1+1)*(N1+1) + j*(N1+1) + (2:N1+1)';
         boundedBot((j-1)*N1+1:j*N1,4) = 4*N1*(N5+N4+1) + 4*N1*(N3+N2) + (N1+1)*(N1+1) + j*(N1+1) + (1:N1)';
-        
+
         boundedUp((j-1)*N1+1:j*N1,1) = 4*N1*(N5+N4+1) + 4*N1*(N3+N2) + (N1+1)*(N1+1) + (N1+1)*(N1+1) + (j-1)*(N1+1) + (1:N1)';
         boundedUp((j-1)*N1+1:j*N1,2) = 4*N1*(N5+N4+1) + 4*N1*(N3+N2) + (N1+1)*(N1+1) + (N1+1)*(N1+1) + (j-1)*(N1+1) + (2:N1+1)';
         boundedUp((j-1)*N1+1:j*N1,3) = 4*N1*(N5+N4+1) + 4*N1*(N3+N2) + (N1+1)*(N1+1) + (N1+1)*(N1+1) + j*(N1+1) + (2:N1+1)';
         boundedUp((j-1)*N1+1:j*N1,4) = 4*N1*(N5+N4+1) + 4*N1*(N3+N2) + (N1+1)*(N1+1) + (N1+1)*(N1+1) + j*(N1+1) + (1:N1)';
     end
-        
+
     elements = [elements;...
                 boundedUp;...
                 boundedBot];
-            
+
     edgesBot = zeros((2*N1+1)*N6+N1,2);
     edgesUp = zeros((2*N1+1)*N6+N1,2);
     for j=1:N6
@@ -456,7 +456,7 @@ if isUpperBounded && isLowerBounded
         edgesBot((j-1)*(2*N1+1)+2:2:j*(2*N1+1)-1,2) = boundedBot((j-1)*N1+1:j*N1,2);
         edgesBot(j*(2*N1+1),1) = boundedBot(j*N1,2);
         edgesBot(j*(2*N1+1),2) = boundedBot(j*N1,3);
-        
+
         edgesUp((j-1)*(2*N1+1)+1:2:j*(2*N1+1)-2,1) = boundedUp((j-1)*N1+1:j*N1,1);
         edgesUp((j-1)*(2*N1+1)+1:2:j*(2*N1+1)-2,2) = boundedUp((j-1)*N1+1:j*N1,4);
         edgesUp((j-1)*(2*N1+1)+2:2:j*(2*N1+1)-1,1) = boundedUp((j-1)*N1+1:j*N1,1);
@@ -468,7 +468,7 @@ if isUpperBounded && isLowerBounded
     edgesBot((2*N1+1)*N6+1:(2*N1+1)*N6+N1,2) = boundedBot((N6-1)*N1+1:N1*N6,3);
     edgesUp((2*N1+1)*N6+1:(2*N1+1)*N6+N1,1) = boundedUp((N6-1)*N1+1:N1*N6,4);
     edgesUp((2*N1+1)*N6+1:(2*N1+1)*N6+N1,2) = boundedUp((N6-1)*N1+1:N1*N6,3);
-    
+
     edges = [edges;...
              edgesUp;...
              edgesBot];
@@ -480,10 +480,10 @@ elseif isUpperBounded
         boundedUp((j-1)*N1+1:j*N1,3) = 4*N1*(N5+N4+1) + 4*N1*(N3+N2) + (N1+1)*(N1+1) + j*(N1+1) + (2:N1+1)';
         boundedUp((j-1)*N1+1:j*N1,4) = 4*N1*(N5+N4+1) + 4*N1*(N3+N2) + (N1+1)*(N1+1) + j*(N1+1) + (1:N1)';
     end
-        
+
     elements = [elements;...
                 boundedUp];
-            
+
     edgesUp = zeros((2*N1+1)*N6+N1,2);
     for j=1:N6
         edgesUp((j-1)*(2*N1+1)+1:2:j*(2*N1+1)-2,1) = boundedUp((j-1)*N1+1:j*N1,1);
@@ -495,7 +495,7 @@ elseif isUpperBounded
     end
     edgesUp((2*N1+1)*N6+1:(2*N1+1)*N6+N1,1) = boundedUp((N6-1)*N1+1:N1*N6,4);
     edgesUp((2*N1+1)*N6+1:(2*N1+1)*N6+N1,2) = boundedUp((N6-1)*N1+1:N1*N6,3);
-    
+
     edges = [edges;...
              edgesUp];
 elseif isLowerBounded
@@ -506,10 +506,10 @@ elseif isLowerBounded
         boundedBot((j-1)*N1+1:j*N1,3) = 4*N1*(N5+N4+1) + 4*N1*(N3+N2) + (N1+1)*(N1+1) + j*(N1+1) + (2:N1+1)';
         boundedBot((j-1)*N1+1:j*N1,4) = 4*N1*(N5+N4+1) + 4*N1*(N3+N2) + (N1+1)*(N1+1) + j*(N1+1) + (1:N1)';
     end
-        
+
     elements = [elements;...
                 boundedBot];
-            
+
     edgesBot = zeros((2*N1+1)*N6+N1,2);
     for j=1:N6
         edgesBot((j-1)*(2*N1+1)+1:2:j*(2*N1+1)-2,1) = boundedBot((j-1)*N1+1:j*N1,1);
@@ -521,7 +521,7 @@ elseif isLowerBounded
     end
     edgesBot((2*N1+1)*N6+1:(2*N1+1)*N6+N1,1) = boundedBot((N6-1)*N1+1:N1*N6,4);
     edgesBot((2*N1+1)*N6+1:(2*N1+1)*N6+N1,2) = boundedBot((N6-1)*N1+1:N1*N6,3);
-    
+
     edges = [edges;...
              edgesBot];
 end
@@ -539,7 +539,7 @@ gammaEl2 = [];
 gammaEl3 = [];
 
 if ~isCohesive
-    
+
 end
 
 return

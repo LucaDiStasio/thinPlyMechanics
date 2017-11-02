@@ -123,7 +123,7 @@ for d=1:length(debonds)
     for n=1:nEls
       x = nodes(elements(extInterfaceElements(e),n),1);
       y = nodes(elements(extInterfaceElements(e),n),2);
-      if ~isempty(find(N0core.+elements(extInterfaceElements(e),n)==intInterfaceNodes)) && cotheta
+      if ~isempty(find(N0core.+elements(extInterfaceElements(e),n)==intInterfaceNodes))
 
       end
     end

@@ -1,4 +1,4 @@
-function[projectName]=writeABQrve2D(logfullfile,inpfullfile)
+function[projectName]=writeABQmatrix2D(spaceDim,elementType,elementOrder,workDir,index)
 %%
 %==============================================================================
 % Copyright (c) 2016 - 2017 Université de Lorraine & Luleå tekniska universitet
@@ -33,46 +33,13 @@ function[projectName]=writeABQrve2D(logfullfile,inpfullfile)
 %
 %  DESCRIPTION
 %
-%  A function to generate FEM models of 2D RVEs with ABAQUS
+%  A function to generate FEM models of RVEs with ABAQUS, here space
+%  dimension selection takes place
 %
 %  Output:
 %
 %%
 
-writeToLogFile(logfullfile,'In function: writeABQrve2D\n')
-writeToLogFile(logfullfile,'\nStarting timer\n')
-start = tic;
 
-%% PREAMBLE
-writeToLogFile(logfullfile,['    Calling function ', 'writeABQpreamble',' ...\n']);
-writeABQpreamble(logfullfile,inpfullfile,title,subtitle,headerDict,holder,author,heading)
-writeToLogFile(logfullfile,['    ... done.','\n'])
-
-%% NODES AND ELEMENTS SECTION
-
-writeABQmeshsec(abqpath);
-
-for i=1:length(fibers)
-  [Ntot,Etot]=writeABQfiber2D(logfullfile,inpfullfile,...
-                                        i,padlength,elType,elOrder,ABQel,...
-                                        xC,yC,Rcore,R,...
-                                        startNode,startEl,...
-                                        fiberMaterial,matrixMaterial,debonds,...
-                                        thetasCore,deltasCore,lthetaIntAnnulus,lRIntAnnulus,deltasIntAnnulus,NRIntAnnulus,lthetaExtAnnulus,lRExtAnnulus,deltasExtAnnulus,NRExtAnnulus)
-
-end
-
-%% SURFACES AND SURFACE INTERACTIONS SECTION
-
-%% MATERIALS DEFINITION AND ASSIGNMENT SECTION
-
-%% BOUNDARY CONDITIONS DEFINITION SECTION
-
-%% STEPS SECTION: LOADS, IMPOSED DISPLACEMENTS AND OUTPUT REQUESTS
-
-elapsed = toc(start);
-writeToLogFile(logfullfile,'Timer stopped.\n')
-writeToLogFile(logfullfile,['\nELAPSED WALLCLOCK TIME: ', num2str(elapsed),' [s]\n\n'])
-writeToLogFile(logfullfile,'Exiting function: writeABQrve2D\n')
 
 return

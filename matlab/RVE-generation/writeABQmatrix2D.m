@@ -1,6 +1,6 @@
-function[projectName]=writeABQrve(spaceDim,elementType,elementOrder,workDir,index)
+function[projectName]=writeABQmatrix2D(logfullfile,inpfullfile)
 %%
-%==============================================================================
+%%==============================================================================
 % Copyright (c) 2016 - 2017 Université de Lorraine & Luleå tekniska universitet
 % Author: Luca Di Stasio <luca.distasio@gmail.com>
 %                        <luca.distasio@ingpec.eu>
@@ -40,15 +40,6 @@ function[projectName]=writeABQrve(spaceDim,elementType,elementOrder,workDir,inde
 %
 %%
 
-switch spaceDim
-    case 1 % 2D
-        projectName = writeABQrve2D(elementType,elementOrder,workDir,index);
-    case 2.5 % 2&1/2 D
-        projectName = writeABQrve2andHalfD(elementType,elementOrder,workDir,index);
-    case 3 % 3D
-        projectName = writeABQrve3D(elementType,elementOrder,workDir,index);
-    otherwise
-        projectName = writeABQrve2D(elementType,elementOrder,workDir,index);
-end
+
 
 return

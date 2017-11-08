@@ -50,21 +50,34 @@ writeToLogFile(logfullfile,['    ... done.','\n'])
 
 %% NODES AND ELEMENTS SECTION
 
+writeToLogFile(logfullfile,['    Calling function ', 'writeABQmeshsec',' ...\n']);
 writeABQmeshsec(abqpath);
+writeToLogFile(logfullfile,['    ... done.','\n'])
 
 for i=1:length(fibers)
-  [Ntot,Etot]=writeABQfiber2D(logfullfile,inpfullfile,...
+  writeToLogFile(logfullfile,['    Calling function ', 'writeABQfiber2D',' ...\n']);
+  [Ntot,Etot] = writeABQfiber2D(logfullfile,inpfullfile,...
                                         i,padlength,elType,elOrder,ABQel,...
                                         xC,yC,Rcore,R,...
                                         startNode,startEl,...
                                         fiberMaterial,matrixMaterial,debonds,...
-                                        thetasCore,deltasCore,lthetaIntAnnulus,lRIntAnnulus,deltasIntAnnulus,NRIntAnnulus,lthetaExtAnnulus,lRExtAnnulus,deltasExtAnnulus,NRExtAnnulus)
+                                        thetasCore,deltasCore,...
+                                        lthetaIntAnnulus,lRIntAnnulus,deltasIntAnnulus,NRIntAnnulus,...
+                                        lthetaExtAnnulus,lRExtAnnulus,deltasExtAnnulus,NRExtAnnulus);
+  writeToLogFile(logfullfile,['    ... done.','\n'])
 
 end
+
+writeToLogFile(logfullfile,['    Calling function ', 'writeABQmatrix2D',' ...\n']);
+[Ntot,Etot]=writeABQmatrix2D(logfullfile,inpfullfile,numFiber,padlength,elType,elOrder,ABQel,startNode,startEl,x0,y0,lx,ly,Nx,Ny);
+writeToLogFile(logfullfile,['    ... done.','\n'])
 
 %% SURFACES AND SURFACE INTERACTIONS SECTION
 
 %% MATERIALS DEFINITION AND ASSIGNMENT SECTION
+writeToLogFile(logfullfile,['    Calling function ', 'writeABQmaterialsdefinition',' ...\n']);
+writeABQmaterialsdefinition(logfullfile,inpfullfile,matDBfolder,materialslist,unitConvFactor);
+writeToLogFile(logfullfile,['    ... done.','\n'])
 
 %% BOUNDARY CONDITIONS DEFINITION SECTION
 

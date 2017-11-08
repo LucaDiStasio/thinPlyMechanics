@@ -1,4 +1,4 @@
-function[projectName]=writeABQmatrix2D(spaceDim,elementType,elementOrder,workDir,index)
+function[projectName]=writeABQsurfacedefinitions(spaceDim,elementType,elementOrder,workDir,index)
 %%
 %==============================================================================
 % Copyright (c) 2016 - 2017 Université de Lorraine & Luleå tekniska universitet
@@ -39,7 +39,13 @@ function[projectName]=writeABQmatrix2D(spaceDim,elementType,elementOrder,workDir
 %  Output:
 %
 %%
+writeToLogFile(logfullfile,'In function: writeABQsurfacedefinitions\n')
+writeToLogFile(logfullfile,'\nStarting timer\n')
+start = tic;
 
-
+elapsed = toc(start);
+writeToLogFile(logfullfile,'Timer stopped.\n')
+writeToLogFile(logfullfile,['\nELAPSED WALLCLOCK TIME: ', num2str(elapsed),' [s]\n\n'])
+writeToLogFile(logfullfile,'Exiting function: writeABQsurfacedefinitions\n')
 
 return

@@ -1,4 +1,4 @@
-function[projectName]=writeABQsurfacedefinitions(spaceDim,elementType,elementOrder,workDir,index)
+function[projectName]=writeABQsurfacedefinitions(logfullfile,inpfullfile)
 %%
 %==============================================================================
 % Copyright (c) 2016 - 2017 Université de Lorraine & Luleå tekniska universitet

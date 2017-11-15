@@ -54,6 +54,9 @@ writeToLogFile(logfullfile,['    Calling function ', 'writeABQmeshsec',' ...\n']
 writeABQmeshsec(abqpath);
 writeToLogFile(logfullfile,['    ... done.','\n'])
 
+padlength = length(fibers);
+startNode = 1;
+startEl = 1;
 for i=1:length(fibers)
   writeToLogFile(logfullfile,['    Calling function ', 'writeABQfiber2D',' ...\n']);
   [Ntot,Etot] = writeABQfiber2D(logfullfile,inpfullfile,...
@@ -65,7 +68,8 @@ for i=1:length(fibers)
                                         lthetaIntAnnulus,lRIntAnnulus,deltasIntAnnulus,NRIntAnnulus,...
                                         lthetaExtAnnulus,lRExtAnnulus,deltasExtAnnulus,NRExtAnnulus);
   writeToLogFile(logfullfile,['    ... done.','\n'])
-
+  startNode = startNode + Ntot;
+  startEl = startEl + Etot;
 end
 
 writeToLogFile(logfullfile,['    Calling function ', 'writeABQmatrix2D',' ...\n']);

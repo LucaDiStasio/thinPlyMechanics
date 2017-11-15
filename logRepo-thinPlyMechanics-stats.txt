@@ -1,0 +1,391 @@
+commit 557d2fc126ac60fca7332775f9190dfd212f63ae
+Author: LucaDiStasio <luca.distasio@gmail.com>
+Date:   Wed Nov 8 19:23:07 2017 +0100
+
+    commit on 08/11/2017 at 19:23
+
+ .../RVE-generation/writeABQmaterialsdefinition.m   | 90 ++++++++++++++++++++++
+ matlab/RVE-generation/writeABQmatrix2D.m           | 79 ++++++++++++++++++-
+ matlab/RVE-generation/writeABQrve2D.m              | 17 +++-
+ ...erialregions.m => writeABQsurfacedefinitions.m} | 10 ++-
+ .../RVE-generation/writeABQsurfaceinteractions.m   | 45 -----------
+ 5 files changed, 190 insertions(+), 51 deletions(-)
+
+commit d84c6d0c592fdff344771aefe2a909fae61b2bee
+Author: LucaDiStasio <luca.distasio@gmail.com>
+Date:   Sat Nov 4 10:21:13 2017 +0100
+
+    commit on 04/11/2017 at 10:21
+
+ matlab/RVE-generation/writeABQboundaryconditions.m |  45 ++
+ matlab/RVE-generation/writeABQfiber2D.m            | 591 +++++++++++++++++++--
+ matlab/RVE-generation/writeABQmaterialregions.m    |  45 ++
+ matlab/RVE-generation/writeABQmatrix2D.m           |  15 +-
+ matlab/RVE-generation/writeABQpreamble.m           |  77 +++
+ matlab/RVE-generation/writeABQrve2D.m              |  62 ++-
+ matlab/RVE-generation/writeABQstepsection.m        |  45 ++
+ .../RVE-generation/writeABQsurfaceinteractions.m   |  45 ++
+ 8 files changed, 863 insertions(+), 62 deletions(-)
+
+commit 4c031d3e244adf9447a615161aff642e2cbf8a34
+Author: LucaDiStasio <luca.distasio@gmail.com>
+Date:   Thu Nov 2 19:11:12 2017 +0100
+
+    commit on 02/11/2017 at 19:11
+
+ matlab/RVE-generation/writeABQfiber2D.m | 470 ++++++++++++++++++++++++++++++--
+ 1 file changed, 452 insertions(+), 18 deletions(-)
+
+commit e5198900a52a083208db29e22233ba73693b248c
+Author: LucaDiStasio <luca.distasio@gmail.com>
+Date:   Thu Nov 2 11:06:25 2017 +0100
+
+    commit on 02/11/2017 at 11:06
+
+ matlab/RVE-generation/rve_mesh_create_project.asv | 2348 ---------------------
+ matlab/RVE-generation/writeABQfiber2D.m           |    2 +-
+ 2 files changed, 1 insertion(+), 2349 deletions(-)
+
+commit 3db7e0f1e184da902a95e9ac9129ebe4d0167adb
+Author: LucaDiStasio <luca.distasio@gmail.com>
+Date:   Wed Nov 1 17:47:12 2017 +0100
+
+    commit on 01/11/2017 at 17:47
+
+ matlab/RVE-generation/writeABQfiber2D.m  | 155 +++++++++++++++++++++++++++++++
+ matlab/RVE-generation/writeABQmatrix2D.m |  54 +++++++++++
+ 2 files changed, 209 insertions(+)
+
+commit 0096d78011e699b141c339b2aa166228f7f6e929
+Author: LucaDiStasio <luca.distasio@gmail.com>
+Date:   Mon Oct 30 16:59:24 2017 +0100
+
+    committing changes on 30/10/2017 at 16:59:24
+
+ matlab/RVE-generation/rve_mesh_F1_C3_quad1.m | 80 ++++++++++++++--------------
+ 1 file changed, 40 insertions(+), 40 deletions(-)
+
+commit 8ddcfe2922fbad480c82bdcc2a65e10b9e186739
+Author: LucaDiStasio <luca.distasio@gmail.com>
+Date:   Mon Oct 23 18:56:03 2017 +0200
+
+    committing changes on 23/10/2017 at 18:56:3
+
+ ...qRfSmallStrain-D0-4_sigmaatboundary_Summary.tex |   3 +-
+ ...berEqRfFiniteStrain_sigmaatboundary_Summary.tex |   3 +-
+ ..._SingleFiberEqRfSmallStrain-D0-4_G0_Summary.aux |   1 +
+ ..._SingleFiberEqRfSmallStrain-D0-4_G0_Summary.pdf | Bin 80393 -> 54757 bytes
+ ..._SingleFiberEqRfSmallStrain-D0-4_G0_Summary.tex | 104 +++++
+ ...qRfSmallStrain-D0-4_sigmaatboundary_Summary.pdf | Bin 86927 -> 60119 bytes
+ ...qRfSmallStrain-D0-4_sigmaatboundary_Summary.tex |  25 +-
+ ...berEqRfFiniteStrain_sigmaatboundary_Summary.pdf | Bin 144841 -> 61101 bytes
+ ...berEqRfFiniteStrain_sigmaatboundary_Summary.tex | 485 +--------------------
+ ...SingleFiberEqRfSmallFiniteStrain_G0_Summary.pdf | Bin 85977 -> 54791 bytes
+ ...SingleFiberEqRfSmallFiniteStrain_G0_Summary.tex |  29 +-
+ ...07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GI.aux |   1 +
+ ...07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GI.pdf | Bin 99705 -> 61227 bytes
+ ...07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GI.tex | 284 ++++++++++++
+ ...7-10_AbqRunSummary_SmallStrain_M-F-VCCT_GII.aux |   1 +
+ ...7-10_AbqRunSummary_SmallStrain_M-F-VCCT_GII.pdf | Bin 102164 -> 62823 bytes
+ ...7-10_AbqRunSummary_SmallStrain_M-F-VCCT_GII.tex | 295 +++++++++++++
+ ...-10_AbqRunSummary_SmallStrain_M-F-VCCT_GTOT.aux |   1 +
+ ...-10_AbqRunSummary_SmallStrain_M-F-VCCT_GTOT.pdf | Bin 110783 -> 72406 bytes
+ ...-10_AbqRunSummary_SmallStrain_M-F-VCCT_GTOT.tex | 285 ++++++++++++
+ .../FEMfiberMatrixInterfaceProblem.pdf             | Bin 46868 -> 46801 bytes
+ .../FEMfiberMatrixInterfaceProblem.tex             |   2 +-
+ .../Flaggs-Kural_InSituTransverseStrength.aux      |   1 +
+ .../Flaggs-Kural_InSituTransverseStrength.pdf      | Bin 67483 -> 40526 bytes
+ ...laggs-Kural_InSituTransverseStrength.synctex.gz | Bin 4381 -> 0 bytes
+ .../Flaggs-Kural_InSituTransverseStrength.tex      |  16 +-
+ tex/Slides_14_Mi-Parcours-2017/J-integral.aux      |   1 +
+ tex/Slides_14_Mi-Parcours-2017/J-integral.pdf      | Bin 23461 -> 22238 bytes
+ .../J-integral.synctex.gz                          | Bin 3034 -> 0 bytes
+ tex/Slides_14_Mi-Parcours-2017/J-integral.tex      |  68 +--
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.aux  |  54 ++-
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.nav  |  45 +-
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.out  |   7 +-
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.pdf  | Bin 5066258 -> 4927877 bytes
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.tex  | 110 +++--
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.toc  |   7 +-
+ tex/Slides_14_Mi-Parcours-2017/VCCT.aux            |   1 +
+ tex/Slides_14_Mi-Parcours-2017/VCCT.pdf            | Bin 22972 -> 21824 bytes
+ tex/Slides_14_Mi-Parcours-2017/VCCT.synctex.gz     | Bin 3111 -> 0 bytes
+ tex/Slides_14_Mi-Parcours-2017/VCCT.tex            |  52 +--
+ .../laminate-section.aux                           |   1 +
+ .../laminate-section.tex                           |  18 +-
+ tex/Slides_14_Mi-Parcours-2017/spread-tow-tech.aux |   1 +
+ tex/Slides_14_Mi-Parcours-2017/spread-tow-tech.pdf | Bin 53929 -> 44880 bytes
+ .../spread-tow-tech.synctex.gz                     | Bin 2818 -> 0 bytes
+ tex/Slides_14_Mi-Parcours-2017/spread-tow-tech.tex |  50 ++-
+ 46 files changed, 1272 insertions(+), 679 deletions(-)
+
+commit a1f191a74d5b8b521d826756c89867ab9729fe92
+Author: LucaDiStasio <luca.distasio@gmail.com>
+Date:   Sat Oct 21 21:57:44 2017 +0200
+
+    committing changes on 21/10/2017 at 21:57:44
+
+ tex/MiParcours2017/2017-03-03_AbqRunSummary_Gs.aux |    1 +
+ tex/MiParcours2017/2017-03-03_AbqRunSummary_Gs.pdf |  Bin 0 -> 102218 bytes
+ .../2017-03-03_AbqRunSummary_Gs.synctex.gz         |  Bin 0 -> 5430 bytes
+ tex/MiParcours2017/2017-03-03_AbqRunSummary_Gs.tex |  250 ++
+ .../2017-03-03_AbqRunSummary_modeRatios.aux        |    1 +
+ .../2017-03-03_AbqRunSummary_modeRatios.pdf        |  Bin 0 -> 95136 bytes
+ .../2017-03-03_AbqRunSummary_modeRatios.synctex.gz |  Bin 0 -> 5474 bytes
+ .../2017-03-03_AbqRunSummary_modeRatios.tex        |  188 ++
+ .../Flaggs-Kural_InSituTransverseStrength.aux      |    1 +
+ .../Flaggs-Kural_InSituTransverseStrength.pdf      |  Bin 0 -> 67395 bytes
+ ...laggs-Kural_InSituTransverseStrength.synctex.gz |  Bin 0 -> 4405 bytes
+ .../Flaggs-Kural_InSituTransverseStrength.tex      |  103 +
+ tex/MiParcours2017/JPCSLaTeXGuidelines.dvi         |  Bin 0 -> 32640 bytes
+ tex/MiParcours2017/JPCSLaTeXGuidelines.pdf         | 2428 ++++++++++++++++++++
+ tex/MiParcours2017/JPCSLaTeXGuidelines.tex         |  502 ++++
+ .../LEFM2DsRVEsFsDdepverdispBCULappAxialDispLR.aux |    1 +
+ .../LEFM2DsRVEsFsDdepverdispBCULappAxialDispLR.pdf |  Bin 0 -> 49929 bytes
+ ...sRVEsFsDdepverdispBCULappAxialDispLR.synctex.gz |  Bin 0 -> 4882 bytes
+ .../LEFM2DsRVEsFsDdepverdispBCULappAxialDispLR.tex |  299 +++
+ .../LEFM2DsRVEsFsDfreeBCULappAxialDispLR.aux       |    1 +
+ .../LEFM2DsRVEsFsDfreeBCULappAxialDispLR.pdf       |  Bin 0 -> 49501 bytes
+ ...LEFM2DsRVEsFsDfreeBCULappAxialDispLR.synctex.gz |  Bin 0 -> 4406 bytes
+ .../LEFM2DsRVEsFsDfreeBCULappAxialDispLR.tex       |  299 +++
+ .../LEFM2DsRVEsFsDhomoBCULappAxialDispLR.aux       |    1 +
+ .../LEFM2DsRVEsFsDhomoBCULappAxialDispLR.pdf       |  Bin 0 -> 58123 bytes
+ ...LEFM2DsRVEsFsDhomoBCULappAxialDispLR.synctex.gz |  Bin 0 -> 5794 bytes
+ .../LEFM2DsRVEsFsDhomoBCULappAxialDispLR.tex       |  299 +++
+ tex/MiParcours2017/MiParcours2017.aux              |  102 +
+ tex/MiParcours2017/MiParcours2017.pdf              |  Bin 0 -> 1404778 bytes
+ tex/MiParcours2017/MiParcours2017.tex              |  248 ++
+ tex/MiParcours2017/abq-crack-theta-100.png         |  Bin 0 -> 709002 bytes
+ tex/MiParcours2017/abq-crack-theta-15.png          |  Bin 0 -> 430885 bytes
+ tex/MiParcours2017/boundedRVE_cc.aux               |    1 +
+ tex/MiParcours2017/boundedRVE_cc.pdf               |  Bin 0 -> 61271 bytes
+ tex/MiParcours2017/boundedRVE_cc.synctex.gz        |  Bin 0 -> 6268 bytes
+ tex/MiParcours2017/boundedRVE_cc.tex               |  280 +++
+ tex/MiParcours2017/cpus-time.aux                   |    1 +
+ tex/MiParcours2017/cpus-time.pdf                   |  Bin 0 -> 58094 bytes
+ tex/MiParcours2017/cpus-time.synctex.gz            |  Bin 0 -> 4029 bytes
+ tex/MiParcours2017/cpus-time.tex                   |  134 ++
+ tex/MiParcours2017/iopams.sty                      |   87 +
+ tex/MiParcours2017/iopart-num.zip                  |  Bin 0 -> 65485 bytes
+ tex/MiParcours2017/jpconf.cls                      |  957 ++++++++
+ tex/MiParcours2017/jpconf11.clo                    |  141 ++
+ tex/MiParcours2017/name.eps                        |   16 +
+ tex/MiParcours2017/periodicRVE_cc.aux              |    1 +
+ tex/MiParcours2017/periodicRVE_cc.pdf              |  Bin 0 -> 49433 bytes
+ tex/MiParcours2017/periodicRVE_cc.synctex.gz       |  Bin 0 -> 5115 bytes
+ tex/MiParcours2017/periodicRVE_cc.tex              |  265 +++
+ tex/MiParcours2017/refs.tex                        |   49 +
+ tex/MiParcours2017/singleRVE_cc.tex                |  247 ++
+ tex/MiParcours2017/singleRVEs.aux                  |    1 +
+ tex/MiParcours2017/singleRVEs.pdf                  |  Bin 0 -> 66775 bytes
+ tex/MiParcours2017/singleRVEs.synctex.gz           |  Bin 0 -> 1940 bytes
+ tex/MiParcours2017/singleRVEs.tex                  |   46 +
+ ...qRfSmallStrain-D0-4_sigmaatboundary_Summary.aux |    1 +
+ ...qRfSmallStrain-D0-4_sigmaatboundary_Summary.pdf |  Bin 0 -> 86927 bytes
+ ...qRfSmallStrain-D0-4_sigmaatboundary_Summary.tex |  525 +++++
+ ...berEqRfFiniteStrain_sigmaatboundary_Summary.aux |    1 +
+ ...berEqRfFiniteStrain_sigmaatboundary_Summary.pdf |  Bin 0 -> 144841 bytes
+ ...berEqRfFiniteStrain_sigmaatboundary_Summary.tex |  984 ++++++++
+ ...SingleFiberEqRfSmallFiniteStrain_G0_Summary.aux |    1 +
+ ...SingleFiberEqRfSmallFiniteStrain_G0_Summary.pdf |  Bin 92786 -> 85977 bytes
+ ...SingleFiberEqRfSmallFiniteStrain_G0_Summary.tex |  103 +
+ ...iberEqRfSmallFiniteStrain_sigma-inf_Summary.tex |  123 +
+ .../DocMASE_template.pdf                           |  Bin 209920 -> 745034 bytes
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.aux  |  213 +-
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.nav  |  107 +-
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.out  |   27 +-
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.pdf  |  Bin 946857 -> 5066258 bytes
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.snm  |   25 +-
+ .../MiParcours2017.synctex.gz                      |  Bin 46433 -> 0 bytes
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.tex  |  346 ++-
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.toc  |   29 +-
+ .../Template_slides/DocMASE_template.pptx          |  Bin 1032783 -> 2146507 bytes
+ .../DocMASE_template_miparcours.pdf                |  Bin 0 -> 745034 bytes
+ 76 files changed, 9174 insertions(+), 261 deletions(-)
+
+commit 2081a282d73210d9aee598af27aeb64116a6548f
+Author: Luca Di Stasio <distasio1@univ-lorraine.fr>
+Date:   Fri Oct 20 14:59:05 2017 +0200
+
+    committing changes on 20/10/2017 at 14:59:5
+
+ .../2017-03-03_AbqRunSummary_Gs.pdf                |    Bin 0 -> 100308 bytes
+ .../2017-03-03_AbqRunSummary_Gs.synctex.gz         |    Bin 0 -> 5448 bytes
+ .../2017-03-03_AbqRunSummary_Gs.tex                |    250 +
+ .../2017-03-03_AbqRunSummary_Js.pdf                |    Bin 0 -> 129342 bytes
+ .../2017-03-03_AbqRunSummary_modeRatios.pdf        |    Bin 0 -> 104625 bytes
+ ...3_AbqRunSummary_GsoverG0_FEM-BEM-comparison.pdf |    Bin 0 -> 114702 bytes
+ ...9_AbqRunSummary_GsoverG0_FEM-BEM-comparison.pdf |    Bin 0 -> 113824 bytes
+ ...3_AbqRunSummary_GsoverG0_FEM-BEM-comparison.pdf |    Bin 0 -> 114059 bytes
+ ...1_AbqRunSummary_GsoverG0_FEM-BEM-comparison.pdf |    Bin 0 -> 115405 bytes
+ ...Summary_GsoverG0_FEM-ConnCRF-BEM-comparison.pdf |    Bin 0 -> 115407 bytes
+ ...ry_GsoverG0_FEM-ConnCRF-EqRF-BEM-comparison.pdf |    Bin 0 -> 119929 bytes
+ ..._SingleFiberEqRfSmallStrain-D0-4_G0_Summary.pdf |    Bin 0 -> 80393 bytes
+ ...FiberEqRfSmallStrain-D0-4_VCCT-JINT_Summary.pdf |    Bin 0 -> 144630 bytes
+ ...FiberEqRfSmallStrain-D0-4_sigma-inf_Summary.pdf |    Bin 0 -> 71639 bytes
+ ...FiberEqRfSmallStrain-D1-0_VCCT-JINT_Summary.pdf |    Bin 0 -> 145878 bytes
+ ...y_SingleFiberEqRfFiniteStrain_J-INT_Summary.pdf |    Bin 0 -> 139049 bytes
+ ...ngleFiberEqRfFiniteStrain_VCCT-JINT_Summary.pdf |    Bin 0 -> 144926 bytes
+ ...SingleFiberEqRfSmallFiniteStrain_G0_Summary.pdf |    Bin 0 -> 92786 bytes
+ ...leFiberEqRfSmallFiniteStrain_M-VCCT_Summary.pdf |    Bin 0 -> 97691 bytes
+ ...iberEqRfSmallFiniteStrain_sigma-inf_Summary.pdf |    Bin 0 -> 83988 bytes
+ ...ry_SingleFiberEqRfSmallStrain_J-INT_Summary.pdf |    Bin 0 -> 139131 bytes
+ ...ingleFiberEqRfSmallStrain_VCCT-JINT_Summary.pdf |    Bin 0 -> 145003 bytes
+ ...07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GI.pdf |    Bin 0 -> 99705 bytes
+ ...7-10_AbqRunSummary_SmallStrain_M-F-VCCT_GII.pdf |    Bin 0 -> 102164 bytes
+ ...-10_AbqRunSummary_SmallStrain_M-F-VCCT_GTOT.pdf |    Bin 0 -> 110783 bytes
+ .../AllCircumferentialSections-E11.pdf             |    Bin 0 -> 289177 bytes
+ .../AllCircumferentialSections-E12.pdf             |    Bin 0 -> 298480 bytes
+ .../AllCircumferentialSections-E22.pdf             |    Bin 0 -> 290613 bytes
+ .../AllCircumferentialSections-S11.pdf             |    Bin 0 -> 265938 bytes
+ .../AllCircumferentialSections-S12.pdf             |    Bin 0 -> 266782 bytes
+ .../AllCircumferentialSections-S22.pdf             |    Bin 0 -> 269295 bytes
+ .../AllRadialSections-E11.pdf                      |    Bin 0 -> 289462 bytes
+ .../AllRadialSections-E12.pdf                      |    Bin 0 -> 319863 bytes
+ .../AllRadialSections-E22.pdf                      |    Bin 0 -> 320264 bytes
+ .../AllRadialSections-S11.pdf                      |    Bin 0 -> 264727 bytes
+ .../AllRadialSections-S12.pdf                      |    Bin 0 -> 296087 bytes
+ .../AllRadialSections-S22.pdf                      |    Bin 0 -> 293639 bytes
+ ...ar_Helmet_reinforced_by_TeXtreme_Technology.jpg |    Bin 0 -> 815777 bytes
+ .../Composite_laminate_specimen.JPG                |    Bin 0 -> 949641 bytes
+ .../DocMASE_template.pdf                           |    Bin 0 -> 209920 bytes
+ tex/Slides_14_Mi-Parcours-2017/ETHclass.cls        |    337 +
+ .../European_Union_(blue).svg                      |   9492 ++
+ .../European_Union_(blue).tex                      | 123236 ++++++++++++++++++
+ .../FEMfiberMatrixInterfaceProblem.aux             |      1 +
+ .../FEMfiberMatrixInterfaceProblem.pdf             |    Bin 0 -> 46868 bytes
+ .../FEMfiberMatrixInterfaceProblem.tex             |    299 +
+ .../Flaggs-Kural_InSituTransverseStrength.pdf      |    Bin 0 -> 67483 bytes
+ ...laggs-Kural_InSituTransverseStrength.synctex.gz |    Bin 0 -> 4381 bytes
+ .../Flaggs-Kural_InSituTransverseStrength.tex      |    103 +
+ tex/Slides_14_Mi-Parcours-2017/IMRM_2017-04.nav    |    126 +
+ tex/Slides_14_Mi-Parcours-2017/IMRM_2017-04.out    |     18 +
+ tex/Slides_14_Mi-Parcours-2017/IMRM_2017-04.pdf    |    Bin 0 -> 4888108 bytes
+ tex/Slides_14_Mi-Parcours-2017/IMRM_2017-04.snm    |     30 +
+ .../IMRM_2017-04.synctex.gz                        |    Bin 0 -> 89612 bytes
+ tex/Slides_14_Mi-Parcours-2017/IMRM_2017-04.toc    |     19 +
+ .../IMRM_2017-04_notes.docx                        |    Bin 0 -> 9722 bytes
+ tex/Slides_14_Mi-Parcours-2017/J-integral.pdf      |    Bin 0 -> 23461 bytes
+ .../J-integral.synctex.gz                          |    Bin 0 -> 3034 bytes
+ tex/Slides_14_Mi-Parcours-2017/J-integral.tex      |    115 +
+ .../LEFM2DsRVEsFsDdepverdispBCULappAxialDispLR.pdf |    Bin 0 -> 49929 bytes
+ ...sRVEsFsDdepverdispBCULappAxialDispLR.synctex.gz |    Bin 0 -> 4866 bytes
+ .../LEFM2DsRVEsFsDdepverdispBCULappAxialDispLR.tex |    299 +
+ .../LEFM2DsRVEsFsDhomoBCULappAxialDispLR.pdf       |    Bin 0 -> 58123 bytes
+ ...LEFM2DsRVEsFsDhomoBCULappAxialDispLR.synctex.gz |    Bin 0 -> 5777 bytes
+ .../LEFM2DsRVEsFsDhomoBCULappAxialDispLR.tex       |    299 +
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.aux  |    130 +
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.nav  |     67 +
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.out  |     13 +
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.pdf  |    Bin 0 -> 946857 bytes
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.snm  |     13 +
+ .../MiParcours2017.synctex.gz                      |    Bin 0 -> 46433 bytes
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.tex  |    620 +
+ tex/Slides_14_Mi-Parcours-2017/MiParcours2017.toc  |     14 +
+ tex/Slides_14_Mi-Parcours-2017/Prepreg.jpg         |    Bin 0 -> 5296 bytes
+ .../TeXtreme_Fanatic_FreeWave.jpg                  |    Bin 0 -> 106067 bytes
+ tex/Slides_14_Mi-Parcours-2017/VCCT-open.pdf       |    Bin 0 -> 21657 bytes
+ .../VCCT-open.synctex.gz                           |    Bin 0 -> 3045 bytes
+ tex/Slides_14_Mi-Parcours-2017/VCCT.pdf            |    Bin 0 -> 22972 bytes
+ tex/Slides_14_Mi-Parcours-2017/VCCT.synctex.gz     |    Bin 0 -> 3111 bytes
+ tex/Slides_14_Mi-Parcours-2017/VCCT.tex            |    100 +
+ tex/Slides_14_Mi-Parcours-2017/abaqus_cpe4.tex     |     44 +
+ tex/Slides_14_Mi-Parcours-2017/abaqus_cpe8.tex     |     54 +
+ .../abq-crack-theta-100.png                        |    Bin 0 -> 709002 bytes
+ .../abq-crack-theta-15.png                         |    Bin 0 -> 430885 bytes
+ tex/Slides_14_Mi-Parcours-2017/all-cracks.png      |    Bin 0 -> 63775 bytes
+ .../allStressesOnSlave.pdf                         |    Bin 0 -> 102929 bytes
+ tex/Slides_14_Mi-Parcours-2017/blue_line.png       |    Bin 0 -> 29781 bytes
+ tex/Slides_14_Mi-Parcours-2017/boundedRVE_cc.pdf   |    Bin 0 -> 61271 bytes
+ .../boundedRVE_cc.synctex.gz                       |    Bin 0 -> 6251 bytes
+ tex/Slides_14_Mi-Parcours-2017/boundedRVE_cc.tex   |    280 +
+ tex/Slides_14_Mi-Parcours-2017/boundedRVE_oc.tex   |    287 +
+ .../carbon-fiber-tow.jpg                           |    Bin 0 -> 5084 bytes
+ tex/Slides_14_Mi-Parcours-2017/cpus-time.pdf       |    Bin 0 -> 58168 bytes
+ .../cpus-time.synctex.gz                           |    Bin 0 -> 4018 bytes
+ tex/Slides_14_Mi-Parcours-2017/cpus-time.tex       |    134 +
+ .../egyptian_mud_bricks.jpg                        |    Bin 0 -> 98058 bytes
+ tex/Slides_14_Mi-Parcours-2017/europe-map.png      |    Bin 0 -> 241231 bytes
+ .../fiberMatrixInterfaceProblem.aux                |      1 +
+ .../fiberMatrixInterfaceProblem.pdf                |    Bin 0 -> 45959 bytes
+ .../fiberMatrixInterfaceProblem.tex                |    299 +
+ tex/Slides_14_Mi-Parcours-2017/flux_diag_1.tex     |    829 +
+ tex/Slides_14_Mi-Parcours-2017/flux_diag_2.tex     |    263 +
+ tex/Slides_14_Mi-Parcours-2017/flux_diag_3.tex     |    219 +
+ .../freccia_trasparente_verde_foresta.png          |    Bin 0 -> 1112 bytes
+ .../helical_numbering.tex                          |    125 +
+ .../intralaminar-cracks.png                        |    Bin 0 -> 47226 bytes
+ .../laminate-section.pdf                           |    Bin 0 -> 38471 bytes
+ .../laminate-section.synctex.gz(busy)              |    Bin 0 -> 3187 bytes
+ .../laminate-section.tex                           |    174 +
+ .../material_prop_tab1.tex                         |     16 +
+ .../material_prop_tab2.tex                         |     16 +
+ .../mesh-disc-at-interface.pdf                     |    Bin 0 -> 38047 bytes
+ .../mesh-disc-at-interface.synctex.gz              |    Bin 0 -> 2509 bytes
+ .../mesh-disc-at-interface.tex                     |    109 +
+ .../mesh_parameters_bounded.pdf                    |    Bin 0 -> 64734 bytes
+ .../mesh_parameters_bounded.synctex.gz             |    Bin 0 -> 7032 bytes
+ .../mesh_parameters_bounded.tex                    |    192 +
+ .../mesh_parameters_single.pdf                     |    Bin 0 -> 62158 bytes
+ .../mesh_parameters_single.synctex.gz              |    Bin 0 -> 5973 bytes
+ .../mesh_parameters_single.tex                     |    177 +
+ tex/Slides_14_Mi-Parcours-2017/mesh_regions.pdf    |    Bin 0 -> 48561 bytes
+ .../mesh_regions.synctex.gz                        |    Bin 0 -> 4346 bytes
+ tex/Slides_14_Mi-Parcours-2017/mesh_regions.tex    |    195 +
+ .../non-spread-tow-tech.synctex.gz(busy)           |      0
+ .../non-spread-tow-tech.tex                        |    110 +
+ .../non-spread-tow-technology.tex                  |    108 +
+ .../ntpt_fishing-rod.jpg                           |    Bin 0 -> 149509 bytes
+ .../ntpt_luxurywatch.jpg                           |    Bin 0 -> 130202 bytes
+ .../ntpt_marine-yatching.jpg                       |    Bin 0 -> 229557 bytes
+ .../ntpt_solar-impulse-1.jpg                       |    Bin 0 -> 119073 bytes
+ tex/Slides_14_Mi-Parcours-2017/ntpt_tubes.jpg      |    Bin 0 -> 119381 bytes
+ tex/Slides_14_Mi-Parcours-2017/opening1.pdf        |    Bin 0 -> 12885 bytes
+ tex/Slides_14_Mi-Parcours-2017/opening1.synctex.gz |    Bin 0 -> 2240 bytes
+ tex/Slides_14_Mi-Parcours-2017/opening1.tex        |    201 +
+ tex/Slides_14_Mi-Parcours-2017/opening2.pdf        |    Bin 0 -> 12866 bytes
+ tex/Slides_14_Mi-Parcours-2017/opening2.synctex.gz |    Bin 0 -> 2240 bytes
+ tex/Slides_14_Mi-Parcours-2017/opening2.tex        |    201 +
+ tex/Slides_14_Mi-Parcours-2017/opening3.pdf        |    Bin 0 -> 27254 bytes
+ tex/Slides_14_Mi-Parcours-2017/opening3.synctex.gz |    Bin 0 -> 5132 bytes
+ tex/Slides_14_Mi-Parcours-2017/opening3.tex        |    238 +
+ tex/Slides_14_Mi-Parcours-2017/periodicRVE_cc.pdf  |    Bin 0 -> 69021 bytes
+ .../periodicRVE_cc.synctex.gz                      |    Bin 0 -> 5782 bytes
+ tex/Slides_14_Mi-Parcours-2017/periodicRVE_cc.tex  |    265 +
+ .../periodicRVE_cc_FR.aux                          |      1 +
+ .../periodicRVE_cc_FR.pdf                          |    Bin 0 -> 69948 bytes
+ .../periodicRVE_cc_FR.synctex.gz                   |    Bin 0 -> 5943 bytes
+ .../periodicRVE_cc_FR.tex                          |    265 +
+ tex/Slides_14_Mi-Parcours-2017/periodicRVE_oc.tex  |    264 +
+ tex/Slides_14_Mi-Parcours-2017/scheme_model1.tex   |    258 +
+ tex/Slides_14_Mi-Parcours-2017/scheme_model2.tex   |    499 +
+ tex/Slides_14_Mi-Parcours-2017/scheme_model3.tex   |    455 +
+ tex/Slides_14_Mi-Parcours-2017/scheme_model4.tex   |    462 +
+ tex/Slides_14_Mi-Parcours-2017/singleRVE_cc.tex    |    247 +
+ tex/Slides_14_Mi-Parcours-2017/singleRVE_oc.tex    |    254 +
+ tex/Slides_14_Mi-Parcours-2017/singleRVEs.nav      |      8 +
+ tex/Slides_14_Mi-Parcours-2017/singleRVEs.out      |      0
+ tex/Slides_14_Mi-Parcours-2017/singleRVEs.pdf      |    Bin 0 -> 66967 bytes
+ tex/Slides_14_Mi-Parcours-2017/singleRVEs.snm      |      1 +
+ .../singleRVEs.synctex.gz                          |    Bin 0 -> 1864 bytes
+ tex/Slides_14_Mi-Parcours-2017/singleRVEs.tex      |     46 +
+ tex/Slides_14_Mi-Parcours-2017/singleRVEs.toc      |      1 +
+ .../slides_01_background.pdf                       |    Bin 0 -> 9394810 bytes
+ tex/Slides_14_Mi-Parcours-2017/slides_05.toc       |     12 +
+ tex/Slides_14_Mi-Parcours-2017/spread-tow-tech.pdf |    Bin 0 -> 53929 bytes
+ .../spread-tow-tech.synctex.gz                     |    Bin 0 -> 2818 bytes
+ tex/Slides_14_Mi-Parcours-2017/spread-tow-tech.tex |    241 +
+ .../spread_tow_technology_scheme.jpg               |    Bin 0 -> 19015 bytes
+ tex/Slides_14_Mi-Parcours-2017/symbols.tex         |     33 +
+ tex/Slides_14_Mi-Parcours-2017/tableanalysis.tex   |     32 +
+ tex/Slides_14_Mi-Parcours-2017/tableanalysisp2.tex |     32 +
+ tex/Slides_14_Mi-Parcours-2017/tablecommands.tex   |     19 +
+ tex/Slides_14_Mi-Parcours-2017/tablegeometries.tex |     28 +
+ .../tablegeometries2.tex                           |     27 +
+ .../tablegeometries3.tex                           |     27 +
+ .../textreme_KE-R8-5KS-CARBON_WHITE.jpg            |    Bin 0 -> 1442474 bytes
+ .../textreme_solar_car.jpg                         |    Bin 0 -> 2051700 bytes
+ .../time-vs-theta-d0-4.png                         |    Bin 0 -> 38235 bytes
+ .../tmp-pdfcrop-8760.tex                           |    127 +
+ .../Template_slides/DocMASE_template.pptx          |    Bin 1010379 -> 1032783 bytes
+ 179 files changed, 143457 insertions(+)

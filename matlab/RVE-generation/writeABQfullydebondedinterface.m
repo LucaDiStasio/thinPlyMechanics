@@ -1,4 +1,4 @@
-function[projectName]=writeABQsurfacedefinitions(logfullfile,inpfullfile)
+function[]=writeABQfullydebondedinterface(logfullfile,inpfullfile,numFiber,padlength,propagationMethod)
 %%
 %==============================================================================
 % Copyright (c) 2016 - 2017 Université de Lorraine & Luleå tekniska universitet
@@ -39,13 +39,15 @@ function[projectName]=writeABQsurfacedefinitions(logfullfile,inpfullfile)
 %  Output:
 %
 %%
-writeToLogFile(logfullfile,'In function: writeABQsurfacedefinitions\n')
+writeToLogFile(logfullfile,'In function: writeABQfullydebondedinterface\n')
 writeToLogFile(logfullfile,'\nStarting timer\n')
 start = tic;
+
+
 
 elapsed = toc(start);
 writeToLogFile(logfullfile,'Timer stopped.\n')
 writeToLogFile(logfullfile,['\nELAPSED WALLCLOCK TIME: ', num2str(elapsed),' [s]\n\n'])
-writeToLogFile(logfullfile,'Exiting function: writeABQsurfacedefinitions\n')
+writeToLogFile(logfullfile,'Exiting function: writeABQfullydebondedinterface\n')
 
 return

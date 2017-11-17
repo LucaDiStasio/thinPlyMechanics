@@ -1,4 +1,4 @@
-function[projectName]=writeABQmeshinterfaces(logfullfile,inpfullfile,numFibers)
+function[]=writeABQmeshinterfaces(logfullfile,inpfullfile,numFibers)
 %%
 %==============================================================================
 % Copyright (c) 2016 - 2017 Université de Lorraine & Luleå tekniska universitet
@@ -47,17 +47,20 @@ for i=1:numFibers
   % use node-based surface definition
   % fiber core to fiber annulus interface
   writeABQsurface(abqpath,['FiberCoreSurface-Fiber',pad(num2str(i),numFibers,'left','0')],'none','none','none','none','none','none','none','none','NODE','none','none','none','none',...
-                            {['NODES-CORE-INTERFACE-FIBER',pad(num2str(numFiber),padlength,'left','0')]},'Fiber core surface');
+                            {['NODES-CORE-INTERFACE-FIBER',pad(num2str(numFiber),numFibers,'left','0')]},'Fiber core surface');
   writeABQsurface(abqpath,['FiberAnnulusIntSurface-Fiber',pad(num2str(i),numFibers,'left','0')],'none','none','none','none','none','none','none','none','NODE','none','none','none','none',...
-                            {['NODES-ANNULUS-INTINTERFACE-FIBER',pad(num2str(numFiber),padlength,'left','0')]},'Fiber annulus internal surface');
+                            {['NODES-ANNULUS-INTINTERFACE-FIBER',pad(num2str(numFiber),numFibers,'left','0')]},'Fiber annulus internal surface');
   % tie constraint
-  writeABQtie(abqpath,'FiberMatrixTieConstraint','none','none','YES','none','none','none','none','SURFACE TO SURFACE',...
-          {'Matrix-Surface-Tied, Fiber-Surface-Tied'},'tie constraint between matrix (slave) and fiber (master)');
+  writeABQtie(abqpath,['FiberInternalMeshContraint-Fiber',pad(num2str(i),numFibers,'left','0')],'none','none','YES','none','none','none','none','SURFACE TO SURFACE',...
+          {'FiberAnnulusIntSurface-Fiber',pad(num2str(i),numFibers,'left','0'),', ','FiberCoreSurface-Fiber',pad(num2str(i),numFibers,'left','0')},'tie constraint to ensure mesh continuity');
   % matrix annulus to matrix bulk interface
   writeABQsurface(abqpath,['MatrixAnnulusExtSurface-Fiber',pad(num2str(i),numFibers,'left','0')],'none','none','none','none','none','none','none','none','NODE','none','none','none','none',...
-                            {'MatrixSurfaceAtFiberInterface-Elements, S3'},'Fiber annulus internal surface');
-  writeABQsurface(abqpath,['MatrixAnnulusExtSurface-Fiber',pad(num2str(i),numFibers,'left','0')],'none','none','none','none','none','none','none','none','NODE','none','none','none','none',...
-                            {'MatrixSurfaceAtFiberInterface-Elements, S3'},'Fiber annulus internal surface');
+                            {['NODES-ANNULUS-EXTINTERFACE-MATRIX',pad(num2str(numFiber),numFibers,'left','0')]},'Matrix annulus surface');
+  writeABQsurface(abqpath,['MatrixBulkSurface-Fiber',pad(num2str(i),numFibers,'left','0')],'none','none','none','none','none','none','none','none','NODE','none','none','none','none',...
+                            {['NODES-MATRIX-INTERFACE-WITH-FIBER',pad(num2str(numFiber),numFibers,'left','0')]},'Matrix internal surface');
+  % tie constraint
+  writeABQtie(abqpath,['MatrixInternalMeshContraint-Fiber',pad(num2str(i),numFibers,'left','0')],'none','none','YES','none','none','none','none','SURFACE TO SURFACE',...
+          {'MatrixAnnulusExtSurface-Fiber',pad(num2str(i),numFibers,'left','0'),', ','MatrixBulkSurface-Fiber',pad(num2str(i),numFibers,'left','0')},'tie constraint to ensure mesh continuity');
 end
 
 elapsed = toc(start);

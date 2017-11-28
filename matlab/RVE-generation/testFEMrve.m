@@ -1,7 +1,6 @@
-function[] = writeToLogFile(fullLogPath,message)
 %%
 %==============================================================================
-% Copyright (c) 2016 - 2017 Universitïé de Lorraine & Luleå tekniska universitet
+% Copyright (c) 2016 - 2017 UniversitÃ© de Lorraine & LuleÃ¥ tekniska universitet
 % Author: Luca Di Stasio <luca.distasio@gmail.com>
 %                        <luca.distasio@ingpec.eu>
 %
@@ -14,7 +13,7 @@ function[] = writeToLogFile(fullLogPath,message)
 % Redistributions in binary form must reproduce the above copyright
 % notice, this list of conditions and the following disclaimer in
 % the documentation and/or other materials provided with the distribution
-% Neither the name of the Université de Lorraine or Luleå tekniska universitet
+% Neither the name of the UniversitÃ© de Lorraine & LuleÃ¥ tekniska universitet
 % nor the names of its contributors may be used to endorse or promote products
 % derived from this software without specific prior written permission.
 %
@@ -33,12 +32,31 @@ function[] = writeToLogFile(fullLogPath,message)
 %
 %  DESCRIPTION
 %
-%  A function to create a log file
+%  A script to test FEM models generation
+%
+%  Output:
 %
 %%
 
-fileId = fopen(fullLogPath,'a');
-fprintf(fileId,'%s',message);
-fclose(fileId);
+close all
+clear all
+clc
 
-return
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DATA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+femSolver = 1; % 1 -> ABAQUS,  2 -> CALCULIX,  3 -> ANSYS,  4 -> CODE ASTER,  5 -> MSC NASTRAN,
+spaceDim = 2;  % 2 -> 2D,  2.5 -> 2 and 1/2 (shell models),  3 -> 3D
+elType = 'quad'; % quad, tri
+elOrder = 'second'; % first, second
+SOLVERel = 'CPE8';
+debug = true;
+workDir = '';
+index = '';
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EXECUTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+projectName = writeFEMrve(femSolver,spaceDim,workDir,index,elType,elOrder,SOLVERel,debug);

@@ -139,7 +139,7 @@ elseif strcomp(elType,'tris') || strcomp(elType,'tri') || strcomp(elType,'triang
     multNodes = 1;
   elseif strcomp(elOrder,'second') || strcomp(elOrder,'Second') || strcomp(elOrder,'2nd') || strcomp(elOrder,'2')
     writeToLogFile(logfullfile,['    Type ad order of elements : Second order triangles','\n'])
-    multNodes = 1;
+    multNodes = 2;
   end
 end
 
@@ -581,8 +581,8 @@ if length(debonds)>0                                      % at least one debond
       bondedElements = [bondedElements; extInterfaceElements(i)];
     end
   end
-  writeABQnodeset(inpfullfile,1,bondedNodes,['NODES-BONDED-FIBERSURF-FIBER',pad(num2str(numFiber),padlength,'left','0'),'-DEBOND',pad(num2str(d),padlength,'left','0')]);
-  writeABQelementset(inpfullfile,1,bondedElements,['ELEMENTS-BONDED-FIBERSURF-FIBER',pad(num2str(numFiber),padlength,'left','0'),'-DEBOND',pad(num2str(d),padlength,'left','0')]);
+  writeABQnodeset(inpfullfile,1,bondedNodes,['NODES-BONDED-FIBERSURF-FIBER',pad(num2str(numFiber),padlength,'left','0')]);
+  writeABQelementset(inpfullfile,1,bondedElements,['ELEMENTS-BONDED-FIBERSURF-FIBER',pad(num2str(numFiber),padlength,'left','0')]);
 else     % no debond
   writeToLogFile(logfullfile,'    Attention! The interface is completely bonded, no debond present.\n')
   writeABQnodeset(inpfullfile,1,extInterfaceNodes,['NODES-BONDED-FIBERSURF-FIBER',pad(num2str(numFiber),padlength,'left','0')]);
@@ -634,7 +634,7 @@ extInterfaceElements = E0core + elementsNORTHside;
 writeABQelementset(inpfullfile,1,extInterfaceElements,['ELEMENTS-ANNULUS-EXTINTERFACE-MATRIX',pad(num2str(numFiber),padlength,'left','0')]);
 
 
-% ========> creating debonds on the fiber surface
+% ========> creating debonds on the matrix surface
 if strcomp(elType,'quads') || strcomp(elType,'quad') || strcomp(elType,'quadrilaterals') || strcomp(elType,'quadrilateral')
   Nnodes = 4;
   if strcomp(elOrder,'first') || strcomp(elOrder,'First') || strcomp(elOrder,'1st') || strcomp(elOrder,'1')
@@ -651,7 +651,7 @@ elseif strcomp(elType,'tris') || strcomp(elType,'tri') || strcomp(elType,'triang
     multNodes = 1;
   elseif strcomp(elOrder,'second') || strcomp(elOrder,'Second') || strcomp(elOrder,'2nd') || strcomp(elOrder,'2')
     writeToLogFile(logfullfile,['    Type ad order of elements : Second order triangles','\n'])
-    multNodes = 1;
+    multNodes = 2;
   end
 end
 
@@ -660,7 +660,7 @@ extLabelMin = min(extInterfaceElements);
 
 angleTol = 0.00001; % 0.001%
 
-writeToLogFile(logfullfile,'    Creating debonded region on fiber surface ...\n')
+writeToLogFile(logfullfile,'    Creating debonded region on matrix surface ...\n')
 
 if length(debonds)>0                                      % at least one debond
   if length(debonds)==1 && abs(pi-debonds(1,2))<=angleTol % completely detached interface
@@ -1087,14 +1087,28 @@ if length(debonds)>0                                      % at least one debond
       bondedNodes = [bondedNodes; extInterfaceNodes(i)];
     end
   end
+  allBondedNodes = [];
+  for i=1:length(extInterfaceNodes)
+    if isempty(extInterfaceNodes(i)==debondedNodes)
+      allBondedNodes = [allBondedNodes; extInterfaceNodes(i)];
+    end
+  end
   bondedElements = [];
   for i=1:length(extInterfaceElements)
     if isempty(extInterfaceElements(i)==[debondedEls;firstBondedEls])
       bondedElements = [bondedElements; extInterfaceElements(i)];
     end
   end
-  writeABQnodeset(inpfullfile,1,bondedNodes,['NODES-BONDED-MATRIXSURF-MATRIX',pad(num2str(numFiber),padlength,'left','0'),'-DEBOND',pad(num2str(d),padlength,'left','0')]);
-  writeABQelementset(inpfullfile,1,bondedElements,['ELEMENTS-BONDED-MATRIXSURF-MATRIX',pad(num2str(numFiber),padlength,'left','0'),'-DEBOND',pad(num2str(d),padlength,'left','0')]);
+  allBondedElements = [];
+  for i=1:length(extInterfaceElements)
+    if isempty(extInterfaceElements(i)==debondedEls)
+      allBondedElements = [allBondedElements; extInterfaceElements(i)];
+    end
+  end
+  writeABQnodeset(inpfullfile,1,bondedNodes,['NODES-BONDED-MATRIXSURF-MATRIX',pad(num2str(numFiber),padlength,'left','0')]);
+  writeABQelementset(inpfullfile,1,bondedElements,['ELEMENTS-BONDED-MATRIXSURF-MATRIX',pad(num2str(numFiber),padlength,'left','0')]);
+  writeABQnodeset(inpfullfile,1,allBondedNodes,['NODES-ALLBONDED-MATRIXSURF-MATRIX',pad(num2str(numFiber),padlength,'left','0')]);
+  writeABQelementset(inpfullfile,1,allBondedElements,['ELEMENTS-ALLBONDED-MATRIXSURF-MATRIX',pad(num2str(numFiber),padlength,'left','0')]);
 else     % no debond
   writeToLogFile(logfullfile,'    Attention! The interface is completely bonded, no debond present.\n')
   writeABQnodeset(inpfullfile,1,extInterfaceNodes,['NODES-BONDED-MATRIXSURF-MATRIX',pad(num2str(numFiber),padlength,'left','0')]);

@@ -1,4 +1,4 @@
-function[projectName]=writeABQrve2D(logfullfile,inpfullfile)
+function[projectName]=writeABQrve2D(logfullfile,inpfullfile,elType,elOrder,ABQel)
 %%
 %==============================================================================
 % Copyright (c) 2016 - 2017 Université de Lorraine & Luleå tekniska universitet
@@ -61,12 +61,12 @@ for i=1:length(fibers)
   writeToLogFile(logfullfile,['    Calling function ', 'writeABQfiber2D',' ...\n']);
   [Ntot,Etot] = writeABQfiber2D(logfullfile,inpfullfile,...
                                         i,padlength,elType,elOrder,ABQel,...
-                                        xC,yC,Rcore,R,...
+                                        fibers(i).xC,yC,fibers(i).Rcore,fibers(i).R,...
                                         startNode,startEl,...
-                                        fiberMaterial,matrixMaterial,debonds,...
-                                        thetasCore,deltasCore,...
-                                        lthetaIntAnnulus,lRIntAnnulus,deltasIntAnnulus,NRIntAnnulus,...
-                                        lthetaExtAnnulus,lRExtAnnulus,deltasExtAnnulus,NRExtAnnulus);
+                                        fibers(i).fiberMaterial,fibers(i).matrixMaterial,fibers(i).debonds,...
+                                        fibers(i).thetasCore,fibers(i).deltasCore,...
+                                        fibers(i).lthetaIntAnnulus,fibers(i).lRIntAnnulus,fibers(i).deltasIntAnnulus,fibers(i).NRIntAnnulus,...
+                                        fibers(i).lthetaExtAnnulus,fibers(i).lRExtAnnulus,fibers(i).deltasExtAnnulus,fibers(i).NRExtAnnulus);
   writeToLogFile(logfullfile,['    ... done.','\n'])
   startNode = startNode + Ntot;
   startEl = startEl + Etot;
@@ -77,6 +77,13 @@ writeToLogFile(logfullfile,['    Calling function ', 'writeABQmatrix2D',' ...\n'
 writeToLogFile(logfullfile,['    ... done.','\n'])
 
 %% SURFACES AND SURFACE INTERACTIONS SECTION
+
+writeToLogFile(logfullfile,['    Calling function ', 'writeABQmeshinterfaces',' ...\n']);
+writeABQmeshinterfaces(logfullfile,inpfullfile,length(fibers))
+
+for i=1:length(fibers)
+
+end
 
 %% MATERIALS DEFINITION AND ASSIGNMENT SECTION
 writeToLogFile(logfullfile,['    Calling function ', 'writeABQmaterialsdefinition',' ...\n']);

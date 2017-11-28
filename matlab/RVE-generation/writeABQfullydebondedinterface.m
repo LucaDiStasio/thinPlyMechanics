@@ -1,4 +1,4 @@
-function[]=writeABQfullydebondedinterface(logfullfile,inpfullfile,numFiber,padlength,propagationMethod)
+function[]=writeABQfullydebondedinterface(logfullfile,inpfullfile,numFiber,padlength,frictionLess,interfaceFriction)
 %%
 %==============================================================================
 % Copyright (c) 2016 - 2017 Université de Lorraine & Luleå tekniska universitet
@@ -43,7 +43,17 @@ writeToLogFile(logfullfile,'In function: writeABQfullydebondedinterface\n')
 writeToLogFile(logfullfile,'\nStarting timer\n')
 start = tic;
 
-
+writeABQsurface(abqpath,['FiberSurface-Fiber',pad(num2str(i),numFibers,'left','0')],'none','none','none','none','none','none','none','none','NODE','none','none','none','none',...
+                          {['NODES-ANNULUS-EXTINTERFACE-FIBER',pad(num2str(numFiber),numFibers,'left','0')]},'Fiber surface');
+writeABQsurface(abqpath,['MatrixInterfaceSurface-Fiber',pad(num2str(i),numFibers,'left','0')],'none','none','none','none','none','none','none','none','NODE','none','none','none','none',...
+                          {['NODES-ANNULUS-INTINTERFACE-MATRIX',pad(num2str(numFiber),numFibers,'left','0')]},'Matrix surface at fiber interface');
+% contact interaction
+writeABQcontactpair(abqpath,['FiberMatrixInterfaceInteraction-Fiber',pad(num2str(i),numFibers,'left','0')],'none','none','none','none','none','none','none','none','none','none','none','none','none','NODE TO SURFACE',...
+                             {['MatrixInterfaceSurface-Fiber',pad(num2str(i),numFibers,'left','0'),', FiberSurface-Fiber',pad(num2str(i),numFibers,'left','0')]},'slave, master');
+writeABQsurfaceinteraction(abqpath,['FiberMatrixInterfaceInteraction-Fiber',pad(num2str(i),numFibers,'left','0')],'none','none','none','none','none','none',{'1.0'},'Out-of-plane thickness of the surface');
+if ~frictionLess>0
+    writeABQfriction(abqpath,'none','none','none','0.005','none','none','none','none','none','none','none','none','none',{num2str(interfaceFriction, '%10.5e')},'friction coefficient');
+end
 
 elapsed = toc(start);
 writeToLogFile(logfullfile,'Timer stopped.\n')

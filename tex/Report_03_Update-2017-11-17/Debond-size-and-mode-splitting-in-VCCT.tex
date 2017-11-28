@@ -1,0 +1,501 @@
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%                                      FILE BEGINS
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%                                    DOCUMENT CLASS
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+\documentclass[a4paper]{jpconf}
+
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%                                       PACKAGES
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[caption=false]{subfig}
+\usepackage[makeroom]{cancel}
+
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%                                    DOCUMENT BEGINS
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+\begin{document}
+
+%------------------------------------------------------------------------------------------%
+%                                        HEADER
+%------------------------------------------------------------------------------------------%
+
+\title{Effect of debond size on mode splitting in the Virtual Crack Closure Technique}
+
+\author{Luca Di Stasio$^{1,2,a}$ , Janis Varna$^{2,b}$ and Zoubir Ayadi$^{1,c}$ }
+
+\address{$^{1}$SI2M, IJL, EEIGM, Universit\'e de Lorraine, 6 Rue Bastien Lepage, F-54010 Nancy, France\\$^{2}$Division of Polymer Engineering, Lule\aa\ University of Technology, SE-97187 Lule\aa , Sweden }
+
+{\vspace*{5pt}\address{E-mail: $^{a}$luca.di-stasio@univ-lorraine.fr, $^{b}$janis.varna@ltu.se, $^{c}$zoubir.ayadi@univ-lorraine.fr}}
+%\address{$^{a}$luca.di-stasio@univ-lorraine.fr}, \address{$^{b}$janis.varna@ltu.se}, \address{$^{c}$zoubir.ayadi@univ-lorraine.fr}
+
+%------------------------------------------------------------------------------------------%
+%                                       ABSTRACT
+%------------------------------------------------------------------------------------------%
+
+\begin{abstract}
+The effect of debond size and crack tip orientation of mode splitting in the Virtual Crack Closure Technique is analyzed by means of analytical derivations. The total energy release rate is shown to have no direct dependence on the debond angular size, but only an indirect one through the FEM solution of the crack displacement field in the crack tip neighbourhood. 
+\end{abstract}
+
+%------------------------------------------------------------------------------------------%
+%                                   List of acronyms
+%------------------------------------------------------------------------------------------%
+
+\section*{List of acronyms}
+
+\begin{tabular}{ll}
+VCCT &  Virtual Crack Closure Technique\\
+BEM &  Boundary Element Method\\
+FEM &  Finite Element Method\\
+\end{tabular}
+%\end{table}
+
+%------------------------------------------------------------------------------------------%
+%                                   List of symbols
+%------------------------------------------------------------------------------------------%
+
+\section*{List of symbols}
+
+%\begin{table}[!h]
+\begin{tabular}{lcl}
+$G_{I}$ & $\left[\frac{J}{m^{2}}\right]$  & Mode I energy release rate\\
+$G_{II}$ & $\left[\frac{J}{m^{2}}\right]$  & Mode II energy release rate\\
+$G_{TOT}$ & $\left[\frac{J}{m^{2}}\right]$  & Total energy release rate\\
+$G_{I,r\theta}$ & $\left[\frac{J}{m^{2}}\right]$  & Mode I energy release rate in $r-\theta$ reference frame\\
+$G_{II,r\theta}$ & $\left[\frac{J}{m^{2}}\right]$  & Mode II energy release rate in $r-\theta$ reference frame\\
+$G_{TOT,r\theta}$ & $\left[\frac{J}{m^{2}}\right]$  & Total energy release rate in $r-\theta$ reference frame\\
+$\widetilde{G}_{I,xy}$ & $\left[\frac{J}{m^{2}}\right]$  & Mode I energy release rate of equivalent crack in $x-y$ reference frame\\
+$\widetilde{G}_{II,xy}$ & $\left[\frac{J}{m^{2}}\right]$  & Mode II energy release rate of equivalent crack in $x-y$ reference frame\\
+$\widetilde{G}_{TOT,xy}$ & $\left[\frac{J}{m^{2}}\right]$  & Total energy release rate of equivalent crack in $x-y$ reference frame\\
+$R_{f}$ & $\left[\mu m\right]$  &Fiber radius\\
+$a$ & $\left[\mu m\right]$  &Debond size\\
+$\Delta a$ & $\left[\mu m\right]$  &Debond increment\\
+$\Delta\theta$ & $\left[rad\right]$  & Half debond angular size\\
+$\delta$ & $\left[rad\right]$  & Angular size of element at the interface close to the crack tip\\
+$u_{x,[A-Z]}$ & $\left[\mu m\right]$  & Displacement along $x$ of a point labeled with a letter in [A-Z]\\
+$u_{y,[A-Z]}$ & $\left[\mu m\right]$  & Displacement along $y$ of a point labeled with a letter in [A-Z]\\
+$u_{x}$ & $\left[\mu m\right]$  & Displacement along $x$-direction\\
+$u_{y}$ & $\left[\mu m\right]$  & Displacement along $y$-direction\\
+$u_{r}$ & $\left[\mu m\right]$  & Displacement along $r$-direction\\
+$u_{\theta}$ & $\left[\mu m\right]$  & Displacement along $\theta$-direction\\
+$F_{x,[A-Z]}$ & $\left[\mu m\right]$  & Force along $x$ at a point labeled with a letter in [A-Z]\\
+$F_{y,[A-Z]}$ & $\left[\mu m\right]$  & Force along $y$ at a point labeled with a letter in [A-Z]\\
+$F_{x}$ & $\left[\mu m\right]$  & Force along $x$-direction\\
+$F_{y}$ & $\left[\mu m\right]$  & Force along $y$-direction\\
+$F_{r}$ & $\left[\mu m\right]$  & Force along $r$-direction\\
+$F_{\theta}$ & $\left[\mu m\right]$  & Force along $\theta$-direction\\
+$\underline{\underline{R}}$ & $\left[-\right]$  & Rotation matrix\\
+\end{tabular}
+%\end{table}
+
+
+
+\clearpage
+%------------------------------------------------------------------------------------------%
+%                        VCCT 1st order
+%------------------------------------------------------------------------------------------%
+
+\section{VCCT for first order quadrilateral elements}
+
+\subsection{Definition of crack tip reference frame}
+
+\begin{figure}[!h]
+\includegraphics[width=\textwidth]{VCCT-linear.pdf}
+\caption{Schematic representation of the discretized crack tip geometry for  $1^{st}$ order quadrilateral elements.}
+\end{figure}
+
+\begin{equation}
+\underline{\underline{R}}=\begin{bmatrix}
+\cos\left(\Delta\theta\right) & \sin\left(\Delta\theta\right) \\
+-\sin\left(\Delta\theta\right) & \cos\left(\Delta\theta\right)
+\end{bmatrix}\qquad\underline{\underline{R}}^{-1}=\underline{\underline{R}}^{T}=\begin{bmatrix}
+\cos\left(\Delta\theta\right) & -\sin\left(\Delta\theta\right) \\
+\sin\left(\Delta\theta\right) & \cos\left(\Delta\theta\right)
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\begin{bmatrix}
+r \\
+\theta
+\end{bmatrix}=\underline{\underline{R}}\begin{bmatrix}
+x \\
+y
+\end{bmatrix}\qquad\begin{bmatrix}
+x \\
+y
+\end{bmatrix}=\underline{\underline{R}}^{-1}\begin{bmatrix}
+r \\
+\theta
+\end{bmatrix}
+\end{equation}
+
+\subsection{Calculation of displacements and reaction forces}
+
+\begin{equation}
+u_{x}=u_{x,M}-u_{x,F}\qquad u_{y}=u_{y,M}-u_{y,F}
+\end{equation}
+
+\begin{equation}
+u_{r}=\cos\left(\Delta\theta\right) u_{x}+\sin\left(\Delta\theta\right) u_{y}\qquad u_{\theta}=-\sin\left(\Delta\theta\right) u_{x}+\cos\left(\Delta\theta\right) u_{y}
+\end{equation}
+
+\begin{equation}
+F_{r}=\cos\left(\Delta\theta\right) F_{x,CT}+\sin\left(\Delta\theta\right) F_{y,CT}\qquad F_{\theta}=-\sin\left(\Delta\theta\right) F_{x,CT}+\cos\left(\Delta\theta\right) F_{y,CT}
+\end{equation}
+
+\subsection{Calculation of energy release rates}
+
+\begin{equation}
+\begin{split}
+G_{I,r\theta} = &\frac{1}{2}\frac{F_{r}u_{r}}{R_{f}\delta}=\\
+= &\frac{1}{2R_{f}\delta}\left(\cos\left(\Delta\theta\right) F_{x}+\sin\left(\Delta\theta\right)F_{y}\right)\left(\cos\left(\Delta\theta\right) u_{x}+\sin\left(\Delta\theta\right) u_{y}\right)=\\
+= &\frac{1}{2R_{f}\delta}\left(\cos^{2}\left(\Delta\theta\right) F_{x}u_{x}+\left(F_{x}u_{y}+F_{y}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{y}\right)\\
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{II,r\theta} = &\frac{1}{2}\frac{F_{\theta}u_{\theta}}{R_{f}\delta}=\\
+= &\frac{1}{2R_{f}\delta}\left(-\sin\left(\Delta\theta\right) F_{x}+\cos\left(\Delta\theta\right)F_{y}\right)\left(-\sin\left(\Delta\theta\right) u_{x}+\cos\left(\Delta\theta\right) u_{y}\right)=\\
+= &\frac{1}{2R_{f}\delta}\left(\sin^{2}\left(\Delta\theta\right) F_{x}u_{x}-\left(F_{x}u_{y}+F_{y}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{y}\right)\\
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{TOT,r\theta} = &G_{I,r\theta} + G_{II,r\theta}=\\
+= &\frac{1}{2R_{f}\delta}\left(\cos^{2}\left(\Delta\theta\right) F_{x}u_{x}+\left(F_{x}u_{y}+F_{y}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{y}\right)+\\
+&+ \frac{1}{2R_{f}\delta}\left(\sin^{2}\left(\Delta\theta\right) F_{x}u_{x}-\left(F_{x}u_{y}+F_{y}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{y}\right)=\\
+=&\frac{1}{2R_{f}\delta}\left(\cancelto{1}{\left(\cos^{2}\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)\right)}F_{x}u_{x}\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(\cancelto{0}{\left(\left(F_{x}u_{y}+F_{y}u_{x}\right)-\left(F_{x}u_{y}+F_{y}u_{x}\right)\right)}\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(\cancelto{1}{\left(\cos^{2}\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)\right)}F_{y}u_{y}\right)=\\
+=&\frac{1}{2}\frac{F_{x}u_{x}}{R_{f}\delta}+\frac{1}{2}\frac{F_{y}u_{y}}{R_{f}\delta}=\\
+=&\widetilde{G}_{I,xy} + \widetilde{G}_{II,xy}=\widetilde{G}_{TOT,xy}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{I,r\theta} =&\frac{1}{2R_{f}\delta}\left(\cos^{2}\left(\Delta\theta\right) F_{x}u_{x}+\left(F_{x}u_{y}+F_{y}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{y}\right)=\\
+=&\cos^{2}\left(\Delta\theta\right)\frac{ F_{x}u_{x}}{2R_{f}\delta}+\left(\frac{F_{x}u_{y}}{2R_{f}\delta}+\frac{F_{y}u_{x}}{2R_{f}\delta}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)\frac{F_{y}u_{y}}{2R_{f}\delta}=\\
+=&\cos^{2}\left(\Delta\theta\right)\widetilde{G}_{I,xy}+\left(\widetilde{G}_{I,xy}\frac{u_{y}}{u_{x}}+\widetilde{G}_{II,xy}\frac{u_{x}}{u_{y}}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)\widetilde{G}_{II,xy}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{II,r\theta} =&\frac{1}{2R_{f}\delta}\left(\sin^{2}\left(\Delta\theta\right) F_{x}u_{x}-\left(F_{x}u_{y}+F_{y}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{y}\right)=\\
+=&\sin^{2}\left(\Delta\theta\right)\frac{ F_{x}u_{x}}{2R_{f}\delta}-\left(\frac{F_{x}u_{y}}{2R_{f}\delta}+\frac{F_{y}u_{x}}{2R_{f}\delta}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)\frac{F_{y}u_{y}}{2R_{f}\delta}=\\
+=&\sin^{2}\left(\Delta\theta\right)\widetilde{G}_{I,xy}-\left(\widetilde{G}_{I,xy}\frac{u_{y}}{u_{x}}+\widetilde{G}_{II,xy}\frac{u_{x}}{u_{y}}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)\widetilde{G}_{II,xy}
+\end{split}
+\end{equation}
+
+\subsection{Sensitivity analysis of the FEM solution}
+
+\begin{equation}
+F_{x}\sim k_{x}u_{x}\qquad F_{y}\sim k_{y}u_{y}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{I,r\theta} \sim&\frac{1}{2R_{f}\delta}\cos^{2}\left(\Delta\theta\right) k_{x}u^{2}_{x}\left(\Delta\theta\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(k_{x}+k_{y}\right)u_{x}\left(\Delta\theta\right)u_{y}\left(\Delta\theta\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&+\frac{1}{2R_{f}\delta}\sin^{2}\left(\Delta\theta\right)k_{y}u^{2}_{y}\left(\Delta\theta\right)
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{II,r\theta} \sim&\frac{1}{2R_{f}\delta}\sin^{2}\left(\Delta\theta\right) k_{x}u^{2}_{x}\left(\Delta\theta\right)+\\
+&-\frac{1}{2R_{f}\delta}\left(k_{x}+k_{y}\right)u_{x}\left(\Delta\theta\right)u_{y}\left(\Delta\theta\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&+\frac{1}{2R_{f}\delta}\cos^{2}\left(\Delta\theta\right)k_{y}u^{2}_{y}\left(\Delta\theta\right)
+\end{split}
+\end{equation}
+
+\begin{equation}
+G_{TOT,r\theta} \sim\frac{1}{2R_{f}\delta}\left( k_{x}u^{2}_{x}\left(\Delta\theta\right)+ k_{y}u^{2}_{y}\left(\Delta\theta\right)\right)
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\frac{\partial G_{I,r\theta}}{\partial\Delta\theta} \sim&\frac{1}{R_{f}\delta}\cos^{2}\left(\Delta\theta\right) k_{x}u_{x}\left(\Delta\theta\right)\frac{\partial u_{x}\left(\Delta\theta\right)}{\partial\Delta\theta}+\\
+&+\frac{1}{2R_{f}\delta}\left(k_{x}+k_{y}\right)\left(\frac{\partial u_{x}\left(\Delta\theta\right)}{\partial\Delta\theta}u_{y}\left(\Delta\theta\right)+u_{x}\left(\Delta\theta\right)\frac{\partial u_{y}\left(\Delta\theta\right)}{\partial\Delta\theta}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&+\frac{1}{R_{f}\delta}\sin^{2}\left(\Delta\theta\right)k_{y}u_{y}\left(\Delta\theta\right)\frac{\partial u_{y}\left(\Delta\theta\right)}{\partial\Delta\theta}+\\
+&+\frac{1}{2R_{f}\delta}\left(k_{y}u^{2}_{y}\left(\Delta\theta\right)- k_{x}u^{2}_{x}\left(\Delta\theta\right)\right)\sin\left(2\Delta\theta\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(k_{x}u_{x}\left(\Delta\theta\right)u_{y}\left(\Delta\theta\right)+k_{y}u_{y}\left(\Delta\theta\right)u_{x}\left(\Delta\theta\right)\right)\cos\left(2\Delta\theta\right)\\
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\frac{\partial G_{II,r\theta}}{\partial\Delta\theta} \sim&\frac{1}{R_{f}\delta}\sin^{2}\left(\Delta\theta\right) k_{x}u_{x}\left(\Delta\theta\right)\frac{\partial u_{x}\left(\Delta\theta\right)}{\partial\Delta\theta}+\\
+&-\frac{1}{2R_{f}\delta}\left(k_{x}+k_{y}\right)\left(\frac{\partial u_{x}\left(\Delta\theta\right)}{\partial\Delta\theta}u_{y}\left(\Delta\theta\right)+u_{x}\left(\Delta\theta\right)\frac{\partial u_{y}\left(\Delta\theta\right)}{\partial\Delta\theta}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&+\frac{1}{R_{f}\delta}\cos^{2}\left(\Delta\theta\right)k_{y}u_{y}\left(\Delta\theta\right)\frac{\partial u_{y}\left(\Delta\theta\right)}{\partial\Delta\theta}+\\
+&+\frac{1}{2R_{f}\delta}\left(k_{x}u^{2}_{x}\left(\Delta\theta\right)- k_{y}u^{2}_{y}\left(\Delta\theta\right)\right)\sin\left(2\Delta\theta\right)+\\
+&-\frac{1}{2R_{f}\delta}\left(k_{x}u_{x}\left(\Delta\theta\right)u_{y}\left(\Delta\theta\right)+k_{y}u_{y}\left(\Delta\theta\right)u_{x}\left(\Delta\theta\right)\right)\cos\left(2\Delta\theta\right)\\
+\end{split}
+\end{equation}
+
+\begin{equation}
+\frac{\partial G_{TOT,r\theta}}{\partial\Delta\theta} \sim\frac{1}{R_{f}\delta}\left( k_{x}u_{x}\left(\Delta\theta\right)\frac{\partial u_{x}\left(\Delta\theta\right)}{\partial\Delta\theta}+ k_{y}u_{y}\left(\Delta\theta\right)\frac{\partial u_{y}\left(\Delta\theta\right)}{\partial\Delta\theta}\right)
+\end{equation}
+
+\clearpage
+
+%------------------------------------------------------------------------------------------%
+%                             VCCT 2nd order
+%------------------------------------------------------------------------------------------%
+
+\section{VCCT for second order quadrilateral elements}
+
+\subsection{Definition of crack tip reference frame}
+
+\begin{figure}[!h]
+\includegraphics[width=\textwidth]{VCCT-quadratic.pdf}
+\caption{Schematic representation of the discretized crack tip geometry for $2^{nd}$ order quadrilateral elements.}
+\end{figure}
+
+\begin{equation}
+\underline{\underline{R}}=\begin{bmatrix}
+\cos\left(\Delta\theta\right) & \sin\left(\Delta\theta\right) \\
+-\sin\left(\Delta\theta\right) & \cos\left(\Delta\theta\right)
+\end{bmatrix}\qquad\underline{\underline{R}}^{-1}=\underline{\underline{R}}^{T}=\begin{bmatrix}
+\cos\left(\Delta\theta\right) & -\sin\left(\Delta\theta\right) \\
+\sin\left(\Delta\theta\right) & \cos\left(\Delta\theta\right)
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\begin{bmatrix}
+r \\
+\theta
+\end{bmatrix}=\underline{\underline{R}}\begin{bmatrix}
+x \\
+y
+\end{bmatrix}\qquad\begin{bmatrix}
+x \\
+y
+\end{bmatrix}=\underline{\underline{R}}^{-1}\begin{bmatrix}
+r \\
+\theta
+\end{bmatrix}
+\end{equation}
+
+\subsection{Calculation of displacements and reaction forces}
+
+\begin{equation}
+\begin{split}
+u_{x,1}=u_{x,M1}-u_{x,F1}&\qquad u_{y,1}=u_{y,M1}-u_{y,F1}\\
+u_{x,2}=u_{x,M2}-u_{x,F2}&\qquad u_{y,2}=u_{y,M2}-u_{y,F2}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+u_{r,1}=\cos\left(\Delta\theta\right) u_{x,1}+\sin\left(\Delta\theta\right) u_{y,1}&\qquad u_{\theta,1}=-\sin\left(\Delta\theta\right) u_{x,1}+\cos\left(\Delta\theta\right) u_{y,1}\\
+u_{r,2}=\cos\left(\Delta\theta\right) u_{x,2}+\sin\left(\Delta\theta\right) u_{y,2}&\qquad u_{\theta,2}=-\sin\left(\Delta\theta\right) u_{x,2}+\cos\left(\Delta\theta\right) u_{y,2}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+F_{r,1}=\cos\left(\Delta\theta\right) F_{x,1}+\sin\left(\Delta\theta\right) F_{y,1}&\qquad F_{\theta,1}=-\sin\left(\Delta\theta\right) F_{x,1}+\cos\left(\Delta\theta\right) F_{y,1}\\
+F_{r,2}=\cos\left(\Delta\theta\right) F_{x,2}+\sin\left(\Delta\theta\right) F_{y,2}&\qquad F_{\theta,2}=-\sin\left(\Delta\theta\right) F_{x,2}+\cos\left(\Delta\theta\right) F_{y,2}\\
+\end{split}
+\end{equation}
+
+\subsection{Calculation of energy release rates}
+
+\begin{equation}
+\begin{split}
+G_{I,r\theta} = &\frac{1}{2R_{f}\delta}\left(F_{r,1}u_{r,1}+F_{r,2}u_{r,2}\right)=\\
+= &\frac{1}{2R_{f}\delta}\left(\cos\left(\Delta\theta\right) F_{x,1}+\sin\left(\Delta\theta\right)F_{y,1}\right)\left(\cos\left(\Delta\theta\right) u_{x,1}+\sin\left(\Delta\theta\right) u_{y,1}\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(\cos\left(\Delta\theta\right) F_{x,2}+\sin\left(\Delta\theta\right)F_{y,2}\right)\left(\cos\left(\Delta\theta\right) u_{x,2}+\sin\left(\Delta\theta\right) u_{y,2}\right)+\\
+= &\frac{1}{2R_{f}\delta}\left(\cos^{2}\left(\Delta\theta\right) F_{x,1}u_{x,1}+\left(F_{x,1}u_{y,1}+F_{y,1}u_{x,1}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y,1}u_{y,1}\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(\cos^{2}\left(\Delta\theta\right) F_{x,2}u_{x,2}+\left(F_{x,2}u_{y,2}+F_{y,2}u_{x,2}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y,2}u_{y,2}\right)
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{II,r\theta} = &\frac{1}{2R_{f}\delta}\left(F_{\theta,1}u_{\theta,1}+F_{\theta,2}u_{\theta,2}\right)=\\
+= &\frac{1}{2R_{f}\delta}\left(-\sin\left(\Delta\theta\right) F_{x,1}+\cos\left(\Delta\theta\right)F_{y,1}\right)\left(-\sin\left(\Delta\theta\right) u_{x,1}+\cos\left(\Delta\theta\right) u_{y,1}\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(-\sin\left(\Delta\theta\right) F_{x,2}+\cos\left(\Delta\theta\right)F_{y,2}\right)\left(-\sin\left(\Delta\theta\right) u_{x,2}+\cos\left(\Delta\theta\right) u_{y,2}\right)=\\
+= &\frac{1}{2R_{f}\delta}\left(\sin^{2}\left(\Delta\theta\right) F_{x,1}u_{x,1}-\left(F_{x,1}u_{y,1}+F_{y,1}u_{x,1}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y,1}u_{y,1}\right)+\\
+ &+\frac{1}{2R_{f}\delta}\left(\sin^{2}\left(\Delta\theta\right) F_{x,2}u_{x,2}-\left(F_{x,2}u_{y,2}+F_{y,2}u_{x,2}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y,2}u_{y,2}\right)\\
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{TOT,r\theta} = &G_{I,r\theta} + G_{II,r\theta}=\\
+=&\frac{1}{2R_{f}\delta}\left(\cos^{2}\left(\Delta\theta\right) F_{x,1}u_{x,1}+\left(F_{x,1}u_{y,1}+F_{y,1}u_{x,1}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y,1}u_{y,1}\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(\cos^{2}\left(\Delta\theta\right) F_{x,2}u_{x,2}+\left(F_{x,2}u_{y,2}+F_{y,2}u_{x,2}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y,2}u_{y,2}\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(\sin^{2}\left(\Delta\theta\right) F_{x,1}u_{x,1}-\left(F_{x,1}u_{y,1}+F_{y,1}u_{x,1}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y,1}u_{y,1}\right)+\\
+ &+\frac{1}{2R_{f}\delta}\left(\sin^{2}\left(\Delta\theta\right) F_{x,2}u_{x,2}-\left(F_{x,2}u_{y,2}+F_{y,2}u_{x,2}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y,2}u_{y,2}\right)=\\
+= &\frac{1}{2R_{f}\delta}\cos^{2}\left(\Delta\theta\right) \left(F_{x,1}u_{x,1}+F_{x,2}u_{x,2}+F_{y,1}u_{y,1}+F_{y,2}u_{y,2}\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(\left(F_{x,1}u_{y,1}+F_{x,1}u_{y,1}\right)+\left(F_{y,2}u_{x,2}+F_{y,2}u_{x,2}\right)\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&+\frac{1}{2R_{f}\delta}\sin^{2}\left(\Delta\theta\right)\left(F_{x,1}u_{x,1}+F_{x,2}u_{x,2}+F_{y,1}u_{y,1}+F_{y,2}u_{y,2}\right)+\\
+&-\frac{1}{2R_{f}\delta}\left(\left(F_{x,1}u_{y,1}+F_{x,1}u_{y,1}\right)+\left(F_{y,2}u_{x,2}+F_{y,2}u_{x,2}\right)\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)=\\
+=&\frac{1}{2R_{f}\delta}\left(\cancelto{1}{\left(\cos^{2}\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)\right)}\left(F_{x,1}u_{x,1}+F_{x,2}u_{x,2}\right)\right)+\\
+&+\frac{1}{2R_{f}\delta}\cancelto{0}{\left(\left(F_{x,1}u_{y,1}+F_{x,1}u_{y,1}\right)-\left(F_{x,1}u_{y,1}+F_{x,1}u_{y,1}\right)\right)}\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&+\frac{1}{2R_{f}\delta}\cancelto{0}{\left(\left(F_{y,2}u_{x,2}+F_{y,2}u_{x,2}\right)-\left(F_{y,2}u_{x,2}+F_{y,2}u_{x,2}\right)\right)}\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(\cancelto{1}{\left(\cos^{2}\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)\right)}\left(F_{y,1}u_{y,1}+F_{y,2}u_{y,2}\right)\right)=\\
+=&\frac{1}{2}\frac{F_{x,1}u_{x,1}+F_{x,2}u_{x,2}}{R_{f}\delta}+\frac{1}{2}\frac{F_{y,1}u_{y,1}+F_{y,2}u_{y,2}}{R_{f}\delta}=\\
+=&\widetilde{G}_{I,xy} + \widetilde{G}_{II,xy}=\widetilde{G}_{TOT,xy}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{I,r\theta} = &\cos^{2}\left(\Delta\theta\right)\frac{F_{x,1}u_{x,1}+F_{x,2}u_{x,2}}{2R_{f}\delta}+\\
+&+\frac{F_{x,1}u_{y,1}+F_{y,1}u_{x,1}+F_{x,2}u_{y,2}+F_{y,2}u_{x,2}}{2R_{f}\delta}\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&+\sin^{2}\left(\Delta\theta\right)\frac{F_{y,1}u_{y,1}+F_{y,2}u_{y,2}}{2R_{f}\delta}=\\
+=&\cos^{2}\left(\Delta\theta\right)\widetilde{G}_{I,xy}+\sin^{2}\left(\Delta\theta\right)\widetilde{G}_{II,xy}+\\
+&+\frac{F_{x,1}u_{y,1}+F_{y,1}u_{x,1}+F_{x,2}u_{y,2}+F_{y,2}u_{x,2}}{2R_{f}\delta}\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{II,r\theta} = &\sin^{2}\left(\Delta\theta\right)\frac{F_{x,1}u_{x,1}+F_{x,2}u_{x,2}}{2R_{f}\delta}+\\
+&-\frac{F_{x,1}u_{y,1}+F_{y,1}u_{x,1}+F_{x,2}u_{y,2}+F_{y,2}u_{x,2}}{2R_{f}\delta}\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&+\cos^{2}\left(\Delta\theta\right)\frac{F_{y,1}u_{y,1}+F_{y,2}u_{y,2}}{2R_{f}\delta}=\\
+=&\sin^{2}\left(\Delta\theta\right)\widetilde{G}_{I,xy}+\cos^{2}\left(\Delta\theta\right)\widetilde{G}_{II,xy}+\\
+&-\frac{F_{x,1}u_{y,1}+F_{y,1}u_{x,1}+F_{x,2}u_{y,2}+F_{y,2}u_{x,2}}{2R_{f}\delta}\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)
+\end{split}
+\end{equation}
+
+\subsection{Sensitivity analysis of the FEM solution}
+
+\begin{equation}
+\begin{split}
+F_{x,1}\sim k_{x,1}u_{x,1}&\qquad F_{y,1}\sim k_{y,1}u_{y,1}\\
+F_{x,2}\sim k_{x,2}u_{x,2}&\qquad F_{y,2}\sim k_{y,2}u_{y,2}\\
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{I,r\theta} \sim &\frac{1}{2R_{f}\delta}\cos^{2}\left(\Delta\theta\right)\left(k_{x,1}u^{2}_{x,1}+k_{x,2}u^{2}_{x,2}\right)+\\
+&+\frac{1}{2R_{f}\delta}\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)\left(k_{x,1}u_{x,1}u_{y,1}+k_{y,1}u_{y,1}u_{x,1}+k_{x,2}u_{x,2}u_{y,2}+k_{y,2}u_{y,2}u_{x,2}\right)+\\
+&+\frac{1}{2R_{f}\delta}\sin^{2}\left(\Delta\theta\right)\left(k_{y,1}u^{2}_{y,1}+k_{y,2}u^{2}_{y,2}\right)
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{II,r\theta} \sim &\frac{1}{2R_{f}\delta}\sin^{2}\left(\Delta\theta\right)\left(k_{x,1}u^{2}_{x,1}+k_{x,2}u^{2}_{x,2}\right)+\\
+&-\frac{1}{2R_{f}\delta}\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)\left(k_{x,1}u_{x,1}u_{y,1}+k_{y,1}u_{y,1}u_{x,1}+k_{x,2}u_{x,2}u_{y,2}+k_{y,2}u_{y,2}u_{x,2}\right)+\\
+&+\frac{1}{2R_{f}\delta}\cos^{2}\left(\Delta\theta\right)\left(k_{y,1}u^{2}_{y,1}+k_{y,2}u^{2}_{y,2}\right)
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{TOT,r\theta} \sim &\frac{1}{2R_{f}\delta}\left(\left(k_{x,1}u^{2}_{x,1}\left(\Delta\theta\right)+k_{x,2}u^{2}_{x,2}\left(\Delta\theta\right)\right)+\left(k_{y,1}u^{2}_{y,1}\left(\Delta\theta\right)+k_{y,2}u^{2}_{y,2}\left(\Delta\theta\right)\right)\right)
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\frac{\partial G_{I,r\theta}}{\partial\Delta\theta} \sim&\frac{1}{R_{f}\delta}\cos^{2}\left(\Delta\theta\right)\left( k_{x,1}u_{x,1}\left(\Delta\theta\right)\frac{\partial u_{x,1}\left(\Delta\theta\right)}{\partial\Delta\theta}+k_{x,2}u_{x,2}\left(\Delta\theta\right)\frac{\partial u_{x,2}\left(\Delta\theta\right)}{\partial\Delta\theta}\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(k_{x,1}+k_{y,1}\right)\left(\frac{\partial u_{x,1}\left(\Delta\theta\right)}{\partial\Delta\theta}u_{y,1}\left(\Delta\theta\right)+u_{x,1}\left(\Delta\theta\right)\frac{\partial u_{y,1}\left(\Delta\theta\right)}{\partial\Delta\theta}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(k_{x,2}+k_{y,2}\right)\left(\frac{\partial u_{x,2}\left(\Delta\theta\right)}{\partial\Delta\theta}u_{y,2}\left(\Delta\theta\right)+u_{x,2}\left(\Delta\theta\right)\frac{\partial u_{y,2}\left(\Delta\theta\right)}{\partial\Delta\theta}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&+\frac{1}{R_{f}\delta}\sin^{2}\left(\Delta\theta\right)\left(k_{y,1}u_{y,1}\left(\Delta\theta\right)\frac{\partial u_{y,1}\left(\Delta\theta\right)}{\partial\Delta\theta}+k_{y,2}u_{y,2}\left(\Delta\theta\right)\frac{\partial u_{y,2}\left(\Delta\theta\right)}{\partial\Delta\theta}\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(\left(k_{y,1}u^{2}_{y,1}+k_{y,2}u^{2}_{y,2}\right)-\left(k_{x,1}u^{2}_{x,1}+k_{x,2}u^{2}_{x,2}\right)\right)\sin\left(2\Delta\theta\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(\left(k_{x,1}+k_{y,1}\right)u_{x,1}u_{y,1}+\left(k_{x,2}+k_{y,2}\right)u_{x,2}u_{y,2}\right)\cos\left(2\Delta\theta\right)\\
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\frac{\partial G_{II,r\theta}}{\partial\Delta\theta} \sim&\frac{1}{R_{f}\delta}\sin^{2}\left(\Delta\theta\right)\left( k_{x,1}u_{x,1}\left(\Delta\theta\right)\frac{\partial u_{x,1}\left(\Delta\theta\right)}{\partial\Delta\theta}+k_{x,2}u_{x,2}\left(\Delta\theta\right)\frac{\partial u_{x,2}\left(\Delta\theta\right)}{\partial\Delta\theta}\right)+\\
+&-\frac{1}{2R_{f}\delta}\left(k_{x,1}+k_{y,1}\right)\left(\frac{\partial u_{x,1}\left(\Delta\theta\right)}{\partial\Delta\theta}u_{y,1}\left(\Delta\theta\right)+u_{x,1}\left(\Delta\theta\right)\frac{\partial u_{y,1}\left(\Delta\theta\right)}{\partial\Delta\theta}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&-\frac{1}{2R_{f}\delta}\left(k_{x,2}+k_{y,2}\right)\left(\frac{\partial u_{x,2}\left(\Delta\theta\right)}{\partial\Delta\theta}u_{y,2}\left(\Delta\theta\right)+u_{x,2}\left(\Delta\theta\right)\frac{\partial u_{y,2}\left(\Delta\theta\right)}{\partial\Delta\theta}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
+&+\frac{1}{R_{f}\delta}\cos^{2}\left(\Delta\theta\right)\left(k_{y,1}u_{y,1}\left(\Delta\theta\right)\frac{\partial u_{y,1}\left(\Delta\theta\right)}{\partial\Delta\theta}+k_{y,2}u_{y,2}\left(\Delta\theta\right)\frac{\partial u_{y,2}\left(\Delta\theta\right)}{\partial\Delta\theta}\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(\left(k_{x,1}u^{2}_{x,1}+k_{x,2}u^{2}_{x,2}\right)-\left(k_{y,1}u^{2}_{y,1}+k_{y,2}u^{2}_{y,2}\right)\right)\sin\left(2\Delta\theta\right)+\\
+&-\frac{1}{2R_{f}\delta}\left(\left(k_{x,1}+k_{y,1}\right)u_{x,1}u_{y,1}+\left(k_{x,2}+k_{y,2}\right)u_{x,2}u_{y,2}\right)\cos\left(2\Delta\theta\right)\\
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{TOT,r\theta} \sim &\frac{1}{R_{f}\delta}\left(\left( k_{x,1}u_{x,1}\frac{\partial u_{x,1}}{\partial\Delta\theta}+k_{x,2}u_{x,2}\frac{\partial u_{x,2}}{\partial\Delta\theta}\right)+\left(k_{y,1}u_{y,1}\frac{\partial u_{y,1}}{\partial\Delta\theta}+k_{y,2}u_{y,2}\frac{\partial u_{y,2}}{\partial\Delta\theta}\right)\right)
+\end{split}
+\end{equation}
+
+\clearpage
+
+%------------------------------------------------------------------------------------------%
+%                             Interpolation
+%------------------------------------------------------------------------------------------%
+
+\section{Trigonometric interpolation}
+
+By inspecting the results of the previous sections, an interpolation of the BEM results is performed manually by trial and error. The following procedure is followed:
+
+\begin{enumerate}
+\item a basis function is selected;
+\item the frequency of the trigonometric basis function is calculated based on the position of the maximum value; 
+\item the amplitude is calculated based on the maximum value.
+\end{enumerate}
+
+\begin{figure}[!h]
+\includegraphics[width=\textwidth]{Gsplot.pdf}
+\caption{Interpolation of BEM results by manual trial and error.}
+\end{figure}
+
+The good agreement suggests that trigonometric functions are very good candidates for energy release rate data interpolation. The effect of different parameters can thus modeled as the functional variation of frequency (period) and amplitude of the trigonometric basis functions.
+
+%\clearpage
+%------------------------------------------------------------------------------------------%
+%                             CONCLUSIONS AND PERSPECTIVES
+%------------------------------------------------------------------------------------------%
+
+%\section{Conclusions}
+
+
+%------------------------------------------------------------------------------------------%
+%                                   ACKNOWLEDGEMENTS
+%------------------------------------------------------------------------------------------%
+%\ack
+%Luca Di Stasio gratefully acknowledges the support of the European School of Materials (EUSMAT) through the DocMASE Doctoral Programme and the European Commission through the Erasmus Mundus Programme.
+%\newpage
+%------------------------------------------------------------------------------------------%
+%                                      REFERENCES
+%------------------------------------------------------------------------------------------%
+%\input{refs}
+
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%                                    DOCUMENT ENDS
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+\end{document}
+
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%                                      FILE ENDS
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%

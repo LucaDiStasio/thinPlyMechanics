@@ -258,6 +258,77 @@ G_{TOT,r\theta} \sim\frac{1}{2R_{f}\delta}\left( k_{x}u^{2}_{x}\left(\Delta\thet
 \frac{\partial G_{TOT,r\theta}}{\partial\Delta\theta} \sim\frac{1}{R_{f}\delta}\left( k_{x}u_{x}\left(\Delta\theta\right)\frac{\partial u_{x}\left(\Delta\theta\right)}{\partial\Delta\theta}+ k_{y}u_{y}\left(\Delta\theta\right)\frac{\partial u_{y}\left(\Delta\theta\right)}{\partial\Delta\theta}\right)
 \end{equation}
 
+\subsection{Discretization error}
+
+\begin{equation}
+u_{r}=\cos\left(\Delta\theta-\delta\right) u_{x}+\sin\left(\Delta\theta-\delta\right) u_{y}\qquad u_{\theta}=-\sin\left(\Delta\theta-\delta\right) u_{x}+\cos\left(\Delta\theta-\delta\right) u_{y}
+\end{equation}
+
+\begin{equation}
+F_{r}=\cos\left(\Delta\theta\right) F_{x,CT}+\sin\left(\Delta\theta\right) F_{y,CT}\qquad F_{\theta}=-\sin\left(\Delta\theta\right) F_{x,CT}+\cos\left(\Delta\theta\right) F_{y,CT}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\widetilde{G}_{I,r\theta} = &\frac{1}{2}\frac{F_{r}u_{r}}{R_{f}\delta}=\\
+= &\frac{1}{2R_{f}\delta}\left(\cos\left(\Delta\theta\right) F_{x}+\sin\left(\Delta\theta\right)F_{y}\right)\left(\cos\left(\Delta\theta-\delta\right) u_{x}+\sin\left(\Delta\theta-\delta\right) u_{y}\right)=\\
+= &\frac{1}{2R_{f}\delta}\left(\cos\left(\Delta\theta\right) F_{x}+\sin\left(\Delta\theta\right)F_{y}\right)\left(\cos\left(\Delta\theta\right) u_{x}+\sin\left(\Delta\theta\right) u_{y}\right)\cos\left(\delta\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(\cos\left(\Delta\theta\right) F_{x}+\sin\left(\Delta\theta\right)F_{y}\right)\left(\sin\left(\Delta\theta\right) u_{x}-\cos\left(\Delta\theta\right) u_{y}\right)\sin\left(\delta\right)=\\
+= &\frac{1}{2R_{f}\delta}\left(\cos^{2}\left(\Delta\theta\right) F_{x}u_{x}+\left(F_{x}u_{y}+F_{y}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{y}\right)\cos\left(\delta\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\sin\left(\delta\right)=\\
+= &G_{I,r\theta}\cos\left(\delta\right)+\\
+&+\frac{1}{2R_{f}\delta}\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\sin\left(\delta\right)
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{II,r\theta} = &\frac{1}{2}\frac{F_{\theta}u_{\theta}}{R_{f}\delta}=\\
+= &\frac{1}{2R_{f}\delta}\left(-\sin\left(\Delta\theta\right) F_{x}+\cos\left(\Delta\theta\right)F_{y}\right)\left(-\sin\left(\Delta\theta-\delta\right) u_{x}+\cos\left(\Delta\theta-\delta\right) u_{y}\right)=\\
+= &\frac{1}{2R_{f}\delta}\left(\sin^{2}\left(\Delta\theta\right) F_{x}u_{x}-\left(F_{x}u_{y}+F_{y}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{y}\right)\\
+\end{split}
+\end{equation}
+
+\subsection{Contact region}
+
+\begin{equation}
+u_{r}=0
+\end{equation}
+
+\begin{equation}
+\cos\left(\Delta\theta\right) u_{x}+\sin\left(\Delta\theta\right) u_{y}=0
+\end{equation}
+
+\begin{equation}
+u_{y}=-\frac{ u_{x}}{\tan\left(\Delta\theta\right)}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+u_{\theta}=&-\sin\left(\Delta\theta\right) u_{x}-\frac{\cos^{2}\left(\Delta\theta\right)}{\sin\left(\Delta\theta\right)}u_{x}=\\
+=&-\frac{u_{x}}{\sin\left(\Delta\theta\right)}
+\end{split}
+\end{equation}
+
+\begin{equation}
+F_{r}=\cos\left(\Delta\theta\right) F_{x,CT}+\sin\left(\Delta\theta\right) F_{y,CT}\qquad F_{\theta}=-\sin\left(\Delta\theta\right) F_{x,CT}+\cos\left(\Delta\theta\right) F_{y,CT}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{I,r\theta} = &\frac{1}{2}\frac{F_{r}u_{r}}{R_{f}\delta}=0
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{II,r\theta} = &\frac{1}{2}\frac{F_{\theta}u_{\theta}}{R_{f}\delta}=\\
+= &\frac{1}{2R_{f}\delta}\left(-\sin\left(\Delta\theta\right) F_{x}+\cos\left(\Delta\theta\right)F_{y}\right)\left(-\frac{u_{x}}{\sin\left(\Delta\theta\right)}\right)=\\
+= &\frac{1}{2R_{f}\delta}\left( F_{x}u_{x}-\frac{F_{y}u_{x}}{\tan\left(\Delta\theta\right)}\right)\\
+= &\frac{1}{2R_{f}\delta}\left( F_{x}-\frac{F_{y}}{\tan\left(\Delta\theta\right)}\right)u_{x}\\
+\end{split}
+\end{equation}
+
 \clearpage
 
 %------------------------------------------------------------------------------------------%
@@ -442,6 +513,8 @@ G_{TOT,r\theta} \sim &\frac{1}{2R_{f}\delta}\left(\left(k_{x,1}u^{2}_{x,1}\left(
 G_{TOT,r\theta} \sim &\frac{1}{R_{f}\delta}\left(\left( k_{x,1}u_{x,1}\frac{\partial u_{x,1}}{\partial\Delta\theta}+k_{x,2}u_{x,2}\frac{\partial u_{x,2}}{\partial\Delta\theta}\right)+\left(k_{y,1}u_{y,1}\frac{\partial u_{y,1}}{\partial\Delta\theta}+k_{y,2}u_{y,2}\frac{\partial u_{y,2}}{\partial\Delta\theta}\right)\right)
 \end{split}
 \end{equation}
+
+
 
 \clearpage
 

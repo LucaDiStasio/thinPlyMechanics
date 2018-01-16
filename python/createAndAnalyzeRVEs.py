@@ -4,7 +4,7 @@
 '''
 =====================================================================================
 
-Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet
+Copyright (c) 2016-2018 Université de Lorraine or Luleå tekniska universitet
 Author: Luca Di Stasio <luca.distasio@gmail.com>
                        <luca.distasio@ingpec.eu>
 
@@ -16,7 +16,7 @@ notice, this list of conditions and the following disclaimer.
 Redistributions in binary form must reproduce the above copyright
 notice, this list of conditions and the following disclaimer in
 the documentation and/or other materials provided with the distribution
-Neither the name of the Universit� de Lorraine or Lule� tekniska universitet
+Neither the name of the Université de Lorraine or Luleå tekniska universitet
 nor the names of its contributors may be used to endorse or promote products
 derived from this software without specific prior written permission.
 
@@ -39,6 +39,7 @@ DESCRIPTION
 Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 
 '''
+import sys
 import numpy as np
 from os.path import isfile
 from abaqus import *
@@ -85,226 +86,261 @@ def createRVE(parameters):
         openMdb(caefullpath)
     else:
         mdb.saveAs(caefullpath)
+    # assign model object to variable for lighter code
+    model = mdb.models[modelname]
 #===============================================================================#
 #                             Parts creation
 #===============================================================================# 
-    # create model
-    s = mdb.models[modelname].ConstrainedSketch(name='__profile__', 
+    # create sketch
+    RVEsketch = model.ConstrainedSketch(name='__profile__', 
         sheetSize=3*L)
-    g, v, d, c = s.geometry, s.vertices, s.dimensions, s.constraints
-    s.setPrimaryObject(option=STANDALONE)
-    # create geometry
-    s.rectangle(point1=(-L, 0.0), point2=(L,L))
-    # session.viewports['Viewport: 1'].view.setValues(nearPlane=138.227, 
-    #     farPlane=238.897, width=390.084, height=180.104, cameraPosition=(
-    #     15.9249, 26.9232, 188.562), cameraTarget=(15.9249, 26.9232, 0))
-    
+    RVEsketch.setPrimaryObject(option=STANDALONE)
+    # create rectangle
+    RVEsketch.rectangle(point1=(-L, 0.0), point2=(L,L))
     # set dimension labels
-    s.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(-109.506118774414, 
-        57.8169174194336), value=100.0)
-    s.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(-36.3927574157715, 
-        110.401977539063), value=200.0)
-    
-    p = mdb.models[modelname].Part(name='RVE', dimensionality=TWO_D_PLANAR, 
-        type=DEFORMABLE_BODY)
-    p = mdb.models[modelname].parts['RVE']
-    p.BaseShell(sketch=s)
-    s.unsetPrimaryObject()
-    p = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p)
-    del mdb.models[modelname].sketches['__profile__']
-    # session.viewports['Viewport: 1'].view.setValues(nearPlane=422.639, 
-    #     farPlane=471.788, width=216.795, height=93.2764, viewOffsetX=2.78779, 
-    #     viewOffsetY=-2.68155)
-    # create partition
-    p = mdb.models[modelname].parts['RVE']
-    f, e, d1 = p.faces, p.edges, p.datums
-    t = p.MakeSketchTransform(sketchPlane=f[0], sketchPlaneSide=SIDE1, origin=(0.0,0.5*L, 0.0))
-    s1 = mdb.models[modelname].ConstrainedSketch(name='__profile__', 
-        sheetSize=3*L, gridSpacing=L/100.0, transform=t)
-    g, v, d, c = s1.geometry, s1.vertices, s1.dimensions, s1.constraints
-    s1.setPrimaryObject(option=SUPERIMPOSE)
-    p = mdb.models[modelname].parts['RVE']
-    p.projectReferencesOntoSketch(sketch=s1, filter=COPLANAR_EDGES)
-    # session.viewports['Viewport: 1'].view.setValues(nearPlane=419.629, 
-    #     farPlane=474.798, width=241.934, height=111.702, cameraPosition=(
-    #     -3.26651, 51.4432, 447.214), cameraTarget=(-3.26651, 51.4432, 0))
-    # draw fiber
-    s1.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-Rf, -0.5*L), point2=(Rf,-0.5*L), direction=CLOCKWISE)
-    # session.viewports['Viewport: 1'].view.setValues(nearPlane=446.175, 
-    #     farPlane=448.252, width=8.04875, height=3.71615, cameraPosition=(
-    #     0.711616, 0.804246, 447.214), cameraTarget=(0.711616, 0.804246, 0))
-    # draw circular sections for mesh generation
-    s1.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-0.75*Rf, -0.5*L), point2=(0.75*Rf,-0.5*L), direction=CLOCKWISE)
-    s1.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-0.5*Rf, -0.5*L), point2=(0.5*Rf,-0.5*L), direction=CLOCKWISE)
+    RVEsketch.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(-1.1*L,0.5*L), value=L)
+    RVEsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(0.0,1.1*L), value=2*L)
+    # assign to part
+    RVEpart = model.Part(name='RVE',dimensionality=TWO_D_PLANAR,type=DEFORMABLE_BODY)
+    RVEpart = model.parts['RVE']
+    RVEpart.BaseShell(sketch=RVEsketch)
+    RVEsketch.unsetPrimaryObject()
+    del model.sketches['__profile__']
+    # create reference to geometrical objects (faces, edges and vertices) of the part
+    RVEfaces = RVEpart.faces
+    RVEedges = RVEpart.edges
+    RVEvertices = RVEpart.vertices
+    # create geometrical transform to draw partition sketch
+    transformToSketch = RVEpart.MakeSketchTransform(sketchPlane=RVEfaces[0], sketchPlaneSide=SIDE1, origin=(0.0,0.5*L, 0.0))
+    # create sketch
+    fiberSketch = model.ConstrainedSketch(name='__profile__',sheetSize=3*L, gridSpacing=L/100.0, transform=transformToSketch)
+    # create reference to geometrical objects (faces, edges and vertices) of the partition sketch
+    fiberGeometry = fiberSketch.geometry
+    fiberVertices = fiberSketch.vertices
+    fiberSketch.setPrimaryObject(option=SUPERIMPOSE)
+    #p = mdb.models[modelname].parts['RVE']
+    RVEpart.projectReferencesOntoSketch(sketch=fiberSketch, filter=COPLANAR_EDGES)
+    # draw fiber and circular sections for mesh generation
+    fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-Rf, -0.5*L), point2=(Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[6]
+    fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-0.75*Rf, -0.5*L), point2=(0.75*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[7]
+    fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-0.5*Rf, -0.5*L), point2=(0.5*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[8]
     if L>2*Rf:
-        s1.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-1.25*Rf, -0.5*L), point2=(1.25*Rf,-0.5*L), direction=CLOCKWISE)
-        s1.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-1.5*Rf, -0.5*L), point2=(1.5*Rf,-0.5*L), direction=CLOCKWISE)
+        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-1.25*Rf, -0.5*L), point2=(1.25*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[9]
+        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-1.5*Rf, -0.5*L), point2=(1.5*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[10]
     else:
-        s1.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-(Rf+0.25*(L-Rf)), -0.5*L), point2=((Rf+0.25*(L-Rf)),-0.5*L), direction=CLOCKWISE)
-        s1.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-(Rf+0.5*(L-Rf)), -0.5*L), point2=((Rf+0.5*(L-Rf)),-0.5*L), direction=CLOCKWISE)
-        
+        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-(Rf+0.25*(L-Rf)), -0.5*L), point2=((Rf+0.25*(L-Rf)),-0.5*L), direction=CLOCKWISE) # fiberGeometry[9]
+        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-(Rf+0.5*(L-Rf)), -0.5*L), point2=((Rf+0.5*(L-Rf)),-0.5*L), direction=CLOCKWISE) # fiberGeometry[10]
+    
+    # calculate angles for construction lines    
     alpha = theta + deltatheta - deltapsi
     beta = theta + deltatheta + deltapsi
     gamma = theta + deltatheta + deltapsi + deltaphi
-    # draw angular section for crack and mesh generation    
-    s1.ConstructionLine(point1=(0.0, -0.5*L), angle=(theta+deltatheta))
-    s1.CoincidentConstraint(entity1=v[6], entity2=g[11], addUndoState=False)
     
-    s1.ConstructionLine(point1=(0.0, -0.5*L), angle=alpha)
-    s1.CoincidentConstraint(entity1=v[6], entity2=g[12], addUndoState=False)
+    # draw construction lines  
+    fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=(theta+deltatheta)) # fiberGeometry[11]
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[11], addUndoState=False)
     
-    s1.ConstructionLine(point1=(0.0, -0.5*L), angle=beta)
-    s1.CoincidentConstraint(entity1=v[6], entity2=g[13], addUndoState=False)
+    fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=alpha) # fiberGeometry[12]
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[12], addUndoState=False)
     
-    s1.ConstructionLine(point1=(0.0, -0.5*L), angle=gamma)
-    s1.CoincidentConstraint(entity1=v[6], entity2=g[14], addUndoState=False)
+    fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=beta) # fiberGeometry[13]
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[13], addUndoState=False)
     
-    # session.viewports['Viewport: 1'].view.setValues(nearPlane=446.654, 
-    #     farPlane=447.773, width=4.33518, height=2.00158, cameraPosition=(
-    #     0.833721, 0.682125, 447.214), cameraTarget=(0.833721, 0.682125, 0))
+    fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=gamma) # fiberGeometry[14]
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[14], addUndoState=False)
     
+    # draw angular sections to identify the crack and for mesh generation
     Rint = 0.75*Rf
     if L>2*Rf:
         Rext = 1.25*Rf
     else:
         Rext = Rf+0.25*(L-Rf)
         
-    s1.Line(point1=(Rint*np.cos(alpha*np.pi/180.0), -0.5*L+Rint*np.sin(alpha*np.pi/180.0)), point2=(
-        Rext*np.cos(alpha*np.pi/180.0), -0.5*L+Rext*np.sin(alpha*np.pi/180.0))
-    s1.PerpendicularConstraint(entity1=g[7], entity2=g[15], addUndoState=False)
-    s1.CoincidentConstraint(entity1=v[15], entity2=g[7], addUndoState=False)
-    s1.CoincidentConstraint(entity1=v[16], entity2=g[9], addUndoState=False)
+    fiberSketch.Line(point1=(Rint*np.cos(alpha*np.pi/180.0), -0.5*L+Rint*np.sin(alpha*np.pi/180.0)), point2=(
+        Rext*np.cos(alpha*np.pi/180.0), -0.5*L+Rext*np.sin(alpha*np.pi/180.0)) # fiberGeometry[15]
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[15], addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[15], entity2=fiberGeometry[7], addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[16], entity2=fiberGeometry[9], addUndoState=False)
     
-    s1.Line(point1=(Rint*np.cos((theta+deltatheta)*np.pi/180.0), -0.5*L+Rint*np.sin((theta+deltatheta)*np.pi/180.0)), point2=(
-        Rext*np.cos((theta+deltatheta)*np.pi/180.0), -0.5*L+Rext*np.sin((theta+deltatheta)*np.pi/180.0))
-    s1.PerpendicularConstraint(entity1=g[7], entity2=g[16], addUndoState=False)
-    s1.CoincidentConstraint(entity1=v[17], entity2=g[7], addUndoState=False)
-    s1.CoincidentConstraint(entity1=v[18], entity2=g[9], addUndoState=False)
+    fiberSketch.Line(point1=(Rint*np.cos((theta+deltatheta)*np.pi/180.0), -0.5*L+Rint*np.sin((theta+deltatheta)*np.pi/180.0)), point2=(
+        Rext*np.cos((theta+deltatheta)*np.pi/180.0), -0.5*L+Rext*np.sin((theta+deltatheta)*np.pi/180.0)) # fiberGeometry[16]
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[16], addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[17], entity2=fiberGeometry[7], addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[18], entity2=fiberGeometry[9], addUndoState=False)
     
-    s1.Line(point1=(Rint*np.cos(beta*np.pi/180.0), -0.5*L+Rint*np.sin(beta*np.pi/180.0)), point2=(
-        Rext*np.cos(beta*np.pi/180.0), -0.5*L+Rext*np.sin(beta*np.pi/180.0))
-    s1.PerpendicularConstraint(entity1=g[7], entity2=g[17], addUndoState=False)
-    s1.CoincidentConstraint(entity1=v[19], entity2=g[7], addUndoState=False)
-    s1.CoincidentConstraint(entity1=v[20], entity2=g[9], addUndoState=False)
+    fiberSketch.Line(point1=(Rint*np.cos(beta*np.pi/180.0), -0.5*L+Rint*np.sin(beta*np.pi/180.0)), point2=(
+        Rext*np.cos(beta*np.pi/180.0), -0.5*L+Rext*np.sin(beta*np.pi/180.0)) # fiberGeometry[17]
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[17], addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[19], entity2=fiberGeometry[7], addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[20], entity2=fiberGeometry[9], addUndoState=False)
     
-    s1.Line(point1=(Rint*np.cos(gamma*np.pi/180.0), -0.5*L+Rint*np.sin(gamma*np.pi/180.0)), point2=(
-        Rext*np.cos(gamma*np.pi/180.0), -0.5*L+Rext*np.sin(gamma*np.pi/180.0))
-    s1.PerpendicularConstraint(entity1=g[7], entity2=g[21], addUndoState=False)
-    s1.CoincidentConstraint(entity1=v[25], entity2=g[7], addUndoState=False)
-    s1.CoincidentConstraint(entity1=v[26], entity2=g[9], addUndoState=False)
+    fiberSketch.Line(point1=(Rint*np.cos(gamma*np.pi/180.0), -0.5*L+Rint*np.sin(gamma*np.pi/180.0)), point2=(
+        Rext*np.cos(gamma*np.pi/180.0), -0.5*L+Rext*np.sin(gamma*np.pi/180.0)) # fiberGeometry[18]
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[18], addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[25], entity2=fiberGeometry[7], addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[26], entity2=fiberGeometry[9], addUndoState=False)
     
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    pickedFaces = f.getSequenceFromMask(mask=('[#1 ]', ), )
-    e1, d2 = p.edges, p.datums
-    p.PartitionFaceBySketch(faces=pickedFaces, sketch=s1)
-    s1.unsetPrimaryObject()
-    del mdb.models[modelname].sketches['__profile__']
-    # session.viewports['Viewport: 1'].view.setValues(nearPlane=446.825, 
-    #     farPlane=447.603, width=3.01417, height=1.29685, viewOffsetX=0.737959, 
-    #     viewOffsetY=-49.1943)
-    p = mdb.models[modelname].parts['RVE']
-    v = p.vertices
-    verts = v.getSequenceFromMask(mask=('[#4000 ]', ), )
-    p.Set(vertices=verts, name='CrackTip')
-    # session.viewports['Viewport: 1'].view.setValues(nearPlane=446.848, 
-    #     farPlane=447.579, viewOffsetX=0.754913, viewOffsetY=-49.3018)
-    # session.viewports['Viewport: 1'].view.setValues(nearPlane=446.848, 
-    #     farPlane=447.579, viewOffsetX=0.900385, viewOffsetY=-49.4203)
-    p = mdb.models[modelname].parts['RVE']
-    e = p.edges
-    edges = e.getSequenceFromMask(mask=('[#20004 ]', ), )
-    p.Set(edges=edges, name='Crack')
+    pickedFaces = RVEfaces.getSequenceFromMask(mask=('[#1 ]', ), )
+    p.PartitionFaceBySketch(faces=pickedFaces, sketch=fiberSketch)
+    fiberSketch.unsetPrimaryObject()
+    del model.sketches['__profile__']
     
+    # create sets
+    RVEvertices = RVEpart.vertices
+    RVEedges = RVEpart.edges
+    RVEfaces = RVEpart.faces
     
-    p = mdb.models[modelname].parts['RVE']
-    p.regenerate()
+    crackTip = RVEvertices.getByBoundingSphere(center=(Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf)
+    RVEpart.Set(vertices=crackTip, name='CRACKTIP')
     
-    # session.viewports['Viewport: 1'].view.setValues(nearPlane=446.727, 
-    #     farPlane=447.7, width=3.77317, height=1.62341, viewOffsetX=1.23565, 
-    #     viewOffsetY=-49.3176)
+    crackEdge1=RVEedges.getByBoundingSphere(center=(Rf*np.cos(0.5*alpha*np.pi/180),Rf*np.sin(0.5*alpha*np.pi/180),0.0),radius=0.01*Rf)
+    crackEdge2=RVEedges.getByBoundingSphere(center=(Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),radius=0.01*Rf)
+    RVEpart.Set(edges=crackEdge1, name='CRACK-LOWER')
+    RVEpart.Set(edges=crackEdge2, name='CRACK-UPPER')
+    RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
     
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#9c7 ]', ), )
-    p.Set(faces=faces, name='Fiber')
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#3638 ]', ), )
-    p.Set(faces=faces, name='Matrix')
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#8 ]', ), )
-    p.Set(faces=faces, name='BulkMatrix')
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#1 ]', ), )
-    p.Set(faces=faces, name='BulkFiber')
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#946 ]', ), )
-    p.Set(faces=faces, name='OuterRingFiber')
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#80 ]', ), )
-    p.Set(faces=faces, name='InnerRingFiber')
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#3430 ]', ), )
-    p.Set(faces=faces, name='InnerRingMatrix')
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#200 ]', ), )
-    p.Set(faces=faces, name='OuterRingMatrix')
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#940 ]', ), )
-    p.Set(faces=faces, name='FiberBounded')
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#6 ]', ), )
-    p.Set(faces=faces, name='FiberCrack')
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#3400 ]', ), )
-    p.Set(faces=faces, name='MatrixBounded')
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#30 ]', ), )
-    p.Set(faces=faces, name='MatrixCrack')
+    RVEpart.Set(faces=RVEfaces.findAt(((0.0, 0.25*L, 0),))), name='FIBER-CENTER')
+    RVEpart.Set(faces=RVEfaces.findAt(((0.0, 0.65*L, 0),))), name='FIBER-INTERMEDIATEANNULUS')
+    RVEpart.Set(faces=RVEfaces.findAt(((0.85*Rf*np.cos(0.5*alpha*np.pi/180), 0.85*Rf*np.sin(0.5*alpha*np.pi/180), 0),))), name='FIBER-EXTANNULUS-LOWERCRACK')
+    RVEpart.Set(faces=RVEfaces.findAt(((0.85*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180), 0),))), name='FIBER-EXTANNULUS-UPPERCRACK')
+    RVEpart.Set(faces=RVEfaces.findAt(((0.85*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0),))), name='FIBER-EXTANNULUS-FIRSTBOUNDED')
+    RVEpart.Set(faces=RVEfaces.findAt(((0.85*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180), 0.85*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180), 0),))), name='FIBER-EXTANNULUS-SECONDBOUNDED')
+    RVEpart.Set(faces=RVEfaces.findAt(((0.85*Rf*np.cos((gamma+0.5*(180-gamma))*np.pi/180), 0.85*Rf*np.sin((gamma+0.5*(180-gamma))*np.pi/180), 0),))), name='FIBER-EXTANNULUS-RESTBOUNDED')
+    RVEpart.SetByBoolean(name='FIBER-EXTANNULUS', sets=[RVEpart.sets['FIBER-EXTANNULUS-LOWERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-UPPERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-FIRSTBOUNDED'],RVEpart.sets['FIBER-EXTANNULUS-SECONDBOUNDED'],RVEpart.sets['FIBER-EXTANNULUS-RESTBOUNDED']])
+    RVEpart.SetByBoolean(name='FIBER', sets=[RVEpart.sets['FIBER-CENTER'],RVEpart.sets['FIBER-INTERMEDIATEANNULUS'],RVEpart.sets['FIBER-EXTANNULUS']])
+    
+    if L>2*Rf:
+        R1 = (1+0.5*0.25)*Rf
+        R2 = (1.25+0.5*0.25)*Rf
+    else:
+        R1 = Rf+0.5*0.25*(L-Rf)
+        R2 = Rf+1.5*0.25*(L-Rf)
+        
+    RVEpart.Set(faces=RVEfaces.findAt(((R1*np.cos(0.5*alpha*np.pi/180), R1*np.sin(0.5*alpha*np.pi/180), 0),))), name='MATRIX-INTANNULUS-LOWERCRACK')
+    RVEpart.Set(faces=RVEfaces.findAt(((R1*np.cos((alpha+0.5*deltapsi)*np.pi/180), R1*np.sin((alpha+0.5*deltapsi)*np.pi/180), 0),))), name='MATRIX-INTANNULUS-UPPERCRACK')
+    RVEpart.Set(faces=RVEfaces.findAt(((R1*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180), R1*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0),))), name='MATRIX-INTANNULUS-FIRSTBOUNDED')
+    RVEpart.Set(faces=RVEfaces.findAt(((R1*np.cos((beta+0.5*deltaphi)*np.pi/180), R1*np.sin((beta+0.5*deltaphi)*np.pi/180), 0),))), name='MATRIX-INTANNULUS-SECONDBOUNDED')
+    RVEpart.Set(faces=RVEfaces.findAt(((R1*np.cos((gamma+0.5*(180-gamma))*np.pi/180), R1*np.sin((gamma+0.5*(180-gamma))*np.pi/180), 0),))), name='MATRIX-INTANNULUS-RESTBOUNDED')
+    RVEpart.SetByBoolean(name='MATRIX-INTANNULUS', sets=[RVEpart.sets['MATRIX-INTANNULUS-LOWERCRACK'],RVEpart.sets['MATRIX-INTANNULUS-UPPERCRACK'],RVEpart.sets['MATRIX-INTANNULUS-FIRSTBOUNDED'],RVEpart.sets['MATRIX-INTANNULUS-SECONDBOUNDED'],RVEpart.sets['MATRIX-INTANNULUS-RESTBOUNDED']])
+    RVEpart.Set(faces=RVEfaces.findAt(((0.0, R2, 0),))), name='MATRIX-INTERMEDIATEANNULUS')
+    RVEpart.Set(faces=RVEfaces.findAt(((0.0, Rf+0.5*(L-Rf), 0),))), name='MATRIX-BODY')
+    RVEpart.SetByBoolean(name='MATRIX', sets=[RVEpart.sets['MATRIX-BODY'],RVEpart.sets['MATRIX-INTERMEDIATEANNULUS'],RVEpart.sets['MATRIX-INTANNULUS']])
+    
+    faces = RVEfaces.findAt(coordinates=())
+    RVEpart.Set(faces=faces, name='Fiber')
+    
+    faces = RVEfaces.findAt()
+    RVEpart.Set(faces=faces, name='Matrix')
+    
+    faces = RVEfaces.findAt()
+    RVEpart.Set(faces=faces, name='BulkMatrix')
+    
+    faces = RVEfaces.findAt(coordinates=())
+    RVEpart.Set(faces=faces, name='BulkFiber')
+    
+    faces = RVEfaces.findAt()
+    RVEpart.Set(faces=faces, name='OuterRingFiber')
+    
+    faces = RVEfaces.findAt()
+    RVEpart.Set(faces=faces, name='InnerRingFiber')
+    
+    faces = RVEfaces.findAt()
+    RVEpart.Set(faces=faces, name='InnerRingMatrix')
+    
+    faces = RVEfaces.findAt()
+    RVEpart.Set(faces=faces, name='OuterRingMatrix')
+    
+    faces = RVEfaces.findAt()
+    RVEpart.Set(faces=faces, name='FiberBounded')
+    
+    faces = RVEfaces.findAt()
+    RVEpart.Set(faces=faces, name='FiberCrack')
+    
+    faces = RVEfaces.findAt()
+    RVEpart.Set(faces=faces, name='MatrixBounded')
+    
+    faces = RVEfaces.findAt()
+    RVEpart.Set(faces=faces, name='MatrixCrack')
+    
     mdb.save()
-    
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    session.viewports['Viewport: 1'].partDisplay.setValues(sectionAssignments=ON, 
-        engineeringFeatures=ON)
-    session.viewports['Viewport: 1'].partDisplay.geometryOptions.setValues(
-        referenceRepresentation=OFF)
     
 #===============================================================================#
 #                             Materials creation
 #===============================================================================#    
-    mdb.models[modelname].Material(name='GlassFiber')
-    mdb.models[modelname].materials['GlassFiber'].Elastic(table=((70000.0, 0.2), ))
     
-    mdb.models[modelname].Material(name='Epoxy')
-    mdb.models[modelname].materials['Epoxy'].Elastic(table=((3500.0, 0.4), ))
-    
+    for material in parameters['materials']:
+        mdb.models[modelname].Material(name=material['name'])
+        try:
+            values = material['elastic']['values']
+            tuplelist = []
+            valuelist = []
+            for v,value in enumerate(values):
+                if v>0 and v%8=0:
+                    tuplelist.append(tuple(valuelist))
+                    valuelist = []
+                valuelist.append(value)
+            tuplelist.append(tuple(valuelist))    
+            mdb.models[modelname].materials[material['name']].Elastic(type=material['elastic']['type'],table=tuple(tuplelist))
+        except Exception, error:
+            sys.exc_clear()
+        try:
+            values = material['density']['values']
+            tuplelist = []
+            valuelist = []
+            for v,value in enumerate(values):
+                if v>0 and v%8=0:
+                    tuplelist.append(tuple(valuelist))
+                    valuelist = []
+                valuelist.append(value)
+            tuplelist.append(tuple(valuelist))    
+            mdb.models[modelname].materials[material['name']].Density(table=tuple(tuplelist))
+        except Exception, error:
+            sys.exc_clear()
+        try:
+            values = material['thermalexpansion']['values']
+            tuplelist = []
+            valuelist = []
+            for v,value in enumerate(values):
+                if v>0 and v%8=0:
+                    tuplelist.append(tuple(valuelist))
+                    valuelist = []
+                valuelist.append(value)
+            tuplelist.append(tuple(valuelist))    
+            mdb.models[modelname].materials[material['name']].Expansion(type=material['thermalexpansion']['type'],table=tuple(tuplelist))
+        except Exception, error:
+            sys.exc_clear()
+        try:
+            values = material['thermalconductivity']['values']
+            tuplelist = []
+            valuelist = []
+            for v,value in enumerate(values):
+                if v>0 and v%8=0:
+                    tuplelist.append(tuple(valuelist))
+                    valuelist = []
+                valuelist.append(value)
+            tuplelist.append(tuple(valuelist))    
+            mdb.models[modelname].materials[material['name']].Conductivity(type=material['thermalconductivity']['type'],table=tuple(tuplelist))
+        except Exception, error:
+            sys.exc_clear()
+
+    mdb.save()
+
 #===============================================================================#
 #                             Sections creation
 #===============================================================================#
     
-    mdb.models[modelname].HomogeneousSolidSection(name='FiberSection', 
-        material='GlassFiber', thickness=1.0)
-    mdb.models[modelname].HomogeneousSolidSection(name='MatrixSection', 
-        material='Epoxy', thickness=1.0)
-        
+    for section in parameters['sections']:
+        if 'HomogeneousSolidSection' in section['type'] or 'Homogeneous Solid Section' in section['type'] or 'somogeneoussolidsection' in section['type'] or 'homogeneous solid section' in section['type'] or 'Homogeneous solid section' in section['type']:
+        mdb.models[modelname].HomogeneousSolidSection(name=section['name'], 
+            material=section['material'], thickness=section['thickness'])
+    
+    mdb.save()
+    
 #===============================================================================#
 #                             Sections assignment
-#===============================================================================#         
+#===============================================================================#  
+    for sectionRegion in parameters['sectionRegions']:
+        
     p = mdb.models[modelname].parts['RVE']
     f = p.faces
     faces = f.getSequenceFromMask(mask=('[#9c7 ]', ), )
@@ -321,10 +357,9 @@ def createRVE(parameters):
     p.SectionAssignment(region=region, sectionName='MatrixSection', offset=0.0, 
         offsetType=MIDDLE_SURFACE, offsetField='', 
         thicknessAssignment=FROM_SECTION)
+        
     mdb.save()
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=445.377, 
-        farPlane=449.05, width=16.1036, height=6.92858, viewOffsetX=5.22035, 
-        viewOffsetY=-49.1912)
+    
 #===============================================================================#
 #                             Instance creation
 #===============================================================================#

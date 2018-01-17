@@ -207,6 +207,78 @@ def createRVE(parameters):
     RVEpart.Set(edges=crackEdge2, name='CRACK-UPPER')
     RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
     
+    RVEpart.Set(edges=crackEdge1, name='LOWERSIDE-CENTER')
+    
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.001*Rf,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-CENTER')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.65*Rf,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-FIRSTRING-RIGHT')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(-0.65*Rf,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-FIRSTRING-LEFT')
+    RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT'],RVEpart.sets['LOWERSIDE-FIRSTRING-LEFT']])
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.85*Rf,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-SECONDRING-RIGHT')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(-0.85*Rf,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-SECONDRING-LEFT')
+    RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT'],RVEpart.sets['LOWERSIDE-SECONDRING-LEFT']])
+    if L>2*Rf:
+        R1 = (1+0.5*0.25)*Rf
+        R2 = (1.25+0.5*0.25)*Rf
+    else:
+        R1 = Rf+0.5*0.25*(L-Rf)
+        R2 = Rf+1.5*0.25*(L-Rf)
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R1,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-THIRDRING-RIGHT')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(-R1,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-THIRDRING-LEFT')
+    RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT'],RVEpart.sets['LOWERSIDE-THIRDRING-LEFT']])
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R2,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-FOURTHRING-RIGHT')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(-R2,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-FOURTHRING-LEFT')
+    RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT'],RVEpart.sets['LOWERSIDE-FOURTHRING-LEFT']])
+    RVEpart.SetByBoolean(name='LOWERSIDE', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING'],RVEpart.sets['LOWERSIDE-SECONDRING'],RVEpart.sets['LOWERSIDE-THIRDRING'],RVEpart.sets['LOWERSIDE-FOURTHRING']])
+    
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.0,L,0.0),radius=0.001*Rf), name='UPPERSIDE')    
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(L,0.5*L,0.0),radius=0.001*Rf), name='RIGHTSIDE')    
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(-L,0.5*L,0.0),radius=0.001*Rf), name='LEFTSIDE')
+    
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.5*Rf*np.cos((theta+deltatheta)*np.pi/180),0.5*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf), name='FIRSTCIRCLE')
+    
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.75*Rf*np.cos(0.5*alpha*np.pi/180),0.75*Rf*np.sin(0.5*alpha*np.pi/180),0.0),radius=0.001*Rf), name='SECONDCIRCLE-LOWERCRACK')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.75*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.75*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),radius=0.001*Rf), name='SECONDCIRCLE-UPPERCRACK')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.75*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.75*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),radius=0.001*Rf), name='SECONDCIRCLE-FIRSTBOUNDED')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.75*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.75*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),radius=0.001*Rf), name='SECONDCIRCLE-SECONDBOUNDED')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.75*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.75*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),radius=0.001*Rf), name='SECONDCIRCLE-RESTBOUNDED')
+    RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-LOWERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
+    
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(Rf*np.cos(0.5*alpha*np.pi/180),Rf*np.sin(0.5*alpha*np.pi/180),0.0),radius=0.001*Rf), name='THIRDCIRCLE-LOWERCRACK')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),radius=0.001*Rf), name='THIRDCIRCLE-UPPERCRACK')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),radius=0.001*Rf), name='THIRDCIRCLE-FIRSTBOUNDED')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),radius=0.001*Rf), name='THIRDCIRCLE-SECONDBOUNDED')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),radius=0.001*Rf), name='THIRDCIRCLE-RESTBOUNDED')
+    RVEpart.SetByBoolean(name='THIRDCIRCLE', sets=[RVEpart.sets['THIRDCIRCLE-LOWERCRACK'],RVEpart.sets['THIRDCIRCLE-UPPERCRACK'],RVEpart.sets['THIRDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['THIRDCIRCLE-SECONDBOUNDED'],RVEpart.sets['THIRDCIRCLE-RESTBOUNDED']])
+    
+    if L>2*Rf:
+        R4 = 1.25*Rf
+    else:
+        R4 = Rf+0.25*(L-Rf)
+        
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R4*np.cos(0.5*alpha*np.pi/180),R4*np.sin(0.5*alpha*np.pi/180),0.0),radius=0.001*Rf), name='FOURTHCIRCLE-LOWERCRACK')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),radius=0.001*Rf), name='FOURTHCIRCLE-UPPERCRACK')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),radius=0.001*Rf), name='FOURTHCIRCLE-FIRSTBOUNDED')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R4*np.cos((beta+0.5*deltaphi)*np.pi/180),R4*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),radius=0.001*Rf), name='FOURTHCIRCLE-SECONDBOUNDED')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R4*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),R4*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),radius=0.001*Rf), name='FOURTHCIRCLE-RESTBOUNDED')
+    RVEpart.SetByBoolean(name='FOURTHCIRCLE', sets=[RVEpart.sets['FOURTHCIRCLE-LOWERCRACK'],RVEpart.sets['FOURTHCIRCLE-UPPERCRACK'],RVEpart.sets['FOURTHCIRCLE-FIRSTBOUNDED'],RVEpart.sets['FOURTHCIRCLE-SECONDBOUNDED'],RVEpart.sets['FOURTHCIRCLE-RESTBOUNDED']])
+    
+    if L>2*Rf:
+        RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(1.5*Rf*np.cos((theta+deltatheta)*np.pi/180),1.5*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf), name='FIFTHCIRCLE')
+    else:
+        RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=((Rf+0.5*(L-Rf))*np.cos((theta+deltatheta)*np.pi/180),(Rf+0.5*(L-Rf))*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf), name='FIFTHCIRCLE')
+    
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.85*Rf*np.cos(alpha*np.pi/180),0.75*Rf*np.sin(alpha*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-FIRSTFIBER')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(1.05*Rf*np.cos(alpha*np.pi/180),1.05*Rf*np.sin(alpha*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-FIRSTMATRIX')
+    
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.85*Rf*np.cos((theta+deltatheta)*np.pi/180),0.75*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-SECONDFIBER')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(1.05*Rf*np.cos((theta+deltatheta)*np.pi/180),1.05*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-SECONDMATRIX')
+    
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.85*Rf*np.cos(beta*np.pi/180),0.75*Rf*np.sin(beta*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-THIRDFIBER')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(1.05*Rf*np.cos(beta*np.pi/180),1.05*Rf*np.sin(beta*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-THIRDMATRIX')
+    
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.85*Rf*np.cos(gamma*np.pi/180),0.75*Rf*np.sin(gamma*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-FOURTHFIBER')
+    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(1.05*Rf*np.cos(gamma*np.pi/180),1.05*Rf*np.sin(gamma*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-FOURTHMATRIX')
+    
     # sets of faces
     RVEpart.Set(faces=RVEfaces.findAt(((0.0, 0.25*L, 0),))), name='FIBER-CENTER')
     RVEpart.Set(faces=RVEfaces.findAt(((0.0, 0.65*L, 0),))), name='FIBER-INTERMEDIATEANNULUS')
@@ -347,8 +419,8 @@ def createRVE(parameters):
     
     # SOUTH side: symmetry line
     
-    mdb.models[modelname].YsymmBC(name='SymmetryBound', createStepName='Step-1', 
-        region=region, localCsys=None)
+    model.YsymmBC(name='SymmetryBound', createStepName='Load-Step', 
+        region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
     
     # NORTH side
     
@@ -357,177 +429,55 @@ def createRVE(parameters):
     # elif 'rigidbar' in parameters['boundaryConditions']['north']['type']:
     # 
     # elif 'homogeneousdisplacement' in parameters['boundaryConditions']['north']['type']:
+    #
+    # else free
     
     # EAST side
     
     # if 'periodic' in parameters['boundaryConditions']['north']['type']:
+    #
+    # else free
     
     # WEST side
     
     # if 'periodic' in parameters['boundaryConditions']['north']['type']:
+    #
+    # else free
+    
+    mdb.save()
     
 #===============================================================================#
 #                                Applied load
 #===============================================================================#    
-    #    
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    edges1 = e1.getSequenceFromMask(mask=('[#e600c502 #40 ]', ), )
-    region = regionToolset.Region(edges=edges1)
     
+    for load in parameters['loads']:
+        if 'appliedstrain' in load['type'] or 'appliedStrain' in load['type'] or 'Applied Strain' in load['type'] or 'applied strain' in load['type']:
+            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*L, u2=load['value'][1]*L, ur3=load['value'][2]*L, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+        elif 'applieddisplacement' in load['type'] or 'appliedDisplacement' in load['type'] or 'Applied Displacement' in load['type'] or 'applied displacement' in load['type']:
+            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0], u2=load['value'][1], ur3=load['value'][2], amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+        # elif 'appliedstress' in load['type'] or 'appliedStress' in load['type'] or 'Applied Stress' in load['type'] or 'applied stress' in load['type']:
+        # 
+        # elif 'appliedforce' in load['type'] or 'appliedForce' in load['type'] or 'Applied Force' in load['type'] or 'applied Force' in load['type']:
     
-    
-    
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=445.864, 
-        farPlane=448.563, width=11.8314, height=5.09047, viewOffsetX=3.97611, 
-        viewOffsetY=-49.5807)
-    p = mdb.models[modelname].parts['RVE']
-    e = p.edges
-    edges = e.getSequenceFromMask(mask=('[#e600c502 #40 ]', ), )
-    p.Set(edges=edges, name='SymmetryBoundary')
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=428.173, 
-        farPlane=466.254, width=166.569, height=71.6664, viewOffsetX=-26.2404, 
-        viewOffsetY=-23.2858)
-    p = mdb.models[modelname].parts['RVE']
-    e = p.edges
-    edges = e.getSequenceFromMask(mask=('[#2000 ]', ), )
-    p.Set(edges=edges, name='LeftBoundary')
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=411.359, 
-        farPlane=483.068, width=279.283, height=120.162, viewOffsetX=53.7961, 
-        viewOffsetY=1.86796)
-    p = mdb.models[modelname].parts['RVE']
-    e = p.edges
-    edges = e.getSequenceFromMask(mask=('[#800 ]', ), )
-    p.Set(edges=edges, name='RightBoundary')
-    p = mdb.models[modelname].parts['RVE']
-    e = p.edges
-    edges = e.getSequenceFromMask(mask=('[#1000 ]', ), )
-    p.Set(edges=edges, name='UpperSide')
-    a = mdb.models[modelname].rootAssembly
-    a.regenerate()
-    session.viewports['Viewport: 1'].setValues(displayedObject=a)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=415.445, 
-        farPlane=478.983, width=277.443, height=119.37, viewOffsetX=20.2886, 
-        viewOffsetY=6.06555)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    edges1 = e1.getSequenceFromMask(mask=('[#800 ]', ), )
-    region = regionToolset.Region(edges=edges1)
-    mdb.models[modelname].DisplacementBC(name='RightAppliedDisp', 
-        createStepName='Step-1', region=region, u1=1.0, u2=UNSET, ur3=UNSET, 
-        amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='', 
-        localCsys=None)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    edges1 = e1.getSequenceFromMask(mask=('[#2000 ]', ), )
-    region = regionToolset.Region(edges=edges1)
-    mdb.models[modelname].DisplacementBC(name='LeftAppliedDisp', 
-        createStepName='Step-1', region=region, u1=-1.0, u2=UNSET, ur3=UNSET, 
-        amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='', 
-        localCsys=None)
     mdb.save()
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.641, 
-        farPlane=447.786, width=4.43929, height=1.91001, viewOffsetX=1.17094, 
-        viewOffsetY=-49.4948)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=444.137, 
-        farPlane=450.29, width=23.8552, height=10.2637, viewOffsetX=3.98199, 
-        viewOffsetY=-45.6997)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.513, 
-        farPlane=447.914, width=5.43211, height=2.33717, viewOffsetX=1.53117, 
-        viewOffsetY=-48.7762)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.88, 
-        farPlane=447.547, width=2.58738, height=1.11322, viewOffsetX=1.11075, 
-        viewOffsetY=-49.1185)
-    p = mdb.models[modelname].parts['RVE']
-    v = p.vertices
-    verts = v.getSequenceFromMask(mask=('[#4 ]', ), )
-    p.Set(vertices=verts, name='CrackTip')
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    p = mdb.models[modelname].parts['RVE']
-    e = p.edges
-    edges = e.getSequenceFromMask(mask=('[#60 ]', ), )
-    p.Set(edges=edges, name='Crack')
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.465, 
-        farPlane=447.962, width=5.80186, height=2.49626, viewOffsetX=1.66622, 
-        viewOffsetY=-48.5757)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    a1 = mdb.models[modelname].rootAssembly
-    a1.regenerate()
-    a = mdb.models[modelname].rootAssembly
-    session.viewports['Viewport: 1'].setValues(displayedObject=a)
-    session.viewports['Viewport: 1'].assemblyDisplay.setValues(loads=OFF, bcs=OFF, 
-        predefinedFields=OFF, interactions=ON, constraints=ON, 
-        engineeringFeatures=ON)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    edges1 = e1.getSequenceFromMask(mask=('[#60 ]', ), )
-    pickedRegions = regionToolset.Region(edges=edges1)
-    mdb.models[modelname].rootAssembly.engineeringFeatures.assignSeam(
-        regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    edges1 = e1.getSequenceFromMask(mask=('[#60 ]', ), )
-    crackFront = regionToolset.Region(edges=edges1)
-    a = mdb.models[modelname].rootAssembly
-    v1 = a.instances['RVE-1'].vertices
-    verts1 = v1.getSequenceFromMask(mask=('[#4 ]', ), )
-    crackTip = regionToolset.Region(vertices=verts1)
-    v11 = a.instances['RVE-1'].vertices
-    e1 = a.instances['RVE-1'].edges
-    a.engineeringFeatures.ContourIntegral(name='Crack-1', symmetric=OFF, 
-        crackFront=crackFront, crackTip=crackTip, 
-        extensionDirectionMethod=Q_VECTORS, qVectors=((v11[2], 
-        a.instances['RVE-1'].InterestingPoint(edge=e1[22], rule=MIDDLE)), ), 
-        midNodePosition=0.5, collapsedElementAtTip=NONE)
+
+#===============================================================================#
+#                                   Crack
+#===============================================================================#
+   
+    # assign seam
+    model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
+        
+    # contour integral
+    xC = Rf*np.cos((theta+deltatheta)*np.pi/180)
+    yC = Rf*np.sin((theta+deltatheta)*np.pi/180)
+    xA = Rf*np.cos((theta+1.025*deltatheta)*np.pi/180)
+    yA = -xC*(xA-xC)/yC + yC
+    model.rootAssembly.engineeringFeatures.ContourIntegral(name='Debond',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIP'],extensionDirectionMethod=Q_VECTORS, qVectors=((v11[2],a.instances['RVE-1'].InterestingPoint(edge=e1[22], rule=MIDDLE)), ), midNodePosition=0.5, collapsedElementAtTip=NONE)
     mdb.save()
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.275, 
-        farPlane=448.152, width=7.27671, height=3.13081, viewOffsetX=1.16701, 
-        viewOffsetY=-49.6886)
-    session.viewports['Viewport: 1'].assemblyDisplay.setValues(mesh=ON, 
-        interactions=OFF, constraints=OFF, connectors=OFF, 
-        engineeringFeatures=OFF)
-    session.viewports['Viewport: 1'].assemblyDisplay.meshOptions.setValues(
-        meshTechnique=ON)
+    
     p1 = mdb.models[modelname].parts['RVE']
-    session.viewports['Viewport: 1'].setValues(displayedObject=p1)
-    session.viewports['Viewport: 1'].partDisplay.setValues(mesh=ON)
-    session.viewports['Viewport: 1'].partDisplay.meshOptions.setValues(
-        meshTechnique=ON)
-    session.viewports['Viewport: 1'].partDisplay.geometryOptions.setValues(
-        referenceRepresentation=OFF)
+    
     p = mdb.models[modelname].parts['RVE']
     f = p.faces
     faces = f.getSequenceFromMask(mask=('[#2c76 ]', ), )

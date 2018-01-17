@@ -185,20 +185,29 @@ def createRVE(parameters):
     fiberSketch.unsetPrimaryObject()
     del model.sketches['__profile__']
     
-    # create sets
+    #-------------------#
+    #                   #
+    #    create sets    #
+    #                   #
+    #-------------------#
+    
+    # create reference to geometric elements for lighter code
     RVEvertices = RVEpart.vertices
     RVEedges = RVEpart.edges
     RVEfaces = RVEpart.faces
     
+    # sets of vertices
     crackTip = RVEvertices.getByBoundingSphere(center=(Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf)
     RVEpart.Set(vertices=crackTip, name='CRACKTIP')
     
+    # sets of edges
     crackEdge1=RVEedges.getByBoundingSphere(center=(Rf*np.cos(0.5*alpha*np.pi/180),Rf*np.sin(0.5*alpha*np.pi/180),0.0),radius=0.01*Rf)
     crackEdge2=RVEedges.getByBoundingSphere(center=(Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),radius=0.01*Rf)
     RVEpart.Set(edges=crackEdge1, name='CRACK-LOWER')
     RVEpart.Set(edges=crackEdge2, name='CRACK-UPPER')
     RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
     
+    # sets of faces
     RVEpart.Set(faces=RVEfaces.findAt(((0.0, 0.25*L, 0),))), name='FIBER-CENTER')
     RVEpart.Set(faces=RVEfaces.findAt(((0.0, 0.65*L, 0),))), name='FIBER-INTERMEDIATEANNULUS')
     RVEpart.Set(faces=RVEfaces.findAt(((0.85*Rf*np.cos(0.5*alpha*np.pi/180), 0.85*Rf*np.sin(0.5*alpha*np.pi/180), 0),))), name='FIBER-EXTANNULUS-LOWERCRACK')
@@ -225,42 +234,8 @@ def createRVE(parameters):
     RVEpart.Set(faces=RVEfaces.findAt(((0.0, R2, 0),))), name='MATRIX-INTERMEDIATEANNULUS')
     RVEpart.Set(faces=RVEfaces.findAt(((0.0, Rf+0.5*(L-Rf), 0),))), name='MATRIX-BODY')
     RVEpart.SetByBoolean(name='MATRIX', sets=[RVEpart.sets['MATRIX-BODY'],RVEpart.sets['MATRIX-INTERMEDIATEANNULUS'],RVEpart.sets['MATRIX-INTANNULUS']])
-    
-    faces = RVEfaces.findAt(coordinates=())
-    RVEpart.Set(faces=faces, name='Fiber')
-    
-    faces = RVEfaces.findAt()
-    RVEpart.Set(faces=faces, name='Matrix')
-    
-    faces = RVEfaces.findAt()
-    RVEpart.Set(faces=faces, name='BulkMatrix')
-    
-    faces = RVEfaces.findAt(coordinates=())
-    RVEpart.Set(faces=faces, name='BulkFiber')
-    
-    faces = RVEfaces.findAt()
-    RVEpart.Set(faces=faces, name='OuterRingFiber')
-    
-    faces = RVEfaces.findAt()
-    RVEpart.Set(faces=faces, name='InnerRingFiber')
-    
-    faces = RVEfaces.findAt()
-    RVEpart.Set(faces=faces, name='InnerRingMatrix')
-    
-    faces = RVEfaces.findAt()
-    RVEpart.Set(faces=faces, name='OuterRingMatrix')
-    
-    faces = RVEfaces.findAt()
-    RVEpart.Set(faces=faces, name='FiberBounded')
-    
-    faces = RVEfaces.findAt()
-    RVEpart.Set(faces=faces, name='FiberCrack')
-    
-    faces = RVEfaces.findAt()
-    RVEpart.Set(faces=faces, name='MatrixBounded')
-    
-    faces = RVEfaces.findAt()
-    RVEpart.Set(faces=faces, name='MatrixCrack')
+                                    
+    # sets of cells (none, i.e. 2D geometry)
     
     mdb.save()
     
@@ -340,60 +315,69 @@ def createRVE(parameters):
 #                             Sections assignment
 #===============================================================================#  
     for sectionRegion in parameters['sectionRegions']:
-        
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#9c7 ]', ), )
-    region = regionToolset.Region(faces=faces)
-    p = mdb.models[modelname].parts['RVE']
-    p.SectionAssignment(region=region, sectionName='FiberSection', offset=0.0, 
-        offsetType=MIDDLE_SURFACE, offsetField='', 
-        thicknessAssignment=FROM_SECTION)
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#3638 ]', ), )
-    region = regionToolset.Region(faces=faces)
-    p = mdb.models[modelname].parts['RVE']
-    p.SectionAssignment(region=region, sectionName='MatrixSection', offset=0.0, 
-        offsetType=MIDDLE_SURFACE, offsetField='', 
-        thicknessAssignment=FROM_SECTION)
+        RVEpart.SectionAssignment(region=RVEpart.sets[sectionRegion['set']], sectionName=sectionRegion['name'], offset=0.0,offsetType=sectionRegion['offsetType'], offsetField=sectionRegion['offsetField'],thicknessAssignment=sectionRegion['thicknessAssignment'])
+    
+    # p.SectionAssignment(region=region, sectionName='MatrixSection', offset=0.0, 
+    #     offsetType=MIDDLE_SURFACE, offsetField='', 
+    #     thicknessAssignment=FROM_SECTION)
         
     mdb.save()
     
 #===============================================================================#
 #                             Instance creation
 #===============================================================================#
-    a = mdb.models[modelname].rootAssembly
-    session.viewports['Viewport: 1'].setValues(displayedObject=a)
-    session.viewports['Viewport: 1'].assemblyDisplay.setValues(
-        optimizationTasks=OFF, geometricRestrictions=OFF, stopConditions=OFF)
-    a = mdb.models[modelname].rootAssembly
-    a.DatumCsysByDefault(CARTESIAN)
-    p = mdb.models[modelname].parts['RVE']
-    a.Instance(name='RVE-1', part=p, dependent=OFF)
-    session.viewports['Viewport: 1'].assemblyDisplay.setValues(
-        adaptiveMeshConstraints=ON)
+
+    model.rootAssembly.DatumCsysByDefault(CARTESIAN)
+    model.rootAssembly.Instance(name='RVE-assembly', part=RVEpart, dependent=OFF)
+    
+    mdb.save()
+    
 #===============================================================================#
 #                             Step creation
 #===============================================================================#
-    mdb.models[modelname].StaticStep(name='Step-1', previous='Initial', 
+    
+    model.StaticStep(name='Load-Step', previous='Initial', 
         minInc=1e-10)
-    session.viewports['Viewport: 1'].assemblyDisplay.setValues(step='Step-1')
-    session.viewports['Viewport: 1'].assemblyDisplay.setValues(loads=ON, bcs=ON, 
-        predefinedFields=ON, connectors=ON, adaptiveMeshConstraints=OFF)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=445.876, 
-        farPlane=448.551, width=10.3678, height=4.46076, viewOffsetX=0.497935, 
-        viewOffsetY=-48.4083)
+
+    mdb.save()
+
+#===============================================================================#
+#                             Boundary conditions
+#===============================================================================#
+    
+    # SOUTH side: symmetry line
+    
+    mdb.models[modelname].YsymmBC(name='SymmetryBound', createStepName='Step-1', 
+        region=region, localCsys=None)
+    
+    # NORTH side
+    
+    # if 'periodic' in parameters['boundaryConditions']['north']['type']:
+    #     
+    # elif 'rigidbar' in parameters['boundaryConditions']['north']['type']:
+    # 
+    # elif 'homogeneousdisplacement' in parameters['boundaryConditions']['north']['type']:
+    
+    # EAST side
+    
+    # if 'periodic' in parameters['boundaryConditions']['north']['type']:
+    
+    # WEST side
+    
+    # if 'periodic' in parameters['boundaryConditions']['north']['type']:
+    
+#===============================================================================#
+#                                Applied load
+#===============================================================================#    
+    #    
     a = mdb.models[modelname].rootAssembly
     e1 = a.instances['RVE-1'].edges
     edges1 = e1.getSequenceFromMask(mask=('[#e600c502 #40 ]', ), )
     region = regionToolset.Region(edges=edges1)
-    mdb.models[modelname].YsymmBC(name='SymmetryBound', createStepName='Step-1', 
-        region=region, localCsys=None)
-    session.viewports['Viewport: 1'].partDisplay.setValues(sectionAssignments=OFF, 
-        engineeringFeatures=OFF)
-    session.viewports['Viewport: 1'].partDisplay.geometryOptions.setValues(
-        referenceRepresentation=ON)
+    
+    
+    
+    
     p1 = mdb.models[modelname].parts['RVE']
     session.viewports['Viewport: 1'].setValues(displayedObject=p1)
     session.viewports['Viewport: 1'].view.setValues(nearPlane=445.864, 
@@ -730,8 +714,10 @@ def createRVE(parameters):
     session.viewports['Viewport: 1'].view.setValues(nearPlane=419.794, 
         farPlane=474.633, width=212.365, height=121.498, viewOffsetX=6.32077, 
         viewOffsetY=0.0595284)
+        
     elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
     elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
+    
     a = mdb.models[modelname].rootAssembly
     f1 = a.instances['RVE-1'].faces
     faces1 = f1.getSequenceFromMask(mask=('[#3fff ]', ), )

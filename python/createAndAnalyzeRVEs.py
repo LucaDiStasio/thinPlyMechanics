@@ -77,6 +77,16 @@ def createRVE(parameters):
     deltatheta = parameters['deltatheta'] # in degrees !!!
     deltapsi = parameters['deltapsi'] # in degrees !!!
     deltaphi = parameters['deltaphi'] # in degrees !!!
+    delta = parameters['delta'] # in degrees !!!
+    minElNum = parameters['minElNum']
+    if ((theta+deltatheta-deltapsi)<=0.0 or (theta+deltatheta-deltapsi)/delta<minElNum) and ((theta+deltatheta+deltapsi+deltaphi)>=180.0 or (180.0-(theta+deltatheta+deltapsi+deltaphi))/delta<minElNum):
+        deltapsi = 0.6*((180.0-(theta+deltatheta))-np.max([0.5*(theta+deltatheta),0.1*(180.0-(theta+deltatheta)),minElnum*delta]))
+        deltaphi = 0.4*((180.0-(theta+deltatheta))-np.max([0.5*(theta+deltatheta),0.1*(180.0-(theta+deltatheta)),minElnum*delta]))
+    elif (theta+deltatheta-deltapsi)<=0.0 or (theta+deltatheta-deltapsi)/delta<minElNum:
+        deltapsi = (theta+deltatheta) - np.max([0.5*(theta+deltatheta),minElnum*delta])
+    elif (theta+deltatheta+deltapsi+deltaphi)>=180.0 or (180.0-(theta+deltatheta+deltapsi+deltaphi))/delta<minElNum:
+        deltapsi = 0.6*((180.0-(theta+deltatheta))-np.max([0.1*(180.0-(theta+deltatheta)),minElnum*delta]))
+        deltaphi = 0.4*((180.0-(theta+deltatheta))-np.max([0.1*(180.0-(theta+deltatheta)),minElnum*delta]))
 #===============================================================================#
 #                          Model database creation
 #===============================================================================#
@@ -306,6 +316,8 @@ def createRVE(parameters):
     RVEpart.Set(faces=RVEfaces.findAt(((0.0, R2, 0),))), name='MATRIX-INTERMEDIATEANNULUS')
     RVEpart.Set(faces=RVEfaces.findAt(((0.0, Rf+0.5*(L-Rf), 0),))), name='MATRIX-BODY')
     RVEpart.SetByBoolean(name='MATRIX', sets=[RVEpart.sets['MATRIX-BODY'],RVEpart.sets['MATRIX-INTERMEDIATEANNULUS'],RVEpart.sets['MATRIX-INTANNULUS']])
+    
+    RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
                                     
     # sets of cells (none, i.e. 2D geometry)
     
@@ -473,7 +485,89 @@ def createRVE(parameters):
     yC = Rf*np.sin((theta+deltatheta)*np.pi/180)
     xA = Rf*np.cos((theta+1.025*deltatheta)*np.pi/180)
     yA = -xC*(xA-xC)/yC + yC
-    model.rootAssembly.engineeringFeatures.ContourIntegral(name='Debond',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIP'],extensionDirectionMethod=Q_VECTORS, qVectors=((v11[2],a.instances['RVE-1'].InterestingPoint(edge=e1[22], rule=MIDDLE)), ), midNodePosition=0.5, collapsedElementAtTip=NONE)
+    model.rootAssembly.engineeringFeatures.ContourIntegral(name='Debond',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIP'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=0.5, collapsedElementAtTip=NONE)
+    
+    mdb.save()
+
+#===============================================================================#
+#                                   Mesh
+#===============================================================================#
+    
+    # assign mesh controls
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-LOWERCRACK'], elemShape=QUAD, technique=STRUCTURED)
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-UPPERCRACK'], elemShape=QUAD, technique=STRUCTURED)
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-FIRSTBOUNDED'], elemShape=QUAD, technique=STRUCTURED)
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-INTANNULUS-LOWERCRACK'], elemShape=QUAD, technique=STRUCTURED)
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-INTANNULUS-UPPERCRACK'], elemShape=QUAD, technique=STRUCTURED)
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-INTANNULUS-FIRSTBOUNDED'], elemShape=QUAD, technique=STRUCTURED)
+    
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-CENTER'], elemShape=QUAD_DOMINATED, technique=FREE)
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-INTANNULUS'], elemShape=QUAD_DOMINATED, technique=FREE)
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-SECONDBOUNDED'], elemShape=QUAD, technique=STRUCTURED)
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-RESTBOUNDED'], elemShape=QUAD, technique=STRUCTURED)
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-INTANNULUS-SECONDBOUNDED'], elemShape=QUAD, technique=STRUCTURED)
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-INTANNULUS-RESTBOUNDED'], elemShape=QUAD, technique=STRUCTURED)
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-EXTANNULUS'], elemShape=QUAD_DOMINATED, technique=FREE)
+    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-BODY'], elemShape=QUAD_DOMINATED, technique=FREE)
+    
+    # assign seeds
+    nTangential = np.floor(deltapsi/delta) 
+    nRadialFiber = np.floor(0.25/delta)
+    if L>2*Rf:
+        nRadialMatrix = np.floor(0.25/delta)
+    else:
+        nRadialMatrix = np.floor(0.25*(L-Rf)/delta)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['SECONDCIRCLE-UPPERCRACK'], number=nTangential, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['SECONDCIRCLE-FIRSTBOUNDED'], number=nTangential, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['THIRDCIRCLE-UPPERCRACK'], number=nTangential, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['THIRDCIRCLE-FIRSTBOUNDED'], number=nTangential, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FOURTHCIRCLE-UPPERCRACK'], number=nTangential, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FOURTHCIRCLE-FIRSTBOUNDED'], number=nTangential, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-FIRSTFIBER'], number=nRadialFiber, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-FIRSTMATRIX'], number=nRadialMatrix, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-SECONDFIBER'], number=nRadialFiber, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-SECONDMATRIX'], number=nRadialMatrix, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-THIRDFIBER'], number=nRadialFiber, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-THIRDMATRIX'], number=nRadialMatrix, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE-SECONDRING-RIGHT'], number=nRadialFiber, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE-THIRDRING-RIGHT'], number=nRadialMatrix, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE-CENTER'], number=6, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FIRSTCIRCLE'], number=18, constraint=FINER)
+    nTangential1 = np.floor(deltaphi/parameters['delta2'])
+    nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['delta3'])
+    nTangential3 = np.floor(alpha/parameters['delta1'])
+    nRadialFiber1 = np.floor(0.25/parameters['delta3'])
+    if L>2*Rf:
+        nRadialMatrix1 = np.floor(0.25/parameters['delta3'])
+    else:
+        nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['delta3']))
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['SECONDCIRCLE-SECONDBOUNDED'], number=nTangential1, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['SECONDCIRCLE-RESTBOUNDED'], number=nTangential2, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['THIRDCIRCLE-SECONDBOUNDED'], number=nTangential1, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['THIRDCIRCLE-RESTBOUNDED'], number=nTangential2, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FOURTHCIRCLE-SECONDBOUNDED'], number=nTangential1, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FOURTHCIRCLE-RESTBOUNDED'], number=nTangential2, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-FOURTHFIBER'], number=nRadialFiber1, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-FOURTHMATRIX'], number=nRadialMatrix1, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['SECONDCIRCLE-LOWERCRACK'], number=nTangential3, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['THIRDCIRCLE-LOWERCRACK'], number=nTangential3, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FOURTHCIRCLE-LOWERCRACK'], number=nTangential3, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FIFTHCIRCLE'], number=90, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'], number=30, constraint=FINER)
+    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'], number=30, constraint=FINER)
+    
+    # select element type
+    if 'first' in parameters['elements']['order']:
+        elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
+        elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
+    elif 'second' in parameters['elements']['order']:
+        elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
+        elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
+    model.rootAssembly.setElementType(regions=model.rootAssembly.instances['RVE-assembly'].sets['RVE'], elemTypes=(elemType1, elemType2))
+    
+    # mesh part
+    model.rootAssembly.generateMesh(regions=model.rootAssembly.instances['RVE-assembly'])
+    
     mdb.save()
     
     p1 = mdb.models[modelname].parts['RVE']
@@ -484,501 +578,31 @@ def createRVE(parameters):
     p.Set(faces=faces, name='StructuredMeshRegion')
     a = mdb.models[modelname].rootAssembly
     a.regenerate()
-    session.viewports['Viewport: 1'].setValues(displayedObject=a)
-    session.viewports['Viewport: 1'].assemblyDisplay.setValues(mesh=OFF)
-    session.viewports['Viewport: 1'].assemblyDisplay.meshOptions.setValues(
-        meshTechnique=OFF)
+    
     a1 = mdb.models[modelname].rootAssembly
     p = mdb.models[modelname].parts['RVE']
     a1.Instance(name='RVE-2', part=p, dependent=OFF)
-    session.viewports['Viewport: 1'].assemblyDisplay.setValues(mesh=ON)
-    session.viewports['Viewport: 1'].assemblyDisplay.meshOptions.setValues(
-        meshTechnique=ON)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.29, 
-        farPlane=448.137, width=7.12694, height=3.0802, viewOffsetX=0.779849, 
-        viewOffsetY=-48.8554)
     a = mdb.models[modelname].rootAssembly
     f1 = a.instances['RVE-2'].faces
     pickedRegions = f1.getSequenceFromMask(mask=('[#2c76 ]', ), )
-    a.setMeshControls(regions=pickedRegions, elemShape=QUAD, technique=STRUCTURED)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.397, 
-        farPlane=448.03, width=6.29888, height=2.72232, viewOffsetX=0.602778, 
-        viewOffsetY=-48.8815)
-    mdb.save()
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-2'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#640028 #4 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=200, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-2'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#1a0014 #8 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=286, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-2'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#8100 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=286, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-2'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#100c0 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=80, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-2'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#800000 #12 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=40, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-2'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#1 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=9, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-2'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#2 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=3, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-2'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#11000000 #1 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=20, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-2'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#200 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=36, constraint=FINER)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=414.321, 
-        farPlane=480.106, width=285.925, height=123.574, viewOffsetX=15.6247, 
-        viewOffsetY=0.775002)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-2'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#2800 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=20, constraint=FINER)
-    mdb.save()
-    elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
-    elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    faces1 = f1.getSequenceFromMask(mask=('[#3fff ]', ), )
-    f2 = a.instances['RVE-2'].faces
-    faces2 = f2.getSequenceFromMask(mask=('[#3fff ]', ), )
-    pickedRegions =((faces1+faces2), )
-    a.setElementType(regions=pickedRegions, elemTypes=(elemType1, elemType2))
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=430.046, 
-        farPlane=464.381, width=132.768, height=57.381, viewOffsetX=12.3062, 
-        viewOffsetY=-28.8418)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-2'], )
-    a.seedPartInstance(regions=partInstances, size=10.0, deviationFactor=0.1, 
-        minSizeFactor=0.1)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.seedPartInstance(regions=partInstances, size=10.0, deviationFactor=0.1, 
-        minSizeFactor=0.1)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], a.instances['RVE-2'], )
-    a.generateMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.53, 
-        farPlane=447.898, width=5.97091, height=3.41606, viewOffsetX=1.56868, 
-        viewOffsetY=-48.8662)
-    mdb.save()
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=445.68, 
-        farPlane=448.748, width=13.3916, height=7.66155, viewOffsetX=3.72768, 
-        viewOffsetY=-46.2342)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-2'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1100 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-2'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#20000000 #40 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=4, constraint=FINER)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.476, 
-        farPlane=447.951, width=6.43706, height=3.68275, viewOffsetX=1.37532, 
-        viewOffsetY=-48.1601)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-2'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#6000000 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=4, constraint=FINER)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=445.667, 
-        farPlane=448.76, width=11.9295, height=6.82506, viewOffsetX=1.39414, 
-        viewOffsetY=-46.5027)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], a.instances['RVE-2'], )
-    a.generateMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=439.422, 
-        farPlane=455.005, width=67.8857, height=38.8386, viewOffsetX=9.93107, 
-        viewOffsetY=-30.3379)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], a.instances['RVE-2'], )
-    a.deleteMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.413, 
-        farPlane=448.014, width=6.17476, height=3.53269, viewOffsetX=1.34447, 
-        viewOffsetY=-47.9682)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.461, 
-        farPlane=447.966, width=6.17542, height=3.53306, viewOffsetX=1.23322, 
-        viewOffsetY=-48.9907)
-    a = mdb.models[modelname].rootAssembly
-    del a.features['RVE-2']
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#2c76 ]', ), )
-    a.setMeshControls(regions=pickedRegions, elemShape=QUAD, technique=STRUCTURED)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#640028 #4 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=200, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#1a0014 #8 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=286, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#8100 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=286, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#100c0 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=80, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#800000 #12 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=40, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#11000000 #1 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=20, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#1 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=9, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#2 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=3, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#200 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=36, constraint=FINER)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=410.381, 
-        farPlane=484.046, width=320.139, height=183.157, viewOffsetX=20.594, 
-        viewOffsetY=28.2835)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#2800 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=20, constraint=FINER)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=419.794, 
-        farPlane=474.633, width=212.365, height=121.498, viewOffsetX=6.32077, 
-        viewOffsetY=0.0595284)
-        
-    elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
-    elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
     
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    faces1 = f1.getSequenceFromMask(mask=('[#3fff ]', ), )
-    pickedRegions =(faces1, )
-    a.setElementType(regions=pickedRegions, elemTypes=(elemType1, elemType2))
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.655, 
-        farPlane=447.772, width=4.30727, height=2.46426, viewOffsetX=0.523219, 
-        viewOffsetY=-49.1655)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1100 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1100 ]', ), )
-    a.setMeshControls(regions=pickedRegions, technique=SWEEP)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#3900 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#8000000 #20 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=10, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#3900 ]', ), )
-    a.setMeshControls(regions=pickedRegions, elemShape=QUAD_DOMINATED, 
-        technique=FREE)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1100 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1100 ]', ), )
-    a.setMeshControls(regions=pickedRegions, technique=SWEEP)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1000 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#0 #40 ]', ), )
-    a.deleteSeeds(regions=pickedEdges)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#100 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#20000000 ]', ), )
-    a.deleteSeeds(regions=pickedEdges)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1100 ]', ), )
-    a.setMeshControls(regions=pickedRegions, technique=FREE)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1100 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#1000000 #1 ]', ), )
-    a.deleteSeeds(regions=pickedEdges)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#2800 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#8000000 #20 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=10, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#8000000 #20 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=6, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#8000000 #20 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=5, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1108 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#10000200 ]', ), )
-    a.deleteSeeds(regions=pickedEdges)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.603, 
-        farPlane=447.825, width=4.71449, height=2.69724, viewOffsetX=0.643251, 
-        viewOffsetY=-48.8833)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#8 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#200 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=72, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#200 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=36, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1000 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#0 #1 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=25, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#1 ]', ), )
-    a.deleteSeeds(regions=pickedEdges)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#2000 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#800000 #12 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=20, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.788, 
-        farPlane=447.639, width=3.71255, height=2.12402, viewOffsetX=0.61176, 
-        viewOffsetY=-48.9074)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#3438 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#c0850200 #17 ]', ), )
-    a.deleteSeeds(regions=pickedEdges)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#1 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=18, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.73, 
-        farPlane=447.697, width=4.21826, height=2.41334, viewOffsetX=0.586307, 
-        viewOffsetY=-48.8347)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#208 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#200 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=36, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#3900 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#3900 ]', ), )
-    a.setMeshControls(regions=pickedRegions, technique=SWEEP)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.758, 
-        farPlane=447.67, width=3.98163, height=2.27796, viewOffsetX=0.68917, 
-        viewOffsetY=-48.5365)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#3900 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#3900 ]', ), )
-    a.setMeshControls(regions=pickedRegions, technique=FREE, algorithm=MEDIAL_AXIS)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.553, 
-        farPlane=447.874, width=5.76892, height=3.3005, viewOffsetX=1.11535, 
-        viewOffsetY=-48.1223)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.511, 
-        farPlane=447.916, width=5.76838, height=3.30019, viewOffsetX=1.14126, 
-        viewOffsetY=-48.606)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.438, 
-        farPlane=447.989, width=5.9833, height=3.42315, viewOffsetX=1.23787, 
-        viewOffsetY=-48.4533)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#10000000 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=50, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.435, 
-        farPlane=447.992, width=6.79915, height=3.88991, viewOffsetX=1.52006, 
-        viewOffsetY=-48.179)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#1100 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#1000000 #1 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=50, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.843, 
-        farPlane=447.585, width=3.23881, height=1.85298, viewOffsetX=0.415233, 
-        viewOffsetY=-48.6405)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#2800 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    e1 = a.instances['RVE-1'].edges
-    pickedEdges = e1.getSequenceFromMask(mask=('[#800000 #12 ]', ), )
-    a.seedEdgeByNumber(edges=pickedEdges, number=5, constraint=FINER)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.729, 
-        farPlane=447.698, width=4.52142, height=2.58678, viewOffsetX=0.415626, 
-        viewOffsetY=-48.6656)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#2800 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#2a80 ]', ), )
-    a.setMeshControls(regions=pickedRegions, elemShape=TRI)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.855, 
-        farPlane=447.572, width=2.76817, height=1.58372, viewOffsetX=0.383482, 
-        viewOffsetY=-48.928)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#2800 ]', ), )
-    a.deleteMesh(regions=pickedRegions)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-1'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#2800 ]', ), )
-    a.setMeshControls(regions=pickedRegions, elemShape=QUAD_DOMINATED)
-    a = mdb.models[modelname].rootAssembly
-    partInstances =(a.instances['RVE-1'], )
-    a.generateMesh(regions=partInstances)
-    session.viewports['Viewport: 1'].view.setValues(nearPlane=446.531, 
-        farPlane=447.896, width=5.95639, height=3.40775, viewOffsetX=2.43989, 
-        viewOffsetY=-47.9197)
+    model.rootAssembly.setMeshControls(regions=pickedRegions, elemShape=QUAD, technique=STRUCTURED)
+    
     mdb.save()
-    session.viewports['Viewport: 1'].assemblyDisplay.setValues(mesh=OFF, 
-        adaptiveMeshConstraints=ON)
-    session.viewports['Viewport: 1'].assemblyDisplay.meshOptions.setValues(
-        meshTechnique=OFF)
-    mdb.models[modelname].historyOutputRequests['H-Output-1'].setValues(
-        contourIntegral='Crack-1', sectionPoints=DEFAULT, rebar=EXCLUDE, 
-        numberOfContours=50)
-    session.viewports['Viewport: 1'].assemblyDisplay.setValues(
-        adaptiveMeshConstraints=OFF)
+    
 #===============================================================================#
-#                             Job creation
+#                                   Output
 #===============================================================================#
-    mdb.Job(name='Job-1', model=modelname, description='', type=ANALYSIS, 
-        atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, 
-        memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, 
-        explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, 
-        modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='', 
-        scratch='', multiprocessingMode=DEFAULT, numCpus=12, numDomains=12, 
-        numGPUs=0)
+    
+    # field output
+    
+    # history output
+    model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=2)
+
+#===============================================================================#
+#                                Job creation
+#===============================================================================#
+    mdb.Job(name='Job-' + modelname, model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=12, numDomains=12,numGPUs=0)
     mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
 
 def main(argv):

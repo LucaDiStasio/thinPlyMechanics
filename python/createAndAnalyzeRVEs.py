@@ -603,7 +603,8 @@ def createRVE(parameters):
 #                                Job creation
 #===============================================================================#
     mdb.Job(name='Job-' + modelname, model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=12, numDomains=12,numGPUs=0)
-    mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+    mdb.jobs['Job-' + modelname].submit(consistencyChecking=OFF)
+    mdb.jobs['Job-' + modelname].waitForCompletion()
 
 def main(argv):
 

@@ -42,6 +42,9 @@ Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 import sys
 import numpy as np
 from os.path import isfile
+from datetime import datetime
+from time import strftime, sleep
+import timeit
 from abaqus import *
 from abaqusConstants import *
 import section
@@ -63,11 +66,439 @@ import displayGroupOdbToolset as dgo
 import connectorBehavior
 #import __main__
 
-def createRVE(parameters):
+#===============================================================================#
+#===============================================================================#
+#                              I/O functions
+#===============================================================================#
+#===============================================================================#
+
+def createABQinpfile(path):
+    with open(path,'w') as fi:
+        fi.write('** ABAQUS INPUT FILE' + '\n')
+        fi.write('** Automatically created on ' + datetime.now().strftime('%d/%m/%Y') + ' at' + datetime.now().strftime('%H:%M:%S') + '\n')
+        fi.write('**' + '\n')
+        fi.write('**============================================================================== + '\n')
+        fi.write('** Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet + '\n')
+        fi.write('** Author: Luca Di Stasio <luca.distasio@gmail.com> + '\n')
+        fi.write('**                        <luca.distasio@ingpec.eu> + '\n')
+        fi.write('** + '\n')
+        fi.write('** Redistribution and use in source and binary forms, with or without' + '\n')
+        fi.write('** modification, are permitted provided that the following conditions are met:' + '\n')
+        fi.write('**'  + '\n')
+        fi.write('** Redistributions of source code must retain the above copyright' + '\n')
+        fi.write('** notice, this list of conditions and the following disclaimer.' + '\n')
+        fi.write('** Redistributions in binary form must reproduce the above copyright' + '\n')
+        fi.write('** notice, this list of conditions and the following disclaimer in' + '\n')
+        fi.write('** the documentation and/or other materials provided with the distribution' + '\n')
+        fi.write('** Neither the name of the Universite de Lorraine or Lulea tekniska universitet' + '\n')
+        fi.write('** nor the names of its contributors may be used to endorse or promote products' + '\n')
+        fi.write('** derived from this software without specific prior written permission.' + '\n')
+        fi.write('**  + '\n')
+        fi.write('** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"' + '\n')
+        fi.write('** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE' + '\n')
+        fi.write('** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE' + '\n')
+        fi.write('** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE' + '\n')
+        fi.write('** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR' + '\n')
+        fi.write('** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF' + '\n')
+        fi.write('** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS' + '\n')
+        fi.write('** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN' + '\n')
+        fi.write('** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)' + '\n')
+        fi.write('** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE' + '\n')
+        fi.write('** POSSIBILITY OF SUCH DAMAGE.' + '\n')
+        fi.write('**==============================================================================' + '\n')
+        fi.write('**' + '\n')
+        
+def writeLineToLogFile(logFileFullPath,mode,line,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write(line + '\n')
+    if toScreen:
+        print(line + '\n')
+
+def skipLineToLogFile(logFileFullPath,mode,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write('\n')
+    if toScreen:
+        print('\n')
+
+def writeTitleSepLineToLogFile(logFileFullPath,mode,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write('===============================================================================================\n')
+    if toScreen:
+        print('===============================================================================================\n')
+
+def writeTitleSecToLogFile(logFileFullPath,mode,title,toScreen):
+    writeTitleSepLineToLogFile(logFileFullPath,mode,toScreen)
+    writeTitleSepLineToLogFile(logFileFullPath,'a',toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+    writeLineToLogFile(logFileFullPath,'a',title,toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+    writeLineToLogFile(logFileFullPath,'a','Starting on ' + datetime.now().strftime('%Y-%m-%d') + ' at ' + datetime.now().strftime('%H:%M:%S'),toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+    writeLineToLogFile(logFileFullPath,'a','Platform: ' + platform(),toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+    writeTitleSepLineToLogFile(logFileFullPath,'a',toScreen)
+    writeTitleSepLineToLogFile(logFileFullPath,'a',toScreen)
+    skipLineToLogFile(logFileFullPath,'a',toScreen)
+
+def writeErrorToLogFile(logFileFullPath,mode,exc,err,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write('!!! ----------------------------------------------------------------------------------------!!!\n')
+        log.write('\n')
+        log.write('                                     AN ERROR OCCURED\n')
+        log.write('\n')
+        log.write('                                -------------------------\n')
+        log.write('\n')
+        log.write(str(exc) + '\n')
+        log.write(str(err) + '\n')
+        log.write('\n')
+        log.write('Terminating program\n')
+        log.write('\n')
+        log.write('!!! ----------------------------------------------------------------------------------------!!!\n')
+        log.write('\n')
+    if toScreen:
+        print('!!! ----------------------------------------------------------------------------------------!!!\n')
+        print('\n')
+        print('                                     AN ERROR OCCURED\n')
+        print('\n')
+        print('                                -------------------------\n')
+        print('\n')
+        print(str(exc) + '\n')
+        print(str(err) + '\n')
+        print('\n')
+        print('Terminating program\n')
+        print('\n')
+        print('!!! ----------------------------------------------------------------------------------------!!!\n')
+        print('\n')
+
+def writePerfToFile(od,outfile,performanceslist):
+    with open(join(od,outfile),'w') as csv:
+        for performances in performanceslist:
+            line = ''
+            for i,performance in enumerate(performances):
+                if i>0:
+                    line += ','
+                line += str(performance)
+            csv.write(line + '\n')
+            
+#===============================================================================#
+#===============================================================================#
+#                        Data analysis functions
+#===============================================================================#
+#===============================================================================#
+        
+def getPerfs(wd,sims):
+    perf = []
+    perf.append(['PROJECT NAME','DEBOND [°]','NUMBER OF CPUS [-]','USER TIME [s]','SYSTEM TIME [s]','USER TIME/TOTAL CPU TIME [%]','SYSTEM TIME/TOTAL CPU TIME [%]','TOTAL CPU TIME [s]','WALLCLOCK TIME [s]','WALLCLOCK TIME [m]','WALLCLOCK TIME [h]','WALLCLOCK TIME/TOTAL CPU TIME [%]','ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-]','MINIMUM REQUIRED MEMORY [MB]','MEMORY TO MINIMIZE I/O [MB]','TOTAL NUMBER OF ELEMENTS [-]','NUMBER OF ELEMENTS DEFINED BY THE USER [-]','NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-]','TOTAL NUMBER OF NODES [-]','NUMBER OF NODES DEFINED BY THE USER [-]','NUMBER OF NODES DEFINED BY THE PROGRAM [-]','TOTAL NUMBER OF VARIABLES [-]'])
+    print('')
+    for sim in sims:
+        print('Extracting data from project: ' + sim)
+        usertime = 0
+        systemtime = 0
+        totalcpu = 0
+        wallclock = 0
+        floatops = 0
+        minMemory = 0
+        minIOmemory = 0
+        totEl = 0
+        userEl = 0
+        progEl = 0
+        totN = 0
+        userN = 0
+        progN = 0
+        totVar = 0
+        cpus = 0
+        debond = 0
+        if exists(join(wd,sim,'solver',sim+'.dat')):
+            with open(join(wd,sim,'solver',sim+'.dat'),'r') as dat:
+                lines = dat.readlines()
+            for l,line in enumerate(lines):
+                if 'JOB TIME SUMMARY' in line:
+                    for subline in lines[l:]:
+                        if 'USER TIME' in subline:
+                            usertime = float(subline.split('=')[1])
+                        elif 'SYSTEM TIME' in subline:
+                            systemtime = float(subline.split('=')[1])
+                        elif 'TOTAL CPU TIME' in subline:
+                            totalcpu = float(subline.split('=')[1])
+                        elif 'WALLCLOCK TIME' in subline:
+                            wallclock = float(subline.split('=')[1])
+                elif 'M E M O R Y   E S T I M A T E' in line:
+                    values = lines[l+6].replace('\n','').split(' ')
+                    while '' in values: values.remove('')
+                    floatops = float(values[1])
+                    minMemory = float(values[2])
+                    minIOmemory = float(values[3])
+                elif 'P R O B L E M   S I Z E' in line:
+                    words = lines[l+3].replace('\n','').split(' ')
+                    while '' in words: words.remove('')
+                    totEl = int(words[-1])
+                    words = lines[l+4].split(' ')
+                    while '' in words: words.remove('')
+                    userEl = int(words[-1])
+                    words = lines[l+5].split(' ')
+                    while '' in words: words.remove('')
+                    progEl = int(words[-1])
+                    words = lines[l+6].split(' ')
+                    while '' in words: words.remove('')
+                    totN = int(words[-1])
+                    words = lines[l+7].split(' ')
+                    while '' in words: words.remove('')
+                    userN = int(words[-1])
+                    words = lines[l+8].split(' ')
+                    while '' in words: words.remove('')
+                    progN = int(words[-1])
+                    words = lines[l+9].split(' ')
+                    while '' in words: words.remove('')
+                    totVar = int(words[-1])
+        if exists(join(wd,sim,'solver',sim+'.msg')):
+            with open(join(wd,sim,'solver',sim+'.msg'),'r') as msg:
+                lines = msg.readlines()
+                for line in lines:
+                    if 'USING THE DIRECT SOLVER WITH' in line:
+                        words = line.replace('\n','').split(' ')
+                        while '' in words: words.remove('')
+                        cpus = int(words[words.index('PROCESSORS')-1])
+        if exists(join(wd,sim,'input',sim+'.inp')):
+            with open(join(wd,sim,'input',sim+'.inp'),'r') as inp:
+                lines = inp.readlines()
+            for line in lines:
+                 if 'Crack Angular Aperture' in line:
+                     debond = numpy.round(float(line.replace('\n','').replace('*','').replace('-','').split(':')[-1].replace('deg','')))
+                     break
+        perf.append([sim,debond,cpus,usertime,systemtime,usertime/totalcpu,systemtime/totalcpu,totalcpu,wallclock,wallclock/60.,wallclock/3600.,wallclock/totalcpu,floatops,minMemory,minIOmemory,totEl,userEl,progEl,totN,userN,progN,totVar])
+    return perf
+
+def getFrame(odbObj,step,frame):
+    return odbObj.steps[odbObj.steps.keys()[step]].frames[frame]
+
+def getFirstAndLastFrame(odbObj,step):
+    return getFrame(odbObj,step,0),getFrame(odbObj,step,-1)
+
+def getFirstAndLastFrameLastStep(odbObj):
+    first, last = getFirstAndLastFrame(odbObj,-1)
+    return first, last
+
+def getSingleNodeSet(odbObj,part,set):
+    return odbObj.rootAssembly.instances[part].nodeSets[set]
+    
+def getSingleElementSet(odbObj,part,set):
+    return odbObj.rootAssembly.instances[part].elementSets[set]
+
+def getSingleSetNodeCoordinates(odbObj,step,frame,part,nodeSet):
+    frameObj = getFrame(odbObj,step,frame)
+    allCoords = frameObj.fieldOutputs['COORD'].getSubset(position=NODAL)
+    coords = allCoords.getSubset(region=odbObj.rootAssembly.instances[part].nodeSets[nodeSet])
+    return coords
+
+def getMultipleSetsNodeCoordinates(odbObj,nodeSets):
+    coords = {}
+    for set in nodeSets:
+        step = set[0]
+        frame = set[1]
+        part = set[2]
+        nodeSet = set[3]
+        coords[nodeSet] = getSingleSetNodeCoordinates(odbObj,step,frame,part,nodeSet)
+    return coords
+
+def extractAndSaveNodesCoordinates(odbObj,nodeSetsData,folder,filename,ext):
+    nodeSets = getMultipleSetsNodeCoordinates(odbObj,nodeSetsData)
+    with open(join(folder,filename + ext),'w') as csv:
+        if len(nodeSets[nodeSetsData[0][3]].values[0].data)==1:
+            string = 'X'
+        elif len(nodeSets[nodeSetsData[0][3]].values[0].data)==2:
+            string = 'X, Y'
+        elif len(nodeSets[nodeSetsData[0][3]].values[0].data)==3:
+            string = 'X, Y, Z'
+        csv.write('DATA\n')
+        csv.write('NODE SET' + ', ' + 'NODE TYPE, NODE LABEL, ' + string + '\n')
+        for set in nodeSetsData:
+            for value in nodeSets[set[3]].values:
+                line = ''
+                line = set[3] + ', ' + 'NODAL' + ', ' + str(value.nodeLabel)
+                for datum in value.data:
+                    line += ', ' + str(datum)
+                csv.write(line + '\n')
+
+def getAllNodes(odbObj,step,frameN):
+    allNodes = {}
+    frame = getFrame(odbObj,step,frameN)
+    nodesCoords = frame.fieldOutputs['COORD'].getSubset(position=NODAL)
+    for value in nodesCoords.values:
+        components = []
+        for component in value.data:
+            components.append(component)
+        allNodes[str(value.nodeLabel)] = components
+    return allNodes
+
+def getAndSaveAllNodes(odbObj,step,frameN,folder,filename,ext):
+    allNodes = {}
+    frame = getFrame(odbObj,step,frameN)
+    nodesCoords = frame.fieldOutputs['COORD'].getSubset(position=NODAL)
+    for value in nodesCoords.values:
+        components = []
+        for component in value.data:
+            components.append(component)
+        allNodes[str(value.nodeLabel)] = components
+    with open(join(folder,filename + ext),'w') as csv:
+        if len(nodesCoords.values[0].data)==1:
+            string = 'X'
+        elif len(nodesCoords.values[0].data)==2:
+            string = 'X, Y'
+        elif len(nodesCoords.values[0].data)==3:
+            string = 'X, Y, Z'
+        csv.write('DATA\n')
+        csv.write('NODE TYPE, NODE LABEL, ' + string + '\n')
+        for value in nodesCoords.values:
+            line = ''
+            line = 'NODAL' + ', ' + str(value.nodeLabel)
+            for datum in value.data:
+                line += ', ' + str(datum)
+            csv.write(line + '\n') 
+    return allNodes
+
+def getAllIntPoints(odbObj,step,frameN):
+    allIntPoints = {}
+    frame = getFrame(odbObj,step,frameN)
+    intpointCoords = frame.fieldOutputs['COORD'].getSubset(position=INTEGRATION_POINT)
+    for value in intpointCoords.values:
+        components = []
+        for component in value.data:
+            components.append(component)
+        allIntPoints[str(value.elementLabel)+'-'+str(value.integrationPoint)] = components
+    return allIntPoints
+
+def getAndSaveAllIntPoints(odbObj,step,frameN,folder,filename,ext):
+    allIntPoints = {}
+    frame = getFrame(odbObj,step,frameN)
+    intpointCoords = frame.fieldOutputs['COORD'].getSubset(position=INTEGRATION_POINT)
+    for value in intpointCoords.values:
+        components = []
+        for component in value.data:
+            components.append(component)
+        allIntPoints[str(value.elementLabel)+'-'+str(value.integrationPoint)] = components
+    with open(join(folder,filename + ext),'w') as csv:
+        if len(intpointCoords.values[0].data)==1:
+            string = 'X'
+        elif len(intpointCoords.values[0].data)==2:
+            string = 'X, Y'
+        elif len(intpointCoords.values[0].data)==3:
+            string = 'X, Y, Z'
+        csv.write('DATA\n')
+        csv.write('NODE TYPE, NODE LABEL, ' + string + '\n')
+        for value in intpointCoords.values:
+            line = ''
+            line = 'INTEGRATION_POINT' + ', ' + str(value.elementLabel)+'-'+str(value.integrationPoint)
+            for datum in value.data:
+                line += ', ' + str(datum)
+            csv.write(line + '\n') 
+    return allIntPoints
+
+def getFieldOutput(odbObj,step,frame,fieldOutput,subset=None,pos=None):
+    frame = getFrame(odbObj,step,frame)
+    if subset!=None:
+        if pos==1:
+            out = frame.fieldOutputs[fieldOutput].getSubset(region=subset,position=INTEGRATION_POINT)
+        elif pos==2:
+            out = frame.fieldOutputs[fieldOutput].getSubset(region=subset,position=NODAL)
+        elif pos==3:
+            out = frame.fieldOutputs[fieldOutput].getSubset(region=subset,position=ELEMENT_NODAL)
+        elif pos==4:
+            out = frame.fieldOutputs[fieldOutput].getSubset(region=subset,position=CENTROID)
+        else:
+            out = frame.fieldOutputs[fieldOutput].getSubset(region=subset)
+    else:
+        out = frame.fieldOutputs[fieldOutput]
+    return out
+    
+def extractAndSaveFieldOutput(odbObj,step,frameN,folder,filename,ext,fieldOutput,subset=None,pos=None):
+    frame = getFrame(odbObj,step,frameN)
+    nodes = getAllNodes(odbObj,step,frameN)
+    intpoints = getAllIntPoints(odbObj,step,frameN)
+    if subset!=None:
+        if pos==1:
+            out = frame.fieldOutputs[fieldOutput].getSubset(region=subset,position=INTEGRATION_POINT)
+        elif pos==2:
+            out = frame.fieldOutputs[fieldOutput].getSubset(region=subset,position=NODAL)
+        elif pos==3:
+            out = frame.fieldOutputs[fieldOutput].getSubset(region=subset,position=ELEMENT_NODAL)
+        elif pos==4:
+            out = frame.fieldOutputs[fieldOutput].getSubset(region=subset,position=CENTROID)
+        else:
+            out = frame.fieldOutputs[fieldOutput].getSubset(region=subset)
+    else:
+        out = frame.fieldOutputs[fieldOutput]    
+    with open(join(folder,filename + ext),'w') as csv:
+        if fieldOutput== 'U' or fieldOutput=='RF':
+            if len(out.values[0].data)==1:
+                string = 'X, ' + fieldOutput + '1'
+            elif len(out.values[0].data)==2:
+                string = 'X, Y, '  + fieldOutput + '1' + ', ' + fieldOutput + '2'
+            elif len(out.values[0].data)==3:
+                string = 'X, Y, Z, '  + fieldOutput + '1' + ', ' + fieldOutput + '2' + ', ' + fieldOutput + '3'
+        elif fieldOutput== 'S' or fieldOutput=='EE':
+            if len(out.values[0].data)==2:
+                string = 'X, ' + fieldOutput + '11' + ', '  + fieldOutput + '12'
+            elif len(out.values[0].data)==4:
+                string = 'X, Y, '  + fieldOutput + '11' + ', ' + fieldOutput + '22' + ', ' + fieldOutput + '33' + ', ' + fieldOutput + '12'
+            elif len(out.values[0].data)==6:
+                string = 'X, Y, Z, '  + fieldOutput + '11' + ', ' + fieldOutput + '22' + ', ' + fieldOutput + '33' + ', ' + fieldOutput + '12' + ', ' + fieldOutput + '13' + ', ' + fieldOutput + '23'
+        csv.write('HEAT MAP\n')
+        csv.write('NODE TYPE, NODE LABEL, ' + string + '\n')
+        for value in out.values:
+            if 'NODAL' in str(value.position):
+                line = ''
+                line = 'NODAL' + ', ' + str(value.nodeLabel)
+                for datum in nodes[str(value.nodeLabel)]:
+                    line += ', ' + str(datum)
+                for datum in value.data:
+                    line += ', ' + str(datum)
+                csv.write(line + '\n') 
+            elif 'INTEGRATION_POINT' in str(value.position):
+                line = ''
+                line = 'INTEGRATION_POINT' + ', ' + str(value.elementLabel)+'-'+str(value.integrationPoint)
+                for datum in intpoints[str(value.elementLabel)+'-'+str(value.integrationPoint)]:
+                    line += ', ' + str(datum)
+                for datum in value.data:
+                    line += ', ' + str(datum)
+                csv.write(line + '\n')
+
+def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
+    
+    set = getSingleNodeSet(odbObj,part,subset)
+    
+    disp = getFieldOutput(odbObj,-1,-1,'U',set)
+
+    countdisp = 0
+    meandisp = 0
+
+    for value in disp.values:
+        countdisp += 1
+        meandisp += value.data[component]
+    meandisp /= countdisp
+    
+    force = getFieldOutput(odbObj,-1,-1,'RF',set)
+    
+    totalforce = 0
+    
+    for value in force.values:
+        totalforce += value.data[component]
+    
+    return meandisp,totalforce
+
+#===============================================================================#
+#===============================================================================#
+#                        Model creation functions
+#===============================================================================#
+#===============================================================================#
+    
+def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#
 #                               Parameters
 #===============================================================================#
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: createRVE(parameters,logfilepath,logindent)',True)
     # assign most used parameters to variables
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Read and assign most used parameters to variables ...',True)
     wd = parameters['wd']
     caefilename = parameters['caefilename']
     modelname = parameters['modelname']
@@ -87,20 +518,41 @@ def createRVE(parameters):
     elif (theta+deltatheta+deltapsi+deltaphi)>=180.0 or (180.0-(theta+deltatheta+deltapsi+deltaphi))/delta<minElNum:
         deltapsi = 0.6*((180.0-(theta+deltatheta))-np.max([0.1*(180.0-(theta+deltatheta)),minElnum*delta]))
         deltaphi = 0.4*((180.0-(theta+deltatheta))-np.max([0.1*(180.0-(theta+deltatheta)),minElnum*delta]))
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Working directory: ' + wd,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'CAE database name: ' + caefilename,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Model name: ' + modelname,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'L: ' + str(L),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rf: ' + str(Rf),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'L/Rf: ' + str(L/Rf),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'theta: ' + str(theta),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'deltatheta: ' + str(deltatheta),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'deltapsi: ' + str(deltapsi),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'deltaphi: ' + str(deltaphi),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'delta: ' + str(delta),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'minElnum: ' + str(minElnum),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 #===============================================================================#
 #                          Model database creation
 #===============================================================================#
 # if CAE database exists, open it; otherwise create new one
     caefullpath = join(wd,caefilename)
     if isfile(caefullpath):
+        skipLineToLogFile(logfilepath,'a',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'CAE database already exists. Opening it ...',True)
         openMdb(caefullpath)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     else:
+        skipLineToLogFile(logfilepath,'a',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'CAE database does not exist. Creating it ...',True)
         mdb.saveAs(caefullpath)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # assign model object to variable for lighter code
     model = mdb.models[modelname]
 #===============================================================================#
 #                             Parts creation
-#===============================================================================# 
+#===============================================================================#
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating part ...',True)
     # create sketch
     RVEsketch = model.ConstrainedSketch(name='__profile__', 
         sheetSize=3*L)
@@ -323,9 +775,14 @@ def createRVE(parameters):
     
     mdb.save()
     
+    writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
+    
 #===============================================================================#
 #                             Materials creation
 #===============================================================================#    
+    
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating materials ...',True)
     
     for material in parameters['materials']:
         mdb.models[modelname].Material(name=material['name'])
@@ -384,9 +841,14 @@ def createRVE(parameters):
 
     mdb.save()
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
 #===============================================================================#
 #                             Sections creation
 #===============================================================================#
+    
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating sections ...',True)
     
     for section in parameters['sections']:
         if 'HomogeneousSolidSection' in section['type'] or 'Homogeneous Solid Section' in section['type'] or 'somogeneoussolidsection' in section['type'] or 'homogeneous solid section' in section['type'] or 'Homogeneous solid section' in section['type']:
@@ -395,9 +857,15 @@ def createRVE(parameters):
     
     mdb.save()
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    
 #===============================================================================#
 #                             Sections assignment
-#===============================================================================#  
+#===============================================================================# 
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Making section assignments ...',True)
+     
     for sectionRegion in parameters['sectionRegions']:
         RVEpart.SectionAssignment(region=RVEpart.sets[sectionRegion['set']], sectionName=sectionRegion['name'], offset=0.0,offsetType=sectionRegion['offsetType'], offsetField=sectionRegion['offsetField'],thicknessAssignment=sectionRegion['thicknessAssignment'])
     
@@ -407,27 +875,42 @@ def createRVE(parameters):
         
     mdb.save()
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    
 #===============================================================================#
 #                             Instance creation
 #===============================================================================#
 
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating instance ...',True)
+    
     model.rootAssembly.DatumCsysByDefault(CARTESIAN)
     model.rootAssembly.Instance(name='RVE-assembly', part=RVEpart, dependent=OFF)
     
     mdb.save()
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    
 #===============================================================================#
 #                             Step creation
 #===============================================================================#
+    
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating step ...',True)
     
     model.StaticStep(name='Load-Step', previous='Initial', 
         minInc=1e-10)
 
     mdb.save()
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 #===============================================================================#
 #                             Boundary conditions
 #===============================================================================#
+    
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assigning boundary conditions ...',True)
     
     # SOUTH side: symmetry line
     
@@ -458,9 +941,14 @@ def createRVE(parameters):
     
     mdb.save()
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    
 #===============================================================================#
 #                                Applied load
 #===============================================================================#    
+    
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',2*logindent + 'Assigning loads ...',True)
     
     for load in parameters['loads']:
         if 'appliedstrain' in load['type'] or 'appliedStrain' in load['type'] or 'Applied Strain' in load['type'] or 'applied strain' in load['type']:
@@ -472,11 +960,16 @@ def createRVE(parameters):
         # elif 'appliedforce' in load['type'] or 'appliedForce' in load['type'] or 'Applied Force' in load['type'] or 'applied Force' in load['type']:
     
     mdb.save()
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 #===============================================================================#
 #                                   Crack
 #===============================================================================#
    
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating cracks ...',True)
+    
     # assign seam
     model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
         
@@ -488,10 +981,15 @@ def createRVE(parameters):
     model.rootAssembly.engineeringFeatures.ContourIntegral(name='Debond',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIP'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=0.5, collapsedElementAtTip=NONE)
     
     mdb.save()
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 #===============================================================================#
 #                                   Mesh
 #===============================================================================#
+    
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating mesh ...',True)
     
     # assign mesh controls
     model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-LOWERCRACK'], elemShape=QUAD, technique=STRUCTURED)
@@ -570,43 +1068,592 @@ def createRVE(parameters):
     
     mdb.save()
     
-    p1 = mdb.models[modelname].parts['RVE']
+    # extract mesh statistics
+    meshStats = model.rootAssembly.getMeshStats(regions=model.rootAssembly.instances['RVE-assembly'])
     
-    p = mdb.models[modelname].parts['RVE']
-    f = p.faces
-    faces = f.getSequenceFromMask(mask=('[#2c76 ]', ), )
-    p.Set(faces=faces, name='StructuredMeshRegion')
-    a = mdb.models[modelname].rootAssembly
-    a.regenerate()
-    
-    a1 = mdb.models[modelname].rootAssembly
-    p = mdb.models[modelname].parts['RVE']
-    a1.Instance(name='RVE-2', part=p, dependent=OFF)
-    a = mdb.models[modelname].rootAssembly
-    f1 = a.instances['RVE-2'].faces
-    pickedRegions = f1.getSequenceFromMask(mask=('[#2c76 ]', ), )
-    
-    model.rootAssembly.setMeshControls(regions=pickedRegions, elemShape=QUAD, technique=STRUCTURED)
+    modelData = {}
+    modelData['numNodes'] =  meshStats.numNodes
+    modelData['numQuads'] =  meshStats.numQuadElems
+    modelData['numTris'] =  meshStats.numTriElems
+    modelData['numEls'] =  meshStats.numQuadElems + meshStats.numTriElems
     
     mdb.save()
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     
 #===============================================================================#
 #                                   Output
 #===============================================================================#
     
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating output requests ...',True)
+    
     # field output
     
     # history output
-    model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=2)
-
+    model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+    
+    mdb.save()
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    
 #===============================================================================#
 #                                Job creation
 #===============================================================================#
-    mdb.Job(name='Job-' + modelname, model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=12, numDomains=12,numGPUs=0)
-    mdb.jobs['Job-' + modelname].submit(consistencyChecking=OFF)
+    
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
+    
+    modelData['jobname'] = 'Job-Jintegral-' + modelname
+    
+    mdb.Job(name='Job-Jintegral-' + modelname, model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=12, numDomains=12,numGPUs=0)
+    
+    mdb.save()
+    
+    #mdb.jobs['Job-' + modelname].submit(consistencyChecking=OFF)
+    mdb.jobs['Job-' + modelname].writeInput(consistencyChecking=OFF)
     mdb.jobs['Job-' + modelname].waitForCompletion()
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Closing database ...',True)
+    mdb.save()
+    mdb.close()
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: createRVE(parameters,logfilepath,logindent)',True)
+    
+    return modelData()
+    
+def modifyRVEinputfile(parameters,mdbData,baselogindent,2*logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: modifyRVE(parameters,mdbData)',True)
+    skipLineToLogFile(logfilepath,'a',True)
+    # odb name and path
+    #odbname = mdbData['jobname'] + '.odb'
+    #odbfullpath = join(parameters['wd'],odbname)
+    # input file name and path
+    inpname = mdbData['jobname'] + '.inp'
+    inpfullpath = join(parameters['wd'],inpname)
+    # modified input file name
+    modinpname = 'Job-VCCTandJintegral-' + parameters['modelname']
+    modinpfullpath = join(parameters['wd'],modinpname)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Working directory: ' + parameters['wd'],True)
+    #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database name: ' + odbname,True)
+    #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database full path: ' + join(parameters['wd'],odbname),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Input file name: ' + inpname,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Input file full path: ' + join(parameters['wd'],inpname),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Modified input file name: ' + modinpname,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Modified input file full path: ' + join(parameters['wd'],modinpname),True)
+    createABQinpfile(modinpname)
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading content of original input file ...',True)
+    with open(inpfullpath,'r') as inp:
+        inpfilelines = inp.readlines()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading nodes and saving to dictionary ...',True)
+    nodes = {}
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            nodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[1])]
+            store == False
+            break
+        elif store == True:
+            nodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[1])]
+        elif ('*Node' in line or '*NODE' in line) and len(inpfilelines[l+1].replace('\n','').split(','))==3:
+            store == True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading quadrilateral elements and saving to dictionary ...',True)
+    quads = {}
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            quadIndex = int(line.replace('\n','').split(',')[0])
+            quads[quadIndex] = []
+            for node in line.replace('\n','').split(',')[1:]:
+                quads[quadIndex].append(int(node))
+            store == False
+            break
+        elif store == True:
+            quadIndex = int(line.replace('\n','').split(',')[0])
+            quads[quadIndex] = []
+            for node in line.replace('\n','').split(',')[1:]:
+                quads[quadIndex].append(int(node))
+        elif ('*Element, type=CPE8' in line or '*ELEMENT, type=CPE8' in line or '*Element, type=CPE4' in line or '*ELEMENT, type=CPE4' in line) and (len(inpfilelines[l+1].replace('\n','').split(','))==5 or len(inpfilelines[l+1].replace('\n','').split(','))==9):
+            store == True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack tip set and saving to variable ...',True)
+    for l,line in enumerate(inpfilelines):
+        if ('*Nset' in line or '*NSET' in line) and ('cracktip' in line or 'CRACKTIP' in line or 'Cracktip' in line):
+            cracktipIndex = int(inpfilelines[l+1].replace('\n').split(',')[0])
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack faces node set and saving to list ...',True)
+    crackfacesNodeset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                crackfacesNodeset.append(int(index))
+            store == False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                crackfacesNodeset.append(int(index))
+        elif ('*Nset' in line or '*NSET' in line) and ('crack' in line or 'CRACK' in line or 'Crack' in line) and and ('cracktip' not in line and 'CRACKTIP' not in line and 'Cracktip' not in line)):
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack faces element set and saving to list ...',True)
+    crackfacesElementset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                crackfacesElementset.append(int(index))
+            store == False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                crackfacesElementset.append(int(index))
+        elif ('*Elset' in line or '*ELSET' in line) and ('crack' in line or 'CRACK' in line or 'Crack' in line) and and ('cracktip' not in line and 'CRACKTIP' not in line and 'Cracktip' not in line)):
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading fiber node set and saving to list ...',True)
+    fiberNodeset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                fiberNodeset.append(int(index))
+            store == False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                fiberNodeset.append(int(index))
+        elif ('*Nset' in line or '*NSET' in line) and ('fiber' in line or 'FIBER' in line or 'Fiber' in line) and and ('fiber-' not in line and 'FIBER-' not in line and 'Fiber-' not in line)):
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading matrix node set and saving to list ...',True)
+    matrixNodeset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                matrixNodeset.append(int(index))
+            store == False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                matrixNodeset.append(int(index))
+        elif ('*Nset' in line or '*NSET' in line) and ('matrix' in line or 'MATRIX' in line or 'Matrix' in line) and and ('matrix-' not in line and 'MATRIX-' not in line and 'Matrix-' not in line)):
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading fiber element set and saving to list ...',True)
+    fiberElementset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                fiberElementset.append(int(index))
+            store == False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                fiberElementset.append(int(index))
+        elif ('*Elset' in line or '*ELSET' in line) and ('fiber' in line or 'FIBER' in line or 'Fiber' in line) and and ('fiber-' not in line and 'FIBER-' not in line and 'Fiber-' not in line)):
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading matrix element set and saving to list ...',True)
+    matrixElementset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                matrixElementset.append(int(index))
+            store == False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                matrixElementset.append(int(index))
+        elif ('*Elset' in line or '*ELSET' in line) and ('matrix' in line or 'MATRIX' in line or 'Matrix' in line) and and ('matrix-' not in line and 'MATRIX-' not in line and 'Matrix-' not in line)):
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)
+    numNodes = mdbData['numNodes']
+    matrixCracktipIndex = numNodes + 1000
+    cracktipDummyIndex = numNodes + 1000 + 1
+    nodes[matrixCracktipIndex] = [nodes[cracktipIndex][0],nodes[cracktipIndex][1]]
+    nodes[cracktipDummyIndex] = [-5*parameters['Rf'],-10*parameters['Rf']]
+    fiberElswithCracktip = []
+    matrixElswithCracktip = []
+    for element in fiberElementset:
+        if cracktipIndex in quads[element]:
+            fiberElswithCracktip.append(element)
+            if len(fiberElswithCracktip) == 2:
+                break
+    for element in matrixElementset:
+        if cracktipIndex in quads[element]:
+            matrixElswithCracktip.append(element)
+            if len(matrixElswithCracktip) == 2:
+                break
+    if 'second' in parameters['elements']['order']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Second order elements are used',True)
+        matrixFirstBehindCracktipIndex = numNodes + 1000 + 2
+        firstBehindCracktipDummyIndex = numNodes + 1000 + 3
+        found = False
+        for fiberEl in fiberElswithCracktip:
+            if found:
+                break
+            fiberElnodes = quads[fiberEl]
+            for matrixEl in matrixElswithCracktip:
+                commonNodes = []
+                matrixElnodes = quads[matrixEl]
+                for node in fiberElnodes:
+                    if node in matrixElnodes:
+                        commonNodes.append(node)
+                if len(commonNodes)==3:
+                    found = True
+                    break
+        distances = []
+        for node in commonNodes:
+            if node != cracktipIndex:
+                distances.append(np.sqrt((nodes[node][0]-nodes[cracktip][0])*(nodes[node][0]-nodes[cracktip][0])+(nodes[node][1]-nodes[cracktip][1])*(nodes[node][1]-nodes[cracktip][1])))
+            else:
+                distances.append(0.0)
+        fiberFirstBehindCracktipIndex = commonNodes[np.argmax(distances)]
+        nodes[matrixFirstBehindCracktipIndex] = [nodes[fiberFirstBehindCracktipIndex][0],nodes[fiberFirstBehindCracktipIndex][1]]
+        nodes[firstBehindCracktipDummyIndex] = [5*parameters['Rf'],-10*parameters['Rf']]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Identify nodes on crack faces for displacement measurements ...',True)
+    nodesAroundCracktip = []
+    for element in fiberElswithCracktip:
+        for node in quads[element]:
+            nodesAroundCracktip.append(node)
+    nodesFiberDisplacementMeas = []
+    for node in crackfacesNodeset:
+        if node in nodesAroundCracktip:
+            nodesFiberDisplacementMeas.append(node)
+    distancesFiberDisplacementMeas = []
+    for node in nodesFiberDisplacementMeas:
+        distancesFiberDisplacementMeas.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
+    nodesAroundCracktip = []
+    for element in matrixElswithCracktip:
+        for node in quads[element]:
+            nodesAroundCracktip.append(node)
+    nodesMatrixDisplacementMeas = []
+    for node in crackfacesNodeset:
+        if node in nodesAroundCracktip:
+            nodesMatrixDisplacementMeas.append(node)
+    distancesMatrixDisplacementMeas = []
+    for node in nodesMatrixDisplacementMeas:
+        distancesFiberDisplacementMeas.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
+    sortedFiberDistanceIndeces = np.argsort(distancesFiberDisplacementMeas)
+    sortedMatrixDistanceIndeces = np.argsort(distancesMatrixDisplacementMeas)
+    if 'second' in parameters['elements']['order']:
+        cracktipFiberDispMeasIndex = nodesFiberDisplacementMeas[sortedFiberDistanceIndeces[-1]]
+        firstBehindCracktipFiberDispMeasIndex = nodesFiberDisplacementMeas[sortedFiberDistanceIndeces[-2]]
+        cracktipMatrixDispMeasIndex = nodesMatrixDisplacementMeas[sortedMatrixDistanceIndeces[-1]]
+        firstBehindCracktipMatrixDispMeasIndex = nodesMatrixDisplacementMeas[sortedMatrixDistanceIndeces[-2]]
+    else:
+        cracktipFiberDispMeasIndex = nodesFiberDisplacementMeas[sortedFiberDistanceIndeces[-1]]
+        cracktipMatrixDispMeasIndex = nodesMatrixDisplacementMeas[sortedMatrixDistanceIndeces[-1]]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at crack tip ...',True)
+    found = False
+    for fIndex,fiberEl in fiberElswithCracktip:
+        if found:
+            break
+        fiberElnodes = quads[fiberEl]
+        for mIndex,matrixEl in matrixElswithCracktip:
+            commonNodes = []
+            matrixElnodes = quads[matrixEl]
+            for node in fiberElnodes:
+                if node in matrixElnodes:
+                    commonNodes.append(node)
+            if len(commonNodes)>1:
+                firstboundedFiberEl = fiberEl
+                firstboundedMatrixEl = matrixEl
+                firstdebondedFiberEl = fiberElswithCracktip[1-fIndex]
+                firstdebondedMatrixEl = matrixElswithCracktip[1-mIndex]
+                found = True
+                break
+    for n,node in enumerate(quads[firstboundedMatrixEl]):
+        if node == crackTipIndex:
+            quads[firstboundedMatrixEl][n] = matrixCracktipIndex
+    if 'second' in parameters['elements']['order']:
+        for n,node in enumerate(quads[firstboundedMatrixEl]):
+            if node == fiberFirstBehindCracktipIndex:
+                quads[firstboundedMatrixEl][n] = matrixFirstBehindCracktipIndex
+    for n,node in enumerate(quads[firstdebondedMatrixEl]):
+        if node == crackTipIndex:
+            quads[firstdebondedMatrixEl][n] = matrixCracktipIndex
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Find set of debonded elements on fiber and on matrix  ...',True)
+    crackfaceFiberElementset = []
+    crackfaceMatrixElementset = []
+    for element in crackfacesElementset:
+        if element in fiberElementset:
+            crackfaceFiberElementset.append(element)
+        else:
+            crackfaceMatrixElementset.append(element)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Find set of debonded nodes on fiber and on matrix  ...',True)
+    crackfaceFiberNodeset = []
+    crackfaceMatrixNodeset = []
+    for node in crackfacesNodeset:
+        if node in fiberNodeset:
+            crackfaceFiberNodeset.append(node)
+        else:
+            crackfaceMatrixNodeset.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Writing new input file  ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify node section  ...',True)
+    started = False
+    for l,line in enumerate(inpfilelines):
+        if started and '*' in line:
+            nodeSecStop = l-1
+            break
+        elif started
+            continue
+        elif ('*Node' in line or '*NODE' in line) and len(inpfilelines[l+1].replace('\n').split(',')) == 3:
+            nodeSecStart = l
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify quadrilateral element section  ...',True)
+    started = False
+    for l,line in enumerate(inpfilelines):
+        if started and '*' in line:
+            elementSecStop = l-1
+            break
+        elif started
+            continue
+        elif ('*Element, type=CPE8' in line or '*ELEMENT, type=CPE8' in line or '*Element, type=CPE4' in line or '*ELEMENT, type=CPE4' in line) and (len(inpfilelines[l+1].replace('\n','').split(','))==5 or len(inpfilelines[l+1].replace('\n','').split(','))==9):
+            elementSecStart = l
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify end of assembly section  ...',True)
+    for l,line in enumerate(inpfilelines):
+        if '*End Assembly' in line or '*END ASSEMBLY' in line:
+            endAssembly = l
+            break 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of boundary conditions section  ...',True)
+    for l,line in enumerate(inpfilelines):
+        if '** BOUNDARY CONDITIONS' in line or '** Boundary Conditions' in line:
+            startBC = l
+            break 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        for line in inpfilelines[:nodeSecStart]:
+            inp.write(line)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write nodes ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NODE' + '\n')
+        for node in nodes.keys():
+            line = str(node)
+            for coord in nodes[node]:
+                line += ', ' + coord
+            inp.write(line + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        for line in inpfilelines[nodeSecStop+1:elementSecStart]:
+            inp.write(line)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write quadrilateral elements ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write(inpfilelines[elementSecStart])
+        for quad in quads.keys():
+            line = str(quad)
+            for node in quads[quad]:
+                line += ', ' + node
+            inp.write(line + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        for line in inpfilelines[elementSecStop+1:endAssembly]:
+            inp.write(line)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write crack faces node and element sets ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=FIBER-CRACKFACE-NODES, INSTANCE=RVEassembly' + '\n')
+        line = ''
+        for n,node in enumerate(crackfaceFiberNodeset):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+        inp.write('*NSET, NSET=MATRIX-CRACKFACE-NODES, INSTANCE=RVEassembly' + '\n')
+        line = ''
+        for n,node in enumerate(crackfaceMatrixNodeset):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+        inp.write('*ELSET, ELSET=FIBER-CRACKFACE-ELEMENTS, INSTANCE=RVEassembly' + '\n')
+        line = ''
+        for n,element in enumerate(crackfaceFiberElementset):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(element)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(element) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+        inp.write('*ELSET, ELSET=MATRIX-CRACKFACE-ELEMENTS, INSTANCE=RVEassembly' + '\n')
+        line = ''
+        for n,element in enumerate(crackfaceMatrixElementset):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(element)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(element) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write VCCT node sets ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=FIBER-CRACKTIP, INSTANCE=RVEassembly' + '\n')
+        inp.write(' ' + str(cracktipIndex) + '\n')
+        inp.write('*NSET, NSET=MATRIX-CRACKTIP, INSTANCE=RVEassembly' + '\n')
+        inp.write(' ' + str(matrixCracktipIndex) + '\n')
+        if 'second' in parameters['elements']['order']:
+            inp.write('*NSET, NSET=FIBER-NODE-FIRSTBOUNDED, INSTANCE=RVEassembly' + '\n')
+            inp.write(' ' + str(fiberFirstBehindCracktipIndex) + '\n')
+            inp.write('*NSET, NSET=MATRIX-NODE-FIRSTBOUNDED, INSTANCE=RVEassembly' + '\n')
+            inp.write(' ' + str(matrixFirstBehindCracktipIndex) + '\n')
+        inp.write('*NSET, NSET=CRACKTIP-DUMMY-NODE, INSTANCE=RVEassembly' + '\n')
+        inp.write(' ' + str(cracktipDummyIndex) + '\n')
+        if 'second' in parameters['elements']['order']:
+            inp.write('*NSET, NSET=FIRSTBOUNDED-DUMMY-NODE, INSTANCE=RVEassembly' + '\n')
+            inp.write(' ' + str(FirstBehindCracktipDummyIndex) + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write equation definitions ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*EQUATION' + '\n')
+        inp.write(' 3' + '\n')
+        inp.write(' FIBER-CRACKTIP,1,1,MATRIX-CRACKTIP,1,-1,CRACKTIP-DUMMY-NODE,1,-1' + '\n')
+        inp.write(' 3' + '\n')
+        inp.write(' FIBER-CRACKTIP,2,1,MATRIX-CRACKTIP,2,-1,CRACKTIP-DUMMY-NODE,2,-1' + '\n')
+        if 'second' in parameters['elements']['order']:
+            inp.write(' 3' + '\n')
+            inp.write(' FIBER-NODE-FIRSTBOUNDED,1,1,MATRIX-NODE-FIRSTBOUNDED,1,-1,FIRSTBOUNDED-DUMMY-NODE,1,-1' + '\n')
+            inp.write(' 3' + '\n')
+            inp.write(' FIBER-NODE-FIRSTBOUNDED,2,1,MATRIX-NODE-FIRSTBOUNDED,2,-1,FIRSTBOUNDED-DUMMY-NODE,2,-1' + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*SURFACE, NAME=FiberSurface, TYPE=ELEMENT' + '\n')
+        inp.write(' crackfaceFiberElementset' + '\n')
+        inp.write('*SURFACE, NAME=MatrixSurface, TYPE=ELEMENT' + '\n')
+        inp.write(' crackfaceMatrixElementset' + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write end assembly ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*End Assembly' + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write contact interaction ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*CONTACT PAIR, INTERACTION=CrackFacesContact, SMALL SLIDING' + '\n')
+        inp.write(' MatrixSurface, FiberSurface' + '\n')
+        inp.write('*SURFACE INTERACTION, NAME=CrackFacesContact' + '\n')
+        inp.write(' 1.0' + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        for line in inpfilelines[endAssembly+1:startBC]:
+            inp.write(line)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('BOUNDARY CONDITIONS' + '\n')
+        inp.write('**' + '\n')
+        inp.write('*BOUNDARY, OP=MOD' + '\n')
+        inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
+        inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+        inp.write('**' + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        for line in inpfilelines[startBC+1:]:
+            inp.write(line)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    return modinpname
 
+def runRVEsimulation(wd,inpfile,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: runRVEsimulation(wd,inpfile)',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
+    
+    mdb.JobFromInputFile(name=inpfile.split('.')[0],inputFileName=inpfile,type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=12, numDomains=12,numGPUs=0)
+    
+    mdb.jobs[inpfile.split('.')[0]].submit(consistencyChecking=OFF)
+    
+    mdb.jobs[inpfile.split('.')[0]].waitForCompletion()
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+def analyzeRVEresults():
+    
+def reportRVEresults():
+    
 def main(argv):
+    
+    workDir = ''
+    
+    logfilename = datetime.now().strftime('%Y-%m-%d_%H-%m-%s') + '_ABQ-RVE-generation-and-analysis' + '.log'
+    logfilefullpath = join(workDir,logfilename)
+    logindent = '    '
+    
+    with open(logfilefullpath,'w') as log:
+        log.write('Automatic generation and FEM analysis of RVEs with Abaqus Python' + '\n')
+        
+    skipLineToLogFile(logfilefullpath,'a',True)
+    writeLineToLogFile(logfilefullpath,'a','In function: main(argv)',True)
+    
+    skipLineToLogFile(logfilefullpath,'a',True)
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Global timer starts',True)
+    globalStart = timeit.default_timer()
+    
+    RVEparams = {}
+    
+    RVEparams[''] =
+    
+    skipLineToLogFile(logfilefullpath,'a',True)
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: ',True)
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
+    localStart = timeit.default_timer()
+    try:
+        
+        localElapsedTime = timeit.default_timer() - localStart
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime),True)
+    except Exception, error:
+        writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+        sys.exit(2)
+    
+    globalElapsedTime = timeit.default_timer() - globalStart
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Global timer stopped',True)
+    
+    skipLineToLogFile(logfilefullpath,'a',True)
+    writeLineToLogFile(logfilefullpath,'a','Exiting function: main(argv)',True)
+    writeLineToLogFile(logfilefullpath,'a','Goodbye!',True)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

@@ -208,8 +208,8 @@ def getPerfs(wd,sims):
         totVar = 0
         cpus = 0
         debond = 0
-        if exists(join(wd,sim,'solver',sim+'.dat')):
-            with open(join(wd,sim,'solver',sim+'.dat'),'r') as dat:
+        if exists(join(wd,sim+'.dat')):
+            with open(join(wd,sim+'.dat'),'r') as dat:
                 lines = dat.readlines()
             for l,line in enumerate(lines):
                 if 'JOB TIME SUMMARY' in line:
@@ -250,7 +250,7 @@ def getPerfs(wd,sims):
                     words = lines[l+9].split(' ')
                     while '' in words: words.remove('')
                     totVar = int(words[-1])
-        if exists(join(wd,sim,'solver',sim+'.msg')):
+        if exists(join(wd,sim+'.msg')):
             with open(join(wd,sim,'solver',sim+'.msg'),'r') as msg:
                 lines = msg.readlines()
                 for line in lines:
@@ -258,8 +258,8 @@ def getPerfs(wd,sims):
                         words = line.replace('\n','').split(' ')
                         while '' in words: words.remove('')
                         cpus = int(words[words.index('PROCESSORS')-1])
-        if exists(join(wd,sim,'input',sim+'.inp')):
-            with open(join(wd,sim,'input',sim+'.inp'),'r') as inp:
+        if exists(join(wd,sim+'.inp')):
+            with open(join(wd,sim+'.inp'),'r') as inp:
                 lines = inp.readlines()
             for line in lines:
                  if 'Crack Angular Aperture' in line:
@@ -485,6 +485,22 @@ def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
     
     return meandisp,totalforce
 
+def getJintegrals(wd,sim,ncontours):
+    with open(join(wd,sim + '.dat'),'r') as dat:
+        lines = dat.readlines()
+    values = []
+    for l,line in enumerate(lines):
+        if 'J - I N T E G R A L   E S T I M A T E S' in line:
+            for n in range(1,int(np.ceil(ncontours/5))+1):
+                if n>1:
+                    temp = filter(lambda x: x!=' ' and x!='', lines[l+6+int(np.ceil(ncontours/5))+n].replace('\n','').split(' '))
+                else:
+                    temp = filter(lambda x: x!=' ' and x!='', lines[l+6+int(np.ceil(ncontours/5))+n].replace('\n','').split(' '))[2:]
+                for value in temp:
+                    values.append(float(value))
+            break
+    return values
+    
 #===============================================================================#
 #===============================================================================#
 #                        Model creation functions
@@ -1127,7 +1143,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     
     return modelData()
     
-def modifyRVEinputfile(parameters,mdbData,baselogindent,2*logindent):
+def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: modifyRVE(parameters,mdbData)',True)
     skipLineToLogFile(logfilepath,'a',True)
@@ -1530,11 +1546,19 @@ def modifyRVEinputfile(parameters,mdbData,baselogindent,2*logindent):
         inp.write(' ' + str(cracktipIndex) + '\n')
         inp.write('*NSET, NSET=MATRIX-CRACKTIP, INSTANCE=RVEassembly' + '\n')
         inp.write(' ' + str(matrixCracktipIndex) + '\n')
+        inp.write('*NSET, NSET=FIBER-CRACKTIP-DISPMEAS, INSTANCE=RVEassembly' + '\n')
+        inp.write(' ' + str(cracktipFiberDispMeasIndex) + '\n')
+        inp.write('*NSET, NSET=MATRIX-CRACKTIP-DISPMEAS, INSTANCE=RVEassembly' + '\n')
+        inp.write(' ' + str(cracktipMatrixDispMeasIndex) + '\n')
         if 'second' in parameters['elements']['order']:
             inp.write('*NSET, NSET=FIBER-NODE-FIRSTBOUNDED, INSTANCE=RVEassembly' + '\n')
             inp.write(' ' + str(fiberFirstBehindCracktipIndex) + '\n')
             inp.write('*NSET, NSET=MATRIX-NODE-FIRSTBOUNDED, INSTANCE=RVEassembly' + '\n')
             inp.write(' ' + str(matrixFirstBehindCracktipIndex) + '\n')
+            inp.write('*NSET, NSET=FIBER-FIRSTBOUNDED-DISPMEAS, INSTANCE=RVEassembly' + '\n')
+            inp.write(' ' + str(firstBehindCracktipFiberDispMeasIndex) + '\n')
+            inp.write('*NSET, NSET=MATRIX-FIRSTBOUNDED-DISPMEAS, INSTANCE=RVEassembly' + '\n')
+            inp.write(' ' + str(firstBehindCracktipMatrixDispMeasIndex) + '\n')
         inp.write('*NSET, NSET=CRACKTIP-DUMMY-NODE, INSTANCE=RVEassembly' + '\n')
         inp.write(' ' + str(cracktipDummyIndex) + '\n')
         if 'second' in parameters['elements']['order']:
@@ -1592,9 +1616,10 @@ def modifyRVEinputfile(parameters,mdbData,baselogindent,2*logindent):
             inp.write(line)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilefullpath,'a','modifyRVEinputfile(parameters,mdbData,baselogindent,logindent)',True)
     return modinpname
 
-def runRVEsimulation(wd,inpfile,baselogindent,logindent):
+def runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: runRVEsimulation(wd,inpfile)',True)
     
@@ -1607,10 +1632,227 @@ def runRVEsimulation(wd,inpfile,baselogindent,logindent):
     mdb.jobs[inpfile.split('.')[0]].waitForCompletion()
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilefullpath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,baselogindent,logindent)',True)
 
-def analyzeRVEresults():
+def analyzeRVEresults(wd,odbname,logfilepath,parameters):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: analyzeRVEresults(wd,odbname)',True)
     
-def reportRVEresults():
+    #=======================================================================
+    # BEGIN - extract performances
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract performances...',True)
+    try:
+        performances = getPerfs(wd,getPerfs(wd,[odbname.split('.')[0]]))
+    except Exception,e:
+        writeErrorToLogFile(logfilepath,'a',Exception,e,True)
+        sys.exc_clear()
+    writeLineToLogFile(logfilepath,'a','... done.',True)
+    #=======================================================================
+    # END - extract performances
+    #=======================================================================
+    
+    #=======================================================================
+    # BEGIN - extract J-integral results
+    #=======================================================================
+    writeLineToLogFile(logfilepathpath,'a',baselogindent + 2*logindent + 'Extracting J-integral results ...',True)
+    try:
+        Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'])
+    except Exception,e:
+        writeErrorToLogFile(logfilepath,'a',Exception,e,True)
+        sys.exc_clear()
+    writeLineToLogFile(logfilepathpath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - extract J-integral results
+    #=======================================================================
+    
+    #=======================================================================
+    # BEGIN - open ODB
+    #=======================================================================
+    writeLineToLogFile(logfilepathpath,'a',baselogindent + 2*logindent + 'Opening ODB database + ' + odbname + ' in directory ' + wd + ' ...',True)
+    if '.odb' not in odbname:
+        odbname += '.odb'
+    odbfullpath = join(wd,odbname)
+    odb = openOdb(path=odbfullpath)
+    writeLineToLogFile(logfilepathpath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - open ODB
+    #=======================================================================
+    
+    #=======================================================================
+    # BEGIN - extract node sets
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting node sets ...',True)
+    
+    rightSide = getSingleNodeSet(odb,'RVE','RIGHTSIDE')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- RIGHTSIDE',True)
+    
+    fiberCrackfaceNodes = getSingleNodeSet(odb,'RVE','FIBER-CRACKFACE-NODES')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKFACE-NODES',True)
+    
+    matrixCrackfaceNodes = getSingleNodeSet(odb,'RVE','MATRIX-CRACKFACE-NODES')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKFACE-NODES',True)
+    
+    fiberCracktip = getSingleNodeSet(odb,'RVE','FIBER-CRACKTIP')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKTIP',True)
+    
+    matrixCracktip = getSingleNodeSet(odb,'RVE','MATRIX-CRACKTIP')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKTIP',True)
+    
+    cracktipDummyNode = getSingleNodeSet(odb,'RVE','CRACKTIP-DUMMY-NODE')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CRACKTIP-DUMMY-NODE',True)
+    
+    fiberCracktipDispMeas = getSingleNodeSet(odb,'RVE','FIBER-CRACKTIP-DISPMEAS')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKTIP-DISPMEAS',True)
+    
+    matrixCracktipDispMeas = getSingleNodeSet(odb,'RVE','MATRIX-CRACKTIP-DISPMEAS')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKTIP-DISPMEAS',True)
+    
+    if 'second' in parameters['elements']['order']:
+        fiberFirstbounded = getSingleNodeSet(odb,'RVE','FIBER-NODE-FIRSTBOUNDED')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-NODE-FIRSTBOUNDED',True)
+        
+        matrixFirstbounded = getSingleNodeSet(odb,'RVE','MATRIX-NODE-FIRSTBOUNDED')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-NODE-FIRSTBOUNDED',True)
+        
+        firstboundedDummyNode = getSingleNodeSet(odb,'RVE','FIRSTBOUNDED-DUMMY-NODE')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIRSTBOUNDED-DUMMY-NODE',True)
+        
+        fiberFirstboundedDispMeas = getSingleNodeSet(odb,'RVE','FIBER-FIRSTBOUNDED-DISPMEAS')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-FIRSTBOUNDED-DISPMEAS',True)
+        
+        matrixFirstboundedDispMeas = getSingleNodeSet(odb,'RVE','MATRIX-FIRSTBOUNDED-DISPMEAS')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-FIRSTBOUNDED-DISPMEAS',True)
+        
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - extract node sets
+    #=======================================================================
+    
+    #=======================================================================
+    # BEGIN - extract stresses at the boundary
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses at the boundary ...',True)
+    
+    rightsideStress = getFieldOutput(odb,-1,-1,'S',rightSide,3)
+    rightsideUndefcoords = getFieldOutput(odb,-1,0,'COORD',rightSide)
+    rightsideDefcoords = getFieldOutput(odb,-1,-1,'COORD',rightSide)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - extract stresses at the boundary
+    #=======================================================================
+    
+    #=======================================================================
+    # BEGIN - compute sigma inf
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute sigma inf ...',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - compute sigma inf
+    #=======================================================================
+    
+    #=======================================================================
+    # BEGIN - compute G0
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract performances...',True)
+    Em = float(factors[1])*float(elprops[1])
+    num = float(factors[4])*float(elprops[4])
+    Gm = float(factors[3])*float(elprops[3])
+    Rf *= lengthFactor #recast in SI units
+    sigmaInf *= stressFactor  #recast in SI units
+    G0 = numpy.pi*Rf*sigmaInf*sigmaInf*(1+(3.0-4.0*num))/(8.0*Gm)
+    writeLineToLogFile(logfilepath,'a','... done.',True)
+    #=======================================================================
+    # END - compute G0
+    #=======================================================================
+    
+    #=======================================================================
+    # BEGIN - compute reference frame transformation
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute reference frame transformation ...',True)
+    
+    undefCracktipCoords = getFieldOutput(odb,-1,0,'COORD',fiberCracktip)
+    phi = numpy.arctan2(undefCracktipCoords.data[1],undefCracktipCoords.data[0])
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - compute reference frame transformation
+    #=======================================================================
+    
+    #=======================================================================
+    # BEGIN - compute contact zone
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute contact zone ...',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements ...',True)
+    
+    fiberCrackfaceDisps = getFieldOutput(odb,-1,-1,'U',fiberCrackfaceNodes)
+    matrixCrackfaceDisps = getFieldOutput(odb,-1,-1,'U',fiberCrackfaceNodes)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - compute contact zone
+    #=======================================================================
+    
+    #=======================================================================
+    # BEGIN - compute VCCT
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute VCCT ...',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract forces and displacements ...',True)
+    
+    RFcracktip = getFieldOutput(odb,-1,-1,'RF',cracktipDummyNode)
+    if 'second' in parameters['elements']['order']:
+        RFfirstbounded = getFieldOutput(odb,-1,-1,'RF',firstboundedDummyNode)
+    fiberCracktipDisplacement = getFieldOutput(odb,-1,-1,'U',fiberCracktipDispMeas)
+    matrixCracktipDisplacement = getFieldOutput(odb,-1,-1,'U',matrixCracktipDispMeas)
+    if 'second' in parameters['elements']['order']:
+        fiberFirstboundedDisplacement = getFieldOutput(odb,-1,-1,'U',fiberFirstboundedDispMeas)
+        matrixFirstboundedDisplacement = getFieldOutput(odb,-1,-1,'U',matrixFirstboundedDispMeas)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate forces and displacements ...',True)
+    
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GTOT=GI+GII ...',True)
+    
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GI=GTOT-GII ...',True)
+    
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - compute VCCT
+    #=======================================================================
+    
+    #=======================================================================
+    # BEGIN - close ODB
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Closing ODB database ...',True)
+    odb.close()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - close ODB
+    #=======================================================================
+    
+    writeLineToLogFile(logfilefullpath,'a',baselogindent + logindent + 'Exiting function: analyzeRVEresults(wd,odbname,parameters)',True)
+    
+def reportRVElocalresults():
+    
+    
+def reportRVEglobalresults():
+    
     
 def main(argv):
     

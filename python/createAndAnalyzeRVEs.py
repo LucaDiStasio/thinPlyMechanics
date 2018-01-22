@@ -1661,6 +1661,9 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     except Exception,e:
         writeErrorToLogFile(logfilepath,'a',Exception,e,True)
         sys.exc_clear()
+    JintegralsWithDistance = []
+    for v,value in enumerate(Jintegrals):
+        JintegralsWithDistance.append([(v+1)*parameters['Rf']*parameters['delta']*np.pi/180.0,value])
     writeLineToLogFile(logfilepathpath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract J-integral results
@@ -1735,8 +1738,27 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses at the boundary ...',True)
     
     rightsideStress = getFieldOutput(odb,-1,-1,'S',rightSide,3)
-    rightsideUndefcoords = getFieldOutput(odb,-1,0,'COORD',rightSide)
+    
     rightsideDefcoords = getFieldOutput(odb,-1,-1,'COORD',rightSide)
+    
+    rightsideStressdata = []
+    rightsideUndefcoords = getFieldOutput(odb,-1,0,'COORD',rightSide)
+    for value in rightsideUndefcoords:
+        node = odb.rootAssembly.instances['RVEassembly'].getNodeFromLabel(value.label)
+        stress = getFieldOutput(odb,-1,-1,'S',node,3)
+        defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
+        rightsideStressdata.append([value.data[0],value.data[1],defcoords.value[0].data[0],defcoords.value[0].data[1],defstress.value[0].data[0],stress.value[0].data[1],stress.value[0].data[2],stress.value[0].data[3]])
+    
+    maxSigmaxx = rightsideStressdata[0][4]
+    minSigmaxx = rightsideStressdata[0][4]
+    meanSigmaxx = 0.0
+    for stress in rightsideStressdata:
+        meanSigmaxx += stress[4]
+        if stress[4]>maxSigmaxx:
+            maxSigmaxx = stress[4]
+        elif stress[4]<minSigmaxx:
+            minSigmaxx = stress[4]
+    meanSigmaxx /= len(rightsideStressdata)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
@@ -1744,25 +1766,10 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     #=======================================================================
     
     #=======================================================================
-    # BEGIN - compute sigma inf
-    #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute sigma inf ...',True)
-    
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    #=======================================================================
-    # END - compute sigma inf
-    #=======================================================================
-    
-    #=======================================================================
     # BEGIN - compute G0
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract performances...',True)
-    Em = float(factors[1])*float(elprops[1])
-    num = float(factors[4])*float(elprops[4])
-    Gm = float(factors[3])*float(elprops[3])
-    Rf *= lengthFactor #recast in SI units
-    sigmaInf *= stressFactor  #recast in SI units
-    G0 = numpy.pi*Rf*sigmaInf*sigmaInf*(1+(3.0-4.0*num))/(8.0*Gm)
+    G0 = np.pi*parameters['Rf']*meanSigmaxx*meanSigmaxx*(1+(3.0-4.0*parameters['nu-G0']))/(8.0*parameters['G-G0'])
     writeLineToLogFile(logfilepath,'a','... done.',True)
     #=======================================================================
     # END - compute G0
@@ -1774,7 +1781,7 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute reference frame transformation ...',True)
     
     undefCracktipCoords = getFieldOutput(odb,-1,0,'COORD',fiberCracktip)
-    phi = numpy.arctan2(undefCracktipCoords.data[1],undefCracktipCoords.data[0])
+    phi = np.arctan2(undefCracktipCoords.data[1],undefCracktipCoords.data[0])
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
@@ -1789,7 +1796,38 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements ...',True)
     
     fiberCrackfaceDisps = getFieldOutput(odb,-1,-1,'U',fiberCrackfaceNodes)
-    matrixCrackfaceDisps = getFieldOutput(odb,-1,-1,'U',fiberCrackfaceNodes)
+    matrixCrackfaceDisps = getFieldOutput(odb,-1,-1,'U',matrixCrackfaceNodes)
+    
+    fiberAngles = []
+    matrixAngles = []
+    fiberDisps = []
+    matrixDisps = []
+    
+    for value in fiberCrackfaceDisps.values:
+        node = odb.rootAssembly.instances['RVEassembly'].getNodeFromLabel(value.label)
+        undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
+        beta = np.arctan2(undefCoords.value[0].data[1],undefCoords.value[0].data[0])
+        fiberAngles.append(beta)
+        fiberDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
+    for value in matrixCrackfaceDisps.values:
+        node = odb.rootAssembly.instances['RVEassembly'].getNodeFromLabel(value.label)
+        undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
+        beta = np.arctan2(undefCoords.value[0].data[1],undefCoords.value[0].data[0])
+        matrixAngles.append(beta)
+        matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
+    
+    fiberDisps = np.array(fiberDisps)[np.argsort(fiberAngles)].tolist()
+    matrixDisps = np.array(matrixDisps)[np.argsort(matrixAngles)].tolist()
+    
+    crackDisps = []
+    
+    for s,dispset in enumerate(fiberDisps):
+        crackDisps.append([matrixDisps[s][0]-dispset[0],matrixDisps[s][1]-dispset[1]])
+        
+    phiCZ = 0.0
+    for s,dispset in enumerate(crackDisps):
+        if dispset[0]<1e-10:
+            phiCZ = phi - fiberAngles[s]
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
@@ -1818,16 +1856,70 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate forces and displacements ...',True)
     
+    xRFcracktip = RFcracktip.value[0].data[0]
+    yRFcracktip = RFcracktip.value[0].data[1]
+    rRFcracktip = np.cos(phi)*xRFcracktip + np.sin(phi)*yRFcracktip 
+    thetaRFcracktip = -np.sin(phi)*xRFcracktip + np.cos(phi)*yRFcracktip
+    if 'second' in parameters['elements']['order']:
+        xRFfirstbounded = RFfirstbounded.value[0].data[0]
+        yRFfirstbounded = RFfirstbounded.value[0].data[1]
+        rRFfirstbounded = np.cos(phi)*xRFfirstbounded + np.sin(phi)*yRFfirstbounded 
+        thetaRFfirstbounded = -np.sin(phi)*xRFfirstbounded + np.cos(phi)*yRFfirstbounded
     
+    xfiberCracktipDisplacement = fiberCracktipDisplacement.value[0].data[0]
+    yfiberCracktipDisplacement = fiberCracktipDisplacement.value[0].data[1]
+    rfiberCracktipDisplacement = np.cos(phi)*xfiberCracktipDisplacement + np.sin(phi)*yfiberCracktipDisplacement
+    thetafiberCracktipDisplacement = -np.sin(phi)*xfiberCracktipDisplacement + np.cos(phi)*yfiberCracktipDisplacement
+    xmatrixCracktipDisplacement = matrixCracktipDisplacement.value[0].data[0]
+    ymatrixCracktipDisplacement = matrixCracktipDisplacement.value[0].data[1]
+    rmatrixCracktipDisplacement = np.cos(phi)*xmatrixCracktipDisplacement + np.sin(phi)*ymatrixCracktipDisplacement 
+    thetamatrixCracktipDisplacement = -np.sin(phi)*xmatrixCracktipDisplacement + np.cos(phi)*ymatrixCracktipDisplacement
+    if 'second' in parameters['elements']['order']:
+        xfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.value[0].data[0]
+        yfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.value[0].data[1]
+        rfiberFirstboundedDisplacement = np.cos(phi)*xfiberFirstboundedDisplacement + np.sin(phi)*yfiberFirstboundedDisplacement
+        thetafiberFirstboundedDisplacement = -np.sin(phi)*xfiberFirstboundedDisplacement + np.cos(phi)*yfiberFirstboundedDisplacement
+        xmatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.value[0].data[0]
+        ymatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.value[0].data[1]
+        rmatrixFirstboundedDisplacement = np.cos(phi)*xmatrixFirstboundedDisplacement + np.sin(phi)*ymatrixFirstboundedDisplacement
+        thetamatrixFirstboundedDisplacement = -np.sin(phi)*xmatrixFirstboundedDisplacement + np.cos(phi)*ymatrixFirstboundedDisplacement
+    
+    xcracktipDisplacement = xmatrixCracktipDisplacement - xfiberCracktipDisplacement
+    ycracktipDisplacement = ymatrixCracktipDisplacement - yfiberCracktipDisplacement
+    rcracktipDisplacement = rmatrixCracktipDisplacement - rfiberCracktipDisplacement
+    thetacracktipDisplacement = thetamatrixCracktipDisplacement - thetafiberCracktipDisplacement
+    if 'second' in parameters['elements']['order']:
+        xfirstboundedDisplacement = xmatrixFirstboundedDisplacement - xfiberFirstboundedDisplacement
+        yfirstboundedDisplacement = ymatrixFirstboundedDisplacement - yfiberFirstboundedDisplacement
+        rfirstboundedDisplacement = rmatrixFirstboundedDisplacement - rfiberFirstboundedDisplacement
+        thetafirstboundedDisplacement = thetamatrixFirstboundedDisplacement - thetafiberFirstboundedDisplacement
+        
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GTOT=GI+GII ...',True)
     
+    if 'second' in parameters['elements']['order']:
+        GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
+        GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
+    else:
+        GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
+        GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
+        GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
+    
+    GTOT = GI + GTOT
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GI=GTOT-GII ...',True)
     
+    if 'second' in parameters['elements']['order']:
+        GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
+    else:
+        GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
+    
+    GTOTv2 = Jintegrals[-1]
+    
+    GIv2 = GTOTv2 - GIIv2
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     

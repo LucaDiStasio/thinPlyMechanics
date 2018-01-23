@@ -72,6 +72,37 @@ import connectorBehavior
 #===============================================================================#
 #===============================================================================#
 
+def createCSVfile(dir,filename,titleline=None):
+    if len(filename.split('.'))<2:
+        filename += '.csv'
+    with open(join(dir,filename),'w') as csv:
+        csv.write('# Automatically created on ' + datetime.now().strftime('%d/%m/%Y') + ' at' + datetime.now().strftime('%H:%M:%S') + '\n')
+        if titleline != None:
+            csv.write(titleline.replace('\n','') + '\n')
+
+def appendCSVfile(dir,filename,data):
+    # data is a list of lists
+    # each list is written to a row
+    # no check is made on data consistency
+    if len(filename.split('.'))<2:
+        filename += '.csv'
+    with open(join(dir,filename),'a') as csv:
+        if len(data)>1 and len(data[0]>1):
+            for row in data:
+                line = ''
+                for v,value in enumerate(row):
+                    if v>1:
+                        line += ', '
+                    line += str(value)
+                csv.write(line + '\n')
+        else:
+            line = ''
+            for v,value in enumerate(data):
+                if v>1:
+                    line += ', '
+                line += str(value)
+            csv.write(line + '\n')
+
 def createABQinpfile(path):
     with open(path,'w') as fi:
         fi.write('** ABAQUS INPUT FILE' + '\n')
@@ -1940,10 +1971,6 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     
     writeLineToLogFile(logfilefullpath,'a',baselogindent + logindent + 'Exiting function: analyzeRVEresults(wd,odbname,parameters)',True)
     
-def reportRVElocalresults():
-    
-    
-def reportRVEglobalresults():
     
     
 def main(argv):

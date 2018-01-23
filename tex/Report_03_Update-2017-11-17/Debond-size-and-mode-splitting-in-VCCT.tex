@@ -105,7 +105,200 @@ $\underline{\underline{R}}$ & $\left[-\right]$  & Rotation matrix\\
 \end{tabular}
 %\end{table}
 
+\clearpage
+%------------------------------------------------------------------------------------------%
+%                        FEM formulation with quadrilateral elements
+%------------------------------------------------------------------------------------------%
+\section{ FEM formulation with quadrilateral elements}
 
+\begin{equation}
+\underline{\sigma}=\underline{\underline{D}}\cdot\underline{\varepsilon}
+\end{equation}
+
+\begin{equation}
+\underline{\sigma}=\begin{bmatrix}
+\sigma_{xx}\\\sigma_{yy}\\\tau_{xy}
+\end{bmatrix}\qquad\underline{\varepsilon}=\begin{bmatrix}
+\varepsilon_{xx}\\\varepsilon_{yy}\\\gamma_{xy}
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\underline{\underline{D}}=\begin{bmatrix}
+E_{1}&E_{2}&0\\E_{2}&E_{1}&0\\0&0&G
+\end{bmatrix}\qquad\text{with }G=\frac{E}{2\left(1+\nu\right)}\text{ for an isotropic material}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+E_{1}=\frac{E}{1-\nu^{2}}\quad E_{2}=\nu E_{1}\quad&\text{for plane stress}\\
+E_{1}=\frac{E\left(1-\nu\right)}{\left(1+\nu\right)\left(1-2\nu\right)}\quad E_{2}=\frac{\nu E_{1}}{1-\nu}\quad&\text{for plane strain}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\underline{\underline{k}}\cdot\underline{u}_{N}=\underline{f}_{N}
+\end{equation}
+
+\begin{equation}
+\underline{u}_{N}=\begin{bmatrix}
+u_{1,x}\\u_{1,y}\\u_{2,x}\\u_{2,y}\\u_{3,x}\\u_{3,y}\\u_{4,x}\\u_{4,y}\\
+\end{bmatrix}\qquad\underline{f}_{N}=\begin{bmatrix}
+f_{1,x}\\f_{1,y}\\f_{2,x}\\f_{2,y}\\f_{3,x}\\f_{3,y}\\f_{4,x}\\f_{4,y}\\
+\end{bmatrix}
+\end{equation}
+
+
+\begin{equation}
+\underline{u}=\underline{\underline{N}}\cdot\underline{u}_{N}
+\end{equation}
+
+
+\begin{equation}
+\underline{u}=\begin{bmatrix}
+u_{x}\left(x,y\right)\\u_{y}\left(x,y\right)
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\underline{\underline{N}}=\begin{bmatrix}
+N_{1}&0&N_{2}&0&N_{3}&0&N_{4}&0\\
+0&N_{1}&0&N_{2}&0&N_{3}&0&N_{4}\\
+\end{bmatrix}
+\end{equation}
+
+
+\begin{equation}
+\begin{cases}
+N_{1}=N_{1}\left(\xi,\eta\right)\\
+N_{2}=N_{2}\left(\xi,\eta\right)\\
+N_{3}=N_{3}\left(\xi,\eta\right)\\
+N_{4}=N_{4}\left(\xi,\eta\right)\\
+\end{cases}\quad\text{with}\quad\begin{cases}
+\xi=\xi\left(x,y\right)\\
+\eta=\eta\left(x,y\right)\\
+\end{cases}\text{for isoparametric elements}
+\end{equation}
+
+\begin{equation}
+\underline{\varepsilon}\left(x,y\right)=\underline{\underline{\widetilde{B}}}\cdot\underline{u}\left(x,y\right)
+\end{equation}
+
+\begin{equation}
+\underline{\widetilde{B}}=\begin{bmatrix}
+\frac{\partial }{\partial x}&0\\[7.5pt]
+0&\frac{\partial }{\partial y}\\[7.5pt]
+\frac{\partial }{\partial y}&\frac{\partial }{\partial x}\\
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\underline{\varepsilon}\left(x,y\right)=\underline{\underline{\widetilde{B}}}\cdot\underline{u}\left(x,y\right)=\underline{\underline{\widetilde{B}}}\cdot\underline{\underline{N}}\cdot\underline{u}_{N}=\underline{\underline{B}}\cdot\underline{u}_{N}
+\end{equation}
+
+\begin{equation}
+\underline{B}=\begin{bmatrix}
+\frac{\partial N_{1}}{\partial x}&0&\frac{\partial N_{2}}{\partial x}&0&\frac{\partial N_{3}}{\partial x}&0&\frac{\partial N_{4}}{\partial x}&0\\[7.5pt]
+0&\frac{\partial N_{1}}{\partial y}&0&\frac{\partial N_{2}}{\partial y}&0&\frac{\partial N_{3}}{\partial y}&0&\frac{\partial N_{4}}{\partial y}\\[7.5pt]
+\frac{\partial N_{1}}{\partial y}&\frac{\partial N_{1}}{\partial x}&\frac{\partial N_{2}}{\partial y}&\frac{\partial N_{2}}{\partial x}&\frac{\partial N_{3}}{\partial y}&\frac{\partial N_{3}}{\partial x}&\frac{\partial N_{4}}{\partial y}&\frac{\partial N_{4}}{\partial x}\\
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\frac{1}{2}\int_{V}\underline{\sigma}^{T}\underline{\varepsilon}dV + 
+\end{equation}
+
+\begin{equation}
+\frac{1}{2}\int_{V}\underline{\sigma}^{T}\underline{\varepsilon}dV=\frac{1}{2}\int_{V}\underline{\varepsilon}^{T}\underline{\underline{D}}\cdot\underline{\varepsilon}dV=\frac{1}{2}\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV
+\end{equation}
+
+\begin{equation}
+\frac{1}{2}\delta\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV=\frac{1}{2}\int_{V}\left(\delta\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}+\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\delta\underline{u}\right)dV
+\end{equation}
+
+\begin{equation}
+\delta\underline{u}=\delta\left(\underline{\underline{N}}\cdot\underline{u}_{N}\right)=\underline{\underline{N}}\delta\underline{u}_{N}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\frac{1}{2}\int_{V}&\left(\delta\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}+\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\delta\underline{u}\right)dV=\\&
+=\frac{1}{2}\int_{V}\left(\delta\underline{u}^{T}_{N}\underline{\underline{N}}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{\underline{N}}\cdot\underline{u}_{N}+\underline{u}^{T}_{N}\underline{\underline{N}}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{\underline{N}}\delta\underline{u}_{N}\right)dV=\\&
+=\delta\underline{u}^{T}_{N}\int_{V}\left(\underline{\underline{N}}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{\underline{N}}\right)dV\underline{u}_{N}=\delta\underline{u}^{T}_{N}\int_{V}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV\underline{u}_{N}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\underline{\underline{k}}=\int_{V}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV
+\end{equation}
+
+\begin{equation}
+\begin{cases}
+N_{1}\left(\xi,\eta\right)=\frac{1}{4}\left(1-\xi\right)\left(1-\eta\right)\\
+N_{2}\left(\xi,\eta\right)=\frac{1}{4}\left(1-\xi\right)\left(1+\eta\right)\\
+N_{3}\left(\xi,\eta\right)=\frac{1}{4}\left(1+\xi\right)\left(1-\eta\right)\\
+N_{4}\left(\xi,\eta\right)=\frac{1}{4}\left(1+\xi\right)\left(1+\eta\right)\\
+\end{cases}
+\end{equation}
+
+\begin{equation}
+\underline{p}=\underline{\underline{N}}\cdot\underline{p}_{N}
+\end{equation}
+
+\begin{equation}
+\underline{p}=\begin{bmatrix}
+x\\y
+\end{bmatrix}\quad\underline{p}_{N}=\begin{bmatrix}
+x_{1}\\y_{1}\\x_{2}\\y_{2}\\x_{3}\\y_{3}\\x_{4}\\y_{4}\\
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+x = x\left(\xi,\eta\right) = N_{1}\left(\xi,\eta\right)x_{1}+N_{2}\left(\xi,\eta\right)x_{2}+N_{3}\left(\xi,\eta\right)x_{3}+N_{4}\left(\xi,\eta\right)x_{4}\\
+y = y\left(\xi,\eta\right) = N_{1}\left(\xi,\eta\right)y_{1}+N_{2}\left(\xi,\eta\right)y_{2}+N_{3}\left(\xi,\eta\right)y_{3}+N_{4}\left(\xi,\eta\right)y_{4}\\
+\end{split}
+\end{equation}
+
+\begin{equation}
+\underline{e}_{\xi}=\begin{bmatrix}
+\frac{\partial x}{\partial\xi}\\\frac{\partial y}{\partial\xi}
+\end{bmatrix}\quad\underline{e}_{\eta}=\begin{bmatrix}
+\frac{\partial x}{\partial\eta}\\\frac{\partial y}{\partial\eta}
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\underline{\underline{J}}=\begin{bmatrix}
+\underline{e}_{\xi}|\underline{e}_{\eta}
+\end{bmatrix}=\begin{bmatrix}
+\frac{\partial x}{\partial\xi}&\frac{\partial x}{\partial\eta}\\\frac{\partial y}{\partial\xi}&\frac{\partial y}{\partial\eta}
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\underline{\underline{g}}=\underline{\underline{J}}^{T}\underline{\underline{J}}=\begin{bmatrix}
+\frac{\partial x}{\partial\xi}&\frac{\partial y}{\partial\xi}\\\frac{\partial x}{\partial\eta}&\frac{\partial y}{\partial\eta}
+\end{bmatrix}\begin{bmatrix}
+\frac{\partial x}{\partial\xi}&\frac{\partial x}{\partial\eta}\\\frac{\partial y}{\partial\xi}&\frac{\partial y}{\partial\eta}
+\end{bmatrix}=\begin{bmatrix}
+\frac{\partial x}{\partial\xi}\frac{\partial x}{\partial\xi}+\frac{\partial y}{\partial\xi}\frac{\partial y}{\partial\xi}&\frac{\partial x}{\partial\xi}\frac{\partial x}{\partial\eta}+\frac{\partial y}{\partial\xi}\frac{\partial y}{\partial\eta}\\\frac{\partial x}{\partial\eta}\frac{\partial x}{\partial\xi}+\frac{\partial y}{\partial\eta}\frac{\partial y}{\partial\xi}&\frac{\partial x}{\partial\eta}\frac{\partial x}{\partial\eta}+\frac{\partial y}{\partial\eta}\frac{\partial y}{\partial\eta}
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+g=&det\left(\underline{\underline{g}}\right)=\\=&\left(\frac{\partial x}{\partial\xi}\frac{\partial x}{\partial\xi}+\frac{\partial y}{\partial\xi}\frac{\partial y}{\partial\xi}\right)\left(\frac{\partial x}{\partial\eta}\frac{\partial x}{\partial\eta}+\frac{\partial y}{\partial\eta}\frac{\partial y}{\partial\eta}\right)-\left(\frac{\partial x}{\partial\eta}\frac{\partial x}{\partial\xi}+\frac{\partial y}{\partial\eta}\frac{\partial y}{\partial\xi}\right)\left(\frac{\partial x}{\partial\xi}\frac{\partial x}{\partial\eta}+\frac{\partial y}{\partial\xi}\frac{\partial y}{\partial\eta}\right)
+\end{split}
+\end{equation}
+
+\begin{equation}
+dV\left(x,y\right)=\sqrt{g}dV\left(\xi,\eta\right)
+\end{equation}
+
+\begin{equation}
+\underline{\underline{k}}=\int_{V\left(x,y\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV\left(x,y\right)=\int_{V\left(\xi,\eta\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)\sqrt{g}dV\left(\xi,\eta\right)
+\end{equation}
 
 \clearpage
 %------------------------------------------------------------------------------------------%
@@ -556,7 +749,18 @@ The good agreement suggests that trigonometric functions are very good candidate
 %------------------------------------------------------------------------------------------%
 %                                      REFERENCES
 %------------------------------------------------------------------------------------------%
-%\input{refs}
+\section*{References}
+\begin{thebibliography}{9}
+%\bibitem{author:year}author surname author initials (up to 10) year title {\it Journal} {\bf vol} (issue) pages
+% FEM
+\bibitem{Griffiths:1994}Griffiths  R. 1994 Stiffness matrix of the four-node quadrilateral element in closed form {\it Int. J. Numer. Meth. Eng.} {\bf 57} (2) 109--143
+% LEFM
+\bibitem{Krueger:2004}Krueger R. 2004 Virtual crack closure technique: History, approach, and applications {\it Appl. Mech. Rev.} {\bf 57} (2) 109--143
+\bibitem{abaqus:2016} ABAQUS 2016 ABAQUS 2016 Analysis User's Manual {\it Online Documentation Help: Dassault Syst\'emes} 
+\bibitem{Rice:1968}Rice J. R. 1968 A Path Independent Integral and the Approximate Analysis of Strain Concentration by Notches and Cracks {\it J. Appl. Mech.} {\bf 35} 379--386
+
+%\bibitem{author:year}
+\end{thebibliography}
 
 %------------------------------------------------------------------------------------------%
 %------------------------------------------------------------------------------------------%

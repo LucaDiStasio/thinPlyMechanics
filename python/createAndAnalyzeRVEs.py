@@ -689,8 +689,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[25], entity2=fiberGeometry[7], addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[26], entity2=fiberGeometry[9], addUndoState=False)
     
-    pickedFaces = RVEfaces.getSequenceFromMask(mask=('[#1 ]', ), )
-    p.PartitionFaceBySketch(faces=pickedFaces, sketch=fiberSketch)
+    pickedFaces = RVEfaces.findAt(((0.0, 0.5*L, 0),)))
+    RVEpart.PartitionFaceBySketch(faces=pickedFaces, sketch=fiberSketch)
     fiberSketch.unsetPrimaryObject()
     del model.sketches['__profile__']
     
@@ -914,7 +914,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Making section assignments ...',True)
      
     for sectionRegion in parameters['sectionRegions']:
-        RVEpart.SectionAssignment(region=RVEpart.sets[sectionRegion['set']], sectionName=sectionRegion['name'], offset=0.0,offsetType=sectionRegion['offsetType'], offsetField=sectionRegion['offsetField'],thicknessAssignment=sectionRegion['thicknessAssignment'])
+        RVEpart.SectionAssignment(region=RVEpart.sets[sectionRegion['set']], sectionName=sectionRegion['name'], offset=sectionRegion['offsetValue'],offsetType=sectionRegion['offsetType'], offsetField=sectionRegion['offsetField'],thicknessAssignment=sectionRegion['thicknessAssignment'])
     
     # p.SectionAssignment(region=region, sectionName='MatrixSection', offset=0.0, 
     #     offsetType=MIDDLE_SURFACE, offsetField='', 
@@ -946,7 +946,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating step ...',True)
     
     model.StaticStep(name='Load-Step', previous='Initial', 
-        minInc=1e-10)
+        minInc=parameters['step']['minimumIncrement'])
 
     mdb.save()
     
@@ -1666,6 +1666,7 @@ def runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilefullpath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,baselogindent,logindent)',True)
 
 def analyzeRVEresults(wd,odbname,logfilepath,parameters):
+    
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: analyzeRVEresults(wd,odbname)',True)
     
@@ -1678,6 +1679,7 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     except Exception,e:
         writeErrorToLogFile(logfilepath,'a',Exception,e,True)
         sys.exc_clear()
+    appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['performances'],performances[1])
     writeLineToLogFile(logfilepath,'a','... done.',True)
     #=======================================================================
     # END - extract performances
@@ -1695,6 +1697,8 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     JintegralsWithDistance = []
     for v,value in enumerate(Jintegrals):
         JintegralsWithDistance.append([(v+1)*parameters['Rf']*parameters['delta']*np.pi/180.0,value])
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
+    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
     writeLineToLogFile(logfilepathpath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract J-integral results
@@ -1778,7 +1782,7 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
         node = odb.rootAssembly.instances['RVEassembly'].getNodeFromLabel(value.label)
         stress = getFieldOutput(odb,-1,-1,'S',node,3)
         defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
-        rightsideStressdata.append([value.data[0],value.data[1],defcoords.value[0].data[0],defcoords.value[0].data[1],defstress.value[0].data[0],stress.value[0].data[1],stress.value[0].data[2],stress.value[0].data[3]])
+        rightsideStressdata.append([value.data[0],value.data[1],defcoords.value[0].data[0],defcoords.value[0].data[1],stress.value[0].data[0],stress.value[0].data[1],stress.value[0].data[2],stress.value[0].data[3]])
     
     maxSigmaxx = rightsideStressdata[0][4]
     minSigmaxx = rightsideStressdata[0][4]
@@ -1790,6 +1794,9 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
         elif stress[4]<minSigmaxx:
             minSigmaxx = stress[4]
     meanSigmaxx /= len(rightsideStressdata)
+    
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0, y0, x, y, sigma_xx, sigma_zz, sigma_yy, tau_xz')
+    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],rightsideStressdata)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
@@ -1851,9 +1858,13 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     matrixDisps = np.array(matrixDisps)[np.argsort(matrixAngles)].tolist()
     
     crackDisps = []
+    uR = []
+    uTheta = []
     
     for s,dispset in enumerate(fiberDisps):
         crackDisps.append([matrixDisps[s][0]-dispset[0],matrixDisps[s][1]-dispset[1]])
+        uR.append(matrixDisps[s][0]-dispset[0])
+        uTheta.append(matrixDisps[s][1]-dispset[1])
         
     phiCZ = 0.0
     for s,dispset in enumerate(crackDisps):
@@ -1861,6 +1872,10 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
             phiCZ = phi - fiberAngles[s]
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],'beta, uR_fiber, uTheta_fiber, uR_matrix, uTheta_matrix, uR, uTheta')
+    for s,dispset, in enumerate(crackDisps):
+        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],[fiberAngles[s],fiberDisps[s][0],fiberDisps[s][1],matrixDisps[s][0],matrixDisps[s][1],crackDisps[s][0],crackDisps[s][1]])
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
@@ -1932,12 +1947,13 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     if 'second' in parameters['elements']['order']:
         GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
         GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
+        GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement+xRFfirstbounded*xfirstboundedDisplacement+yRFfirstbounded*yfirstboundedDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
     else:
         GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
         GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
         GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
     
-    GTOT = GI + GTOT
+    GTOT = GI + GII
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
@@ -1953,6 +1969,11 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     GIv2 = GTOTv2 - GIIv2
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+    if 'second' in parameters['elements']['order']:
+        appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[parameters['deltatheta'],parameters['Rf'],parameters['Rf'],parameters['Rf']/parameters['Rf'],phiCZ,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement])
+    else:
+        appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[parameters['deltatheta'],parameters['Rf'],parameters['Rf'],parameters['Rf']/parameters['Rf'],phiCZ,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement])
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
@@ -1975,7 +1996,91 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     
 def main(argv):
     
-    workDir = ''
+    #=======================================================================
+    # BEGIN - DATA
+    #=======================================================================
+    
+    # units are already the ones used in simulation, not SI ==> conversion tool must be added
+    
+    # constant Vff, i.e. L/Rf, and variable deltatheta
+    
+    RVEparams = {}
+    
+    RVEparams['input'] = {'wd':'D:/',
+                          'caefilename':}
+    RVEparams['geometry'] = {'L':100.0,
+                             'Rf':1.0}
+    RVEparams['materials'] = [{'name':'glassFiber',
+                               'elastic':{'type':'ISOTROPIC',
+                                           'values':[]}},
+                               {'name':'epoxy',
+                               'elastic':{'type':'ISOTROPIC',
+                                           'values':[]}}]
+    # in general:
+    # params['materials'] = [{'name':'material1',
+    #                            'elastic':{'type':'type1',
+    #                                        'values':[]},
+    #                            'density':{'values':[]},
+    #                            'thermalexpansion':{'type':'type1',
+    #                                                'values':[]},
+    #                            'thermalconductivity':{'type':'type1',
+    #                                                   'values':[]}},
+    #                            {'name':'material2',
+    #                            'elastic':{'type':'type2',
+    #                                        'values':[]}}]
+    RVEparams['sections'] = [{'name':'fiberSection',
+                              'type':'HomogeneousSolidSection',
+                              'material':'glassFiber',
+                              'thickness':1.0},
+                              {'name':'matrixSection',
+                              'type':'HomogeneousSolidSection',
+                              'material':'epoxy',
+                              'thickness':1.0}]
+    RVEparams['sectionRegions'] = [{'name':'fiberSection',
+                                    'set':'FIBER',
+                                    'offsetType':'MIDDLE_SURFACE',
+                                    'offsetField':'',
+                                    'thicknessAssignment':'FROM_SECTION',
+                                    'offsetValue':0.0},
+                                    {'name':'fiberSection',
+                                    'set':'FIBER',
+                                    'offsetType':'MIDDLE_SURFACE',
+                                    'offsetField':'',
+                                    'thicknessAssignment':'FROM_SECTION',
+                                    'offsetValue':0.0}]
+    RVEparams['step'] = {'minimumIncrement':1e-10}
+    RVEparams['loads'] = [{'name':'rightBC',
+                           'type':'appliedStrain',
+                           'set':'RIGHTSIDE',
+                           'value':[0.01,0.0,0.0]},
+                            {'name':'leftBC',
+                           'type':'appliedStrain',
+                           'set':'LEFTSIDE',
+                           'value':[-0.01,0.0,0.0]}]
+    RVEparams['mesh'] = {'size':{'delta':0.05,
+                                 'delta1':,
+                                 'delta2':,
+                                 'delta3':},
+                         'elements':{'minElNum':10,
+                                     'order':'second'}}
+    RVEparams['Jintegral'] = {'numberOfContours':50}
+    RVEparams[''] =
+    RVEparams[''] =
+    RVEparams[''] =
+    RVEparams[''] =
+    RVEparams[''] =
+    
+    # parameters for iterations
+    # RVEparams['modelname']
+    # RVEparams['deltatheta']
+    # RVEparams['deltapsi']
+    # RVEparams['deltaphi']
+    
+    #=======================================================================
+    # END - DATA
+    #=======================================================================
+    
+    workDir = RVEparams['wd']
     
     logfilename = datetime.now().strftime('%Y-%m-%d_%H-%m-%s') + '_ABQ-RVE-generation-and-analysis' + '.log'
     logfilefullpath = join(workDir,logfilename)
@@ -1991,26 +2096,67 @@ def main(argv):
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Global timer starts',True)
     globalStart = timeit.default_timer()
     
-    RVEparams = {}
-    
-    RVEparams[''] =
-    
-    skipLineToLogFile(logfilefullpath,'a',True)
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: ',True)
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
-    localStart = timeit.default_timer()
-    try:
+    for set in iterationsSets:
+        skipLineToLogFile(logfilefullpath,'a',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: createRVE(parameters,logfilepath,baselogindent,logindent)',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
+        localStart = timeit.default_timer()
+        try:
+            modelData = createRVE(parameters,logfilepath,baselogindent,logindent)
+            localElapsedTime = timeit.default_timer() - localStart
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime),True)
+        except Exception, error:
+            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+            sys.exit(2)
+            
+        skipLineToLogFile(logfilefullpath,'a',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent)',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
+        localStart = timeit.default_timer()
+        try:
+            inputfilename = modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent)
+            localElapsedTime = timeit.default_timer() - localStart
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime),True)
+        except Exception, error:
+            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+            sys.exit(2)
         
-        localElapsedTime = timeit.default_timer() - localStart
-        writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
-        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
-        writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime),True)
-    except Exception, error:
-        writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
-        sys.exit(2)
+        skipLineToLogFile(logfilefullpath,'a',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent)',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
+        localStart = timeit.default_timer()
+        try:
+            runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilepath,baselogindent,logindent)
+            localElapsedTime = timeit.default_timer() - localStart
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime),True)
+        except Exception, error:
+            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+            sys.exit(2)
+        
+        skipLineToLogFile(logfilefullpath,'a',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: analyzeRVEresults(wd,odbname,logfilepath,parameters)',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
+        localStart = timeit.default_timer()
+        try:
+            
+            analyzeRVEresults(wd,odbname,logfilepath,parameters)
+            localElapsedTime = timeit.default_timer() - localStart
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime),True)
+        except Exception, error:
+            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+            sys.exit(2)
     
     globalElapsedTime = timeit.default_timer() - globalStart
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Global timer stopped',True)
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(globalElapsedTime),True)
     
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a','Exiting function: main(argv)',True)

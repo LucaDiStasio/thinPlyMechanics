@@ -289,14 +289,7 @@ def getPerfs(wd,sims):
                         words = line.replace('\n','').split(' ')
                         while '' in words: words.remove('')
                         cpus = int(words[words.index('PROCESSORS')-1])
-        if exists(join(wd,sim+'.inp')):
-            with open(join(wd,sim+'.inp'),'r') as inp:
-                lines = inp.readlines()
-            for line in lines:
-                 if 'Crack Angular Aperture' in line:
-                     debond = numpy.round(float(line.replace('\n','').replace('*','').replace('-','').split(':')[-1].replace('deg','')))
-                     break
-        perf.append([sim,debond,cpus,usertime,systemtime,usertime/totalcpu,systemtime/totalcpu,totalcpu,wallclock,wallclock/60.,wallclock/3600.,wallclock/totalcpu,floatops,minMemory,minIOmemory,totEl,userEl,progEl,totN,userN,progN,totVar])
+        perf.append([sim,cpus,usertime,systemtime,usertime/totalcpu,systemtime/totalcpu,totalcpu,wallclock,wallclock/60.,wallclock/3600.,wallclock/totalcpu,floatops,minMemory,minIOmemory,totEl,userEl,progEl,totN,userN,progN,totVar])
     return perf
 
 def getFrame(odbObj,step,frame):
@@ -1665,7 +1658,7 @@ def runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilefullpath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,baselogindent,logindent)',True)
 
-def analyzeRVEresults(odbname,logfilepath,parameters):
+def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: analyzeRVEresults(wd,odbname)',True)
@@ -2064,9 +2057,9 @@ def main(argv):
     RVEparams['mesh'] = {'size':{'deltapsi':,
                                  'deltaphi':,
                                  'delta':0.05,
-                                 'delta1':,
-                                 'delta2':,
-                                 'delta3':},
+                                 'delta1':0.1,
+                                 'delta2':0.5,
+                                 'delta3':1.0},
                          'elements':{'minElNum':10,
                                      'order':'second'}}
     RVEparams['Jintegral'] = {'numberOfContours':50}
@@ -2095,10 +2088,24 @@ def main(argv):
     # BEGIN - ITERABLES
     #=======================================================================
     
+    basename = 'RVE100-Half-SmallDisplacement-Free'
+    
     iterationsSets = []
     
     for angle in range(10,160,10):
-        
+        set = []
+        value1 = basename + '-' + str(angle).replace('.','_')
+        value2 = angle
+        if angle<20:
+            value3 = 0.5*angle
+            value4 = 20.0
+        elif angle<140:
+            value3 = 10.0
+            value4 = 20.0
+        else:
+            value3 = 0.4*(180.0-angle)
+            value4 = 0.4*(180.0-angle)
+        set.append([value1,value2,value3,value4])
     
     #=======================================================================
     # END - ITERABLES
@@ -2125,12 +2132,18 @@ def main(argv):
     globalStart = timeit.default_timer()
     
     for set in iterationsSets:
+        
+        RVEparams['input']['modelname'] = set[0]
+        RVEparams['geometry']['deltatheta'] = set[1]
+        RVEparams['mesh']['size']['deltapsi'] = set[2]
+        RVEparams['mesh']['size']['deltaphi'] = set[3]        
+        
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: createRVE(parameters,logfilepath,baselogindent,logindent)',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            modelData = createRVE(parameters,logfilepath,baselogindent,logindent)
+            modelData = createRVE(RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
@@ -2144,7 +2157,7 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            inputfilename = modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent)
+            inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
@@ -2158,7 +2171,7 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilepath,baselogindent,logindent)
+            runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
@@ -2172,8 +2185,9 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            
-            analyzeRVEresults(wd,odbname,logfilepath,parameters)
+            createCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['performances'],'PROJECT NAME, NUMBER OF CPUS [-], USER TIME [s], SYSTEM TIME [s], USER TIME/TOTAL CPU TIME [%], SYSTEM TIME/TOTAL CPU TIME [%], TOTAL CPU TIME [s], WALLCLOCK TIME [s], WALLCLOCK TIME [m], WALLCLOCK TIME [h], WALLCLOCK TIME/TOTAL CPU TIME [%], ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-], MINIMUM REQUIRED MEMORY [MB], MEMORY TO MINIMIZE I/O [MB], TOTAL NUMBER OF ELEMENTS [-], NUMBER OF ELEMENTS DEFINED BY THE USER [-], NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF NODES [-], NUMBER OF NODES DEFINED BY THE USER [-], NUMBER OF NODES DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF VARIABLES [-]')
+            createCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],'')
+            analyzeRVEresults(inputfilename.split('.')[0]+'.odb',RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)

@@ -546,17 +546,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: createRVE(parameters,logfilepath,logindent)',True)
     # assign most used parameters to variables
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Read and assign most used parameters to variables ...',True)
-    wd = parameters['wd']
-    caefilename = parameters['caefilename']
-    modelname = parameters['modelname']
-    L = parameters['L']
-    Rf = parameters['Rf']
+    wd = parameters['input']['wd']
+    caefilename = parameters['input']['caefilename']
+    modelname = parameters['input']['modelname']
+    L = parameters['geometry']['L']
+    Rf = parameters['geometry']['Rf']
     theta = 0.0
-    deltatheta = parameters['deltatheta'] # in degrees !!!
-    deltapsi = parameters['deltapsi'] # in degrees !!!
-    deltaphi = parameters['deltaphi'] # in degrees !!!
-    delta = parameters['delta'] # in degrees !!!
-    minElNum = parameters['minElNum']
+    deltatheta = parameters['geometry']['deltatheta'] # in degrees !!!
+    deltapsi = parameters['mesh']['size']['deltapsi'] # in degrees !!!
+    deltaphi = parameters['mesh']['size']['deltaphi'] # in degrees !!!
+    delta = parameters['mesh']['size']['delta'] # in degrees !!!
+    minElNum = parameters['mesh']['elements']['minElNum']
     if ((theta+deltatheta-deltapsi)<=0.0 or (theta+deltatheta-deltapsi)/delta<minElNum) and ((theta+deltatheta+deltapsi+deltaphi)>=180.0 or (180.0-(theta+deltatheta+deltapsi+deltaphi))/delta<minElNum):
         deltapsi = 0.6*((180.0-(theta+deltatheta))-np.max([0.5*(theta+deltatheta),0.1*(180.0-(theta+deltatheta)),minElnum*delta]))
         deltaphi = 0.4*((180.0-(theta+deltatheta))-np.max([0.5*(theta+deltatheta),0.1*(180.0-(theta+deltatheta)),minElnum*delta]))
@@ -1078,14 +1078,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE-THIRDRING-RIGHT'], number=nRadialMatrix, constraint=FINER)
     model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE-CENTER'], number=6, constraint=FINER)
     model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FIRSTCIRCLE'], number=18, constraint=FINER)
-    nTangential1 = np.floor(deltaphi/parameters['delta2'])
-    nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['delta3'])
-    nTangential3 = np.floor(alpha/parameters['delta1'])
-    nRadialFiber1 = np.floor(0.25/parameters['delta3'])
+    nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
+    nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['mesh']['size']['delta3'])
+    nTangential3 = np.floor(alpha/parameters['mesh']['size']['delta1'])
+    nRadialFiber1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
     if L>2*Rf:
-        nRadialMatrix1 = np.floor(0.25/parameters['delta3'])
+        nRadialMatrix1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
     else:
-        nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['delta3']))
+        nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
     model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['SECONDCIRCLE-SECONDBOUNDED'], number=nTangential1, constraint=FINER)
     model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['SECONDCIRCLE-RESTBOUNDED'], number=nTangential2, constraint=FINER)
     model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['THIRDCIRCLE-SECONDBOUNDED'], number=nTangential1, constraint=FINER)
@@ -1102,10 +1102,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'], number=30, constraint=FINER)
     
     # select element type
-    if 'first' in parameters['elements']['order']:
+    if 'first' in parameters['mesh']['elements']['order']:
         elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
         elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
-    elif 'second' in parameters['elements']['order']:
+    elif 'second' in parameters['mesh']['elements']['order']:
         elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
         elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
     model.rootAssembly.setElementType(regions=model.rootAssembly.instances['RVE-assembly'].sets['RVE'], elemTypes=(elemType1, elemType2))
@@ -1183,10 +1183,10 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     #odbfullpath = join(parameters['wd'],odbname)
     # input file name and path
     inpname = mdbData['jobname'] + '.inp'
-    inpfullpath = join(parameters['wd'],inpname)
+    inpfullpath = join(parameters['input']['wd'],inpname)
     # modified input file name
-    modinpname = 'Job-VCCTandJintegral-' + parameters['modelname']
-    modinpfullpath = join(parameters['wd'],modinpname)
+    modinpname = 'Job-VCCTandJintegral-' + parameters['input']['modelname']
+    modinpfullpath = join(parameters['input']['wd'],modinpname)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Working directory: ' + parameters['wd'],True)
     #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database name: ' + odbname,True)
     #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database full path: ' + join(parameters['wd'],odbname),True)
@@ -1665,10 +1665,12 @@ def runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilefullpath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,baselogindent,logindent)',True)
 
-def analyzeRVEresults(wd,odbname,logfilepath,parameters):
+def analyzeRVEresults(odbname,logfilepath,parameters):
     
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: analyzeRVEresults(wd,odbname)',True)
+    
+    wd = parameters['input']['wd']
     
     #=======================================================================
     # BEGIN - extract performances
@@ -1807,7 +1809,7 @@ def analyzeRVEresults(wd,odbname,logfilepath,parameters):
     # BEGIN - compute G0
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract performances...',True)
-    G0 = np.pi*parameters['Rf']*meanSigmaxx*meanSigmaxx*(1+(3.0-4.0*parameters['nu-G0']))/(8.0*parameters['G-G0'])
+    G0 = np.pi*parameters['geometry']['Rf']*meanSigmaxx*meanSigmaxx*(1+(3.0-4.0*parameters['materials']['nu-G0']))/(8.0*parameters['materials']['G-G0'])
     writeLineToLogFile(logfilepath,'a','... done.',True)
     #=======================================================================
     # END - compute G0
@@ -2007,9 +2009,11 @@ def main(argv):
     RVEparams = {}
     
     RVEparams['input'] = {'wd':'D:/',
-                          'caefilename':}
+                          'caefilename':'',
+                          'modelname':''}
     RVEparams['geometry'] = {'L':100.0,
-                             'Rf':1.0}
+                             'Rf':1.0,
+                             'deltatheta':10.0}
     RVEparams['materials'] = [{'name':'glassFiber',
                                'elastic':{'type':'ISOTROPIC',
                                            'values':[]}},
@@ -2057,18 +2061,25 @@ def main(argv):
                            'type':'appliedStrain',
                            'set':'LEFTSIDE',
                            'value':[-0.01,0.0,0.0]}]
-    RVEparams['mesh'] = {'size':{'delta':0.05,
+    RVEparams['mesh'] = {'size':{'deltapsi':,
+                                 'deltaphi':,
+                                 'delta':0.05,
                                  'delta1':,
                                  'delta2':,
                                  'delta3':},
                          'elements':{'minElNum':10,
                                      'order':'second'}}
     RVEparams['Jintegral'] = {'numberOfContours':50}
-    RVEparams[''] =
-    RVEparams[''] =
-    RVEparams[''] =
-    RVEparams[''] =
-    RVEparams[''] =
+    RVEparams['output'] = {'global':{'directory':'D:/',
+                                     'filenames':{'performances':'',
+                                                  'energyreleaserate':''}},
+                           'local':{'directory':'D:/',
+                                     'filenames':{'Jintegral':'',
+                                                  'stressesatboundary':'',
+                                                  'crackdisplacements':''}},
+                           'report':{'global':{},
+                                     'local':{}}
+                          }
     
     # parameters for iterations
     # RVEparams['modelname']
@@ -2078,6 +2089,23 @@ def main(argv):
     
     #=======================================================================
     # END - DATA
+    #=======================================================================
+    
+    #=======================================================================
+    # BEGIN - ITERABLES
+    #=======================================================================
+    
+    iterationsSets = []
+    
+    for angle in range(10,160,10):
+        
+    
+    #=======================================================================
+    # END - ITERABLES
+    #=======================================================================
+    
+    #=======================================================================
+    # BEGIN - ANALYSIS
     #=======================================================================
     
     workDir = RVEparams['wd']

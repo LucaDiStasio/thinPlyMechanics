@@ -695,7 +695,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[25], entity2=fiberGeometry[7],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[26], entity2=fiberGeometry[9],addUndoState=False)
     
-    pickedFaces = RVEfaces.findAt(((0.0, 0.5*L, 0),)))
+    pickedFaces = RVEfaces.findAt(coordinates=(0.0, 0.5*L, 0))
     RVEpart.PartitionFaceBySketch(faces=pickedFaces, sketch=fiberSketch)
     fiberSketch.unsetPrimaryObject()
     del model.sketches['__profile__']

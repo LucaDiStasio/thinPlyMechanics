@@ -597,36 +597,56 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating part ...',True)
     # create sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Initialize sketch to draw the external shape of the RVE ...',True)
     RVEsketch = model.ConstrainedSketch(name='__profile__', 
         sheetSize=3*L)
     RVEsketch.setPrimaryObject(option=STANDALONE)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # create rectangle
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw a rectangle ...',True)
     RVEsketch.rectangle(point1=(-L, 0.0), point2=(L,L))
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # set dimension labels
+     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Set dimension labels ...',True)
+    v = RVEsketch.vertices
     RVEsketch.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(-1.1*L,0.5*L), value=L)
     RVEsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(0.0,1.1*L), value=2*L)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # assign to part
+     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign sketch geometry to the part ...',True)
     RVEpart = model.Part(name='RVE',dimensionality=TWO_D_PLANAR,type=DEFORMABLE_BODY)
     RVEpart = model.parts['RVE']
     RVEpart.BaseShell(sketch=RVEsketch)
     RVEsketch.unsetPrimaryObject()
     del model.sketches['__profile__']
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # create reference to geometrical objects (faces, edges and vertices) of the part
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create reference to geometrical objects of the part ...',True)
     RVEfaces = RVEpart.faces
     RVEedges = RVEpart.edges
     RVEvertices = RVEpart.vertices
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # create geometrical transform to draw partition sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create geometrical transform to draw partition sketch ...',True)
     transformToSketch = RVEpart.MakeSketchTransform(sketchPlane=RVEfaces[0], sketchPlaneSide=SIDE1, origin=(0.0,0.5*L, 0.0))
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # create sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create sketch ...',True)
     fiberSketch = model.ConstrainedSketch(name='fiberSketch',sheetSize=3*L, gridSpacing=L/100.0, transform=transformToSketch)
     fiberSketch = model.sketches['fiberSketch']
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # create reference to geometrical objects (faces, edges and vertices) of the partition sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create reference to geometrical objects of the partition sketch ...',True)
     fiberGeometry = fiberSketch.geometry
     fiberVertices = fiberSketch.vertices
     fiberSketch.setPrimaryObject(option=SUPERIMPOSE)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #p = mdb.models[modelname].parts['RVE']
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Project reference onto sketch ...',True)
     RVEpart.projectReferencesOntoSketch(sketch=fiberSketch, filter=COPLANAR_EDGES)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # draw fiber and circular sections for mesh generation
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fiber and circular sections for mesh generation ...',True)
     fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-Rf, -0.5*L), point2=(Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[6]
     fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-0.75*Rf, -0.5*L), point2=(0.75*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[7]
     fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-0.5*Rf, -0.5*L), point2=(0.5*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[8]
@@ -636,13 +656,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-(Rf+0.25*(L-Rf)), -0.5*L), point2=((Rf+0.25*(L-Rf)),-0.5*L), direction=CLOCKWISE) # fiberGeometry[9]
         fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-(Rf+0.5*(L-Rf)), -0.5*L), point2=((Rf+0.5*(L-Rf)),-0.5*L), direction=CLOCKWISE) # fiberGeometry[10]
-    
-    # calculate angles for construction lines    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # calculate angles for construction lines 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calculate angles for construction lines ...',True)
     alpha = theta + deltatheta - deltapsi
     beta = theta + deltatheta + deltapsi
     gamma = theta + deltatheta + deltapsi + deltaphi
-    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # draw construction lines  
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction lines ...',True)
     fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=(theta+deltatheta)) # fiberGeometry[11]
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[11],addUndoState=False)
     
@@ -654,8 +676,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     
     fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=gamma) # fiberGeometry[14]
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[14],addUndoState=False)
-    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # draw angular sections to identify the crack and for mesh generation
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'draw angular sections to identify the crack and for mesh generation ...',True)
     Rint = 0.75*Rf
     if L>2*Rf:
         Rext = 1.25*Rf
@@ -697,11 +720,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[18],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[25], entity2=fiberGeometry[7],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[26], entity2=fiberGeometry[9],addUndoState=False)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)
     pickedFaces = RVEfaces.findAt(coordinates=(0.0, 0.5*L, 0))
     RVEpart.PartitionFaceBySketch(faces=pickedFaces, sketch=fiberSketch)
     fiberSketch.unsetPrimaryObject()
     del model.sketches['__profile__']
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     
     #-------------------#
     #                   #

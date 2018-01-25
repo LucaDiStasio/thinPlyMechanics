@@ -39,7 +39,7 @@ DESCRIPTION
 Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 
 '''
-import sys
+import sys, os
 import numpy as np
 from os.path import isfile
 from datetime import datetime
@@ -2001,18 +2001,18 @@ def main(argv):
     
     RVEparams = {}
     
-    RVEparams['input'] = {'wd':'D:/',
-                          'caefilename':'',
+    RVEparams['input'] = {'wd':'D:/01_Luca/07_Data/03_FEM/CurvedInterface',
+                          'caefilename':'caePythonTest',
                           'modelname':''}
     RVEparams['geometry'] = {'L':100.0,
                              'Rf':1.0,
                              'deltatheta':10.0}
     RVEparams['materials'] = [{'name':'glassFiber',
                                'elastic':{'type':'ISOTROPIC',
-                                           'values':[]}},
+                                           'values':[70e3,0.2]}},
                                {'name':'epoxy',
                                'elastic':{'type':'ISOTROPIC',
-                                           'values':[]}}]
+                                           'values':[3.5e3,0.4]}}]
     # in general:
     # params['materials'] = [{'name':'material1',
     #                            'elastic':{'type':'type1',
@@ -2063,10 +2063,10 @@ def main(argv):
                          'elements':{'minElNum':10,
                                      'order':'second'}}
     RVEparams['Jintegral'] = {'numberOfContours':50}
-    RVEparams['output'] = {'global':{'directory':'D:/',
+    RVEparams['output'] = {'global':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
                                      'filenames':{'performances':'',
                                                   'energyreleaserate':''}},
-                           'local':{'directory':'D:/',
+                           'local':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
                                      'filenames':{'Jintegral':'',
                                                   'stressesatboundary':'',
                                                   'crackdisplacements':''}},
@@ -2121,6 +2121,9 @@ def main(argv):
     logfilefullpath = join(workDir,logfilename)
     logindent = '    '
     
+    if not os.path.exists(RVEparams['output']['global']['directory']):
+            os.mkdirs(RVEparams['output']['global']['directory'])
+            
     with open(logfilefullpath,'w') as log:
         log.write('Automatic generation and FEM analysis of RVEs with Abaqus Python' + '\n')
         
@@ -2137,7 +2140,11 @@ def main(argv):
         RVEparams['geometry']['deltatheta'] = set[1]
         RVEparams['mesh']['size']['deltapsi'] = set[2]
         RVEparams['mesh']['size']['deltaphi'] = set[3]        
+        RVEparams['output']['local']['directory'] = join(RVEparams['output']['global']['directory'],set[0])
         
+        if not os.path.exists(RVEparams['output']['local']['directory']):
+                os.mkdirs(RVEparams['output']['local']['directory'])
+                
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: createRVE(parameters,logfilepath,baselogindent,logindent)',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)

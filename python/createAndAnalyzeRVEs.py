@@ -2117,7 +2117,7 @@ def main(argv):
         else:
             value3 = 0.4*(180.0-angle)
             value4 = 0.4*(180.0-angle)
-        iterationSets.append([value1,value2,value3,value4])
+        iterationsSets.append([value1,value2,value3,value4])
     
     #=======================================================================
     # END - ITERABLES

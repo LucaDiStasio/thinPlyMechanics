@@ -143,19 +143,19 @@ def writeLineToLogFile(logFileFullPath,mode,line,toScreen):
     with open(logFileFullPath,mode) as log:
         log.write(line + '\n')
     if toScreen:
-        print(line + '\n')
+        print >> sys.__stdout__,(line + '\n')
 
 def skipLineToLogFile(logFileFullPath,mode,toScreen):
     with open(logFileFullPath,mode) as log:
         log.write('\n')
     if toScreen:
-        print('\n')
+        print >> sys.__stdout__,('\n')
 
 def writeTitleSepLineToLogFile(logFileFullPath,mode,toScreen):
     with open(logFileFullPath,mode) as log:
         log.write('===============================================================================================\n')
     if toScreen:
-        print('===============================================================================================\n')
+        print >> sys.__stdout__,('===============================================================================================\n')
 
 def writeTitleSecToLogFile(logFileFullPath,mode,title,toScreen):
     writeTitleSepLineToLogFile(logFileFullPath,mode,toScreen)
@@ -187,19 +187,19 @@ def writeErrorToLogFile(logFileFullPath,mode,exc,err,toScreen):
         log.write('!!! ----------------------------------------------------------------------------------------!!!\n')
         log.write('\n')
     if toScreen:
-        print('!!! ----------------------------------------------------------------------------------------!!!\n')
-        print('\n')
-        print('                                     AN ERROR OCCURED\n')
-        print('\n')
-        print('                                -------------------------\n')
-        print('\n')
-        print(str(exc) + '\n')
-        print(str(err) + '\n')
-        print('\n')
-        print('Terminating program\n')
-        print('\n')
-        print('!!! ----------------------------------------------------------------------------------------!!!\n')
-        print('\n')
+        print >> sys.__stdout__,('!!! ----------------------------------------------------------------------------------------!!!\n')
+        print >> sys.__stdout__,('\n')
+        print >> sys.__stdout__,('                                     AN ERROR OCCURED\n')
+        print >> sys.__stdout__,('\n')
+        print >> sys.__stdout__,('                                -------------------------\n')
+        print >> sys.__stdout__,('\n')
+        print >> sys.__stdout__,(str(exc) + '\n')
+        print >> sys.__stdout__,(str(err) + '\n')
+        print >> sys.__stdout__,('\n')
+        print >> sys.__stdout__,('Terminating program\n')
+        print >> sys.__stdout__,('\n')
+        print>> sys.__stdout__, ('!!! ----------------------------------------------------------------------------------------!!!\n')
+        print>> sys.__stdout__, ('\n')
 
 def writePerfToFile(od,outfile,performanceslist):
     with open(join(od,outfile),'w') as csv:
@@ -2106,7 +2106,6 @@ def main(argv):
     iterationsSets = []
     
     for angle in range(10,160,10):
-        set = []
         value1 = basename + '-' + str(angle).replace('.','_')
         value2 = angle
         if angle<20:
@@ -2118,7 +2117,7 @@ def main(argv):
         else:
             value3 = 0.4*(180.0-angle)
             value4 = 0.4*(180.0-angle)
-        set.append([value1,value2,value3,value4])
+        iterationSets.append([value1,value2,value3,value4])
     
     #=======================================================================
     # END - ITERABLES

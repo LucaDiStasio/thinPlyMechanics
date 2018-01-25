@@ -659,7 +659,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         Rext = Rf+0.25*(L-Rf)
     
-    Ax = Rint*np.cos(alpha*np.pi/180.0
+    Ax = Rint*np.cos(alpha*np.pi/180.0)
     Ay = -0.5*L+Rint*np.sin(alpha*np.pi/180.0)
     Bx = Rext*np.cos(alpha*np.pi/180.0)
     By = -0.5*L+Rint*np.sin(alpha*np.pi/180.0)

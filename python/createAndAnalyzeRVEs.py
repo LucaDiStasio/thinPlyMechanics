@@ -857,7 +857,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             tuplelist = []
             valuelist = []
             for v,value in enumerate(values):
-                if v>0 and v%8=0:
+                if v>0 and v%8==0:
                     tuplelist.append(tuple(valuelist))
                     valuelist = []
                 valuelist.append(value)
@@ -870,7 +870,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             tuplelist = []
             valuelist = []
             for v,value in enumerate(values):
-                if v>0 and v%8=0:
+                if v>0 and v%8==0:
                     tuplelist.append(tuple(valuelist))
                     valuelist = []
                 valuelist.append(value)
@@ -883,7 +883,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             tuplelist = []
             valuelist = []
             for v,value in enumerate(values):
-                if v>0 and v%8=0:
+                if v>0 and v%8==0:
                     tuplelist.append(tuple(valuelist))
                     valuelist = []
                 valuelist.append(value)

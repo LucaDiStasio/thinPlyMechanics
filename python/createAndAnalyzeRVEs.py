@@ -679,12 +679,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # draw angular sections to identify the crack and for mesh generation
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'draw angular sections to identify the crack and for mesh generation ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute internal and external radii ...',True)
     Rint = 0.75*Rf
     if L>2*Rf:
         Rext = 1.25*Rf
     else:
         Rext = Rf+0.25*(L-Rf)
-    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create first circular section ...',True)
     Ax = Rint*np.cos(alpha*np.pi/180.0)
     Ay = -0.5*L+Rint*np.sin(alpha*np.pi/180.0)
     Bx = Rext*np.cos(alpha*np.pi/180.0)
@@ -693,7 +695,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[15],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[15], entity2=fiberGeometry[7],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[16], entity2=fiberGeometry[9],addUndoState=False)
-    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create second circular section ...',True)
     Ax = Rint*np.cos((theta+deltatheta)*np.pi/180.0)
     Ay = -0.5*L+Rint*np.sin((theta+deltatheta)*np.pi/180.0)
     Bx = Rext*np.cos((theta+deltatheta)*np.pi/180.0)
@@ -702,7 +705,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[16],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[17], entity2=fiberGeometry[7],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[18], entity2=fiberGeometry[9],addUndoState=False)
-    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create third circular section ...',True)
     Ax = Rint*np.cos(beta*np.pi/180.0)
     Ay = -0.5*L+Rint*np.sin(beta*np.pi/180.0)
     Bx = Rext*np.cos(beta*np.pi/180.0)
@@ -711,7 +715,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[17],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[19], entity2=fiberGeometry[7],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[20], entity2=fiberGeometry[9],addUndoState=False)
-    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create fourth circular section ...',True)
     Ax = Rint*np.cos(gamma*np.pi/180.0)
     Ay = -0.5*L+Rint*np.sin(gamma*np.pi/180.0)
     Bx = Rext*np.cos(gamma*np.pi/180.0)
@@ -720,8 +725,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[18],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[25], entity2=fiberGeometry[7],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[26], entity2=fiberGeometry[9],addUndoState=False)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)
     pickedFaces = RVEfaces.findAt(coordinates=(0.0, 0.5*L, 0))
     RVEpart.PartitionFaceBySketch(faces=pickedFaces, sketch=fiberSketch)

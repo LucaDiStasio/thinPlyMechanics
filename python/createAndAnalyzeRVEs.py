@@ -569,7 +569,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'deltapsi: ' + str(deltapsi),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'deltaphi: ' + str(deltaphi),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'delta: ' + str(delta),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'minElnum: ' + str(minElnum),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'minElnum: ' + str(minElNum),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 #===============================================================================#
 #                          Model database creation

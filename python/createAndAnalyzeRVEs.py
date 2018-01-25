@@ -905,7 +905,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     
     for section in parameters['sections']:
         if 'HomogeneousSolidSection' in section['type'] or 'Homogeneous Solid Section' in section['type'] or 'somogeneoussolidsection' in section['type'] or 'homogeneous solid section' in section['type'] or 'Homogeneous solid section' in section['type']:
-        mdb.models[modelname].HomogeneousSolidSection(name=section['name'], 
+            mdb.models[modelname].HomogeneousSolidSection(name=section['name'], 
             material=section['material'], thickness=section['thickness'])
     
     mdb.save()

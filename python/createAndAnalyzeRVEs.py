@@ -108,8 +108,8 @@ def createABQinpfile(path):
         fi.write('** ABAQUS INPUT FILE' + '\n')
         fi.write('** Automatically created on ' + datetime.now().strftime('%d/%m/%Y') + ' at' + datetime.now().strftime('%H:%M:%S') + '\n')
         fi.write('**' + '\n')
-        fi.write('**============================================================================== + '\n')
-        fi.write('** Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet + '\n')
+        fi.write('**==============================================================================' + '\n')
+        fi.write('** Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet' + '\n')
         fi.write('** Author: Luca Di Stasio <luca.distasio@gmail.com> + '\n')
         fi.write('**                        <luca.distasio@ingpec.eu> + '\n')
         fi.write('** + '\n')
@@ -2115,7 +2115,7 @@ def main(argv):
     # BEGIN - ANALYSIS
     #=======================================================================
     
-    workDir = RVEparams['wd']
+    workDir = RVEparams['input']['wd']
     
     logfilename = datetime.now().strftime('%Y-%m-%d_%H-%m-%s') + '_ABQ-RVE-generation-and-analysis' + '.log'
     logfilefullpath = join(workDir,logfilename)

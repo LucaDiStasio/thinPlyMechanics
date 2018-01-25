@@ -658,14 +658,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         Rext = 1.25*Rf
     else:
         Rext = Rf+0.25*(L-Rf)
-        
-    #fiberSketch.Line(point1=(Rint*np.cos(alpha*np.pi/180.0),-0.5*L+Rint*np.sin(alpha*np.pi/180.0)),point2=(Rext*np.cos(alpha*np.pi/180.0), -0.5*L+Rext*np.sin(alpha*np.pi/180.0)) # fiberGeometry[15]
-    #fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[15])
+    
+    A = (Rint*np.cos(alpha*np.pi/180.0),-0.5*L+Rint*np.sin(alpha*np.pi/180.0))
+    B = (Rext*np.cos(alpha*np.pi/180.0), -0.5*L+Rext*np.sin(alpha*np.pi/180.0)
+    fiberSketch.Line(point1=A,point2=B) # fiberGeometry[15]
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[15])
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[15], entity2=fiberGeometry[7])
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[16], entity2=fiberGeometry[9])
     
-    fiberSketch.Line(point1=(Rint*np.cos((theta+deltatheta)*np.pi/180.0), -0.5*L+Rint*np.sin((theta+deltatheta)*np.pi/180.0)), point2=(
-        Rext*np.cos((theta+deltatheta)*np.pi/180.0), -0.5*L+Rext*np.sin((theta+deltatheta)*np.pi/180.0)) # fiberGeometry[16]
+    fiberSketch.Line(point1=(Rint*np.cos((theta+deltatheta)*np.pi/180.0), -0.5*L+Rint*np.sin((theta+deltatheta)*np.pi/180.0)), point2=(Rext*np.cos((theta+deltatheta)*np.pi/180.0), -0.5*L+Rext*np.sin((theta+deltatheta)*np.pi/180.0)) # fiberGeometry[16]
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[16])
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[17], entity2=fiberGeometry[7])
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[18], entity2=fiberGeometry[9])

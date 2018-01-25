@@ -2067,8 +2067,8 @@ def main(argv):
                            'type':'appliedStrain',
                            'set':'LEFTSIDE',
                            'value':[-0.01,0.0,0.0]}]
-    RVEparams['mesh'] = {'size':{'deltapsi':,
-                                 'deltaphi':,
+    RVEparams['mesh'] = {'size':{'deltapsi':'',
+                                 'deltaphi':'',
                                  'delta':0.05,
                                  'delta1':0.1,
                                  'delta2':0.5,

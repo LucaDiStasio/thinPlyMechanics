@@ -2130,7 +2130,7 @@ def main(argv):
     
     workDir = RVEparams['input']['wd']
     
-    logfilename = datetime.now().strftime('%Y-%m-%d_%H-%m-%s') + '_ABQ-RVE-generation-and-analysis' + '.log'
+    logfilename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_ABQ-RVE-generation-and-analysis' + '.log'
     logfilefullpath = join(workDir,logfilename)
     logindent = '    '
     

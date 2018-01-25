@@ -615,7 +615,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # create geometrical transform to draw partition sketch
     transformToSketch = RVEpart.MakeSketchTransform(sketchPlane=RVEfaces[0], sketchPlaneSide=SIDE1, origin=(0.0,0.5*L, 0.0))
     # create sketch
-    fiberSketch = model.ConstrainedSketch(name='__profile__',sheetSize=3*L, gridSpacing=L/100.0, transform=transformToSketch)
+    fiberSketch = model.ConstrainedSketch(name='fiberSketch',sheetSize=3*L, gridSpacing=L/100.0, transform=transformToSketch)
+    fiberSketch = model.sketches['fiberSketch']
     # create reference to geometrical objects (faces, edges and vertices) of the partition sketch
     fiberGeometry = fiberSketch.geometry
     fiberVertices = fiberSketch.vertices

@@ -607,7 +607,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     RVEsketch.rectangle(point1=(-L, 0.0), point2=(L,L))
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # set dimension labels
-     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Set dimension labels ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Set dimension labels ...',True)
     v = RVEsketch.vertices
     RVEsketch.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(-1.1*L,0.5*L), value=L)
     RVEsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(0.0,1.1*L), value=2*L)

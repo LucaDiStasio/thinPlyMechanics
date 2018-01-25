@@ -2135,7 +2135,7 @@ def main(argv):
     logindent = '    '
     
     if not os.path.exists(RVEparams['output']['global']['directory']):
-            os.mkdirs(RVEparams['output']['global']['directory'])
+            os.mkdir(RVEparams['output']['global']['directory'])
             
     with open(logfilefullpath,'w') as log:
         log.write('Automatic generation and FEM analysis of RVEs with Abaqus Python' + '\n')
@@ -2156,7 +2156,7 @@ def main(argv):
         RVEparams['output']['local']['directory'] = join(RVEparams['output']['global']['directory'],set[0])
         
         if not os.path.exists(RVEparams['output']['local']['directory']):
-                os.mkdirs(RVEparams['output']['local']['directory'])
+                os.mkdir(RVEparams['output']['local']['directory'])
                 
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: createRVE(parameters,logfilepath,baselogindent,logindent)',True)

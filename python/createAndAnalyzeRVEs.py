@@ -641,16 +641,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     
     # draw construction lines  
     fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=(theta+deltatheta)) # fiberGeometry[11]
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[11])
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[11],addUndoState=False)
     
     fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=alpha) # fiberGeometry[12]
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[12])
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[12],addUndoState=False)
     
     fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=beta) # fiberGeometry[13]
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[13])
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[13],addUndoState=False)
     
     fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=gamma) # fiberGeometry[14]
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[14])
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[14],addUndoState=False)
     
     # draw angular sections to identify the crack and for mesh generation
     Rint = 0.75*Rf
@@ -664,26 +664,36 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     Bx = Rext*np.cos(alpha*np.pi/180.0)
     By = -0.5*L+Rint*np.sin(alpha*np.pi/180.0)
     fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[15]
-    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[15])
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[15], entity2=fiberGeometry[7])
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[16], entity2=fiberGeometry[9])
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[15],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[15], entity2=fiberGeometry[7],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[16], entity2=fiberGeometry[9],addUndoState=False)
     
-    fiberSketch.Line(point1=(Rint*np.cos((theta+deltatheta)*np.pi/180.0), -0.5*L+Rint*np.sin((theta+deltatheta)*np.pi/180.0)), point2=(Rext*np.cos((theta+deltatheta)*np.pi/180.0), -0.5*L+Rext*np.sin((theta+deltatheta)*np.pi/180.0)) # fiberGeometry[16]
-    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[16])
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[17], entity2=fiberGeometry[7])
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[18], entity2=fiberGeometry[9])
+    Ax = Rint*np.cos((theta+deltatheta)*np.pi/180.0)
+    Ay = -0.5*L+Rint*np.sin((theta+deltatheta)*np.pi/180.0)
+    Bx = Rext*np.cos((theta+deltatheta)*np.pi/180.0)
+    By = -0.5*L+Rext*np.sin((theta+deltatheta)*np.pi/180.0)
+    fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[16]
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[16],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[17], entity2=fiberGeometry[7],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[18], entity2=fiberGeometry[9],addUndoState=False)
     
-    fiberSketch.Line(point1=(Rint*np.cos(beta*np.pi/180.0), -0.5*L+Rint*np.sin(beta*np.pi/180.0)), point2=(
-        Rext*np.cos(beta*np.pi/180.0), -0.5*L+Rext*np.sin(beta*np.pi/180.0)) # fiberGeometry[17]
-    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[17])
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[19], entity2=fiberGeometry[7])
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[20], entity2=fiberGeometry[9])
+    Ax = Rint*np.cos(beta*np.pi/180.0)
+    Ay = -0.5*L+Rint*np.sin(beta*np.pi/180.0)
+    Bx = Rext*np.cos(beta*np.pi/180.0)
+    By = -0.5*L+Rext*np.sin(beta*np.pi/180.0)
+    fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[17]
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[17],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[19], entity2=fiberGeometry[7],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[20], entity2=fiberGeometry[9],addUndoState=False)
     
-    fiberSketch.Line(point1=(Rint*np.cos(gamma*np.pi/180.0), -0.5*L+Rint*np.sin(gamma*np.pi/180.0)), point2=(
-        Rext*np.cos(gamma*np.pi/180.0), -0.5*L+Rext*np.sin(gamma*np.pi/180.0)) # fiberGeometry[18]
-    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[18])
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[25], entity2=fiberGeometry[7])
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[26], entity2=fiberGeometry[9])
+    Ax = Rint*np.cos(gamma*np.pi/180.0)
+    Ay = -0.5*L+Rint*np.sin(gamma*np.pi/180.0)
+    Bx = Rext*np.cos(gamma*np.pi/180.0)
+    By = -0.5*L+Rext*np.sin(gamma*np.pi/180.0)
+    fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[18]
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[18],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[25], entity2=fiberGeometry[7],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[26], entity2=fiberGeometry[9],addUndoState=False)
     
     pickedFaces = RVEfaces.findAt(((0.0, 0.5*L, 0),)))
     RVEpart.PartitionFaceBySketch(faces=pickedFaces, sketch=fiberSketch)

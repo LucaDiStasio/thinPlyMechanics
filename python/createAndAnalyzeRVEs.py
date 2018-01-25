@@ -585,9 +585,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         skipLineToLogFile(logfilepath,'a',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'CAE database does not exist. Creating it ...',True)
         mdb.saveAs(caefullpath)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    # assign model object to variable for lighter code
+        writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+    # create and assign model object to variable for lighter code
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating model ' + modelname + ' ...',True)
+    mdb.Model(name=modelname)
     model = mdb.models[modelname]
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 #===============================================================================#
 #                             Parts creation
 #===============================================================================#

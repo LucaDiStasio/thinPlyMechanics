@@ -613,7 +613,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     RVEsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(0.0,1.1*L), value=2*L)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # assign to part
-     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign sketch geometry to the part ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign sketch geometry to the part ...',True)
     RVEpart = model.Part(name='RVE',dimensionality=TWO_D_PLANAR,type=DEFORMABLE_BODY)
     RVEpart = model.parts['RVE']
     RVEpart.BaseShell(sketch=RVEsketch)

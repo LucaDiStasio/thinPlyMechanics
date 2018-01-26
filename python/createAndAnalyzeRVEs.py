@@ -877,7 +877,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create sets ...',True)
     
     # create reference to geometric elements for lighter code
-     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create reference to geometric elements of the part ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create reference to geometric elements of the part ...',True)
     RVEvertices = RVEpart.vertices
     RVEedges = RVEpart.edges
     RVEfaces = RVEpart.faces

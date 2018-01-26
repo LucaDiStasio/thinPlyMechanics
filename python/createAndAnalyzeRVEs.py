@@ -908,7 +908,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(type(RVEedges.getClosest(coordinates=((0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0),(1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0),)))),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(type(RVEedges.getClosest(coordinates=((0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0),(1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0),))[0])),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(type(RVEedges.getClosest(coordinates=((0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0),(1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0),))[0][0])),True)
-    RVEpart.Set(edges=RVEpart.EdgeArray(edges=[crackEdge1]), name='CRACK-LOWER')
+    RVEpart.Set(edges=part.EdgeArray(edges=[crackEdge1]), name='CRACK-LOWER')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... ok ...',True)
     RVEpart.Set(edges=crackEdge2, name='CRACK-UPPER')
     RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])

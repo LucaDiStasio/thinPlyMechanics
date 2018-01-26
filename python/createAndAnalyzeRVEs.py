@@ -641,6 +641,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberVertices = fiberSketch.vertices
     fiberSketch.setPrimaryObject(option=SUPERIMPOSE)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(fiberGeometry),True)
     for e,element in enumerate(fiberGeometry):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)

@@ -904,7 +904,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of edges',True)
     crackEdge1=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0),(1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0),))[0][0]
     crackEdge2=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),(1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),))[0][0]
-    RVEpart.Set(edges=crackEdge1, name='CRACK-LOWER')
+    RVEpart.Set(edges=[crackEdge1], name='CRACK-LOWER')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... ok ...',True)
     RVEpart.Set(edges=crackEdge2, name='CRACK-UPPER')
     RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])

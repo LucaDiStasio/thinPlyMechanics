@@ -538,7 +538,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: createRVE(parameters,logfilepath,logindent)',True)
     # assign most used parameters to variables
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Read and assign most used parameters to variables ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Read and assign most used parameters to variables ...',True)
+    baselogindent += logindent
     wd = parameters['input']['wd']
     caefilename = parameters['input']['caefilename']
     modelname = parameters['input']['modelname']
@@ -558,19 +559,19 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     elif (theta+deltatheta+deltapsi+deltaphi)>=180.0 or (180.0-(theta+deltatheta+deltapsi+deltaphi))/delta<minElNum:
         deltapsi = 0.6*((180.0-(theta+deltatheta))-np.max([0.1*(180.0-(theta+deltatheta)),minElnum*delta]))
         deltaphi = 0.4*((180.0-(theta+deltatheta))-np.max([0.1*(180.0-(theta+deltatheta)),minElnum*delta]))
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Working directory: ' + wd,True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'CAE database name: ' + caefilename,True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Model name: ' + modelname,True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'L: ' + str(L),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rf: ' + str(Rf),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'L/Rf: ' + str(L/Rf),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'theta: ' + str(theta),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'deltatheta: ' + str(deltatheta),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'deltapsi: ' + str(deltapsi),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'deltaphi: ' + str(deltaphi),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'delta: ' + str(delta),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'minElnum: ' + str(minElNum),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Working directory: ' + wd,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'CAE database name: ' + caefilename,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Model name: ' + modelname,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'L: ' + str(L),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Rf: ' + str(Rf),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'L/Rf: ' + str(L/Rf),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'theta: ' + str(theta),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'deltatheta: ' + str(deltatheta),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'deltapsi: ' + str(deltapsi),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'deltaphi: ' + str(deltaphi),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'delta: ' + str(delta),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'minElnum: ' + str(minElNum),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 #===============================================================================#
 #                          Model database creation
 #===============================================================================#
@@ -882,7 +883,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     RVEedges = RVEpart.edges
     RVEfaces = RVEpart.faces
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The part has ' + str(len(RVEvertices)) + ' vertices',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(RVEvertices) ,True)
     for e,element in enumerate(RVEvertices):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'RVEvertices[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The part has ' + str(len(RVEedges)) + ' edges',True)
@@ -901,7 +901,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     # sets of edges
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of edges',True)
-    crackEdge1=RVEedges.getByBoundingSphere(center=(Rf*np.cos(0.5*alpha*np.pi/180),Rf*np.sin(0.5*alpha*np.pi/180),0.0),radius=0.01*Rf)
+    #crackEdge1=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0),(1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0),))[0][0]
+    Cx = Rf*np.cos(0.5*alpha*np.pi/180)
+    Cy = Rf*np.sin(0.5*alpha*np.pi/180)
+    crackEdge1=RVEedges.getByBoundingSphere(center=(Cx,Cy,0.0),radius=0.01*Rf)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... ok ...',True)
     crackEdge2=RVEedges.getByBoundingSphere(center=(Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),radius=0.01*Rf)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... ok ...',True)

@@ -639,6 +639,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create reference to geometrical objects of the partition sketch ...',True)
     fiberGeometry = fiberSketch.geometry
     fiberVertices = fiberSketch.vertices
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
     fiberSketch.setPrimaryObject(option=SUPERIMPOSE)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #p = mdb.models[modelname].parts['RVE']

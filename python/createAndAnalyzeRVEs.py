@@ -898,6 +898,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     crackTip = RVEvertices.getByBoundingSphere(center=(Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf)
     RVEpart.Set(vertices=crackTip, name='CRACKTIP')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACKTIP',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '     ' + str(crackTip),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     # sets of edges

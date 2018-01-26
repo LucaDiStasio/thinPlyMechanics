@@ -646,7 +646,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberVertices)) + ' vertices',True)
     for key in fiberVertices.keys():
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(key) + '] = ' + str(fiberVertices[key]),True)
-    ##raw_input()
+    #raw_input()
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # Project reference onto sketch
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Project reference onto sketch ...',True)
@@ -657,7 +657,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberVertices)) + ' vertices',True)
     for key in fiberVertices.keys():
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(key) + '] = ' + str(fiberVertices[key]),True)
-    ##raw_input()
+    #raw_input()
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # draw fiber and circular sections for mesh generation
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fiber and circular sections for mesh generation ...',True)
@@ -863,7 +863,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     pickedFaces = RVEfaces.findAt(coordinates=(0.0, 0.5*L, 0))
     RVEpart.PartitionFaceBySketch(faces=pickedFaces, sketch=fiberSketch)
     fiberSketch.unsetPrimaryObject()
-    del model.sketches['__profile__']
+    del model.sketches['fiberSketch']
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     
     #-------------------#

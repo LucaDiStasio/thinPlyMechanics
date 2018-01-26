@@ -883,14 +883,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     RVEfaces = RVEpart.faces
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The part has ' + str(len(RVEvertices)) + ' vertices',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(RVEvertices) ,True)
-    for key in RVEvertices.keys():
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'RVEvertices[' + str(key) + '] = ' + str(RVEvertices[key]),True)
+    for e,element in enumerate(RVEvertices):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'RVEvertices[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The part has ' + str(len(RVEedges)) + ' edges',True)
-    for key in RVEedges.keys():
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'RVEedges[' + str(key) + '] = ' + str(RVEedges[key]),True)
+    for e,element in enumerate(RVEedges):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'RVEedges[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The part has ' + str(len(RVEfaces)) + ' faces',True)
-    for key in RVEfaces.keys():
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'RVEfaces[' + str(key) + '] = ' + str(RVEfaces[key]),True)
+    for e,element in enumerate(RVEfaces):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'RVEfaces[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     # sets of vertices

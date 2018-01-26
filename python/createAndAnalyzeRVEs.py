@@ -639,13 +639,23 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create reference to geometrical objects of the partition sketch ...',True)
     fiberGeometry = fiberSketch.geometry
     fiberVertices = fiberSketch.vertices
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
     fiberSketch.setPrimaryObject(option=SUPERIMPOSE)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #p = mdb.models[modelname].parts['RVE']
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Project reference onto sketch ...',True)
     RVEpart.projectReferencesOntoSketch(sketch=fiberSketch, filter=COPLANAR_EDGES)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # draw fiber and circular sections for mesh generation
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fiber and circular sections for mesh generation ...',True)
@@ -658,27 +668,59 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-(Rf+0.25*(L-Rf)), -0.5*L), point2=((Rf+0.25*(L-Rf)),-0.5*L), direction=CLOCKWISE) # fiberGeometry[9]
         fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-(Rf+0.5*(L-Rf)), -0.5*L), point2=((Rf+0.5*(L-Rf)),-0.5*L), direction=CLOCKWISE) # fiberGeometry[10]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # calculate angles for construction lines 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calculate angles for construction lines ...',True)
     alpha = theta + deltatheta - deltapsi
     beta = theta + deltatheta + deltapsi
     gamma = theta + deltatheta + deltapsi + deltaphi
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # draw construction lines  
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction lines ...',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[6] = ' + str(fiberVertices[6]),True)
     fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=(theta+deltatheta)) # fiberGeometry[11]
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[11],addUndoState=False)
-    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=alpha) # fiberGeometry[12]
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[12],addUndoState=False)
-    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=beta) # fiberGeometry[13]
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[13],addUndoState=False)
-    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=gamma) # fiberGeometry[14]
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[14],addUndoState=False)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # draw angular sections to identify the crack and for mesh generation
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'draw angular sections to identify the crack and for mesh generation ...',True)
@@ -688,6 +730,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         Rext = 1.25*Rf
     else:
         Rext = Rf+0.25*(L-Rf)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create first circular section ...',True)
     Ax = Rint*np.cos(alpha*np.pi/180.0)
@@ -698,6 +746,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[15],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[15], entity2=fiberGeometry[7],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[16], entity2=fiberGeometry[9],addUndoState=False)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create second circular section ...',True)
     Ax = Rint*np.cos((theta+deltatheta)*np.pi/180.0)
@@ -708,6 +762,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[16],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[17], entity2=fiberGeometry[7],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[18], entity2=fiberGeometry[9],addUndoState=False)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create third circular section ...',True)
     Ax = Rint*np.cos(beta*np.pi/180.0)
@@ -718,6 +778,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[17],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[19], entity2=fiberGeometry[7],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[20], entity2=fiberGeometry[9],addUndoState=False)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create fourth circular section ...',True)
     Ax = Rint*np.cos(gamma*np.pi/180.0)
@@ -728,6 +794,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[18],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[25], entity2=fiberGeometry[7],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[26], entity2=fiberGeometry[9],addUndoState=False)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for e,element in enumerate(fiberGeometry):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)
+    for e,element in enumerate(fiberVertices):    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)

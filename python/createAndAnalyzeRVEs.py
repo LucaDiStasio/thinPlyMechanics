@@ -647,7 +647,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Project reference onto sketch ...',True)
     RVEpart.projectReferencesOntoSketch(sketch=fiberSketch, filter=COPLANAR_EDGES)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(fiberGeometry),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(fiberGeometry[2]),True)
     for e,element in enumerate(fiberGeometry):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' vertices',True)

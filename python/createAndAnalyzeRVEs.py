@@ -1038,7 +1038,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     RVEpart.Set(edges=RVEedges.getClosest(coordinates=((1.05*Rf*np.cos(0.99*(theta+deltatheta)*np.pi/180),1.05*Rf*np.sin(0.99*(theta+deltatheta)*np.pi/180),0.0),(1.05*Rf*np.cos(1.01*(theta+deltatheta)*np.pi/180),1.05*Rf*np.sin(1.01*(theta+deltatheta)*np.pi/180),0.0),))[0][0], name='TRANSVERSALCUT-SECONDMATRIX')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-SECONDMATRIX',True)
     
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.85*Rf*np.cos(0.99*beta*np.pi/180),0.85*Rf*np.sin(0.99*beta*np.pi/180),0.0),radius=0.001*Rf),(0.85*Rf*np.cos(1.01*beta*np.pi/180),0.85*Rf*np.sin(1.01*beta*np.pi/180),0.0),radius=0.001*Rf),))[0][0], name='TRANSVERSALCUT-THIRDFIBER')
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.85*Rf*np.cos(0.99*beta*np.pi/180),0.85*Rf*np.sin(0.99*beta*np.pi/180),0.0),(0.85*Rf*np.cos(1.01*beta*np.pi/180),0.85*Rf*np.sin(1.01*beta*np.pi/180),0.0),))[0][0], name='TRANSVERSALCUT-THIRDFIBER')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-THIRDFIBER',True)
     
     RVEpart.Set(edges=RVEedges.getClosest(coordinates=((1.05*Rf*np.cos(0.99*beta*np.pi/180),1.05*Rf*np.sin(0.99*beta*np.pi/180),0.0),(1.05*Rf*np.cos(1.01*beta*np.pi/180),1.05*Rf*np.sin(1.01*beta*np.pi/180),0.0),))[0][0], name='TRANSVERSALCUT-THIRDMATRIX')

@@ -902,12 +902,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # sets of edges
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of edges',True)
     crackEdge1=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0),(1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0),))[0][0]
-    # Cx = Rf*np.cos(0.5*alpha*np.pi/180)
-    # Cy = Rf*np.sin(0.5*alpha*np.pi/180)
-    # crackEdge1=RVEedges.getByBoundingSphere(center=(Cx,Cy,0.0),radius=0.01*Rf)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... ok ...',True)
-    crackEdge2=RVEedges.getByBoundingSphere(center=(Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),radius=0.01*Rf)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... ok ...',True)
+    crackEdge1=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),(1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),))[0][0]
     RVEpart.Set(edges=crackEdge1, name='CRACK-LOWER')
     RVEpart.Set(edges=crackEdge2, name='CRACK-UPPER')
     RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
@@ -915,17 +910,20 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACK-UPPER',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACK',True)
     
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.001*Rf,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-CENTER')
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.001*Rf,0.001,0.0),(0.001*Rf,-0.001,0.0),))[0][0], name='LOWERSIDE-CENTER')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-CENTER',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.65*Rf,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-FIRSTRING-RIGHT')
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.65*Rf,0.001,0.0),(0.65*Rf,-0.001,0.0),))[0][0], name='LOWERSIDE-FIRSTRING-RIGHT')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FIRSTRING-RIGHT',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(-0.65*Rf,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-FIRSTRING-LEFT')
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((-0.65*Rf,0.001,0.0),(-0.65*Rf,-0.001,0.0),))[0][0], name='LOWERSIDE-FIRSTRING-LEFT')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FIRSTRING-LEFT',True)
     RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT'],RVEpart.sets['LOWERSIDE-FIRSTRING-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FIRSTRING',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.85*Rf,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-SECONDRING-RIGHT')
+    #RVEedges.getClosest(coordinates=(,,))[0][0]
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.85*Rf,0.001,0.0),(0.85*Rf,-0.001,0.0),))[0][0], name='LOWERSIDE-SECONDRING-RIGHT')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-SECONDRING-RIGHT',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(-0.85*Rf,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-SECONDRING-LEFT')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((-0.85*Rf,0.001,0.0),(-0.85*Rf,-0.001,0.0),))[0][0], name='LOWERSIDE-SECONDRING-LEFT')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-SECONDRING-LEFT',True)
     RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT'],RVEpart.sets['LOWERSIDE-SECONDRING-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-SECONDRING',True)
@@ -935,50 +933,67 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         R1 = Rf+0.5*0.25*(L-Rf)
         R2 = Rf+1.5*0.25*(L-Rf)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R1,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-THIRDRING-RIGHT')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((R1,0.001,0.0),(R1,-0.001,0.0),))[0][0], name='LOWERSIDE-THIRDRING-RIGHT')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING-RIGHT',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(-R1,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-THIRDRING-LEFT')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((-R1,0.001,0.0),(-R1,-0.001,0.0),))[0][0], name='LOWERSIDE-THIRDRING-LEFT')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING-LEFT',True)
     RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT'],RVEpart.sets['LOWERSIDE-THIRDRING-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R2,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-FOURTHRING-RIGHT')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((R2,0.001,0.0),(R2,-0.001,0.0),))[0][0], name='LOWERSIDE-FOURTHRING-RIGHT')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING-RIGHT',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(-R2,0.0,0.0),radius=0.001*Rf), name='LOWERSIDE-FOURTHRING-LEFT')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((-R2,0.001,0.0),(-R2,-0.001,0.0),))[0][0], name='LOWERSIDE-FOURTHRING-LEFT')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING-LEFT',True)
     RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT'],RVEpart.sets['LOWERSIDE-FOURTHRING-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING',True)
     RVEpart.SetByBoolean(name='LOWERSIDE', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING'],RVEpart.sets['LOWERSIDE-SECONDRING'],RVEpart.sets['LOWERSIDE-THIRDRING'],RVEpart.sets['LOWERSIDE-FOURTHRING']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.0,L,0.0),radius=0.001*Rf), name='UPPERSIDE')    
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.001,L,0.0),(-0.001,L,0.0),))[0][0], name='UPPERSIDE')    
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- UPPERSIDE',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(L,0.5*L,0.0),radius=0.001*Rf), name='RIGHTSIDE')    
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.99*L,0.5*L,0.0),(1.01*L,0.5*L,0.0),))[0][0], name='RIGHTSIDE')    
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RIGHTSIDE',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(-L,0.5*L,0.0),radius=0.001*Rf), name='LEFTSIDE')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((-0.99*L,0.5*L,0.0),(-1.01*L,0.5*L,0.0),))[0][0], name='LEFTSIDE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LEFTSIDE',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.5*Rf*np.cos((theta+deltatheta)*np.pi/180),0.5*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf), name='FIRSTCIRCLE')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.49*Rf*np.cos((theta+deltatheta)*np.pi/180),0.49*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),(0.51*Rf*np.cos((theta+deltatheta)*np.pi/180),0.51*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),))[0][0], name='FIRSTCIRCLE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FIRSTCIRCLE',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.75*Rf*np.cos(0.5*alpha*np.pi/180),0.75*Rf*np.sin(0.5*alpha*np.pi/180),0.0),radius=0.001*Rf), name='SECONDCIRCLE-LOWERCRACK')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.74*Rf*np.cos(0.5*alpha*np.pi/180),0.74*Rf*np.sin(0.5*alpha*np.pi/180),0.0),(0.76*Rf*np.cos(0.5*alpha*np.pi/180),0.76*Rf*np.sin(0.5*alpha*np.pi/180),0.0),))[0][0], name='SECONDCIRCLE-LOWERCRACK')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE-LOWERCRACK',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.75*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.75*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),radius=0.001*Rf), name='SECONDCIRCLE-UPPERCRACK')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.74*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),(0.76*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),))[0][0], name='SECONDCIRCLE-UPPERCRACK')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE-UPPERCRACK',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.75*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.75*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),radius=0.001*Rf), name='SECONDCIRCLE-FIRSTBOUNDED')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.74*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),(0.76*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),))[0][0], name='SECONDCIRCLE-FIRSTBOUNDED')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE-FIRSTBOUNDED',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.75*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.75*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),radius=0.001*Rf), name='SECONDCIRCLE-SECONDBOUNDED')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.74*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),(0.76*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),))[0][0], name='SECONDCIRCLE-SECONDBOUNDED')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE-SECONDBOUNDED',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.75*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.75*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),radius=0.001*Rf), name='SECONDCIRCLE-RESTBOUNDED')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.74*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.74*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),(0.76*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.76*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),))[0][0], name='SECONDCIRCLE-RESTBOUNDED')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE-RESTBOUNDED',True)
     RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-LOWERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE',True)
-    
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(Rf*np.cos(0.5*alpha*np.pi/180),Rf*np.sin(0.5*alpha*np.pi/180),0.0),radius=0.001*Rf), name='THIRDCIRCLE-LOWERCRACK')
+    #RVEedges.getClosest(coordinates=(,,))[0][0]
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0),(1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0),))[0][0], name='THIRDCIRCLE-LOWERCRACK')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE-LOWERCRACK',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),radius=0.001*Rf), name='THIRDCIRCLE-UPPERCRACK')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),(1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),))[0][0], name='THIRDCIRCLE-UPPERCRACK')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE-UPPERCRACK',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),radius=0.001*Rf), name='THIRDCIRCLE-FIRSTBOUNDED')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),(1.01*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),))[0][0], name='THIRDCIRCLE-FIRSTBOUNDED')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE-FIRSTBOUNDED',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),radius=0.001*Rf), name='THIRDCIRCLE-SECONDBOUNDED')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),(1.01*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),))[0][0], name='THIRDCIRCLE-SECONDBOUNDED')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE-SECONDBOUNDED',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),radius=0.001*Rf), name='THIRDCIRCLE-RESTBOUNDED')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.99*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),(1.01*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),1.01*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),))[0][0], name='THIRDCIRCLE-RESTBOUNDED')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE-RESTBOUNDED',True)
     RVEpart.SetByBoolean(name='THIRDCIRCLE', sets=[RVEpart.sets['THIRDCIRCLE-LOWERCRACK'],RVEpart.sets['THIRDCIRCLE-UPPERCRACK'],RVEpart.sets['THIRDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['THIRDCIRCLE-SECONDBOUNDED'],RVEpart.sets['THIRDCIRCLE-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE',True)
@@ -987,44 +1002,52 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         R4 = 1.25*Rf
     else:
         R4 = Rf+0.25*(L-Rf)
-        
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R4*np.cos(0.5*alpha*np.pi/180),R4*np.sin(0.5*alpha*np.pi/180),0.0),radius=0.001*Rf), name='FOURTHCIRCLE-LOWERCRACK')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.99*R4*np.cos(0.5*alpha*np.pi/180),0.99*R4*np.sin(0.5*alpha*np.pi/180),0.0),(1.01*R4*np.cos(0.5*alpha*np.pi/180),1.01*R4*np.sin(0.5*alpha*np.pi/180),0.0),))[0][0]  , name='FOURTHCIRCLE-LOWERCRACK')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FOURTHCIRCLE-LOWERCRACK',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),radius=0.001*Rf), name='FOURTHCIRCLE-UPPERCRACK')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.99*R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),(1.01*R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),))[0][0], name='FOURTHCIRCLE-UPPERCRACK')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FOURTHCIRCLE-UPPERCRACK',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),radius=0.001*Rf), name='FOURTHCIRCLE-FIRSTBOUNDED')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.99*R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),(1.01*R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),))[0][0], name='FOURTHCIRCLE-FIRSTBOUNDED')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FOURTHCIRCLE-FIRSTBOUNDED',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R4*np.cos((beta+0.5*deltaphi)*np.pi/180),R4*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),radius=0.001*Rf), name='FOURTHCIRCLE-SECONDBOUNDED')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.99*R4*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*R4*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),(1.01*R4*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*R4*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),))[0][0], name='FOURTHCIRCLE-SECONDBOUNDED')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FOURTHCIRCLE-SECONDBOUNDED',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(R4*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),R4*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),radius=0.001*Rf), name='FOURTHCIRCLE-RESTBOUNDED')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.99*R4*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.99*R4*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),(1.01*R4*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),1.01*R4*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),))[0][0], name='FOURTHCIRCLE-RESTBOUNDED')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FOURTHCIRCLE-RESTBOUNDED',True)
     RVEpart.SetByBoolean(name='FOURTHCIRCLE', sets=[RVEpart.sets['FOURTHCIRCLE-LOWERCRACK'],RVEpart.sets['FOURTHCIRCLE-UPPERCRACK'],RVEpart.sets['FOURTHCIRCLE-FIRSTBOUNDED'],RVEpart.sets['FOURTHCIRCLE-SECONDBOUNDED'],RVEpart.sets['FOURTHCIRCLE-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FOURTHCIRCLE',True)
     
     if L>2*Rf:
-        RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(1.5*Rf*np.cos((theta+deltatheta)*np.pi/180),1.5*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf), name='FIFTHCIRCLE')
+        RVEpart.Set(edges=RVEedges.getClosest(coordinates=((1.49*Rf*np.cos((theta+deltatheta)*np.pi/180),1.49*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),(1.51*Rf*np.cos((theta+deltatheta)*np.pi/180),1.51*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),))[0][0], name='FIFTHCIRCLE')
     else:
-        RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=((Rf+0.5*(L-Rf))*np.cos((theta+deltatheta)*np.pi/180),(Rf+0.5*(L-Rf))*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf), name='FIFTHCIRCLE')
+        RVEpart.Set(edges=RVEedges.getClosest(coordinates=(((Rf+0.49*(L-Rf))*np.cos((theta+deltatheta)*np.pi/180),(Rf+0.49*(L-Rf))*np.sin((theta+deltatheta)*np.pi/180),0.0),((Rf+0.51*(L-Rf))*np.cos((theta+deltatheta)*np.pi/180),(Rf+0.51*(L-Rf))*np.sin((theta+deltatheta)*np.pi/180),0.0),))[0][0], name='FIFTHCIRCLE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FIFTHCIRCLE',True)
     
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.85*Rf*np.cos(alpha*np.pi/180),0.75*Rf*np.sin(alpha*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-FIRSTFIBER')
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.85*Rf*np.cos(0.99*alpha*np.pi/180),0.85*Rf*np.sin(0.99*alpha*np.pi/180),0.0),(0.85*Rf*np.cos(1.01*alpha*np.pi/180),0.85*Rf*np.sin(1.01*alpha*np.pi/180),0.0),))[0][0], name='TRANSVERSALCUT-FIRSTFIBER')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-FIRSTFIBER',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(1.05*Rf*np.cos(alpha*np.pi/180),1.05*Rf*np.sin(alpha*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-FIRSTMATRIX')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((1.05*Rf*np.cos(0.99*alpha*np.pi/180),1.05*Rf*np.sin(0.99*alpha*np.pi/180),0.0),(1.05*Rf*np.cos(1.01*alpha*np.pi/180),1.05*Rf*np.sin(1.01*alpha*np.pi/180),0.0),))[0][0], name='TRANSVERSALCUT-FIRSTMATRIX')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-FIRSTMATRIX',True)
     
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.85*Rf*np.cos((theta+deltatheta)*np.pi/180),0.75*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-SECONDFIBER')
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.85*Rf*np.cos(0.99*(theta+deltatheta)*np.pi/180),0.85*Rf*np.sin(0.99*(theta+deltatheta)*np.pi/180),0.0),(0.85*Rf*np.cos(1.01*(theta+deltatheta)*np.pi/180),0.85*Rf*np.sin(1.01*(theta+deltatheta)*np.pi/180),0.0),))[0][0], name='TRANSVERSALCUT-SECONDFIBER')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-SECONDFIBER',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(1.05*Rf*np.cos((theta+deltatheta)*np.pi/180),1.05*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-SECONDMATRIX')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((1.05*Rf*np.cos(0.99*(theta+deltatheta)*np.pi/180),1.05*Rf*np.sin(0.99*(theta+deltatheta)*np.pi/180),0.0),(1.05*Rf*np.cos(1.01*(theta+deltatheta)*np.pi/180),1.05*Rf*np.sin(1.01*(theta+deltatheta)*np.pi/180),0.0),))[0][0], name='TRANSVERSALCUT-SECONDMATRIX')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-SECONDMATRIX',True)
     
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.85*Rf*np.cos(beta*np.pi/180),0.75*Rf*np.sin(beta*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-THIRDFIBER')
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.85*Rf*np.cos(0.99*beta*np.pi/180),0.85*Rf*np.sin(0.99*beta*np.pi/180),0.0),radius=0.001*Rf),(0.85*Rf*np.cos(1.01*beta*np.pi/180),0.85*Rf*np.sin(1.01*beta*np.pi/180),0.0),radius=0.001*Rf),))[0][0], name='TRANSVERSALCUT-THIRDFIBER')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-THIRDFIBER',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(1.05*Rf*np.cos(beta*np.pi/180),1.05*Rf*np.sin(beta*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-THIRDMATRIX')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((1.05*Rf*np.cos(0.99*beta*np.pi/180),1.05*Rf*np.sin(0.99*beta*np.pi/180),0.0),(1.05*Rf*np.cos(1.01*beta*np.pi/180),1.05*Rf*np.sin(1.01*beta*np.pi/180),0.0),))[0][0], name='TRANSVERSALCUT-THIRDMATRIX')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-THIRDMATRIX',True)
     
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.85*Rf*np.cos(gamma*np.pi/180),0.75*Rf*np.sin(gamma*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-FOURTHFIBER')
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.85*Rf*np.cos(0.99*gamma*np.pi/180),0.85*Rf*np.sin(0.99*gamma*np.pi/180),0.0),(0.85*Rf*np.cos(1.01*gamma*np.pi/180),0.85*Rf*np.sin(1.01*gamma*np.pi/180),0.0),))[0][0], name='TRANSVERSALCUT-FOURTHFIBER')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-FOURTHFIBER',True)
-    RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(1.05*Rf*np.cos(gamma*np.pi/180),1.05*Rf*np.sin(gamma*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-FOURTHMATRIX')
+    
+    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((1.05*Rf*np.cos(0.99*gamma*np.pi/180),1.05*Rf*np.sin(0.99*gamma*np.pi/180),0.0),(1.05*Rf*np.cos(1.01*gamma*np.pi/180),1.05*Rf*np.sin(1.01*gamma*np.pi/180),0.0),))[0][0], name='TRANSVERSALCUT-FOURTHMATRIX')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-FOURTHMATRIX',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     

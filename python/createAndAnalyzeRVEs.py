@@ -899,7 +899,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     RVEpart.Set(vertices=crackTip, name='CRACKTIP')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACKTIP',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(crackTip),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(crackTip),True)
     # sets of edges
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of edges',True)
     crackEdge1=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0),(1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0),))[0][0]

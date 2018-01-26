@@ -795,7 +795,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     Ax = Rint*np.cos(alpha*np.pi/180.0)
     Ay = -0.5*L+Rint*np.sin(alpha*np.pi/180.0)
     Bx = Rext*np.cos(alpha*np.pi/180.0)
-    By = -0.5*L+Rint*np.sin(alpha*np.pi/180.0)
+    By = -0.5*L+Rext*np.sin(alpha*np.pi/180.0)
     fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[15]
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[15],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[15], entity2=fiberGeometry[7],addUndoState=False)
@@ -849,8 +849,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     By = -0.5*L+Rext*np.sin(gamma*np.pi/180.0)
     fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[18]
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[18],addUndoState=False)
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[25], entity2=fiberGeometry[7],addUndoState=False)
-    fiberSketch.CoincidentConstraint(entity1=fiberVertices[26], entity2=fiberGeometry[9],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[21], entity2=fiberGeometry[7],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[22], entity2=fiberGeometry[9],addUndoState=False)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
     for key in fiberGeometry.keys():
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(key) + '] = ' + str(fiberGeometry[key]),True)

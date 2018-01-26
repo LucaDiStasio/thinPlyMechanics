@@ -1003,7 +1003,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FIFTHCIRCLE',True)
     
     RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(0.85*Rf*np.cos(alpha*np.pi/180),0.75*Rf*np.sin(alpha*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-FIRSTFIBER')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-FIRSTFIBER'',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-FIRSTFIBER',True)
     RVEpart.Set(edges=RVEedges.getByBoundingSphere(center=(1.05*Rf*np.cos(alpha*np.pi/180),1.05*Rf*np.sin(alpha*np.pi/180),0.0),radius=0.001*Rf), name='TRANSVERSALCUT-FIRSTMATRIX')
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- TRANSVERSALCUT-FIRSTMATRIX',True)
     

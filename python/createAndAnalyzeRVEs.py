@@ -882,6 +882,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     RVEedges = RVEpart.edges
     RVEfaces = RVEpart.faces
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The part has ' + str(len(RVEvertices)) + ' vertices',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(RVEvertices) ,True)
     for key in RVEvertices.keys():
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'RVEvertices[' + str(key) + '] = ' + str(RVEvertices[key]),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The part has ' + str(len(RVEedges)) + ' edges',True)

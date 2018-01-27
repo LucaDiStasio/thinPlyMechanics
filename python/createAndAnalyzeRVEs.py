@@ -2305,13 +2305,13 @@ def main(argv):
                                     'set':'FIBER',
                                     'offsetType':MIDDLE_SURFACE,
                                     'offsetField':'',
-                                    'thicknessAssignment':'FROM_SECTION',
+                                    'thicknessAssignment':FROM_SECTION,
                                     'offsetValue':0.0},
                                     {'name':'fiberSection',
                                     'set':'FIBER',
                                     'offsetType':MIDDLE_SURFACE,
                                     'offsetField':'',
-                                    'thicknessAssignment':'FROM_SECTION',
+                                    'thicknessAssignment':FROM_SECTION,
                                     'offsetValue':0.0}]
     RVEparams['step'] = {'minimumIncrement':1e-10}
     RVEparams['loads'] = [{'name':'rightBC',

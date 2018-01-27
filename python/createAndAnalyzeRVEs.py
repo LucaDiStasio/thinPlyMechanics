@@ -945,64 +945,36 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         R1 = Rf+0.5*0.25*(L-Rf)
         R2 = Rf+1.5*0.25*(L-Rf)
     
-    setsOfEdgesData = [[],
-                       [],
-                       []]
-                       
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((R1,0.001,0.0),(R1,-0.001,0.0),))[0][0], name='LOWERSIDE-THIRDRING-RIGHT')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING-RIGHT',True)
-    
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((-R1,0.001,0.0),(-R1,-0.001,0.0),))[0][0], name='LOWERSIDE-THIRDRING-LEFT')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING-LEFT',True)
+    setsOfEdgesData = [[R1,0.001,0.0,R1,-0.001,0.0,'LOWERSIDE-THIRDRING-RIGHT'],
+                       [-R1,0.001,0.0,-R1,-0.001,0.0,'LOWERSIDE-THIRDRING-LEFT']]
+    for setOfEdgesData in setsOfEdgesData:
+        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
     
     RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT'],RVEpart.sets['LOWERSIDE-THIRDRING-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING',True)
     
-    setsOfEdgesData = [[],
-                       [],
-                       []]
-                       
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((R2,0.001,0.0),(R2,-0.001,0.0),))[0][0], name='LOWERSIDE-FOURTHRING-RIGHT')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING-RIGHT',True)
-    
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((-R2,0.001,0.0),(-R2,-0.001,0.0),))[0][0], name='LOWERSIDE-FOURTHRING-LEFT')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING-LEFT',True)
+    setsOfEdgesData = [[R2,0.001,0.0,R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-RIGHT'],
+                       [-R2,0.001,0.0,-R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-LEFT']]
+    for setOfEdgesData in setsOfEdgesData:
+        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
     
     RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT'],RVEpart.sets['LOWERSIDE-FOURTHRING-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING',True)
+    
     RVEpart.SetByBoolean(name='LOWERSIDE', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING'],RVEpart.sets['LOWERSIDE-SECONDRING'],RVEpart.sets['LOWERSIDE-THIRDRING'],RVEpart.sets['LOWERSIDE-FOURTHRING']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE',True)
     
-    setsOfEdgesData = [[],
-                       [],
-                       []]
-                       
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.001,L,0.0),(-0.001,L,0.0),))[0][0], name='UPPERSIDE')    
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- UPPERSIDE',True)
-    
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.99*L,0.5*L,0.0),(1.01*L,0.5*L,0.0),))[0][0], name='RIGHTSIDE')    
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RIGHTSIDE',True)
-    
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((-0.99*L,0.5*L,0.0),(-1.01*L,0.5*L,0.0),))[0][0], name='LEFTSIDE')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LEFTSIDE',True)
-    
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.49*Rf*np.cos((theta+deltatheta)*np.pi/180),0.49*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),(0.51*Rf*np.cos((theta+deltatheta)*np.pi/180),0.51*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),))[0][0], name='FIRSTCIRCLE')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FIRSTCIRCLE',True)
-    
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.74*Rf*np.cos(0.5*alpha*np.pi/180),0.74*Rf*np.sin(0.5*alpha*np.pi/180),0.0),(0.76*Rf*np.cos(0.5*alpha*np.pi/180),0.76*Rf*np.sin(0.5*alpha*np.pi/180),0.0),))[0][0], name='SECONDCIRCLE-LOWERCRACK')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE-LOWERCRACK',True)
-    
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.74*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),(0.76*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),))[0][0], name='SECONDCIRCLE-UPPERCRACK')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE-UPPERCRACK',True)
-    
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.74*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),(0.76*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0),))[0][0], name='SECONDCIRCLE-FIRSTBOUNDED')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE-FIRSTBOUNDED',True)
-    
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.74*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),(0.76*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0),))[0][0], name='SECONDCIRCLE-SECONDBOUNDED')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE-SECONDBOUNDED',True)
-    
-    RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.74*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.74*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),(0.76*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.76*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0),))[0][0], name='SECONDCIRCLE-RESTBOUNDED')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE-RESTBOUNDED',True)
+    setsOfEdgesData = [[0.001,L,0.0,-0.001,L,0.0,'UPPERSIDE'],
+                       [0.99*L,0.5*L,0.0,1.01*L,0.5*L,0.0,'RIGHTSIDE'],
+                       [-0.99*L,0.5*L,0.0,-1.01*L,0.5*L,0.0,'LEFTSIDE'],
+                       [0.49*Rf*np.cos((theta+deltatheta)*np.pi/180),0.49*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.51*Rf*np.cos((theta+deltatheta)*np.pi/180),0.51*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,'FIRSTCIRCLE'],
+                       [0.74*Rf*np.cos(0.5*alpha*np.pi/180),0.74*Rf*np.sin(0.5*alpha*np.pi/180),0.0,0.76*Rf*np.cos(0.5*alpha*np.pi/180),0.76*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'SECONDCIRCLE-LOWERCRACK'],
+                       [0.74*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-UPPERCRACK'],
+                       [0.74*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-FIRSTBOUNDED'],
+                       [0.74*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,0.76*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'SECONDCIRCLE-SECONDBOUNDED'],
+                       [0.74*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.74*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,0.76*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.76*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'SECONDCIRCLE-RESTBOUNDED']]
+    for setOfEdgesData in setsOfEdgesData:
+        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)                   
     
     RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-LOWERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE',True)

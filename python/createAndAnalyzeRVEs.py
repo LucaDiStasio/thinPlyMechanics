@@ -996,7 +996,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         R4 = Rf+0.25*(L-Rf)
     
-    setsOfEdgesData = [[0.99*R4*np.cos(0.5*alpha*np.pi/180),0.99*R4*np.sin(0.5*alpha*np.pi/180),0.01.01*R4*np.cos(0.5*alpha*np.pi/180),1.01*R4*np.sin(0.5*alpha*np.pi/180),0.0,'FOURTHCIRCLE-LOWERCRACK'],
+    setsOfEdgesData = [[0.99*R4*np.cos(0.5*alpha*np.pi/180),0.99*R4*np.sin(0.5*alpha*np.pi/180),0.0,1.01*R4*np.cos(0.5*alpha*np.pi/180),1.01*R4*np.sin(0.5*alpha*np.pi/180),0.0,'FOURTHCIRCLE-LOWERCRACK'],
                        [0.99*R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'FOURTHCIRCLE-UPPERCRACK'],
                        [0.99*R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'FOURTHCIRCLE-FIRSTBOUNDED'],
                        [0.99*R4*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*R4*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,1.01*R4*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*R4*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'FOURTHCIRCLE-SECONDBOUNDED'],

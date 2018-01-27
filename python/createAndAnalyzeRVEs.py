@@ -2303,13 +2303,13 @@ def main(argv):
                               'thickness':1.0}]
     RVEparams['sectionRegions'] = [{'name':'fiberSection',
                                     'set':'FIBER',
-                                    'offsetType':'MIDDLE_SURFACE',
+                                    'offsetType':MIDDLE_SURFACE,
                                     'offsetField':'',
                                     'thicknessAssignment':'FROM_SECTION',
                                     'offsetValue':0.0},
                                     {'name':'fiberSection',
                                     'set':'FIBER',
-                                    'offsetType':'MIDDLE_SURFACE',
+                                    'offsetType':MIDDLE_SURFACE,
                                     'offsetField':'',
                                     'thicknessAssignment':'FROM_SECTION',
                                     'offsetValue':0.0}]

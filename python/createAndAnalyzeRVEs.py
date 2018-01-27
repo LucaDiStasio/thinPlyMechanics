@@ -530,7 +530,7 @@ def defineSetOfVerticesByBoundingSphere(modelpart,Cx,Cy,Cz,R,setName,logfile,ind
     modelpart.Set(vertices=setOfVertices, name=setName)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
      
-def defineSetOfEdgesByClosestPoints(modelpart,Ax,Ay,Az,Ax,Ay,Az,setName,logfile,indent,toScreen):
+def defineSetOfEdgesByClosestPoints(modelpart,Ax,Ay,Az,Bx,By,Bz,setName,logfile,indent,toScreen):
     setOfEdges=modelpart.edges.getClosest(coordinates=((Ax,Ay,Az),(Bx,By,Bz),))[0][0]
     modelpart.Set(edges=modelpart.edges[setOfEdges.index:setOfEdges.index+1], name=setName)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)

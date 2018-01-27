@@ -524,6 +524,19 @@ def getJintegrals(wd,sim,ncontours):
                     values.append(float(value))
             break
     return values
+
+def defineSetOfVerticesByBoundingSphere(modelpart,Cx,Cy,Cz,R,setName,logfile,indent,toScreen):
+    setOfVertices = modelpart.vertices.getByBoundingSphere(center=(Cx,Cy,Cz),radius=R)
+    modelpart.Set(vertices=setOfVertices, name=setName)
+    writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
+     
+def defineSetOfEdgesByClosestPoints(modelpart,Ax,Ay,Az,Ax,Ay,Az,setName,logfile,indent,toScreen):
+    setOfEdges=modelpart.edges.getClosest(coordinates=((Ax,Ay,Az),(Bx,By,Bz),))[0][0]
+    modelpart.Set(edges=modelpart.edges[setOfEdges.index:setOfEdges.index+1], name=setName)
+    writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
+    
+def defineSetOfFacesByFindAt(modelpart,Ax,Ay,Az,setName,logfile,indent,toScreen):
+    writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
     
 #===============================================================================#
 #===============================================================================#
@@ -895,20 +908,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     
     # sets of vertices
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of vertices',True)
-    crackTip = RVEvertices.getByBoundingSphere(center=(Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0),radius=0.001*Rf)
-    RVEpart.Set(vertices=crackTip, name='CRACKTIP')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACKTIP',True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIP',logfilepath,baselogindent + 4*logindent,True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # sets of edges
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of edges',True)
-    crackEdge1=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0),(1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0),))[0][0]
-    crackEdge2=RVEedges.getClosest(coordinates=((0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),(1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0),))[0][0]
-    RVEpart.Set(edges=RVEedges[crackEdge1.index:crackEdge1.index+1], name='CRACK-LOWER')
-    RVEpart.Set(edges=RVEedges[crackEdge2.index:crackEdge2.index+1], name='CRACK-UPPER')
+    setsOfEdgesData = [[0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0,1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'CRACK-LOWER'],
+ [0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'CRACK-UPPER']]
+    for setOfEdgesData in setsOfEdgesData:
+        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
     RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACK-LOWER',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACK-UPPER',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACK',True)
     
     RVEpart.Set(edges=RVEedges.getClosest(coordinates=((0.001*Rf,0.001,0.0),(0.001*Rf,-0.001,0.0),))[0][0], name='LOWERSIDE-CENTER')

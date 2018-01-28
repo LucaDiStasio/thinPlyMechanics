@@ -1301,7 +1301,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     
     # assign mesh controls
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-LOWERCRACK'], elemShape=QUAD, technique=STRUCTURED)
+    model.rootAssembly.setMeshControls(regions=(model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-LOWERCRACK'],), elemShape=QUAD, technique=STRUCTURED)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- FIBER-EXTANNULUS-LOWERCRACK',True)
     model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-UPPERCRACK'], elemShape=QUAD, technique=STRUCTURED)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- FIBER-EXTANNULUS-UPPERCRACK',True)

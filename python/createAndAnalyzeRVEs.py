@@ -1318,7 +1318,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD,STRUCTURED],
                     ['MATRIX-INTANNULUS-SECONDBOUNDED',QUAD,STRUCTURED],
                     ['MATRIX-INTANNULUS-RESTBOUNDED',QUAD,STRUCTURED],
-                    ['MATRIX-EXTANNULUS',QUAD_DOMINATED,FREE],
+                    ['MATRIX-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
                     ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
                     
     for regionSet in regionSets:

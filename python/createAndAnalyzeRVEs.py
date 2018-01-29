@@ -1665,6 +1665,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     matrixElswithCracktip = []
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(quads),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(type(quads.keys()[0])),True)
     for element in fiberElementset:
         if cracktipIndex in quads[element]:
             fiberElswithCracktip.append(element)

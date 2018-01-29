@@ -1665,20 +1665,20 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     matrixElswithCracktip = []
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(quads),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(type(quads.keys()[0])),True)
     for element in fiberElementset:
-        if cracktipIndex in quads[element]:
-            fiberElswithCracktip.append(element)
-            if len(fiberElswithCracktip) == 2:
-                break
+        if element in quads.keys():
+            if cracktipIndex in quads[element]:
+                fiberElswithCracktip.append(element)
+                if len(fiberElswithCracktip) == 2:
+                    break
     for element in fiberElswithCracktip:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - element ' + str(element),True)
     for element in matrixElementset:
-        if cracktipIndex in quads[element]:
-            matrixElswithCracktip.append(element)
-            if len(matrixElswithCracktip) == 2:
-                break
+        if element in quads.keys():
+            if cracktipIndex in quads[element]:
+                matrixElswithCracktip.append(element)
+                if len(matrixElswithCracktip) == 2:
+                    break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
     for element in matrixElswithCracktip:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - element ' + str(element),True)

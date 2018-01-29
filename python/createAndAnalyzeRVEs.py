@@ -1752,6 +1752,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort lists with computed distances',True)
     sortedFiberDistanceIndeces = np.argsort(distancesFiberDisplacementMeas)
     sortedMatrixDistanceIndeces = np.argsort(distancesMatrixDisplacementMeas)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Indeces to sort fiber nodes ' + str(sortedFiberDistanceIndeces),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Indeces to sort matrix nodes ' + str(sortedMatrixDistanceIndeces),True)
     if 'second' in parameters['mesh']['elements']['order']:
         cracktipFiberDispMeasIndex = nodesFiberDisplacementMeas[sortedFiberDistanceIndeces[-1]]
         firstBehindCracktipFiberDispMeasIndex = nodesFiberDisplacementMeas[sortedFiberDistanceIndeces[-2]]

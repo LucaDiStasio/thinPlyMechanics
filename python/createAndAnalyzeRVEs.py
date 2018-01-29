@@ -1944,7 +1944,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         inp.write(' ' + str(cracktipFiberDispMeasIndex) + '\n')
         inp.write('*NSET, NSET=MATRIX-CRACKTIP-DISPMEAS, INSTANCE=RVEassembly' + '\n')
         inp.write(' ' + str(cracktipMatrixDispMeasIndex) + '\n')
-        if 'second' in parameters['elements']['order']:
+        if 'second' in parameters['mesh']['elements']['order']:
             inp.write('*NSET, NSET=FIBER-NODE-FIRSTBOUNDED, INSTANCE=RVEassembly' + '\n')
             inp.write(' ' + str(fiberFirstBehindCracktipIndex) + '\n')
             inp.write('*NSET, NSET=MATRIX-NODE-FIRSTBOUNDED, INSTANCE=RVEassembly' + '\n')
@@ -1955,7 +1955,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(' ' + str(firstBehindCracktipMatrixDispMeasIndex) + '\n')
         inp.write('*NSET, NSET=CRACKTIP-DUMMY-NODE, INSTANCE=RVEassembly' + '\n')
         inp.write(' ' + str(cracktipDummyIndex) + '\n')
-        if 'second' in parameters['elements']['order']:
+        if 'second' in parameters['mesh']['elements']['order']:
             inp.write('*NSET, NSET=FIRSTBOUNDED-DUMMY-NODE, INSTANCE=RVEassembly' + '\n')
             inp.write(' ' + str(FirstBehindCracktipDummyIndex) + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)

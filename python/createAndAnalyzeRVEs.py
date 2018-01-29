@@ -1548,7 +1548,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack tip set and saving to variable ...',True)
     for l,line in enumerate(inpfilelines):
-        if ('*Nset' in line or '*NSET' in line) and ('cracktip' in line or 'CRACKTIP' in line or 'Cracktip' in line):
+        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIP','cracktip']:
             cracktipIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
             break
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -1564,7 +1564,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         elif store == True:
             for index in line.replace('\n','').split(','):
                 crackfacesNodeset.append(int(index))
-        elif ('*Nset' in line or '*NSET' in line) and ('crack' in line or 'CRACK' in line or 'Crack' in line) and ('cracktip' not in line and 'CRACKTIP' not in line and 'Cracktip' not in line):
+        elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACK','crack']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack faces element set and saving to list ...',True)
@@ -1579,7 +1579,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         elif store == True:
             for index in line.replace('\n','').split(','):
                 crackfacesElementset.append(int(index))
-        elif ('*Elset' in line or '*ELSET' in line) and ('crack' in line or 'CRACK' in line or 'Crack' in line) and ('cracktip' not in line and 'CRACKTIP' not in line and 'Cracktip' not in line):
+        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIP','cracktip']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading fiber node set and saving to list ...',True)
@@ -1596,7 +1596,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             for index in line.replace('\n','').split(','):
                 if index!='' and index!=' ':
                     fiberNodeset.append(int(index))
-        elif ('*Nset' in line or '*NSET' in line) and ('fiber' in line or 'FIBER' in line or 'Fiber' in line) and ('fiber-' not in line and 'FIBER-' not in line and 'Fiber-' not in line):
+        elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER','fiber']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading matrix node set and saving to list ...',True)
@@ -1611,7 +1611,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         elif store == True:
             for index in line.replace('\n','').split(','):
                 matrixNodeset.append(int(index))
-        elif ('*Nset' in line or '*NSET' in line) and ('matrix' in line or 'MATRIX' in line or 'Matrix' in line) and ('matrix-' not in line and 'MATRIX-' not in line and 'Matrix-' not in line):
+        elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX','matrix']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading fiber element set and saving to list ...',True)
@@ -1626,7 +1626,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         elif store == True:
             for index in line.replace('\n','').split(','):
                 fiberElementset.append(int(index))
-        elif ('*Elset' in line or '*ELSET' in line) and ('fiber' in line or 'FIBER' in line or 'Fiber' in line) and ('fiber-' not in line and 'FIBER-' not in line and 'Fiber-' not in line):
+        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER','fiber']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading matrix element set and saving to list ...',True)
@@ -1641,7 +1641,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         elif store == True:
             for index in line.replace('\n','').split(','):
                 matrixElementset.append(int(index))
-        elif ('*Elset' in line or '*ELSET' in line) and ('matrix' in line or 'MATRIX' in line or 'Matrix' in line) and ('matrix-' not in line and 'MATRIX-' not in line and 'Matrix-' not in line):
+        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX','matrix']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)

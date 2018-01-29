@@ -1398,7 +1398,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # mesh part
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Meshing part ...',True)
     
-    model.rootAssembly.generateMesh(regions=(model.rootAssembly.instances['RVE-assembly']))
+    #model.rootAssembly.generateMesh(regions=(model.rootAssembly.instances['RVE-assembly']))
+    model.rootAssembly.generateMesh()
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     

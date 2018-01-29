@@ -1285,13 +1285,13 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,codedir,settings,logfile,
         beta2 = numpy.arctan2(undeftip2.data[1],undeftip2.data[0])
         
         #writeLineToLogFile(logfile,'a','orientation defined')
-        '''
-        xdispcracktip1 = (defmatrixpretip1.data[0]-undefmatrixpretip1.data[0]) - (deffiberpretip1.data[0]-undeffiberpretip1.data[0])
-        zdispcracktip1 = (defmatrixpretip1.data[1]-undefmatrixpretip1.data[1]) - (deffiberpretip1.data[1]-undeffiberpretip1.data[1])
         
-        xdispcracktip2 = (defmatrixpretip2.data[0]-undefmatrixpretip2.data[0]) - (deffiberpretip2.data[0]-undeffiberpretip2.data[0])
-        zdispcracktip2 = (defmatrixpretip2.data[1]-undefmatrixpretip2.data[1]) - (deffiberpretip2.data[1]-undeffiberpretip2.data[1])
-        '''
+        # xdispcracktip1 = (defmatrixpretip1.data[0]-undefmatrixpretip1.data[0]) - (deffiberpretip1.data[0]-undeffiberpretip1.data[0])
+        # zdispcracktip1 = (defmatrixpretip1.data[1]-undefmatrixpretip1.data[1]) - (deffiberpretip1.data[1]-undeffiberpretip1.data[1])
+        # 
+        # xdispcracktip2 = (defmatrixpretip2.data[0]-undefmatrixpretip2.data[0]) - (deffiberpretip2.data[0]-undeffiberpretip2.data[0])
+        # zdispcracktip2 = (defmatrixpretip2.data[1]-undefmatrixpretip2.data[1]) - (deffiberpretip2.data[1]-undeffiberpretip2.data[1])
+        
         
         xdispcracktip1 = dispmatrixpretip1.data[0] - dispfiberpretip1.data[0]
         zdispcracktip1 = dispmatrixpretip1.data[1] - dispfiberpretip1.data[1]

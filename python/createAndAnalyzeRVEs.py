@@ -540,8 +540,8 @@ def defineSetOfFacesByFindAt(modelpart,Ax,Ay,Az,setName,logfile,indent,toScreen)
     modelpart.Set(faces = modelpart.faces[setOfFaces.index:setOfFaces.index+1], name=setName)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
     
-def assignMeshControls(globalModel,assemblyName,setName,elementShape,controls,logfile,indent,toScreen):
-    globalModel.rootAssembly.setMeshControls(regions=(model.rootAssembly.instances[assemblyName].sets[setName].faces), elemShape=elementShape, technique=controls)
+def assignMeshControls(thisModel,assemblyName,setName,elementShape,controls,logfile,indent,toScreen):
+    thisModel.rootAssembly.setMeshControls(regions=(thisModel.rootAssembly.instances[assemblyName].sets[setName].faces), elemShape=elementShape, technique=controls)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
     
 #===============================================================================#

@@ -1657,20 +1657,20 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the crack tip',True)
     fiberElswithCracktip = []
     matrixElswithCracktip = []
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
     for element in fiberElementset:
         if cracktipIndex in quads[element]:
             fiberElswithCracktip.append(element)
             if len(fiberElswithCracktip) == 2:
                 break
+    for element in fiberElswithCracktip:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - element ' + str(element),True)
     for element in matrixElementset:
         if cracktipIndex in quads[element]:
             matrixElswithCracktip.append(element)
             if len(matrixElswithCracktip) == 2:
                 break
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
-    for element in fiberElswithCracktip:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - element ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
     for element in matrixElswithCracktip:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - element ' + str(element),True)

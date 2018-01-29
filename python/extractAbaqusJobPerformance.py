@@ -113,7 +113,8 @@ def getPerfs(wd,inpfile):
                     while '' in words: words.remove('')
                     progN = int(words[-1])
                     words = lines[l+9].split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     totVar = int(words[-1])
         if exists(join(wd,sim,'abaqus',sim+'.msg')):
             with open(join(wd,sim,'abaqus',sim+'.msg'),'r') as msg:

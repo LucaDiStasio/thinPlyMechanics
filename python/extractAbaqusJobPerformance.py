@@ -121,7 +121,8 @@ def getPerfs(wd,inpfile):
                 for line in lines:
                     if 'USING THE DIRECT SOLVER WITH' in line:
                         words = line.replace('\n','').split(' ')
-                        while '' in words: words.remove('')
+                        while '' in words:
+                            words.remove('')
                         cpus = int(words[words.index('PROCESSORS')-1])
         if exists(join(wd,sim,'abqinp',sim+'.inp')):
             with open(join(wd,sim,'abqinp',sim+'.inp'),'r') as inp:

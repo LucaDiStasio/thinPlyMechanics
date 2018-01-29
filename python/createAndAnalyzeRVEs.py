@@ -1536,7 +1536,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             quads[quadIndex] = []
             for node in line.replace('\n','').split(',')[1:]:
                 quads[quadIndex].append(int(node))
-            store == False
+            store = False
             break
         elif store == True:
             quadIndex = int(line.replace('\n','').split(',')[0])
@@ -1544,7 +1544,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             for node in line.replace('\n','').split(',')[1:]:
                 quads[quadIndex].append(int(node))
         elif ('*Element, type=CPE8' in line or '*ELEMENT, type=CPE8' in line or '*Element, type=CPE4' in line or '*ELEMENT, type=CPE4' in line) and (len(inpfilelines[l+1].replace('\n','').split(','))==5 or len(inpfilelines[l+1].replace('\n','').split(','))==9):
-            store == True
+            store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack tip set and saving to variable ...',True)
     for l,line in enumerate(inpfilelines):
@@ -1559,7 +1559,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         if store == True and '*' in inpfilelines[l+1]:
             for index in line.replace('\n','').split(','):
                 crackfacesNodeset.append(int(index))
-            store == False
+            store = False
             break
         elif store == True:
             for index in line.replace('\n','').split(','):
@@ -1574,7 +1574,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         if store == True and '*' in inpfilelines[l+1]:
             for index in line.replace('\n','').split(','):
                 crackfacesElementset.append(int(index))
-            store == False
+            store = False
             break
         elif store == True:
             for index in line.replace('\n','').split(','):
@@ -1590,7 +1590,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             for index in line.replace('\n','').split(','):
                 if index!='' and index!=' ':
                     fiberNodeset.append(int(index))
-            store == False
+            store = False
             break
         elif store == True:
             for index in line.replace('\n','').split(','):
@@ -1606,7 +1606,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         if store == True and '*' in inpfilelines[l+1]:
             for index in line.replace('\n','').split(','):
                 matrixNodeset.append(int(index))
-            store == False
+            store = False
             break
         elif store == True:
             for index in line.replace('\n','').split(','):
@@ -1621,7 +1621,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         if store == True and '*' in inpfilelines[l+1]:
             for index in line.replace('\n','').split(','):
                 fiberElementset.append(int(index))
-            store == False
+            store = False
             break
         elif store == True:
             for index in line.replace('\n','').split(','):
@@ -1636,7 +1636,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         if store == True and '*' in inpfilelines[l+1]:
             for index in line.replace('\n','').split(','):
                 matrixElementset.append(int(index))
-            store == False
+            store = False
             break
         elif store == True:
             for index in line.replace('\n','').split(','):

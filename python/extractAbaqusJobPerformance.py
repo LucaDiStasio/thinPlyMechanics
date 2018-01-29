@@ -95,13 +95,16 @@ def getPerfs(wd,inpfile):
                     minIOmemory = float(values[3])
                 elif 'P R O B L E M   S I Z E' in line:
                     words = lines[l+3].replace('\n','').split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     totEl = int(words[-1])
                     words = lines[l+4].split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     userEl = int(words[-1])
                     words = lines[l+5].split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     progEl = int(words[-1])
                     words = lines[l+6].split(' ')
                     while '' in words:

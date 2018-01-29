@@ -1313,7 +1313,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['MATRIX-INTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
                     ['MATRIX-INTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
                     ['FIBER-CENTER',QUAD_DOMINATED,FREE],
-                    ['FIBER-INTANNULUS',QUAD_DOMINATED,FREE],
+                    ['FIBER-INTERMEDIATE',QUAD_DOMINATED,FREE],
                     ['FIBER-EXTANNULUS-SECONDBOUNDED',QUAD,STRUCTURED],
                     ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD,STRUCTURED],
                     ['MATRIX-INTANNULUS-SECONDBOUNDED',QUAD,STRUCTURED],

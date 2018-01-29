@@ -1383,20 +1383,28 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     # select element type
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Selecting and assigning element types ...',True)
+    
     if 'first' in parameters['mesh']['elements']['order']:
         elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
         elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
     elif 'second' in parameters['mesh']['elements']['order']:
         elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
         elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
-    model.rootAssembly.setElementType(regions=model.rootAssembly.instances['RVE-assembly'].sets['RVE'], elemTypes=(elemType1, elemType2))
+    model.rootAssembly.setElementType(regions=(model.rootAssembly.instances['RVE-assembly'].sets['RVE']), elemTypes=(elemType1, elemType2))
     
     # mesh part
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Meshing part ...',True)
+    
     model.rootAssembly.generateMesh(regions=model.rootAssembly.instances['RVE-assembly'])
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     mdb.save()
     
     # extract mesh statistics
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extracting mesh statistics ...',True)
+    
     meshStats = model.rootAssembly.getMeshStats(regions=model.rootAssembly.instances['RVE-assembly'])
     
     modelData = {}
@@ -1404,6 +1412,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     modelData['numQuads'] =  meshStats.numQuadElems
     modelData['numTris'] =  meshStats.numTriElems
     modelData['numEls'] =  meshStats.numQuadElems + meshStats.numTriElems
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     mdb.save()
     

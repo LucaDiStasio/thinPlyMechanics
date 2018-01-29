@@ -401,9 +401,9 @@ def extractAndSaveFieldOutput(odbObj,step,frameN,folder,filename,ext,fieldOutput
 
 def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
     
-    set = getSingleNodeSet(odbObj,part,subset)
+    nodeSet = getSingleNodeSet(odbObj,part,subset)
     
-    disp = getFieldOutput(odbObj,-1,-1,'U',set)
+    disp = getFieldOutput(odbObj,-1,-1,'U',nodeSet)
 
     countdisp = 0
     meandisp = 0
@@ -413,7 +413,7 @@ def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
         meandisp += value.data[component]
     meandisp /= countdisp
     
-    force = getFieldOutput(odbObj,-1,-1,'RF',set)
+    force = getFieldOutput(odbObj,-1,-1,'RF',nodeSet)
     
     totalforce = 0
     

@@ -1583,7 +1583,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for l,line in enumerate(inpfilelines):
         if store == True and '*' in inpfilelines[l+1]:
             for index in line.replace('\n','').split(','):
-                fiberNodeset.append(int(index))
+                if index!='' and index!=' ':
+                    fiberNodeset.append(int(index))
             store == False
             break
         elif store == True:

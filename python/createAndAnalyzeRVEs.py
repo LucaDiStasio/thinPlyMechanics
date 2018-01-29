@@ -1496,7 +1496,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     # modified input file name
     modinpname = 'Job-VCCTandJintegral-' + parameters['input']['modelname']
     modinpfullpath = join(parameters['input']['wd'],modinpname)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Working directory: ' + parameters['wd'],True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Working directory: ' + parameters['input']['wd'],True)
     #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database name: ' + odbname,True)
     #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database full path: ' + join(parameters['wd'],odbname),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Input file name: ' + inpname,True)
@@ -2307,6 +2307,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     
 def main(argv):
     
+    debug = True
+    
     #=======================================================================
     # BEGIN - DATA
     #=======================================================================
@@ -2467,7 +2469,7 @@ def main(argv):
         try:
             modelData = createRVE(RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: createRVE(parameters,logfilepath,baselogindent,logindent)',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
         except Exception, error:
@@ -2481,7 +2483,7 @@ def main(argv):
         try:
             inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent)',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
         except Exception, error:
@@ -2495,7 +2497,7 @@ def main(argv):
         try:
             runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent)',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
         except Exception, error:
@@ -2511,12 +2513,14 @@ def main(argv):
             createCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],'')
             analyzeRVEresults(inputfilename.split('.')[0]+'.odb',RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: analyzeRVEresults(wd,odbname,logfilepath,parameters)',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
+        if debug:
+            break
     
     globalElapsedTime = timeit.default_timer() - globalStart
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Global timer stopped',True)

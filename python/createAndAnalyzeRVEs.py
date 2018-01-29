@@ -1748,7 +1748,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
     distancesMatrixDisplacementMeas = []
     for node in nodesMatrixDisplacementMeas:
-        distancesFiberDisplacementMeas.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
+        distancesMatrixDisplacementMeas.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort lists with computed distances',True)
     sortedFiberDistanceIndeces = np.argsort(distancesFiberDisplacementMeas)
     sortedMatrixDistanceIndeces = np.argsort(distancesMatrixDisplacementMeas)

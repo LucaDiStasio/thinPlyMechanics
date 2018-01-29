@@ -1393,10 +1393,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
     model.rootAssembly.setElementType(regions=(model.rootAssembly.instances['RVE-assembly'].sets['RVE']), elemTypes=(elemType1, elemType2))
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
     # mesh part
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Meshing part ...',True)
     
-    model.rootAssembly.generateMesh(regions=model.rootAssembly.instances['RVE-assembly'])
+    model.rootAssembly.generateMesh(regions=(model.rootAssembly.instances['RVE-assembly']))
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     

@@ -1376,7 +1376,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['LEFTSIDE',30]]
                     
     for regionSet in regionSets:
-        seedEdge(model,'RVE-assembly',regionSet[],regionSet[],FINER,logfilepath,baselogindent + 3*logindent,True)
+        seedEdge(model,'RVE-assembly',regionSet[0],regionSet[1],FINER,logfilepath,baselogindent + 3*logindent,True)
     
     # select element type
     if 'first' in parameters['mesh']['elements']['order']:

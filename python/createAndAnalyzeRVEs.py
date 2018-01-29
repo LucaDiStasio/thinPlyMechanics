@@ -1865,7 +1865,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         for node in nodes.keys():
             line = str(node)
             for coord in nodes[node]:
-                line += ', ' + coord
+                line += ', ' + str(coord)
             inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
@@ -1879,7 +1879,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         for quad in quads.keys():
             line = str(quad)
             for node in quads[quad]:
-                line += ', ' + node
+                line += ', ' + str(node)
             inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)

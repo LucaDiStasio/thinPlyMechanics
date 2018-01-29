@@ -1686,6 +1686,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Second order elements are used',True)
         matrixFirstBehindCracktipIndex = numNodes + 1000 + 2
         firstBehindCracktipDummyIndex = numNodes + 1000 + 3
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix first behind crack tip node with index ' + str(matrixFirstBehindCracktipIndex),True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(firstBehindCracktipDummyIndex),True)
         found = False
         for fiberEl in fiberElswithCracktip:
             if found:

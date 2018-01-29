@@ -1657,6 +1657,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the crack tip',True)
     fiberElswithCracktip = []
     matrixElswithCracktip = []
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(fiberElementset),True)
     for element in fiberElementset:
         if cracktipIndex in quads[element]:
             fiberElswithCracktip.append(element)
@@ -1674,7 +1675,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
     for element in matrixElswithCracktip:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - element ' + str(element),True)
-    if 'second' in parameters['elements']['order']:
+    if 'second' in parameters['mesh']['elements']['order']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Second order elements are used',True)
         matrixFirstBehindCracktipIndex = numNodes + 1000 + 2
         firstBehindCracktipDummyIndex = numNodes + 1000 + 3

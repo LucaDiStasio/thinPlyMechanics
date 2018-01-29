@@ -248,10 +248,10 @@ def extractAndSaveNodesCoordinates(odbObj,nodeSetsData,folder,filename,ext):
             string = 'X, Y, Z'
         csv.write('DATA\n')
         csv.write('NODE SET' + ', ' + 'NODE TYPE, NODE LABEL, ' + string + '\n')
-        for set in nodeSetsData:
-            for value in nodeSets[set[3]].values:
+        for nodeSet in nodeSetsData:
+            for value in nodeSets[nodeSet[3]].values:
                 line = ''
-                line = set[3] + ', ' + 'NODAL' + ', ' + str(value.nodeLabel)
+                line = nodeSet[3] + ', ' + 'NODAL' + ', ' + str(value.nodeLabel)
                 for datum in value.data:
                     line += ', ' + str(datum)
                 csv.write(line + '\n')

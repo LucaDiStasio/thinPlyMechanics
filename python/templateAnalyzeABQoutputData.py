@@ -1267,7 +1267,7 @@ def extractFromODBoutputSet01(wd,project,matdatafolder,codedir,settings,logfile,
         deftip2 = lastFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=matrixCrackTip2).values[0]
         
         #undefmatrixpretip1 = firstFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=preMatrixCrackTip1).values[0]
-        undefmatrixpretip2 = firstFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=preMatrixCrackTip2).values[0]
+        #undefmatrixpretip2 = firstFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=preMatrixCrackTip2).values[0]
         undeffiberpretip1 = firstFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=preFiberCrackTip1).values[0]
         undeffiberpretip2 = firstFrame.fieldOutputs['COORD'].getSubset(position=NODAL).getSubset(region=preFiberCrackTip2).values[0]
         

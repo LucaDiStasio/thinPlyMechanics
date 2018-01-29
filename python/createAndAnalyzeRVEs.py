@@ -1768,6 +1768,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         cracktipMatrixDispMeasIndex = nodesMatrixDisplacementMeas[sortedMatrixDistanceIndeces[-1]]
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at crack tip ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify bonded and debonded elements around crack tip on fiber and matrix',True)
     found = False
     for fIndex,fiberEl in fiberElswithCracktip:
         if found:
@@ -1786,13 +1787,16 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 firstdebondedMatrixEl = matrixElswithCracktip[1-mIndex]
                 found = True
                 break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the bonded element on the matrix',True)
     for n,node in enumerate(quads[firstboundedMatrixEl]):
         if node == crackTipIndex:
             quads[firstboundedMatrixEl][n] = matrixCracktipIndex
     if 'second' in parameters['mesh']['elements']['order']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new first behind crack tip index to the bonded element on the matrix',True)
         for n,node in enumerate(quads[firstboundedMatrixEl]):
             if node == fiberFirstBehindCracktipIndex:
                 quads[firstboundedMatrixEl][n] = matrixFirstBehindCracktipIndex
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the debonded element on the matrix',True)
     for n,node in enumerate(quads[firstdebondedMatrixEl]):
         if node == crackTipIndex:
             quads[firstdebondedMatrixEl][n] = matrixCracktipIndex

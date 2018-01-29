@@ -1588,7 +1588,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             break
         elif store == True:
             for index in line.replace('\n','').split(','):
-                fiberNodeset.append(int(index))
+                if index!='' and index!=' ':
+                    fiberNodeset.append(int(index))
         elif ('*Nset' in line or '*NSET' in line) and ('fiber' in line or 'FIBER' in line or 'Fiber' in line) and ('fiber-' not in line and 'FIBER-' not in line and 'Fiber-' not in line):
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

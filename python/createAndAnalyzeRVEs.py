@@ -551,7 +551,7 @@ def assignMeshControls(thisModel,assemblyName,setName,elementShape,controls,logf
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
 
 def seedEdgeByNumber(thisModel,assemblyName,setName,seedsNumber,seedsConstraint,logfile,indent,toScreen):
-    thisModel.rootAssembly.seedEdgeByNumber(edges=(thisModel.rootAssembly.instances[assemblyName].sets[setName].edges), number=float(seedsNumber), constraint=seedsConstraint)
+    thisModel.rootAssembly.seedEdgeByNumber(edges=(thisModel.rootAssembly.instances[assemblyName].sets[setName].edges), number=int(seedsNumber), constraint=seedsConstraint)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
 
 def createRVE(parameters,logfilepath,baselogindent,logindent):
@@ -1331,6 +1331,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     # assign seeds
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
+    
     nTangential = np.floor(deltapsi/delta) 
     nRadialFiber = np.floor(0.25/delta)
     nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
@@ -1377,6 +1379,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     
     for regionSet in regionSets:
         seedEdgeByNumber(model,'RVE-assembly',regionSet[0],regionSet[1],FINER,logfilepath,baselogindent + 3*logindent,True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     # select element type
     if 'first' in parameters['mesh']['elements']['order']:

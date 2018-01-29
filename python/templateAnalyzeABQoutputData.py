@@ -229,12 +229,12 @@ def getSingleSetNodeCoordinates(odbObj,step,frame,part,nodeSet):
 
 def getMultipleSetsNodeCoordinates(odbObj,nodeSets):
     coords = {}
-    for set in nodeSets:
-        step = set[0]
-        frame = set[1]
-        part = set[2]
-        nodeSet = set[3]
-        coords[nodeSet] = getSingleSetNodeCoordinates(odbObj,step,frame,part,nodeSet)
+    for nodeSet in nodeSets:
+        step = nodeSet[0]
+        frame = nodeSet[1]
+        part = nodeSet[2]
+        nodeSetName = nodeSet[3]
+        coords[nodeSet] = getSingleSetNodeCoordinates(odbObj,step,frame,part,nodeSetName)
     return coords
 
 def extractAndSaveNodesCoordinates(odbObj,nodeSetsData,folder,filename,ext):

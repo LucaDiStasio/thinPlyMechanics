@@ -1401,7 +1401,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     model.rootAssembly.generateMesh(regions=(model.rootAssembly.instances['RVE-assembly'],))
     
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Mesh creation time: ' + str(timeit.default_timer() - localStart),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Mesh creation time: ' + str(timeit.default_timer() - localStart) + ' [s]',True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
@@ -1465,10 +1465,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Submit job and wait for completion',True)
     localStart = timeit.default_timer()
     #mdb.jobs['Job-' + modelname].submit(consistencyChecking=OFF)
-    mdb.jobs['Job-' + modelname].writeInput(consistencyChecking=OFF)
-    mdb.jobs['Job-' + modelname].waitForCompletion()
+    mdb.jobs['Job-Jintegral-' + modelname].writeInput(consistencyChecking=OFF)
+    mdb.jobs['Job-Jintegral-' + modelname].waitForCompletion()
     
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Job time: ' + str(timeit.default_timer() - localStart),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Job time: ' + str(timeit.default_timer() - localStart) + ' [s]',True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     
@@ -1481,7 +1481,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: createRVE(parameters,logfilepath,logindent)',True)
     
-    return modelData()
+    return modelData
     
 def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
@@ -2469,7 +2469,7 @@ def main(argv):
             localElapsedTime = timeit.default_timer() - localStart
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime),True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
@@ -2483,7 +2483,7 @@ def main(argv):
             localElapsedTime = timeit.default_timer() - localStart
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime),True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
@@ -2497,7 +2497,7 @@ def main(argv):
             localElapsedTime = timeit.default_timer() - localStart
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime),True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
@@ -2513,14 +2513,14 @@ def main(argv):
             localElapsedTime = timeit.default_timer() - localStart
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime),True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
     
     globalElapsedTime = timeit.default_timer() - globalStart
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Global timer stopped',True)
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(globalElapsedTime),True)
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(globalElapsedTime) + ' [s]',True)
     
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a','Exiting function: main(argv)',True)

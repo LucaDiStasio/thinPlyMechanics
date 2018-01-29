@@ -1401,7 +1401,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     model.rootAssembly.generateMesh(regions=(model.rootAssembly.instances['RVE-assembly'],))
     
-    writeLineToLogFile(logfilefullpath,'a',baselogindent + 3*logindent + 'Mesh creation time: ' + str(timeit.default_timer() - localStart),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Mesh creation time: ' + str(timeit.default_timer() - localStart),True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
@@ -1468,7 +1468,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     mdb.jobs['Job-' + modelname].writeInput(consistencyChecking=OFF)
     mdb.jobs['Job-' + modelname].waitForCompletion()
     
-    writeLineToLogFile(logfilefullpath,'a',baselogindent + 3*logindent + 'Job time: ' + str(timeit.default_timer() - localStart),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Job time: ' + str(timeit.default_timer() - localStart),True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     

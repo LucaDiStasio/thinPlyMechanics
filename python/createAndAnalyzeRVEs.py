@@ -1828,7 +1828,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             break
         elif started:
             continue
-        elif ('*Node' in line or '*NODE' in line) and len(inpfilelines[l+1].replace('\n').split(',')) == 3:
+        elif ('*Node' in line or '*NODE' in line) and len(inpfilelines[l+1].replace('\n','').split(',')) == 3:
             nodeSecStart = l
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify quadrilateral element section  ...',True)

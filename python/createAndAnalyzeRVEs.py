@@ -1729,7 +1729,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for node in crackfacesNodeset:
         if node in nodesAroundCracktip:
             nodesFiberDisplacementMeas.append(node)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesFiberDisplacementMeas) + ' nodes',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesFiberDisplacementMeas)) + ' nodes',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
     distancesFiberDisplacementMeas = []
     for node in nodesFiberDisplacementMeas:
@@ -1744,7 +1744,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for node in crackfacesNodeset:
         if node in nodesAroundCracktip:
             nodesMatrixDisplacementMeas.append(node)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesMatrixDisplacementMeas) + ' nodes',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesMatrixDisplacementMeas)) + ' nodes',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
     distancesMatrixDisplacementMeas = []
     for node in nodesMatrixDisplacementMeas:

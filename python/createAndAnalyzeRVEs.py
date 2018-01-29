@@ -1957,7 +1957,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         inp.write(' ' + str(cracktipDummyIndex) + '\n')
         if 'second' in parameters['mesh']['elements']['order']:
             inp.write('*NSET, NSET=FIRSTBOUNDED-DUMMY-NODE, INSTANCE=RVEassembly' + '\n')
-            inp.write(' ' + str(FirstBehindCracktipDummyIndex) + '\n')
+            inp.write(' ' + str(firstBehindCracktipDummyIndex) + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write equation definitions ...',True)
     with open(modinpfullpath,'a') as inp:

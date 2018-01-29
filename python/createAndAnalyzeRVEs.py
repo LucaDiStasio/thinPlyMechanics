@@ -1729,11 +1729,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for node in crackfacesNodeset:
         if node in nodesAroundCracktip:
             nodesFiberDisplacementMeas.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesFiberDisplacementMeas) + ' nodes',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
     distancesFiberDisplacementMeas = []
     for node in nodesFiberDisplacementMeas:
         distancesFiberDisplacementMeas.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the matrix elements around the crack tip',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the matrix elements around the crack tip',True)
     nodesAroundCracktip = []
     for element in matrixElswithCracktip:
         for node in quads[element]:
@@ -1743,6 +1744,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for node in crackfacesNodeset:
         if node in nodesAroundCracktip:
             nodesMatrixDisplacementMeas.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesMatrixDisplacementMeas) + ' nodes',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
     distancesMatrixDisplacementMeas = []
     for node in nodesMatrixDisplacementMeas:

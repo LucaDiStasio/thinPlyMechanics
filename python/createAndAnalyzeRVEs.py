@@ -2010,7 +2010,6 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(line)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    writeLineToLogFile(logfilefullpath,'a','modifyRVEinputfile(parameters,mdbData,baselogindent,logindent)',True)
     return modinpname
 
 def runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent):

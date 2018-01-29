@@ -1544,7 +1544,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack tip set and saving to variable ...',True)
     for l,line in enumerate(inpfilelines):
         if ('*Nset' in line or '*NSET' in line) and ('cracktip' in line or 'CRACKTIP' in line or 'Cracktip' in line):
-            cracktipIndex = int(inpfilelines[l+1].replace('\n').split(',')[0])
+            cracktipIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
             break
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack faces node set and saving to list ...',True)

@@ -1642,6 +1642,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)
     numNodes = mdbData['numNodes']
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Total number of nodes = ' + str(numNodes),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Index of current crack tip node: ' + str(cracktipIndex),True)
     matrixCracktipIndex = numNodes + 1000
     cracktipDummyIndex = numNodes + 1000 + 1
     nodes[matrixCracktipIndex] = [nodes[cracktipIndex][0],nodes[cracktipIndex][1]]

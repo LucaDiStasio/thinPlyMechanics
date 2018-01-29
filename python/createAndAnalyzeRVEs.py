@@ -1397,8 +1397,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     
     # mesh part
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Meshing part ...',True)
-    
+    localStart = timeit.default_timer()
+
     model.rootAssembly.generateMesh(regions=(model.rootAssembly.instances['RVE-assembly'],))
+    
+    writeLineToLogFile(logfilefullpath,'a',baselogindent + 3*logindent + 'Mesh creation time: ' + str(timeit.default_timer() - localStart),True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
@@ -1429,9 +1432,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating output requests ...',True)
     
     # field output
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Field output ...',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     # history output
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'History output ...',True)
+    
     model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     mdb.save()
     
@@ -1444,15 +1454,21 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set job name',True)
     modelData['jobname'] = 'Job-Jintegral-' + modelname
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job',True)
     mdb.Job(name='Job-Jintegral-' + modelname, model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=12, numDomains=12,numGPUs=0)
     
     mdb.save()
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Submit job and wait for completion',True)
+    localStart = timeit.default_timer()
     #mdb.jobs['Job-' + modelname].submit(consistencyChecking=OFF)
     mdb.jobs['Job-' + modelname].writeInput(consistencyChecking=OFF)
     mdb.jobs['Job-' + modelname].waitForCompletion()
+    
+    writeLineToLogFile(logfilefullpath,'a',baselogindent + 3*logindent + 'Job time: ' + str(timeit.default_timer() - localStart),True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     

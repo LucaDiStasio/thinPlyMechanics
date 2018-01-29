@@ -1338,14 +1338,13 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
     nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['mesh']['size']['delta3'])
     nTangential3 = np.floor(alpha/parameters['mesh']['size']['delta1'])
-    nRadialFiber1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'parameters[\'mesh\'][\'size\'][\'delta3\'] = ' + str(parameters['mesh']['size']['delta3']),True)
+    #nRadialFiber1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
     if L>2*Rf:
         nRadialMatrix = np.floor(0.25/delta)
-        nRadialMatrix1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
+        #nRadialMatrix1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
     else:
         nRadialMatrix = np.floor(0.25*(L-Rf)/delta)
-        nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
+        #nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
     
     regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
                     ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
@@ -1369,8 +1368,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['THIRDCIRCLE-RESTBOUNDED',nTangential2],
                     ['FOURTHCIRCLE-SECONDBOUNDED',nTangential1],
                     ['FOURTHCIRCLE-RESTBOUNDED',nTangential2],
-                    ['TRANSVERSALCUT-FOURTHFIBER',nRadialFiber1],
-                    ['TRANSVERSALCUT-FOURTHMATRIX',nRadialMatrix1],
+                    ['TRANSVERSALCUT-FOURTHFIBER',nRadialFiber],
+                    ['TRANSVERSALCUT-FOURTHMATRIX',nRadialMatrix],
                     ['SECONDCIRCLE-LOWERCRACK',nTangential3],
                     ['THIRDCIRCLE-LOWERCRACK',nTangential3],
                     ['FOURTHCIRCLE-LOWERCRACK',nTangential3],

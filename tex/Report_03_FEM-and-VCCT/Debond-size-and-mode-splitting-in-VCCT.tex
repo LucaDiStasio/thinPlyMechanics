@@ -112,6 +112,18 @@ $\underline{\underline{R}}$ & $\left[-\right]$  & Rotation matrix\\
 \section{ FEM formulation with quadrilateral elements}
 
 \begin{equation}
+\Pi\left(u_{i}\right)=\int_{V}\sigma_{ij}\varepsilon_{ij}dV+\int_{V}\rho\ddot{u}_{i}u_{i}dV-\int_{V}F^{T}_{i}u_{i}dV-\int_{S}f^{T}_{i}u_{i}dS
+\end{equation}
+
+\begin{equation}
+\Pi\left(u_{i}\right)=\int_{V}\sigma_{ij}\varepsilon_{ij}dV-\int_{V}F^{T}_{i}u_{i}dV-\int_{S}f^{T}_{i}u_{i}dS
+\end{equation}
+
+\begin{equation}
+\varepsilon_{ij}=\frac{1}{2}\left(u_{i,j}+u_{j,i}\right)
+\end{equation}
+
+\begin{equation}
 \underline{\sigma}=\underline{\underline{D}}\cdot\underline{\varepsilon}
 \end{equation}
 
@@ -137,11 +149,7 @@ E_{1}=\frac{E\left(1-\nu\right)}{\left(1+\nu\right)\left(1-2\nu\right)}\quad E_{
 \end{equation}
 
 \begin{equation}
-\Pi\left(\underline{u}\right)=\int_{V}\underline{\underline{\sigma}}^{T}\underline{\underline{\varepsilon}}dV+\int_{V}\rho\underline{\ddot{u}}dV-\int_{V}\underline{F}^{T}\underline{u}dV-\int_{S}\underline{f}^{T}\underline{u}dS
-\end{equation}
-
-\begin{equation}
-\Pi\left(\underline{u}\right)=\frac{1}{2}\int_{V}\underline{\underline{\sigma}}^{T}\underline{\underline{\varepsilon}}dV-\int_{V}\underline{F}^{T}\underline{u}dV-\int_{S}\underline{f}^{T}\underline{u}dS
+\Pi\left(\underline{u}\right)=\frac{1}{2}\int_{V}\underline{\underline{\varepsilon}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\varepsilon}}dV-\int_{V}\underline{F}^{T}\underline{u}dV-\int_{S}\underline{f}^{T}\underline{u}dS
 \end{equation}
 
 \begin{equation}

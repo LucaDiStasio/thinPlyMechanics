@@ -1339,6 +1339,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['mesh']['size']['delta3'])
     nTangential3 = np.floor(alpha/parameters['mesh']['size']['delta1'])
     nRadialFiber1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'nRadialFiber1 = ' + str(nRadialFiber1),True)
     if L>2*Rf:
         nRadialMatrix = np.floor(0.25/delta)
         nRadialMatrix1 = np.floor(0.25/parameters['mesh']['size']['delta3'])

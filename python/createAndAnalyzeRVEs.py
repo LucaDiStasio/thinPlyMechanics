@@ -550,8 +550,8 @@ def assignMeshControls(thisModel,assemblyName,setName,elementShape,controls,logf
     thisModel.rootAssembly.setMeshControls(regions=(thisModel.rootAssembly.instances[assemblyName].sets[setName].faces), elemShape=elementShape, technique=controls)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
 
-def seedEdge(thisModel,assemblyName,setName,seedsNumber,seedsConstraint,logfile,indent,toScreen):
-    thisModel.rootAssembly.seedEdgeByNumber(edges=(thisModel.rootAssembly.instances[assemblyName].sets[setName].edges), number=seedsNumber, constraint=seedsConstraint)
+def seedEdgeByNumber(thisModel,assemblyName,setName,seedsNumber,seedsConstraint,logfile,indent,toScreen):
+    thisModel.rootAssembly.seedEdgeByNumber(edges=(thisModel.rootAssembly.instances[assemblyName].sets[setName].edges), number=float(seedsNumber), constraint=seedsConstraint)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
 
 def createRVE(parameters,logfilepath,baselogindent,logindent):
@@ -1376,7 +1376,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['LEFTSIDE',30]]
                     
     for regionSet in regionSets:
-        seedEdge(model,'RVE-assembly',regionSet[0],regionSet[1],FINER,logfilepath,baselogindent + 3*logindent,True)
+        seedEdgeByNumber(model,'RVE-assembly',regionSet[0],regionSet[1],FINER,logfilepath,baselogindent + 3*logindent,True)
     
     # select element type
     if 'first' in parameters['mesh']['elements']['order']:

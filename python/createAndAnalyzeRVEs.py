@@ -1514,12 +1514,14 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     store = False
     for l,line in enumerate(inpfilelines):
         if store == True and '*' in inpfilelines[l+1]:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node section ends at line ' + str(l),True)
             nodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[1])]
             store == False
             break
         elif store == True:
             nodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[1])]
         elif ('*Node' in line or '*NODE' in line) and len(inpfilelines[l+1].replace('\n','').split(','))==3:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node section starts at line ' + str(l),True)
             store == True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading quadrilateral elements and saving to dictionary ...',True)
@@ -1643,7 +1645,6 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     numNodes = mdbData['numNodes']
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Total number of nodes = ' + str(numNodes),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Index of current crack tip node: ' + str(cracktipIndex),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(nodes),True)
     matrixCracktipIndex = numNodes + 1000
     cracktipDummyIndex = numNodes + 1000 + 1
     nodes[matrixCracktipIndex] = [nodes[cracktipIndex][0],nodes[cracktipIndex][1]]

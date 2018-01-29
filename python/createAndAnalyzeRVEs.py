@@ -1641,10 +1641,14 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)
     numNodes = mdbData['numNodes']
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Total number of nodes = ' + str(numNodes),True)
     matrixCracktipIndex = numNodes + 1000
     cracktipDummyIndex = numNodes + 1000 + 1
     nodes[matrixCracktipIndex] = [nodes[cracktipIndex][0],nodes[cracktipIndex][1]]
     nodes[cracktipDummyIndex] = [-5*parameters['Rf'],-10*parameters['Rf']]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix crack tip node with index ' + str(matrixCracktipIndex) + ' and coordinates (' + str(nodes[cracktipIndex][0]) + ', '+ str(nodes[cracktipIndex][1]) + ')',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(cracktipDummyIndex)+ ' and coordinates (' + str(-5*parameters['Rf']) + ', '+ str(-10*parameters['Rf']) + ')',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the crack tip',True)
     fiberElswithCracktip = []
     matrixElswithCracktip = []
     for element in fiberElementset:
@@ -1657,6 +1661,13 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             matrixElswithCracktip.append(element)
             if len(matrixElswithCracktip) == 2:
                 break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
+    for element in fiberElswithCracktip:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - element ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
+    for element in matrixElswithCracktip:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - element ' + str(element),True)
     if 'second' in parameters['elements']['order']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Second order elements are used',True)
         matrixFirstBehindCracktipIndex = numNodes + 1000 + 2

@@ -89,7 +89,8 @@ def getPerfs(wd,inpfile):
                             wallclock = float(subline.split('=')[1])
                 elif 'M E M O R Y   E S T I M A T E' in line:
                     values = lines[l+6].replace('\n','').split(' ')
-                    while '' in values: values.remove('')
+                    while '' in values:
+                        values.remove('')
                     floatops = float(values[1])
                     minMemory = float(values[2])
                     minIOmemory = float(values[3])

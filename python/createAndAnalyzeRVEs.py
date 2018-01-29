@@ -525,6 +525,12 @@ def getJintegrals(wd,sim,ncontours):
             break
     return values
 
+#===============================================================================#
+#===============================================================================#
+#                        Model creation functions
+#===============================================================================#
+#===============================================================================#
+
 def defineSetOfVerticesByBoundingSphere(modelpart,Cx,Cy,Cz,R,setName,logfile,indent,toScreen):
     setOfVertices = modelpart.vertices.getByBoundingSphere(center=(Cx,Cy,Cz),radius=R)
     modelpart.Set(vertices=setOfVertices, name=setName)
@@ -543,13 +549,11 @@ def defineSetOfFacesByFindAt(modelpart,Ax,Ay,Az,setName,logfile,indent,toScreen)
 def assignMeshControls(thisModel,assemblyName,setName,elementShape,controls,logfile,indent,toScreen):
     thisModel.rootAssembly.setMeshControls(regions=(thisModel.rootAssembly.instances[assemblyName].sets[setName].faces), elemShape=elementShape, technique=controls)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
-    
-#===============================================================================#
-#===============================================================================#
-#                        Model creation functions
-#===============================================================================#
-#===============================================================================#
-    
+
+def seedEdge(thisModel,assemblyName,setName,seedsNumber,seedsConstraint,logfile,indent,toScreen):
+    thisModel.rootAssembly.seedEdgeByNumber(edges=(thisModel.rootAssembly.instances[assemblyName].sets[setName].edges), number=seedsNumber, constraint=seedsConstraint)
+    writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
+
 def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#
 #                               Parameters
@@ -1329,48 +1333,50 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # assign seeds
     nTangential = np.floor(deltapsi/delta) 
     nRadialFiber = np.floor(0.25/delta)
-    if L>2*Rf:
-        nRadialMatrix = np.floor(0.25/delta)
-    else:
-        nRadialMatrix = np.floor(0.25*(L-Rf)/delta)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['SECONDCIRCLE-UPPERCRACK'], number=nTangential, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['SECONDCIRCLE-FIRSTBOUNDED'], number=nTangential, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['THIRDCIRCLE-UPPERCRACK'], number=nTangential, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['THIRDCIRCLE-FIRSTBOUNDED'], number=nTangential, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FOURTHCIRCLE-UPPERCRACK'], number=nTangential, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FOURTHCIRCLE-FIRSTBOUNDED'], number=nTangential, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-FIRSTFIBER'], number=nRadialFiber, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-FIRSTMATRIX'], number=nRadialMatrix, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-SECONDFIBER'], number=nRadialFiber, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-SECONDMATRIX'], number=nRadialMatrix, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-THIRDFIBER'], number=nRadialFiber, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-THIRDMATRIX'], number=nRadialMatrix, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE-SECONDRING-RIGHT'], number=nRadialFiber, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE-THIRDRING-RIGHT'], number=nRadialMatrix, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE-CENTER'], number=6, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FIRSTCIRCLE'], number=18, constraint=FINER)
     nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
     nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['mesh']['size']['delta3'])
     nTangential3 = np.floor(alpha/parameters['mesh']['size']['delta1'])
     nRadialFiber1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
     if L>2*Rf:
+        nRadialMatrix = np.floor(0.25/delta)
         nRadialMatrix1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
     else:
+        nRadialMatrix = np.floor(0.25*(L-Rf)/delta)
         nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['SECONDCIRCLE-SECONDBOUNDED'], number=nTangential1, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['SECONDCIRCLE-RESTBOUNDED'], number=nTangential2, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['THIRDCIRCLE-SECONDBOUNDED'], number=nTangential1, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['THIRDCIRCLE-RESTBOUNDED'], number=nTangential2, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FOURTHCIRCLE-SECONDBOUNDED'], number=nTangential1, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FOURTHCIRCLE-RESTBOUNDED'], number=nTangential2, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-FOURTHFIBER'], number=nRadialFiber1, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['TRANSVERSALCUT-FOURTHMATRIX'], number=nRadialMatrix1, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['SECONDCIRCLE-LOWERCRACK'], number=nTangential3, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['THIRDCIRCLE-LOWERCRACK'], number=nTangential3, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FOURTHCIRCLE-LOWERCRACK'], number=nTangential3, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['FIFTHCIRCLE'], number=90, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'], number=30, constraint=FINER)
-    model.rootAssembly.seedEdgeByNumber(edges=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'], number=30, constraint=FINER)
+    
+    regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
+                    ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
+                    ['THIRDCIRCLE-UPPERCRACK',nTangential],
+                    ['THIRDCIRCLE-FIRSTBOUNDED',nTangential],
+                    ['FOURTHCIRCLE-UPPERCRACK',nTangential],
+                    ['FOURTHCIRCLE-FIRSTBOUNDED',nTangential],
+                    ['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber],
+                    ['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix],
+                    ['TRANSVERSALCUT-SECONDFIBER',nRadialFiber],
+                    ['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix],
+                    ['TRANSVERSALCUT-THIRDFIBER',nRadialFiber],
+                    ['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix],
+                    ['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber],
+                    ['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix],
+                    ['LOWERSIDE-CENTER',6],
+                    ['FIRSTCIRCLE',18],
+                    ['SECONDCIRCLE-SECONDBOUNDED',nTangential1],
+                    ['SECONDCIRCLE-RESTBOUNDED',nTangential2],
+                    ['THIRDCIRCLE-SECONDBOUNDED',nTangential1],
+                    ['THIRDCIRCLE-RESTBOUNDED',nTangential2],
+                    ['FOURTHCIRCLE-SECONDBOUNDED',nTangential1],
+                    ['FOURTHCIRCLE-RESTBOUNDED',nTangential2],
+                    ['TRANSVERSALCUT-FOURTHFIBER',nRadialFiber1],
+                    ['TRANSVERSALCUT-FOURTHMATRIX',nRadialMatrix1],
+                    ['SECONDCIRCLE-LOWERCRACK',nTangential3],
+                    ['THIRDCIRCLE-LOWERCRACK',nTangential3],
+                    ['FOURTHCIRCLE-LOWERCRACK',nTangential3],
+                    ['FIFTHCIRCLE',90],
+                    ['RIGHTSIDE',30],
+                    ['LEFTSIDE',30]]
+                    
+    for regionSet in regionSets:
+        seedEdge(model,'RVE-assembly',regionSet[],regionSet[],FINER,logfilepath,baselogindent + 3*logindent,True)
     
     # select element type
     if 'first' in parameters['mesh']['elements']['order']:

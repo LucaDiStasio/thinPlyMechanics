@@ -1743,7 +1743,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         distancesFiberDisplacementMeas.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
     sortedFiberDistanceIndeces = np.argsort(distancesFiberDisplacementMeas)
     sortedMatrixDistanceIndeces = np.argsort(distancesMatrixDisplacementMeas)
-    if 'second' in parameters['elements']['order']:
+    if 'second' in parameters['mesh']['elements']['order']:
         cracktipFiberDispMeasIndex = nodesFiberDisplacementMeas[sortedFiberDistanceIndeces[-1]]
         firstBehindCracktipFiberDispMeasIndex = nodesFiberDisplacementMeas[sortedFiberDistanceIndeces[-2]]
         cracktipMatrixDispMeasIndex = nodesMatrixDisplacementMeas[sortedMatrixDistanceIndeces[-1]]
@@ -1774,7 +1774,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for n,node in enumerate(quads[firstboundedMatrixEl]):
         if node == crackTipIndex:
             quads[firstboundedMatrixEl][n] = matrixCracktipIndex
-    if 'second' in parameters['elements']['order']:
+    if 'second' in parameters['mesh']['elements']['order']:
         for n,node in enumerate(quads[firstboundedMatrixEl]):
             if node == fiberFirstBehindCracktipIndex:
                 quads[firstboundedMatrixEl][n] = matrixFirstBehindCracktipIndex

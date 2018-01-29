@@ -1516,15 +1516,15 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         if store == True and '*' in inpfilelines[l+1]:
             nodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[1])]
             #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Stored node ' + str(int(line.replace('\n','').split(',')[0])) + ' with coordinates (' + str(float(line.replace('\n','').split(',')[1])) + ', ' + str(float(line.replace('\n','').split(',')[2])) + ')',True)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node section ends at line ' + str(l),True)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'No more to go',True)
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node section ends at line ' + str(l),True)
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'No more to go',True)
             store = False
             break
         elif store == True:
             nodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[2])]
             #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Stored node ' + str(int(line.replace('\n','').split(',')[0])) + ' with coordinates (' + str(float(line.replace('\n','').split(',')[1])) + ', ' + str(float(line.replace('\n','').split(',')[2])) + ')',True)
         elif ('*Node' in line or '*NODE' in line) and len(inpfilelines[l+1].replace('\n','').split(','))==3:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node section starts at line ' + str(l),True)
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node section starts at line ' + str(l),True)
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading quadrilateral elements and saving to dictionary ...',True)
@@ -1651,7 +1651,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     matrixCracktipIndex = numNodes + 1000
     cracktipDummyIndex = numNodes + 1000 + 1
     nodes[matrixCracktipIndex] = [nodes[cracktipIndex][0],nodes[cracktipIndex][1]]
-    nodes[cracktipDummyIndex] = [-5*parameters['Rf'],-10*parameters['Rf']]
+    nodes[cracktipDummyIndex] = [-5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix crack tip node with index ' + str(matrixCracktipIndex) + ' and coordinates (' + str(nodes[cracktipIndex][0]) + ', '+ str(nodes[cracktipIndex][1]) + ')',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(cracktipDummyIndex)+ ' and coordinates (' + str(-5*parameters['Rf']) + ', '+ str(-10*parameters['Rf']) + ')',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the crack tip',True)

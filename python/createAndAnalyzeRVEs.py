@@ -1407,7 +1407,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # extract mesh statistics
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extracting mesh statistics ...',True)
     
-    meshStats = model.rootAssembly.getMeshStats(regions=model.rootAssembly.instances['RVE-assembly'])
+    meshStats = model.rootAssembly.getMeshStats(regions=(model.rootAssembly.instances['RVE-assembly'],))
     
     modelData = {}
     modelData['numNodes'] =  meshStats.numNodes

@@ -1770,11 +1770,11 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at crack tip ...',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify bonded and debonded elements around crack tip on fiber and matrix',True)
     found = False
-    for fIndex,fiberEl in fiberElswithCracktip:
+    for fIndex,fiberEl in enumerate(fiberElswithCracktip):
         if found:
             break
         fiberElnodes = quads[fiberEl]
-        for mIndex,matrixEl in matrixElswithCracktip:
+        for mIndex,matrixEl in enumerate(matrixElswithCracktip):
             commonNodes = []
             matrixElnodes = quads[matrixEl]
             for node in fiberElnodes:

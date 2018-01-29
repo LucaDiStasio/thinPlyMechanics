@@ -151,31 +151,39 @@ def getPerfs(wd,sims):
                             wallclock = float(subline.split('=')[1])
                 elif 'M E M O R Y   E S T I M A T E' in line:
                     values = lines[l+6].replace('\n','').split(' ')
-                    while '' in values: values.remove('')
+                    while '' in values:
+                        values.remove('')
                     floatops = float(values[1])
                     minMemory = float(values[2])
                     minIOmemory = float(values[3])
                 elif 'P R O B L E M   S I Z E' in line:
                     words = lines[l+3].replace('\n','').split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     totEl = int(words[-1])
                     words = lines[l+4].split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     userEl = int(words[-1])
                     words = lines[l+5].split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     progEl = int(words[-1])
                     words = lines[l+6].split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     totN = int(words[-1])
                     words = lines[l+7].split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     userN = int(words[-1])
                     words = lines[l+8].split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     progN = int(words[-1])
                     words = lines[l+9].split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     totVar = int(words[-1])
         if exists(join(wd,sim,'solver',sim+'.msg')):
             with open(join(wd,sim,'solver',sim+'.msg'),'r') as msg:
@@ -183,7 +191,8 @@ def getPerfs(wd,sims):
                 for line in lines:
                     if 'USING THE DIRECT SOLVER WITH' in line:
                         words = line.replace('\n','').split(' ')
-                        while '' in words: words.remove('')
+                        while '' in words:
+                            words.remove('')
                         cpus = int(words[words.index('PROCESSORS')-1])
         if exists(join(wd,sim,'input',sim+'.inp')):
             with open(join(wd,sim,'input',sim+'.inp'),'r') as inp:

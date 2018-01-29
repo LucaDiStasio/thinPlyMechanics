@@ -1789,7 +1789,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the bonded element on the matrix',True)
     for n,node in enumerate(quads[firstboundedMatrixEl]):
-        if node == crackTipIndex:
+        if node == cracktipIndex:
             quads[firstboundedMatrixEl][n] = matrixCracktipIndex
     if 'second' in parameters['mesh']['elements']['order']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new first behind crack tip index to the bonded element on the matrix',True)
@@ -1798,7 +1798,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 quads[firstboundedMatrixEl][n] = matrixFirstBehindCracktipIndex
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the debonded element on the matrix',True)
     for n,node in enumerate(quads[firstdebondedMatrixEl]):
-        if node == crackTipIndex:
+        if node == cracktipIndex:
             quads[firstdebondedMatrixEl][n] = matrixCracktipIndex
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Find set of debonded elements on fiber and on matrix  ...',True)

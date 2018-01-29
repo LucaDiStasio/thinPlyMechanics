@@ -218,8 +218,8 @@ def getFirstAndLastFrameLastStep(odbObj):
 def getSingleNodeSet(odbObj,part,nodeSet):
     return odbObj.rootAssembly.instances[part].nodeSets[nodeSet]
     
-def getSingleElementSet(odbObj,part,set):
-    return odbObj.rootAssembly.instances[part].elementSets[set]
+def getSingleElementSet(odbObj,part,elementSet):
+    return odbObj.rootAssembly.instances[part].elementSets[elementSet]
 
 def getSingleSetNodeCoordinates(odbObj,step,frame,part,nodeSet):
     frameObj = getFrame(odbObj,step,frame)

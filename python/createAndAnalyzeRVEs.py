@@ -540,6 +540,10 @@ def defineSetOfFacesByFindAt(modelpart,Ax,Ay,Az,setName,logfile,indent,toScreen)
     modelpart.Set(faces = modelpart.faces[setOfFaces.index:setOfFaces.index+1], name=setName)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
     
+def assignMeshControls(globalModel,assemblyName,setName,elementShape,controls,logfile,indent,toScreen):
+    globalModel.rootAssembly.setMeshControls(regions=(model.rootAssembly.instances[assemblyName].sets[setName].faces), elemShape=elementShape, technique=controls)
+    writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
+    
 #===============================================================================#
 #===============================================================================#
 #                        Model creation functions
@@ -1301,34 +1305,25 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     
     # assign mesh controls
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
-    model.rootAssembly.setMeshControls(regions=(model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-LOWERCRACK'],), elemShape=QUAD, technique=STRUCTURED)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- FIBER-EXTANNULUS-LOWERCRACK',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-UPPERCRACK'], elemShape=QUAD, technique=STRUCTURED)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- FIBER-EXTANNULUS-UPPERCRACK',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-FIRSTBOUNDED'], elemShape=QUAD, technique=STRUCTURED)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- FIBER-EXTANNULUS-FIRSTBOUNDED',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-INTANNULUS-LOWERCRACK'], elemShape=QUAD, technique=STRUCTURED)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- MATRIX-INTANNULUS-LOWERCRACK',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-INTANNULUS-UPPERCRACK'], elemShape=QUAD, technique=STRUCTURED)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- MATRIX-INTANNULUS-UPPERCRACK',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-INTANNULUS-FIRSTBOUNDED'], elemShape=QUAD, technique=STRUCTURED)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- MATRIX-INTANNULUS-FIRSTBOUNDED',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-CENTER'], elemShape=QUAD_DOMINATED, technique=FREE)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- FIBER-CENTER',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-INTANNULUS'], elemShape=QUAD_DOMINATED, technique=FREE)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- FIBER-INTANNULUS',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-SECONDBOUNDED'], elemShape=QUAD, technique=STRUCTURED)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- FIBER-EXTANNULUS-SECONDBOUNDED',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER-EXTANNULUS-RESTBOUNDED'], elemShape=QUAD, technique=STRUCTURED)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- FIBER-EXTANNULUS-RESTBOUNDED',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-INTANNULUS-SECONDBOUNDED'], elemShape=QUAD, technique=STRUCTURED)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- MATRIX-INTANNULUS-SECONDBOUNDED',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-INTANNULUS-RESTBOUNDED'], elemShape=QUAD, technique=STRUCTURED)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- MATRIX-INTANNULUS-RESTBOUNDED',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-EXTANNULUS'], elemShape=QUAD_DOMINATED, technique=FREE)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- MATRIX-EXTANNULUS',True)
-    model.rootAssembly.setMeshControls(regions=model.rootAssembly.instances['RVE-assembly'].sets['MATRIX-BODY'], elemShape=QUAD_DOMINATED, technique=FREE)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   -- MATRIX-BODY',True)
+    
+    regionSets = [['FIBER-EXTANNULUS-LOWERCRACK',QUAD,STRUCTURED],
+                    ['FIBER-EXTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
+                    ['FIBER-EXTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
+                    ['MATRIX-INTANNULUS-LOWERCRACK',QUAD,STRUCTURED],
+                    ['MATRIX-INTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
+                    ['MATRIX-INTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
+                    ['FIBER-CENTER',QUAD_DOMINATED,FREE],
+                    ['FIBER-INTANNULUS',QUAD_DOMINATED,FREE],
+                    ['FIBER-EXTANNULUS-SECONDBOUNDED',QUAD,STRUCTURED],
+                    ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD,STRUCTURED],
+                    ['MATRIX-INTANNULUS-SECONDBOUNDED',QUAD,STRUCTURED],
+                    ['MATRIX-INTANNULUS-RESTBOUNDED',QUAD,STRUCTURED],
+                    ['MATRIX-EXTANNULUS',QUAD_DOMINATED,FREE],
+                    ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
+                    
+    for regionSet in regionSets:
+        assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
+        
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     # assign seeds

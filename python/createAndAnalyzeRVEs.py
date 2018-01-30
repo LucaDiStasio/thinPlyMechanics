@@ -1494,7 +1494,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     inpname = mdbData['jobname'] + '.inp'
     inpfullpath = join(parameters['input']['wd'],inpname)
     # modified input file name
-    modinpname = 'Job-VCCTandJintegral-' + parameters['input']['modelname']
+    modinpname = 'Job-VCCTandJintegral-' + parameters['input']['modelname'] + '.inp'
     modinpfullpath = join(parameters['input']['wd'],modinpname)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Working directory: ' + parameters['input']['wd'],True)
     #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database name: ' + odbname,True)

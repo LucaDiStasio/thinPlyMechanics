@@ -2478,7 +2478,7 @@ def main(argv):
                            'report':{'global':{},
                                      'local':{}}
                           }
-    parameters['solver'] = {'cpus':12}
+    RVEparams['solver'] = {'cpus':12}
     
     # parameters for iterations
     # RVEparams['modelname']

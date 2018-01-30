@@ -2531,7 +2531,7 @@ def main(argv):
     with open(logfilefullpath,'w') as log:
         log.write('Automatic generation and FEM analysis of RVEs with Abaqus Python' + '\n')
     
-    createCSVfile(parameters['output']['global']['directory'],logfilename.split('.')[0] + '_TIME','ITERATION PARAMETER VALUE, T(createRVE()) [s], T(modifyRVEinputfile()) [s], T(runRVEsimulation()) [s], T(analyzeRVEresults()) [s], TOTAL TIME FOR ITERATION [s]')
+    createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME','ITERATION PARAMETER VALUE, T(createRVE()) [s], T(modifyRVEinputfile()) [s], T(runRVEsimulation()) [s], T(analyzeRVEresults()) [s], TOTAL TIME FOR ITERATION [s]')
     
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a','In function: main(argv)',True)
@@ -2609,13 +2609,13 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            createCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['performances'],'PROJECT NAME, NUMBER OF CPUS [-], USER TIME [s], SYSTEM TIME [s], USER TIME/TOTAL CPU TIME [%], SYSTEM TIME/TOTAL CPU TIME [%], TOTAL CPU TIME [s], WALLCLOCK TIME [s], WALLCLOCK TIME [m], WALLCLOCK TIME [h], WALLCLOCK TIME/TOTAL CPU TIME [%], ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-], MINIMUM REQUIRED MEMORY [MB], MEMORY TO MINIMIZE I/O [MB], TOTAL NUMBER OF ELEMENTS [-], NUMBER OF ELEMENTS DEFINED BY THE USER [-], NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF NODES [-], NUMBER OF NODES DEFINED BY THE USER [-], NUMBER OF NODES DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF VARIABLES [-]')
+            createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances'],'PROJECT NAME, NUMBER OF CPUS [-], USER TIME [s], SYSTEM TIME [s], USER TIME/TOTAL CPU TIME [%], SYSTEM TIME/TOTAL CPU TIME [%], TOTAL CPU TIME [s], WALLCLOCK TIME [s], WALLCLOCK TIME [m], WALLCLOCK TIME [h], WALLCLOCK TIME/TOTAL CPU TIME [%], ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-], MINIMUM REQUIRED MEMORY [MB], MEMORY TO MINIMIZE I/O [MB], TOTAL NUMBER OF ELEMENTS [-], NUMBER OF ELEMENTS DEFINED BY THE USER [-], NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF NODES [-], NUMBER OF NODES DEFINED BY THE USER [-], NUMBER OF NODES DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF VARIABLES [-]')
             titleline = ''
             if 'second' in parameters['elements']['order']:
                 line = ''
             else:
                 line = ''
-            createCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],titleline)
+            createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate'],titleline)
             analyzeRVEresults(inputfilename.split('.')[0]+'.odb',RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
@@ -2627,7 +2627,7 @@ def main(argv):
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
         
-        appendCSVfile(parameters['output']['global']['directory'],logfilename.split('.')[0] + '_TIME',timedataList.append(totalIterationTime))
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME',timedataList.append(totalIterationTime))
         
         if debug:
             break

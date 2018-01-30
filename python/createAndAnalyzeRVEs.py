@@ -106,7 +106,7 @@ def appendCSVfile(dir,filename,data):
 def createABQinpfile(path):
     with open(path,'w') as fi:
         fi.write('** ABAQUS INPUT FILE' + '\n')
-        fi.write('** Automatically created on ' + datetime.now().strftime('%d/%m/%Y') + ' at' + datetime.now().strftime('%H:%M:%S') + '\n')
+        fi.write('** Automatically created on ' + datetime.now().strftime('%d/%m/%Y') + ' at ' + datetime.now().strftime('%H:%M:%S') + '\n')
         fi.write('**' + '\n')
         fi.write('**==============================================================================' + '\n')
         fi.write('** Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet' + '\n')
@@ -1102,6 +1102,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     
     for material in parameters['materials']:
         mdb.models[modelname].Material(name=material['name'])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'MATERIAL: ' + material['name'],True)
         try:
             values = material['elastic']['values']
             tuplelist = []
@@ -1113,7 +1114,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                 valuelist.append(value)
             tuplelist.append(tuple(valuelist))    
             mdb.models[modelname].materials[material['name']].Elastic(type=material['elastic']['type'],table=tuple(tuplelist))
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  ELASTIC',True)
+            line = '    '
+            for v,value in enumerate(values):
+                if v>0:
+                    line += ', '
+                line += str(value)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + line,True)
         except Exception, error:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  NO ELASTIC PROPERTY',True)
             sys.exc_clear()
         try:
             values = material['density']['values']
@@ -1126,7 +1135,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                 valuelist.append(value)
             tuplelist.append(tuple(valuelist))    
             mdb.models[modelname].materials[material['name']].Density(table=tuple(tuplelist))
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  DENSITY',True)
+            line = '    '
+            for v,value in enumerate(values):
+                if v>0:
+                    line += ', '
+                line += str(value)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + line,True)
         except Exception, error:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  NO DENSITY PROPERTY',True)
             sys.exc_clear()
         try:
             values = material['thermalexpansion']['values']
@@ -1139,7 +1156,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                 valuelist.append(value)
             tuplelist.append(tuple(valuelist))    
             mdb.models[modelname].materials[material['name']].Expansion(type=material['thermalexpansion']['type'],table=tuple(tuplelist))
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  THERMAL EXPANSION',True)
+            line = '    '
+            for v,value in enumerate(values):
+                if v>0:
+                    line += ', '
+                line += str(value)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + line,True)
         except Exception, error:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  NO THERMAL EXPANSION PROPERTY',True)
             sys.exc_clear()
         try:
             values = material['thermalconductivity']['values']
@@ -1152,7 +1177,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                 valuelist.append(value)
             tuplelist.append(tuple(valuelist))    
             mdb.models[modelname].materials[material['name']].Conductivity(type=material['thermalconductivity']['type'],table=tuple(tuplelist))
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  THERMAL CONDUCTIVITY',True)
+            line = '    '
+            for v,value in enumerate(values):
+                if v>0:
+                    line += ', '
+                line += str(value)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + line,True)
         except Exception, error:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  NO THERMAL CONDUCTIVITY PROPERTY',True)
             sys.exc_clear()
 
     mdb.save()
@@ -1889,7 +1922,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write crack faces node and element sets ...',True)
     with open(modinpfullpath,'a') as inp:
-        inp.write('*NSET, NSET=FIBER-CRACKFACE-NODES, INSTANCE=RVEassembly' + '\n')
+        inp.write('*NSET, NSET=FIBER-CRACKFACE-NODES, INSTANCE=RVE-assembly' + '\n')
         line = ''
         for n,node in enumerate(crackfaceFiberNodeset):
             if n>0 and n%8==0.0:
@@ -1900,7 +1933,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 line += ' ' + str(node) + ','
         if len(line)>0:
             inp.write(line + '\n')
-        inp.write('*NSET, NSET=MATRIX-CRACKFACE-NODES, INSTANCE=RVEassembly' + '\n')
+        inp.write('*NSET, NSET=MATRIX-CRACKFACE-NODES, INSTANCE=RVE-assembly' + '\n')
         line = ''
         for n,node in enumerate(crackfaceMatrixNodeset):
             if n>0 and n%8==0.0:
@@ -1911,7 +1944,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 line += ' ' + str(node) + ','
         if len(line)>0:
             inp.write(line + '\n')
-        inp.write('*ELSET, ELSET=FIBER-CRACKFACE-ELEMENTS, INSTANCE=RVEassembly' + '\n')
+        inp.write('*ELSET, ELSET=FIBER-CRACKFACE-ELEMENTS, INSTANCE=RVE-assembly' + '\n')
         line = ''
         for n,element in enumerate(crackfaceFiberElementset):
             if n>0 and n%8==0.0:
@@ -1922,7 +1955,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 line += ' ' + str(element) + ','
         if len(line)>0:
             inp.write(line + '\n')
-        inp.write('*ELSET, ELSET=MATRIX-CRACKFACE-ELEMENTS, INSTANCE=RVEassembly' + '\n')
+        inp.write('*ELSET, ELSET=MATRIX-CRACKFACE-ELEMENTS, INSTANCE=RVE-assembly' + '\n')
         line = ''
         for n,element in enumerate(crackfaceMatrixElementset):
             if n>0 and n%8==0.0:
@@ -1936,27 +1969,27 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write VCCT node sets ...',True)
     with open(modinpfullpath,'a') as inp:
-        inp.write('*NSET, NSET=FIBER-CRACKTIP, INSTANCE=RVEassembly' + '\n')
+        inp.write('*NSET, NSET=FIBER-CRACKTIP, INSTANCE=RVE-assembly' + '\n')
         inp.write(' ' + str(cracktipIndex) + '\n')
-        inp.write('*NSET, NSET=MATRIX-CRACKTIP, INSTANCE=RVEassembly' + '\n')
+        inp.write('*NSET, NSET=MATRIX-CRACKTIP, INSTANCE=RVE-assembly' + '\n')
         inp.write(' ' + str(matrixCracktipIndex) + '\n')
-        inp.write('*NSET, NSET=FIBER-CRACKTIP-DISPMEAS, INSTANCE=RVEassembly' + '\n')
+        inp.write('*NSET, NSET=FIBER-CRACKTIP-DISPMEAS, INSTANCE=RVE-assembly' + '\n')
         inp.write(' ' + str(cracktipFiberDispMeasIndex) + '\n')
-        inp.write('*NSET, NSET=MATRIX-CRACKTIP-DISPMEAS, INSTANCE=RVEassembly' + '\n')
+        inp.write('*NSET, NSET=MATRIX-CRACKTIP-DISPMEAS, INSTANCE=RVE-assembly' + '\n')
         inp.write(' ' + str(cracktipMatrixDispMeasIndex) + '\n')
         if 'second' in parameters['mesh']['elements']['order']:
-            inp.write('*NSET, NSET=FIBER-NODE-FIRSTBOUNDED, INSTANCE=RVEassembly' + '\n')
+            inp.write('*NSET, NSET=FIBER-NODE-FIRSTBOUNDED, INSTANCE=RVE-assembly' + '\n')
             inp.write(' ' + str(fiberFirstBehindCracktipIndex) + '\n')
-            inp.write('*NSET, NSET=MATRIX-NODE-FIRSTBOUNDED, INSTANCE=RVEassembly' + '\n')
+            inp.write('*NSET, NSET=MATRIX-NODE-FIRSTBOUNDED, INSTANCE=RVE-assembly' + '\n')
             inp.write(' ' + str(matrixFirstBehindCracktipIndex) + '\n')
-            inp.write('*NSET, NSET=FIBER-FIRSTBOUNDED-DISPMEAS, INSTANCE=RVEassembly' + '\n')
+            inp.write('*NSET, NSET=FIBER-FIRSTBOUNDED-DISPMEAS, INSTANCE=RVE-assembly' + '\n')
             inp.write(' ' + str(firstBehindCracktipFiberDispMeasIndex) + '\n')
-            inp.write('*NSET, NSET=MATRIX-FIRSTBOUNDED-DISPMEAS, INSTANCE=RVEassembly' + '\n')
+            inp.write('*NSET, NSET=MATRIX-FIRSTBOUNDED-DISPMEAS, INSTANCE=RVE-assembly' + '\n')
             inp.write(' ' + str(firstBehindCracktipMatrixDispMeasIndex) + '\n')
-        inp.write('*NSET, NSET=CRACKTIP-DUMMY-NODE, INSTANCE=RVEassembly' + '\n')
+        inp.write('*NSET, NSET=CRACKTIP-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
         inp.write(' ' + str(cracktipDummyIndex) + '\n')
         if 'second' in parameters['mesh']['elements']['order']:
-            inp.write('*NSET, NSET=FIRSTBOUNDED-DUMMY-NODE, INSTANCE=RVEassembly' + '\n')
+            inp.write('*NSET, NSET=FIRSTBOUNDED-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
             inp.write(' ' + str(firstBehindCracktipDummyIndex) + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write equation definitions ...',True)

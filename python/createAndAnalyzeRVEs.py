@@ -1123,7 +1123,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + line,True)
         except Exception, error:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  NO ELASTIC PROPERTY',True)
-            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+            writeErrorToLogFile(logfilepath,'a',Exception,error,True)
             sys.exit(2)
             #sys.exc_clear()
         try:

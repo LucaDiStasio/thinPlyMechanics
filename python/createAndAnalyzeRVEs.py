@@ -1613,7 +1613,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         elif store == True:
             for index in line.replace('\n','').split(','):
                 crackfacesElementset.append(int(index))
-        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIP','cracktip']:
+        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACK','crack']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading fiber node set and saving to list ...',True)
@@ -2009,9 +2009,9 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*SURFACE, NAME=FiberSurface, TYPE=ELEMENT' + '\n')
-        inp.write(' crackfaceFiberElementset' + '\n')
+        inp.write(' FIBER-CRACKFACE-ELEMENTS' + '\n')
         inp.write('*SURFACE, NAME=MatrixSurface, TYPE=ELEMENT' + '\n')
-        inp.write(' crackfaceMatrixElementset' + '\n')
+        inp.write(' MATRIX-CRACKFACE-ELEMENTS' + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write end assembly ...',True)
     with open(modinpfullpath,'a') as inp:

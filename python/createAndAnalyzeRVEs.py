@@ -1037,8 +1037,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # sets of faces
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of faces',True)
     
-    setsOfFacesData = [[0.0, 0.25*L, 0,'FIBER-CENTER'],
-                       [0.0, 0.65*L, 0,'FIBER-INTERMEDIATEANNULUS'],
+    setsOfFacesData = [[0.0, 0.25*Rf, 0,'FIBER-CENTER'],
+                       [0.0, 0.65*Rf, 0,'FIBER-INTERMEDIATEANNULUS'],
                        [0.85*Rf*np.cos(0.5*alpha*np.pi/180), 0.85*Rf*np.sin(0.5*alpha*np.pi/180), 0,'FIBER-EXTANNULUS-LOWERCRACK'],
                        [0.85*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-UPPERCRACK'],
                        [0.85*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-FIRSTBOUNDED'],

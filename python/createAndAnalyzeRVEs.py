@@ -1368,7 +1368,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
     
     nTangential = np.floor(deltapsi/delta) 
-    nRadialFiber = np.floor(0.25/delta*np.pi/180.0)
+    nRadialFiber = np.floor(0.25/(delta*np.pi/180.0))
     nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
     nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['mesh']['size']['delta3'])
     nTangential3 = np.floor(alpha/parameters['mesh']['size']['delta1'])

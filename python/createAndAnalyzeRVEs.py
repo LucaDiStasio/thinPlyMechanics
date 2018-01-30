@@ -2530,7 +2530,9 @@ def main(argv):
             
     with open(logfilefullpath,'w') as log:
         log.write('Automatic generation and FEM analysis of RVEs with Abaqus Python' + '\n')
-        
+    
+    createCSVfile(parameters['output']['global']['directory'],logfilename.split('.')[0] + '_TIME','ITERATION PARAMETER VALUE, T(createRVE()) [s], T(modifyRVEinputfile()) [s], T(runRVEsimulation()) [s], T(analyzeRVEresults()) [s], TOTAL TIME FOR ITERATION [s]')
+    
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a','In function: main(argv)',True)
     
@@ -2540,11 +2542,16 @@ def main(argv):
     
     for set in iterationsSets:
         
+        timedataList = []
+        totalIterationTime = 0.0
+        
         RVEparams['input']['modelname'] = set[0]
         RVEparams['geometry']['deltatheta'] = set[1]
         RVEparams['mesh']['size']['deltapsi'] = set[2]
         RVEparams['mesh']['size']['deltaphi'] = set[3]        
         RVEparams['output']['local']['directory'] = join(RVEparams['output']['global']['directory'],set[0])
+        
+        timedataList.append(set[1])
         
         if not os.path.exists(RVEparams['output']['local']['directory']):
                 os.mkdir(RVEparams['output']['local']['directory'])
@@ -2556,6 +2563,8 @@ def main(argv):
         try:
             modelData = createRVE(RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
+            timedataList.append(localElapsedTime)
+            totalIterationTime += localElapsedTime
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: createRVE(parameters,logfilepath,baselogindent,logindent)',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
@@ -2570,6 +2579,8 @@ def main(argv):
         try:
             inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
+            timedataList.append(localElapsedTime)
+            totalIterationTime += localElapsedTime
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent)',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
@@ -2584,6 +2595,8 @@ def main(argv):
         try:
             runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
+            timedataList.append(localElapsedTime)
+            totalIterationTime += localElapsedTime
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent)',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
@@ -2597,15 +2610,25 @@ def main(argv):
         localStart = timeit.default_timer()
         try:
             createCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['performances'],'PROJECT NAME, NUMBER OF CPUS [-], USER TIME [s], SYSTEM TIME [s], USER TIME/TOTAL CPU TIME [%], SYSTEM TIME/TOTAL CPU TIME [%], TOTAL CPU TIME [s], WALLCLOCK TIME [s], WALLCLOCK TIME [m], WALLCLOCK TIME [h], WALLCLOCK TIME/TOTAL CPU TIME [%], ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-], MINIMUM REQUIRED MEMORY [MB], MEMORY TO MINIMIZE I/O [MB], TOTAL NUMBER OF ELEMENTS [-], NUMBER OF ELEMENTS DEFINED BY THE USER [-], NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF NODES [-], NUMBER OF NODES DEFINED BY THE USER [-], NUMBER OF NODES DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF VARIABLES [-]')
-            createCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],'')
+            titleline = ''
+            if 'second' in parameters['elements']['order']:
+                line = ''
+            else:
+                line = ''
+            createCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],titleline)
             analyzeRVEresults(inputfilename.split('.')[0]+'.odb',RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
+            timedataList.append(localElapsedTime)
+            totalIterationTime += localElapsedTime
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: analyzeRVEresults(wd,odbname,logfilepath,parameters)',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
+        
+        appendCSVfile(parameters['output']['global']['directory'],logfilename.split('.')[0] + '_TIME',timedataList.append(totalIterationTime))
+        
         if debug:
             break
     
@@ -2619,3 +2642,9 @@ def main(argv):
 
 if __name__ == "__main__":
     main(sys.argv[1:])
+    
+    # if 'second' in parameters['elements']['order']:
+    #     appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[parameters['deltatheta'],parameters['Rf'],parameters['Rf'],parameters['Rf']/parameters['Rf'],phiCZ,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement])
+    # else:
+    #     appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[parameters['deltatheta'],parameters['Rf'],parameters['Rf'],parameters['Rf']/parameters['Rf'],phiCZ,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement])
+    

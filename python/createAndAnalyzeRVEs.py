@@ -1374,10 +1374,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     nTangential3 = np.floor(alpha/parameters['mesh']['size']['delta1'])
     #nRadialFiber1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
     if L>2*Rf:
-        nRadialMatrix = np.floor(0.25/delta)
+        nRadialMatrix = np.floor(0.25/(delta*np.pi/180.0))
         #nRadialMatrix1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
     else:
-        nRadialMatrix = np.floor(0.25*(L-Rf)/delta)
+        nRadialMatrix = np.floor(0.25*(L-Rf)/(delta*np.pi/180.0))
         #nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
     
     regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],

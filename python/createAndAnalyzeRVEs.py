@@ -2414,10 +2414,10 @@ def main(argv):
                              'Rf':1.0,
                              'deltatheta':10.0}
     RVEparams['materials'] = [{'name':'glassFiber',
-                               'elastic':{'type':'ISOTROPIC',
+                               'elastic':{'type':ISOTROPIC,
                                            'values':[70e3,0.2]}},
                                {'name':'epoxy',
-                               'elastic':{'type':'ISOTROPIC',
+                               'elastic':{'type':ISOTROPIC,
                                            'values':[3.5e3,0.4]}}]
     # in general:
     # params['materials'] = [{'name':'material1',

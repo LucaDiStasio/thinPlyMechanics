@@ -762,7 +762,8 @@ def add2DFullFiber(currentmodel,fiber,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fiber ...',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Fiber',True)
     fiberSketch.CircleByCenterPerimeter(center=(fiber['center'][0], fiber['center'][1]), point1=(fiber['center'][0]+fiber['Rf']*np.cos(45.0*np.pi/180.0), fiber['center'][1]+fiber['Rf']*np.sin(45.0*np.pi/180.0))
-    reportSketchGeomElements(sketchGeometry,sketchVertices,logfilepath,baselogindent + 2*logindent,logindent)
+    currentLogindent = baselogindent + 2*logindent
+    reportSketchGeomElements(sketchGeometry,sketchVertices,logfilepath,currentLogindent,logindent)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if fiber['cracks']['isCracked']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'The fiber IS CRACKED',True)

@@ -222,7 +222,7 @@ def getPerfs(wd,sims):
     perf.append(['PROJECT NAME','DEBOND [°]','NUMBER OF CPUS [-]','USER TIME [s]','SYSTEM TIME [s]','USER TIME/TOTAL CPU TIME [%]','SYSTEM TIME/TOTAL CPU TIME [%]','TOTAL CPU TIME [s]','WALLCLOCK TIME [s]','WALLCLOCK TIME [m]','WALLCLOCK TIME [h]','WALLCLOCK TIME/TOTAL CPU TIME [%]','ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-]','MINIMUM REQUIRED MEMORY [MB]','MEMORY TO MINIMIZE I/O [MB]','TOTAL NUMBER OF ELEMENTS [-]','NUMBER OF ELEMENTS DEFINED BY THE USER [-]','NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-]','TOTAL NUMBER OF NODES [-]','NUMBER OF NODES DEFINED BY THE USER [-]','NUMBER OF NODES DEFINED BY THE PROGRAM [-]','TOTAL NUMBER OF VARIABLES [-]'])
     print('')
     for sim in sims:
-        print('Extracting data from project: ' + sim)
+        print >> sys.__stdout__,('Extracting data from project: ' + sim)
         usertime = 0
         systemtime = 0
         totalcpu = 0
@@ -282,7 +282,7 @@ def getPerfs(wd,sims):
                     while '' in words: words.remove('')
                     totVar = int(words[-1])
         if exists(join(wd,sim+'.msg')):
-            with open(join(wd,sim,'solver',sim+'.msg'),'r') as msg:
+            with open(join(wd,sim+'.msg'),'r') as msg:
                 lines = msg.readlines()
                 for line in lines:
                     if 'USING THE DIRECT SOLVER WITH' in line:

@@ -87,7 +87,7 @@ def appendCSVfile(dir,filename,data):
     if len(filename.split('.'))<2:
         filename += '.csv'
     with open(join(dir,filename),'a') as csv:
-        if len(data)>1 and len(data[0]>1):
+        if len(data)>1 and len(data[0])>1:
             for row in data:
                 line = ''
                 for v,value in enumerate(row):

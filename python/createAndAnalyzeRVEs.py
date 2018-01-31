@@ -87,17 +87,9 @@ def appendCSVfile(dir,filename,data):
     if len(filename.split('.'))<2:
         filename += '.csv'
     with open(join(dir,filename),'a') as csv:
-        if len(data)>1 and len(data[0])>1:
-            for row in data:
-                line = ''
-                for v,value in enumerate(row):
-                    if v>1:
-                        line += ', '
-                    line += str(value)
-                csv.write(line + '\n')
-        else:
+        for row in data:
             line = ''
-            for v,value in enumerate(data):
+            for v,value in enumerate(row):
                 if v>1:
                     line += ', '
                 line += str(value)
@@ -2487,7 +2479,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     except Exception,e:
         writeErrorToLogFile(logfilepath,'a',Exception,e,True)
         sys.exc_clear()
-    appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['performances'],performances[1])
+    appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['performances'],[performances[1]])
     writeLineToLogFile(logfilepath,'a','... done.',True)
     #=======================================================================
     # END - extract performances

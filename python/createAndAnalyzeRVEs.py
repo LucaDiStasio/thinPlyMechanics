@@ -641,13 +641,13 @@ def create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Successfully returned from function: create2Drectanglesketch(currentmodel,partName,partDimensionality,partType,sizeOfSheet,Ax,Ay,Bx,By,Cx,Cy,Dx,Dy,Clabel,Dlabel,logfilepath,baselogindent,logindent)',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
-def add2DSymmCrack(currentmodel, ,logfilepath,baselogindent,logindent):
+def add2DSymmCrack(currentmodel,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: add2DSymmCrack()',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
-def add2DFullCrack(currentmodel, ,logfilepath,baselogindent,logindent):
+def add2DFullCrack(currentmodel,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: add2DFullCrack()',True)
 

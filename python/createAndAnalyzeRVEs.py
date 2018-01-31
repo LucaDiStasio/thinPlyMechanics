@@ -41,7 +41,7 @@ Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 '''
 import sys, os
 import numpy as np
-from os.path import isfile, join
+from os.path import isfile, join, exists
 from datetime import datetime
 from time import strftime, sleep
 import timeit

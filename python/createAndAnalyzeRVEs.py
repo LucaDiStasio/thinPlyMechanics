@@ -138,7 +138,7 @@ def createABQinpfile(path):
         fi.write('** POSSIBILITY OF SUCH DAMAGE.' + '\n')
         fi.write('**==============================================================================' + '\n')
         fi.write('**' + '\n')
-        
+
 def writeLineToLogFile(logFileFullPath,mode,line,toScreen):
     with open(logFileFullPath,mode) as log:
         log.write(line + '\n')
@@ -210,13 +210,13 @@ def writePerfToFile(od,outfile,performanceslist):
                     line += ','
                 line += str(performance)
             csv.write(line + '\n')
-            
+
 #===============================================================================#
 #===============================================================================#
 #                        Data analysis functions
 #===============================================================================#
 #===============================================================================#
-        
+
 def getPerfs(wd,sims):
     perf = []
     perf.append(['PROJECT NAME','DEBOND [°]','NUMBER OF CPUS [-]','USER TIME [s]','SYSTEM TIME [s]','USER TIME/TOTAL CPU TIME [%]','SYSTEM TIME/TOTAL CPU TIME [%]','TOTAL CPU TIME [s]','WALLCLOCK TIME [s]','WALLCLOCK TIME [m]','WALLCLOCK TIME [h]','WALLCLOCK TIME/TOTAL CPU TIME [%]','ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-]','MINIMUM REQUIRED MEMORY [MB]','MEMORY TO MINIMIZE I/O [MB]','TOTAL NUMBER OF ELEMENTS [-]','NUMBER OF ELEMENTS DEFINED BY THE USER [-]','NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-]','TOTAL NUMBER OF NODES [-]','NUMBER OF NODES DEFINED BY THE USER [-]','NUMBER OF NODES DEFINED BY THE PROGRAM [-]','TOTAL NUMBER OF VARIABLES [-]'])
@@ -304,7 +304,7 @@ def getFirstAndLastFrameLastStep(odbObj):
 
 def getSingleNodeSet(odbObj,part,set):
     return odbObj.rootAssembly.instances[part].nodeSets[set]
-    
+
 def getSingleElementSet(odbObj,part,set):
     return odbObj.rootAssembly.instances[part].elementSets[set]
 
@@ -377,7 +377,7 @@ def getAndSaveAllNodes(odbObj,step,frameN,folder,filename,ext):
             line = 'NODAL' + ', ' + str(value.nodeLabel)
             for datum in value.data:
                 line += ', ' + str(datum)
-            csv.write(line + '\n') 
+            csv.write(line + '\n')
     return allNodes
 
 def getAllIntPoints(odbObj,step,frameN):
@@ -414,7 +414,7 @@ def getAndSaveAllIntPoints(odbObj,step,frameN,folder,filename,ext):
             line = 'INTEGRATION_POINT' + ', ' + str(value.elementLabel)+'-'+str(value.integrationPoint)
             for datum in value.data:
                 line += ', ' + str(datum)
-            csv.write(line + '\n') 
+            csv.write(line + '\n')
     return allIntPoints
 
 def getFieldOutput(odbObj,step,frame,fieldOutput,subset=None,pos=None):
@@ -433,7 +433,7 @@ def getFieldOutput(odbObj,step,frame,fieldOutput,subset=None,pos=None):
     else:
         out = frame.fieldOutputs[fieldOutput]
     return out
-    
+
 def extractAndSaveFieldOutput(odbObj,step,frameN,folder,filename,ext,fieldOutput,subset=None,pos=None):
     frame = getFrame(odbObj,step,frameN)
     nodes = getAllNodes(odbObj,step,frameN)
@@ -450,7 +450,7 @@ def extractAndSaveFieldOutput(odbObj,step,frameN,folder,filename,ext,fieldOutput
         else:
             out = frame.fieldOutputs[fieldOutput].getSubset(region=subset)
     else:
-        out = frame.fieldOutputs[fieldOutput]    
+        out = frame.fieldOutputs[fieldOutput]
     with open(join(folder,filename + ext),'w') as csv:
         if fieldOutput== 'U' or fieldOutput=='RF':
             if len(out.values[0].data)==1:
@@ -476,7 +476,7 @@ def extractAndSaveFieldOutput(odbObj,step,frameN,folder,filename,ext,fieldOutput
                     line += ', ' + str(datum)
                 for datum in value.data:
                     line += ', ' + str(datum)
-                csv.write(line + '\n') 
+                csv.write(line + '\n')
             elif 'INTEGRATION_POINT' in str(value.position):
                 line = ''
                 line = 'INTEGRATION_POINT' + ', ' + str(value.elementLabel)+'-'+str(value.integrationPoint)
@@ -487,9 +487,9 @@ def extractAndSaveFieldOutput(odbObj,step,frameN,folder,filename,ext,fieldOutput
                 csv.write(line + '\n')
 
 def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
-    
+
     set = getSingleNodeSet(odbObj,part,subset)
-    
+
     disp = getFieldOutput(odbObj,-1,-1,'U',set)
 
     countdisp = 0
@@ -499,14 +499,14 @@ def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
         countdisp += 1
         meandisp += value.data[component]
     meandisp /= countdisp
-    
+
     force = getFieldOutput(odbObj,-1,-1,'RF',set)
-    
+
     totalforce = 0
-    
+
     for value in force.values:
         totalforce += value.data[component]
-    
+
     return meandisp,totalforce
 
 def getJintegrals(wd,sim,ncontours):
@@ -531,21 +531,336 @@ def getJintegrals(wd,sim,ncontours):
 #===============================================================================#
 #===============================================================================#
 
+def reportSketchGeomElements(sketchGeometry,sketchVertices,logfilepath,baselogindent,logindent):
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'The sketch has ' + str(len(sketchGeometry)) + ' geometric elements',True)
+    for key in sketchGeometry.keys():
+        writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'fiberGeometry[' + str(key) + '] = ' + str(sketchGeometry[key]),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'The sketch has ' + str(len(sketchVertices)) + ' vertices',True)
+    for key in sketchVertices.keys():
+        writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'fiberVertices[' + str(key) + '] = ' + str(sketchVertices[key]),True)
+
 def defineSetOfVerticesByBoundingSphere(modelpart,Cx,Cy,Cz,R,setName,logfile,indent,toScreen):
     setOfVertices = modelpart.vertices.getByBoundingSphere(center=(Cx,Cy,Cz),radius=R)
     modelpart.Set(vertices=setOfVertices, name=setName)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
-     
+
 def defineSetOfEdgesByClosestPoints(modelpart,Ax,Ay,Az,Bx,By,Bz,setName,logfile,indent,toScreen):
     setOfEdges = modelpart.edges.getClosest(coordinates=((Ax,Ay,Az),(Bx,By,Bz),))[0][0]
     modelpart.Set(edges = modelpart.edges[setOfEdges.index:setOfEdges.index+1], name=setName)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
-    
+
 def defineSetOfFacesByFindAt(modelpart,Ax,Ay,Az,setName,logfile,indent,toScreen):
     setOfFaces = modelpart.faces.findAt(coordinates=(Ax,Ay,Az))
     modelpart.Set(faces = modelpart.faces[setOfFaces.index:setOfFaces.index+1], name=setName)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
-    
+
+def create2Drectanglesketch(currentmodel,partName,partDimensionality,partType,sizeOfSheet,Ax,Ay,Bx,By,Cx,Cy,Dx,Dy,Clabel,Dlabel,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: create2Drectanglesketch(currentmodel,partName,partDimensionality,partType,sizeOfSheet,Ax,Ay,Bx,By,Cx,Cy,Dx,Dy,Clabel,Dlabel,logfilepath,baselogindent,logindent)',True)
+    # create sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Initialize sketch to draw the external shape of the RVE ...',True)
+    currentsketch = currentmodel.ConstrainedSketch(name='__profile__',sheetSize=sizeOfSheet)
+    currentsketch.setPrimaryObject(option=STANDALONE)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # create rectangle
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw a rectangle ...',True)
+    currentsketch.rectangle(point1=(Ax, Ay), point2=(Bx,By))
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # set dimension labels
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Set dimension labels ...',True)
+    v = currentsketch.vertices
+    currentsketch.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(Cx,Cy), value=Clabel)
+    currentsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(Dx,Dy), value=Dlabel)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # assign to part
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign sketch geometry to the part ...',True)
+    currentpart = currentmodel.Part(name='RVE',dimensionality=TWO_D_PLANAR,type=DEFORMABLE_BODY)
+    currentpart = currentmodel.parts['RVE']
+    currentpart.BaseShell(sketch=RVEsketch)
+    currentsketch.unsetPrimaryObject()
+    del currentmodel.sketches['__profile__']
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+
+def create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+    # initialize parameters
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Initialize parameters ...',True)
+    if type=='quarter':
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Model: quarter of RVE',True)
+        sizeOfSheet = 2*L
+        Ax = 0.0
+        Ay = 0.0
+        Bx = L
+        By = L
+        Cx = 0.5*L
+        Cy = 1.1*L
+        Dx = 1.1*L
+        Dy = 0.5*L
+        Clabel = L
+        Dlabel = L
+    elif type=='half':
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Model: quarter of RVE',True)
+        sizeOfSheet = 3*L
+        Ax = -L
+        Ay = 0.0
+        Bx = L
+        By = L
+        Cx = 1.1*L
+        Cy = 0.5*L
+        Dx = 0.0
+        Dy = 1.1*L
+        Clabel = L
+        Dlabel = 2*L
+    else:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Model: quarter of RVE',True)
+        sizeOfSheet = 3*L
+        Ax = -L
+        Ay = -L
+        Bx = L
+        By = L
+        Cx = -1.1*L
+        Cy = 0.0
+        Dx = 0.0
+        Dy = 1.1*L
+        Clabel = 2*L
+        Dlabel = 2*L
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  sheet size = ' + str(sizeOfSheet),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Ax = ' + str(Ax),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Ay = ' + str(Ay),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Bx = ' + str(Bx),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  By = ' + str(By),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Cx = ' + str(Cx),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Cy = ' + str(Cy),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Dx = ' + str(Dx),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Dy = ' + str(Dy),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Clabel = ' + str(Clabel),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Dlabel = ' + str(Dlabel),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calling function: create2Drectanglesketch(currentmodel,partName,partDimensionality,partType,sizeOfSheet,Ax,Ay,Bx,By,Cx,Cy,Dx,Dy,Clabel,Dlabel,logfilepath,baselogindent,logindent)',True)
+    create2Drectanglesketch(currentmodel,'RVE',TWO_D_PLANAR,DEFORMABLE_BODY,sizeOfSheet,Ax,Ay,Bx,By,Cx,Cy,Dx,Dy,Clabel,Dlabel,logfilepath,baselogindent + 2*logindent,logindent)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Successfully returned from function: create2Drectanglesketch(currentmodel,partName,partDimensionality,partType,sizeOfSheet,Ax,Ay,Bx,By,Cx,Cy,Dx,Dy,Clabel,Dlabel,logfilepath,baselogindent,logindent)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+
+def add2DSymmCrack(currentmodel, ,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: add2DSymmCrack()',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+
+def add2DFullCrack(currentmodel, ,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: add2DFullCrack()',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+
+def add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: add2DFiberSection()',True)
+    # create geometrical transform to draw partition sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create geometrical transform to draw partition sketch ...',True)
+    transformToSketch = currentpart.MakeSketchTransform(sketchPlane=planeToSketch, sketchPlaneSide=SIDE1, origin=(0.0,0.0,0.0))
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # create sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create sketch ...',True)
+    fiberSketch = model.ConstrainedSketch(name='fiberSketch',sheetSize=3*L, gridSpacing=L/100.0, transform=transformToSketch)
+    fiberSketch = model.sketches['fiberSketch']
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # create reference to geometrical objects (faces, edges and vertices) of the partition sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create reference to geometrical objects of the partition sketch ...',True)
+    fiberGeometry = fiberSketch.geometry
+    fiberVertices = fiberSketch.vertices
+    fiberSketch.setPrimaryObject(option=SUPERIMPOSE)
+    reportSketchGeomElements(sketchGeometry,sketchVertices,logfilepath,baselogindent + 2*logindent,logindent)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # Project reference onto sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Project reference onto sketch ...',True)
+    currentpart.projectReferencesOntoSketch(sketch=fiberSketch, filter=COPLANAR_EDGES)
+    reportSketchGeomElements(fiberGeometry,fiberVertices,logfilepath,baselogindent + 2*logindent,logindent)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # draw fiber
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fiber ...',True)
+    fiberSketch.ArcByCenterEnds(center=(fiber['center'][0], fiber['center'][1]), point1=(fiber['center'][0]+fiber['Rf']*np.cos(fiber['arcStart']*np.pi/180.0), fiber['center'][1]+fiber['Rf']*np.sin(fiber['arcStart']*np.pi/180.0)), point2=(fiber['center'][0]+fiber['Rf']*np.cos(fiber['arcStop']*np.pi/180.0), fiber['center'][1]+fiber['Rf']*np.sin(fiber['arcStop']*np.pi/180.0)), direction=CLOCKWISE) # fiberGeometry[6]
+    reportSketchGeomElements(fiberGeometry,fiberVertices,logfilepath,baselogindent + 2*logindent,logindent)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Identify indeces of fiber and its center point ...',True)
+    lastGeometryKey = 0
+    for key in fiberGeometry.keys():
+        lastGeometryKey = key
+        if 'ARC' in fiberGeometry[key]['curveType']:
+            fiberIndex = key
+    lastVerticesKey = 0
+    for key in fiberVertices.keys():
+        lastVerticesKey = key
+        if fiberVertices[key]['coords'][0]==0.0 and fiberVertices[key]['coords'][1]==0.0:
+            fiberOriginIndex = key
+    if fiber['isCracked']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'The fiber IS CRACKED',True)
+        regionRadiuses = [fiber['R1'],fiber['R2'],fiber['R3'],fiber['R4']]
+        circsectionsIndeces = []
+        for R in regionRadiuses:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw circular section with R = ' + str(R) + ' ...',True)
+            fiberSketch.ArcByCenterEnds(center=(fiber['center'][0], fiber['center'][1]), point1=(fiber['center'][0]+R*np.cos(fiber['arcStart']*np.pi/180.0), fiber['center'][1]+R*np.sin(fiber['arcStart']*np.pi/180.0)), point2=(fiber['center'][0]+R*np.cos(fiber['arcStop']*np.pi/180.0), fiber['center'][1]+R*np.sin(fiber['arcStop']*np.pi/180.0)), direction=CLOCKWISE) # fiberGeometry[6]
+            reportSketchGeomElements(fiberGeometry,fiberVertices,logfilepath,baselogindent + 2*logindent,logindent)
+            lastGeometryKey += 1
+            circsectionsIndeces.append(lastGeometryKey)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        if len(fiber['cracks'])>1:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'There is 1 crack',True)
+        else:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'There are ' + str(len(fiber['cracks'])) + ' cracks',True)
+        for cNum,crack in enumerate(fiber['cracks']):
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Crack number ' + str(cNum),True)
+            angles = [crack['theta']+crack['deltatheta']]
+            if crack['isMeasured']:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The crack IS SUBJECT TO MEASUREMENTS',True)
+                angles.append(crack['theta']+crack['deltatheta']-crack['deltapsi'])
+                angles.append(crack['theta']+crack['deltatheta']+crack['deltapsi'])
+                angles.append(crack['theta']+crack['deltatheta']+crack['deltapsi']+crack['deltaphi'])
+            else:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The crack IS NOT SUBJECT TO MEASUREMENTS',True)
+            if not crack['isSymm']:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The crack IS NOT SYMMETRIC',True)
+                angles = [crack['theta']-crack['deltatheta']]
+                angles.append(crack['theta']-crack['deltatheta']+crack['deltapsi'])
+                angles.append(crack['theta']-crack['deltatheta']-crack['deltapsi'])
+                angles.append(crack['theta']-crack['deltatheta']-crack['deltapsi']-crack['deltaphi'])
+            else:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The crack IS SYMMETRIC',True)
+            constructionLinesIndeces = []
+            for angle in angles:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction line at = ' + str(angle) + ' deg ...',True)
+
+    else:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'The fiber IS NOT CRACKED',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+
+def add2DFullFiber(currentmodel,fiber,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: add2DFullFiber()',True)
+    # create geometrical transform to draw partition sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create geometrical transform to draw partition sketch ...',True)
+    transformToSketch = currentpart.MakeSketchTransform(sketchPlane=planeToSketch, sketchPlaneSide=SIDE1, origin=(0.0,0.0,0.0))
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # create sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create sketch ...',True)
+    fiberSketch = model.ConstrainedSketch(name='fiberSketch',sheetSize=3*L, gridSpacing=L/100.0, transform=transformToSketch)
+    fiberSketch = model.sketches['fiberSketch']
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # create reference to geometrical objects (faces, edges and vertices) of the partition sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create reference to geometrical objects of the partition sketch ...',True)
+    fiberGeometry = fiberSketch.geometry
+    fiberVertices = fiberSketch.vertices
+    fiberSketch.setPrimaryObject(option=SUPERIMPOSE)
+    reportSketchGeomElements(sketchGeometry,sketchVertices,logfilepath,baselogindent + 2*logindent,logindent)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # Project reference onto sketch
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Project reference onto sketch ...',True)
+    currentpart.projectReferencesOntoSketch(sketch=fiberSketch, filter=COPLANAR_EDGES)
+    reportSketchGeomElements(sketchGeometry,sketchVertices,logfilepath,baselogindent + 2*logindent,logindent)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # draw fiber
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fiber ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Fiber',True)
+    fiberSketch.CircleByCenterPerimeter(center=fiber['center'][0], fiber['center'][1]), point1=(fiber['center'][0]+fiber['Rf']*np.cos(45.0*np.pi/180.0), fiber['center'][1]+fiber['Rf']*np.sin(45.0*np.pi/180.0))
+    reportSketchGeomElements(sketchGeometry,sketchVertices,logfilepath,baselogindent + 2*logindent,logindent)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    if fiber['cracks']['isCracked']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'The fiber IS CRACKED',True)
+    else:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'The fiber IS NOT CRACKED',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+
+def addMaterial(currentmodel,material,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addMaterial()',True)
+    currentmodel.Material(name=material['name'])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'MATERIAL: ' + material['name'],True)
+    try:
+        values = material['elastic']['values']
+        tuplelist = []
+        valuelist = []
+        for v,value in enumerate(values):
+            if v>0 and v%8==0:
+                tuplelist.append(tuple(valuelist))
+                valuelist = []
+            valuelist.append(value)
+        tuplelist.append(tuple(valuelist))
+        mdb.models[modelname].materials[material['name']].Elastic(type=material['elastic']['type'],table=tuple(tuplelist))
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  ELASTIC',True)
+        line = '    '
+        for v,value in enumerate(values):
+            if v>0:
+                line += ', '
+            line += str(value)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + line,True)
+    except Exception, error:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  NO ELASTIC PROPERTY',True)
+        sys.exc_clear()
+    try:
+        values = material['density']['values']
+        tuplelist = []
+        valuelist = []
+        for v,value in enumerate(values):
+            if v>0 and v%8==0:
+                tuplelist.append(tuple(valuelist))
+                valuelist = []
+            valuelist.append(value)
+        tuplelist.append(tuple(valuelist))
+        mdb.models[modelname].materials[material['name']].Density(table=tuple(tuplelist))
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  DENSITY',True)
+        line = '    '
+        for v,value in enumerate(values):
+            if v>0:
+                line += ', '
+            line += str(value)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + line,True)
+    except Exception, error:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  NO DENSITY PROPERTY',True)
+        sys.exc_clear()
+    try:
+        values = material['thermalexpansion']['values']
+        tuplelist = []
+        valuelist = []
+        for v,value in enumerate(values):
+            if v>0 and v%8==0:
+                tuplelist.append(tuple(valuelist))
+                valuelist = []
+            valuelist.append(value)
+        tuplelist.append(tuple(valuelist))
+        mdb.models[modelname].materials[material['name']].Expansion(type=material['thermalexpansion']['type'],table=tuple(tuplelist))
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  THERMAL EXPANSION',True)
+        line = '    '
+        for v,value in enumerate(values):
+            if v>0:
+                line += ', '
+            line += str(value)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + line,True)
+    except Exception, error:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  NO THERMAL EXPANSION PROPERTY',True)
+        sys.exc_clear()
+    try:
+        values = material['thermalconductivity']['values']
+        tuplelist = []
+        valuelist = []
+        for v,value in enumerate(values):
+            if v>0 and v%8==0:
+                tuplelist.append(tuple(valuelist))
+                valuelist = []
+            valuelist.append(value)
+        tuplelist.append(tuple(valuelist))
+        mdb.models[modelname].materials[material['name']].Conductivity(type=material['thermalconductivity']['type'],table=tuple(tuplelist))
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  THERMAL CONDUCTIVITY',True)
+        line = '    '
+        for v,value in enumerate(values):
+            if v>0:
+                line += ', '
+            line += str(value)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + line,True)
+    except Exception, error:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  NO THERMAL CONDUCTIVITY PROPERTY',True)
+        sys.exc_clear()
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+
 def assignMeshControls(thisModel,assemblyName,setName,elementShape,controls,logfile,indent,toScreen):
     thisModel.rootAssembly.setMeshControls(regions=(thisModel.rootAssembly.instances[assemblyName].sets[setName].faces), elemShape=elementShape, technique=controls)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
@@ -553,6 +868,86 @@ def assignMeshControls(thisModel,assemblyName,setName,elementShape,controls,logf
 def seedEdgeByNumber(thisModel,assemblyName,setName,seedsNumber,seedsConstraint,logfile,indent,toScreen):
     thisModel.rootAssembly.seedEdgeByNumber(edges=(thisModel.rootAssembly.instances[assemblyName].sets[setName].edges), number=int(seedsNumber), constraint=seedsConstraint)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
+
+def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
+    # this will supersede and substitute createRVE()
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: assemble2DRVE(parameters,logfilepath,baselogindent,logindent)',True)
+
+#===============================================================================#
+#                          Model database creation
+#===============================================================================#
+# if CAE database exists, open it; otherwise create new one
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating CAE database and model ...',True)
+    caefullpath = join(parameters['input']['wd'],parameters['input']['caefilename'])
+    if isfile(caefullpath):
+        skipLineToLogFile(logfilepath,'a',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'CAE database already exists. Opening it ...',True)
+        openMdb(caefullpath)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    else:
+        skipLineToLogFile(logfilepath,'a',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'CAE database does not exist. Creating it ...',True)
+        mdb.saveAs(caefullpath)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    # create and assign model object to variable for lighter code
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating model ' + parameters['input']['modelname'] + ' ...',True)
+    mdb.Model(name=parameters['input']['modelname'])
+    model = mdb.models[parameters['input']['modelname']]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3**logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                            Create RVE region
+#===============================================================================#
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating RVE region ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+    create2DRVEregion(model,parameters['geometry']['RVE-type'],parameters['geometry']['L'],logfilepath,baselogindent + logindent,logindent)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                         Create fibers and debonds
+#===============================================================================#
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating fibers and debonds ...',True)
+    for fiber in parameters['fibers']:
+        if fiber['type'] == 'quarter':
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calling function: ',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Successfully returned from function: ',True)
+        elif fiber['type'] == 'half':
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calling function: ',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Successfully returned from function: ',True)
+        else:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calling function: ',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Successfully returned from function: ',True)
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                             Materials creation
+#===============================================================================#
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating materials ...',True)
+    for material in parameters['materials']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: addMaterial(currentmodel,material,logfilepath,baselogindent,logindent)',True)
+        addMaterial(model,material,logfilepath,baselogindent + 3*logindent,logindent)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: addMaterial(currentmodel,material,logfilepath,baselogindent,logindent)',True)
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#
@@ -622,7 +1017,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating part ...',True)
     # create sketch
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Initialize sketch to draw the external shape of the RVE ...',True)
-    RVEsketch = model.ConstrainedSketch(name='__profile__', 
+    RVEsketch = model.ConstrainedSketch(name='__profile__',
         sheetSize=3*L)
     RVEsketch.setPrimaryObject(option=STANDALONE)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -743,7 +1138,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(key) + '] = ' + str(fiberVertices[key]),True)
     #raw_input()
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    # calculate angles for construction lines 
+    # calculate angles for construction lines
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calculate angles for construction lines ...',True)
     alpha = theta + deltatheta - deltapsi
     beta = theta + deltatheta + deltapsi
@@ -756,7 +1151,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(key) + '] = ' + str(fiberVertices[key]),True)
     #raw_input()
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    # draw construction lines  
+    # draw construction lines
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction lines ...',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(theta+deltatheta) + ' deg',True)
     fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=(theta+deltatheta)) # fiberGeometry[11]
@@ -889,17 +1284,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     fiberSketch.unsetPrimaryObject()
     del model.sketches['fiberSketch']
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    
+
     mdb.save()
-    
+
     #-------------------#
     #                   #
     #    create sets    #
     #                   #
     #-------------------#
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create sets ...',True)
-    
+
     # create reference to geometric elements for lighter code
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create reference to geometric elements of the part ...',True)
     RVEvertices = RVEpart.vertices
@@ -915,7 +1310,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for e,element in enumerate(RVEfaces):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'RVEfaces[' + str(e) + '] = ' + str(element),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     # sets of vertices
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of vertices',True)
     defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIP',logfilepath,baselogindent + 4*logindent,True)
@@ -929,51 +1324,51 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
     RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACK',True)
-    
+
     setsOfEdgesData = [[0.001*Rf,0.001,0.0,0.001*Rf,-0.001,0.0,'LOWERSIDE-CENTER'],
                        [0.65*Rf,0.001,0.0,0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-RIGHT'],
                        [-0.65*Rf,0.001,0.0,-0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-LEFT']]
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-    
+
     RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT'],RVEpart.sets['LOWERSIDE-FIRSTRING-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FIRSTRING',True)
     #RVEedges.getClosest(coordinates=(,,))[0][0]
-    
+
     setsOfEdgesData = [[0.85*Rf,0.001,0.0,0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-RIGHT'],
                        [-0.85*Rf,0.001,0.0,-0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-LEFT']]
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-    
+
     RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT'],RVEpart.sets['LOWERSIDE-SECONDRING-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-SECONDRING',True)
-    
+
     if L>2*Rf:
         R1 = (1+0.5*0.25)*Rf
         R2 = (1.25+0.5*0.25)*Rf
     else:
         R1 = Rf+0.5*0.25*(L-Rf)
         R2 = Rf+1.5*0.25*(L-Rf)
-    
+
     setsOfEdgesData = [[R1,0.001,0.0,R1,-0.001,0.0,'LOWERSIDE-THIRDRING-RIGHT'],
                        [-R1,0.001,0.0,-R1,-0.001,0.0,'LOWERSIDE-THIRDRING-LEFT']]
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-    
+
     RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT'],RVEpart.sets['LOWERSIDE-THIRDRING-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING',True)
-    
+
     setsOfEdgesData = [[R2,0.001,0.0,R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-RIGHT'],
                        [-R2,0.001,0.0,-R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-LEFT']]
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-    
+
     RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT'],RVEpart.sets['LOWERSIDE-FOURTHRING-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING',True)
-    
+
     RVEpart.SetByBoolean(name='LOWERSIDE', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING'],RVEpart.sets['LOWERSIDE-SECONDRING'],RVEpart.sets['LOWERSIDE-THIRDRING'],RVEpart.sets['LOWERSIDE-FOURTHRING']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE',True)
-    
+
     setsOfEdgesData = [[0.001,L,0.0,-0.001,L,0.0,'UPPERSIDE'],
                        [0.99*L,0.5*L,0.0,1.01*L,0.5*L,0.0,'RIGHTSIDE'],
                        [-0.99*L,0.5*L,0.0,-1.01*L,0.5*L,0.0,'LEFTSIDE'],
@@ -984,45 +1379,45 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                        [0.74*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,0.76*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'SECONDCIRCLE-SECONDBOUNDED'],
                        [0.74*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.74*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,0.76*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.76*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'SECONDCIRCLE-RESTBOUNDED']]
     for setOfEdgesData in setsOfEdgesData:
-        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)                   
-    
+        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+
     RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-LOWERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE',True)
-    
+
     setsOfEdgesData = [[0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0,1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'THIRDCIRCLE-LOWERCRACK'],
                        [0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-UPPERCRACK'],
                        [0.99*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-FIRSTBOUNDED'],
                        [0.99*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,1.01*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'THIRDCIRCLE-SECONDBOUNDED'],
                        [0.99*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.99*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,1.01*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),1.01*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'THIRDCIRCLE-RESTBOUNDED']]
     for setOfEdgesData in setsOfEdgesData:
-        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)                           
-                       
+        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+
     RVEpart.SetByBoolean(name='THIRDCIRCLE', sets=[RVEpart.sets['THIRDCIRCLE-LOWERCRACK'],RVEpart.sets['THIRDCIRCLE-UPPERCRACK'],RVEpart.sets['THIRDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['THIRDCIRCLE-SECONDBOUNDED'],RVEpart.sets['THIRDCIRCLE-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE',True)
-    
+
     if L>2*Rf:
         R4 = 1.25*Rf
     else:
         R4 = Rf+0.25*(L-Rf)
-    
+
     setsOfEdgesData = [[0.99*R4*np.cos(0.5*alpha*np.pi/180),0.99*R4*np.sin(0.5*alpha*np.pi/180),0.0,1.01*R4*np.cos(0.5*alpha*np.pi/180),1.01*R4*np.sin(0.5*alpha*np.pi/180),0.0,'FOURTHCIRCLE-LOWERCRACK'],
                        [0.99*R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'FOURTHCIRCLE-UPPERCRACK'],
                        [0.99*R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'FOURTHCIRCLE-FIRSTBOUNDED'],
                        [0.99*R4*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*R4*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,1.01*R4*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*R4*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'FOURTHCIRCLE-SECONDBOUNDED'],
                        [0.99*R4*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.99*R4*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,1.01*R4*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),1.01*R4*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'FOURTHCIRCLE-RESTBOUNDED']]
     for setOfEdgesData in setsOfEdgesData:
-        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True) 
-    
+        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+
     RVEpart.SetByBoolean(name='FOURTHCIRCLE', sets=[RVEpart.sets['FOURTHCIRCLE-LOWERCRACK'],RVEpart.sets['FOURTHCIRCLE-UPPERCRACK'],RVEpart.sets['FOURTHCIRCLE-FIRSTBOUNDED'],RVEpart.sets['FOURTHCIRCLE-SECONDBOUNDED'],RVEpart.sets['FOURTHCIRCLE-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FOURTHCIRCLE',True)
-    
+
     if L>2*Rf:
         setsOfEdgesData = [[1.49*Rf*np.cos((theta+deltatheta)*np.pi/180),1.49*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,1.51*Rf*np.cos((theta+deltatheta)*np.pi/180),1.51*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,'FIFTHCIRCLE']]
     else:
         setsOfEdgesData = [[(Rf+0.49*(L-Rf))*np.cos((theta+deltatheta)*np.pi/180),(Rf+0.49*(L-Rf))*np.sin((theta+deltatheta)*np.pi/180),0.0,(Rf+0.51*(L-Rf))*np.cos((theta+deltatheta)*np.pi/180),(Rf+0.51*(L-Rf))*np.sin((theta+deltatheta)*np.pi/180),0.0,'FIFTHCIRCLE']]
     for setOfEdgesData in setsOfEdgesData:
-        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True) 
-    
+        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+
     setsOfEdgesData = [[0.85*Rf*np.cos(0.99*alpha*np.pi/180),0.85*Rf*np.sin(0.99*alpha*np.pi/180),0.0,0.85*Rf*np.cos(1.01*alpha*np.pi/180),0.85*Rf*np.sin(1.01*alpha*np.pi/180),0.0,'TRANSVERSALCUT-FIRSTFIBER'],
                        [1.05*Rf*np.cos(0.99*alpha*np.pi/180),1.05*Rf*np.sin(0.99*alpha*np.pi/180),0.0,1.05*Rf*np.cos(1.01*alpha*np.pi/180),1.05*Rf*np.sin(1.01*alpha*np.pi/180),0.0,'TRANSVERSALCUT-FIRSTMATRIX'],
                        [0.85*Rf*np.cos(0.99*(theta+deltatheta)*np.pi/180),0.85*Rf*np.sin(0.99*(theta+deltatheta)*np.pi/180),0.0,0.85*Rf*np.cos(1.01*(theta+deltatheta)*np.pi/180),0.85*Rf*np.sin(1.01*(theta+deltatheta)*np.pi/180),0.0,'TRANSVERSALCUT-SECONDFIBER'],
@@ -1032,11 +1427,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                        [0.85*Rf*np.cos(0.99*gamma*np.pi/180),0.85*Rf*np.sin(0.99*gamma*np.pi/180),0.0,0.85*Rf*np.cos(1.01*gamma*np.pi/180),0.85*Rf*np.sin(1.01*gamma*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHFIBER'],
                        [1.05*Rf*np.cos(0.99*gamma*np.pi/180),1.05*Rf*np.sin(0.99*gamma*np.pi/180),0.0,1.05*Rf*np.cos(1.01*gamma*np.pi/180),1.05*Rf*np.sin(1.01*gamma*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHMATRIX']]
     for setOfEdgesData in setsOfEdgesData:
-        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True) 
-    
+        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+
     # sets of faces
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of faces',True)
-    
+
     setsOfFacesData = [[0.0, 0.25*Rf, 0,'FIBER-CENTER'],
                        [0.0, 0.65*Rf, 0,'FIBER-INTERMEDIATEANNULUS'],
                        [0.85*Rf*np.cos(0.5*alpha*np.pi/180), 0.85*Rf*np.sin(0.5*alpha*np.pi/180), 0,'FIBER-EXTANNULUS-LOWERCRACK'],
@@ -1044,62 +1439,62 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                        [0.85*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-FIRSTBOUNDED'],
                        [0.85*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180), 0.85*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180), 0,'FIBER-EXTANNULUS-SECONDBOUNDED'],
                        [0.85*Rf*np.cos((gamma+0.5*(180-gamma))*np.pi/180), 0.85*Rf*np.sin((gamma+0.5*(180-gamma))*np.pi/180), 0,'FIBER-EXTANNULUS-RESTBOUNDED']]
-    
+
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
-    
+
     RVEpart.SetByBoolean(name='FIBER-EXTANNULUS', sets=[RVEpart.sets['FIBER-EXTANNULUS-LOWERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-UPPERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-FIRSTBOUNDED'],RVEpart.sets['FIBER-EXTANNULUS-SECONDBOUNDED'],RVEpart.sets['FIBER-EXTANNULUS-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FIBER-EXTANNULUS',True)
     RVEpart.SetByBoolean(name='FIBER', sets=[RVEpart.sets['FIBER-CENTER'],RVEpart.sets['FIBER-INTERMEDIATEANNULUS'],RVEpart.sets['FIBER-EXTANNULUS']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FIBER',True)
-    
+
     if L>2*Rf:
         R1 = (1+0.5*0.25)*Rf
         R2 = (1.25+0.5*0.25)*Rf
     else:
         R1 = Rf+0.5*0.25*(L-Rf)
         R2 = Rf+1.5*0.25*(L-Rf)
-    
+
     setsOfFacesData = [[R1*np.cos(0.5*alpha*np.pi/180), R1*np.sin(0.5*alpha*np.pi/180), 0,'MATRIX-INTANNULUS-LOWERCRACK'],
                        [R1*np.cos((alpha+0.5*deltapsi)*np.pi/180), R1*np.sin((alpha+0.5*deltapsi)*np.pi/180), 0,'MATRIX-INTANNULUS-UPPERCRACK'],
                        [R1*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180), R1*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0,'MATRIX-INTANNULUS-FIRSTBOUNDED'],
                        [R1*np.cos((beta+0.5*deltaphi)*np.pi/180), R1*np.sin((beta+0.5*deltaphi)*np.pi/180), 0,'MATRIX-INTANNULUS-SECONDBOUNDED'],
                        [R1*np.cos((gamma+0.5*(180-gamma))*np.pi/180), R1*np.sin((gamma+0.5*(180-gamma))*np.pi/180), 0,'MATRIX-INTANNULUS-RESTBOUNDED']]
-                           
+
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
-        
+
     RVEpart.SetByBoolean(name='MATRIX-INTANNULUS', sets=[RVEpart.sets['MATRIX-INTANNULUS-LOWERCRACK'],RVEpart.sets['MATRIX-INTANNULUS-UPPERCRACK'],RVEpart.sets['MATRIX-INTANNULUS-FIRSTBOUNDED'],RVEpart.sets['MATRIX-INTANNULUS-SECONDBOUNDED'],RVEpart.sets['MATRIX-INTANNULUS-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MATRIX-INTANNULUS',True)
-    
+
     setsOfFacesData = [[0.0, R2, 0,'MATRIX-INTERMEDIATEANNULUS'],
                        [0.0, Rf+0.5*(L-Rf), 0,'MATRIX-BODY']]
-                       
-    
+
+
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
-        
+
     RVEpart.SetByBoolean(name='MATRIX', sets=[RVEpart.sets['MATRIX-BODY'],RVEpart.sets['MATRIX-INTERMEDIATEANNULUS'],RVEpart.sets['MATRIX-INTANNULUS']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MATRIX',True)
-    
+
     RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-                                    
+
     # sets of cells (none, i.e. 2D geometry)
-    
+
     mdb.save()
-    
+
     writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
-    
+
 #===============================================================================#
 #                             Materials creation
-#===============================================================================#    
-    
+#===============================================================================#
+
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating materials ...',True)
-    
+
     for material in parameters['materials']:
         mdb.models[modelname].Material(name=material['name'])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'MATERIAL: ' + material['name'],True)
@@ -1112,7 +1507,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     tuplelist.append(tuple(valuelist))
                     valuelist = []
                 valuelist.append(value)
-            tuplelist.append(tuple(valuelist))    
+            tuplelist.append(tuple(valuelist))
             mdb.models[modelname].materials[material['name']].Elastic(type=material['elastic']['type'],table=tuple(tuplelist))
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  ELASTIC',True)
             line = '    '
@@ -1134,7 +1529,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     tuplelist.append(tuple(valuelist))
                     valuelist = []
                 valuelist.append(value)
-            tuplelist.append(tuple(valuelist))    
+            tuplelist.append(tuple(valuelist))
             mdb.models[modelname].materials[material['name']].Density(table=tuple(tuplelist))
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  DENSITY',True)
             line = '    '
@@ -1155,7 +1550,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     tuplelist.append(tuple(valuelist))
                     valuelist = []
                 valuelist.append(value)
-            tuplelist.append(tuple(valuelist))    
+            tuplelist.append(tuple(valuelist))
             mdb.models[modelname].materials[material['name']].Expansion(type=material['thermalexpansion']['type'],table=tuple(tuplelist))
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  THERMAL EXPANSION',True)
             line = '    '
@@ -1176,7 +1571,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     tuplelist.append(tuple(valuelist))
                     valuelist = []
                 valuelist.append(value)
-            tuplelist.append(tuple(valuelist))    
+            tuplelist.append(tuple(valuelist))
             mdb.models[modelname].materials[material['name']].Conductivity(type=material['thermalconductivity']['type'],table=tuple(tuplelist))
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  THERMAL CONDUCTIVITY',True)
             line = '    '
@@ -1196,154 +1591,154 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#
 #                             Sections creation
 #===============================================================================#
-    
+
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating sections ...',True)
-    
+
     for section in parameters['sections']:
         if 'HomogeneousSolidSection' in section['type'] or 'Homogeneous Solid Section' in section['type'] or 'somogeneoussolidsection' in section['type'] or 'homogeneous solid section' in section['type'] or 'Homogeneous solid section' in section['type']:
-            mdb.models[modelname].HomogeneousSolidSection(name=section['name'], 
+            mdb.models[modelname].HomogeneousSolidSection(name=section['name'],
             material=section['material'], thickness=section['thickness'])
-    
+
     mdb.save()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    
+
 #===============================================================================#
 #                             Sections assignment
-#===============================================================================# 
+#===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Making section assignments ...',True)
-     
+
     for sectionRegion in parameters['sectionRegions']:
         RVEpart.SectionAssignment(region=RVEpart.sets[sectionRegion['set']], sectionName=sectionRegion['name'], offset=sectionRegion['offsetValue'],offsetType=sectionRegion['offsetType'], offsetField=sectionRegion['offsetField'],thicknessAssignment=sectionRegion['thicknessAssignment'])
-    
-    # p.SectionAssignment(region=region, sectionName='MatrixSection', offset=0.0, 
-    #     offsetType=MIDDLE_SURFACE, offsetField='', 
+
+    # p.SectionAssignment(region=region, sectionName='MatrixSection', offset=0.0,
+    #     offsetType=MIDDLE_SURFACE, offsetField='',
     #     thicknessAssignment=FROM_SECTION)
-        
+
     mdb.save()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    
+
 #===============================================================================#
 #                             Instance creation
 #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating instance ...',True)
-    
+
     model.rootAssembly.DatumCsysByDefault(CARTESIAN)
     model.rootAssembly.Instance(name='RVE-assembly', part=RVEpart, dependent=OFF)
-    
+
     mdb.save()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    
+
 #===============================================================================#
 #                             Step creation
 #===============================================================================#
-    
+
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating step ...',True)
-    
-    model.StaticStep(name='Load-Step', previous='Initial', 
+
+    model.StaticStep(name='Load-Step', previous='Initial',
         minInc=parameters['step']['minimumIncrement'])
 
     mdb.save()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 #===============================================================================#
 #                             Boundary conditions
 #===============================================================================#
-    
+
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assigning boundary conditions ...',True)
-    
+
     # SOUTH side: symmetry line
-    
-    model.YsymmBC(name='SymmetryBound', createStepName='Load-Step', 
+
+    model.YsymmBC(name='SymmetryBound', createStepName='Load-Step',
         region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
-    
+
     # NORTH side
-    
+
     # if 'periodic' in parameters['boundaryConditions']['north']['type']:
-    #     
+    #
     # elif 'rigidbar' in parameters['boundaryConditions']['north']['type']:
-    # 
+    #
     # elif 'homogeneousdisplacement' in parameters['boundaryConditions']['north']['type']:
     #
     # else free
-    
+
     # EAST side
-    
+
     # if 'periodic' in parameters['boundaryConditions']['north']['type']:
     #
     # else free
-    
+
     # WEST side
-    
+
     # if 'periodic' in parameters['boundaryConditions']['north']['type']:
     #
     # else free
-    
+
     mdb.save()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    
+
 #===============================================================================#
 #                                Applied load
-#===============================================================================#    
-    
+#===============================================================================#
+
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',2*logindent + 'Assigning loads ...',True)
-    
+
     for load in parameters['loads']:
         if 'appliedstrain' in load['type'] or 'appliedStrain' in load['type'] or 'Applied Strain' in load['type'] or 'applied strain' in load['type']:
             model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*L, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
         elif 'applieddisplacement' in load['type'] or 'appliedDisplacement' in load['type'] or 'Applied Displacement' in load['type'] or 'applied displacement' in load['type']:
             model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0], amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
         # elif 'appliedstress' in load['type'] or 'appliedStress' in load['type'] or 'Applied Stress' in load['type'] or 'applied stress' in load['type']:
-        # 
+        #
         # elif 'appliedforce' in load['type'] or 'appliedForce' in load['type'] or 'Applied Force' in load['type'] or 'applied Force' in load['type']:
-    
+
     mdb.save()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 #===============================================================================#
 #                                   Crack
 #===============================================================================#
-   
+
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating cracks ...',True)
-    
+
     # assign seam
     model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
-        
+
     # contour integral
     xC = Rf*np.cos((theta+deltatheta)*np.pi/180)
     yC = Rf*np.sin((theta+deltatheta)*np.pi/180)
     xA = Rf*np.cos((theta+1.025*deltatheta)*np.pi/180)
     yA = -xC*(xA-xC)/yC + yC
     model.rootAssembly.engineeringFeatures.ContourIntegral(name='Debond',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIP'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=0.5, collapsedElementAtTip=NONE)
-    
+
     mdb.save()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 #===============================================================================#
 #                                   Mesh
 #===============================================================================#
-    
+
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating mesh ...',True)
-    
+
     # assign mesh controls
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
-    
+
     regionSets = [['FIBER-EXTANNULUS-LOWERCRACK',QUAD,STRUCTURED],
                     ['FIBER-EXTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
                     ['FIBER-EXTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
@@ -1358,16 +1753,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['MATRIX-INTANNULUS-RESTBOUNDED',QUAD,STRUCTURED],
                     ['MATRIX-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
                     ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
-                    
+
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
-        
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     # assign seeds
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
-    
-    nTangential = np.floor(deltapsi/delta) 
+
+    nTangential = np.floor(deltapsi/delta)
     nRadialFiber = np.floor(0.25/(delta*np.pi/180.0))
     nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
     nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['mesh']['size']['delta3'])
@@ -1379,7 +1774,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         nRadialMatrix = np.floor(0.25*(L-Rf)/(delta*np.pi/180.0))
         #nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
-    
+
     regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
                     ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
                     ['THIRDCIRCLE-UPPERCRACK',nTangential],
@@ -1410,15 +1805,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['FIFTHCIRCLE',90],
                     ['RIGHTSIDE',30],
                     ['LEFTSIDE',30]]
-                    
+
     for regionSet in regionSets:
         seedEdgeByNumber(model,'RVE-assembly',regionSet[0],regionSet[1],FINER,logfilepath,baselogindent + 3*logindent,True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     # select element type
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Selecting and assigning element types ...',True)
-    
+
     if 'first' in parameters['mesh']['elements']['order']:
         elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
         elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
@@ -1426,97 +1821,97 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
         elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
     model.rootAssembly.setElementType(regions=(model.rootAssembly.instances['RVE-assembly'].sets['RVE']), elemTypes=(elemType1, elemType2))
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     # mesh part
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Meshing part ...',True)
     localStart = timeit.default_timer()
 
     model.rootAssembly.generateMesh(regions=(model.rootAssembly.instances['RVE-assembly'],))
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Mesh creation time: ' + str(timeit.default_timer() - localStart) + ' [s]',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     mdb.save()
-    
+
     # extract mesh statistics
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extracting mesh statistics ...',True)
-    
+
     meshStats = model.rootAssembly.getMeshStats(regions=(model.rootAssembly.instances['RVE-assembly'],))
-    
+
     modelData = {}
     modelData['numNodes'] =  meshStats.numNodes
     modelData['numQuads'] =  meshStats.numQuadElems
     modelData['numTris'] =  meshStats.numTriElems
     modelData['numEls'] =  meshStats.numQuadElems + meshStats.numTriElems
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     mdb.save()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    
+
 #===============================================================================#
 #                                   Output
 #===============================================================================#
-    
+
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating output requests ...',True)
-    
+
     # field output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Field output ...',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     # history output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'History output ...',True)
-    
+
     model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     mdb.save()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    
+
 #===============================================================================#
 #                                Job creation
 #===============================================================================#
-    
+
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set job name',True)
     modelData['jobname'] = 'Job-Jintegral-' + modelname
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job',True)
     mdb.Job(name='Job-Jintegral-' + modelname, model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=parameters['solver']['cpus'], numDomains=12,numGPUs=0)
-    
+
     mdb.save()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Submit job and wait for completion',True)
     localStart = timeit.default_timer()
     #mdb.jobs['Job-' + modelname].submit(consistencyChecking=OFF)
     mdb.jobs['Job-Jintegral-' + modelname].writeInput(consistencyChecking=OFF)
     mdb.jobs['Job-Jintegral-' + modelname].waitForCompletion()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Job time: ' + str(timeit.default_timer() - localStart) + ' [s]',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    
+
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Closing database ...',True)
     mdb.save()
     mdb.close()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: createRVE(parameters,logfilepath,logindent)',True)
-    
+
     return modelData
-    
+
 def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: modifyRVE(parameters,mdbData)',True)
@@ -1773,7 +2168,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for element in matrixElswithCracktip:
         for node in quads[element]:
             nodesAroundCracktip.append(node)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)        
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
     nodesMatrixDisplacementMeas = []
     for node in crackfacesNodeset:
         if node in nodesAroundCracktip:
@@ -1880,13 +2275,13 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for l,line in enumerate(inpfilelines):
         if '*End Assembly' in line or '*END ASSEMBLY' in line:
             endAssembly = l
-            break 
+            break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of boundary conditions section  ...',True)
     for l,line in enumerate(inpfilelines):
         if '** BOUNDARY CONDITIONS' in line or '** Boundary Conditions' in line:
             startBC = l
-            break 
+            break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
     with open(modinpfullpath,'a') as inp:
@@ -2049,25 +2444,25 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 def runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: runRVEsimulation(wd,inpfile)',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
-    
+
     mdb.JobFromInputFile(name=inpfile.split('.')[0],inputFileName=inpfile,type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=12, numDomains=12,numGPUs=0)
-    
+
     mdb.jobs[inpfile.split('.')[0]].submit(consistencyChecking=OFF)
-    
+
     mdb.jobs[inpfile.split('.')[0]].waitForCompletion()
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    writeLineToLogFile(logfilefullpath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,baselogindent,logindent)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,baselogindent,logindent)',True)
 
 def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
-    
+
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: analyzeRVEresults(wd,odbname)',True)
-    
+
     wd = parameters['input']['wd']
-    
+
     #=======================================================================
     # BEGIN - extract performances
     #=======================================================================
@@ -2082,7 +2477,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # END - extract performances
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - extract J-integral results
     #=======================================================================
@@ -2101,7 +2496,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # END - extract J-integral results
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - open ODB
     #=======================================================================
@@ -2114,66 +2509,66 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # END - open ODB
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - extract node sets
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting node sets ...',True)
-    
+
     rightSide = getSingleNodeSet(odb,'RVE','RIGHTSIDE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- RIGHTSIDE',True)
-    
+
     fiberCrackfaceNodes = getSingleNodeSet(odb,'RVE','FIBER-CRACKFACE-NODES')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKFACE-NODES',True)
-    
+
     matrixCrackfaceNodes = getSingleNodeSet(odb,'RVE','MATRIX-CRACKFACE-NODES')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKFACE-NODES',True)
-    
+
     fiberCracktip = getSingleNodeSet(odb,'RVE','FIBER-CRACKTIP')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKTIP',True)
-    
+
     matrixCracktip = getSingleNodeSet(odb,'RVE','MATRIX-CRACKTIP')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKTIP',True)
-    
+
     cracktipDummyNode = getSingleNodeSet(odb,'RVE','CRACKTIP-DUMMY-NODE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CRACKTIP-DUMMY-NODE',True)
-    
+
     fiberCracktipDispMeas = getSingleNodeSet(odb,'RVE','FIBER-CRACKTIP-DISPMEAS')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKTIP-DISPMEAS',True)
-    
+
     matrixCracktipDispMeas = getSingleNodeSet(odb,'RVE','MATRIX-CRACKTIP-DISPMEAS')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKTIP-DISPMEAS',True)
-    
+
     if 'second' in parameters['elements']['order']:
         fiberFirstbounded = getSingleNodeSet(odb,'RVE','FIBER-NODE-FIRSTBOUNDED')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-NODE-FIRSTBOUNDED',True)
-        
+
         matrixFirstbounded = getSingleNodeSet(odb,'RVE','MATRIX-NODE-FIRSTBOUNDED')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-NODE-FIRSTBOUNDED',True)
-        
+
         firstboundedDummyNode = getSingleNodeSet(odb,'RVE','FIRSTBOUNDED-DUMMY-NODE')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIRSTBOUNDED-DUMMY-NODE',True)
-        
+
         fiberFirstboundedDispMeas = getSingleNodeSet(odb,'RVE','FIBER-FIRSTBOUNDED-DISPMEAS')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-FIRSTBOUNDED-DISPMEAS',True)
-        
+
         matrixFirstboundedDispMeas = getSingleNodeSet(odb,'RVE','MATRIX-FIRSTBOUNDED-DISPMEAS')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-FIRSTBOUNDED-DISPMEAS',True)
-        
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract node sets
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - extract stresses at the boundary
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses at the boundary ...',True)
-    
+
     rightsideStress = getFieldOutput(odb,-1,-1,'S',rightSide,3)
-    
+
     rightsideDefcoords = getFieldOutput(odb,-1,-1,'COORD',rightSide)
-    
+
     rightsideStressdata = []
     rightsideUndefcoords = getFieldOutput(odb,-1,0,'COORD',rightSide)
     for value in rightsideUndefcoords:
@@ -2181,7 +2576,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         stress = getFieldOutput(odb,-1,-1,'S',node,3)
         defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
         rightsideStressdata.append([value.data[0],value.data[1],defcoords.value[0].data[0],defcoords.value[0].data[1],stress.value[0].data[0],stress.value[0].data[1],stress.value[0].data[2],stress.value[0].data[3]])
-    
+
     maxSigmaxx = rightsideStressdata[0][4]
     minSigmaxx = rightsideStressdata[0][4]
     meanSigmaxx = 0.0
@@ -2192,15 +2587,15 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         elif stress[4]<minSigmaxx:
             minSigmaxx = stress[4]
     meanSigmaxx /= len(rightsideStressdata)
-    
+
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0, y0, x, y, sigma_xx, sigma_zz, sigma_yy, tau_xz')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],rightsideStressdata)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract stresses at the boundary
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - compute G0
     #=======================================================================
@@ -2210,35 +2605,35 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # END - compute G0
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - compute reference frame transformation
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute reference frame transformation ...',True)
-    
+
     undefCracktipCoords = getFieldOutput(odb,-1,0,'COORD',fiberCracktip)
     phi = np.arctan2(undefCracktipCoords.data[1],undefCracktipCoords.data[0])
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - compute reference frame transformation
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - compute contact zone
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute contact zone ...',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements ...',True)
-    
+
     fiberCrackfaceDisps = getFieldOutput(odb,-1,-1,'U',fiberCrackfaceNodes)
     matrixCrackfaceDisps = getFieldOutput(odb,-1,-1,'U',matrixCrackfaceNodes)
-    
+
     fiberAngles = []
     matrixAngles = []
     fiberDisps = []
     matrixDisps = []
-    
+
     for value in fiberCrackfaceDisps.values:
         node = odb.rootAssembly.instances['RVEassembly'].getNodeFromLabel(value.label)
         undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
@@ -2251,42 +2646,42 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         beta = np.arctan2(undefCoords.value[0].data[1],undefCoords.value[0].data[0])
         matrixAngles.append(beta)
         matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
-    
+
     fiberDisps = np.array(fiberDisps)[np.argsort(fiberAngles)].tolist()
     matrixDisps = np.array(matrixDisps)[np.argsort(matrixAngles)].tolist()
-    
+
     crackDisps = []
     uR = []
     uTheta = []
-    
+
     for s,dispset in enumerate(fiberDisps):
         crackDisps.append([matrixDisps[s][0]-dispset[0],matrixDisps[s][1]-dispset[1]])
         uR.append(matrixDisps[s][0]-dispset[0])
         uTheta.append(matrixDisps[s][1]-dispset[1])
-        
+
     phiCZ = 0.0
     for s,dispset in enumerate(crackDisps):
         if dispset[0]<1e-10:
             phiCZ = phi - fiberAngles[s]
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],'beta, uR_fiber, uTheta_fiber, uR_matrix, uTheta_matrix, uR, uTheta')
     for s,dispset, in enumerate(crackDisps):
         appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],[fiberAngles[s],fiberDisps[s][0],fiberDisps[s][1],matrixDisps[s][0],matrixDisps[s][1],crackDisps[s][0],crackDisps[s][1]])
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - compute contact zone
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - compute VCCT
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute VCCT ...',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract forces and displacements ...',True)
-    
+
     RFcracktip = getFieldOutput(odb,-1,-1,'RF',cracktipDummyNode)
     if 'second' in parameters['elements']['order']:
         RFfirstbounded = getFieldOutput(odb,-1,-1,'RF',firstboundedDummyNode)
@@ -2295,28 +2690,28 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     if 'second' in parameters['elements']['order']:
         fiberFirstboundedDisplacement = getFieldOutput(odb,-1,-1,'U',fiberFirstboundedDispMeas)
         matrixFirstboundedDisplacement = getFieldOutput(odb,-1,-1,'U',matrixFirstboundedDispMeas)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate forces and displacements ...',True)
-    
+
     xRFcracktip = RFcracktip.value[0].data[0]
     yRFcracktip = RFcracktip.value[0].data[1]
-    rRFcracktip = np.cos(phi)*xRFcracktip + np.sin(phi)*yRFcracktip 
+    rRFcracktip = np.cos(phi)*xRFcracktip + np.sin(phi)*yRFcracktip
     thetaRFcracktip = -np.sin(phi)*xRFcracktip + np.cos(phi)*yRFcracktip
     if 'second' in parameters['elements']['order']:
         xRFfirstbounded = RFfirstbounded.value[0].data[0]
         yRFfirstbounded = RFfirstbounded.value[0].data[1]
-        rRFfirstbounded = np.cos(phi)*xRFfirstbounded + np.sin(phi)*yRFfirstbounded 
+        rRFfirstbounded = np.cos(phi)*xRFfirstbounded + np.sin(phi)*yRFfirstbounded
         thetaRFfirstbounded = -np.sin(phi)*xRFfirstbounded + np.cos(phi)*yRFfirstbounded
-    
+
     xfiberCracktipDisplacement = fiberCracktipDisplacement.value[0].data[0]
     yfiberCracktipDisplacement = fiberCracktipDisplacement.value[0].data[1]
     rfiberCracktipDisplacement = np.cos(phi)*xfiberCracktipDisplacement + np.sin(phi)*yfiberCracktipDisplacement
     thetafiberCracktipDisplacement = -np.sin(phi)*xfiberCracktipDisplacement + np.cos(phi)*yfiberCracktipDisplacement
     xmatrixCracktipDisplacement = matrixCracktipDisplacement.value[0].data[0]
     ymatrixCracktipDisplacement = matrixCracktipDisplacement.value[0].data[1]
-    rmatrixCracktipDisplacement = np.cos(phi)*xmatrixCracktipDisplacement + np.sin(phi)*ymatrixCracktipDisplacement 
+    rmatrixCracktipDisplacement = np.cos(phi)*xmatrixCracktipDisplacement + np.sin(phi)*ymatrixCracktipDisplacement
     thetamatrixCracktipDisplacement = -np.sin(phi)*xmatrixCracktipDisplacement + np.cos(phi)*ymatrixCracktipDisplacement
     if 'second' in parameters['elements']['order']:
         xfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.value[0].data[0]
@@ -2327,7 +2722,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         ymatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.value[0].data[1]
         rmatrixFirstboundedDisplacement = np.cos(phi)*xmatrixFirstboundedDisplacement + np.sin(phi)*ymatrixFirstboundedDisplacement
         thetamatrixFirstboundedDisplacement = -np.sin(phi)*xmatrixFirstboundedDisplacement + np.cos(phi)*ymatrixFirstboundedDisplacement
-    
+
     xcracktipDisplacement = xmatrixCracktipDisplacement - xfiberCracktipDisplacement
     ycracktipDisplacement = ymatrixCracktipDisplacement - yfiberCracktipDisplacement
     rcracktipDisplacement = rmatrixCracktipDisplacement - rfiberCracktipDisplacement
@@ -2337,11 +2732,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         yfirstboundedDisplacement = ymatrixFirstboundedDisplacement - yfiberFirstboundedDisplacement
         rfirstboundedDisplacement = rmatrixFirstboundedDisplacement - rfiberFirstboundedDisplacement
         thetafirstboundedDisplacement = thetamatrixFirstboundedDisplacement - thetafiberFirstboundedDisplacement
-        
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GTOT=GI+GII ...',True)
-    
+
     if 'second' in parameters['elements']['order']:
         GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
         GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
@@ -2350,34 +2745,34 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
         GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
         GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
-    
+
     GTOT = GI + GII
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GI=GTOT-GII ...',True)
-    
+
     if 'second' in parameters['elements']['order']:
         GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
     else:
         GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['Rf']*parameters['delta']*np.pi/180.0))
-    
+
     GTOTv2 = Jintegrals[-1]
-    
+
     GIv2 = GTOTv2 - GIIv2
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     if 'second' in parameters['elements']['order']:
         appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZ,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement])
     else:
         appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZ,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement])
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - compute VCCT
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - close ODB
     #=======================================================================
@@ -2387,25 +2782,25 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # END - close ODB
     #=======================================================================
-    
+
     writeLineToLogFile(logfilefullpath,'a',baselogindent + logindent + 'Exiting function: analyzeRVEresults(wd,odbname,parameters)',True)
-    
-    
-    
+
+
+
 def main(argv):
-    
+
     debug = True
-    
+
     #=======================================================================
     # BEGIN - DATA
     #=======================================================================
-    
+
     # units are already the ones used in simulation, not SI ==> conversion tool must be added
-    
+
     # constant Vff, i.e. L/Rf, and variable deltatheta
-    
+
     RVEparams = {}
-    
+
     RVEparams['input'] = {'wd':'D:/01_Luca/07_Data/03_FEM/CurvedInterface',
                           'caefilename':'caePythonTest',
                           'modelname':''}
@@ -2479,25 +2874,25 @@ def main(argv):
                                      'local':{}}
                           }
     RVEparams['solver'] = {'cpus':12}
-    
+
     # parameters for iterations
     # RVEparams['modelname']
     # RVEparams['deltatheta']
     # RVEparams['deltapsi']
     # RVEparams['deltaphi']
-    
+
     #=======================================================================
     # END - DATA
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - ITERABLES
     #=======================================================================
-    
+
     basename = 'RVE100-Half-SmallDisplacement-Free'
-    
+
     iterationsSets = []
-    
+
     for angle in range(10,160,10):
         value1 = basename + '-' + str(angle).replace('.','_')
         value2 = angle
@@ -2511,58 +2906,58 @@ def main(argv):
             value3 = 0.4*(180.0-angle)
             value4 = 0.4*(180.0-angle)
         iterationsSets.append([value1,value2,value3,value4])
-    
+
     #=======================================================================
     # END - ITERABLES
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - ANALYSIS
     #=======================================================================
-    
+
     workDir = RVEparams['input']['wd']
-    
+
     logfilename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_ABQ-RVE-generation-and-analysis' + '.log'
     logfilefullpath = join(workDir,logfilename)
     logindent = '    '
-    
+
     if not os.path.exists(RVEparams['output']['global']['directory']):
             os.mkdir(RVEparams['output']['global']['directory'])
-            
+
     with open(logfilefullpath,'w') as log:
         log.write('Automatic generation and FEM analysis of RVEs with Abaqus Python' + '\n')
-    
+
     createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME','ITERATION PARAMETER VALUE, T(createRVE()) [s], T(modifyRVEinputfile()) [s], T(runRVEsimulation()) [s], T(analyzeRVEresults()) [s], TOTAL TIME FOR ITERATION [s]')
-    
+
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a','In function: main(argv)',True)
-    
+
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Global timer starts',True)
     globalStart = timeit.default_timer()
-    
+
     for set in iterationsSets:
-        
+
         timedataList = []
         totalIterationTime = 0.0
-        
+
         RVEparams['input']['modelname'] = set[0]
         RVEparams['geometry']['deltatheta'] = set[1]
         RVEparams['mesh']['size']['deltapsi'] = set[2]
-        RVEparams['mesh']['size']['deltaphi'] = set[3]        
+        RVEparams['mesh']['size']['deltaphi'] = set[3]
         RVEparams['output']['local']['directory'] = join(RVEparams['output']['global']['directory'],set[0])
-        
+
         timedataList.append(set[1])
-        
+
         if not os.path.exists(RVEparams['output']['local']['directory']):
                 os.mkdir(RVEparams['output']['local']['directory'])
-                
+
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: createRVE(parameters,logfilepath,baselogindent,logindent)',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            modelData = createRVE(RVEparams,logfilefullpath,logindent,logindent)
+            #modelData = createRVE(RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -2572,13 +2967,13 @@ def main(argv):
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
-            
+
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent)',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
+            #inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -2588,13 +2983,13 @@ def main(argv):
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
-        
+
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent)',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilefullpath,logindent,logindent)
+            #runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -2604,7 +2999,7 @@ def main(argv):
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
-        
+        inputfilename = 'Job-VCCTandJintegral-RVE100-Half-SmallDisplacement-Free-10' + '.inp'
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: analyzeRVEresults(wd,odbname,logfilepath,parameters)',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
@@ -2627,20 +3022,19 @@ def main(argv):
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
-        
+
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME',timedataList.append(totalIterationTime))
-        
+
         if debug:
             break
-    
+
     globalElapsedTime = timeit.default_timer() - globalStart
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Global timer stopped',True)
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(globalElapsedTime) + ' [s]',True)
-    
+
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a','Exiting function: main(argv)',True)
     writeLineToLogFile(logfilefullpath,'a','Goodbye!',True)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
-    

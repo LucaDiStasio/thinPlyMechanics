@@ -2480,7 +2480,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         writeErrorToLogFile(logfilepath,'a',Exception,e,True)
         sys.exc_clear()
     appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['performances'],[performances[1]])
-    writeLineToLogFile(logfilepath,'a','... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract performances
     #=======================================================================
@@ -2488,7 +2488,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # BEGIN - extract J-integral results
     #=======================================================================
-    writeLineToLogFile(logfilepathpath,'a',baselogindent + 2*logindent + 'Extracting J-integral results ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting J-integral results ...',True)
     try:
         Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'])
     except Exception,e:

@@ -2496,7 +2496,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         sys.exc_clear()
     JintegralsWithDistance = []
     for v,value in enumerate(Jintegrals):
-        JintegralsWithDistance.append([(v+1)*parameters['Rf']*parameters['delta']*np.pi/180.0,value])
+        JintegralsWithDistance.append([(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
     writeLineToLogFile(logfilepathpath,'a',baselogindent + 2*logindent + '... done.',True)

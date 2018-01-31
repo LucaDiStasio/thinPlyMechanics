@@ -2528,7 +2528,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     rightSide = getSingleNodeSet(odb,'RVE-ASSEMBLY','RIGHTSIDE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- RIGHTSIDE',True)
 
-    fiberCrackfaceNodes = getSingleNodeSet(odb,'RVE-ASSEMBLY','RVE-ASSEMBLY.FIBER-CRACKFACE-NODES')
+    fiberCrackfaceNodes = getSingleNodeSet(odb,'RVE-ASSEMBLY','FIBER-CRACKFACE-NODES')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKFACE-NODES',True)
 
     matrixCrackfaceNodes = getSingleNodeSet(odb,'RVE-ASSEMBLY','MATRIX-CRACKFACE-NODES')

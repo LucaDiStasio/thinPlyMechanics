@@ -2525,44 +2525,44 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting node sets ...',True)
 
-    rightSide = getSingleNodeSet(odb,'RVE','RIGHTSIDE')
+    rightSide = getSingleNodeSet(odb,'RVE-assembly','RIGHTSIDE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- RIGHTSIDE',True)
 
-    fiberCrackfaceNodes = getSingleNodeSet(odb,'RVE','FIBER-CRACKFACE-NODES')
+    fiberCrackfaceNodes = getSingleNodeSet(odb,'RVE-assembly','FIBER-CRACKFACE-NODES')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKFACE-NODES',True)
 
-    matrixCrackfaceNodes = getSingleNodeSet(odb,'RVE','MATRIX-CRACKFACE-NODES')
+    matrixCrackfaceNodes = getSingleNodeSet(odb,'RVE-assembly','MATRIX-CRACKFACE-NODES')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKFACE-NODES',True)
 
-    fiberCracktip = getSingleNodeSet(odb,'RVE','FIBER-CRACKTIP')
+    fiberCracktip = getSingleNodeSet(odb,'RVE-assembly','FIBER-CRACKTIP')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKTIP',True)
 
-    matrixCracktip = getSingleNodeSet(odb,'RVE','MATRIX-CRACKTIP')
+    matrixCracktip = getSingleNodeSet(odb,'RVE-assembly','MATRIX-CRACKTIP')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKTIP',True)
 
-    cracktipDummyNode = getSingleNodeSet(odb,'RVE','CRACKTIP-DUMMY-NODE')
+    cracktipDummyNode = getSingleNodeSet(odb,'RVE-assembly','CRACKTIP-DUMMY-NODE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CRACKTIP-DUMMY-NODE',True)
 
-    fiberCracktipDispMeas = getSingleNodeSet(odb,'RVE','FIBER-CRACKTIP-DISPMEAS')
+    fiberCracktipDispMeas = getSingleNodeSet(odb,'RVE-assembly','FIBER-CRACKTIP-DISPMEAS')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKTIP-DISPMEAS',True)
 
-    matrixCracktipDispMeas = getSingleNodeSet(odb,'RVE','MATRIX-CRACKTIP-DISPMEAS')
+    matrixCracktipDispMeas = getSingleNodeSet(odb,'RVE-assembly','MATRIX-CRACKTIP-DISPMEAS')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKTIP-DISPMEAS',True)
 
     if 'second' in parameters['elements']['order']:
-        fiberFirstbounded = getSingleNodeSet(odb,'RVE','FIBER-NODE-FIRSTBOUNDED')
+        fiberFirstbounded = getSingleNodeSet(odb,'RVE-assembly','FIBER-NODE-FIRSTBOUNDED')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-NODE-FIRSTBOUNDED',True)
 
-        matrixFirstbounded = getSingleNodeSet(odb,'RVE','MATRIX-NODE-FIRSTBOUNDED')
+        matrixFirstbounded = getSingleNodeSet(odb,'RVE-assembly','MATRIX-NODE-FIRSTBOUNDED')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-NODE-FIRSTBOUNDED',True)
 
-        firstboundedDummyNode = getSingleNodeSet(odb,'RVE','FIRSTBOUNDED-DUMMY-NODE')
+        firstboundedDummyNode = getSingleNodeSet(odb,'RVE-assembly','FIRSTBOUNDED-DUMMY-NODE')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIRSTBOUNDED-DUMMY-NODE',True)
 
-        fiberFirstboundedDispMeas = getSingleNodeSet(odb,'RVE','FIBER-FIRSTBOUNDED-DISPMEAS')
+        fiberFirstboundedDispMeas = getSingleNodeSet(odb,'RVE-assembly','FIBER-FIRSTBOUNDED-DISPMEAS')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-FIRSTBOUNDED-DISPMEAS',True)
 
-        matrixFirstboundedDispMeas = getSingleNodeSet(odb,'RVE','MATRIX-FIRSTBOUNDED-DISPMEAS')
+        matrixFirstboundedDispMeas = getSingleNodeSet(odb,'RVE-assembly','MATRIX-FIRSTBOUNDED-DISPMEAS')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-FIRSTBOUNDED-DISPMEAS',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -2582,7 +2582,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     rightsideStressdata = []
     rightsideUndefcoords = getFieldOutput(odb,-1,0,'COORD',rightSide)
     for value in rightsideUndefcoords:
-        node = odb.rootAssembly.instances['RVEassembly'].getNodeFromLabel(value.label)
+        node = odb.rootAssembly.instances['RVE-assembly'].getNodeFromLabel(value.label)
         stress = getFieldOutput(odb,-1,-1,'S',node,3)
         defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
         rightsideStressdata.append([value.data[0],value.data[1],defcoords.value[0].data[0],defcoords.value[0].data[1],stress.value[0].data[0],stress.value[0].data[1],stress.value[0].data[2],stress.value[0].data[3]])
@@ -2645,13 +2645,13 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     matrixDisps = []
 
     for value in fiberCrackfaceDisps.values:
-        node = odb.rootAssembly.instances['RVEassembly'].getNodeFromLabel(value.label)
+        node = odb.rootAssembly.instances['RVE-assembly'].getNodeFromLabel(value.label)
         undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
         beta = np.arctan2(undefCoords.value[0].data[1],undefCoords.value[0].data[0])
         fiberAngles.append(beta)
         fiberDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
     for value in matrixCrackfaceDisps.values:
-        node = odb.rootAssembly.instances['RVEassembly'].getNodeFromLabel(value.label)
+        node = odb.rootAssembly.instances['RVE-assembly'].getNodeFromLabel(value.label)
         undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
         beta = np.arctan2(undefCoords.value[0].data[1],undefCoords.value[0].data[0])
         matrixAngles.append(beta)

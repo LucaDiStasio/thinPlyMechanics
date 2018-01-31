@@ -301,11 +301,10 @@ def getPerfs(wd,sims,logfilepath,baselogindent,logindent):
                         while '' in words:
                             words.remove('')
                         cpus = int(words[words.index('PROCESSORS')-1])
-                        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  - PROCESSORS',True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  - PROCESSORS',True)
         perf.append([sim,cpus,usertime,systemtime,usertime/totalcpu,systemtime/totalcpu,totalcpu,wallclock,wallclock/60.,wallclock/3600.,wallclock/totalcpu,floatops,minMemory,minIOmemory,totEl,userEl,progEl,totN,userN,progN,totVar])
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: getPerfs(wd,sims,logfilepath,baselogindent,logindent)',True)
-
     return perf
 
 def getFrame(odbObj,step,frame):
@@ -2880,8 +2879,8 @@ def main(argv):
                                      'order':'second'}}
     RVEparams['Jintegral'] = {'numberOfContours':50}
     RVEparams['output'] = {'global':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
-                                     'filenames':{'performances':'',
-                                                  'energyreleaserate':''}},
+                                     'filenames':{'performances':'caePythonTest-performances',
+                                                  'energyreleaserate':'caePythonTest-energyreleaserates'}},
                            'local':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
                                      'filenames':{'Jintegral':'',
                                                   'stressesatboundary':'',
@@ -2962,6 +2961,10 @@ def main(argv):
         RVEparams['mesh']['size']['deltapsi'] = set[2]
         RVEparams['mesh']['size']['deltaphi'] = set[3]
         RVEparams['output']['local']['directory'] = join(RVEparams['output']['global']['directory'],set[0])
+
+        RVEparams['output']['local']['filenames']['Jintegral'] = set[0] + '-Jintegral'
+        RVEparams['output']['local']['filenames']['stressesatboundary'] = set[0] + '-stressesatboundary'
+        RVEparams['output']['local']['filenames']['crackdisplacements'] = set[0] + '-crackdisplacements'
 
         timedataList.append(set[1])
 

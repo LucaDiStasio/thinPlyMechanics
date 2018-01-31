@@ -64,6 +64,9 @@ import visualization
 import xyPlot
 import displayGroupOdbToolset as dgo
 import connectorBehavior
+from odbAccess import *
+from odbMaterial import *
+from odbSection import
 #import __main__
 
 #===============================================================================#
@@ -2507,7 +2510,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # BEGIN - open ODB
     #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Opening ODB database + ' + odbname + ' in directory ' + wd + ' ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Opening ODB database ' + odbname + ' in directory ' + wd + ' ...',True)
     if '.odb' not in odbname:
         odbname += '.odb'
     odbfullpath = join(wd,odbname)

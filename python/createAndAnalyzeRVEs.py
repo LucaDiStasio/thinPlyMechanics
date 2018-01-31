@@ -2499,7 +2499,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         JintegralsWithDistance.append([(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
-    writeLineToLogFile(logfilepathpath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract J-integral results
     #=======================================================================
@@ -2507,12 +2507,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # BEGIN - open ODB
     #=======================================================================
-    writeLineToLogFile(logfilepathpath,'a',baselogindent + 2*logindent + 'Opening ODB database + ' + odbname + ' in directory ' + wd + ' ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Opening ODB database + ' + odbname + ' in directory ' + wd + ' ...',True)
     if '.odb' not in odbname:
         odbname += '.odb'
     odbfullpath = join(wd,odbname)
     odb = openOdb(path=odbfullpath)
-    writeLineToLogFile(logfilepathpath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - open ODB
     #=======================================================================

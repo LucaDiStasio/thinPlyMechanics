@@ -66,7 +66,7 @@ import displayGroupOdbToolset as dgo
 import connectorBehavior
 from odbAccess import *
 from odbMaterial import *
-from odbSection import
+from odbSection import *
 #import __main__
 
 #===============================================================================#

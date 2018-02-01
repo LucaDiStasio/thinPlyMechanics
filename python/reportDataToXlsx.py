@@ -41,13 +41,6 @@ from platform import platform
 import xlsxwriter
 import ast
 
-def convertIntToXlsxColumnIndex(index):
-    engDict = []
-    return col
-
-def convertRowColPairToXlsxCellName(row,col):
-    cellName = convertIntToXlsxColumnIndex(col) + str(row+1)
-    return cellName
 
 def main(argv):
     # Read the command line, throw error if not option is provided
@@ -139,22 +132,19 @@ def main(argv):
         for c,csvline in enumerate(csvlines[1:]):
             for e,element in enumerate(csvline.replace('\n','').split(',')):
                 worksheet.write(c+1,e,float(element),numberFormat)
-        for plot in plotSettings[:-3]:
+        for p,plot in enumerate(plotSettings[:-3]):
             chart = workbook.add_chart({'type': 'scatter',
                                         'subtype': 'smooth_with_markers'})
             for curve in plot[:-1]:
                 chart.add_series({
-                                    'name':       [sheetName,0,curve[1]],
+                                    'name':       curve[2],
                                     'categories': [sheetName,1,curve[0],len(csvlines)-1,curve[0]],
                                     'values':     [sheetName,1,curve[1],len(csvlines)-1,curve[1]],
                                 })
             chart.set_title ({'name': plotSettings[:-1]})
             chart.set_x_axis({'name': plotSettings[:-3]})
             chart.set_y_axis({'name': plotSettings[:-2]})
-            worksheet.insert_chart('D2', chart)
-
-
-
+            worksheet.insert_chart(len(csvlines)+10,10*p, chart)
 
     workbook.close()
 

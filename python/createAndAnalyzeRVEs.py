@@ -42,6 +42,8 @@ Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 import sys, os
 import numpy as np
 from os.path import isfile, join, exists
+from shutil import copyfile
+import sqlite3
 from datetime import datetime
 from time import strftime, sleep
 import timeit
@@ -75,6 +77,10 @@ from odbSection import *
 #===============================================================================#
 #===============================================================================#
 
+#===============================================================================#
+#                              CSV files
+#===============================================================================#
+
 def createCSVfile(dir,filename,titleline=None):
     if len(filename.split('.'))<2:
         filename += '.csv'
@@ -97,6 +103,10 @@ def appendCSVfile(dir,filename,data):
                     line += ', '
                 line += str(value)
             csv.write(line + '\n')
+
+#===============================================================================#
+#                              ABAQUS input files
+#===============================================================================#
 
 def createABQinpfile(path):
     with open(path,'w') as fi:
@@ -133,6 +143,10 @@ def createABQinpfile(path):
         fi.write('** POSSIBILITY OF SUCH DAMAGE.' + '\n')
         fi.write('**==============================================================================' + '\n')
         fi.write('**' + '\n')
+
+#===============================================================================#
+#                                 Log files
+#===============================================================================#
 
 def writeLineToLogFile(logFileFullPath,mode,line,toScreen):
     with open(logFileFullPath,mode) as log:
@@ -196,19 +210,171 @@ def writeErrorToLogFile(logFileFullPath,mode,exc,err,toScreen):
         print>> sys.__stdout__, ('!!! ----------------------------------------------------------------------------------------!!!\n')
         print>> sys.__stdout__, ('\n')
 
-def writePerfToFile(od,outfile,performanceslist):
-    with open(join(od,outfile),'w') as csv:
-        for performances in performanceslist:
-            line = ''
-            for i,performance in enumerate(performances):
-                if i>0:
-                    line += ','
-                line += str(performance)
-            csv.write(line + '\n')
+#===============================================================================#
+#                                 Latex files
+#===============================================================================#
+
+def createLatexFile(folder,filename,documentclass,options=''):
+    if not exists(folder):
+        makedirs(folder)
+    with open(join(folder,filename + '.tex'),'w') as tex:
+        if options!='':
+            tex.write('\\documentclass[' + options + ']{' + documentclass + '}\n')
+        else:
+            tex.write('\\documentclass{' + documentclass + '}\n')
+        tex.write('\n')
+
+def writeLatexPackages(folder,filename,packages,options):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%                                 Packages and basic declarations\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('\n')
+        for i,package in enumerate(packages):
+            if options[i]!='':
+                tex.write('\\usepackage[' + options[i] + ']{' + package + '}\n')
+            else:
+                tex.write('\\usepackage{' + package + '}\n')
+        tex.write('\n')
+
+def writeLatexDocumentStarts(folder,filename):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%                                            DOCUMENT STARTS\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('\n')
+        tex.write('\\begin{document}\n')
+        tex.write('\n')
+
+def writeLatexDocumentEnds(folder,filename):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('\\end{document}\n')
+        tex.write('\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%                                            DOCUMENT ENDS\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('\n')
+
+def writeLatexTikzPicStarts(folder,filename,options=''):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('%Tikz picture starts%\n')
+        tex.write('\n')
+        if options!='':
+            tex.write('\\begin{tikzpicture}[' + options + ']\n')
+        else:
+            tex.write('\\begin{tikzpicture}\n')
+
+def writeLatexTikzPicEnds(folder,filename):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('\\end{tikzpicture}\n')
+        tex.write('%Tikz picture ends%\n')
+        tex.write('\n')
+
+def writeLatexTikzAxisStarts(folder,filename,options):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('%Tikz axis starts%\n')
+        tex.write('\n')
+        if options!='':
+            tex.write('\\begin{axis}[' + options + ']\n')
+        else:
+            tex.write('\\begin{axis}\n')
+
+def writeLatexTikzAxisEnds(folder,filename):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('\\end{axis}\n')
+        tex.write('%Tikz axis ends%\n')
+        tex.write('\n')
+
+def writeLatexAddPlotTable(folder,filename,data,options):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('\\addplot')
+        if options!='':
+            tex.write('[' + options + ']\n')
+        tex.write('table{\n')
+        for element in data:
+            tex.write(str(element[0]) + ' ' + str(element[1]) + '\n')
+        tex.write('};\n')
+
+def writeLatexSinglePlot(wdir,proj,folder,filename,data,axoptions,dataoptions):
+    createLatexFile(folder,filename,'standalone')
+    writeLatexPackages(folder,filename,['inputenc','pgfplots','tikz'],['utf8','',''])
+    writeLatexDocumentStarts(folder,filename)
+    writeLatexTikzPicStarts(folder,filename,'')
+    writeLatexTikzAxisStarts(folder,filename,axoptions)
+    writeLatexAddPlotTable(folder,filename,data,dataoptions)
+    writeLatexTikzAxisEnds(folder,filename)
+    writeLatexTikzPicEnds(folder,filename)
+    writeLatexDocumentEnds(folder,filename)
+    if not exists(join(wdir,proj,'pdf')):
+        makedirs(join(wdir,proj,'pdf'))
+    cmdfile = join(wdir,proj,'pdf','runlatex.cmd')
+    with open(cmdfile,'w') as cmd:
+        cmd.write('\n')
+        cmd.write('CD ' + wdir + '\\' + proj + '\\pdf\n')
+        cmd.write('\n')
+        cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+    try:
+        subprocess.call('cmd.exe /C ' + cmdfile)
+    except Exception:
+        sys.exc_clear()
+
+def writeLatexMultiplePlots(wdir,proj,folder,filename,data,axoptions,dataoptions):
+    createLatexFile(folder,filename,'standalone')
+    writeLatexPackages(folder,filename,['inputenc','pgfplots','tikz'],['utf8','',''])
+    writeLatexDocumentStarts(folder,filename)
+    writeLatexTikzPicStarts(folder,filename,'')
+    writeLatexTikzAxisStarts(folder,filename,axoptions)
+    for k,datum in enumerate(data):
+        writeLatexAddPlotTable(folder,filename,datum,dataoptions[k])
+    writeLatexTikzAxisEnds(folder,filename)
+    writeLatexTikzPicEnds(folder,filename)
+    writeLatexDocumentEnds(folder,filename)
+    if not exists(join(wdir,proj,'pdf')):
+        makedirs(join(wdir,proj,'pdf'))
+    cmdfile = join(wdir,proj,'pdf','runlatex.cmd')
+    with open(cmdfile,'w') as cmd:
+        cmd.write('\n')
+        cmd.write('CD ' + wdir + '\\' + proj + '\\pdf\n')
+        cmd.write('\n')
+        cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+    try:
+        subprocess.call('cmd.exe /C ' + cmdfile)
+    except Exception:
+        sys.exc_clear()
+
+def writeLatexGenericCommand(folder,filename,command,options,arguments):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        if options!='' and arguments!='':
+            tex.write('\\'+ command +'[' + options + ']{' + arguments + '}\n')
+        elif options!='':
+            tex.write('\\'+ command +'{' + arguments + '}\n')
+        else:
+            tex.write('\\'+ command + '\n')
+        tex.write('\n')
+
+def writeLatexCustomLine(folder,filename,line):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write(line + '\n')
+
+def writeLatexSetLength(folder,filename,length,value):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\\setlength' +'{' + '\\' + length + '}' +'{' + value + '}\n')
+
 
 #===============================================================================#
 #===============================================================================#
-#                        Data analysis functions
+#                        Data extraction functions
 #===============================================================================#
 #===============================================================================#
 
@@ -542,6 +708,22 @@ def getJintegrals(wd,sim,ncontours):
                     values.append(float(value))
             break
     return values
+
+#===============================================================================#
+#===============================================================================#
+#                        Data reporting functions
+#===============================================================================#
+#===============================================================================#
+
+def writePerfToFile(od,outfile,performanceslist):
+    with open(join(od,outfile),'w') as csv:
+        for performances in performanceslist:
+            line = ''
+            for i,performance in enumerate(performances):
+                if i>0:
+                    line += ','
+                line += str(performance)
+            csv.write(line + '\n')
 
 #===============================================================================#
 #===============================================================================#
@@ -1881,7 +2063,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # field output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Field output ...',True)
 
-    model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('COORD',))
+    model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('U','RF','S','E','EE','COORD',))
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # history output
@@ -2890,8 +3072,12 @@ def main(argv):
                                      'filenames':{'Jintegral':'',
                                                   'stressesatboundary':'',
                                                   'crackdisplacements':''}},
-                           'report':{'global':{},
-                                     'local':{}}
+                           'report':{'global':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
+                                                'filename':'caePythonTest-report'},
+                                     'local':{'directory':[],
+                                               'filenames':{'Jintegral':[],
+                                                            'stressesatboundary':[],
+                                                            'crackdisplacements':[]}}}
                           }
     RVEparams['solver'] = {'cpus':12}
 
@@ -2947,7 +3133,12 @@ def main(argv):
     with open(logfilefullpath,'w') as log:
         log.write('Automatic generation and FEM analysis of RVEs with Abaqus Python' + '\n')
 
-    createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME','ITERATION PARAMETER VALUE, T(createRVE()) [s], T(modifyRVEinputfile()) [s], T(runRVEsimulation()) [s], T(analyzeRVEresults()) [s], TOTAL TIME FOR ITERATION [s]')
+    createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME','ITERATION PARAMETER VALUE, T(createRVE()) [s], T(modifyRVEinputfile()) [s], T(runRVEsimulation()) [s], T(analyzeRVEresults()) [s], T() [s],TOTAL TIME FOR ITERATION [s]')
+
+    createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist','ABSOLUTE PATH, NAME, TO PLOT, PLOT VARIABLES')
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate']+'.csv'),'GLOBAL-ERRTS','True','{}'])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME'+'.csv'),'GLOBAL-TIME','True','{}'])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances']+'.csv'),'GLOBAL-ABQperformances','True','{}'])
 
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a','In function: main(argv)',True)
@@ -2965,17 +3156,27 @@ def main(argv):
         RVEparams['geometry']['deltatheta'] = set[1]
         RVEparams['mesh']['size']['deltapsi'] = set[2]
         RVEparams['mesh']['size']['deltaphi'] = set[3]
-        RVEparams['output']['local']['directory'] = join(RVEparams['output']['global']['directory'],set[0])
 
+        RVEparams['output']['local']['directory'] = join(RVEparams['output']['global']['directory'],set[0])
         RVEparams['output']['local']['filenames']['Jintegral'] = set[0] + '-Jintegral'
         RVEparams['output']['local']['filenames']['stressesatboundary'] = set[0] + '-stressesatboundary'
         RVEparams['output']['local']['filenames']['crackdisplacements'] = set[0] + '-crackdisplacements'
+
+        RVEparams['report']['local']['directory'].append(join(RVEparams['output']['global']['directory'],set[0]))
+        RVEparams['report']['local']['filenames']['Jintegral'].append(set[0] + '-Jintegral')
+        RVEparams['report']['local']['filenames']['stressesatboundary'].append(set[0] + '-stressesatboundary')
+        RVEparams['report']['local']['filenames']['crackdisplacements'].append(set[0] + '-crackdisplacements')
+
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['report']['local']['directory'],RVEparams['report']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Param='+str(set[1]),'True','{}'])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['report']['local']['directory'],RVEparams['report']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Param='+str(set[1]),'True','{}'])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['report']['local']['directory'],RVEparams['report']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Param='+str(set[1]),'True','{}'])
 
         timedataList.append(set[1])
 
         if not os.path.exists(RVEparams['output']['local']['directory']):
                 os.mkdir(RVEparams['output']['local']['directory'])
 
+        #================= create ABAQUS CAE model
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: createRVE(parameters,logfilepath,baselogindent,logindent)',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
@@ -2992,6 +3193,7 @@ def main(argv):
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
 
+        #================= modify input file
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent)',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
@@ -3008,6 +3210,7 @@ def main(argv):
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
 
+        #================= run ABAQUS simulation
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent)',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
@@ -3024,6 +3227,8 @@ def main(argv):
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
         #inputfilename = 'Job-VCCTandJintegral-RVE100-Half-SmallDisplacement-Free-10' + '.inp'
+
+        #================= extract and analyze data from ODB
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: analyzeRVEresults(wd,odbname,logfilepath,parameters)',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
@@ -3047,10 +3252,153 @@ def main(argv):
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
 
+        #================= create graphics in pdf using latex
+        skipLineToLogFile(logfilefullpath,'a',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: ',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
+        localStart = timeit.default_timer()
+        try:
+
+            localElapsedTime = timeit.default_timer() - localStart
+            timedataList.append(localElapsedTime)
+            totalIterationTime += localElapsedTime
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
+        except Exception, error:
+            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+            sys.exit(2)
+
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME',timedataList.append(totalIterationTime))
 
         if debug:
             break
+
+    #=======================================================================
+    # END - ANALYSIS
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - REPORTING
+    #=======================================================================
+
+    reportFolder = RVEparams['report']['global']['directory']
+    reportFilename = RVEparams['report']['global']['filename'].split('.')[0]
+
+    if not os.path.exists(reportFolder):
+            os.mkdir(reportFolder)
+
+    if not os.path.exists(join(reportFolder,'pics')):
+            os.mkdir(join(reportFolder,'pics'))
+
+    copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','Docmase_logo.jpg'),join(reportFolder,'pics','Docmase_logo.jpg'))
+    copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','erasmusmundus_logo.jpg'),join(reportFolder,'pics','erasmusmundus_logo.jpg'))
+    copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_slides','logo-eeigm.jpg'),join(reportFolder,'pics','logo-eeigm.jpg'))
+    copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','lulea_logo1.jpg'),join(reportFolder,'pics','lulea_logo1.jpg'))
+
+    createLatexFile(reportFolder,reportFilename,'scrartcl',options='a4paper, twoside,12pt, abstract')
+    packages = ['inputenc',
+                'fontenc',
+                'amsfonts',
+                'amsmath',
+                'amssymb',
+                'amstext',
+                'animate',
+                'babel',
+                'biblatex',
+                'bm',
+                'booktabs',
+                'caption',
+                'colortbl',
+                'csquotes',
+                'enumerate',
+                'eurosym',
+                'geometry',
+                'graphicx',
+                'float',
+                'helvet',
+                'longtable',
+                'makeidx',
+                'multirow',
+                'nameref',
+                'parskip',
+                'pdfpages',
+                'rotating',
+                'scrpage2',
+                'setspace',
+                'standalone',
+                'subcaption',
+                'tabularx',
+                'tikz',
+                'xcolor',
+                'glossaries',
+                'hyperref']
+    options = ['utf8',
+               'fontenc',
+               '',
+               '',
+               '',
+               '',
+               '',
+               'english',
+               'backend=bibtex, sorting=none,style=numeric',
+               '',
+               '',
+               '',
+               '',
+               '',
+               '',
+               'right',
+               'inner=3cm,outer=2cm,top=2.7cm,bottom=3.2cm',
+               '',
+               '',
+               'scaled=.90',
+               '',
+               '',
+               '',
+               '',
+               '',
+               '',
+               '',
+               '',
+               '',
+               '',
+               '',
+               '',
+               '',
+               '',
+               'acronym,nonumberlist,nopostdot,toc',
+               '']
+    writeLatexPackages(reportFolder,reportFilename,packages,options)
+
+    writeLatexCustomLine(reportFolder,reportFilename,'\\definecolor{Gray}{gray}{0.85}')
+    writeLatexCustomLine(reportFolder,reportFilename,'\\definecolor{LightCyan}{rgb}{0.88,1,1}')
+    writeLatexCustomLine(reportFolder,reportFilename,'\\sloppy % avoids lines that are too long on the right side')
+    writeLatexCustomLine(reportFolder,reportFilename,'% avoid "orphans"')
+    writeLatexCustomLine(reportFolder,reportFilename,'\\clubpenalty = 10000')
+    writeLatexCustomLine(reportFolder,reportFilename,'% avoid "widows"')
+    writeLatexCustomLine(reportFolder,reportFilename,'\\widowpenalty = 10000')
+    writeLatexCustomLine(reportFolder,reportFilename,'% this makes the table of content etc. look better')
+    writeLatexCustomLine(reportFolder,reportFilename,'\\renewcommand{\\dotfill}{\\leaders\\hbox to 5pt{\\hss.\\hss}\\hfill}')
+    writeLatexCustomLine(reportFolder,reportFilename,'% avoid indentation of line after a paragraph')
+    writeLatexSetLength(reportFolder,reportFilename,'parindent','0pt')
+    writeLatexGenericCommand(reportFolder,reportFilename,'pagestyle','','scrheadings')
+    writeLatexGenericCommand(reportFolder,reportFilename,'automark','section','section')
+    writeLatexGenericCommand(reportFolder,reportFilename,'ofoot','','\\pagemark')
+    writeLatexGenericCommand(reportFolder,reportFilename,'ifoot','','Research Plan')
+
+    writeLatexSetLength(reportFolder,reportFilename,'unitlength','1cm')
+    writeLatexSetLength(reportFolder,reportFilename,'oddsidemargin','0.3cm')
+    writeLatexSetLength(reportFolder,reportFilename,'evensidemargin','0.3cm')
+    writeLatexSetLength(reportFolder,reportFilename,'textwidth','15.5cm')
+    writeLatexSetLength(reportFolder,reportFilename,'topmargin','0cm')
+    writeLatexSetLength(reportFolder,reportFilename,'textheight','22cm')
+
+    writeLatexDocumentEnds(reportFolder,reportFilename)
+
+    #=======================================================================
+    # END - REPORTING
+    #=======================================================================
 
     globalElapsedTime = timeit.default_timer() - globalStart
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Global timer stopped',True)

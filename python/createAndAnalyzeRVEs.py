@@ -2557,20 +2557,20 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     matrixCracktipDispMeas = getSingleNodeSet(odb,None,'MATRIX-CRACKTIP-DISPMEAS')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKTIP-DISPMEAS',True)
 
-    if 'second' in parameters['elements']['order']:
-        fiberFirstbounded = getSingleNodeSet(odb,'RVE-ASSEMBLY','FIBER-NODE-FIRSTBOUNDED')
+    if 'second' in parameters['mesh']['elements']['order']:
+        fiberFirstbounded = getSingleNodeSet(odb,None,'FIBER-NODE-FIRSTBOUNDED')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-NODE-FIRSTBOUNDED',True)
 
-        matrixFirstbounded = getSingleNodeSet(odb,'RVE-ASSEMBLY','MATRIX-NODE-FIRSTBOUNDED')
+        matrixFirstbounded = getSingleNodeSet(odb,None,'MATRIX-NODE-FIRSTBOUNDED')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-NODE-FIRSTBOUNDED',True)
 
-        firstboundedDummyNode = getSingleNodeSet(odb,'RVE-ASSEMBLY','FIRSTBOUNDED-DUMMY-NODE')
+        firstboundedDummyNode = getSingleNodeSet(odb,None,'FIRSTBOUNDED-DUMMY-NODE')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIRSTBOUNDED-DUMMY-NODE',True)
 
-        fiberFirstboundedDispMeas = getSingleNodeSet(odb,'RVE-ASSEMBLY','FIBER-FIRSTBOUNDED-DISPMEAS')
+        fiberFirstboundedDispMeas = getSingleNodeSet(odb,None,'FIBER-FIRSTBOUNDED-DISPMEAS')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-FIRSTBOUNDED-DISPMEAS',True)
 
-        matrixFirstboundedDispMeas = getSingleNodeSet(odb,'RVE-ASSEMBLY','MATRIX-FIRSTBOUNDED-DISPMEAS')
+        matrixFirstboundedDispMeas = getSingleNodeSet(odb,None,'MATRIX-FIRSTBOUNDED-DISPMEAS')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-FIRSTBOUNDED-DISPMEAS',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

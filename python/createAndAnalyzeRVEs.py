@@ -3067,7 +3067,8 @@ def main(argv):
     RVEparams['Jintegral'] = {'numberOfContours':50}
     RVEparams['output'] = {'global':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
                                      'filenames':{'performances':'caePythonTest-performances',
-                                                  'energyreleaserate':'caePythonTest-energyreleaserates'}},
+                                                  'energyreleaserate':'caePythonTest-energyreleaserates',
+                                                  'inputdata':'caePythonTest-inputdata'}},
                            'local':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
                                      'filenames':{'Jintegral':'',
                                                   'stressesatboundary':'',
@@ -3077,7 +3078,9 @@ def main(argv):
                                      'local':{'directory':[],
                                                'filenames':{'Jintegral':[],
                                                             'stressesatboundary':[],
-                                                            'crackdisplacements':[]}}}
+                                                            'crackdisplacements':[]}}
+                           'sql':{'global':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
+                                            'filename':'caePythonTestDB'}}}
                           }
     RVEparams['solver'] = {'cpus':12}
 
@@ -3135,10 +3138,26 @@ def main(argv):
 
     createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME','ITERATION PARAMETER VALUE, T(createRVE()) [s], T(modifyRVEinputfile()) [s], T(runRVEsimulation()) [s], T(analyzeRVEresults()) [s], T() [s],TOTAL TIME FOR ITERATION [s]')
 
+    createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata'],'Rf [um],L [um],L/Rf [-],Vff [-],BC,applied strain [-],fiber,matrix')
+    appendCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata'],[RVEparams['geometry']['Rf'],RVEparams['geometry']['L'],RVEparams['geometry']['L']/RVEparams['geometry']['Rf'],(4*RVEparams['geometry']['L']*RVEparams['geometry']['L'])/(RVEparams['geometry']['Rf']*RVEparams['geometry']['Rf']*np.pi),
+                                                                                                                      'FREE',RVEparams['loads'][0]['value'][0],RVEparams['sections'][0]['material'],RVEparams['sections'][1]['material']])
+
+
     createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist','ABSOLUTE PATH, NAME, TO PLOT, PLOT VARIABLES')
-    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate']+'.csv'),'GLOBAL-ERRTS','True','[]'])
-    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME'+'.csv'),'GLOBAL-TIME','True','[]'])
-    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances']+'.csv'),'GLOBAL-ABQperformances','True','[]'])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata']+'.csv'),'MODEL-DATA','False',[]])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate']+'.csv'),'GLOBAL-ERRTS','True','[[[0,6,"GI(VCCT)"],[0,7,"GII(VCCT)"],[0,8,"GI+GII(VCCT)"],"Debond size [deg]","Normalized energy release rate [-]","Normalized energy release rates from VCCT"],
+                                                                                                                                                                                                                                                          [[0,9,"Jint(50)-GII(VCCT)"],[0,10,"GII(VCCT)"],[0,11,"Jint(50)"],"Debond size [deg]","Normalized energy release rate [-]","Normalized energy release rates from mixed VCCT/J-integral approach"],
+                                                                                                                                                                                                                                                          [[0,8,"GI+GII(VCCT)"],[0,11,"Jint(50)"],[0,12,"GTOTequiv(XY)"],"Debond size [deg]","Total normalized energy release rate [-]","Total normalized energy release rates from VCCT, J-integral and VCCT in in non-rotated frame"],
+                                                                                                                                                                                                                                                          [[0,6,"GI(VCCT)"],[0,9,"Jint(50)-GII(VCCT)"],"Debond size [deg]","Mode I energy release rate [-]","Mode I normalized energy release rate"],
+                                                                                                                                                                                                                                                          [[0,20,"min(uR)"],[0,21,"max(uR)"],[0,22,"mean(uR)"],"Debond size [deg]","Radial displacement [um]","Minimum, maximum and mean radial displacement"],
+                                                                                                                                                                                                                                                          [[0,23,"min(uTheta)"],[0,24,"max(uTheta)"],[0,25,"mean(uTheta)"],"Debond size [deg]","Tangential displacement [um]","Minimum, maximum and mean tangential displacement"],
+                                                                                                                                                                                                                                                          [[0,20,"min(uR)"],[0,23,"min(uTheta)"],"Debond size [deg]","Minimum displacement [um]","Minimum radial and tangential displacement"],
+                                                                                                                                                                                                                                                          [[0,21,"max(uR)"],[0,24,"max(uTheta)"],"Debond size [deg]","Maximum displacement [um]","Maximum radial and tangential displacement"],
+                                                                                                                                                                                                                                                          [[0,22,"mean(uR)"],[0,25,"mean(uTheta)"],"Debond size [deg]","Mean displacement [um]","Mean radial and tangential displacement"],
+                                                                                                                                                                                                                                                          [0,4,'Contact zone size'],"Debond size [deg]","Contact zone size [deg]",""]'])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME'+'.csv'),'GLOBAL-TIME','True','[[[0,1,"createRVE()"],[0,2,"modifyRVEinputfile()"],[0,3,"runRVEsimulationRVE()"],[0,4,"analyzeRVEresults()"],[0,5,"createLatexReport()"],[0,6,"TOTAL TIME"],"Debond size [deg]","Time [s]","Pipeline execution time [s]"]]'])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances']+'.csv'),'GLOBAL-ABQperformances','True','[[[0,2,"User time [s]"],[0,3,"System time [s]"],[0,5,"Total cpu time [s]",[0,6,"Wallclock time [s]"],"Simulation","Time [s]","ABAQUS Simulation Time"],
+                                                                                                                                                                                                                                                               [[0,4,"User time/total cpu time [s]"],[0,5,"System time/Total cpu time [s]"],[0,9,"Wallclock time/Total cpu time [s]"],"Simulation","Normalized time [-]","ABAQUS Normalized Simulation Time"]]'])
 
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a','In function: main(argv)',True)
@@ -3167,9 +3186,11 @@ def main(argv):
         RVEparams['output']['report']['local']['filenames']['stressesatboundary'].append(set[0] + '-stressesatboundary')
         RVEparams['output']['report']['local']['filenames']['crackdisplacements'].append(set[0] + '-crackdisplacements')
 
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Param='+str(set[1]),'True','[]'])
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Param='+str(set[1]),'True','[]'])
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Param='+str(set[1]),'True','[]'])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Param='+str(set[1]),'True','[[[1,2,"J-integral"],"Average distance [um]","GTOT [J/m^2]","GTOT from J-integral"]]'])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Param='+str(set[1]),'True','[[[1,4,"sigma_xx"],"z [um]","Axial stress [MPa]","Stress along the right boundary"]]'])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Param='+str(set[1]),'True','[[[0,5,"Radial"],[0,6,"Tangential"],"Angle [deg]","Displacement [um]","Crack faces displacements"],
+                                                                                                                                                                                                                                                                              [[0,1,"Radial"],[0,2,"Tangential"],"Angle [deg]","Displacement [um]","Fiber crack faces displacements"],
+                                                                                                                                                                                                                                                                              [[0,3,"Radial"],[0,4,"Tangential"],"Angle [deg]","Displacement [um]","Matrix crack faces displacements"]]'])
 
         timedataList.append(set[1])
 

@@ -312,11 +312,19 @@ def getFirstAndLastFrameLastStep(odbObj):
     first, last = getFirstAndLastFrame(odbObj,-1)
     return first, last
 
-def getSingleNodeSet(odbObj,part,set):
-    return odbObj.rootAssembly.instances[part].nodeSets[set]
+def getSingleNodeSet(odbObj,part,nodeSet):
+    if part==None:
+        result = odbObj.rootAssembly.nodeSets[nodeSet]
+    else:
+        result = odbObj.rootAssembly.instances[part].nodeSets[nodeSet]
+    return result
 
-def getSingleElementSet(odbObj,part,set):
-    return odbObj.rootAssembly.instances[part].elementSets[set]
+def getSingleElementSet(odbObj,part,elementSet):
+    if part==None:
+        result = odbObj.rootAssembly.elementSets[elementSet]
+    else:
+        result = odbObj.rootAssembly.instances[part].elementSets[elementSet]
+    return result
 
 def getSingleSetNodeCoordinates(odbObj,step,frame,part,nodeSet):
     frameObj = getFrame(odbObj,step,frame)
@@ -2528,25 +2536,25 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     rightSide = getSingleNodeSet(odb,'RVE-ASSEMBLY','RIGHTSIDE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- RIGHTSIDE',True)
 
-    fiberCrackfaceNodes = getSingleNodeSet(odb,'RVE-ASSEMBLY','FIBER-CRACKFACE-NODES')
+    fiberCrackfaceNodes = getSingleNodeSet(odb,None,'FIBER-CRACKFACE-NODES')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKFACE-NODES',True)
 
-    matrixCrackfaceNodes = getSingleNodeSet(odb,'RVE-ASSEMBLY','MATRIX-CRACKFACE-NODES')
+    matrixCrackfaceNodes = getSingleNodeSet(odb,None,'MATRIX-CRACKFACE-NODES')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKFACE-NODES',True)
 
-    fiberCracktip = getSingleNodeSet(odb,'RVE-ASSEMBLY','FIBER-CRACKTIP')
+    fiberCracktip = getSingleNodeSet(odb,None,'FIBER-CRACKTIP')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKTIP',True)
 
-    matrixCracktip = getSingleNodeSet(odb,'RVE-ASSEMBLY','MATRIX-CRACKTIP')
+    matrixCracktip = getSingleNodeSet(odb,None,'MATRIX-CRACKTIP')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKTIP',True)
 
-    cracktipDummyNode = getSingleNodeSet(odb,'RVE-ASSEMBLY','CRACKTIP-DUMMY-NODE')
+    cracktipDummyNode = getSingleNodeSet(odb,None,'CRACKTIP-DUMMY-NODE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CRACKTIP-DUMMY-NODE',True)
 
-    fiberCracktipDispMeas = getSingleNodeSet(odb,'RVE-ASSEMBLY','FIBER-CRACKTIP-DISPMEAS')
+    fiberCracktipDispMeas = getSingleNodeSet(odb,None,'FIBER-CRACKTIP-DISPMEAS')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKTIP-DISPMEAS',True)
 
-    matrixCracktipDispMeas = getSingleNodeSet(odb,'RVE-ASSEMBLY','MATRIX-CRACKTIP-DISPMEAS')
+    matrixCracktipDispMeas = getSingleNodeSet(odb,None,'MATRIX-CRACKTIP-DISPMEAS')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKTIP-DISPMEAS',True)
 
     if 'second' in parameters['elements']['order']:

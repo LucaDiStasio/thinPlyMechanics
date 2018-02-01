@@ -1881,11 +1881,13 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # field output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Field output ...',True)
 
+    model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('COORD'))
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # history output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'History output ...',True)
 
+    #model.HistoryOutputRequest(name='H-Output-1',createStepName='Load-Step')
     model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
@@ -2979,7 +2981,7 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            #modelData = createRVE(RVEparams,logfilefullpath,logindent,logindent)
+            modelData = createRVE(RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -2995,7 +2997,7 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            #inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
+            inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -3011,7 +3013,7 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            #runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilefullpath,logindent,logindent)
+            runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -3021,7 +3023,7 @@ def main(argv):
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
-        inputfilename = 'Job-VCCTandJintegral-RVE100-Half-SmallDisplacement-Free-10' + '.inp'
+        #inputfilename = 'Job-VCCTandJintegral-RVE100-Half-SmallDisplacement-Free-10' + '.inp'
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: analyzeRVEresults(wd,odbname,logfilepath,parameters)',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)

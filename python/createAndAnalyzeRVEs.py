@@ -1881,7 +1881,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # field output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Field output ...',True)
 
-    model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('COORD'))
+    model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('COORD',))
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # history output

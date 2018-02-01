@@ -39,9 +39,15 @@ from datetime import datetime
 from time import strftime
 from platform import platform
 import xlsxwriter
+import ast
 
+def convertIntToXlsxColumnIndex(index):
+    engDict = []
+    return col
 
-
+def convertRowColPairToXlsxCellName(row,col):
+    cellName = convertIntToXlsxColumnIndex(col) + str(row+1)
+    return cellName
 
 def main(argv):
     # Read the command line, throw error if not option is provided
@@ -113,6 +119,44 @@ def main(argv):
 
     with open(join(workdir,inputfile),'r') as csv:
         lines = csv.readlines()
+
+    workbook = xlsxwriter.Workbook(outputfile)
+
+    stringFormat = workbook.add_format({'bold': 1})
+    numberFormat = workbook.add_format({'num_format': '$#,####0'})
+
+    for line in lines[1:]:
+        csvPath = line.replace('\n','').split(',')[0]
+        sheetName = line.replace('\n','').split(',')[1]
+        toPlot = bool(line.replace('\n','').split(',')[2])
+        if toPlot:
+            plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
+        worksheet = workbook.add_worksheet(sheetName)
+        with open(csvPath,'r') as csv:
+            csvlines = csv.readlines()
+        for e,element in enumerate(csvlines[0].replace('\n','').split(',')):
+            worksheet.write(0,e,element,stringFormat)
+        for c,csvline in enumerate(csvlines[1:]):
+            for e,element in enumerate(csvline.replace('\n','').split(',')):
+                worksheet.write(c+1,e,float(element),numberFormat)
+        for plot in plotSettings[:-3]:
+            chart = workbook.add_chart({'type': 'scatter',
+                                        'subtype': 'smooth_with_markers'})
+            for curve in plot[:-1]:
+                chart.add_series({
+                                    'name':       [sheetName,0,curve[1]],
+                                    'categories': [sheetName,1,curve[0],len(csvlines)-1,curve[0]],
+                                    'values':     [sheetName,1,curve[1],len(csvlines)-1,curve[1]],
+                                })
+            chart.set_title ({'name': plotSettings[:-1]})
+            chart.set_x_axis({'name': plotSettings[:-3]})
+            chart.set_y_axis({'name': plotSettings[:-2]})
+            worksheet.insert_chart('D2', chart)
+
+
+
+
+    workbook.close()
 
 
 

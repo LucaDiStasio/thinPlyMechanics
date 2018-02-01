@@ -3136,9 +3136,9 @@ def main(argv):
     createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME','ITERATION PARAMETER VALUE, T(createRVE()) [s], T(modifyRVEinputfile()) [s], T(runRVEsimulation()) [s], T(analyzeRVEresults()) [s], T() [s],TOTAL TIME FOR ITERATION [s]')
 
     createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist','ABSOLUTE PATH, NAME, TO PLOT, PLOT VARIABLES')
-    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate']+'.csv'),'GLOBAL-ERRTS','True','{}'])
-    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME'+'.csv'),'GLOBAL-TIME','True','{}'])
-    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances']+'.csv'),'GLOBAL-ABQperformances','True','{}'])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate']+'.csv'),'GLOBAL-ERRTS','True','[]'])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME'+'.csv'),'GLOBAL-TIME','True','[]'])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances']+'.csv'),'GLOBAL-ABQperformances','True','[]'])
 
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a','In function: main(argv)',True)
@@ -3167,9 +3167,9 @@ def main(argv):
         RVEparams['output']['report']['local']['filenames']['stressesatboundary'].append(set[0] + '-stressesatboundary')
         RVEparams['output']['report']['local']['filenames']['crackdisplacements'].append(set[0] + '-crackdisplacements')
 
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Param='+str(set[1]),'True','{}'])
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Param='+str(set[1]),'True','{}'])
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Param='+str(set[1]),'True','{}'])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Param='+str(set[1]),'True','[]'])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Param='+str(set[1]),'True','[]'])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Param='+str(set[1]),'True','[]'])
 
         timedataList.append(set[1])
 

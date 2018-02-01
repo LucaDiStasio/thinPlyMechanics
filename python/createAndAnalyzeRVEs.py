@@ -3162,14 +3162,14 @@ def main(argv):
         RVEparams['output']['local']['filenames']['stressesatboundary'] = set[0] + '-stressesatboundary'
         RVEparams['output']['local']['filenames']['crackdisplacements'] = set[0] + '-crackdisplacements'
 
-        RVEparams['report']['local']['directory'].append(join(RVEparams['output']['global']['directory'],set[0]))
-        RVEparams['report']['local']['filenames']['Jintegral'].append(set[0] + '-Jintegral')
-        RVEparams['report']['local']['filenames']['stressesatboundary'].append(set[0] + '-stressesatboundary')
-        RVEparams['report']['local']['filenames']['crackdisplacements'].append(set[0] + '-crackdisplacements')
+        RVEparams['output']['report']['local']['directory'].append(join(RVEparams['output']['global']['directory'],set[0]))
+        RVEparams['output']['report']['local']['filenames']['Jintegral'].append(set[0] + '-Jintegral')
+        RVEparams['output']['report']['local']['filenames']['stressesatboundary'].append(set[0] + '-stressesatboundary')
+        RVEparams['output']['report']['local']['filenames']['crackdisplacements'].append(set[0] + '-crackdisplacements')
 
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['report']['local']['directory'],RVEparams['report']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Param='+str(set[1]),'True','{}'])
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['report']['local']['directory'],RVEparams['report']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Param='+str(set[1]),'True','{}'])
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['report']['local']['directory'],RVEparams['report']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Param='+str(set[1]),'True','{}'])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Param='+str(set[1]),'True','{}'])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Param='+str(set[1]),'True','{}'])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Param='+str(set[1]),'True','{}'])
 
         timedataList.append(set[1])
 
@@ -3282,8 +3282,8 @@ def main(argv):
     # BEGIN - REPORTING
     #=======================================================================
 
-    reportFolder = RVEparams['report']['global']['directory']
-    reportFilename = RVEparams['report']['global']['filename'].split('.')[0]
+    reportFolder = RVEparams['output']['report']['global']['directory']
+    reportFilename = RVEparams['output']['report']['global']['filename'].split('.')[0]
 
     if not os.path.exists(reportFolder):
             os.mkdir(reportFolder)

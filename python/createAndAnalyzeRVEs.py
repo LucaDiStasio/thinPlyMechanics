@@ -3040,8 +3040,8 @@ def main(argv):
     #                            {'name':'material2',
     #                            'elastic':{'type':'type2',
     #                                        'values':[]}}]
-    RVEparams['postproc'] = {'nu-G0':RVEparams['materials'][1]['values'][1],
-                              'G-G0':RVEparams['materials'][1]['values'][0]/(1+RVEparams['materials'][1]['values'][1])}
+    RVEparams['postproc'] = {'nu-G0':RVEparams['materials'][1]['elastic']['values'][1],
+                              'G-G0':RVEparams['materials'][1]['elastic']['values'][0]/(1+RVEparams['materials'][1]['elastic']['values'][1])}
     RVEparams['sections'] = [{'name':'fiberSection',
                               'type':'HomogeneousSolidSection',
                               'material':'glassFiber',

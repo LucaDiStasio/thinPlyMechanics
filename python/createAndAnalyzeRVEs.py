@@ -3091,9 +3091,9 @@ def main(argv):
                                      'local':{'directory':[],
                                                'filenames':{'Jintegral':[],
                                                             'stressesatboundary':[],
-                                                            'crackdisplacements':[]}}
+                                                            'crackdisplacements':[]}}}
                            'sql':{'global':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
-                                            'filename':'caePythonTestDB'}}}
+                                            'filename':'caePythonTestDB'}}
                           }
     RVEparams['solver'] = {'cpus':12}
 

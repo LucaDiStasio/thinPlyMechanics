@@ -2792,7 +2792,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     maxSigmaxx = rightsideStressdata[0][4]
     minSigmaxx = rightsideStressdata[0][4]
     meanSigmaxx = 0.0
-    for stress in rightsideStressdata.values:
+    for stress in rightsideStressdata:
         meanSigmaxx += stress[4]
         if stress[4]>maxSigmaxx:
             maxSigmaxx = stress[4]

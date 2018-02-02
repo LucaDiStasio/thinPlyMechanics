@@ -122,6 +122,7 @@ def main(argv):
         csvPath = line.replace('\n','').split(',')[0]
         sheetName = line.replace('\n','').split(',')[1]
         toPlot = bool(line.replace('\n','').split(',')[2])
+        plotSettings = []
         if toPlot:
             plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
         worksheet = workbook.add_worksheet(sheetName)
@@ -132,18 +133,18 @@ def main(argv):
         for c,csvline in enumerate(csvlines[1:]):
             for e,element in enumerate(csvline.replace('\n','').split(',')):
                 worksheet.write(c+1,e,float(element),numberFormat)
-        for p,plot in enumerate(plotSettings[:-3]):
+        for p,plot in enumerate(plotSettings):
             chart = workbook.add_chart({'type': 'scatter',
                                         'subtype': 'smooth_with_markers'})
-            for curve in plot[:-1]:
+            for curve in plot[:-3]:
                 chart.add_series({
                                     'name':       curve[2],
                                     'categories': [sheetName,1,curve[0],len(csvlines)-1,curve[0]],
                                     'values':     [sheetName,1,curve[1],len(csvlines)-1,curve[1]],
                                 })
-            chart.set_title ({'name': plotSettings[:-1]})
-            chart.set_x_axis({'name': plotSettings[:-3]})
-            chart.set_y_axis({'name': plotSettings[:-2]})
+            chart.set_title ({'name': plot[:-1]})
+            chart.set_x_axis({'name': plot[:-3]})
+            chart.set_y_axis({'name': plot[:-2]})
             worksheet.insert_chart(len(csvlines)+10,10*p, chart)
 
     workbook.close()

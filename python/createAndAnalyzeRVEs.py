@@ -330,7 +330,7 @@ def writeLatexSinglePlot(wdir,proj,folder,filename,data,axoptions,dataoptions):
     except Exception:
         sys.exc_clear()
 
-def writeLatexMultiplePlots(wdir,proj,folder,filename,data,axoptions,dataoptions):
+def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions):
     createLatexFile(folder,filename,'standalone')
     writeLatexPackages(folder,filename,['inputenc','pgfplots','tikz'],['utf8','',''])
     writeLatexDocumentStarts(folder,filename)
@@ -343,10 +343,10 @@ def writeLatexMultiplePlots(wdir,proj,folder,filename,data,axoptions,dataoptions
     writeLatexDocumentEnds(folder,filename)
     if not exists(join(wdir,proj,'pdf')):
         makedirs(join(wdir,proj,'pdf'))
-    cmdfile = join(wdir,proj,'pdf','runlatex.cmd')
+    cmdfile = join(folder,'runlatex.cmd')
     with open(cmdfile,'w') as cmd:
         cmd.write('\n')
-        cmd.write('CD ' + wdir + '\\' + proj + '\\pdf\n')
+        cmd.write('CD ' + folder + '\n')
         cmd.write('\n')
         cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
     try:
@@ -3291,14 +3291,14 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances'],'PROJECT NAME, NUMBER OF CPUS [-], USER TIME [s], SYSTEM TIME [s], USER TIME/TOTAL CPU TIME [%], SYSTEM TIME/TOTAL CPU TIME [%], TOTAL CPU TIME [s], WALLCLOCK TIME [s], WALLCLOCK TIME [m], WALLCLOCK TIME [h], WALLCLOCK TIME/TOTAL CPU TIME [%], ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-], MINIMUM REQUIRED MEMORY [MB], MEMORY TO MINIMIZE I/O [MB], TOTAL NUMBER OF ELEMENTS [-], NUMBER OF ELEMENTS DEFINED BY THE USER [-], NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF NODES [-], NUMBER OF NODES DEFINED BY THE USER [-], NUMBER OF NODES DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF VARIABLES [-]')
+            #createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances'],'PROJECT NAME, NUMBER OF CPUS [-], USER TIME [s], SYSTEM TIME [s], USER TIME/TOTAL CPU TIME [%], SYSTEM TIME/TOTAL CPU TIME [%], TOTAL CPU TIME [s], WALLCLOCK TIME [s], WALLCLOCK TIME [m], WALLCLOCK TIME [h], WALLCLOCK TIME/TOTAL CPU TIME [%], ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-], MINIMUM REQUIRED MEMORY [MB], MEMORY TO MINIMIZE I/O [MB], TOTAL NUMBER OF ELEMENTS [-], NUMBER OF ELEMENTS DEFINED BY THE USER [-], NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF NODES [-], NUMBER OF NODES DEFINED BY THE USER [-], NUMBER OF NODES DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF VARIABLES [-]')
             titleline = ''
             if 'second' in RVEparams['mesh']['elements']['order']:
                 titleline = 'deltatheta,Rf,L,Rf/L,phiCZ,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement'
             else:
                 titleline = 'deltatheta,Rf,L,Rf/L,phiCZ,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement'
-            createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate'],titleline)
-            analyzeRVEresults(inputfilename.split('.')[0]+'.odb',RVEparams,logfilefullpath,logindent,logindent)
+            #createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate'],titleline)
+            #analyzeRVEresults(inputfilename.split('.')[0]+'.odb',RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -3340,7 +3340,11 @@ def main(argv):
     # BEGIN - REPORTING
     #=======================================================================
 
-    locale.setlocale(lcoale.LC_TIME,'us_US')
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Setting the locale to US english ... ',True)
+    locale.setlocale(locale.LC_TIME,'us_US')
+    writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Check if latex output directories exist and create them if needed ... ',True)
 
     reportFolder = RVEparams['output']['report']['global']['directory']
     reportFilename = RVEparams['output']['report']['global']['filename'].split('.')[0]
@@ -3351,11 +3355,197 @@ def main(argv):
     if not os.path.exists(join(reportFolder,'pics')):
             os.mkdir(join(reportFolder,'pics'))
 
+    writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Copy report template images to latex folder ... ',True)
     copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','Docmase_logo.jpg'),join(reportFolder,'pics','Docmase_logo.jpg'))
     copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','erasmusmundus_logo.jpg'),join(reportFolder,'pics','erasmusmundus_logo.jpg'))
     copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_slides','logo-eeigm.jpg'),join(reportFolder,'pics','logo-eeigm.jpg'))
     copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','lulea_logo1.jpg'),join(reportFolder,'pics','lulea_logo1.jpg'))
+    writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
 
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Reading index of generated csv files ... ',True)
+    with open(join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist'),'r') as csv:
+        lines = csv.readlines()
+    writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Generating local plots ... ',True)
+    for l,line in enumerate(lines[4:]):
+        csvPath = line.replace('\n','').split(',')[0]
+        writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
+        with open(csvPath,'r') as csv:
+            csvlines = csv.readlines()
+        plotName = line.replace('\n','').split(',')[1]
+        toPlot = bool(line.replace('\n','').split(',')[2])
+        plotSettings = []
+        if toPlot:
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + str(len(plotSettings)) + ' PLOTS REQUESTED',True)
+            plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
+            for p,plot in enumerate(plotSettings):
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Plot name: ' + plot[-1],True)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'x-axis name: ' + plot[-3],True)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Number of curves: ' + str(len(plot[:-3])),True)
+                xyData = []
+                xmin = 0.0
+                xmax = 0.0
+                ymin = 0.0
+                ymax = 0.0
+                legendEntries = ''
+                dataoptions = []
+                for c,curve in enumerate(plot[:-3]):
+                    writeLineToLogFile(logfilefullpath,'a',4*logindent + '(' + str(c+1) + ') Curve name: ' + curve[2],True)
+                    writeLineToLogFile(logfilefullpath,'a',4*logindent + '    x-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[0])],True)
+                    xData = []
+                    for csvline in csvlines[1:]:
+                        xData.append(float(csvline.replace('\n','').split(',')[int(curve[0])]))
+                    writeLineToLogFile(logfilefullpath,'a',4*logindent + '    y-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[1])],True)
+                    yData = []
+                    for csvline in csvlines[1:]:
+                        yData.append(float(csvline.replace('\n','').split(',')[int(curve[1])]))
+                    xyData.append(np.transpose([np.array(xData),np.array(yData)]))
+                    if c>0:
+                        if np.min(xData)<xmin:
+                            xmin = np.min(xdata)
+                    else
+                        xmin = np.min(xdata)
+                    if c>0:
+                        if np.max(xData)<xmax:
+                            xmax = np.max(xdata)
+                    else
+                        xmax = np.max(xdata)
+                    if c>0:
+                        if np.min(yData)<ymin:
+                            ymin = np.min(ydata)
+                    else
+                        ymin = np.min(ydata)
+                    if c>0:
+                        if np.max(yData)<ymax:
+                            ymax = np.max(ydata)
+                    else
+                        ymax = np.max(ydata)
+                    if c>0:
+                        legendEntries += ', '
+                    legendEntries += '{' + curve[2] + '}'
+                    dataoptions.append('red!' + 100.0*float(c)/float(len(plot[:-3])) + '!blue')
+                axisoptions = 'width=30cm,\n ' \
+                              'title={\\bf{' + plot[-1] + '}},\n ' \
+                              'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
+                              'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                              'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                              'xlabel={' + plot[-3] + '},ylabel={' + plot[-2] + '},\n ' \
+                              'xmin=' + str(xmin) + ',\n ' \
+                              'xmax=' + str(xmax) + ',\n ' \
+                              'ymin=' + str(ymin) + ',\n ' \
+                              'ymax=' + str(ymax) + ',\n ' \
+                              'tick align=outside,\n ' \
+                              'tick label style={font=\\huge},\n ' \
+                              'xmajorgrids,\n ' \
+                              'x grid style={lightgray!92.026143790849673!black},\n ' \
+                              'ymajorgrids,\n ' \
+                              'y grid style={lightgray!92.026143790849673!black},\n ' \
+                              'line width=0.5mm,\n ' \
+                              'legend style={draw=white!80.0!black,font=\\fontsize{28}{24}\\selectfont,row sep=15pt},\n ' \
+                              'legend entries={' + legendEnwriteLatexMultiplePlots(wdir,proj,folder,filename,data,axoptions,dataoptions)tries + '},\n ' \
+                              'legend image post style={xscale=2},\n ' \
+                              'legend cell align={left}'
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1] + '.pdf' + ' in directory ' + RVEparams['output']['report']['local']['directory'][l],True)
+                writeLatexMultiplePlots(RVEparams['output']['report']['local']['directory'][l],plot[-1] + '.tex',xyData,axisoptions,dataoptions)
+        else:
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
+
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Generating global plots ... ',True)
+    for l,line in enumerate(lines[:4]):
+        csvPath = line.replace('\n','').split(',')[0]
+        writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
+        with open(csvPath,'r') as csv:
+            csvlines = csv.readlines()
+        plotName = line.replace('\n','').split(',')[1]
+        toPlot = bool(line.replace('\n','').split(',')[2])
+        plotSettings = []
+        if toPlot:
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + str(len(plotSettings)) + ' PLOTS REQUESTED',True)
+            plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
+            for p,plot in enumerate(plotSettings):
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Plot name: ' + plot[-1],True)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'x-axis name: ' + plot[-3],True)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Number of curves: ' + str(len(plot[:-3])),True)
+                xyData = []
+                xmin = 0.0
+                xmax = 0.0
+                ymin = 0.0
+                ymax = 0.0
+                legendEntries = ''
+                dataoptions = []
+                for c,curve in enumerate(plot[:-3]):
+                    writeLineToLogFile(logfilefullpath,'a',4*logindent + '(' + str(c+1) + ') Curve name: ' + curve[2],True)
+                    writeLineToLogFile(logfilefullpath,'a',4*logindent + '    x-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[0])],True)
+                    xData = []
+                    for csvline in csvlines[1:]:
+                        xData.append(float(csvline.replace('\n','').split(',')[int(curve[0])]))
+                    writeLineToLogFile(logfilefullpath,'a',4*logindent + '    y-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[1])],True)
+                    yData = []
+                    for csvline in csvlines[1:]:
+                        yData.append(float(csvline.replace('\n','').split(',')[int(curve[1])]))
+                    xyData.append(np.transpose([np.array(xData),np.array(yData)]))
+                    if c>0:
+                        if np.min(xData)<xmin:
+                            xmin = np.min(xdata)
+                    else
+                        xmin = np.min(xdata)
+                    if c>0:
+                        if np.max(xData)<xmax:
+                            xmax = np.max(xdata)
+                    else
+                        xmax = np.max(xdata)
+                    if c>0:
+                        if np.min(yData)<ymin:
+                            ymin = np.min(ydata)
+                    else
+                        ymin = np.min(ydata)
+                    if c>0:
+                        if np.max(yData)<ymax:
+                            ymax = np.max(ydata)
+                    else
+                        ymax = np.max(ydata)
+                    if c>0:
+                        legendEntries += ', '
+                    legendEntries += '{' + curve[2] + '}'
+                    dataoptions.append('red!' + 100.0*float(c)/float(len(plot[:-3])) + '!blue')
+                axisoptions = 'width=30cm,\n ' \
+                              'title={\\bf{' + plot[-1] + '}},\n ' \
+                              'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
+                              'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                              'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                              'xlabel={' + plot[-3] + '},ylabel={' + plot[-2] + '},\n ' \
+                              'xmin=' + str(xmin) + ',\n ' \
+                              'xmax=' + str(xmax) + ',\n ' \
+                              'ymin=' + str(ymin) + ',\n ' \
+                              'ymax=' + str(ymax) + ',\n ' \
+                              'tick align=outside,\n ' \
+                              'tick label style={font=\\huge},\n ' \
+                              'xmajorgrids,\n ' \
+                              'x grid style={lightgray!92.026143790849673!black},\n ' \
+                              'ymajorgrids,\n ' \
+                              'y grid style={lightgray!92.026143790849673!black},\n ' \
+                              'line width=0.5mm,\n ' \
+                              'legend style={draw=white!80.0!black,font=\\fontsize{28}{24}\\selectfont,row sep=15pt},\n ' \
+                              'legend entries={' + legendEnwriteLatexMultiplePlots(wdir,proj,folder,filename,data,axoptions,dataoptions)tries + '},\n ' \
+                              'legend image post style={xscale=2},\n ' \
+                              'legend cell align={left}'
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1] + '.pdf' + ' in directory ' + RVEparams['output']['report']['global']['directory'][l],True)
+                writeLatexMultiplePlots(RVEparams['output']['report']['global']['directory'][l],plot[-1] + '.tex',xyData,axisoptions,dataoptions)
+        else:
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
+
+    writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Creating main report ...',True)
+
+    writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Create latex file ...',True)
     createLatexFile(reportFolder,reportFilename,'scrartcl',options='a4paper, twoside,12pt, abstract')
     packages = ['inputenc',
                 'fontenc',
@@ -3430,7 +3620,9 @@ def main(argv):
                'acronym,nonumberlist,nopostdot,toc',
                '']
     writeLatexPackages(reportFolder,reportFilename,packages,options)
+    writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Write packages ...',True)
     writeLatexCustomLine(reportFolder,reportFilename,'\\definecolor{Gray}{gray}{0.85}')
     writeLatexCustomLine(reportFolder,reportFilename,'\\definecolor{LightCyan}{rgb}{0.88,1,1}')
     writeLatexCustomLine(reportFolder,reportFilename,'\\sloppy % avoids lines that are too long on the right side')
@@ -3459,8 +3651,13 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'\\addto\\captionsenglish{\\renewcommand{\\listtablename}{Tables}}')
     writeLatexGenericCommand(reportFolder,reportFilename,'makeglossaries','','')
     writeLatexGenericCommand(reportFolder,reportFilename,'makeindex','','',)
+    writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
+
+    writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Document starts ...',True)
 
     writeLatexDocumentStarts(reportFolder,reportFilename)
+
+    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Title page',True)
 
     writeLatexCustomLine(reportFolder,reportFilename,'')
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
@@ -3536,6 +3733,7 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'')
     writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepage')
     writeLatexCustomLine(reportFolder,reportFilename,'')
+    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Table of Contents',True)
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
     writeLatexCustomLine(reportFolder,reportFilename,'%            Table of Contents')
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
@@ -3559,6 +3757,7 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'')
     writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
     writeLatexCustomLine(reportFolder,reportFilename,'')
+    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'List of Figures',True)
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
     writeLatexCustomLine(reportFolder,reportFilename,'%            List of Figures')
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
@@ -3580,6 +3779,7 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'')
     writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
     writeLatexCustomLine(reportFolder,reportFilename,'')
+    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'List of Tables',True)
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
     writeLatexCustomLine(reportFolder,reportFilename,'%            List of Tables')
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
@@ -3601,6 +3801,7 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'')
     writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
     writeLatexCustomLine(reportFolder,reportFilename,'')
+    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'List of Acronyms',True)
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
     writeLatexCustomLine(reportFolder,reportFilename,'%            List of Acronyms')
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
@@ -3625,6 +3826,7 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'')
     writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
     writeLatexCustomLine(reportFolder,reportFilename,'')
+    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'List of Symbols',True)
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
     writeLatexCustomLine(reportFolder,reportFilename,'%            List of Symbols')
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
@@ -3646,6 +3848,7 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'%')
     writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
     writeLatexCustomLine(reportFolder,reportFilename,'')
+    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Abstract',True)
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
     writeLatexCustomLine(reportFolder,reportFilename,'%                   Abstract')
     writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
@@ -3675,9 +3878,98 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'\\pagenumbering{arabic}')
     writeLatexCustomLine(reportFolder,reportFilename,'')
     writeLatexCustomLine(reportFolder,reportFilename,'\\setcounter{page}{1}')
+    writeLatexCustomLine(reportFolder,reportFilename,'')
 
+    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Global results',True)
+    for l,line in enumerate(lines[:4]):
+        csvPath = line.replace('\n','').split(',')[0]
+        writeLineToLogFile(logfilefullpath,'a',4*logindent + 'Opening file ' + csvPath,True)
+        with open(csvPath,'r') as csv:
+            csvlines = csv.readlines()
+        plotName = line.replace('\n','').split(',')[1]
+        toPlot = bool(line.replace('\n','').split(',')[2])
+        plotSettings = []
+        if toPlot:
+            writeLineToLogFile(logfilefullpath,'a',4*logindent + str(len(plotSettings)) + ' PLOTS TO BE INSERTED',True)
+            plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
+            for p,plot in enumerate(plotSettings):
+                writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+                writeLatexCustomLine(reportFolder,reportFilename,'%               GLOBAL - ' + plot[-1])
+                writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+                writeLatexCustomLine(reportFolder,reportFilename,'')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\nameref{sec:sec1}}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
+                writeLatexCustomLine(reportFolder,reportFilename,'')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\section{Parametric study: ' + plot[-1] + '}\label{sec:sec1}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + RVEparams['output']['report']['global']['directory'][l] + plot[-1] + '.pdf}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
+                writeLatexCustomLine(reportFolder,reportFilename,'')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
+                writeLatexCustomLine(reportFolder,reportFilename,'')
 
+    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Local results',True)
+    for l,line in enumerate(lines[4:]):
+        csvPath = line.replace('\n','').split(',')[0]
+        writeLineToLogFile(logfilefullpath,'a',4*logindent + 'Opening file ' + csvPath,True)
+        with open(csvPath,'r') as csv:
+            csvlines = csv.readlines()
+        plotName = line.replace('\n','').split(',')[1]
+        toPlot = bool(line.replace('\n','').split(',')[2])
+        plotSettings = []
+        if toPlot:
+            writeLineToLogFile(logfilefullpath,'a',4*logindent + str(len(plotSettings)) + ' PLOTS TO BE INSERTED',True)
+            plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
+            writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+            writeLatexCustomLine(reportFolder,reportFilename,'%               SIMULATION N. ' + str(p+1)
+            writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+            writeLatexCustomLine(reportFolder,reportFilename,'')
+            writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
+            writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
+            writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
+            writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
+            writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
+            writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\nameref{sec:sec1}}')
+            writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
+            writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
+            writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
+            writeLatexCustomLine(reportFolder,reportFilename,'')
+            writeLatexCustomLine(reportFolder,reportFilename,'\\section{Simulation n. ' + str(p+1) + '}\label{sec:sec1}')
+            for p,plot in enumerate(plotSettings):
+                writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + RVEparams['output']['report']['global']['directory'][l] + plot[-1] + '.pdf}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
+            writeLatexCustomLine(reportFolder,reportFilename,'')
+            writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
+            writeLatexCustomLine(reportFolder,reportFilename,'')
+
+    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Documents ends',True)
     writeLatexDocumentEnds(reportFolder,reportFilename)
+
+    writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done. ',True)
+
+    writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Compile pdf ... ',True)
+    cmdfile = join(reportFolder,'runlatex.cmd')
+    with open(cmdfile,'w') as cmd:
+        cmd.write('\n')
+        cmd.write('CD ' + reportFolder + '\n')
+        cmd.write('\n')
+        cmd.write('pdflatex ' + join(reportFolder,reportFilename.split(',')[0] + '.tex') + ' -job-name=' + reportFilename.split(',')[0] + '\n')
+    try:
+        subprocess.call('cmd.exe /C ' + cmdfile)
+    except Exception:
+        sys.exc_clear()
+    writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done. ',True)
+
+
+    writeLineToLogFile(logfilefullpath,'a',logindent + '... done. ',True)
 
     #=======================================================================
     # END - REPORTING

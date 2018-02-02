@@ -2928,31 +2928,31 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate forces and displacements ...',True)
 
-    xRFcracktip = RFcracktip.value[0].data[0]
-    yRFcracktip = RFcracktip.value[0].data[1]
+    xRFcracktip = RFcracktip.values[0].data[0]
+    yRFcracktip = RFcracktip.values[0].data[1]
     rRFcracktip = np.cos(phi)*xRFcracktip + np.sin(phi)*yRFcracktip
     thetaRFcracktip = -np.sin(phi)*xRFcracktip + np.cos(phi)*yRFcracktip
     if 'second' in parameters['mesh']['elements']['order']:
-        xRFfirstbounded = RFfirstbounded.value[0].data[0]
-        yRFfirstbounded = RFfirstbounded.value[0].data[1]
+        xRFfirstbounded = RFfirstbounded.values[0].data[0]
+        yRFfirstbounded = RFfirstbounded.values[0].data[1]
         rRFfirstbounded = np.cos(phi)*xRFfirstbounded + np.sin(phi)*yRFfirstbounded
         thetaRFfirstbounded = -np.sin(phi)*xRFfirstbounded + np.cos(phi)*yRFfirstbounded
 
-    xfiberCracktipDisplacement = fiberCracktipDisplacement.value[0].data[0]
-    yfiberCracktipDisplacement = fiberCracktipDisplacement.value[0].data[1]
+    xfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[0]
+    yfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[1]
     rfiberCracktipDisplacement = np.cos(phi)*xfiberCracktipDisplacement + np.sin(phi)*yfiberCracktipDisplacement
     thetafiberCracktipDisplacement = -np.sin(phi)*xfiberCracktipDisplacement + np.cos(phi)*yfiberCracktipDisplacement
-    xmatrixCracktipDisplacement = matrixCracktipDisplacement.value[0].data[0]
-    ymatrixCracktipDisplacement = matrixCracktipDisplacement.value[0].data[1]
+    xmatrixCracktipDisplacement = matrixCracktipDisplacement.values[0].data[0]
+    ymatrixCracktipDisplacement = matrixCracktipDisplacement.values[0].data[1]
     rmatrixCracktipDisplacement = np.cos(phi)*xmatrixCracktipDisplacement + np.sin(phi)*ymatrixCracktipDisplacement
     thetamatrixCracktipDisplacement = -np.sin(phi)*xmatrixCracktipDisplacement + np.cos(phi)*ymatrixCracktipDisplacement
     if 'second' in parameters['mesh']['elements']['order']:
-        xfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.value[0].data[0]
-        yfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.value[0].data[1]
+        xfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[0]
+        yfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[1]
         rfiberFirstboundedDisplacement = np.cos(phi)*xfiberFirstboundedDisplacement + np.sin(phi)*yfiberFirstboundedDisplacement
         thetafiberFirstboundedDisplacement = -np.sin(phi)*xfiberFirstboundedDisplacement + np.cos(phi)*yfiberFirstboundedDisplacement
-        xmatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.value[0].data[0]
-        ymatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.value[0].data[1]
+        xmatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[0]
+        ymatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[1]
         rmatrixFirstboundedDisplacement = np.cos(phi)*xmatrixFirstboundedDisplacement + np.sin(phi)*ymatrixFirstboundedDisplacement
         thetamatrixFirstboundedDisplacement = -np.sin(phi)*xmatrixFirstboundedDisplacement + np.cos(phi)*ymatrixFirstboundedDisplacement
 

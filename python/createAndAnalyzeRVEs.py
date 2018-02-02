@@ -2862,7 +2862,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             fiberDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate fiber displacements ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate matrix displacements ...',True)
     for value in matrixCrackfaceDisps.values:
         node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
         undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
@@ -2884,8 +2884,6 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     uTheta = []
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute crack displacements ...',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(len(fiberDisps)),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(len(matrixDisps)),True)
     for s,dispset in enumerate(fiberDisps):
         crackDisps.append([matrixDisps[s][0]-dispset[0],matrixDisps[s][1]-dispset[1]])
         uR.append(matrixDisps[s][0]-dispset[0])
@@ -2901,7 +2899,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],'beta, uR_fiber, uTheta_fiber, uR_matrix, uTheta_matrix, uR, uTheta')
-    for s,dispset, in enumerate(crackDisps):
+    for s,dispset in enumerate(crackDisps):
         appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],[fiberAngles[s],fiberDisps[s][0],fiberDisps[s][1],matrixDisps[s][0],matrixDisps[s][1],crackDisps[s][0],crackDisps[s][1]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

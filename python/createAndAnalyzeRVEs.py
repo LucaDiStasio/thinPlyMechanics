@@ -3408,22 +3408,22 @@ def main(argv):
                     if c>0:
                         if np.min(xData)<xmin:
                             xmin = np.min(xdata)
-                    else
+                    else:
                         xmin = np.min(xdata)
                     if c>0:
                         if np.max(xData)<xmax:
                             xmax = np.max(xdata)
-                    else
+                    else:
                         xmax = np.max(xdata)
                     if c>0:
                         if np.min(yData)<ymin:
                             ymin = np.min(ydata)
-                    else
+                    else:
                         ymin = np.min(ydata)
                     if c>0:
                         if np.max(yData)<ymax:
                             ymax = np.max(ydata)
-                    else
+                    else:
                         ymax = np.max(ydata)
                     if c>0:
                         legendEntries += ', '
@@ -3494,22 +3494,22 @@ def main(argv):
                     if c>0:
                         if np.min(xData)<xmin:
                             xmin = np.min(xdata)
-                    else
+                    else:
                         xmin = np.min(xdata)
                     if c>0:
                         if np.max(xData)<xmax:
                             xmax = np.max(xdata)
-                    else
+                    else:
                         xmax = np.max(xdata)
                     if c>0:
                         if np.min(yData)<ymin:
                             ymin = np.min(ydata)
-                    else
+                    else:
                         ymin = np.min(ydata)
                     if c>0:
                         if np.max(yData)<ymax:
                             ymax = np.max(ydata)
-                    else
+                    else:
                         ymax = np.max(ydata)
                     if c>0:
                         legendEntries += ', '

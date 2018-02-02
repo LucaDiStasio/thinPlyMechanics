@@ -44,6 +44,7 @@ import numpy as np
 from os.path import isfile, join, exists
 from shutil import copyfile
 import sqlite3
+import locale
 from datetime import datetime
 from time import strftime, sleep
 import timeit
@@ -3325,7 +3326,8 @@ def main(argv):
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
 
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME',[timedataList.append(totalIterationTime)])
+        timedataList.append(totalIterationTime)
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME',[timedataList])
 
         if debug:
             break
@@ -3337,6 +3339,8 @@ def main(argv):
     #=======================================================================
     # BEGIN - REPORTING
     #=======================================================================
+
+    locale.setlocale(lcoale.LC_TIME,'us_US')
 
     reportFolder = RVEparams['output']['report']['global']['directory']
     reportFilename = RVEparams['output']['report']['global']['filename'].split('.')[0]
@@ -3497,12 +3501,12 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'\\vspace{1.75cm}')
     writeLatexCustomLine(reportFolder,reportFilename,'')
     writeLatexCustomLine(reportFolder,reportFilename,'\\begin{Large}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{\\textsc{Progress Report}}\\\\[0.75ex]')
+    writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{\\textsc{Simulation Report}}\\\\[0.75ex]')
     writeLatexCustomLine(reportFolder,reportFilename,'\\end{Large}')
     writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{0.5cm}')
     writeLatexCustomLine(reportFolder,reportFilename,'')
     writeLatexCustomLine(reportFolder,reportFilename,'\\begin{LARGE}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{\\textsc{Mechanics of Extreme Thin Composite Layers for Aerospace Applications}}\\\\[0.75ex]')
+    writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{\\textsc{Report of ABAQUS simulations}}\\\\[0.75ex]')
     writeLatexCustomLine(reportFolder,reportFilename,'\\end{LARGE}')
     writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{2.5cm}')
     writeLatexCustomLine(reportFolder,reportFilename,'')
@@ -3524,7 +3528,8 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'')
     writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{2cm}')
     writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'{\\large \\textbf{Created on October 17, 2016}}\\\\[10pt]')
+    timeNow = datetime.now()
+    writeLatexCustomLine(reportFolder,reportFilename,'{\\large \\textbf{Created on ' + timeNow.strftime('%B') + timeNow.strftime('%d') + ', ' + timeNow.strftime('%Y') +'}}\\\\[10pt]')
     writeLatexCustomLine(reportFolder,reportFilename,'{\\large \\textbf{Last Updated on \\today}}\\\\')
     writeLatexCustomLine(reportFolder,reportFilename,'')
     writeLatexCustomLine(reportFolder,reportFilename,'\\end{center}')

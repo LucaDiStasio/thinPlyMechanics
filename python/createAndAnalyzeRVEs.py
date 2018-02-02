@@ -100,7 +100,7 @@ def appendCSVfile(dir,filename,data):
         for row in data:
             line = ''
             for v,value in enumerate(row):
-                if v>1:
+                if v>0:
                     line += ', '
                 line += str(value)
             csv.write(line + '\n')

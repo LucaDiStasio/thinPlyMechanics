@@ -2858,7 +2858,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     for value in matrixCrackfaceDisps.values:
         node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
         undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
-        beta = np.arctan2(undefCoords.value[0].data[1],undefCoords.value[0].data[0])
+        beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
         matrixAngles.append(beta)
         matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
 

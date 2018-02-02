@@ -2767,18 +2767,28 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses at the boundary ...',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stresses along the right side ...',True)
     rightsideStress = getFieldOutput(odb,-1,-1,'S',rightSide,3)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract deformed coordinates along the right side ...',True)
     rightsideDefcoords = getFieldOutput(odb,-1,-1,'COORD',rightSide)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    rightsideStressdata = []
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along the right side ...',True)
     rightsideUndefcoords = getFieldOutput(odb,-1,0,'COORD',rightSide)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, x, y, sigma_xx, sigma_zz, sigma_yy, tau_xz ...',True)
+    rightsideStressdata = []
     for value in rightsideUndefcoords:
         node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.label)
         stress = getFieldOutput(odb,-1,-1,'S',node,3)
         defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
         rightsideStressdata.append([value.data[0],value.data[1],defcoords.value[0].data[0],defcoords.value[0].data[1],stress.value[0].data[0],stress.value[0].data[1],stress.value[0].data[2],stress.value[0].data[3]])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute minimum, maximum and mean stress ...',True)
     maxSigmaxx = rightsideStressdata[0][4]
     minSigmaxx = rightsideStressdata[0][4]
     meanSigmaxx = 0.0
@@ -2789,9 +2799,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         elif stress[4]<minSigmaxx:
             minSigmaxx = stress[4]
     meanSigmaxx /= len(rightsideStressdata)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0, y0, x, y, sigma_xx, sigma_zz, sigma_yy, tau_xz')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],rightsideStressdata)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
@@ -3203,7 +3216,7 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            modelData = createRVE(RVEparams,logfilefullpath,logindent,logindent)
+            #modelData = createRVE(RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -3220,7 +3233,7 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
+            #inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -3237,7 +3250,7 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilefullpath,logindent,logindent)
+            #runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -3247,7 +3260,7 @@ def main(argv):
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
-        #inputfilename = 'Job-VCCTandJintegral-RVE100-Half-SmallDisplacement-Free-10' + '.inp'
+        inputfilename = 'Job-VCCTandJintegral-RVE100-Half-SmallDisplacement-Free-10' + '.inp'
 
         #================= extract and analyze data from ODB
         skipLineToLogFile(logfilefullpath,'a',True)

@@ -2883,8 +2883,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     uTheta = []
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute crack displacements ...',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + len(fiberDisps),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + len(matrixDisps),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(len(fiberDisps)),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(len(matrixDisps)),True)
     for s,dispset in enumerate(fiberDisps):
         crackDisps.append([matrixDisps[s][0]-dispset[0],matrixDisps[s][1]-dispset[1]])
         uR.append(matrixDisps[s][0]-dispset[0])

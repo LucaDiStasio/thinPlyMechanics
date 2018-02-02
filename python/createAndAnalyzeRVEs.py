@@ -2899,10 +2899,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],'beta, uR_fiber, uTheta_fiber, uR_matrix, uTheta_matrix, uR, uTheta')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'WTF!',True)
     for s,dispset in enumerate(crackDisps):
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'WTF!',True)
-        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],[fiberAngles[s],fiberDisps[s][0],fiberDisps[s][1],matrixDisps[s][0],matrixDisps[s][1],crackDisps[s][0],crackDisps[s][1]])
+        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],[[fiberAngles[s],fiberDisps[s][0],fiberDisps[s][1],matrixDisps[s][0],matrixDisps[s][1],dispset[0],dispset[1]]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

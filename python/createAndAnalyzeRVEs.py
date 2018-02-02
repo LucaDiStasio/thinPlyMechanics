@@ -2814,8 +2814,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # BEGIN - compute G0
     #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract performances...',True)
-    G0 = np.pi*parameters['geometry']['Rf']*meanSigmaxx*meanSigmaxx*(1+(3.0-4.0*parameters['materials']['nu-G0']))/(8.0*parameters['materials']['G-G0'])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute G0...',True)
+    G0 = np.pi*parameters['geometry']['Rf']*meanSigmaxx*meanSigmaxx*(1+(3.0-4.0*parameters['postproc']['nu-G0']))/(8.0*parameters['postproc']['G-G0'])
     writeLineToLogFile(logfilepath,'a','... done.',True)
     #=======================================================================
     # END - compute G0
@@ -3040,6 +3040,8 @@ def main(argv):
     #                            {'name':'material2',
     #                            'elastic':{'type':'type2',
     #                                        'values':[]}}]
+    RVEparams['postproc'] = {'nu-G0':RVEparams['materials'][1]['values'][1],
+                              'G-G0':RVEparams['materials'][1]['values'][0]/(1+RVEparams['materials'][1]['values'][1])}
     RVEparams['sections'] = [{'name':'fiberSection',
                               'type':'HomogeneousSolidSection',
                               'material':'glassFiber',

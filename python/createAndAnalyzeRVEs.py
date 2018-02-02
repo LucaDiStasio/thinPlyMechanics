@@ -2827,7 +2827,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute reference frame transformation ...',True)
 
     undefCracktipCoords = getFieldOutput(odb,-1,0,'COORD',fiberCracktip)
-    phi = np.arctan2(undefCracktipCoords.data[1],undefCracktipCoords.data[0])
+    phi = np.arctan2(undefCracktipCoords.values[0].data[1],undefCracktipCoords.values[0].data[0])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

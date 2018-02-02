@@ -3561,7 +3561,7 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
     writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
     writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}v
+    writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
     writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
     writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\listfigurename}')
     writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')

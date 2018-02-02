@@ -3018,7 +3018,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # END - close ODB
     #=======================================================================
 
-    writeLineToLogFile(logfilefullpath,'a',baselogindent + logindent + 'Exiting function: analyzeRVEresults(wd,odbname,parameters)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: analyzeRVEresults(wd,odbname,parameters)',True)
 
 
 
@@ -3442,13 +3442,19 @@ def main(argv):
     writeLatexGenericCommand(reportFolder,reportFilename,'automark','section','section')
     writeLatexGenericCommand(reportFolder,reportFilename,'ofoot','','\\pagemark')
     writeLatexGenericCommand(reportFolder,reportFilename,'ifoot','','Research Plan')
-
     writeLatexSetLength(reportFolder,reportFilename,'unitlength','1cm')
     writeLatexSetLength(reportFolder,reportFilename,'oddsidemargin','0.3cm')
     writeLatexSetLength(reportFolder,reportFilename,'evensidemargin','0.3cm')
     writeLatexSetLength(reportFolder,reportFilename,'textwidth','15.5cm')
     writeLatexSetLength(reportFolder,reportFilename,'topmargin','0cm')
     writeLatexSetLength(reportFolder,reportFilename,'textheight','22cm')
+    writeLatexCustomLine(reportFolder,reportFilename,'\\columnsep 0.5cm')
+    writeLatexCustomLine(reportFolder,reportFilename,'\\newcommand{\\brac}[1]{\\left(#1\\right)}')
+    writeLatexGenericCommand(reportFolder,reportFilename,'graphicspath','','{./pics/}')
+    writeLatexCustomLine(reportFolder,reportFilename,'\\addto\\captionsenglish{\\renewcommand{\\listfigurename}{Figures}}')
+    writeLatexCustomLine(reportFolder,reportFilename,'\\addto\\captionsenglish{\\renewcommand{\\listtablename}{Tables}}')
+    writeLatexGenericCommand(reportFolder,reportFilename,'makeglossaries','','')
+    writeLatexGenericCommand(reportFolder,reportFilename,'makeindex','','',)
 
     writeLatexDocumentEnds(reportFolder,reportFilename)
 

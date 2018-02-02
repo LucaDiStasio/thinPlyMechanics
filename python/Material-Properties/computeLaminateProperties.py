@@ -147,16 +147,16 @@ def RoM(Vf,rhof,ELf,ETf,nuf,alphaf,rhom,ELm,ETm,num,alpham):
     Vm = 1 - Vf
     Gf = 0.5*ELf/(1+nuf)
     Gm = 0.5*ELm/(1+num)
-    rhoc = dot(rhof,Vf) + dot(rhom,Vm)
-    E1 = dot(ELf,Vf) + dot(ELm,Vm)
-    E2 = (Vf / ETf + Vm / ETm) ** (- 1)
-    nu12 = dot(nuf,Vf) + dot(num,Vm)
-    G12 = (Vf / Gf + Vm / Gm) ** (- 1)
-    nu21 = dot(nu12,(E2 / E1))
-    nu23 = dot(nu12,(1 - nu21)) / (1 - nu12)
-    G23 = dot(0.5,E2) / (1 + nu23)
-    alpha1 = (dot(dot(ELf,alphaf),Vf) + dot(dot(ELm,alpham),Vm)) / (dot(ELf,Vf) + dot(ELm,Vm))
-    alpha2 = dot(dot((1 + nuf),alphaf),Vf) + dot(dot((1 + num),alpham),Vm) - dot(alpha1,nu12)
+    rhoc = rhof*Vf + rhom*Vm
+    E1 = ELf*Vf + ELm*Vm
+    E2 = 1.0/(Vf/ETf + Vm/ETm)
+    nu12 = *nuf*Vf + num*Vm
+    G12 = 1/(Vf/Gf + Vm/Gm)
+    nu21 = nu12*(E2/E1)
+    nu23 = nu12*(1 - nu21)/(1 - nu12)
+    G23 = 0.5*E2)/(1 + nu23)
+    alpha1 = (ELf*alphaf*Vf + ELm*alpham*Vm)/(ELf*Vf + ELm*Vm)
+    alpha2 = (1 + nuf)*alphaf*Vf + (1 + num)*alpham*Vm - alpha1*nu12
     return rhoc,E1,E2,nu12,nu21,G12,nu23,G23,alpha1,alpha2
 #===============================================================================#
 #===============================================================================#

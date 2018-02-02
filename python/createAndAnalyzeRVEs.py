@@ -2816,7 +2816,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute G0...',True)
     G0 = np.pi*parameters['geometry']['Rf']*meanSigmaxx*meanSigmaxx*(1+(3.0-4.0*parameters['postproc']['nu-G0']))/(8.0*parameters['postproc']['G-G0'])
-    writeLineToLogFile(logfilepath,'a','... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - compute G0
     #=======================================================================

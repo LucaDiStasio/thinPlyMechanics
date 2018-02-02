@@ -2854,11 +2854,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate fiber displacements ...',True)
     for value in fiberCrackfaceDisps.values:
-        node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
-        undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
-        beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
-        fiberAngles.append(beta)
-        fiberDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
+        if value.nodeLabel!=undefCracktipCoords.values[0].nodeLabel:
+            node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
+            undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
+            beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
+            fiberAngles.append(beta)
+            fiberDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate fiber displacements ...',True)

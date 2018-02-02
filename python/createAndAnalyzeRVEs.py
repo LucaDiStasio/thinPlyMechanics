@@ -2782,6 +2782,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, x, y, sigma_xx, sigma_zz, sigma_yy, tau_xz ...',True)
     rightsideStressdata = []
     for value in rightsideUndefcoords.values:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(value),True)
         node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.label)
         stress = getFieldOutput(odb,-1,-1,'S',node,3)
         defcoords = getFieldOutput(odb,-1,-1,'COORD',node)

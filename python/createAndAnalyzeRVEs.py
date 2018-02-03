@@ -3438,8 +3438,8 @@ def main(argv):
                               'legend entries={' + legendEntries + '},\n ' \
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-') + '.pdf' + ' in directory ' + outDir,True)
-                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-') + '.tex',xyData,axisoptions,dataoptions)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-').replace('/','-') + '.pdf' + ' in directory ' + outDir,True)
+                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-') + '.tex',xyData,axisoptions,dataoptions)
         else:
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
 
@@ -3527,8 +3527,8 @@ def main(argv):
                               'legend entries={' + legendEntries + '},\n ' \
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-') + '.pdf' + ' in directory ' + outDir,True)
-                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-') + '.tex',xyData,axisoptions,dataoptions)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-').replace('/','-') + '.pdf' + ' in directory ' + outDir,True)
+                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-') + '.tex',xyData,axisoptions,dataoptions)
         else:
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
 
@@ -3899,9 +3899,9 @@ def main(argv):
                 writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
                 writeLatexCustomLine(reportFolder,reportFilename,'')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\section{Parametric study: ' + plot[-1].replace(' ','-') + '}\label{sec:sec1}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\section{Parametric study: ' + plot[-1] + '}\label{sec:sec1}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-') + '.pdf}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-').replace('/','-') + '.pdf}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
                 writeLatexCustomLine(reportFolder,reportFilename,'')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
@@ -3937,7 +3937,7 @@ def main(argv):
             writeLatexCustomLine(reportFolder,reportFilename,'\\section{Simulation n. ' + str(p+1) + '}\label{sec:sec1}')
             for p,plot in enumerate(plotSettings):
                 writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-') + '.pdf}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-').replace('/','-') + '.pdf}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
             writeLatexCustomLine(reportFolder,reportFilename,'')
             writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')

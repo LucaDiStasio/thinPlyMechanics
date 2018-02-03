@@ -3453,7 +3453,7 @@ def main(argv):
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf' + ' in directory ' + outDir,True)
-                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.tex',xyData,axisoptions,dataoptions,logfilepath,baselogindent,logindent)
+                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.tex',xyData,axisoptions,dataoptions,logfilefullpath,3*logindent,logindent)
         else:
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
 
@@ -3542,7 +3542,7 @@ def main(argv):
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf' + ' in directory ' + outDir,True)
-                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.tex',xyData,axisoptions,dataoptions,logfilepath,baselogindent,logindent)
+                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.tex',xyData,axisoptions,dataoptions,logfilefullpath,3*logindent,logindent)
         else:
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
 

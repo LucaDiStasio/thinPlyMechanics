@@ -3396,24 +3396,24 @@ def main(argv):
                     xyData.append(np.transpose([np.array(xData),np.array(yData)]))
                     if c>0:
                         if np.min(xData)<xmin:
-                            xmin = np.min(xdata)
+                            xmin = np.min(xData)
                     else:
-                        xmin = np.min(xdata)
+                        xmin = np.min(xData)
                     if c>0:
                         if np.max(xData)<xmax:
-                            xmax = np.max(xdata)
+                            xmax = np.max(xData)
                     else:
-                        xmax = np.max(xdata)
+                        xmax = np.max(xData)
                     if c>0:
                         if np.min(yData)<ymin:
-                            ymin = np.min(ydata)
+                            ymin = np.min(yData)
                     else:
-                        ymin = np.min(ydata)
+                        ymin = np.min(yData)
                     if c>0:
                         if np.max(yData)<ymax:
-                            ymax = np.max(ydata)
+                            ymax = np.max(yData)
                     else:
-                        ymax = np.max(ydata)
+                        ymax = np.max(yData)
                     if c>0:
                         legendEntries += ', '
                     legendEntries += '{' + curve[2] + '}'
@@ -3484,24 +3484,24 @@ def main(argv):
                     xyData.append(np.transpose([np.array(xData),np.array(yData)]))
                     if c>0:
                         if np.min(xData)<xmin:
-                            xmin = np.min(xdata)
+                            xmin = np.min(xData)
                     else:
-                        xmin = np.min(xdata)
+                        xmin = np.min(xData)
                     if c>0:
                         if np.max(xData)<xmax:
-                            xmax = np.max(xdata)
+                            xmax = np.max(xData)
                     else:
-                        xmax = np.max(xdata)
+                        xmax = np.max(xData)
                     if c>0:
                         if np.min(yData)<ymin:
-                            ymin = np.min(ydata)
+                            ymin = np.min(yData)
                     else:
-                        ymin = np.min(ydata)
+                        ymin = np.min(yData)
                     if c>0:
                         if np.max(yData)<ymax:
-                            ymax = np.max(ydata)
+                            ymax = np.max(yData)
                     else:
-                        ymax = np.max(ydata)
+                        ymax = np.max(yData)
                     if c>0:
                         legendEntries += ', '
                     legendEntries += '{' + curve[2] + '}'

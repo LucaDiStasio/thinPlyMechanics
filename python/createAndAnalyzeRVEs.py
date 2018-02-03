@@ -3367,7 +3367,8 @@ def main(argv):
         plotSettings = []
         if toPlot:
             writeLineToLogFile(logfilefullpath,'a',2*logindent + str(len(plotSettings)) + ' PLOTS REQUESTED',True)
-            plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
+            stringToEval = ','.join(line.replace('\n','').split(',')[3:])
+            plotSettings = ast.literal_eval(stringToEval[1:])
             for p,plot in enumerate(plotSettings):
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Plot name: ' + plot[-1],True)
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'x-axis name: ' + plot[-3],True)

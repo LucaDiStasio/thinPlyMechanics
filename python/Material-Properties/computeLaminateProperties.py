@@ -207,11 +207,49 @@ def Hashin(Vf=None,rhof=None,ELf=None,ETf=None,nu12f=None,nu23f=None,alphaLf=Non
 #===============================================================================#
 #===============================================================================#
 
+def locallaminaQ(E1=None,E2=None,nu12=None,nu21=None,G12=None,*args,**kwargs):
+    Q11=E1 / (1 - dot(nu12,nu21))
+    Q12=dot(nu12,E2) / (1 - dot(nu12,nu21))
+    Q21=copy(Q12)
+    Q22=E2 / (1 - dot(nu12,nu21))
+    Q66=copy(G12)
+    Q=matlabarray(cat([Q11,Q12,0],[Q21,Q22,0],[0,0,Q66]))
+    return Q
+
+def locallaminaS(E1=None,E2=None,nu12=None,nu21=None,G12=None,*args,**kwargs):
+    S11=1 / E1
+    S12=- nu12 / E1
+    S21=copy(S12)
+    S22=1 / E2
+    S66=copy(G12)
+    S=matlabarray(cat([S11,S12,0],[S21,S22,0],[0,0,S66]))
+    return S
+
+def laminaQ(theta=None,E1=None,E2=None,nu12=None,G12=None,nu23=None,G23=None,*args,**kwargs):
+    R=inv(T(theta))
+    Q=dot(dot(R,locallaminaQ(E1,E2,nu12,nu21,G12)),R.T)
+    return Q
+
+def laminaS(theta=None,E1=None,E2=None,nu12=None,nu21=None,G12=None,*args,**kwargs):
+    S=dot(dot(T(theta).T,locallaminaS(E1,E2,nu12,nu21,G12)),T(theta))
+    return S
+
+def CLT(throughThicknessCoords=None,angles=None,isSymmetric=None,*args,**kwargs):
+    
+
+    return A,B,D
+
 #===============================================================================#
 #===============================================================================#
 #                               Transformations
 #===============================================================================#
 #===============================================================================#
+
+def T(theta=None,*args,**kwargs):
+    m=cos(theta) ** 2
+    n=sin(theta) ** 2
+    matrixT=matlabarray(cat([m ** 2,n ** 2,dot(dot(2,m),n)],[n ** 2,m ** 2,dot(dot(- 2,m),n)],[- mn,mn,m ** 2 - n ** 2]))
+    return matrixT
 
 #===============================================================================#
 #===============================================================================#

@@ -3417,7 +3417,7 @@ def main(argv):
                     if c>0:
                         legendEntries += ', '
                     legendEntries += '{' + curve[2] + '}'
-                    dataoptions.append('red!' + 100.0*float(c)/float(len(plot[:-3])) + '!blue')
+                    dataoptions.append('red!' + str(100.0*float(c)/float(len(plot[:-3]))) + '!blue')
                 axisoptions = 'width=30cm,\n ' \
                               'title={\\bf{' + plot[-1] + '}},\n ' \
                               'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
@@ -3505,7 +3505,7 @@ def main(argv):
                     if c>0:
                         legendEntries += ', '
                     legendEntries += '{' + curve[2] + '}'
-                    dataoptions.append('red!' + 100.0*float(c)/float(len(plot[:-3])) + '!blue')
+                    dataoptions.append('red!' + str(100.0*float(c)/float(len(plot[:-3]))) + '!blue')
                 axisoptions = 'width=30cm,\n ' \
                               'title={\\bf{' + plot[-1] + '}},\n ' \
                               'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \

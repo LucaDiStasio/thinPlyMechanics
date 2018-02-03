@@ -3928,7 +3928,7 @@ def main(argv):
             writeLineToLogFile(logfilefullpath,'a',4*logindent + str(len(plotSettings)) + ' PLOTS TO BE INSERTED',True)
             plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
             writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-            writeLatexCustomLine(reportFolder,reportFilename,'%               SIMULATION N. ' + str(p+1)
+            writeLatexCustomLine(reportFolder,reportFilename,'%               SIMULATION N. ' + str(p+1))
             writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
             writeLatexCustomLine(reportFolder,reportFilename,'')
             writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')

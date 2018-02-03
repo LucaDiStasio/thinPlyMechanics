@@ -3321,6 +3321,7 @@ def main(argv):
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
 
+        timedataList.append(timedataList[1:])
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME',[timedataList])
 
         if debug:

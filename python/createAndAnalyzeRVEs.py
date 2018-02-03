@@ -3357,7 +3357,7 @@ def main(argv):
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Generating local plots ... ',True)
     for l,line in enumerate(lines[5:]):
         csvPath = line.replace('\n','').split(',')[0]
-        outDir = csvPath.split('\\')[0]
+        outDir = csvPath.split('\\')[0] + '/' + csvPath.split('\\')[1]
         writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
         with open(csvPath,'r') as csv:
             csvlines = csv.readlines()
@@ -3444,7 +3444,7 @@ def main(argv):
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
 
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Generating global plots ... ',True)
-    for l,line in enumerate(lines[:5]):
+    for l,line in enumerate(lines[1:5]):
         csvPath = line.replace('\n','').split(',')[0]
         outDir = csvPath.split('\\')[0]
         writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
@@ -3872,7 +3872,7 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'')
 
     writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Global results',True)
-    for l,line in enumerate(lines[:5]):
+    for l,line in enumerate(lines[1:5]):
         csvPath = line.replace('\n','').split(',')[0]
         outDir = csvPath.split('\\')[0]
         writeLineToLogFile(logfilefullpath,'a',4*logindent + 'Opening file ' + csvPath,True)
@@ -3910,7 +3910,7 @@ def main(argv):
     writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Local results',True)
     for l,line in enumerate(lines[5:]):
         csvPath = line.replace('\n','').split(',')[0]
-        outDir = csvPath.split('\\')[0]
+        outDir = csvPath.split('\\')[0] + '/' + csvPath.split('\\')[1]
         writeLineToLogFile(logfilefullpath,'a',4*logindent + 'Opening file ' + csvPath,True)
         with open(csvPath,'r') as csv:
             csvlines = csv.readlines()

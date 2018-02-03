@@ -160,22 +160,22 @@ def RoM(Vf,rhof,ELf,ETf,nuf,alphaf,rhom,ELm,ETm,num,alpham):
     return rhoc,E1,E2,nu12,nu21,G12,nu23,G23,alpha1,alpha2
 
 def HalpinTsai(Vf,rhof,ELf,ETf,nuf,alphaf,rhom,ELm,ETm,num,alpham):
-    Vm=1 - Vf
-    Gf=dot(0.5,ELf) / (1 + nuf)
-    Gm=dot(0.5,ELm) / (1 + num)
-    xi=1
-    rhoc=dot(rhof,Vf) + dot(rhom,Vm)
-    E1=dot(ELf,Vf) + dot(ELm,Vm)
-    eta1=(ETf / ETm - 1) / (ETf / ETm + dot(2,xi))
-    E2=dot(ETm,(1 + dot(dot(dot(2,xi),eta1),Vf))) / (1 - dot(eta1,Vf))
-    nu12=dot(nuf,Vf) + dot(num,Vm)
-    eta2=(Gf / Gm - 1) / (Gf / Gm + xi)
-    G12=dot(Gm,(1 + dot(dot(xi,eta2),Vf))) / (1 - dot(eta2,Vf))
-    nu21=dot(nu12,(E2 / E1))
-    nu23=dot(nu12,(1 - nu21)) / (1 - nu12)
-    G23=dot(0.5,E2) / (1 + nu23)
-    alpha1=(dot(dot(ELf,alphaf),Vf) + dot(dot(ELm,alpham),Vm)) / (dot(ELf,Vf) + dot(ELm,Vm))
-    alpha2=dot(dot((1 + nuf),alphaf),Vf) + dot(dot((1 + num),alpham),Vm) - dot(alpha1,nu12)
+    Vm = 1-Vf
+    Gf = 0.5*ELf/(1+nuf)
+    Gm = 0.5*ELm/(1+num)
+    xi = 1
+    rhoc = rhof*Vf + rhom*Vm
+    E1 = ELf*Vf + ELm*Vm
+    eta1 = (ETf/ETm - 1)/(ETf/ETm + 2*xi)
+    E2 = dot(ETm,(1 + dot(dot(2*xi,eta1),Vf))) / (1 - dot(eta1,Vf))
+    nu12 = dot(nuf,Vf) + dot(num,Vm)
+    eta2 = (Gf / Gm - 1) / (Gf / Gm + xi)
+    G12 = dot(Gm,(1 + dot(dot(xi,eta2),Vf))) / (1 - dot(eta2,Vf))
+    nu21 = dot(nu12,(E2 / E1))
+    nu23 = dot(nu12,(1 - nu21)) / (1 - nu12)
+    G23 = dot(0.5,E2) / (1 + nu23)
+    alpha1 = (dot(dot(ELf,alphaf),Vf) + dot(dot(ELm,alpham),Vm)) / (dot(ELf,Vf) + dot(ELm,Vm))
+    alpha2 = dot(dot((1 + nuf),alphaf),Vf) + dot(dot((1 + num),alpham),Vm) - dot(alpha1,nu12)
     return rhoc,E1,E2,nu12,nu21,G12,nu23,G23,alpha1,alpha2
 
 def Hashin(Vf=None,rhof=None,ELf=None,ETf=None,nu12f=None,nu23f=None,alphaLf=None,alphaTf=None,rhom=None,ELm=None,ETm=None,num=None,alpham=None,*args,**kwargs):
@@ -235,7 +235,7 @@ def laminaS(theta=None,E1=None,E2=None,nu12=None,nu21=None,G12=None,*args,**kwar
     return S
 
 def CLT(throughThicknessCoords=None,angles=None,isSymmetric=None,*args,**kwargs):
-    
+
 
     return A,B,D
 

@@ -343,8 +343,6 @@ def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions):
     writeLatexTikzAxisEnds(folder,filename)
     writeLatexTikzPicEnds(folder,filename)
     writeLatexDocumentEnds(folder,filename)
-    if not exists(join(wdir,proj,'pdf')):
-        makedirs(join(wdir,proj,'pdf'))
     cmdfile = join(folder,'runlatex.cmd')
     with open(cmdfile,'w') as cmd:
         cmd.write('\n')
@@ -3439,7 +3437,7 @@ def main(argv):
                               'legend entries={' + legendEntries + '},\n ' \
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1] + '.pdf' + ' in directory ' + RVEparams['output']['report']['local']['directory'][l],True)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-') + '.pdf' + ' in directory ' + RVEparams['output']['report']['local']['directory'][l],True)
                 writeLatexMultiplePlots(RVEparams['output']['report']['local']['directory'][l],plot[-1] + '.tex',xyData,axisoptions,dataoptions)
         else:
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
@@ -3527,7 +3525,7 @@ def main(argv):
                               'legend entries={' + legendEntries + '},\n ' \
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1] + '.pdf' + ' in directory ' + RVEparams['output']['report']['global']['directory'][l],True)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-') + '.pdf' + ' in directory ' + RVEparams['output']['report']['global']['directory'][l],True)
                 writeLatexMultiplePlots(RVEparams['output']['report']['global']['directory'][l],plot[-1] + '.tex',xyData,axisoptions,dataoptions)
         else:
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
@@ -3898,7 +3896,7 @@ def main(argv):
                 writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
                 writeLatexCustomLine(reportFolder,reportFilename,'')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\section{Parametric study: ' + plot[-1] + '}\label{sec:sec1}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\section{Parametric study: ' + plot[-1].replace(' ','-') + '}\label{sec:sec1}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + RVEparams['output']['report']['global']['directory'][l] + plot[-1] + '.pdf}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
@@ -3935,7 +3933,7 @@ def main(argv):
             writeLatexCustomLine(reportFolder,reportFilename,'\\section{Simulation n. ' + str(p+1) + '}\label{sec:sec1}')
             for p,plot in enumerate(plotSettings):
                 writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + RVEparams['output']['report']['global']['directory'][l] + plot[-1] + '.pdf}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + RVEparams['output']['report']['global']['directory'][l] + plot[-1].replace(' ','-') + '.pdf}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
             writeLatexCustomLine(reportFolder,reportFilename,'')
             writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')

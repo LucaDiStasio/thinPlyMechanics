@@ -41,6 +41,7 @@ Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 '''
 import sys, os
 import numpy as np
+import subprocess
 from os.path import isfile, join, exists
 from shutil import copyfile
 import sqlite3
@@ -332,9 +333,13 @@ def writeLatexSinglePlot(wdir,proj,folder,filename,data,axoptions,dataoptions):
     except Exception:
         sys.exc_clear()
 
-def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions):
+def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent):
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create latex file',True)
     createLatexFile(folder,filename,'standalone')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Write latex packages',True)
     writeLatexPackages(folder,filename,['inputenc','pgfplots','tikz'],['utf8','',''])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Document starts',True)
     writeLatexDocumentStarts(folder,filename)
     writeLatexTikzPicStarts(folder,filename,'')
     writeLatexTikzAxisStarts(folder,filename,axoptions)
@@ -342,16 +347,23 @@ def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions):
         writeLatexAddPlotTable(folder,filename,datum,dataoptions[k])
     writeLatexTikzAxisEnds(folder,filename)
     writeLatexTikzPicEnds(folder,filename)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Document ends',True)
     writeLatexDocumentEnds(folder,filename)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Windows command file',True)
     cmdfile = join(folder,'runlatex.cmd')
     with open(cmdfile,'w') as cmd:
         cmd.write('\n')
         cmd.write('CD ' + folder + '\n')
         cmd.write('\n')
         cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Windows command file...',True)
     try:
         subprocess.call('cmd.exe /C ' + cmdfile)
-    except Exception:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    except Exception,error:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
         sys.exc_clear()
 
 def writeLatexGenericCommand(folder,filename,command,options,arguments):
@@ -3309,6 +3321,8 @@ def main(argv):
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
 
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME',[timedataList])
+
         if debug:
             break
 
@@ -3415,7 +3429,7 @@ def main(argv):
                         ymax = np.max(yData)
                     if c>0:
                         legendEntries += ', '
-                    legendEntries += '{' + curve[2] + '}'
+                    legendEntries += '{$' + curve[2] + '$}'
                     dataoptions.append('red!' + str(100.0*float(c)/float(len(plot[:-3]))) + '!blue')
                 axisoptions = 'width=30cm,\n ' \
                               'title={\\bf{' + plot[-1] + '}},\n ' \
@@ -3438,8 +3452,8 @@ def main(argv):
                               'legend entries={' + legendEntries + '},\n ' \
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-').replace('/','-') + '.pdf' + ' in directory ' + outDir,True)
-                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-') + '.tex',xyData,axisoptions,dataoptions)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf' + ' in directory ' + outDir,True)
+                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.tex',xyData,axisoptions,dataoptions,logfilepath,baselogindent,logindent)
         else:
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
 
@@ -3504,7 +3518,7 @@ def main(argv):
                         ymax = np.max(yData)
                     if c>0:
                         legendEntries += ', '
-                    legendEntries += '{' + curve[2] + '}'
+                    legendEntries += '{$' + curve[2] + '$}'
                     dataoptions.append('red!' + str(100.0*float(c)/float(len(plot[:-3]))) + '!blue')
                 axisoptions = 'width=30cm,\n ' \
                               'title={\\bf{' + plot[-1] + '}},\n ' \
@@ -3527,8 +3541,8 @@ def main(argv):
                               'legend entries={' + legendEntries + '},\n ' \
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-').replace('/','-') + '.pdf' + ' in directory ' + outDir,True)
-                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-') + '.tex',xyData,axisoptions,dataoptions)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf' + ' in directory ' + outDir,True)
+                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.tex',xyData,axisoptions,dataoptions,logfilepath,baselogindent,logindent)
         else:
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
 
@@ -3901,7 +3915,7 @@ def main(argv):
                 writeLatexCustomLine(reportFolder,reportFilename,'')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\section{Parametric study: ' + plot[-1] + '}\label{sec:sec1}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-').replace('/','-') + '.pdf}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
                 writeLatexCustomLine(reportFolder,reportFilename,'')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
@@ -3937,7 +3951,7 @@ def main(argv):
             writeLatexCustomLine(reportFolder,reportFilename,'\\section{Simulation n. ' + str(p+1) + '}\label{sec:sec1}')
             for p,plot in enumerate(plotSettings):
                 writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-').replace('/','-') + '.pdf}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
             writeLatexCustomLine(reportFolder,reportFilename,'')
             writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')

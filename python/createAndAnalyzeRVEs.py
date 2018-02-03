@@ -3533,7 +3533,7 @@ def main(argv):
                               'y grid style={lightgray!92.026143790849673!black},\n ' \
                               'line width=0.5mm,\n ' \
                               'legend style={draw=white!80.0!black,font=\\fontsize{28}{24}\\selectfont,row sep=15pt},\n ' \
-                              'legend entries={' + legendEnwriteLatexMultiplePlots(wdir,proj,folder,filename,data,axoptions,dataoptions)tries + '},\n ' \
+                              'legend entries={' + legendEntries + '},\n ' \
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1] + '.pdf' + ' in directory ' + RVEparams['output']['report']['global']['directory'][l],True)

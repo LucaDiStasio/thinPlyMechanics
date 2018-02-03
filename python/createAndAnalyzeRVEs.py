@@ -3357,7 +3357,7 @@ def main(argv):
     writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
 
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Generating local plots ... ',True)
-    for l,line in enumerate(lines[4:]):
+    for l,line in enumerate(lines[5:]):
         csvPath = line.replace('\n','').split(',')[0]
         writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
         with open(csvPath,'r') as csv:
@@ -3366,9 +3366,9 @@ def main(argv):
         toPlot = bool(line.replace('\n','').split(',')[2])
         plotSettings = []
         if toPlot:
-            writeLineToLogFile(logfilefullpath,'a',2*logindent + str(len(plotSettings)) + ' PLOTS REQUESTED',True)
             stringToEval = ','.join(line.replace('\n','').split(',')[3:])
             plotSettings = ast.literal_eval(stringToEval[1:])
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + str(len(plotSettings)) + ' PLOTS REQUESTED',True)
             for p,plot in enumerate(plotSettings):
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Plot name: ' + plot[-1],True)
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'x-axis name: ' + plot[-3],True)
@@ -3444,7 +3444,7 @@ def main(argv):
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
 
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Generating global plots ... ',True)
-    for l,line in enumerate(lines[:4]):
+    for l,line in enumerate(lines[:5]):
         csvPath = line.replace('\n','').split(',')[0]
         writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
         with open(csvPath,'r') as csv:
@@ -3453,8 +3453,9 @@ def main(argv):
         toPlot = bool(line.replace('\n','').split(',')[2])
         plotSettings = []
         if toPlot:
+            stringToEval = ','.join(line.replace('\n','').split(',')[3:])
+            plotSettings = ast.literal_eval(stringToEval[1:])
             writeLineToLogFile(logfilefullpath,'a',2*logindent + str(len(plotSettings)) + ' PLOTS REQUESTED',True)
-            plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
             for p,plot in enumerate(plotSettings):
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Plot name: ' + plot[-1],True)
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'x-axis name: ' + plot[-3],True)
@@ -3869,7 +3870,7 @@ def main(argv):
     writeLatexCustomLine(reportFolder,reportFilename,'')
 
     writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Global results',True)
-    for l,line in enumerate(lines[:4]):
+    for l,line in enumerate(lines[:5]):
         csvPath = line.replace('\n','').split(',')[0]
         writeLineToLogFile(logfilefullpath,'a',4*logindent + 'Opening file ' + csvPath,True)
         with open(csvPath,'r') as csv:
@@ -3904,7 +3905,7 @@ def main(argv):
                 writeLatexCustomLine(reportFolder,reportFilename,'')
 
     writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Local results',True)
-    for l,line in enumerate(lines[4:]):
+    for l,line in enumerate(lines[5:]):
         csvPath = line.replace('\n','').split(',')[0]
         writeLineToLogFile(logfilefullpath,'a',4*logindent + 'Opening file ' + csvPath,True)
         with open(csvPath,'r') as csv:

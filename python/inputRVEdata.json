@@ -1,0 +1,82 @@
+RVEparams['input'] = {'wd':'D:/01_Luca/07_Data/03_FEM/CurvedInterface',
+                        'caefilename':'caePythonTest',
+                        'modelname':''}
+  RVEparams['geometry'] = {'L':100.0,
+                           'Rf':1.0,
+                           'deltatheta':10.0}
+  RVEparams['materials'] = [{'name':'glassFiber',
+                             'elastic':{'type':ISOTROPIC,
+                                         'values':[70e3,0.2]}},
+                             {'name':'epoxy',
+                             'elastic':{'type':ISOTROPIC,
+                                         'values':[3.5e3,0.4]}}]
+  # in general:
+  # params['materials'] = [{'name':'material1',
+  #                            'elastic':{'type':'type1',
+  #                                        'values':[]},
+  #                            'density':{'values':[]},
+  #                            'thermalexpansion':{'type':'type1',
+  #                                                'values':[]},
+  #                            'thermalconductivity':{'type':'type1',
+  #                                                   'values':[]}},
+  #                            {'name':'material2',
+  #                            'elastic':{'type':'type2',
+  #                                        'values':[]}}]
+  RVEparams['postproc'] = {'nu-G0':RVEparams['materials'][1]['elastic']['values'][1],
+                            'G-G0':0.5*RVEparams['materials'][1]['elastic']['values'][0]/(1+RVEparams['materials'][1]['elastic']['values'][1])}
+  RVEparams['sections'] = [{'name':'fiberSection',
+                            'type':'HomogeneousSolidSection',
+                            'material':'glassFiber',
+                            'thickness':1.0},
+                            {'name':'matrixSection',
+                            'type':'HomogeneousSolidSection',
+                            'material':'epoxy',
+                            'thickness':1.0}]
+  RVEparams['sectionRegions'] = [{'name':'fiberSection',
+                                  'set':'FIBER',
+                                  'offsetType':MIDDLE_SURFACE,
+                                  'offsetField':'',
+                                  'thicknessAssignment':FROM_SECTION,
+                                  'offsetValue':0.0},
+                                  {'name':'matrixSection',
+                                  'set':'MATRIX',
+                                  'offsetType':MIDDLE_SURFACE,
+                                  'offsetField':'',
+                                  'thicknessAssignment':FROM_SECTION,
+                                  'offsetValue':0.0}]
+  RVEparams['step'] = {'minimumIncrement':1e-10}
+  RVEparams['loads'] = [{'name':'rightBC',
+                         'type':'appliedStrain',
+                         'set':'RIGHTSIDE',
+                         'value':[0.01,0.0,0.0]},
+                          {'name':'leftBC',
+                         'type':'appliedStrain',
+                         'set':'LEFTSIDE',
+                         'value':[-0.01,0.0,0.0]}]
+  RVEparams['mesh'] = {'size':{'deltapsi':'',
+                               'deltaphi':'',
+                               'delta':0.05,
+                               'delta1':0.1,
+                               'delta2':0.5,
+                               'delta3':1.0},
+                       'elements':{'minElNum':10,
+                                   'order':'second'}}
+  RVEparams['Jintegral'] = {'numberOfContours':50}
+  RVEparams['output'] = {'global':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
+                                   'filenames':{'performances':'caePythonTest-performances',
+                                                'energyreleaserate':'caePythonTest-energyreleaserates',
+                                                'inputdata':'caePythonTest-inputdata'}},
+                         'local':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
+                                   'filenames':{'Jintegral':'',
+                                                'stressesatboundary':'',
+                                                'crackdisplacements':''}},
+                         'report':{'global':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
+                                              'filename':'caePythonTest-report'},
+                                   'local':{'directory':[],
+                                             'filenames':{'Jintegral':[],
+                                                          'stressesatboundary':[],
+                                                          'crackdisplacements':[]}}},
+                         'sql':{'global':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
+                                          'filename':'caePythonTestDB'}}
+                        }
+  RVEparams['solver'] = {'cpus':12}

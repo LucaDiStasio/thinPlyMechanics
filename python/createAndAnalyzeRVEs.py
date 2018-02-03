@@ -3373,7 +3373,6 @@ def main(argv):
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Plot name: ' + plot[-1],True)
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'x-axis name: ' + plot[-3],True)
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Number of curves: ' + str(len(plot[:-3])),True)
                 xyData = []
                 xmin = 0.0
@@ -3387,11 +3386,13 @@ def main(argv):
                     writeLineToLogFile(logfilefullpath,'a',4*logindent + '    x-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[0])],True)
                     xData = []
                     for csvline in csvlines[1:]:
-                        xData.append(float(csvline.replace('\n','').split(',')[int(curve[0])]))
+                        if len(csvline)>2:
+                            xData.append(float(csvline.replace('\n','').split(',')[int(curve[0])]))
                     writeLineToLogFile(logfilefullpath,'a',4*logindent + '    y-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[1])],True)
                     yData = []
                     for csvline in csvlines[1:]:
-                        yData.append(float(csvline.replace('\n','').split(',')[int(curve[1])]))
+                        if len(csvline)>2:
+                            yData.append(float(csvline.replace('\n','').split(',')[int(curve[1])]))
                     xyData.append(np.transpose([np.array(xData),np.array(yData)]))
                     if c>0:
                         if np.min(xData)<xmin:
@@ -3460,7 +3461,6 @@ def main(argv):
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Plot name: ' + plot[-1],True)
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'x-axis name: ' + plot[-3],True)
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
                 writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Number of curves: ' + str(len(plot[:-3])),True)
                 xyData = []
                 xmin = 0.0
@@ -3474,11 +3474,13 @@ def main(argv):
                     writeLineToLogFile(logfilefullpath,'a',4*logindent + '    x-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[0])],True)
                     xData = []
                     for csvline in csvlines[1:]:
-                        xData.append(float(csvline.replace('\n','').split(',')[int(curve[0])]))
+                        if len(csvline)>2:
+                            xData.append(float(csvline.replace('\n','').split(',')[int(curve[0])]))
                     writeLineToLogFile(logfilefullpath,'a',4*logindent + '    y-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[1])],True)
                     yData = []
                     for csvline in csvlines[1:]:
-                        yData.append(float(csvline.replace('\n','').split(',')[int(curve[1])]))
+                        if len(csvline)>2:
+                            yData.append(float(csvline.replace('\n','').split(',')[int(curve[1])]))
                     xyData.append(np.transpose([np.array(xData),np.array(yData)]))
                     if c>0:
                         if np.min(xData)<xmin:

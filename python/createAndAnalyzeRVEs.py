@@ -3172,7 +3172,7 @@ def main(argv):
     with open(logfilefullpath,'w') as log:
         log.write('Automatic generation and FEM analysis of RVEs with Abaqus Python' + '\n')
 
-    createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME','ITERATION PARAMETER VALUE, T(createRVE()) [s], T(modifyRVEinputfile()) [s], T(runRVEsimulation()) [s], T(analyzeRVEresults()) [s], T() [s],TOTAL TIME FOR ITERATION [s]')
+    createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME','ITERATION PARAMETER VALUE, T(createRVE()) [s], T(modifyRVEinputfile()) [s], T(runRVEsimulation()) [s], T(analyzeRVEresults()) [s],TOTAL TIME FOR ITERATION [s]')
 
     createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata'],'Rf [um],L [um],L/Rf [-],Vff [-],BC,applied strain [-],fiber,matrix')
     appendCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata'],[[RVEparams['geometry']['Rf'],RVEparams['geometry']['L'],RVEparams['geometry']['L']/RVEparams['geometry']['Rf'],(4*RVEparams['geometry']['L']*RVEparams['geometry']['L'])/(RVEparams['geometry']['Rf']*RVEparams['geometry']['Rf']*np.pi),
@@ -3191,7 +3191,7 @@ def main(argv):
                                                                                                                                                                                                                                                           '[[0,21,"max(uR)"],[0,24,"max(uTheta)"],"Debond size [deg]","Maximum displacement [um]","Maximum radial and tangential displacement"],' \
                                                                                                                                                                                                                                                           '[[0,22,"mean(uR)"],[0,25,"mean(uTheta)"],"Debond size [deg]","Mean displacement [um]","Mean radial and tangential displacement"],' \
                                                                                                                                                                                                                                                           '[0,4,"Contact zone size"],"Debond size [deg]","Contact zone size [deg]","Contact zone size"]']])
-    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME'+'.csv'),'GLOBAL-TIME','True','[[[0,1,"createRVE()"],[0,2,"modifyRVEinputfile()"],[0,3,"runRVEsimulationRVE()"],[0,4,"analyzeRVEresults()"],[0,5,"createLatexReport()"],[0,6,"TOTAL TIME"],"Debond size [deg]","Time [s]","Pipeline execution time [s]"]]']])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME'+'.csv'),'GLOBAL-TIME','True','[[[0,1,"createRVE()"],[0,2,"modifyRVEinputfile()"],[0,3,"runRVEsimulationRVE()"],[0,4,"analyzeRVEresults()"],[0,5,"TOTAL TIME"],"Debond size [deg]","Time [s]","Pipeline execution time [s]"]]']])
     appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances']+'.csv'),'GLOBAL-ABQperformances','True','[[[0,2,"User time [s]"],[0,3,"System time [s]"],[0,5,"Total cpu time [s]",[0,6,"Wallclock time [s]"],"Simulation","Time [s]","ABAQUS Simulation Time"],' \
                                                                                                                                                                                                                                                                '[[0,4,"User time/total cpu time [s]"],[0,5,"System time/Total cpu time [s]"],[0,9,"Wallclock time/Total cpu time [s]"],"Simulation","Normalized time [-]","ABAQUS Normalized Simulation Time"]]']])
 
@@ -3291,14 +3291,14 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            #createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances'],'PROJECT NAME, NUMBER OF CPUS [-], USER TIME [s], SYSTEM TIME [s], USER TIME/TOTAL CPU TIME [%], SYSTEM TIME/TOTAL CPU TIME [%], TOTAL CPU TIME [s], WALLCLOCK TIME [s], WALLCLOCK TIME [m], WALLCLOCK TIME [h], WALLCLOCK TIME/TOTAL CPU TIME [%], ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-], MINIMUM REQUIRED MEMORY [MB], MEMORY TO MINIMIZE I/O [MB], TOTAL NUMBER OF ELEMENTS [-], NUMBER OF ELEMENTS DEFINED BY THE USER [-], NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF NODES [-], NUMBER OF NODES DEFINED BY THE USER [-], NUMBER OF NODES DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF VARIABLES [-]')
+            createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances'],'PROJECT NAME, NUMBER OF CPUS [-], USER TIME [s], SYSTEM TIME [s], USER TIME/TOTAL CPU TIME [%], SYSTEM TIME/TOTAL CPU TIME [%], TOTAL CPU TIME [s], WALLCLOCK TIME [s], WALLCLOCK TIME [m], WALLCLOCK TIME [h], WALLCLOCK TIME/TOTAL CPU TIME [%], ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-], MINIMUM REQUIRED MEMORY [MB], MEMORY TO MINIMIZE I/O [MB], TOTAL NUMBER OF ELEMENTS [-], NUMBER OF ELEMENTS DEFINED BY THE USER [-], NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF NODES [-], NUMBER OF NODES DEFINED BY THE USER [-], NUMBER OF NODES DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF VARIABLES [-]')
             titleline = ''
             if 'second' in RVEparams['mesh']['elements']['order']:
                 titleline = 'deltatheta,Rf,L,Rf/L,phiCZ,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement'
             else:
                 titleline = 'deltatheta,Rf,L,Rf/L,phiCZ,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement'
-            #createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate'],titleline)
-            #analyzeRVEresults(inputfilename.split('.')[0]+'.odb',RVEparams,logfilefullpath,logindent,logindent)
+            createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate'],titleline)
+            analyzeRVEresults(inputfilename.split('.')[0]+'.odb',RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -3308,26 +3308,6 @@ def main(argv):
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
-
-        #================= create graphics in pdf using latex
-        skipLineToLogFile(logfilefullpath,'a',True)
-        writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: ',True)
-        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
-        localStart = timeit.default_timer()
-        try:
-
-            localElapsedTime = timeit.default_timer() - localStart
-            timedataList.append(localElapsedTime)
-            totalIterationTime += localElapsedTime
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: ',True)
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
-        except Exception, error:
-            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
-            sys.exit(2)
-
-        timedataList.append(totalIterationTime)
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME',[timedataList])
 
         if debug:
             break
@@ -3339,6 +3319,11 @@ def main(argv):
     #=======================================================================
     # BEGIN - REPORTING
     #=======================================================================
+
+    skipLineToLogFile(logfilefullpath,'a',True)
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Begin reporting',True)
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
+    localStart = timeit.default_timer()
 
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Setting the locale to US english ... ',True)
     locale.setlocale(locale.LC_TIME,'us_US')
@@ -3968,6 +3953,8 @@ def main(argv):
         sys.exc_clear()
     writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done. ',True)
 
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
 
     writeLineToLogFile(logfilefullpath,'a',logindent + '... done. ',True)
 

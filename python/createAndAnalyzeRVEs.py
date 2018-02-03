@@ -86,9 +86,10 @@ def createCSVfile(dir,filename,titleline=None):
     if len(filename.split('.'))<2:
         filename += '.csv'
     with open(join(dir,filename),'w') as csv:
-        csv.write('# Automatically created on ' + datetime.now().strftime('%d/%m/%Y') + ' at' + datetime.now().strftime('%H:%M:%S') + '\n')
         if titleline != None:
             csv.write(titleline.replace('\n','') + '\n')
+        else:
+            csv.write('# Automatically created on ' + datetime.now().strftime('%d/%m/%Y') + ' at' + datetime.now().strftime('%H:%M:%S') + '\n')
 
 def appendCSVfile(dir,filename,data):
     # data is a list of lists
@@ -3350,7 +3351,7 @@ def main(argv):
     writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
 
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Reading index of generated csv files ... ',True)
-    with open(join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist'),'r') as csv:
+    with open(join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist' + '.csv'),'r') as csv:
         lines = csv.readlines()
     writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
 

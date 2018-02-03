@@ -3357,6 +3357,7 @@ def main(argv):
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Generating local plots ... ',True)
     for l,line in enumerate(lines[5:]):
         csvPath = line.replace('\n','').split(',')[0]
+        outDir = csvPath.split('\\')[0]
         writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
         with open(csvPath,'r') as csv:
             csvlines = csv.readlines()
@@ -3421,7 +3422,7 @@ def main(argv):
                               'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
                               'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
                               'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
-                              'xlabel={' + plot[-3] + '},ylabel={' + plot[-2] + '},\n ' \
+                              'xlabel={$' + plot[-3] + '$},ylabel={$' + plot[-2] + '$},\n ' \
                               'xmin=' + str(xmin) + ',\n ' \
                               'xmax=' + str(xmax) + ',\n ' \
                               'ymin=' + str(ymin) + ',\n ' \
@@ -3437,14 +3438,15 @@ def main(argv):
                               'legend entries={' + legendEntries + '},\n ' \
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-') + '.pdf' + ' in directory ' + RVEparams['output']['report']['local']['directory'][l],True)
-                writeLatexMultiplePlots(RVEparams['output']['report']['local']['directory'][l],plot[-1] + '.tex',xyData,axisoptions,dataoptions)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-') + '.pdf' + ' in directory ' + outDir,True)
+                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-') + '.tex',xyData,axisoptions,dataoptions)
         else:
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
 
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Generating global plots ... ',True)
     for l,line in enumerate(lines[:5]):
         csvPath = line.replace('\n','').split(',')[0]
+        outDir = csvPath.split('\\')[0]
         writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
         with open(csvPath,'r') as csv:
             csvlines = csv.readlines()
@@ -3509,7 +3511,7 @@ def main(argv):
                               'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
                               'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
                               'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
-                              'xlabel={' + plot[-3] + '},ylabel={' + plot[-2] + '},\n ' \
+                              'xlabel={$' + plot[-3] + '$},ylabel={$' + plot[-2] + '$},\n ' \
                               'xmin=' + str(xmin) + ',\n ' \
                               'xmax=' + str(xmax) + ',\n ' \
                               'ymin=' + str(ymin) + ',\n ' \
@@ -3525,8 +3527,8 @@ def main(argv):
                               'legend entries={' + legendEntries + '},\n ' \
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-') + '.pdf' + ' in directory ' + RVEparams['output']['report']['global']['directory'][l],True)
-                writeLatexMultiplePlots(RVEparams['output']['report']['global']['directory'][l],plot[-1] + '.tex',xyData,axisoptions,dataoptions)
+                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-') + '.pdf' + ' in directory ' + outDir,True)
+                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-') + '.tex',xyData,axisoptions,dataoptions)
         else:
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
 
@@ -3872,6 +3874,7 @@ def main(argv):
     writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Global results',True)
     for l,line in enumerate(lines[:5]):
         csvPath = line.replace('\n','').split(',')[0]
+        outDir = csvPath.split('\\')[0]
         writeLineToLogFile(logfilefullpath,'a',4*logindent + 'Opening file ' + csvPath,True)
         with open(csvPath,'r') as csv:
             csvlines = csv.readlines()
@@ -3898,7 +3901,7 @@ def main(argv):
                 writeLatexCustomLine(reportFolder,reportFilename,'')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\section{Parametric study: ' + plot[-1].replace(' ','-') + '}\label{sec:sec1}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + RVEparams['output']['report']['global']['directory'][l] + plot[-1] + '.pdf}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-') + '.pdf}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
                 writeLatexCustomLine(reportFolder,reportFilename,'')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
@@ -3907,6 +3910,7 @@ def main(argv):
     writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Local results',True)
     for l,line in enumerate(lines[5:]):
         csvPath = line.replace('\n','').split(',')[0]
+        outDir = csvPath.split('\\')[0]
         writeLineToLogFile(logfilefullpath,'a',4*logindent + 'Opening file ' + csvPath,True)
         with open(csvPath,'r') as csv:
             csvlines = csv.readlines()
@@ -3933,7 +3937,7 @@ def main(argv):
             writeLatexCustomLine(reportFolder,reportFilename,'\\section{Simulation n. ' + str(p+1) + '}\label{sec:sec1}')
             for p,plot in enumerate(plotSettings):
                 writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + RVEparams['output']['report']['global']['directory'][l] + plot[-1].replace(' ','-') + '.pdf}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-') + '.pdf}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
             writeLatexCustomLine(reportFolder,reportFilename,'')
             writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')

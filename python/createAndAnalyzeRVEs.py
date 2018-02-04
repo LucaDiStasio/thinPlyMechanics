@@ -2202,12 +2202,14 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for l,line in enumerate(inpfilelines):
         if store == True and '*' in inpfilelines[l+1]:
             for index in line.replace('\n','').split(','):
-                crackfacesNodeset.append(int(index))
+                if index!='' and index!=' ':
+                    crackfacesNodeset.append(int(index))
             store = False
             break
         elif store == True:
             for index in line.replace('\n','').split(','):
-                crackfacesNodeset.append(int(index))
+                if index!='' and index!=' ':
+                    crackfacesNodeset.append(int(index))
         elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACK','crack']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -2217,12 +2219,14 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for l,line in enumerate(inpfilelines):
         if store == True and '*' in inpfilelines[l+1]:
             for index in line.replace('\n','').split(','):
-                crackfacesElementset.append(int(index))
+                if index!='' and index!=' ':
+                    crackfacesElementset.append(int(index))
             store = False
             break
         elif store == True:
             for index in line.replace('\n','').split(','):
-                crackfacesElementset.append(int(index))
+                if index!='' and index!=' ':
+                    crackfacesElementset.append(int(index))
         elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACK','crack']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -2249,12 +2253,14 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for l,line in enumerate(inpfilelines):
         if store == True and '*' in inpfilelines[l+1]:
             for index in line.replace('\n','').split(','):
-                matrixNodeset.append(int(index))
+                if index!='' and index!=' ':
+                    matrixNodeset.append(int(index))
             store = False
             break
         elif store == True:
             for index in line.replace('\n','').split(','):
-                matrixNodeset.append(int(index))
+                if index!='' and index!=' ':
+                    matrixNodeset.append(int(index))
         elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX','matrix']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -2264,12 +2270,14 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for l,line in enumerate(inpfilelines):
         if store == True and '*' in inpfilelines[l+1]:
             for index in line.replace('\n','').split(','):
-                fiberElementset.append(int(index))
+                if index!='' and index!=' ':
+                    fiberElementset.append(int(index))
             store = False
             break
         elif store == True:
             for index in line.replace('\n','').split(','):
-                fiberElementset.append(int(index))
+                if index!='' and index!=' ':
+                    fiberElementset.append(int(index))
         elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER','fiber']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -2279,12 +2287,14 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for l,line in enumerate(inpfilelines):
         if store == True and '*' in inpfilelines[l+1]:
             for index in line.replace('\n','').split(','):
-                matrixElementset.append(int(index))
+                if index!='' and index!=' ':
+                    matrixElementset.append(int(index))
             store = False
             break
         elif store == True:
             for index in line.replace('\n','').split(','):
-                matrixElementset.append(int(index))
+                if index!='' and index!=' ':
+                    matrixElementset.append(int(index))
         elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX','matrix']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

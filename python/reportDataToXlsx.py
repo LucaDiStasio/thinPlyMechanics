@@ -134,7 +134,11 @@ def main(argv):
             worksheet.write(0,e,element,stringFormat)
         for c,csvline in enumerate(csvlines[1:]):
             for e,element in enumerate(csvline.replace('\n','').split(',')):
-                worksheet.write(c+1,e,float(element),numberFormat)
+                try:
+                    worksheet.write(c+1,e,float(element),numberFormat)
+                except Exception,error:
+                    worksheet.write(c+1,e,str(element),numberFormat)
+                    sys.exc_clear()
         for p,plot in enumerate(plotSettings):
             chart = workbook.add_chart({'type': 'scatter',
                                         'subtype': 'smooth_with_markers'})

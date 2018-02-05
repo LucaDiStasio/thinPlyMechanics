@@ -117,7 +117,7 @@ def main(argv):
     workbook = xlsxwriter.Workbook(join(outdir,outputfile))
 
     stringFormat = workbook.add_format({'bold': 1})
-    numberFormat = workbook.add_format({'num_format': '$#,####0'})
+    numberFormat = workbook.add_format({'num_format': '0.000000'})
 
     for line in lines[1:]:
         csvPath = line.replace('\n','').split(',')[0]

@@ -2562,6 +2562,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             startBC = l
             break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of contour integral section  ...',True)
+    for l,line in enumerate(inpfilelines):
+        if '** BOUNDARY CONDITIONS' in line or '** Boundary Conditions' in line:
+            startCI = l
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
     with open(modinpfullpath,'a') as inp:
         for line in inpfilelines[:nodeSecStart]:
@@ -2642,12 +2648,14 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         if len(line)>0:
             inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write VCCT node sets ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write VCCT and J-integral node sets ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*NSET, NSET=FIBER-CRACKTIP, INSTANCE=RVE-assembly' + '\n')
         inp.write(' ' + str(cracktipIndex) + '\n')
         inp.write('*NSET, NSET=MATRIX-CRACKTIP, INSTANCE=RVE-assembly' + '\n')
         inp.write(' ' + str(matrixCracktipIndex) + '\n')
+        inp.write('*NSET, NSET=CRACKTIP-CONTOURINTEGRAL, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(cracktipIndex) + ', ' + str(matrixCracktipIndex) + '\n')
         inp.write('*NSET, NSET=FIBER-CRACKTIP-DISPMEAS, INSTANCE=RVE-assembly' + '\n')
         inp.write(' ' + str(cracktipFiberDispMeasIndex) + '\n')
         inp.write('*NSET, NSET=MATRIX-CRACKTIP-DISPMEAS, INSTANCE=RVE-assembly' + '\n')

@@ -2564,8 +2564,9 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of contour integral section  ...',True)
     for l,line in enumerate(inpfilelines):
-        if '** BOUNDARY CONDITIONS' in line or '** Boundary Conditions' in line:
+        if '*CONTOUR INTEGRAL' in line or '*Contour Integral' in line:
             startCI = l
+            endCI = l+1
             break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
@@ -2722,7 +2723,21 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
     with open(modinpfullpath,'a') as inp:
-        for line in inpfilelines[startBC+1:]:
+        for line in inpfilelines[startBC+1:startCI]:
+            inp.write(line)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
+    crackName = inpfilelines[startCI].replace('\n','').split(',')[1].split('=')[1]
+    nContours = inpfilelines[startCI].replace('\n','').split(',')[2].split('=')[1]
+    qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
+    qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
+        inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + + ', 0.0' + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        for line in inpfilelines[endCI+1:]:
             inp.write(line)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

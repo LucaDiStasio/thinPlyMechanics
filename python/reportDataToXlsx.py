@@ -114,7 +114,7 @@ def main(argv):
     with open(join(workdir,inputfile),'r') as csv:
         lines = csv.readlines()
 
-    workbook = xlsxwriter.Workbook(outputfile)
+    workbook = xlsxwriter.Workbook(join(outdir,outputfile))
 
     stringFormat = workbook.add_format({'bold': 1})
     numberFormat = workbook.add_format({'num_format': '$#,####0'})

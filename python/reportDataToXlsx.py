@@ -145,8 +145,8 @@ def main(argv):
             for curve in plot[:-3]:
                 chart.add_series({
                                     'name':       curve[2],
-                                    'categories': [sheetName,1,curve[0],len(csvlines)-1,curve[0]],
-                                    'values':     [sheetName,1,curve[1],len(csvlines)-1,curve[1]],
+                                    'categories': [sheetName,1,curve[0],len(csvlines),curve[0]],
+                                    'values':     [sheetName,1,curve[1],len(csvlines),curve[1]],
                                 })
             chart.set_title ({'name': plot[:-1]})
             chart.set_x_axis({'name': plot[:-3]})

@@ -148,9 +148,9 @@ def main(argv):
                                     'categories': [sheetName,1,curve[0],len(csvlines),curve[0]],
                                     'values':     [sheetName,1,curve[1],len(csvlines),curve[1]],
                                 })
-            chart.set_title ({'name': plot[:-1]})
-            chart.set_x_axis({'name': plot[:-3]})
-            chart.set_y_axis({'name': plot[:-2]})
+            chart.set_title ({'name': plot[-1]})
+            chart.set_x_axis({'name': plot[-3]})
+            chart.set_y_axis({'name': plot[-2]})
             worksheet.insert_chart(len(csvlines)+10,10*p, chart)
 
     workbook.close()

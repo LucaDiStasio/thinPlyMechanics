@@ -125,7 +125,8 @@ def main(argv):
         toPlot = bool(line.replace('\n','').split(',')[2])
         plotSettings = []
         if toPlot:
-            plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
+            settingsString = ','.join(line.replace('\n','').split(',')[3:])
+            plotSettings = ast.literal_eval(settingsString[1:])
         worksheet = workbook.add_worksheet(sheetName)
         with open(csvPath,'r') as csv:
             csvlines = csv.readlines()

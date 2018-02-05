@@ -43,6 +43,7 @@ import sys, os
 import numpy as np
 import subprocess
 from os.path import isfile, join, exists
+from platform import platform,system
 from shutil import copyfile
 import sqlite3
 import locale
@@ -325,22 +326,44 @@ def writeLatexSinglePlot(folder,filename,data,axoptions,dataoptions,logfilepath,
     writeLatexTikzPicEnds(folder,filename)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Document ends',True)
     writeLatexDocumentEnds(folder,filename)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Windows command file',True)
-    cmdfile = join(folder,filename,'runlatex.cmd')
-    with open(cmdfile,'w') as cmd:
-        cmd.write('\n')
-        cmd.write('CD ' + folder + '\n')
-        cmd.write('\n')
-        cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Windows command file...',True)
-    try:
-        subprocess.call('cmd.exe /C ' + cmdfile)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    except Exception:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
-        sys.exc_clear()
+    if 'Windows' in system():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Windows command file',True)
+        cmdfile = join(folder,filename,'runlatex.cmd')
+        with open(cmdfile,'w') as cmd:
+            cmd.write('\n')
+            cmd.write('CD ' + folder + '\n')
+            cmd.write('\n')
+            cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Windows command file...',True)
+        try:
+            subprocess.call('cmd.exe /C ' + cmdfile)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        except Exception:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
+            sys.exc_clear()
+    elif 'Linux' in system():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Linux bash file',True)
+        bashfile = join(folder,filename,'runlatex.sh')
+        with open(bashfile,'w') as bsh:
+            bsh.write('#!/bin/bash\n')
+            bsh.write('\n')
+            bsh.write('cd ' + folder + '\n')
+            bsh.write('\n')
+            bsh.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Linux bash file...',True)
+            try:
+                writeLineToLogFile(logfilename,'a',baselogindent + 3*logindent + 'Change permissions to ' + bashfile ,True)
+                os.chmod(bashfile, 0o755)
+                writeLineToLogFile(logfilename,'a','Run bash file',True)
+                rc = call('.' + bashfile)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+            except Exception:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
+                sys.exc_clear()
 
 def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent)',True)
@@ -358,22 +381,44 @@ def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepa
     writeLatexTikzPicEnds(folder,filename)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Document ends',True)
     writeLatexDocumentEnds(folder,filename)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Windows command file',True)
-    cmdfile = join(folder,'runlatex.cmd')
-    with open(cmdfile,'w') as cmd:
-        cmd.write('\n')
-        cmd.write('CD ' + folder + '\n')
-        cmd.write('\n')
-        cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Windows command file...',True)
-    try:
-        subprocess.call('cmd.exe /C ' + cmdfile)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    except Exception,error:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
-        sys.exc_clear()
+    if 'Windows' in system():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Windows command file',True)
+        cmdfile = join(folder,'runlatex.cmd')
+        with open(cmdfile,'w') as cmd:
+            cmd.write('\n')
+            cmd.write('CD ' + folder + '\n')
+            cmd.write('\n')
+            cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Windows command file...',True)
+        try:
+            subprocess.call('cmd.exe /C ' + cmdfile)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        except Exception,error:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
+            sys.exc_clear()
+    elif 'Linux' in system():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Linux bash file',True)
+        bashfile = join(folder,filename,'runlatex.sh')
+        with open(bashfile,'w') as bsh:
+            bsh.write('#!/bin/bash\n')
+            bsh.write('\n')
+            bsh.write('cd ' + folder + '\n')
+            bsh.write('\n')
+            bsh.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Linux bash file...',True)
+            try:
+                writeLineToLogFile(logfilename,'a',baselogindent + 3*logindent + 'Change permissions to ' + bashfile ,True)
+                os.chmod(bashfile, 0o755)
+                writeLineToLogFile(logfilename,'a','Run bash file',True)
+                rc = call('.' + bashfile)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+            except Exception:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
+                sys.exc_clear()
 
 def writeLatexGenericCommand(folder,filename,command,options,arguments):
     with open(join(folder,filename + '.tex'),'a') as tex:

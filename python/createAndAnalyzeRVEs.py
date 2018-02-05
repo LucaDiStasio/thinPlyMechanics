@@ -310,27 +310,36 @@ def writeLatexAddPlotTable(folder,filename,data,options):
             tex.write(str(element[0]) + ' ' + str(element[1]) + '\n')
         tex.write('};\n')
 
-def writeLatexSinglePlot(wdir,proj,folder,filename,data,axoptions,dataoptions):
+def writeLatexSinglePlot(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent):
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: writeLatexSinglePlot(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create latex file',True)
     createLatexFile(folder,filename,'standalone')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Write latex packages',True)
     writeLatexPackages(folder,filename,['inputenc','pgfplots','tikz'],['utf8','',''])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Document starts',True)
     writeLatexDocumentStarts(folder,filename)
     writeLatexTikzPicStarts(folder,filename,'')
     writeLatexTikzAxisStarts(folder,filename,axoptions)
     writeLatexAddPlotTable(folder,filename,data,dataoptions)
     writeLatexTikzAxisEnds(folder,filename)
     writeLatexTikzPicEnds(folder,filename)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Document ends',True)
     writeLatexDocumentEnds(folder,filename)
-    if not exists(join(wdir,proj,'pdf')):
-        makedirs(join(wdir,proj,'pdf'))
-    cmdfile = join(wdir,proj,'pdf','runlatex.cmd')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Windows command file',True)
+    cmdfile = join(folder,filename,'runlatex.cmd')
     with open(cmdfile,'w') as cmd:
         cmd.write('\n')
-        cmd.write('CD ' + wdir + '\\' + proj + '\\pdf\n')
+        cmd.write('CD ' + folder + '\n')
         cmd.write('\n')
         cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Windows command file...',True)
     try:
         subprocess.call('cmd.exe /C ' + cmdfile)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     except Exception:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
         sys.exc_clear()
 
 def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent):
@@ -3278,7 +3287,8 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            modelData = createRVE(RVEparams,logfilefullpath,logindent,logindent)
+            if RVEparams['simulation-pipeline']['create-CAE']:
+                modelData = createRVE(RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -3295,7 +3305,8 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
+            if RVEparams['simulation-pipeline']['modify-INP']:
+                inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -3312,7 +3323,8 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilefullpath,logindent,logindent)
+            if RVEparams['simulation-pipeline']['analyze-ODB']:
+                runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -3330,8 +3342,8 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-
-            analyzeRVEresults(inputfilename.split('.')[0]+'.odb',RVEparams,logfilefullpath,logindent,logindent)
+            if RVEparams['simulation-pipeline']['analyze-ODB']:
+                analyzeRVEresults(inputfilename.split('.')[0]+'.odb',RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
@@ -3356,573 +3368,619 @@ def main(argv):
     # BEGIN - REPORTING
     #=======================================================================
 
-    skipLineToLogFile(logfilefullpath,'a',True)
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Begin reporting',True)
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
-    localStart = timeit.default_timer()
+    writeLineToLogFile(logfilefullpath,'a',logindent + '... done. ',True)
+    if RVEparams['simulation-pipeline']['report-EXCEL']:
+        skipLineToLogFile(logfilefullpath,'a',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Begin reporting in latex',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
+        localStart = timeit.default_timer()
 
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Setting the locale to US english ... ',True)
-    locale.setlocale(locale.LC_TIME,'us_US')
-    writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
 
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Check if latex output directories exist and create them if needed ... ',True)
+    if RVEparams['simulation-pipeline']['report-LATEX']:
+        skipLineToLogFile(logfilefullpath,'a',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Begin reporting in latex',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
+        localStart = timeit.default_timer()
 
-    reportFolder = RVEparams['output']['report']['global']['directory']
-    reportFilename = RVEparams['output']['report']['global']['filename'].split('.')[0]
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Setting the locale to US english ... ',True)
+        locale.setlocale(locale.LC_TIME,'us_US')
+        writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
 
-    if not os.path.exists(reportFolder):
-            os.mkdir(reportFolder)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Check if latex output directories exist and create them if needed ... ',True)
 
-    if not os.path.exists(join(reportFolder,'pics')):
-            os.mkdir(join(reportFolder,'pics'))
+        reportFolder = RVEparams['output']['report']['global']['directory']
+        reportFilename = RVEparams['output']['report']['global']['filename'].split('.')[0]
 
-    writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+        if not os.path.exists(reportFolder):
+                os.mkdir(reportFolder)
 
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Copy report template images to latex folder ... ',True)
-    copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','Docmase_logo.jpg'),join(reportFolder,'pics','Docmase_logo.jpg'))
-    copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','erasmusmundus_logo.jpg'),join(reportFolder,'pics','erasmusmundus_logo.jpg'))
-    copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_slides','logo-eeigm.jpg'),join(reportFolder,'pics','logo-eeigm.jpg'))
-    copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','lulea_logo1.jpg'),join(reportFolder,'pics','lulea_logo1.jpg'))
-    writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+        if not os.path.exists(join(reportFolder,'pics')):
+                os.mkdir(join(reportFolder,'pics'))
 
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Reading index of generated csv files ... ',True)
-    with open(join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist' + '.csv'),'r') as csv:
-        lines = csv.readlines()
-    writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
 
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Generating local plots ... ',True)
-    for l,line in enumerate(lines[5:]):
-        csvPath = line.replace('\n','').split(',')[0]
-        outDir = csvPath.split('\\')[0] + '/' + csvPath.split('\\')[1]
-        writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
-        with open(csvPath,'r') as csv:
-            csvlines = csv.readlines()
-        plotName = line.replace('\n','').split(',')[1]
-        toPlot = bool(line.replace('\n','').split(',')[2])
-        plotSettings = []
-        if toPlot:
-            stringToEval = ','.join(line.replace('\n','').split(',')[3:])
-            plotSettings = ast.literal_eval(stringToEval[1:])
-            writeLineToLogFile(logfilefullpath,'a',2*logindent + str(len(plotSettings)) + ' PLOTS REQUESTED',True)
-            for p,plot in enumerate(plotSettings):
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Plot name: ' + plot[-1],True)
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'x-axis name: ' + plot[-3],True)
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Number of curves: ' + str(len(plot[:-3])),True)
-                xyData = []
-                xmin = 0.0
-                xmax = 0.0
-                ymin = 0.0
-                ymax = 0.0
-                legendEntries = ''
-                dataoptions = []
-                for c,curve in enumerate(plot[:-3]):
-                    writeLineToLogFile(logfilefullpath,'a',4*logindent + '(' + str(c+1) + ') Curve name: ' + curve[2],True)
-                    writeLineToLogFile(logfilefullpath,'a',4*logindent + '    x-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[0])],True)
-                    xData = []
-                    for csvline in csvlines[1:]:
-                        if len(csvline)>2:
-                            xData.append(float(csvline.replace('\n','').split(',')[int(curve[0])]))
-                    writeLineToLogFile(logfilefullpath,'a',4*logindent + '    y-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[1])],True)
-                    yData = []
-                    for csvline in csvlines[1:]:
-                        if len(csvline)>2:
-                            yData.append(float(csvline.replace('\n','').split(',')[int(curve[1])]))
-                    xyData.append(np.transpose([np.array(xData),np.array(yData)]))
-                    if c>0:
-                        if np.min(xData)<xmin:
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Copy report template images to latex folder ... ',True)
+        copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','Docmase_logo.jpg'),join(reportFolder,'pics','Docmase_logo.jpg'))
+        copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','erasmusmundus_logo.jpg'),join(reportFolder,'pics','erasmusmundus_logo.jpg'))
+        copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_slides','logo-eeigm.jpg'),join(reportFolder,'pics','logo-eeigm.jpg'))
+        copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','lulea_logo1.jpg'),join(reportFolder,'pics','lulea_logo1.jpg'))
+        writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Reading index of generated csv files ... ',True)
+        with open(join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist' + '.csv'),'r') as csv:
+            lines = csv.readlines()
+        writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Generating local plots ... ',True)
+        for l,line in enumerate(lines[5:]):
+            csvPath = line.replace('\n','').split(',')[0]
+            outDir = csvPath.split('\\')[0] + '/' + csvPath.split('\\')[1]
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
+            with open(csvPath,'r') as csv:
+                csvlines = csv.readlines()
+            plotName = line.replace('\n','').split(',')[1]
+            toPlot = bool(line.replace('\n','').split(',')[2])
+            plotSettings = []
+            if toPlot:
+                stringToEval = ','.join(line.replace('\n','').split(',')[3:])
+                plotSettings = ast.literal_eval(stringToEval[1:])
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + str(len(plotSettings)) + ' PLOTS REQUESTED',True)
+                for p,plot in enumerate(plotSettings):
+                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Plot name: ' + plot[-1],True)
+                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'x-axis name: ' + plot[-3],True)
+                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
+                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Number of curves: ' + str(len(plot[:-3])),True)
+                    xyData = []
+                    xmin = 0.0
+                    xmax = 0.0
+                    ymin = 0.0
+                    ymax = 0.0
+                    legendEntries = ''
+                    dataoptions = []
+                    for c,curve in enumerate(plot[:-3]):
+                        writeLineToLogFile(logfilefullpath,'a',4*logindent + '(' + str(c+1) + ') Curve name: ' + curve[2],True)
+                        writeLineToLogFile(logfilefullpath,'a',4*logindent + '    x-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[0])],True)
+                        xData = []
+                        for csvline in csvlines[1:]:
+                            if len(csvline)>2:
+                                xData.append(float(csvline.replace('\n','').split(',')[int(curve[0])]))
+                        writeLineToLogFile(logfilefullpath,'a',4*logindent + '    y-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[1])],True)
+                        yData = []
+                        for csvline in csvlines[1:]:
+                            if len(csvline)>2:
+                                yData.append(float(csvline.replace('\n','').split(',')[int(curve[1])]))
+                        xyData.append(np.transpose([np.array(xData),np.array(yData)]))
+                        if c>0:
+                            if np.min(xData)<xmin:
+                                xmin = np.min(xData)
+                        else:
                             xmin = np.min(xData)
-                    else:
-                        xmin = np.min(xData)
-                    if c>0:
-                        if np.max(xData)<xmax:
+                        if c>0:
+                            if np.max(xData)<xmax:
+                                xmax = np.max(xData)
+                        else:
                             xmax = np.max(xData)
-                    else:
-                        xmax = np.max(xData)
-                    if c>0:
-                        if np.min(yData)<ymin:
+                        if c>0:
+                            if np.min(yData)<ymin:
+                                ymin = np.min(yData)
+                        else:
                             ymin = np.min(yData)
-                    else:
-                        ymin = np.min(yData)
-                    if c>0:
-                        if np.max(yData)<ymax:
+                        if c>0:
+                            if np.max(yData)<ymax:
+                                ymax = np.max(yData)
+                        else:
                             ymax = np.max(yData)
-                    else:
-                        ymax = np.max(yData)
-                    if c>0:
-                        legendEntries += ', '
-                    legendEntries += '{$' + curve[2] + '$}'
-                    dataoptions.append('red!' + str(100.0*float(c)/float(len(plot[:-3]))) + '!blue')
-                axisoptions = 'width=30cm,\n ' \
-                              'title={\\bf{' + plot[-1] + '}},\n ' \
-                              'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
-                              'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
-                              'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
-                              'xlabel={$' + plot[-3] + '$},ylabel={$' + plot[-2] + '$},\n ' \
-                              'xmin=' + str(xmin) + ',\n ' \
-                              'xmax=' + str(xmax) + ',\n ' \
-                              'ymin=' + str(ymin) + ',\n ' \
-                              'ymax=' + str(ymax) + ',\n ' \
-                              'tick align=outside,\n ' \
-                              'tick label style={font=\\huge},\n ' \
-                              'xmajorgrids,\n ' \
-                              'x grid style={lightgray!92.026143790849673!black},\n ' \
-                              'ymajorgrids,\n ' \
-                              'y grid style={lightgray!92.026143790849673!black},\n ' \
-                              'line width=0.5mm,\n ' \
-                              'legend style={draw=white!80.0!black,font=\\fontsize{28}{24}\\selectfont,row sep=15pt},\n ' \
-                              'legend entries={' + legendEntries + '},\n ' \
-                              'legend image post style={xscale=2},\n ' \
-                              'legend cell align={left}'
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf' + ' in directory ' + outDir,True)
-                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.tex',xyData,axisoptions,dataoptions,logfilefullpath,3*logindent,logindent)
-        else:
-            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
+                        if c>0:
+                            legendEntries += ', '
+                        legendEntries += '{$' + curve[2] + '$}'
+                        dataoptions.append('red!' + str(100.0*float(c)/float(len(plot[:-3]))) + '!blue')
+                    axisoptions = 'width=30cm,\n ' \
+                                  'title={\\bf{' + plot[-1] + '}},\n ' \
+                                  'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
+                                  'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                                  'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                                  'xlabel={$' + plot[-3] + '$},ylabel={$' + plot[-2] + '$},\n ' \
+                                  'xmin=' + str(xmin) + ',\n ' \
+                                  'xmax=' + str(xmax) + ',\n ' \
+                                  'ymin=' + str(ymin) + ',\n ' \
+                                  'ymax=' + str(ymax) + ',\n ' \
+                                  'tick align=outside,\n ' \
+                                  'tick label style={font=\\huge},\n ' \
+                                  'xmajorgrids,\n ' \
+                                  'x grid style={lightgray!92.026143790849673!black},\n ' \
+                                  'ymajorgrids,\n ' \
+                                  'y grid style={lightgray!92.026143790849673!black},\n ' \
+                                  'line width=0.5mm,\n ' \
+                                  'legend style={draw=white!80.0!black,font=\\fontsize{28}{24}\\selectfont,row sep=15pt},\n ' \
+                                  'legend entries={' + legendEntries + '},\n ' \
+                                  'legend image post style={xscale=2},\n ' \
+                                  'legend cell align={left}'
+                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf' + ' in directory ' + outDir,True)
+                    writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.tex',xyData,axisoptions,dataoptions,logfilefullpath,3*logindent,logindent)
+            else:
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
 
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Generating global plots ... ',True)
-    for l,line in enumerate(lines[1:5]):
-        csvPath = line.replace('\n','').split(',')[0]
-        outDir = csvPath.split('\\')[0]
-        writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
-        with open(csvPath,'r') as csv:
-            csvlines = csv.readlines()
-        plotName = line.replace('\n','').split(',')[1]
-        toPlot = bool(line.replace('\n','').split(',')[2])
-        plotSettings = []
-        if toPlot:
-            stringToEval = ','.join(line.replace('\n','').split(',')[3:])
-            plotSettings = ast.literal_eval(stringToEval[1:])
-            writeLineToLogFile(logfilefullpath,'a',2*logindent + str(len(plotSettings)) + ' PLOTS REQUESTED',True)
-            for p,plot in enumerate(plotSettings):
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Plot name: ' + plot[-1],True)
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'x-axis name: ' + plot[-3],True)
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Number of curves: ' + str(len(plot[:-3])),True)
-                xyData = []
-                xmin = 0.0
-                xmax = 0.0
-                ymin = 0.0
-                ymax = 0.0
-                legendEntries = ''
-                dataoptions = []
-                for c,curve in enumerate(plot[:-3]):
-                    writeLineToLogFile(logfilefullpath,'a',4*logindent + '(' + str(c+1) + ') Curve name: ' + curve[2],True)
-                    writeLineToLogFile(logfilefullpath,'a',4*logindent + '    x-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[0])],True)
-                    xData = []
-                    for csvline in csvlines[1:]:
-                        if len(csvline)>2:
-                            xData.append(float(csvline.replace('\n','').split(',')[int(curve[0])]))
-                    writeLineToLogFile(logfilefullpath,'a',4*logindent + '    y-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[1])],True)
-                    yData = []
-                    for csvline in csvlines[1:]:
-                        if len(csvline)>2:
-                            yData.append(float(csvline.replace('\n','').split(',')[int(curve[1])]))
-                    xyData.append(np.transpose([np.array(xData),np.array(yData)]))
-                    if c>0:
-                        if np.min(xData)<xmin:
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Generating global plots ... ',True)
+        for l,line in enumerate(lines[1:5]):
+            csvPath = line.replace('\n','').split(',')[0]
+            outDir = csvPath.split('\\')[0]
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
+            with open(csvPath,'r') as csv:
+                csvlines = csv.readlines()
+            plotName = line.replace('\n','').split(',')[1]
+            toPlot = bool(line.replace('\n','').split(',')[2])
+            plotSettings = []
+            if toPlot:
+                stringToEval = ','.join(line.replace('\n','').split(',')[3:])
+                plotSettings = ast.literal_eval(stringToEval[1:])
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + str(len(plotSettings)) + ' PLOTS REQUESTED',True)
+                for p,plot in enumerate(plotSettings):
+                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Plot name: ' + plot[-1],True)
+                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'x-axis name: ' + plot[-3],True)
+                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
+                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Number of curves: ' + str(len(plot[:-3])),True)
+                    xyData = []
+                    xmin = 0.0
+                    xmax = 0.0
+                    ymin = 0.0
+                    ymax = 0.0
+                    legendEntries = ''
+                    dataoptions = []
+                    for c,curve in enumerate(plot[:-3]):
+                        writeLineToLogFile(logfilefullpath,'a',4*logindent + '(' + str(c+1) + ') Curve name: ' + curve[2],True)
+                        writeLineToLogFile(logfilefullpath,'a',4*logindent + '    x-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[0])],True)
+                        xData = []
+                        for csvline in csvlines[1:]:
+                            if len(csvline)>2:
+                                xData.append(float(csvline.replace('\n','').split(',')[int(curve[0])]))
+                        writeLineToLogFile(logfilefullpath,'a',4*logindent + '    y-values: ' + csvlines[0].replace('\n','').split(',')[int(curve[1])],True)
+                        yData = []
+                        for csvline in csvlines[1:]:
+                            if len(csvline)>2:
+                                yData.append(float(csvline.replace('\n','').split(',')[int(curve[1])]))
+                        xyData.append(np.transpose([np.array(xData),np.array(yData)]))
+                        if c>0:
+                            if np.min(xData)<xmin:
+                                xmin = np.min(xData)
+                        else:
                             xmin = np.min(xData)
-                    else:
-                        xmin = np.min(xData)
-                    if c>0:
-                        if np.max(xData)<xmax:
+                        if c>0:
+                            if np.max(xData)<xmax:
+                                xmax = np.max(xData)
+                        else:
                             xmax = np.max(xData)
-                    else:
-                        xmax = np.max(xData)
-                    if c>0:
-                        if np.min(yData)<ymin:
+                        if c>0:
+                            if np.min(yData)<ymin:
+                                ymin = np.min(yData)
+                        else:
                             ymin = np.min(yData)
-                    else:
-                        ymin = np.min(yData)
-                    if c>0:
-                        if np.max(yData)<ymax:
+                        if c>0:
+                            if np.max(yData)<ymax:
+                                ymax = np.max(yData)
+                        else:
                             ymax = np.max(yData)
-                    else:
-                        ymax = np.max(yData)
-                    if c>0:
-                        legendEntries += ', '
-                    legendEntries += '{$' + curve[2] + '$}'
-                    dataoptions.append('red!' + str(100.0*float(c)/float(len(plot[:-3]))) + '!blue')
-                axisoptions = 'width=30cm,\n ' \
-                              'title={\\bf{' + plot[-1] + '}},\n ' \
-                              'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
-                              'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
-                              'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
-                              'xlabel={$' + plot[-3] + '$},ylabel={$' + plot[-2] + '$},\n ' \
-                              'xmin=' + str(xmin) + ',\n ' \
-                              'xmax=' + str(xmax) + ',\n ' \
-                              'ymin=' + str(ymin) + ',\n ' \
-                              'ymax=' + str(ymax) + ',\n ' \
-                              'tick align=outside,\n ' \
-                              'tick label style={font=\\huge},\n ' \
-                              'xmajorgrids,\n ' \
-                              'x grid style={lightgray!92.026143790849673!black},\n ' \
-                              'ymajorgrids,\n ' \
-                              'y grid style={lightgray!92.026143790849673!black},\n ' \
-                              'line width=0.5mm,\n ' \
-                              'legend style={draw=white!80.0!black,font=\\fontsize{28}{24}\\selectfont,row sep=15pt},\n ' \
-                              'legend entries={' + legendEntries + '},\n ' \
-                              'legend image post style={xscale=2},\n ' \
-                              'legend cell align={left}'
-                writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf' + ' in directory ' + outDir,True)
-                writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.tex',xyData,axisoptions,dataoptions,logfilefullpath,3*logindent,logindent)
-        else:
-            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
+                        if c>0:
+                            legendEntries += ', '
+                        legendEntries += '{$' + curve[2] + '$}'
+                        dataoptions.append('red!' + str(100.0*float(c)/float(len(plot[:-3]))) + '!blue')
+                    axisoptions = 'width=30cm,\n ' \
+                                  'title={\\bf{' + plot[-1] + '}},\n ' \
+                                  'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
+                                  'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                                  'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                                  'xlabel={$' + plot[-3] + '$},ylabel={$' + plot[-2] + '$},\n ' \
+                                  'xmin=' + str(xmin) + ',\n ' \
+                                  'xmax=' + str(xmax) + ',\n ' \
+                                  'ymin=' + str(ymin) + ',\n ' \
+                                  'ymax=' + str(ymax) + ',\n ' \
+                                  'tick align=outside,\n ' \
+                                  'tick label style={font=\\huge},\n ' \
+                                  'xmajorgrids,\n ' \
+                                  'x grid style={lightgray!92.026143790849673!black},\n ' \
+                                  'ymajorgrids,\n ' \
+                                  'y grid style={lightgray!92.026143790849673!black},\n ' \
+                                  'line width=0.5mm,\n ' \
+                                  'legend style={draw=white!80.0!black,font=\\fontsize{28}{24}\\selectfont,row sep=15pt},\n ' \
+                                  'legend entries={' + legendEntries + '},\n ' \
+                                  'legend image post style={xscale=2},\n ' \
+                                  'legend cell align={left}'
+                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Create plot in file ' + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf' + ' in directory ' + outDir,True)
+                    writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.tex',xyData,axisoptions,dataoptions,logfilefullpath,3*logindent,logindent)
+            else:
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + 'NO PLOT REQUESTED',True)
 
-    writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
 
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Creating main report ...',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Creating main report ...',True)
 
-    writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Create latex file ...',True)
-    createLatexFile(reportFolder,reportFilename,'scrartcl',options='a4paper, twoside,12pt, abstract')
-    packages = ['inputenc',
-                'fontenc',
-                'amsfonts',
-                'amsmath',
-                'amssymb',
-                'amstext',
-                'animate',
-                'babel',
-                'biblatex',
-                'bm',
-                'booktabs',
-                'caption',
-                'colortbl',
-                'csquotes',
-                'enumerate',
-                'eurosym',
-                'geometry',
-                'graphicx',
-                'float',
-                'helvet',
-                'longtable',
-                'makeidx',
-                'multirow',
-                'nameref',
-                'parskip',
-                'pdfpages',
-                'rotating',
-                'scrpage2',
-                'setspace',
-                'standalone',
-                'subcaption',
-                'tabularx',
-                'tikz',
-                'xcolor',
-                'glossaries',
-                'hyperref']
-    options = ['utf8',
-               'fontenc',
-               '',
-               '',
-               '',
-               '',
-               '',
-               'english',
-               'backend=bibtex, sorting=none,style=numeric',
-               '',
-               '',
-               '',
-               '',
-               '',
-               '',
-               'right',
-               'inner=3cm,outer=2cm,top=2.7cm,bottom=3.2cm',
-               '',
-               '',
-               'scaled=.90',
-               '',
-               '',
-               '',
-               '',
-               '',
-               '',
-               '',
-               '',
-               '',
-               '',
-               '',
-               '',
-               '',
-               '',
-               'acronym,nonumberlist,nopostdot,toc',
-               '']
-    writeLatexPackages(reportFolder,reportFilename,packages,options)
-    writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
+        writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Create latex file ...',True)
+        createLatexFile(reportFolder,reportFilename,'scrartcl',options='a4paper, twoside,12pt, abstract')
+        packages = ['inputenc',
+                    'fontenc',
+                    'amsfonts',
+                    'amsmath',
+                    'amssymb',
+                    'amstext',
+                    'animate',
+                    'babel',
+                    'biblatex',
+                    'bm',
+                    'booktabs',
+                    'caption',
+                    'colortbl',
+                    'csquotes',
+                    'enumerate',
+                    'eurosym',
+                    'geometry',
+                    'graphicx',
+                    'float',
+                    'helvet',
+                    'longtable',
+                    'makeidx',
+                    'multirow',
+                    'nameref',
+                    'parskip',
+                    'pdfpages',
+                    'rotating',
+                    'scrpage2',
+                    'setspace',
+                    'standalone',
+                    'subcaption',
+                    'tabularx',
+                    'tikz',
+                    'xcolor',
+                    'glossaries',
+                    'hyperref']
+        options = ['utf8',
+                   'fontenc',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   'english',
+                   'backend=bibtex, sorting=none,style=numeric',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   'right',
+                   'inner=3cm,outer=2cm,top=2.7cm,bottom=3.2cm',
+                   '',
+                   '',
+                   'scaled=.90',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   '',
+                   'acronym,nonumberlist,nopostdot,toc',
+                   '']
+        writeLatexPackages(reportFolder,reportFilename,packages,options)
+        writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Write packages ...',True)
-    writeLatexCustomLine(reportFolder,reportFilename,'\\definecolor{Gray}{gray}{0.85}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\definecolor{LightCyan}{rgb}{0.88,1,1}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\sloppy % avoids lines that are too long on the right side')
-    writeLatexCustomLine(reportFolder,reportFilename,'% avoid "orphans"')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\clubpenalty = 10000')
-    writeLatexCustomLine(reportFolder,reportFilename,'% avoid "widows"')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\widowpenalty = 10000')
-    writeLatexCustomLine(reportFolder,reportFilename,'% this makes the table of content etc. look better')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\renewcommand{\\dotfill}{\\leaders\\hbox to 5pt{\\hss.\\hss}\\hfill}')
-    writeLatexCustomLine(reportFolder,reportFilename,'% avoid indentation of line after a paragraph')
-    writeLatexSetLength(reportFolder,reportFilename,'parindent','0pt')
-    writeLatexGenericCommand(reportFolder,reportFilename,'pagestyle','','scrheadings')
-    writeLatexGenericCommand(reportFolder,reportFilename,'automark','section','section')
-    writeLatexGenericCommand(reportFolder,reportFilename,'ofoot','','\\pagemark')
-    writeLatexGenericCommand(reportFolder,reportFilename,'ifoot','','Research Plan')
-    writeLatexSetLength(reportFolder,reportFilename,'unitlength','1cm')
-    writeLatexSetLength(reportFolder,reportFilename,'oddsidemargin','0.3cm')
-    writeLatexSetLength(reportFolder,reportFilename,'evensidemargin','0.3cm')
-    writeLatexSetLength(reportFolder,reportFilename,'textwidth','15.5cm')
-    writeLatexSetLength(reportFolder,reportFilename,'topmargin','0cm')
-    writeLatexSetLength(reportFolder,reportFilename,'textheight','22cm')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\columnsep 0.5cm')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\newcommand{\\brac}[1]{\\left(#1\\right)}')
-    writeLatexGenericCommand(reportFolder,reportFilename,'graphicspath','','{./pics/}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\addto\\captionsenglish{\\renewcommand{\\listfigurename}{Figures}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\addto\\captionsenglish{\\renewcommand{\\listtablename}{Tables}}')
-    writeLatexGenericCommand(reportFolder,reportFilename,'makeglossaries','','')
-    writeLatexGenericCommand(reportFolder,reportFilename,'makeindex','','',)
-    writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
+        writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Write packages ...',True)
+        writeLatexCustomLine(reportFolder,reportFilename,'\\definecolor{Gray}{gray}{0.85}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\definecolor{LightCyan}{rgb}{0.88,1,1}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\sloppy % avoids lines that are too long on the right side')
+        writeLatexCustomLine(reportFolder,reportFilename,'% avoid "orphans"')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\clubpenalty = 10000')
+        writeLatexCustomLine(reportFolder,reportFilename,'% avoid "widows"')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\widowpenalty = 10000')
+        writeLatexCustomLine(reportFolder,reportFilename,'% this makes the table of content etc. look better')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\renewcommand{\\dotfill}{\\leaders\\hbox to 5pt{\\hss.\\hss}\\hfill}')
+        writeLatexCustomLine(reportFolder,reportFilename,'% avoid indentation of line after a paragraph')
+        writeLatexSetLength(reportFolder,reportFilename,'parindent','0pt')
+        writeLatexGenericCommand(reportFolder,reportFilename,'pagestyle','','scrheadings')
+        writeLatexGenericCommand(reportFolder,reportFilename,'automark','section','section')
+        writeLatexGenericCommand(reportFolder,reportFilename,'ofoot','','\\pagemark')
+        writeLatexGenericCommand(reportFolder,reportFilename,'ifoot','','Research Plan')
+        writeLatexSetLength(reportFolder,reportFilename,'unitlength','1cm')
+        writeLatexSetLength(reportFolder,reportFilename,'oddsidemargin','0.3cm')
+        writeLatexSetLength(reportFolder,reportFilename,'evensidemargin','0.3cm')
+        writeLatexSetLength(reportFolder,reportFilename,'textwidth','15.5cm')
+        writeLatexSetLength(reportFolder,reportFilename,'topmargin','0cm')
+        writeLatexSetLength(reportFolder,reportFilename,'textheight','22cm')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\columnsep 0.5cm')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\newcommand{\\brac}[1]{\\left(#1\\right)}')
+        writeLatexGenericCommand(reportFolder,reportFilename,'graphicspath','','{./pics/}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\addto\\captionsenglish{\\renewcommand{\\listfigurename}{Figures}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\addto\\captionsenglish{\\renewcommand{\\listtablename}{Tables}}')
+        writeLatexGenericCommand(reportFolder,reportFilename,'makeglossaries','','')
+        writeLatexGenericCommand(reportFolder,reportFilename,'makeindex','','',)
+        writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Document starts ...',True)
+        writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Document starts ...',True)
 
-    writeLatexDocumentStarts(reportFolder,reportFilename)
+        writeLatexDocumentStarts(reportFolder,reportFilename)
 
-    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Title page',True)
+        writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Title page',True)
 
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%                  Front Matter                  %')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%                 Title Page')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ihead{\\href{http://www.ltu.se/}{\\includegraphics[height=1.5cm]{lulea_logo1.jpg}}\\hspace{6.1953125cm}\\href{http://www.eeigm.univ-lorraine.fr/}{\\includegraphics[height=1.5cm]{logo-eeigm.jpg}}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{\\noindent\\makebox[\\linewidth]{\\rule{\\textwidth}{0.4pt}}\\\\\\href{http://eacea.ec.europa.eu/erasmus_mundus/index_en.php}{\\includegraphics[height=1.75cm]{erasmusmundus_logo.jpg}}\\hspace{9.55cm}\\href{http://www.uni-saarland.de/einrichtung/eusmat/international-studies/phd/docmase.html}{\\includegraphics[height=1.75cm]{Docmase_logo.jpg}}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\begin{center}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{0.1cm}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\begin{Large}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{\\textsc{EUSMAT}}\\\\[0.75ex]')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\end{Large}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\begin{large}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{European School of Materials}\\\\[0.75ex]')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{1cm}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{DocMASE}\\\\[0.75ex]')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{\\textsc{Doctorate in Materials Science and Engineering}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\end{large}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\vspace{1.75cm}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\begin{Large}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{\\textsc{Simulation Report}}\\\\[0.75ex]')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\end{Large}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{0.5cm}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\begin{LARGE}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{\\textsc{Report of ABAQUS simulations}}\\\\[0.75ex]')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\end{LARGE}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{2.5cm}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\begin{flushright}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\begin{tabular}{l l }')
-    writeLatexCustomLine(reportFolder,reportFilename,'{\\large \\textbf{Doctoral Candidate:}} & {\\large \\href{http://lucadistasioengineering.com/}{Luca DI STASIO}}\\\\')
-    writeLatexCustomLine(reportFolder,reportFilename,'&\\\\')
-    writeLatexCustomLine(reportFolder,reportFilename,'&\\\\')
-    writeLatexCustomLine(reportFolder,reportFilename,'&\\\\')
-    writeLatexCustomLine(reportFolder,reportFilename,'{\\large \\textbf{Thesis Supervisors:}}& {\\large Prof. Zoubir AYADI}\\\\')
-    writeLatexCustomLine(reportFolder,reportFilename,'&{\\large Universit\\\'e de Lorraine}\\\\')
-    writeLatexCustomLine(reportFolder,reportFilename,'&{\\large Nancy, France}\\\\')
-    writeLatexCustomLine(reportFolder,reportFilename,'&\\\\')
-    writeLatexCustomLine(reportFolder,reportFilename,'& {\\large Prof. Janis VARNA}\\\\')
-    writeLatexCustomLine(reportFolder,reportFilename,'&{\\large Lule\\aa\\ University of Technology}\\\\')
-    writeLatexCustomLine(reportFolder,reportFilename,'&{\\large Lule\\aa, Sweden}\\\\')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\end{tabular}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\end{flushright}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{2cm}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    timeNow = datetime.now()
-    writeLatexCustomLine(reportFolder,reportFilename,'{\\large \\textbf{Created on ' + timeNow.strftime('%B') + timeNow.strftime('%d') + ', ' + timeNow.strftime('%Y') +'}}\\\\[10pt]')
-    writeLatexCustomLine(reportFolder,reportFilename,'{\\large \\textbf{Last Updated on \\today}}\\\\')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\end{center}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepage')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Table of Contents',True)
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%            Table of Contents')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\pagenumbering{roman}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setcounter{page}{1}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\contentsname}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\tableofcontents')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\label{sec:content}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'List of Figures',True)
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%            List of Figures')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\listfigurename}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'%\\section*{List of Figures}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\addcontentsline{toc}{section}{\\listfigurename}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\listoffigures')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'List of Tables',True)
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%            List of Tables')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\listtablename}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'%\\section*{List of Tables}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\addcontentsline{toc}{section}{\\listtablename}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\listoftables')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'List of Acronyms',True)
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%            List of Acronyms')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\nameref{sec:acr}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\section*{Acronyms}\\label{sec:acr}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\addcontentsline{toc}{section}{\\nameref{sec:acr}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\printglossary[type=\\acronymtype]')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'%\\printglossary')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'List of Symbols',True)
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%            List of Symbols')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\nameref{sec:sym}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\section*{Symbols}\\label{sec:sym}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\addcontentsline{toc}{section}{\\nameref{sec:sym}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'%\\input{symbols}')
-    writeLatexCustomLine(reportFolder,reportFilename,'%')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Abstract',True)
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%                   Abstract')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\nameref{sec:abs}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\section*{Abstract}\\label{sec:abs}')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\addcontentsline{toc}{section}{\\nameref{sec:abs}}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%                   Main Matter                  %')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\pagenumbering{arabic}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
-    writeLatexCustomLine(reportFolder,reportFilename,'\\setcounter{page}{1}')
-    writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%                  Front Matter                  %')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%                 Title Page')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ihead{\\href{http://www.ltu.se/}{\\includegraphics[height=1.5cm]{lulea_logo1.jpg}}\\hspace{6.1953125cm}\\href{http://www.eeigm.univ-lorraine.fr/}{\\includegraphics[height=1.5cm]{logo-eeigm.jpg}}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{\\noindent\\makebox[\\linewidth]{\\rule{\\textwidth}{0.4pt}}\\\\\\href{http://eacea.ec.europa.eu/erasmus_mundus/index_en.php}{\\includegraphics[height=1.75cm]{erasmusmundus_logo.jpg}}\\hspace{9.55cm}\\href{http://www.uni-saarland.de/einrichtung/eusmat/international-studies/phd/docmase.html}{\\includegraphics[height=1.75cm]{Docmase_logo.jpg}}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\begin{center}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{0.1cm}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\begin{Large}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{\\textsc{EUSMAT}}\\\\[0.75ex]')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\end{Large}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\begin{large}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{European School of Materials}\\\\[0.75ex]')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{1cm}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{DocMASE}\\\\[0.75ex]')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{\\textsc{Doctorate in Materials Science and Engineering}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\end{large}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\vspace{1.75cm}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\begin{Large}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{\\textsc{Simulation Report}}\\\\[0.75ex]')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\end{Large}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{0.5cm}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\begin{LARGE}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\textbf{\\textsc{Report of ABAQUS simulations}}\\\\[0.75ex]')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\end{LARGE}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{2.5cm}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\begin{flushright}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\begin{tabular}{l l }')
+        writeLatexCustomLine(reportFolder,reportFilename,'{\\large \\textbf{Doctoral Candidate:}} & {\\large \\href{http://lucadistasioengineering.com/}{Luca DI STASIO}}\\\\')
+        writeLatexCustomLine(reportFolder,reportFilename,'&\\\\')
+        writeLatexCustomLine(reportFolder,reportFilename,'&\\\\')
+        writeLatexCustomLine(reportFolder,reportFilename,'&\\\\')
+        writeLatexCustomLine(reportFolder,reportFilename,'{\\large \\textbf{Thesis Supervisors:}}& {\\large Prof. Zoubir AYADI}\\\\')
+        writeLatexCustomLine(reportFolder,reportFilename,'&{\\large Universit\\\'e de Lorraine}\\\\')
+        writeLatexCustomLine(reportFolder,reportFilename,'&{\\large Nancy, France}\\\\')
+        writeLatexCustomLine(reportFolder,reportFilename,'&\\\\')
+        writeLatexCustomLine(reportFolder,reportFilename,'& {\\large Prof. Janis VARNA}\\\\')
+        writeLatexCustomLine(reportFolder,reportFilename,'&{\\large Lule\\aa\\ University of Technology}\\\\')
+        writeLatexCustomLine(reportFolder,reportFilename,'&{\\large Lule\\aa, Sweden}\\\\')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\end{tabular}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\end{flushright}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\vspace*{2cm}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        timeNow = datetime.now()
+        writeLatexCustomLine(reportFolder,reportFilename,'{\\large \\textbf{Created on ' + timeNow.strftime('%B') + timeNow.strftime('%d') + ', ' + timeNow.strftime('%Y') +'}}\\\\[10pt]')
+        writeLatexCustomLine(reportFolder,reportFilename,'{\\large \\textbf{Last Updated on \\today}}\\\\')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\end{center}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepage')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Table of Contents',True)
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%            Table of Contents')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\pagenumbering{roman}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setcounter{page}{1}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\contentsname}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\tableofcontents')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\label{sec:content}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLineToLogFile(logfilefullpath,'a',3*logindent + 'List of Figures',True)
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%            List of Figures')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\listfigurename}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'%\\section*{List of Figures}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\addcontentsline{toc}{section}{\\listfigurename}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\listoffigures')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLineToLogFile(logfilefullpath,'a',3*logindent + 'List of Tables',True)
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%            List of Tables')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\listtablename}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'%\\section*{List of Tables}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\addcontentsline{toc}{section}{\\listtablename}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\listoftables')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLineToLogFile(logfilefullpath,'a',3*logindent + 'List of Acronyms',True)
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%            List of Acronyms')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\nameref{sec:acr}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\section*{Acronyms}\\label{sec:acr}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\addcontentsline{toc}{section}{\\nameref{sec:acr}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\printglossary[type=\\acronymtype]')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'%\\printglossary')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLineToLogFile(logfilefullpath,'a',3*logindent + 'List of Symbols',True)
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%            List of Symbols')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\nameref{sec:sym}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\section*{Symbols}\\label{sec:sym}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\addcontentsline{toc}{section}{\\nameref{sec:sym}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'%\\input{symbols}')
+        writeLatexCustomLine(reportFolder,reportFilename,'%')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Abstract',True)
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%                   Abstract')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\nameref{sec:abs}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\section*{Abstract}\\label{sec:abs}')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\addcontentsline{toc}{section}{\\nameref{sec:abs}}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%                   Main Matter                  %')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\pagenumbering{arabic}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLatexCustomLine(reportFolder,reportFilename,'\\setcounter{page}{1}')
+        writeLatexCustomLine(reportFolder,reportFilename,'')
 
-    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Global results',True)
-    for l,line in enumerate(lines[1:5]):
-        csvPath = line.replace('\n','').split(',')[0]
-        outDir = csvPath.split('\\')[0]
-        writeLineToLogFile(logfilefullpath,'a',4*logindent + 'Opening file ' + csvPath,True)
-        with open(csvPath,'r') as csv:
-            csvlines = csv.readlines()
-        plotName = line.replace('\n','').split(',')[1]
-        toPlot = bool(line.replace('\n','').split(',')[2])
-        plotSettings = []
-        if toPlot:
-            writeLineToLogFile(logfilefullpath,'a',4*logindent + str(len(plotSettings)) + ' PLOTS TO BE INSERTED',True)
-            plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
-            for p,plot in enumerate(plotSettings):
+        writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Global results',True)
+        for l,line in enumerate(lines[1:5]):
+            csvPath = line.replace('\n','').split(',')[0]
+            outDir = csvPath.split('\\')[0]
+            writeLineToLogFile(logfilefullpath,'a',4*logindent + 'Opening file ' + csvPath,True)
+            with open(csvPath,'r') as csv:
+                csvlines = csv.readlines()
+            plotName = line.replace('\n','').split(',')[1]
+            toPlot = bool(line.replace('\n','').split(',')[2])
+            plotSettings = []
+            if toPlot:
+                writeLineToLogFile(logfilefullpath,'a',4*logindent + str(len(plotSettings)) + ' PLOTS TO BE INSERTED',True)
+                plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
+                for p,plot in enumerate(plotSettings):
+                    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+                    writeLatexCustomLine(reportFolder,reportFilename,'%               GLOBAL - ' + plot[-1])
+                    writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
+                    writeLatexCustomLine(reportFolder,reportFilename,'')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\nameref{sec:sec1}}')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
+                    writeLatexCustomLine(reportFolder,reportFilename,'')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\section{Parametric study: ' + plot[-1] + '}\label{sec:sec1}')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf}')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
+                    writeLatexCustomLine(reportFolder,reportFilename,'')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
+                    writeLatexCustomLine(reportFolder,reportFilename,'')
+
+        writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Local results',True)
+        for l,line in enumerate(lines[5:]):
+            csvPath = line.replace('\n','').split(',')[0]
+            outDir = csvPath.split('\\')[0] + '/' + csvPath.split('\\')[1]
+            writeLineToLogFile(logfilefullpath,'a',4*logindent + 'Opening file ' + csvPath,True)
+            with open(csvPath,'r') as csv:
+                csvlines = csv.readlines()
+            plotName = line.replace('\n','').split(',')[1]
+            toPlot = bool(line.replace('\n','').split(',')[2])
+            plotSettings = []
+            if toPlot:
+                writeLineToLogFile(logfilefullpath,'a',4*logindent + str(len(plotSettings)) + ' PLOTS TO BE INSERTED',True)
+                plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
                 writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-                writeLatexCustomLine(reportFolder,reportFilename,'%               GLOBAL - ' + plot[-1])
+                writeLatexCustomLine(reportFolder,reportFilename,'%               SIMULATION N. ' + str(p+1))
                 writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
                 writeLatexCustomLine(reportFolder,reportFilename,'')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
@@ -3935,72 +3993,37 @@ def main(argv):
                 writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
                 writeLatexCustomLine(reportFolder,reportFilename,'')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\section{Parametric study: ' + plot[-1] + '}\label{sec:sec1}')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf}')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
+                writeLatexCustomLine(reportFolder,reportFilename,'\\section{Simulation n. ' + str(p+1) + '}\label{sec:sec1}')
+                for p,plot in enumerate(plotSettings):
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf}')
+                    writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
                 writeLatexCustomLine(reportFolder,reportFilename,'')
                 writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
                 writeLatexCustomLine(reportFolder,reportFilename,'')
 
-    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Local results',True)
-    for l,line in enumerate(lines[5:]):
-        csvPath = line.replace('\n','').split(',')[0]
-        outDir = csvPath.split('\\')[0] + '/' + csvPath.split('\\')[1]
-        writeLineToLogFile(logfilefullpath,'a',4*logindent + 'Opening file ' + csvPath,True)
-        with open(csvPath,'r') as csv:
-            csvlines = csv.readlines()
-        plotName = line.replace('\n','').split(',')[1]
-        toPlot = bool(line.replace('\n','').split(',')[2])
-        plotSettings = []
-        if toPlot:
-            writeLineToLogFile(logfilefullpath,'a',4*logindent + str(len(plotSettings)) + ' PLOTS TO BE INSERTED',True)
-            plotSettings = ast.literal_eval(','.join(line.replace('\n','').split(',')[3:]))
-            writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-            writeLatexCustomLine(reportFolder,reportFilename,'%               SIMULATION N. ' + str(p+1))
-            writeLatexCustomLine(reportFolder,reportFilename,'%------------------------------------------------%')
-            writeLatexCustomLine(reportFolder,reportFilename,'')
-            writeLatexCustomLine(reportFolder,reportFilename,'\\clearscrheadings')
-            writeLatexCustomLine(reportFolder,reportFilename,'\\pagestyle{scrheadings}')
-            writeLatexCustomLine(reportFolder,reportFilename,'\\manualmark')
-            writeLatexCustomLine(reportFolder,reportFilename,'\\ofoot{\\\\ \\hyperref[sec:content]{\\pagemark}}')
-            writeLatexCustomLine(reportFolder,reportFilename,'\\ifoot{} % ofoo')
-            writeLatexCustomLine(reportFolder,reportFilename,'\\ohead{\\nameref{sec:sec1}}')
-            writeLatexCustomLine(reportFolder,reportFilename,'\\setheadtopline{2pt}')
-            writeLatexCustomLine(reportFolder,reportFilename,'\\setheadsepline{0.5pt}')
-            writeLatexCustomLine(reportFolder,reportFilename,'\\setfootsepline{0.5pt}')
-            writeLatexCustomLine(reportFolder,reportFilename,'')
-            writeLatexCustomLine(reportFolder,reportFilename,'\\section{Simulation n. ' + str(p+1) + '}\label{sec:sec1}')
-            for p,plot in enumerate(plotSettings):
-                writeLatexCustomLine(reportFolder,reportFilename,'\\begin{figure}[!h]')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\includegraphics[width=\\textwidth]{' + outDir + plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.pdf}')
-                writeLatexCustomLine(reportFolder,reportFilename,'\\end{figure}')
-            writeLatexCustomLine(reportFolder,reportFilename,'')
-            writeLatexCustomLine(reportFolder,reportFilename,'\\cleardoublepageusingstyle{scrheadings}')
-            writeLatexCustomLine(reportFolder,reportFilename,'')
+        writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Documents ends',True)
+        writeLatexDocumentEnds(reportFolder,reportFilename)
 
-    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Documents ends',True)
-    writeLatexDocumentEnds(reportFolder,reportFilename)
+        writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done. ',True)
 
-    writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done. ',True)
+        writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Compile pdf ... ',True)
+        cmdfile = join(reportFolder,'runlatex.cmd')
+        with open(cmdfile,'w') as cmd:
+            cmd.write('\n')
+            cmd.write('CD ' + reportFolder + '\n')
+            cmd.write('\n')
+            cmd.write('pdflatex ' + join(reportFolder,reportFilename.split(',')[0] + '.tex') + ' -job-name=' + reportFilename.split(',')[0] + '\n')
+        try:
+            subprocess.call('cmd.exe /C ' + cmdfile)
+        except Exception:
+            sys.exc_clear()
+        writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done. ',True)
 
-    writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Compile pdf ... ',True)
-    cmdfile = join(reportFolder,'runlatex.cmd')
-    with open(cmdfile,'w') as cmd:
-        cmd.write('\n')
-        cmd.write('CD ' + reportFolder + '\n')
-        cmd.write('\n')
-        cmd.write('pdflatex ' + join(reportFolder,reportFilename.split(',')[0] + '.tex') + ' -job-name=' + reportFilename.split(',')[0] + '\n')
-    try:
-        subprocess.call('cmd.exe /C ' + cmdfile)
-    except Exception:
-        sys.exc_clear()
-    writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done. ',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
 
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
-    writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
-
-    writeLineToLogFile(logfilefullpath,'a',logindent + '... done. ',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + '... done. ',True)
 
     #=======================================================================
     # END - REPORTING

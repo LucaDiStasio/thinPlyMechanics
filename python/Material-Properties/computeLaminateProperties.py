@@ -167,38 +167,38 @@ def HalpinTsai(Vf,rhof,ELf,ETf,nuf,alphaf,rhom,ELm,ETm,num,alpham):
     rhoc = rhof*Vf + rhom*Vm
     E1 = ELf*Vf + ELm*Vm
     eta1 = (ETf/ETm - 1)/(ETf/ETm + 2*xi)
-    E2 = dot(ETm,(1 + dot(dot(2*xi,eta1),Vf))) / (1 - dot(eta1,Vf))
-    nu12 = dot(nuf,Vf) + dot(num,Vm)
-    eta2 = (Gf / Gm - 1) / (Gf / Gm + xi)
-    G12 = dot(Gm,(1 + dot(dot(xi,eta2),Vf))) / (1 - dot(eta2,Vf))
-    nu21 = dot(nu12,(E2 / E1))
-    nu23 = dot(nu12,(1 - nu21)) / (1 - nu12)
-    G23 = dot(0.5,E2) / (1 + nu23)
-    alpha1 = (dot(dot(ELf,alphaf),Vf) + dot(dot(ELm,alpham),Vm)) / (dot(ELf,Vf) + dot(ELm,Vm))
-    alpha2 = dot(dot((1 + nuf),alphaf),Vf) + dot(dot((1 + num),alpham),Vm) - dot(alpha1,nu12)
+    E2 = (ETm*(1 + 2*xi*eta1*Vf))/(1-eta1*Vf)
+    nu12 = nuf*Vf + num*Vm
+    eta2 = (Gf/Gm-1)/(Gf/Gm + xi)
+    G12 = (Gm*(1 + xi*eta2*Vf)/(1-eta2*Vf)
+    nu21 = nu12*(E2/E1)
+    nu23 = nu12*(1-nu21)/(1-nu12)
+    G23 = 0.5*E2/(1+nu23)
+    alpha1 = (ELf*alphaf*Vf + ELm*alpham*Vm)/(ELf*Vf + ELm*Vm)
+    alpha2 = (1 + nuf)*alphaf*Vf + (1 + num)*alpham*Vm - alpha1*nu12
     return rhoc,E1,E2,nu12,nu21,G12,nu23,G23,alpha1,alpha2
 
-def Hashin(Vf=None,rhof=None,ELf=None,ETf=None,nu12f=None,nu23f=None,alphaLf=None,alphaTf=None,rhom=None,ELm=None,ETm=None,num=None,alpham=None,*args,**kwargs):
-    Vm=1 - Vf
-    G12f=dot(0.5,ELf) / (1 + nu12f)
-    Gm=dot(0.5,ELm) / (1 + num)
-    rhoc=dot(rhof,Vf) + dot(rhom,Vm)
-    kmT=dot(0.5,ELm) / (1 - num - dot(2,num ** 2))
-    kfT=dot(ELf,ETf) / (dot(dot(2,ELf),(1 - nu23f)) - dot(dot(4,ETf),nu12f ** 2))
-    lambda1=dot(2,(1 / Gm + Vf / kmT + Vm / kfT) ** (- 1))
-    E1=dot(Vf,ELf) + dot(Vm,ELm) + dot(dot(dot(dot(2,lambda1),Vf),Vm),(num - nu12f) ** 2)
-    nu12=dot(Vf,nu12f) + dot(Vm,num) + dot(dot(dot(dot(dot(0.5,lambda1),(num - nu12f)),(1 / kfT - 1 / kmT)),Vf),Vm)
-    G12=Gm + Vf / (1 / (G12f - Gm) + dot(0.5,Vm) / Gm)
-    K23=(dot(dot(kmT,(kfT + Gm)),Vm) + dot(dot(kfT,(kmT + Gm)),Vf)) / (dot((kfT + Gm),Vm) + dot((kmT + Gm),Vf))
-    lambda3=1 + dot(4,(dot(K23,nu12 ** 2))) / E1
-    G23=Gm + Vf / (1 / (dot(0.5,ETf) / (1 + nu23f) - Gm) + dot(Vm,(kmT + dot(2,Gm))) / (dot(dot(2,Gm),(kmT + Gm))))
-    E2=dot(4,G23) / (1 + dot(lambda3,G23) / K23)
-    nu21=dot(nu12,(E2 / E1))
-    nu23=dot(nu12,(1 - nu21)) / (1 - nu12)
-    km=Gm / (1 - dot(2,num))
-    lambda_=(dot(0.5,(1 / Gm + Vf / km + Vm / kfT))) ** (- 1)
-    alpha1=(dot(dot(ELf,alphaf),Vf) + dot(dot(ELm,alpham),Vm)) / (dot(ELf,Vf) + dot(ELm,Vm))
-    alpha2=dot(- nu12,alpha1) + dot((alphaTf + dot(nu12f,alphaLf)),Vf) + dot((alpham + dot(num,alpham)),Vm) + dot(dot(dot(dot(dot(0.5,lambda_),(1 / kfT - 1 / km)),Vf),Vm),((alpham + dot(num,alpham)) - (alphaTf + dot(nu23f,alphaLf))))
+def Hashin(Vf,rhof,ELf,ETf,nu12f,nu23f,alphaLf,alphaTf,rhom,ELm,ETm,num,alpham):
+    Vm = 1.0-Vf
+    G12f = 0.5*ELf/(1.0+nu12f)
+    Gm = 0.5*ELm/(1.0+num)
+    rhoc = rhof*Vf + rhom*Vm
+    kmT = 0.5*ELm/(1.0-num-2.0*num*num)
+    kfT = ELf*ETf/(2*ELf*(1.0-nu23f)-4.0*ETf*nu12f*nu12f)
+    lambda1 = 1.0/(2*(1/Gm + Vf/kmT + Vm/kfT)
+    E1 = Vf*ELf + Vm*ELm + 2.0*lambda1*Vf*Vm*(num - nu12f)*(num - nu12f)
+    nu12 = Vf*nu12f + Vm*num + 0.5*lambda1*(num - nu12f)*(1.0/kfT - 1.0/kmT)*Vf*Vm
+    G12 = Gm + Vf/(1.0/(G12f - Gm) + (0.5*Vm)/Gm)
+    K23 = (kmT*(kfT + Gm)*Vm + kfT*(kmT + Gm)*Vf)/((kfT + Gm)*Vm + (kmT + Gm)*Vf)
+    lambda3 = 1.0 + (4*K23*nu12*nu12)/E1
+    G23 = Gm + Vf/(1.0/(0.5*ETf/(1 + nu23f)-Gm) + Vm*(kmT + 2*Gm)/(2*Gm*(kmT + Gm)))
+    E2 = 4*G23/(1 + lambda3*G23/K23)
+    nu21 = nu12*(E2/E1)
+    nu23 = nu12*(1-nu21)/(1 - nu12)
+    km = Gm/(1-2*num)
+    lambda2 = 1.0/(0.5*(1/Gm + Vf/km + Vm/kfT))
+    alpha1 = (ELf*alphaf*Vf + ELm*alpham*Vm)/(ELf*Vf + ELm*Vm)
+    alpha2 = -nu12*alpha1 + (alphaTf + nu12f*alphaLf)*Vf + (alpham + num*alpham)*Vm + 0.5*lambda2*(1/kfT-1/km)*Vf*Vm*((alpham + num*alpham) - (alphaTf + nu23f*alphaLf))
     return rhoc,E1,E2,nu12,nu21,G12,nu23,G23,alpha1,alpha2
 
 #===============================================================================#

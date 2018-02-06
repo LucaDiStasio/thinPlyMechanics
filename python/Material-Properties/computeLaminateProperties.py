@@ -31,7 +31,9 @@ ested with Python 2.7 (64-bit) distribution in Windows 10.
 '''
 
 import sys, os
-import numpy as np
+from numpy import cos, sin, array, transpose, matmul, add
+from numpy import sum as npsum
+from numpy.linalg import inv
 from os.path import isfile, join, exists
 from shutil import copyfile
 import sqlite3
@@ -207,37 +209,63 @@ def Hashin(Vf,rhof,ELf,ETf,nu12f,nu23f,alphaLf,alphaTf,rhom,ELm,ETm,num,alpham):
 #===============================================================================#
 #===============================================================================#
 
-def locallaminaQ(E1=None,E2=None,nu12=None,nu21=None,G12=None,*args,**kwargs):
-    Q11=E1 / (1 - dot(nu12,nu21))
-    Q12=dot(nu12,E2) / (1 - dot(nu12,nu21))
-    Q21=copy(Q12)
-    Q22=E2 / (1 - dot(nu12,nu21))
-    Q66=copy(G12)
-    Q=matlabarray(cat([Q11,Q12,0],[Q21,Q22,0],[0,0,Q66]))
+def locallaminaQ(E1,E2,nu12,nu21,G12):
+    Q11 = E1/(1-nu12*nu21)
+    Q12 = nu12*E2/(1-nu12*nu21)
+    Q21 = Q12
+    Q22 = E2/(1- nu12*nu21)
+    Q66 = G12
+    Q = array([[Q11,Q12,0],[Q21,Q22,0],[0,0,Q66]])
     return Q
 
-def locallaminaS(E1=None,E2=None,nu12=None,nu21=None,G12=None,*args,**kwargs):
-    S11=1 / E1
-    S12=- nu12 / E1
-    S21=copy(S12)
-    S22=1 / E2
-    S66=copy(G12)
-    S=matlabarray(cat([S11,S12,0],[S21,S22,0],[0,0,S66]))
+def locallaminaS(E1,E2,nu12,nu21,G12):
+    S11 = 1/E1
+    S12 = -nu12/E1
+    S21 = S12
+    S22 = 1/E2
+    S66 = G12
+    S = array([[S11,S12,0],[S21,S22,0],[0,0,S66]])
     return S
 
-def laminaQ(theta=None,E1=None,E2=None,nu12=None,G12=None,nu23=None,G23=None,*args,**kwargs):
-    R=inv(T(theta))
-    Q=dot(dot(R,locallaminaQ(E1,E2,nu12,nu21,G12)),R.T)
+def laminaQ(theta,E1,E2,nu12,nu21,G12):
+    R = inv(T(theta))
+    Q = matmul(matmul(R,locallaminaQ(E1,E2,nu12,nu21,G12)),transpose(R))
     return Q
 
-def laminaS(theta=None,E1=None,E2=None,nu12=None,nu21=None,G12=None,*args,**kwargs):
-    S=dot(dot(T(theta).T,locallaminaS(E1,E2,nu12,nu21,G12)),T(theta))
+def laminaS(theta,E1,E2,nu12,nu21,G12):
+    S = matmul(matmul(transpose(T(theta)),locallaminaS(E1,E2,nu12,nu21,G12)),T(theta))
     return S
 
-def CLT(throughThicknessCoords=None,angles=None,isSymmetric=None,*args,**kwargs):
-
-
-    return A,B,D
+def CLT(thicknesses,angles,properties,isSymmetric):
+    # thicknesses and angles must be ordered from bottom to top, symmetry line is on top
+    # properties = [...,[E1,E2,nu12,nu21,G12],...]  ordered from bottom to top
+    totalThick = npsum(thicknesses)
+    if isSymmetric:
+        totalThick *= 2
+    midplaneHeight = 0.5*totalThick
+    if isSymmetric:
+        l = len(thicknesses)
+        for t in range(l-1,-1,-1):
+            thicknesses.append(thicknesses[t])
+    z = [] # ply through-the-stack coordinates
+    for t,thickness in enumerate(thicknesses):
+        zk1 = npsum(thicknesses[:t]) - midplaneHeight
+        zk2 = npsum(thicknesses[:t+1]) - midplaneHeight
+        z.append([zk1,zk2])
+    A = array([[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]])
+    B = array([[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]])
+    D = array([[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]])
+    for t,thickness in enumerate(thicknesses):
+        A = add(A,thickness*laminaQ(angles[t],properties[t][0],properties[t][1],properties[t][2],properties[t][3],properties[t][4]))
+        B = add(B,0.5*(z[t][1]*z[t][1]-z[t][0]*z[t][0])*laminaQ(angles[t],properties[t][0],properties[t][1],properties[t][2],properties[t][3],properties[t][4]))
+        D = add(D,(1.0/3.0))*(z[t][1]*z[t][1]*z[t][1]-z[t][0]*z[t][0]*z[t][0])*laminaQ(angles[t],properties[t][0],properties[t][1],properties[t][2],properties[t][3],properties[t][4]))
+        Qlam = array([[A[0,0],A[0,1],A[0,2],B[0,0],B[0,1],B[0,2]],
+                      [A[1,0],A[1,1],A[1,2],B[1,0],B[1,1],B[1,2]],
+                      [A[2,0],A[2,1],A[2,2],B[2,0],B[2,1],B[2,2]],
+                      [B[0,0],B[0,1],B[0,2],D[0,0],D[0,1],D[0,2]],
+                      [B[1,0],B[1,1],B[1,2],D[1,0],D[1,1],D[1,2]],
+                      [B[2,0],B[2,1],B[2,2],D[2,0],D[2,1],D[2,2]]])
+    return A,B,D,Qlam
 
 #===============================================================================#
 #===============================================================================#
@@ -245,10 +273,10 @@ def CLT(throughThicknessCoords=None,angles=None,isSymmetric=None,*args,**kwargs)
 #===============================================================================#
 #===============================================================================#
 
-def T(theta=None,*args,**kwargs):
-    m=cos(theta) ** 2
-    n=sin(theta) ** 2
-    matrixT=matlabarray(cat([m ** 2,n ** 2,dot(dot(2,m),n)],[n ** 2,m ** 2,dot(dot(- 2,m),n)],[- mn,mn,m ** 2 - n ** 2]))
+def T(theta):
+    m = cos(theta)
+    n = sin(theta)
+    matrixT = np.array([m*m,n*n,2*m*n],[n*n,m*m,-2*m*n],[-m*n,m*n,m*m - n*n])
     return matrixT
 
 #===============================================================================#

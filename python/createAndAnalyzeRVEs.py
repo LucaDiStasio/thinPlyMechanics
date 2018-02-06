@@ -2003,32 +2003,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating mesh ...',True)
 
-    # assign mesh controls
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
-
-    regionSets = [['FIBER-EXTANNULUS-LOWERCRACK',QUAD,STRUCTURED],
-                    ['FIBER-EXTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
-                    ['FIBER-EXTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
-                    ['MATRIX-INTANNULUS-LOWERCRACK',QUAD,STRUCTURED],
-                    ['MATRIX-INTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
-                    ['MATRIX-INTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
-                    ['FIBER-CENTER',QUAD_DOMINATED,FREE],
-                    ['FIBER-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
-                    ['FIBER-EXTANNULUS-SECONDBOUNDED',QUAD,STRUCTURED],
-                    ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD,STRUCTURED],
-                    ['MATRIX-INTANNULUS-SECONDBOUNDED',QUAD,STRUCTURED],
-                    ['MATRIX-INTANNULUS-RESTBOUNDED',QUAD,STRUCTURED],
-                    ['MATRIX-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
-                    ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
-
-    for regionSet in regionSets:
-        assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-
-    # assign seeds
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
-
     nTangential = np.floor(deltapsi/delta)
     nRadialFiber = np.floor(0.25/(delta*np.pi/180.0))
     nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
@@ -2042,6 +2016,69 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         nRadialMatrix = np.floor(0.25*(L-Rf)/(delta*np.pi/180.0))
         #nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
 
+    if nTangential<parameters['Jintegral']['numberOfContours'] or nRadialFiber<parameters['Jintegral']['numberOfContours'] or nRadialMatrix<parameters['Jintegral']['numberOfContours']:
+        writeErrorToLogFile(logfilefullpath,'a','MESH SIZE','The provided element size around the crack tip is incompatible with the number of contour integral requested.\nContour integral option in ABAQUS is available only for quadrilateral and hexahedral elements.',True)
+        sys.exit(2)
+
+    # assign mesh controls
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
+
+    regionSets = [['FIBER-EXTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE],
+                    ['FIBER-EXTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
+                    ['FIBER-EXTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
+                    ['MATRIX-INTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE],
+                    ['MATRIX-INTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
+                    ['MATRIX-INTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
+                    ['FIBER-CENTER',QUAD_DOMINATED,FREE],
+                    ['FIBER-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
+                    ['FIBER-EXTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE],
+                    ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD_DOMINATED,FREE],
+                    ['MATRIX-INTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE],
+                    ['MATRIX-INTANNULUS-RESTBOUNDED',QUAD_DOMINATED,FREE],
+                    ['MATRIX-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
+                    ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
+
+    for regionSet in regionSets:
+        assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    # assign seeds
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
+
+
+
+    #regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
+    #                ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
+    #                ['THIRDCIRCLE-UPPERCRACK',nTangential],
+    #                ['THIRDCIRCLE-FIRSTBOUNDED',nTangential],
+    #                ['FOURTHCIRCLE-UPPERCRACK',nTangential],
+    #                ['FOURTHCIRCLE-FIRSTBOUNDED',nTangential],
+    #                ['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber],
+    #                ['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix],
+    #                ['TRANSVERSALCUT-SECONDFIBER',nRadialFiber],
+    #                ['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix],
+    #                ['TRANSVERSALCUT-THIRDFIBER',nRadialFiber],
+    #                ['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix],
+    #                ['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber],
+    #                ['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix],
+    #                ['LOWERSIDE-CENTER',6],
+    #                ['FIRSTCIRCLE',18],
+    #                ['SECONDCIRCLE-SECONDBOUNDED',nTangential1],
+    #                ['SECONDCIRCLE-RESTBOUNDED',nTangential2],
+    #                ['THIRDCIRCLE-SECONDBOUNDED',nTangential1],
+    #                ['THIRDCIRCLE-RESTBOUNDED',nTangential2],
+    #                ['FOURTHCIRCLE-SECONDBOUNDED',nTangential1],
+    #                ['FOURTHCIRCLE-RESTBOUNDED',nTangential2],
+    #                ['TRANSVERSALCUT-FOURTHFIBER',nRadialFiber],
+    #                ['TRANSVERSALCUT-FOURTHMATRIX',nRadialMatrix],
+    #                ['SECONDCIRCLE-LOWERCRACK',nTangential3],
+    #                ['THIRDCIRCLE-LOWERCRACK',nTangential3],
+    #                ['FOURTHCIRCLE-LOWERCRACK',nTangential3],
+    #                ['FIFTHCIRCLE',90],
+    #                ['RIGHTSIDE',30],
+    #                ['LEFTSIDE',30]]
+
     regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
                     ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
                     ['THIRDCIRCLE-UPPERCRACK',nTangential],
@@ -2054,21 +2091,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix],
                     ['TRANSVERSALCUT-THIRDFIBER',nRadialFiber],
                     ['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix],
-                    ['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber],
-                    ['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix],
-                    ['LOWERSIDE-CENTER',6],
                     ['FIRSTCIRCLE',18],
-                    ['SECONDCIRCLE-SECONDBOUNDED',nTangential1],
-                    ['SECONDCIRCLE-RESTBOUNDED',nTangential2],
                     ['THIRDCIRCLE-SECONDBOUNDED',nTangential1],
                     ['THIRDCIRCLE-RESTBOUNDED',nTangential2],
-                    ['FOURTHCIRCLE-SECONDBOUNDED',nTangential1],
-                    ['FOURTHCIRCLE-RESTBOUNDED',nTangential2],
-                    ['TRANSVERSALCUT-FOURTHFIBER',nRadialFiber],
-                    ['TRANSVERSALCUT-FOURTHMATRIX',nRadialMatrix],
-                    ['SECONDCIRCLE-LOWERCRACK',nTangential3],
                     ['THIRDCIRCLE-LOWERCRACK',nTangential3],
-                    ['FOURTHCIRCLE-LOWERCRACK',nTangential3],
                     ['FIFTHCIRCLE',90],
                     ['RIGHTSIDE',30],
                     ['LEFTSIDE',30]]

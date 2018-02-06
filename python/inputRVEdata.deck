@@ -1,0 +1,106 @@
+# everything after is a comment
+# keywords are divided by commas: keyword1, keyword2, ...
+# the corresponding value is introduced by @
+# variable type is introduced by $
+#
+# Select execution steps in the pipeline
+simulation-pipeline, create-CAE   @True  $boolean
+simulation-pipeline, modify-INP   @True  $boolean
+simulation-pipeline, analyze-ODB  @True  $boolean
+simulation-pipeline, remove-ODB   @False $boolean
+simulation-pipeline, remove-DAT   @False $boolean
+simulation-pipeline, report-LATEX @True  $boolean
+simulation-pipeline, report-EXCEL @True  $boolean
+#
+# Directory and names for CAE model generation
+input, wd          @D:/01_Luca/07_Data/03_FEM/CurvedInterface  $string
+input, caefilename @caePythonTest                              $string
+input, modelname   @aname                                      $string
+#
+# Geometry
+geometry, L          @100.0 $float
+geometry, Rf         @1.0   $float
+geometry, deltatheta @10.0  $float
+#
+# Materials (repeat keywords for every material to be defined)
+materials, name            @glassFiber  $string
+materials, elastic, type   @ISOTROPIC   $ABAQUS keyword
+materials, elastic, values @[70e3,0.2]  $list of float
+materials, name            @epoxy       $string
+materials, elastic,type    @ISOTROPIC   $ABAQUS keyword
+materials, elastic, values @[3.5e3,0.4] $list of float
+#
+# Values of nu and G needed for postprocessing
+postproc, nu-G0 @0.4 $float
+postproc, G-G0 @0.5*3.5e3/(1+0.4) $float
+#
+# Section properties (repeat for every section to be defined)
+sections, name      @fiberSection             $string
+sections, type      @HomogeneousSolidSection  $string
+sections, material  @glassFiber               $string
+sections, thickness @1.0                      $float
+sections, name      @matrixSection            $string
+sections, type      @HomogeneousSolidSection  $string
+sections, material  @epoxy                    $string
+sections, thickness @1.0                      $float
+#
+# Section assignments (repeat as needed)
+sectionRegions, name @fiberSection $string
+sectionRegions, set @FIBER $string
+sectionRegions, offsetType @MIDDLE_SURFACE $ABAQUS keyword
+sectionRegions, offsetField         @'' $string
+sectionRegions, thicknessAssignment @FROM_SECTION $ABAQUS keyword
+sectionRegions, offsetValue @0.0 $float
+sectionRegions, name @matrixSection $string
+sectionRegions, set @MATRIX $string
+sectionRegions, offsetType @MIDDLE_SURFACE $ABAQUS keyword
+sectionRegions, offsetField @'' $string
+sectionRegions, thicknessAssignment @FROM_SECTION $ABAQUS keyword
+sectionRegions, offsetValue @0.0 $float
+#
+# Step data
+step':{'minimumIncrement @1e-10},
+#
+# Loads
+loads':[{'name @rightBC',
+          'type @appliedStrain',
+          'set @RIGHTSIDE',
+          'value @[0.01,0.0,0.0]},
+         {'name @leftBC',
+          'type @appliedStrain',
+          'set @LEFTSIDE',
+          'value @[-0.01,0.0,0.0]}],
+#
+# Mesh
+mesh':{'size':{'deltapsi @,
+                'deltaphi @,
+                'delta @0.05,
+                'delta1 @0.1,
+                'delta2 @0.5,
+                'delta3 @1.0},
+        'elements':{'minElNum @10,
+                    'order @second'}},
+#
+# J-Integral
+Jintegral':{'numberOfContours @50},
+#
+# Output directory and filenames
+output':{'global':{'directory @'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
+                    'filenames':{'performances @caePythonTest-performances',
+                                 'energyreleaserate @caePythonTest-energyreleaserates',
+                                 'inputdata @caePythonTest-inputdata'}},
+          'local':{'directory @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
+                   'filenames':{'Jintegral @',
+                                'stressesatboundary @',
+                                'crackdisplacements @'}},
+          'report':{'global':{'directory @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
+                              'filename @caePythonTest-report'},
+                    'local':{'directory @[],
+                             'filenames':{'Jintegral @[],
+                                          'stressesatboundary @[],
+                                          'crackdisplacements @[]}}},
+          'sql':{'global':{'directory @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
+                           'filename @caePythonTestDB'}}},
+#
+# Solver properties
+solver':{'cpus @12}}

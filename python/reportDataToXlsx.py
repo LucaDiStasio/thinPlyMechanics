@@ -121,6 +121,12 @@ def main(argv):
 
     for line in lines[1:]:
         csvPath = line.replace('\n','').split(',')[0]
+        try:
+            with open(csvPath,'r') as csv:
+                csvlines = csv.readlines()
+        except Exception,error:
+            continue
+            sys.exc_clear()
         sheetName = line.replace('\n','').split(',')[1]
         toPlot = bool(line.replace('\n','').split(',')[2])
         plotSettings = []
@@ -128,8 +134,6 @@ def main(argv):
             settingsString = ','.join(line.replace('\n','').split(',')[3:])
             plotSettings = ast.literal_eval(settingsString[1:])
         worksheet = workbook.add_worksheet(sheetName)
-        with open(csvPath,'r') as csv:
-            csvlines = csv.readlines()
         for e,element in enumerate(csvlines[0].replace('\n','').split(',')):
             worksheet.write(0,e,element,stringFormat)
         for c,csvline in enumerate(csvlines[1:]):

@@ -3322,9 +3322,74 @@ def main(argv):
 
     # units are already the ones used in simulation, not SI ==> conversion tool must be added
 
-    # constant Vff, i.e. L/Rf, and variable deltatheta
+    ABQbuiltinDict = {'':,}
+
+    if inputDirectory[-1]=='/' or inputDirectory[-1]=='\\':
+        inputDirectory = inputDirectory[:-1]
+
+    with open(join(inputDirectory,dataFile.split('.')[0]+'.deck'),'r') as deck:
+        decklines = deck.readlines()
 
     RVEparams = {}
+
+    keywords = []
+    values = []
+
+    for line in decklines:
+        if line[0] == '#':
+            continue
+        removeComment = line.replace('\n','').split('#')[0]
+        keywordSet = removeComment.split('@')[0]
+        keywords.append(keywordSet.replace(' ','').split(','))
+        dataType = removeComment.split('$')[1]
+        if  'list of boolean' in dataType:
+            listAsString = removeComment.split('@')[1].split('$')[0].replace('[','').replace(']','').split[',']
+            dataList = []
+            for dataString in listAsString:
+                dataList.append(ast.literal_eval(dataString))
+            values.append(dataList)
+        elif  'list of int' in dataType:
+            listAsString = removeComment.split('@')[1].split('$')[0].replace('[','').replace(']','').split[',']
+            dataList = []
+            for dataString in listAsString:
+                dataList.append(int(dataString))
+            values.append(dataList)
+        elif  'list of float' in dataType:
+            listAsString = removeComment.split('@')[1].split('$')[0].replace('[','').replace(']','').split[',']
+            dataList = []
+            for dataString in listAsString:
+                dataList.append(float(dataString))
+            values.append(dataList)
+        elif  'list of string' in dataType:
+            listAsString = removeComment.split('@')[1].split('$')[0].replace('[','').replace(']','').split[',']
+            dataList = []
+            for dataString in listAsString:
+                dataList.append(str(dataString))
+            values.append(dataList)
+        elif  'list of ABAQUS keyword' in dataType:
+            values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0]])
+            listAsString = removeComment.split('@')[1].split('$')[0].replace('[','').replace(']','').split[',']
+            dataList = []
+            for dataString in listAsString:
+                dataList.append(ABQbuiltinDict[dataString])
+            values.append(dataList)
+        elif 'boolean' in dataType:
+            values.append(ast.literal_eval(removeComment.split('@')[1].split('$')[0]))
+        elif  'int' in dataType:
+            values.append(int(removeComment.split('@')[1].split('$')[0]))
+        elif  'float' in dataType:
+            values.append(float(removeComment.split('@')[1].split('$')[0]))
+        elif  'string' in dataType:
+            values.append(str(removeComment.split('@')[1].split('$')[0]))
+        elif  'ABAQUS keyword' in dataType:
+            values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0]])
+
+    for k,keywordSet in enumerate(keywords):
+        if keywordSet in keywords[k+1:]:
+            # this keyword set is part of a list
+        else: # build the entry in dictionary
+
+
 
     RVEparams['simulation-pipeline'] = {'create-CAE':True,
                                         'modify-INP':True,

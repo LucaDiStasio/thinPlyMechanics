@@ -2499,20 +2499,32 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     matrixElswithCracktip = []
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
-    for element in fiberElementset:
+    for element in fiberExtannUppcrackElementset:
         if element in quads.keys():
             if cracktipIndex in quads[element]:
                 fiberElswithCracktip.append(element)
-                if len(fiberElswithCracktip) == 2:
-                    break
+                firstdebondedFiberEl = element
+                break
+    for element in fiberExtannFirstbounElementset:
+        if element in quads.keys():
+            if cracktipIndex in quads[element]:
+                fiberElswithCracktip.append(element)
+                firstboundedFiberEl = element
+                break
     for element in fiberElswithCracktip:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - element ' + str(element),True)
-    for element in matrixElementset:
+    for element in matrixIntannUppcrackElementset:
         if element in quads.keys():
             if cracktipIndex in quads[element]:
                 matrixElswithCracktip.append(element)
-                if len(matrixElswithCracktip) == 2:
-                    break
+                firstdebondedMatrixEl = element
+                break
+    for element in matrixIntannFirstbounElementset:
+        if element in quads.keys():
+            if cracktipIndex in quads[element]:
+                matrixElswithCracktip.append(element)
+                firstboundedMatrixEl = element
+                break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
     for element in matrixElswithCracktip:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - element ' + str(element),True)
@@ -2523,21 +2535,17 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix first behind crack tip node with index ' + str(matrixFirstBehindCracktipIndex),True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(firstBehindCracktipDummyIndex),True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded crack tip elements on fiber and matrix',True)
-        found = False
-        for fiberEl in fiberElswithCracktip:
-            if found:
-                break
-            fiberElnodes = quads[fiberEl]
-            for matrixEl in matrixElswithCracktip:
-                commonNodes = []
-                matrixElnodes = quads[matrixEl]
-                for node in fiberElnodes:
-                    if node in matrixElnodes:
-                        commonNodes.append(node)
-                        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
-                if len(commonNodes)==3:
-                    found = True
-                    break
+        found = False # check here!!!
+        commonNodes = []
+        fiberElnodes = quads[firstboundedFiberEl]
+        matrixElnodes = quads[firstboundedMatrixEl]
+        for node in fiberElnodes:
+            if node in matrixElnodes:
+                commonNodes.append(node)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
+        if len(commonNodes)==3:
+            found = True
+            break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from cracktip',True)
         distances = []
         for node in commonNodes:

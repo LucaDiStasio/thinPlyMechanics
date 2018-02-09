@@ -2535,7 +2535,6 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix first behind crack tip node with index ' + str(matrixFirstBehindCracktipIndex),True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(firstBehindCracktipDummyIndex),True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded crack tip elements on fiber and matrix',True)
-        found = False # check here!!!
         commonNodes = []
         fiberElnodes = quads[firstboundedFiberEl]
         matrixElnodes = quads[firstboundedMatrixEl]
@@ -2543,9 +2542,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             if node in matrixElnodes:
                 commonNodes.append(node)
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
-        if len(commonNodes)==3:
-            found = True
-            break
+            if len(commonNodes)==3:
+                break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from cracktip',True)
         distances = []
         for node in commonNodes:
@@ -2562,30 +2560,28 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Identify nodes on crack faces for displacement measurements ...',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the fiber elements around the crack tip',True)
-    nodesAroundCracktip = []
-    for element in fiberElswithCracktip:
-        for node in quads[element]:
-            nodesAroundCracktip.append(node)
+    nodesAroundCracktip = quads[firstdebondedFiberEl]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
     nodesFiberDisplacementMeas = []
     for node in crackfacesNodeset:
-        if node in nodesAroundCracktip:
+        if node in nodesAroundCracktip and node!=cracktipIndex:
             nodesFiberDisplacementMeas.append(node)
+        if len(nodesFiberDisplacementMeas)==2:
+            break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesFiberDisplacementMeas)) + ' nodes',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
     distancesFiberDisplacementMeas = []
     for node in nodesFiberDisplacementMeas:
         distancesFiberDisplacementMeas.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the matrix elements around the crack tip',True)
-    nodesAroundCracktip = []
-    for element in matrixElswithCracktip:
-        for node in quads[element]:
-            nodesAroundCracktip.append(node)
+    nodesAroundCracktip = quads[firstdebondedMatrixEl]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
     nodesMatrixDisplacementMeas = []
     for node in crackfacesNodeset:
-        if node in nodesAroundCracktip:
+        if node in nodesAroundCracktip and node!=cracktipIndex:
             nodesMatrixDisplacementMeas.append(node)
+        if len(nodesFiberDisplacementMeas)==2:
+            break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesMatrixDisplacementMeas)) + ' nodes',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
     distancesMatrixDisplacementMeas = []
@@ -2610,25 +2606,6 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         cracktipMatrixDispMeasIndex = nodesMatrixDisplacementMeas[sortedMatrixDistanceIndeces[-1]]
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at crack tip ...',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify bonded and debonded elements around crack tip on fiber and matrix',True)
-    found = False
-    for fIndex,fiberEl in enumerate(fiberElswithCracktip):
-        if found:
-            break
-        fiberElnodes = quads[fiberEl]
-        for mIndex,matrixEl in enumerate(matrixElswithCracktip):
-            commonNodes = []
-            matrixElnodes = quads[matrixEl]
-            for node in fiberElnodes:
-                if node in matrixElnodes:
-                    commonNodes.append(node)
-            if len(commonNodes)>1:
-                firstboundedFiberEl = fiberEl
-                firstboundedMatrixEl = matrixEl
-                firstdebondedFiberEl = fiberElswithCracktip[1-fIndex]
-                firstdebondedMatrixEl = matrixElswithCracktip[1-mIndex]
-                found = True
-                break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the bonded element on the matrix',True)
     for n,node in enumerate(quads[firstboundedMatrixEl]):
         if node == cracktipIndex:

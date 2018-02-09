@@ -82,6 +82,44 @@ from odbSection import *
 #===============================================================================#
 
 #===============================================================================#
+#                                  SHELL
+#===============================================================================#
+
+def printHelp():
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,('*****************************************************************************************************')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,('                       CREATION AND ANALYSIS OF RVEs/RUCs WITH FEM IN ABAQUS')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,('                                              by')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,('                                    Luca Di Stasio, 2016-2018')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,('*****************************************************************************************************')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,('Program syntax:')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,('abaqus cae noGUI=createAndAnalyzeRVEs.py -- -dir/-directory <input file directory> -data <RVE base data> -iterables <parameters for iterations> -debug')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,('Mandatory arguments:')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,('-dir/-directory <input file directory>                     ===> full/path/to/folder/without/closing/slash')
+    print >> sys.__stdout__,('-data <RVE base data>                                      ===> full/path/to/file/without/closing/slash')
+    print >> sys.__stdout__,('-iterables <parameters for iterations>                     ===> full/path/to/file/without/extension')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,('Optional arguments:')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,('-debug                                                     ===> debug mode active')
+    print >> sys.__stdout__,(' ')
+    print >> sys.__stdout__,(' ')
+    sys.exit()
+
+#===============================================================================#
 #                              CSV files
 #===============================================================================#
 
@@ -3235,7 +3273,48 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
 def main(argv):
 
-    debug = True
+    #=======================================================================
+    # BEGIN - PARSE COMMAND LINE
+    #=======================================================================
+
+    for a,arg in enumerate(argv):
+        if 'h' in arg or 'help' in arg:
+            printHelp()
+        elif 'dir' in arg or 'directory' in arg:
+            inputDirectory = argv[a+1]
+        elif 'data' in arg:
+            dataFile = argv[a+1]
+        elif 'iterables' in arg:
+            iterablesFile = argv[a+1]
+        elif 'debug' in arg:
+            debug = True
+            print >> sys.__stdout__,('>>>> Running in DEBUG MODE <<<<')
+
+    if 'inputDirectory' not in locals():
+        print >> sys.__stdout__,(' ')
+        print >> sys.__stdout__,(' ')
+        print >> sys.__stdout__,('!!! ERROR: missing input directory !!!')
+        print >> sys.__stdout__,(' ')
+        print >> sys.__stdout__,(' ')
+        printHelp()
+    if 'dataFile' not in locals():
+        print >> sys.__stdout__,(' ')
+        print >> sys.__stdout__,(' ')
+        print >> sys.__stdout__,('!!! ERROR: missing data file !!!')
+        print >> sys.__stdout__,(' ')
+        print >> sys.__stdout__,(' ')
+        printHelp()
+    if 'iterablesFile' not in locals():
+        print >> sys.__stdout__,(' ')
+        print >> sys.__stdout__,(' ')
+        print >> sys.__stdout__,('!!! ERROR: missing iterables file !!!')
+        print >> sys.__stdout__,(' ')
+        print >> sys.__stdout__,(' ')
+        printHelp()
+
+    #=======================================================================
+    # END - PARSE COMMAND LINE
+    #=======================================================================
 
     #=======================================================================
     # BEGIN - DATA

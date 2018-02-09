@@ -45,62 +45,62 @@ sections, material  @epoxy                    $string
 sections, thickness @1.0                      $float
 #
 # Section assignments (repeat as needed)
-sectionRegions, name @fiberSection $string
-sectionRegions, set @FIBER $string
-sectionRegions, offsetType @MIDDLE_SURFACE $ABAQUS keyword
-sectionRegions, offsetField         @'' $string
-sectionRegions, thicknessAssignment @FROM_SECTION $ABAQUS keyword
-sectionRegions, offsetValue @0.0 $float
-sectionRegions, name @matrixSection $string
-sectionRegions, set @MATRIX $string
-sectionRegions, offsetType @MIDDLE_SURFACE $ABAQUS keyword
-sectionRegions, offsetField @'' $string
-sectionRegions, thicknessAssignment @FROM_SECTION $ABAQUS keyword
-sectionRegions, offsetValue @0.0 $float
+sectionRegions, name                @fiberSection   $string
+sectionRegions, set                 @FIBER          $string
+sectionRegions, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
+sectionRegions, offsetField         @''             $string
+sectionRegions, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
+sectionRegions, offsetValue         @0.0            $float
+sectionRegions, name                @matrixSection  $string
+sectionRegions, set                 @MATRIX         $string
+sectionRegions, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
+sectionRegions, offsetField         @''             $string
+sectionRegions, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
+sectionRegions, offsetValue         @0.0            $float
 #
 # Step data
-step':{'minimumIncrement @1e-10},
+step, minimumIncrement @1e-10 $float
 #
 # Loads
-loads':[{'name @rightBC',
-          'type @appliedStrain',
-          'set @RIGHTSIDE',
-          'value @[0.01,0.0,0.0]},
-         {'name @leftBC',
-          'type @appliedStrain',
-          'set @LEFTSIDE',
-          'value @[-0.01,0.0,0.0]}],
+loads, name  @rightBC          $string
+loads, type  @appliedStrain    $string
+loads, set   @RIGHTSIDE        $string
+loads, value @[0.01,0.0,0.0]   $list of float
+loads, name  @leftBC           $string
+loads, type  @appliedStrain    $string
+loads, set   @LEFTSIDE         $string
+loads, value @[-0.01,0.0,0.0]  $list of float
 #
 # Mesh
-mesh':{'size':{'deltapsi @,
-                'deltaphi @,
-                'delta @0.05,
-                'delta1 @0.1,
-                'delta2 @0.5,
-                'delta3 @1.0},
-        'elements':{'minElNum @10,
-                    'order @second'}},
+mesh, size, deltapsi           @        $float
+mesh, size, deltaphi           @        $float
+mesh, size, delta              @0.05    $float
+mesh, size, delta1             @0.1     $float
+mesh, size, delta2             @0.5     $float
+mesh, size, delta3             @1.0     $float
+mesh, size, elements, minElNum @10      $int
+mesh, size, elements, order    @second  $string
 #
 # J-Integral
-Jintegral':{'numberOfContours @50},
+Jintegral, numberOfContours @50 $int
 #
 # Output directory and filenames
-output':{'global':{'directory @'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
-                    'filenames':{'performances @caePythonTest-performances',
-                                 'energyreleaserate @caePythonTest-energyreleaserates',
-                                 'inputdata @caePythonTest-inputdata'}},
-          'local':{'directory @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
-                   'filenames':{'Jintegral @',
-                                'stressesatboundary @',
-                                'crackdisplacements @'}},
-          'report':{'global':{'directory @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
-                              'filename @caePythonTest-report'},
-                    'local':{'directory @[],
-                             'filenames':{'Jintegral @[],
-                                          'stressesatboundary @[],
-                                          'crackdisplacements @[]}}},
-          'sql':{'global':{'directory @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
-                           'filename @caePythonTestDB'}}},
+output, global, directory @'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest                                 $string
+output, global, filenames, performances @caePythonTest-performances                                                     $string
+output, global, filenames, energyreleaserate @caePythonTest-energyreleaserates                                          $string
+output, global, filenames, inputdata                 @caePythonTest-inputdata                                           $string
+output, local, directory                             @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest       $string
+output, local, filenames, Jintegral                  @                                                                  $string
+output, local, filenames, stressesatboundary         @                                                                  $string
+output, local, filenames, crackdisplacements         @                                                                  $string
+output, report, global, directory                    @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest       $string
+output, report, global, filename                     @caePythonTest-report                                              $string
+output, report, local, directory                     @[]                                                                $string
+output, report, local, filenames, Jintegral          @[]                                                                $string
+output, report, local, filenames, stressesatboundary @[]                                                                $string
+output, report, local, filenames, crackdisplacements @[]                                                                $string
+output, sql, global, directory                       @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest       $string
+output, sql, global, filename                        @caePythonTestDB                                                   $string
 #
 # Solver properties
-solver':{'cpus @12}}
+solver, cpus @12 $int

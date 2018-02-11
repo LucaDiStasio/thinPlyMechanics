@@ -123,6 +123,14 @@ def printHelp():
 #                                  DECK file
 #===============================================================================#
 
+def fillDataDictionary(dataDict,inputKeywords,inputValue):
+    if len(inputKeywords)>1:
+        branchDict = dataDict.setdefault(inputKeywords[0],{})
+        fillDataDictionary(branchDict,inputKeywords[1:],inputValue)
+    else:
+        dataDict[inputKeywords[0]] = inputValue
+
+
 #===============================================================================#
 #                                    CSV files
 #===============================================================================#
@@ -3479,12 +3487,13 @@ def main(argv):
         elif  'ABAQUS keyword' in dataType:
             values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0]])
 
-    for key in RVEparams.keys():
-        if isinstance(RVEparams[key],dict):
+    RVEparams = {}
 
-        elif isinstance(RVEparams[key],list):
+    for k,keywordSet in enumerate(keywords):
+        fillDataDictionary(RVEparams,keywordSet,values[k])
 
-        else:
+
+
 
 
     # parameters for iterations

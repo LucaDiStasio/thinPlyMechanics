@@ -23,53 +23,53 @@ geometry, Rf         @1.0   $float
 geometry, deltatheta @10.0  $float
 #
 # Materials (repeat keywords for every material to be defined)
-materials, name            @glassFiber  $string
-materials, elastic, type   @ISOTROPIC   $ABAQUS keyword
-materials, elastic, values @[70e3,0.2]  $list of float
-materials, name            @epoxy       $string
-materials, elastic,type    @ISOTROPIC   $ABAQUS keyword
-materials, elastic, values @[3.5e3,0.4] $list of float
+materials, 1, name            @glassFiber  $string
+materials, 1, elastic, type   @ISOTROPIC   $ABAQUS keyword
+materials, 1, elastic, values @[70e3,0.2]  $list of float
+materials, 2, name            @epoxy       $string
+materials, 2, elastic,type    @ISOTROPIC   $ABAQUS keyword
+materials, 2, elastic, values @[3.5e3,0.4] $list of float
 #
 # Values of nu and G needed for postprocessing
 postproc, nu-G0 @0.4 $float
 postproc, G-G0 @0.5*3.5e3/(1+0.4) $float
 #
 # Section properties (repeat for every section to be defined)
-sections, name      @fiberSection             $string
-sections, type      @HomogeneousSolidSection  $string
-sections, material  @glassFiber               $string
-sections, thickness @1.0                      $float
-sections, name      @matrixSection            $string
-sections, type      @HomogeneousSolidSection  $string
-sections, material  @epoxy                    $string
-sections, thickness @1.0                      $float
+sections, 1, name      @fiberSection             $string
+sections, 1, type      @HomogeneousSolidSection  $string
+sections, 1, material  @glassFiber               $string
+sections, 1, thickness @1.0                      $float
+sections, 2, name      @matrixSection            $string
+sections, 2, type      @HomogeneousSolidSection  $string
+sections, 2, material  @epoxy                    $string
+sections, 2, thickness @1.0                      $float
 #
 # Section assignments (repeat as needed)
-sectionRegions, name                @fiberSection   $string
-sectionRegions, set                 @FIBER          $string
-sectionRegions, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
-sectionRegions, offsetField         @''             $string
-sectionRegions, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
-sectionRegions, offsetValue         @0.0            $float
-sectionRegions, name                @matrixSection  $string
-sectionRegions, set                 @MATRIX         $string
-sectionRegions, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
-sectionRegions, offsetField         @''             $string
-sectionRegions, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
-sectionRegions, offsetValue         @0.0            $float
+sectionRegions, 1, name                @fiberSection   $string
+sectionRegions, 1, set                 @FIBER          $string
+sectionRegions, 1, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
+sectionRegions, 1, offsetField         @''             $string
+sectionRegions, 1, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
+sectionRegions, 1, offsetValue         @0.0            $float
+sectionRegions, 2, name                @matrixSection  $string
+sectionRegions, 2, set                 @MATRIX         $string
+sectionRegions, 2, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
+sectionRegions, 2, offsetField         @''             $string
+sectionRegions, 2, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
+sectionRegions, 2, offsetValue         @0.0            $float
 #
 # Step data
 step, minimumIncrement @1e-10 $float
 #
 # Loads
-loads, name  @rightBC          $string
-loads, type  @appliedStrain    $string
-loads, set   @RIGHTSIDE        $string
-loads, value @[0.01,0.0,0.0]   $list of float
-loads, name  @leftBC           $string
-loads, type  @appliedStrain    $string
-loads, set   @LEFTSIDE         $string
-loads, value @[-0.01,0.0,0.0]  $list of float
+loads, 1, name  @rightBC          $string
+loads, 1, type  @appliedStrain    $string
+loads, 1, set   @RIGHTSIDE        $string
+loads, 1, value @[0.01,0.0,0.0]   $list of float
+loads, 2, name  @leftBC           $string
+loads, 2, type  @appliedStrain    $string
+loads, 2, set   @LEFTSIDE         $string
+loads, 2, value @[-0.01,0.0,0.0]  $list of float
 #
 # Mesh
 mesh, size, deltapsi           @        $float

@@ -3,4 +3,6 @@
 # the corresponding value is introduced by @
 # variable type is introduced by $
 #
-loops @1 $int
+basename @RVE100-Half-SmallDisplacement-Free $string
+free parameters @1 $int
+geometry, deltatheta @[10,150,10]  $min,max,step #other possibility: [v1,v2,...,vn] $ list of values

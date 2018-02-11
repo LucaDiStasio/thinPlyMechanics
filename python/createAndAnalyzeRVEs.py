@@ -3415,23 +3415,83 @@ def main(argv):
     # BEGIN - ITERABLES
     #=======================================================================
 
-    basename = 'RVE100-Half-SmallDisplacement-Free'
+    with open(join(inputDirectory,iterablesFile.split('.')[0]+'.deck'),'r') as deck:
+        decklines = deck.readlines()
+
+    for l,line in enumerate(decklines):
+        if line[0] == '#':
+            continue
+        elif 'basename' in line:
+            basename = str(line.replace('\n','').split('#')[0].split('$')[0].split('@')[1].replace(' ',''))
+        elif 'free parameters' in line:
+            freeParams = int(line.replace('\n','').split('#')[0].split('$')[0].split('@')[1].replace(' ',''))
+            freeParamsStart = l+1
+
+    keywords = []
+    values = []
+    lenOfValues = []
+
+    for line in decklines[l+1:]:
+        if line[0] == '#':
+            continue
+        removeComment = line.replace('\n','').split('#')[0]
+        keywordSet = removeComment.split('@')[0]
+        keywords.append(keywordSet.replace(' ','').split(','))
+        dataType = removeComment.split('$')[1]
+        listAsString = removeComment.split('@')[1].split('$')[0].replace('[','').replace(']','').split[',']
+        dataList = []
+        for dataString in listAsString:
+            dataList.append(float(dataString))
+        if 'min' in dataType and 'max' in dataType and 'step' in dataType:
+            values.append(np.arange(dataList[0],dataList[1]+dataList[2],dataList[2]))
+        else:
+            values.append(dataList)
+        lenOfValues.append(len(values[-1]))
+
+    lenSortedIndeces = np.argsort(lenOfValues)
+    sortedValues = []
+    sortedKeywords = []
+    for index in lenSortedIndeces:
+        sortedValues.append(values[index])
+        sortedKeywords.append(keywords[index])
 
     iterationsSets = []
+    indecesCollection = []
 
-    for angle in range(10,160,10):
-        value1 = basename + '-' + str(angle).replace('.','_')
-        value2 = angle
-        if angle<20:
-            value3 = 0.5*angle
-            value4 = 20.0
-        elif angle<140:
-            value3 = 10.0
-            value4 = 20.0
+    totalSets = 1
+    for valueSet in sortedValues:
+        totalSets *= len(valueSet)
+
+    indeces = []
+    for j in range(0,len(sortedKeywords)):
+        indeces.append(0)
+    indecesCollection.append(indeces)
+    iterationSet = []
+    for i,index in enumerate(indeces):
+        iterationSet.append(sortedValues[i][index])
+    interationSets.append(iterationSet)
+
+    for k in range(1,totalSets):
+        indeces = []
+        for j in range(0,len(sortedKeywords)-1):
+            indeces.append(0)
+        if indecesCollection[k-1][-1]==len(sortedValues[-1])-1:
+            indeces.append(0)
         else:
-            value3 = 0.4*(180.0-angle)
-            value4 = 0.4*(180.0-angle)
-        iterationsSets.append([value1,value2,value3,value4])
+            indeces.append(indecesCollection[k-1][-1] + 1)
+        for j in range(len(sortedKeywords)-2,-1,-1):
+            if indeces[j+1]==0:
+                if indecesCollection[k-1][j]==len(sortedValues[j])-1:
+                    indeces.append(0)
+                else:
+                    indeces.append(indecesCollection[k-1][j] + 1)
+            else:
+                indeces.append(indecesCollection[k-1][j])
+        indecesCollection.append(indeces)
+        iterationSet = []
+        for i,index in enumerate(indeces):
+            iterationSet.append(sortedValues[i][index])
+        interationSets.append(iterationSet)
 
     #=======================================================================
     # END - ITERABLES
@@ -3442,6 +3502,9 @@ def main(argv):
     #=======================================================================
 
     workDir = RVEparams['input']['wd']
+    RVEparams['output']['global']['filenames']['inputdata'] = basename + '_InputData'
+    RVEparams['output']['global']['filenames']['performances'] = basename + '_ABQ-Performances'
+    RVEparams['output']['global']['filenames']['energyreleaserate'] = basename + '_ERRTS'
 
     logfilename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_ABQ-RVE-generation-and-analysis' + '.log'
     logfilefullpath = join(workDir,logfilename)
@@ -3492,33 +3555,47 @@ def main(argv):
     writeLineToLogFile(logfilefullpath,'a',logindent + 'Global timer starts',True)
     globalStart = timeit.default_timer()
 
-    for set in iterationsSets:
+    for iterationSet in iterationsSets:
 
         timedataList = []
         totalIterationTime = 0.0
 
-        RVEparams['input']['modelname'] = set[0]
-        RVEparams['geometry']['deltatheta'] = set[1]
-        RVEparams['mesh']['size']['deltapsi'] = set[2]
-        RVEparams['mesh']['size']['deltaphi'] = set[3]
+        variationString = ''
+        for v,value in enumerate(iterationSet):
+            if v>0:
+                variationString += '-'
+            variationString += str(sortedKeywords[v][-1]) + str(value).replace('.','_')
+            fillDataDictionary(RVEparams,sortedKeywords[v],value)
 
-        RVEparams['output']['local']['directory'] = join(RVEparams['output']['global']['directory'],set[0])
-        RVEparams['output']['local']['filenames']['Jintegral'] = set[0] + '-Jintegral'
-        RVEparams['output']['local']['filenames']['stressesatboundary'] = set[0] + '-stressesatboundary'
-        RVEparams['output']['local']['filenames']['crackdisplacements'] = set[0] + '-crackdisplacements'
+        RVEparams['input']['modelname'] = basename + '_' + variationString
 
-        RVEparams['output']['report']['local']['directory'].append(join(RVEparams['output']['global']['directory'],set[0]))
-        RVEparams['output']['report']['local']['filenames']['Jintegral'].append(set[0] + '-Jintegral')
-        RVEparams['output']['report']['local']['filenames']['stressesatboundary'].append(set[0] + '-stressesatboundary')
-        RVEparams['output']['report']['local']['filenames']['crackdisplacements'].append(set[0] + '-crackdisplacements')
+        if RVEparams['geometry']['deltatheta']<20:
+            RVEparams['mesh']['size']['deltapsi'] = 0.5*RVEparams['geometry']['deltatheta']
+            RVEparams['mesh']['size']['deltaphi'] = 20.0
+        elif RVEparams['geometry']['deltatheta']<140:
+            RVEparams['mesh']['size']['deltapsi'] = 10.0
+            RVEparams['mesh']['size']['deltaphi'] = 20.0
+        else:
+            RVEparams['mesh']['size']['deltapsi'] = 0.4*(180.0-RVEparams['geometry']['deltatheta'])
+            RVEparams['mesh']['size']['deltaphi'] = 0.4*(180.0-RVEparams['geometry']['deltatheta'])
 
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Param='+str(set[1]),'True','[[[1,2,"J-integral"],"Average distance [um]","GTOT [J/m^2]","GTOT from J-integral"]]']])
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Param='+str(set[1]),'True','[[[1,4,"sigma_xx"],"z [um]","Axial stress [MPa]","Stress along the right boundary"]]']])
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Param='+str(set[1]),'True','[[[0,5,"Radial"],[0,6,"Tangential"],"Angle [deg]","Displacement [um]","Crack faces displacements"],' \
+        RVEparams['output']['local']['directory'] = join(RVEparams['output']['global']['directory'],RVEparams['input']['modelname'])
+        RVEparams['output']['local']['filenames']['Jintegral'] = RVEparams['input']['modelname'] + '-Jintegral'
+        RVEparams['output']['local']['filenames']['stressesatboundary'] = RVEparams['input']['modelname'] + '-stressesatboundary'
+        RVEparams['output']['local']['filenames']['crackdisplacements'] = RVEparams['input']['modelname'] + '-crackdisplacements'
+
+        RVEparams['output']['report']['local']['directory'].append(join(RVEparams['output']['global']['directory'],RVEparams['input']['modelname']))
+        RVEparams['output']['report']['local']['filenames']['Jintegral'].append(RVEparams['input']['modelname'] + '-Jintegral')
+        RVEparams['output']['report']['local']['filenames']['stressesatboundary'].append(RVEparams['input']['modelname'] + '-stressesatboundary')
+        RVEparams['output']['report']['local']['filenames']['crackdisplacements'].append(RVEparams['input']['modelname'] + '-crackdisplacements')
+
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Params='+variationString,'True','[[[1,2,"J-integral"],"Average distance [um]","GTOT [J/m^2]","GTOT from J-integral"]]']])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Params='+variationString,'True','[[[1,4,"sigma_xx"],"z [um]","Axial stress [MPa]","Stress along the right boundary"]]']])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Params='+variationString,'True','[[[0,5,"Radial"],[0,6,"Tangential"],"Angle [deg]","Displacement [um]","Crack faces displacements"],' \
                                                                                                                                                                                                                                                                               '[[0,1,"Radial"],[0,2,"Tangential"],"Angle [deg]","Displacement [um]","Fiber crack faces displacements"],' \
                                                                                                                                                                                                                                                                               '[[0,3,"Radial"],[0,4,"Tangential"],"Angle [deg]","Displacement [um]","Matrix crack faces displacements"]]']])
 
-        timedataList.append(set[1])
+        timedataList.append(RVEparams['input']['modelname'])
 
         if not os.path.exists(RVEparams['output']['local']['directory']):
                 os.mkdir(RVEparams['output']['local']['directory'])

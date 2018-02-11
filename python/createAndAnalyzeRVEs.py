@@ -1812,7 +1812,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating materials ...',True)
 
-    for material in parameters['materials']:
+    for material in parameters['materials'].values():
         mdb.models[modelname].Material(name=material['name'])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'MATERIAL: ' + material['name'],True)
         try:
@@ -1912,7 +1912,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating sections ...',True)
 
-    for section in parameters['sections']:
+    for section in parameters['sections'].values():
         if 'HomogeneousSolidSection' in section['type'] or 'Homogeneous Solid Section' in section['type'] or 'somogeneoussolidsection' in section['type'] or 'homogeneous solid section' in section['type'] or 'Homogeneous solid section' in section['type']:
             mdb.models[modelname].HomogeneousSolidSection(name=section['name'],
             material=section['material'], thickness=section['thickness'])
@@ -1928,7 +1928,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Making section assignments ...',True)
 
-    for sectionRegion in parameters['sectionRegions']:
+    for sectionRegion in parameters['sectionRegions'].values():
         RVEpart.SectionAssignment(region=RVEpart.sets[sectionRegion['set']], sectionName=sectionRegion['name'], offset=sectionRegion['offsetValue'],offsetType=sectionRegion['offsetType'], offsetField=sectionRegion['offsetField'],thicknessAssignment=sectionRegion['thicknessAssignment'])
 
     # p.SectionAssignment(region=region, sectionName='MatrixSection', offset=0.0,
@@ -2012,7 +2012,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',2*logindent + 'Assigning loads ...',True)
 
-    for load in parameters['loads']:
+    for load in parameters['loads'].values():
         if 'appliedstrain' in load['type'] or 'appliedStrain' in load['type'] or 'Applied Strain' in load['type'] or 'applied strain' in load['type']:
             model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*L, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
         elif 'applieddisplacement' in load['type'] or 'appliedDisplacement' in load['type'] or 'Applied Displacement' in load['type'] or 'applied displacement' in load['type']:
@@ -3334,97 +3334,6 @@ def main(argv):
 
     # units are already the ones used in simulation, not SI ==> conversion tool must be added
 
-    RVEparams['simulation-pipeline'] = {'create-CAE':False,
-                                        'modify-INP':False,
-                                        'analyze-ODB':False,
-                                        'remove-ODB':False,
-                                        'remove-DAT':False,
-                                        'report-LATEX':False,
-                                        'report-EXCEL':False}
-
-    RVEparams['input'] = {'wd':'D:/Abaqus-WD',
-                          'caefilename':'caePythonTest',
-                          'modelname':''}
-    RVEparams['geometry'] = {'L':0.0,
-                             'Rf':0.0,
-                             'deltatheta':0.0}
-    RVEparams['materials'] = [{'name':'material1',
-                               'elastic':{'type':ISOTROPIC,
-                                           'values':0.0,0.0]}},
-                               {'name':'material2',
-                               'elastic':{'type':ISOTROPIC,
-                                           'values':[0.0,0.0]}}]
-    # in general:
-    # params['materials'] = [{'name':'material1',
-    #                            'elastic':{'type':'type1',
-    #                                        'values':[]},
-    #                            'density':{'values':[]},
-    #                            'thermalexpansion':{'type':'type1',
-    #                                                'values':[]},
-    #                            'thermalconductivity':{'type':'type1',
-    #                                                   'values':[]}},
-    #                            {'name':'material2',
-    #                            'elastic':{'type':'type2',
-    #                                        'values':[]}}]
-    RVEparams['postproc'] = {'nu-G0':0.0,
-                              'G-G0':0.0}
-    RVEparams['sections'] = [{'name':'section1',
-                              'type':'HomogeneousSolidSection',
-                              'material':'material1',
-                              'thickness':0.0},
-                              {'name':'section2',
-                              'type':'HomogeneousSolidSection',
-                              'material':'material2',
-                              'thickness':0.0}]
-    RVEparams['sectionRegions'] = [{'name':'section1',
-                                    'set':'SET1',
-                                    'offsetType':MIDDLE_SURFACE,
-                                    'offsetField':'',
-                                    'thicknessAssignment':FROM_SECTION,
-                                    'offsetValue':0.0},
-                                    {'name':'section2',
-                                    'set':'SET2',
-                                    'offsetType':MIDDLE_SURFACE,
-                                    'offsetField':'',
-                                    'thicknessAssignment':FROM_SECTION,
-                                    'offsetValue':0.0}]
-    RVEparams['step'] = {'minimumIncrement':0.0}
-    RVEparams['loads'] = [{'name':'loadName1',
-                           'type':'loadType1',
-                           'set':'LOADSET1',
-                           'value':[0.0,0.0,0.0]},
-                            {'name':'loadName2',
-                           'type':'loadType2',
-                           'set':'LOADSET2',
-                           'value':[0.0,0.0,0.0]}]
-    RVEparams['mesh'] = {'size':{'deltapsi':0.0,
-                                 'deltaphi':0.0,
-                                 'delta':0.0,
-                                 'delta1':0.0,
-                                 'delta2':0.0,
-                                 'delta3':0.0},
-                         'elements':{'minElNum':0,
-                                     'order':'second'}}
-    RVEparams['Jintegral'] = {'numberOfContours':0}
-    RVEparams['output'] = {'global':{'directory':'D:/Abaqus-WD',
-                                     'filenames':{'performances':'caePythonTest-performances',
-                                                  'energyreleaserate':'caePythonTest-energyreleaserates',
-                                                  'inputdata':'caePythonTest-inputdata'}},
-                           'local':{'directory':'D:/Abaqus-WD',
-                                     'filenames':{'Jintegral':'',
-                                                  'stressesatboundary':'',
-                                                  'crackdisplacements':''}},
-                           'report':{'global':{'directory':'D:/Abaqus-WD',
-                                                'filename':'caePythonTest-report'},
-                                     'local':{'directory':[],
-                                               'filenames':{'Jintegral':[],
-                                                            'stressesatboundary':[],
-                                                            'crackdisplacements':[]}}},
-                           'sql':{'global':{'directory':'D:/Abaqus-WD',
-                                            'filename':'caePythonTestDB'}}
-                          }
-    RVEparams['solver'] = {'cpus':0}
-
     ABQbuiltinDict = {'ISOTROPIC':ISOTROPIC,
                       'MIDDLE_SURFACE':MIDDLE_SURFACE,
                       'FROM_SECTION':FROM_SECTION}
@@ -3491,10 +3400,6 @@ def main(argv):
 
     for k,keywordSet in enumerate(keywords):
         fillDataDictionary(RVEparams,keywordSet,values[k])
-
-
-
-
 
     # parameters for iterations
     # RVEparams['modelname']

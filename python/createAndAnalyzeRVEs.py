@@ -120,7 +120,11 @@ def printHelp():
     sys.exit()
 
 #===============================================================================#
-#                              CSV files
+#                                  DECK file
+#===============================================================================#
+
+#===============================================================================#
+#                                    CSV files
 #===============================================================================#
 
 def createCSVfile(dir,filename,titleline=None):
@@ -3322,15 +3326,106 @@ def main(argv):
 
     # units are already the ones used in simulation, not SI ==> conversion tool must be added
 
-    ABQbuiltinDict = {'':,}
+    RVEparams['simulation-pipeline'] = {'create-CAE':False,
+                                        'modify-INP':False,
+                                        'analyze-ODB':False,
+                                        'remove-ODB':False,
+                                        'remove-DAT':False,
+                                        'report-LATEX':False,
+                                        'report-EXCEL':False}
+
+    RVEparams['input'] = {'wd':'D:/Abaqus-WD',
+                          'caefilename':'caePythonTest',
+                          'modelname':''}
+    RVEparams['geometry'] = {'L':0.0,
+                             'Rf':0.0,
+                             'deltatheta':0.0}
+    RVEparams['materials'] = [{'name':'material1',
+                               'elastic':{'type':ISOTROPIC,
+                                           'values':0.0,0.0]}},
+                               {'name':'material2',
+                               'elastic':{'type':ISOTROPIC,
+                                           'values':[0.0,0.0]}}]
+    # in general:
+    # params['materials'] = [{'name':'material1',
+    #                            'elastic':{'type':'type1',
+    #                                        'values':[]},
+    #                            'density':{'values':[]},
+    #                            'thermalexpansion':{'type':'type1',
+    #                                                'values':[]},
+    #                            'thermalconductivity':{'type':'type1',
+    #                                                   'values':[]}},
+    #                            {'name':'material2',
+    #                            'elastic':{'type':'type2',
+    #                                        'values':[]}}]
+    RVEparams['postproc'] = {'nu-G0':0.0,
+                              'G-G0':0.0}
+    RVEparams['sections'] = [{'name':'section1',
+                              'type':'HomogeneousSolidSection',
+                              'material':'material1',
+                              'thickness':0.0},
+                              {'name':'section2',
+                              'type':'HomogeneousSolidSection',
+                              'material':'material2',
+                              'thickness':0.0}]
+    RVEparams['sectionRegions'] = [{'name':'section1',
+                                    'set':'SET1',
+                                    'offsetType':MIDDLE_SURFACE,
+                                    'offsetField':'',
+                                    'thicknessAssignment':FROM_SECTION,
+                                    'offsetValue':0.0},
+                                    {'name':'section2',
+                                    'set':'SET2',
+                                    'offsetType':MIDDLE_SURFACE,
+                                    'offsetField':'',
+                                    'thicknessAssignment':FROM_SECTION,
+                                    'offsetValue':0.0}]
+    RVEparams['step'] = {'minimumIncrement':0.0}
+    RVEparams['loads'] = [{'name':'loadName1',
+                           'type':'loadType1',
+                           'set':'LOADSET1',
+                           'value':[0.0,0.0,0.0]},
+                            {'name':'loadName2',
+                           'type':'loadType2',
+                           'set':'LOADSET2',
+                           'value':[0.0,0.0,0.0]}]
+    RVEparams['mesh'] = {'size':{'deltapsi':0.0,
+                                 'deltaphi':0.0,
+                                 'delta':0.0,
+                                 'delta1':0.0,
+                                 'delta2':0.0,
+                                 'delta3':0.0},
+                         'elements':{'minElNum':0,
+                                     'order':'second'}}
+    RVEparams['Jintegral'] = {'numberOfContours':0}
+    RVEparams['output'] = {'global':{'directory':'D:/Abaqus-WD',
+                                     'filenames':{'performances':'caePythonTest-performances',
+                                                  'energyreleaserate':'caePythonTest-energyreleaserates',
+                                                  'inputdata':'caePythonTest-inputdata'}},
+                           'local':{'directory':'D:/Abaqus-WD',
+                                     'filenames':{'Jintegral':'',
+                                                  'stressesatboundary':'',
+                                                  'crackdisplacements':''}},
+                           'report':{'global':{'directory':'D:/Abaqus-WD',
+                                                'filename':'caePythonTest-report'},
+                                     'local':{'directory':[],
+                                               'filenames':{'Jintegral':[],
+                                                            'stressesatboundary':[],
+                                                            'crackdisplacements':[]}}},
+                           'sql':{'global':{'directory':'D:/Abaqus-WD',
+                                            'filename':'caePythonTestDB'}}
+                          }
+    RVEparams['solver'] = {'cpus':0}
+
+    ABQbuiltinDict = {'ISOTROPIC':ISOTROPIC,
+                      'MIDDLE_SURFACE':MIDDLE_SURFACE,
+                      'FROM_SECTION':FROM_SECTION}
 
     if inputDirectory[-1]=='/' or inputDirectory[-1]=='\\':
         inputDirectory = inputDirectory[:-1]
 
     with open(join(inputDirectory,dataFile.split('.')[0]+'.deck'),'r') as deck:
         decklines = deck.readlines()
-
-    RVEparams = {}
 
     keywords = []
     values = []
@@ -3384,103 +3479,13 @@ def main(argv):
         elif  'ABAQUS keyword' in dataType:
             values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0]])
 
-    for k,keywordSet in enumerate(keywords):
-        if keywordSet in keywords[k+1:]:
-            # this keyword set is part of a list
-        else: # build the entry in dictionary
+    for key in RVEparams.keys():
+        if isinstance(RVEparams[key],dict):
 
+        elif isinstance(RVEparams[key],list):
 
+        else:
 
-    RVEparams['simulation-pipeline'] = {'create-CAE':True,
-                                        'modify-INP':True,
-                                        'analyze-ODB':True,
-                                        'remove-ODB':False,
-                                        'remove-DAT':False,
-                                        'report-LATEX':True,
-                                        'report-EXCEL':True}
-
-    RVEparams['input'] = {'wd':'D:/01_Luca/07_Data/03_FEM/CurvedInterface',
-                          'caefilename':'caePythonTest',
-                          'modelname':''}
-    RVEparams['geometry'] = {'L':100.0,
-                             'Rf':1.0,
-                             'deltatheta':10.0}
-    RVEparams['materials'] = [{'name':'glassFiber',
-                               'elastic':{'type':ISOTROPIC,
-                                           'values':[70e3,0.2]}},
-                               {'name':'epoxy',
-                               'elastic':{'type':ISOTROPIC,
-                                           'values':[3.5e3,0.4]}}]
-    # in general:
-    # params['materials'] = [{'name':'material1',
-    #                            'elastic':{'type':'type1',
-    #                                        'values':[]},
-    #                            'density':{'values':[]},
-    #                            'thermalexpansion':{'type':'type1',
-    #                                                'values':[]},
-    #                            'thermalconductivity':{'type':'type1',
-    #                                                   'values':[]}},
-    #                            {'name':'material2',
-    #                            'elastic':{'type':'type2',
-    #                                        'values':[]}}]
-    RVEparams['postproc'] = {'nu-G0':RVEparams['materials'][1]['elastic']['values'][1],
-                              'G-G0':0.5*RVEparams['materials'][1]['elastic']['values'][0]/(1+RVEparams['materials'][1]['elastic']['values'][1])}
-    RVEparams['sections'] = [{'name':'fiberSection',
-                              'type':'HomogeneousSolidSection',
-                              'material':'glassFiber',
-                              'thickness':1.0},
-                              {'name':'matrixSection',
-                              'type':'HomogeneousSolidSection',
-                              'material':'epoxy',
-                              'thickness':1.0}]
-    RVEparams['sectionRegions'] = [{'name':'fiberSection',
-                                    'set':'FIBER',
-                                    'offsetType':MIDDLE_SURFACE,
-                                    'offsetField':'',
-                                    'thicknessAssignment':FROM_SECTION,
-                                    'offsetValue':0.0},
-                                    {'name':'matrixSection',
-                                    'set':'MATRIX',
-                                    'offsetType':MIDDLE_SURFACE,
-                                    'offsetField':'',
-                                    'thicknessAssignment':FROM_SECTION,
-                                    'offsetValue':0.0}]
-    RVEparams['step'] = {'minimumIncrement':1e-10}
-    RVEparams['loads'] = [{'name':'rightBC',
-                           'type':'appliedStrain',
-                           'set':'RIGHTSIDE',
-                           'value':[0.01,0.0,0.0]},
-                            {'name':'leftBC',
-                           'type':'appliedStrain',
-                           'set':'LEFTSIDE',
-                           'value':[-0.01,0.0,0.0]}]
-    RVEparams['mesh'] = {'size':{'deltapsi':'',
-                                 'deltaphi':'',
-                                 'delta':0.05,
-                                 'delta1':0.1,
-                                 'delta2':0.5,
-                                 'delta3':1.0},
-                         'elements':{'minElNum':10,
-                                     'order':'second'}}
-    RVEparams['Jintegral'] = {'numberOfContours':50}
-    RVEparams['output'] = {'global':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
-                                     'filenames':{'performances':'caePythonTest-performances',
-                                                  'energyreleaserate':'caePythonTest-energyreleaserates',
-                                                  'inputdata':'caePythonTest-inputdata'}},
-                           'local':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
-                                     'filenames':{'Jintegral':'',
-                                                  'stressesatboundary':'',
-                                                  'crackdisplacements':''}},
-                           'report':{'global':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
-                                                'filename':'caePythonTest-report'},
-                                     'local':{'directory':[],
-                                               'filenames':{'Jintegral':[],
-                                                            'stressesatboundary':[],
-                                                            'crackdisplacements':[]}}},
-                           'sql':{'global':{'directory':'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest',
-                                            'filename':'caePythonTestDB'}}
-                          }
-    RVEparams['solver'] = {'cpus':12}
 
     # parameters for iterations
     # RVEparams['modelname']

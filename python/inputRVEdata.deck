@@ -48,13 +48,13 @@ sections, 2, thickness @1.0                      $float
 sectionRegions, 1, name                @fiberSection   $string
 sectionRegions, 1, set                 @FIBER          $string
 sectionRegions, 1, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
-sectionRegions, 1, offsetField         @''             $string
+sectionRegions, 1, offsetField         @               $string
 sectionRegions, 1, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
 sectionRegions, 1, offsetValue         @0.0            $float
 sectionRegions, 2, name                @matrixSection  $string
 sectionRegions, 2, set                 @MATRIX         $string
 sectionRegions, 2, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
-sectionRegions, 2, offsetField         @''             $string
+sectionRegions, 2, offsetField         @               $string
 sectionRegions, 2, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
 sectionRegions, 2, offsetValue         @0.0            $float
 #
@@ -72,8 +72,8 @@ loads, 2, set   @LEFTSIDE         $string
 loads, 2, value @[-0.01,0.0,0.0]  $list of float
 #
 # Mesh
-mesh, size, deltapsi           @        $float
-mesh, size, deltaphi           @        $float
+mesh, size, deltapsi           @0.0     $float
+mesh, size, deltaphi           @0.0     $float
 mesh, size, delta              @0.05    $float
 mesh, size, delta1             @0.1     $float
 mesh, size, delta2             @0.5     $float
@@ -90,9 +90,9 @@ output, global, filenames, performances @caePythonTest-performances             
 output, global, filenames, energyreleaserate @caePythonTest-energyreleaserates                                          $string
 output, global, filenames, inputdata                 @caePythonTest-inputdata                                           $string
 output, local, directory                             @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest       $string
-output, local, filenames, Jintegral                  @                                                                  $string
-output, local, filenames, stressesatboundary         @                                                                  $string
-output, local, filenames, crackdisplacements         @                                                                  $string
+output, local, filenames, Jintegral                  @D:/                                                               $string
+output, local, filenames, stressesatboundary         @D:/                                                               $string
+output, local, filenames, crackdisplacements         @D:/                                                               $string
 output, report, global, directory                    @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest       $string
 output, report, global, filename                     @caePythonTest-report                                              $string
 output, report, local, directory                     @[]                                                                $string

@@ -3395,7 +3395,7 @@ def main(argv):
         elif  'string' in dataType:
             values.append(str(removeComment.split('@')[1].split('$')[0].replace(' ','')))
         elif  'ABAQUS keyword' in dataType:
-            values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0]])
+            values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0].replace(' ','')])
 
     RVEparams = {}
 

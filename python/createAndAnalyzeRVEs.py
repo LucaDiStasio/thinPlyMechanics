@@ -2443,7 +2443,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             for index in line.replace('\n','').split(','):
                 if index!='' and index!=' ':
                     fiberExtannUppcrackElementset.append(int(index))
-        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-UPPERCRACK','fiber-extannulus-uppercrack'] and line.replace('\n','').split(',')[2] in ['GENERATE','generate']:
+        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-UPPERCRACK','fiber-extannulus-uppercrack'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
             store = False
             startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
             endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
@@ -2468,7 +2468,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             for index in line.replace('\n','').split(','):
                 if index!='' and index!=' ':
                     fiberExtannFirstbounElementset.append(int(index))
-        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-FIRSTBOUNDED','fiber-extannulus-firstbounded'] and line.replace('\n','').split(',')[2] in ['GENERATE','generate']:
+        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-FIRSTBOUNDED','fiber-extannulus-firstbounded'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
             store = False
             startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
             endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
@@ -2493,7 +2493,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             for index in line.replace('\n','').split(','):
                 if index!='' and index!=' ':
                     matrixIntannUppcrackElementset.append(int(index))
-        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-UPPERCRACK','matrix-intannulus-uppercrack'] and line.replace('\n','').split(',')[2] in ['GENERATE','generate']:
+        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-UPPERCRACK','matrix-intannulus-uppercrack'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
             store = False
             startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
             endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
@@ -2518,7 +2518,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             for index in line.replace('\n','').split(','):
                 if index!='' and index!=' ':
                     matrixIntannFirstbounElementset.append(int(index))
-        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-FIRSTBOUNDED','matrix-intannulus-firstbounded'] and line.replace('\n','').split(',')[2] in ['GENERATE','generate']:
+        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-FIRSTBOUNDED','matrix-intannulus-firstbounded'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
             store = False
             startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
             endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])

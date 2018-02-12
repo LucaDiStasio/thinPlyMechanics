@@ -3289,7 +3289,7 @@ def main(argv):
     #=======================================================================
     # BEGIN - PARSE COMMAND LINE
     #=======================================================================
-
+    print >> sys.__stdout__,(str(argv))
     for a,arg in enumerate(argv):
         if 'help' in arg:
             printHelp()

@@ -95,10 +95,10 @@ output, local, filenames, stressesatboundary         @D:/                       
 output, local, filenames, crackdisplacements         @D:/                                                               $string
 output, report, global, directory                    @C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2      $string
 output, report, global, filename                     @caePythonTest2-report                                              $string
-output, report, local, directory                     @[]                                                                $string
-output, report, local, filenames, Jintegral          @[]                                                                $string
-output, report, local, filenames, stressesatboundary @[]                                                                $string
-output, report, local, filenames, crackdisplacements @[]                                                                $string
+output, report, local, directory                     @[]                                                                $list of string
+output, report, local, filenames, Jintegral          @[]                                                                $list of string
+output, report, local, filenames, stressesatboundary @[]                                                                $list of string
+output, report, local, filenames, crackdisplacements @[]                                                                $list of string
 output, sql, global, directory                       @C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2       $string
 output, sql, global, filename                        @caePythonTest2DB                                                   $string
 #

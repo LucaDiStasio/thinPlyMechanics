@@ -85,7 +85,7 @@ mesh, size, elements, order    @second  $string
 Jintegral, numberOfContours @50 $int
 #
 # Output directory and filenames
-output, global, directory @'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2                                 $string
+output, global, directory @C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2                                 $string
 output, global, filenames, performances @caePythonTest2-performances                                                     $string
 output, global, filenames, energyreleaserate @caePythonTest2-energyreleaserates                                          $string
 output, global, filenames, inputdata                 @caePythonTest2-inputdata                                           $string
@@ -93,7 +93,7 @@ output, local, directory                             @C:/Users/lucad/OneDrive/01
 output, local, filenames, Jintegral                  @D:/                                                               $string
 output, local, filenames, stressesatboundary         @D:/                                                               $string
 output, local, filenames, crackdisplacements         @D:/                                                               $string
-output, report, global, directory                    @C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest 2      $string
+output, report, global, directory                    @C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2      $string
 output, report, global, filename                     @caePythonTest2-report                                              $string
 output, report, local, directory                     @[]                                                                $string
 output, report, local, filenames, Jintegral          @[]                                                                $string

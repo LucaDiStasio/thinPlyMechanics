@@ -2633,7 +2633,9 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
     nodesMatrixDisplacementMeas = []
     for node in nodesAroundCracktip:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node ' + str(node),True)
         if node in crackfacesNodeset and node!=cracktipIndex:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'is on crack face',True)
             nodesMatrixDisplacementMeas.append(node)
         if len(nodesFiberDisplacementMeas)==2:
             break

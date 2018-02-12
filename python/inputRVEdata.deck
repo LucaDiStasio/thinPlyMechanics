@@ -78,8 +78,8 @@ mesh, size, delta              @0.05    $float
 mesh, size, delta1             @0.1     $float
 mesh, size, delta2             @0.5     $float
 mesh, size, delta3             @1.0     $float
-mesh, size, elements, minElNum @10      $int
-mesh, size, elements, order    @second  $string
+mesh, elements, minElNum @10      $int
+mesh, elements, order    @second  $string
 #
 # J-Integral
 Jintegral, numberOfContours @50 $int

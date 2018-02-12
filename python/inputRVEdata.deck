@@ -13,7 +13,7 @@ simulation-pipeline, report-LATEX @True  $boolean
 simulation-pipeline, report-EXCEL @True  $boolean
 #
 # Directory and names for CAE model generation
-input, wd          @C:/Abaqus_WD                               $string
+input, wd          @D:/01_Luca/07_Data/03_FEM/CurvedInterface  $string
 input, caefilename @caePythonTest2                             $string
 input, modelname   @aname                                      $string
 #
@@ -85,22 +85,22 @@ mesh, elements, order    @second  $string
 Jintegral, numberOfContours @50 $int
 #
 # Output directory and filenames
-output, global, directory @C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2                                 $string
-output, global, filenames, performances @caePythonTest2-performances                                                     $string
-output, global, filenames, energyreleaserate @caePythonTest2-energyreleaserates                                          $string
+output, global, directory                            @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2                                 $string
+output, global, filenames, performances              @caePythonTest2-performances                                                     $string
+output, global, filenames, energyreleaserate         @caePythonTest2-energyreleaserates                                          $string
 output, global, filenames, inputdata                 @caePythonTest2-inputdata                                           $string
-output, local, directory                             @C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2       $string
+output, local, directory                             @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2       $string
 output, local, filenames, Jintegral                  @D:/                                                               $string
 output, local, filenames, stressesatboundary         @D:/                                                               $string
 output, local, filenames, crackdisplacements         @D:/                                                               $string
-output, report, global, directory                    @C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2      $string
+output, report, global, directory                    @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2      $string
 output, report, global, filename                     @caePythonTest2-report                                              $string
 output, report, local, directory                     @[]                                                                $list of string
 output, report, local, filenames, Jintegral          @[]                                                                $list of string
 output, report, local, filenames, stressesatboundary @[]                                                                $list of string
 output, report, local, filenames, crackdisplacements @[]                                                                $list of string
-output, sql, global, directory                       @C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2       $string
+output, sql, global, directory                       @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/caePythonTest2       $string
 output, sql, global, filename                        @caePythonTest2DB                                                   $string
 #
 # Solver properties
-solver, cpus @12 $int
+solver, cpus @3 $int

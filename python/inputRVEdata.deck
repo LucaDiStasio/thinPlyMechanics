@@ -32,7 +32,7 @@ materials, 2, elastic, values @[3.5e3,0.4] $list of float
 #
 # Values of nu and G needed for postprocessing
 postproc, nu-G0 @0.4 $float
-postproc, G-G0 @0.5*3.5e3/(1+0.4) $float
+postproc, G-G0 @1250.0 $float
 #
 # Section properties (repeat for every section to be defined)
 sections, 1, name      @fiberSection             $string

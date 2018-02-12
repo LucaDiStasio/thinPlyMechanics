@@ -2557,7 +2557,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 firstdebondedFiberEl = element
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
                 break
-    for element in fiberExtannFirstbounElementset:
+    for e in range(len(fiberExtannFirstbounElementset)-1,-1,-1):
+        element = fiberExtannFirstbounElementset[e]
         if element in quads.keys():
             if cracktipIndex in quads[element]:
                 fiberElswithCracktip.append(element)
@@ -2572,7 +2573,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 firstdebondedMatrixEl = element
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
                 break
-    for element in matrixIntannFirstbounElementset:
+    for e in range(len(matrixIntannFirstbounElementset)-1,-1,-1):
+        element = fiberExtannFirstbounElementset[e]
         if element in quads.keys():
             if cracktipIndex in quads[element]:
                 matrixElswithCracktip.append(element)

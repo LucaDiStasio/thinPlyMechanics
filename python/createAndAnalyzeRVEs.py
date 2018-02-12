@@ -3356,32 +3356,32 @@ def main(argv):
         keywords.append(keywordSet.replace(' ','').split(','))
         dataType = removeComment.split('$')[1]
         if  'list of boolean' in dataType:
-            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split[',']
+            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
             dataList = []
             for dataString in listAsString:
                 dataList.append(ast.literal_eval(dataString))
             values.append(dataList)
         elif  'list of int' in dataType:
-            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split[',']
+            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
             dataList = []
             for dataString in listAsString:
                 dataList.append(int(dataString))
             values.append(dataList)
         elif  'list of float' in dataType:
-            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split[',']
+            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
             dataList = []
             for dataString in listAsString:
                 dataList.append(float(dataString))
             values.append(dataList)
         elif  'list of string' in dataType:
-            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split[',']
+            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
             dataList = []
             for dataString in listAsString:
                 dataList.append(str(dataString))
             values.append(dataList)
         elif  'list of ABAQUS keyword' in dataType:
             values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0]])
-            listAsString = removeComment.split('@')[1].split('$')[0]..replace(' ','')replace('[','').replace(']','').split[',']
+            listAsString = removeComment.split('@')[1].split('$')[0]..replace(' ','')replace('[','').replace(']','').split(',')
             dataList = []
             for dataString in listAsString:
                 dataList.append(ABQbuiltinDict[dataString])

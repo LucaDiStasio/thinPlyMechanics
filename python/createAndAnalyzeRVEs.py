@@ -3381,7 +3381,7 @@ def main(argv):
             values.append(dataList)
         elif  'list of ABAQUS keyword' in dataType:
             values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0]])
-            listAsString = removeComment.split('@')[1].split('$')[0]..replace(' ','')replace('[','').replace(']','').split(',')
+            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
             dataList = []
             for dataString in listAsString:
                 dataList.append(ABQbuiltinDict[dataString])

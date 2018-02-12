@@ -3521,7 +3521,7 @@ def main(argv):
 
     createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata'],'Rf [um],L [um],L/Rf [-],Vff [-],BC,applied strain [-],fiber,matrix')
     appendCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata'],[[RVEparams['geometry']['Rf'],RVEparams['geometry']['L'],RVEparams['geometry']['L']/RVEparams['geometry']['Rf'],(RVEparams['geometry']['Rf']*RVEparams['geometry']['Rf']*np.pi)/(4*RVEparams['geometry']['L']*RVEparams['geometry']['L']),
-                                                                                                                      'FREE',RVEparams['loads'][0]['value'][0],RVEparams['sections'][0]['material'],RVEparams['sections'][1]['material']]])
+                                                                                                                      'FREE',RVEparams['loads']['1']['value'][0],RVEparams['sections']['1']['material'],RVEparams['sections']['2']['material']]])
 
 
     createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist','ABSOLUTE PATH, NAME, TO PLOT, PLOT VARIABLES')

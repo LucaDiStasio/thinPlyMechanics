@@ -3291,7 +3291,7 @@ def main(argv):
     #=======================================================================
 
     for a,arg in enumerate(argv):
-        if 'h' in arg or 'help' in arg:
+        if 'help' in arg:
             printHelp()
         elif 'dir' in arg or 'directory' in arg:
             inputDirectory = argv[a+1]

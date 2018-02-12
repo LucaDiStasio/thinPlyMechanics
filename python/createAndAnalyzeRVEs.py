@@ -2574,7 +2574,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
                 break
     for e in range(len(matrixIntannFirstbounElementset)-1,-1,-1):
-        element = fiberExtannFirstbounElementset[e]
+        element = matrixExtannFirstbounElementset[e]
         if element in quads.keys():
             if cracktipIndex in quads[element]:
                 matrixElswithCracktip.append(element)
@@ -2628,7 +2628,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         distancesFiberDisplacementMeas.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the matrix elements around the crack tip',True)
     nodesAroundCracktip = quads[firstdebondedMatrixEl]
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesAroundCracktip)) + ' nodes',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Element: ' + str(firstdebondedMatrixEl),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Nodes: ' + str(nodesAroundCracktip),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
     nodesMatrixDisplacementMeas = []
     for node in crackfacesNodeset:

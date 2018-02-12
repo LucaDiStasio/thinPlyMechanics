@@ -3470,7 +3470,7 @@ def main(argv):
     iterationSet = []
     for i,index in enumerate(indeces):
         iterationSet.append(sortedValues[i][index])
-    interationSets.append(iterationSet)
+    iterationSets.append(iterationSet)
 
     for k in range(1,totalSets):
         indeces = []
@@ -3492,7 +3492,7 @@ def main(argv):
         iterationSet = []
         for i,index in enumerate(indeces):
             iterationSet.append(sortedValues[i][index])
-        interationSets.append(iterationSet)
+        iterationSets.append(iterationSet)
 
     #=======================================================================
     # END - ITERABLES

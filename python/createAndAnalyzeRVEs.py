@@ -3289,17 +3289,17 @@ def main(argv):
     #=======================================================================
     # BEGIN - PARSE COMMAND LINE
     #=======================================================================
-    print >> sys.__stdout__,(str(argv))
+
     for a,arg in enumerate(argv):
-        if 'help' in arg:
+        if '-help' in arg:
             printHelp()
-        elif 'dir' in arg or 'directory' in arg:
+        elif '-dir' in arg or '-directory' in arg:
             inputDirectory = argv[a+1]
-        elif 'data' in arg:
+        elif '-data' in arg:
             dataFile = argv[a+1]
-        elif 'iterables' in arg:
+        elif '-iterables' in arg:
             iterablesFile = argv[a+1]
-        elif 'debug' in arg:
+        elif '-debug' in arg:
             debug = True
             print >> sys.__stdout__,('>>>> Running in DEBUG MODE <<<<')
 

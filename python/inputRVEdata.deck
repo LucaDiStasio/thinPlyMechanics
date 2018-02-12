@@ -13,8 +13,8 @@ simulation-pipeline, report-LATEX @True  $boolean
 simulation-pipeline, report-EXCEL @True  $boolean
 #
 # Directory and names for CAE model generation
-input, wd          @D:/01_Luca/07_Data/03_FEM/CurvedInterface  $string
-input, caefilename @caePythonTest                              $string
+input, wd          @C:/Abaqus_WD                               $string
+input, caefilename @caePythonTest2                             $string
 input, modelname   @aname                                      $string
 #
 # Geometry

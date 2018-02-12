@@ -2555,30 +2555,30 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             if cracktipIndex in quads[element]:
                 fiberElswithCracktip.append(element)
                 firstdebondedFiberEl = element
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
                 break
     for element in fiberExtannFirstbounElementset:
         if element in quads.keys():
             if cracktipIndex in quads[element]:
                 fiberElswithCracktip.append(element)
                 firstboundedFiberEl = element
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
                 break
-    for element in fiberElswithCracktip:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - element ' + str(element),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
     for element in matrixIntannUppcrackElementset:
         if element in quads.keys():
             if cracktipIndex in quads[element]:
                 matrixElswithCracktip.append(element)
                 firstdebondedMatrixEl = element
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
                 break
     for element in matrixIntannFirstbounElementset:
         if element in quads.keys():
             if cracktipIndex in quads[element]:
                 matrixElswithCracktip.append(element)
                 firstboundedMatrixEl = element
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
                 break
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
-    for element in matrixElswithCracktip:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - element ' + str(element),True)
     if 'second' in parameters['mesh']['elements']['order']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Second order elements are used',True)
         matrixFirstBehindCracktipIndex = numNodes + 1000 + 2

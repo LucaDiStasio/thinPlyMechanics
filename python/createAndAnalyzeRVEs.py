@@ -2557,7 +2557,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 firstdebondedFiberEl = element
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
                 break
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(len(fiberExtannFirstbounElementset)),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Length of fiberExtannFirstbounElementset: ' + str(len(fiberExtannFirstbounElementset)),True)
     for element in fiberExtannFirstbounElementset:
         if element in quads.keys():
             if cracktipIndex in quads[element]:

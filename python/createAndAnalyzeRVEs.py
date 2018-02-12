@@ -2573,8 +2573,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 firstdebondedMatrixEl = element
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
                 break
-    for e in range(len(matrixIntannFirstbounElementset)-1,-1,-1):
-        element = matrixIntannFirstbounElementset[e]
+    for element in matrixIntannFirstbounElementset:
         if element in quads.keys():
             if cracktipIndex in quads[element]:
                 matrixElswithCracktip.append(element)

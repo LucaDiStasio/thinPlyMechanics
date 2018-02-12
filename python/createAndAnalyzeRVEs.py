@@ -2628,6 +2628,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         distancesFiberDisplacementMeas.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the matrix elements around the crack tip',True)
     nodesAroundCracktip = quads[firstdebondedMatrixEl]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesAroundCracktip)) + ' nodes',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
     nodesMatrixDisplacementMeas = []
     for node in crackfacesNodeset:

@@ -3442,7 +3442,7 @@ def main(argv):
         keywordSet = removeComment.split('@')[0]
         keywords.append(keywordSet.replace(' ','').split(','))
         dataType = removeComment.split('$')[1]
-        listAsString = removeComment.split('@')[1].split('$')[0].replace('[','').replace(']','').split[',']
+        listAsString = removeComment.split('@')[1].split('$')[0].replace('[','').replace(']','').split(',')
         dataList = []
         for dataString in listAsString:
             dataList.append(float(dataString))

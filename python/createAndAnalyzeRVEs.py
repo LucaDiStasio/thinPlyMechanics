@@ -3561,7 +3561,7 @@ def main(argv):
 
         timedataList = []
         totalIterationTime = 0.0
-
+        writeLineToLogFile(logfilefullpath,'a',str(sortedKeywords),True)
         variationString = ''
         for v,value in enumerate(iterationSet):
             if v>0:

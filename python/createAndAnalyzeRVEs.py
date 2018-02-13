@@ -3429,6 +3429,8 @@ def main(argv):
             freeParams = int(line.replace('\n','').split('#')[0].split('$')[0].split('@')[1].replace(' ',''))
             freeParamsStart = l+1
 
+    writeLineToLogFile(logfilefullpath,'a','List of parameters starts at line ' + str(freeParamsStart),True)
+
     keywords = []
     values = []
     lenOfValues = []
@@ -3449,6 +3451,10 @@ def main(argv):
         else:
             values.append(dataList)
         lenOfValues.append(len(values[-1]))
+
+    writeLineToLogFile(logfilefullpath,'a','Keywords: ' + str(keywords),True)
+    writeLineToLogFile(logfilefullpath,'a','Values: ' + str(values),True)
+    writeLineToLogFile(logfilefullpath,'a','Length of values: ' + str(lenOfValues),True)
 
     lenSortedIndeces = np.argsort(lenOfValues)
     sortedValues = []

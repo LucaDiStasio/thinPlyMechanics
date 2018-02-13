@@ -3429,8 +3429,6 @@ def main(argv):
             freeParams = int(line.replace('\n','').split('#')[0].split('$')[0].split('@')[1].replace(' ',''))
             freeParamsStart = l+1
 
-    print >> sys.__stdout__,('List of parameters starts at line ' + str(freeParamsStart))
-
     keywords = []
     values = []
     lenOfValues = []
@@ -3451,10 +3449,6 @@ def main(argv):
         else:
             values.append(dataList)
         lenOfValues.append(len(values[-1]))
-
-    print >> sys.__stdout__,('Keywords: ' + str(keywords))
-    print >> sys.__stdout__,('Values: ' + str(values))
-    print >> sys.__stdout__,('Length of values: ' + str(lenOfValues))
 
     lenSortedIndeces = np.argsort(lenOfValues)
     sortedValues = []
@@ -3567,7 +3561,6 @@ def main(argv):
 
         timedataList = []
         totalIterationTime = 0.0
-        writeLineToLogFile(logfilefullpath,'a',str(iterationSet),True)
         variationString = ''
         for v,value in enumerate(iterationSet):
             if v>0:

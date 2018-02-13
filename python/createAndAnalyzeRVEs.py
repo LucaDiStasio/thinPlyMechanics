@@ -3435,7 +3435,7 @@ def main(argv):
     values = []
     lenOfValues = []
 
-    for line in decklines[l+1:]:
+    for line in decklines[freeParamsStart:]:
         if line[0] == '#':
             continue
         removeComment = line.replace('\n','').split('#')[0]

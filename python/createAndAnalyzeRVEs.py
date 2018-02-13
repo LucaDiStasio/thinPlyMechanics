@@ -3302,7 +3302,13 @@ def main(argv):
             iterablesFile = argv[a+1]
         elif '-debug' in arg:
             debug = True
+            print >> sys.__stdout__,(' ')
+            print >> sys.__stdout__,(' ')
+            print >> sys.__stdout__,('>>>>-----------------------<<<<')
             print >> sys.__stdout__,('>>>> Running in DEBUG MODE <<<<')
+            print >> sys.__stdout__,('>>>>-----------------------<<<<')
+            print >> sys.__stdout__,(' ')
+            print >> sys.__stdout__,(' ')
 
     if 'inputDirectory' not in locals():
         print >> sys.__stdout__,(' ')
@@ -3570,8 +3576,6 @@ def main(argv):
 
         RVEparams['input']['modelname'] = basename + '_' + variationString
 
-        writeLineToLogFile(logfilefullpath,'a',RVEparams['input']['modelname'],True)
-        sys.exit(2)
         if RVEparams['geometry']['deltatheta']<20:
             RVEparams['mesh']['size']['deltapsi'] = 0.5*RVEparams['geometry']['deltatheta']
             RVEparams['mesh']['size']['deltaphi'] = 20.0

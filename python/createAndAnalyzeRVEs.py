@@ -3523,6 +3523,61 @@ def main(argv):
     with open(join(inputDirectory,plotFile.split('.')[0]+'.deck'),'r') as deck:
         decklines = deck.readlines()
 
+    keywords = []
+    values = []
+
+    for line in decklines:
+        if line[0] == '#':
+            continue
+        removeComment = line.replace('\n','').split('#')[0]
+        keywordSet = removeComment.split('@')[0]
+        keywords.append(keywordSet.replace(' ','').split(','))
+        dataType = removeComment.split('$')[1]
+        if  'list of boolean' in dataType:
+            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
+            dataList = []
+            for dataString in listAsString:
+                dataList.append(ast.literal_eval(dataString))
+            values.append(dataList)
+        elif  'list of int' in dataType:
+            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
+            dataList = []
+            for dataString in listAsString:
+                dataList.append(int(dataString))
+            values.append(dataList)
+        elif  'list of float' in dataType:
+            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
+            dataList = []
+            for dataString in listAsString:
+                dataList.append(float(dataString))
+            values.append(dataList)
+        elif  'list of string' in dataType:
+            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
+            dataList = []
+            for dataString in listAsString:
+                dataList.append(str(dataString))
+            values.append(dataList)
+        elif  'list of ABAQUS keyword' in dataType:
+            values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0]])
+            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
+            dataList = []
+            for dataString in listAsString:
+                dataList.append(ABQbuiltinDict[dataString])
+            values.append(dataList)
+        elif 'boolean' in dataType:
+            values.append(ast.literal_eval(removeComment.split('@')[1].split('$')[0].replace(' ','')))
+        elif  'int' in dataType:
+            values.append(int(removeComment.split('@')[1].split('$')[0].replace(' ','')))
+        elif  'float' in dataType:
+            values.append(float(removeComment.split('@')[1].split('$')[0].replace(' ','')))
+        elif  'string' in dataType:
+            values.append(str(removeComment.split('@')[1].split('$')[0].replace(' ','')))
+        elif  'ABAQUS keyword' in dataType:
+            values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0].replace(' ','')])
+
+    for k,keywordSet in enumerate(keywords):
+        fillDataDictionary(RVEparams,keywordSet,values[k])
+
     #=======================================================================
     # END - PLOT SETTINGS
     #=======================================================================

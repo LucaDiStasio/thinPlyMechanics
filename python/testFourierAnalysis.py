@@ -36,7 +36,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import fftpack
 
-wd = 'C:/Users/lucdis/Documents/WD/data/thinplymechanics'
+wd = 'C:/02_Local-folder/01_Luca/01_WD/data/thinplymechanics'
 filename = 'BEM-data.csv'
 
 with open(join(wd,filename),'r') as csv:

@@ -36,8 +36,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import fftpack, optimize
 
-def model(x,A,B,C):
+def model1(x,A,B,C,D):
+    return (A*np.sin(B*x))
+
+def model2(x,A,B,C,D):
     return (A*np.sin(B*x+C))
+
+def model3(x,A,B,C,D):
+    return (A*np.sin(B*x+C)+D)
+
+def model4(x,A,B,C,D):
+    return (A*np.sin(B*x)+D)
 
 plt.close("all")
 
@@ -68,37 +77,66 @@ plt.ylabel('G/GO [-]')
 plt.legend(['GI', 'GII', 'GTOT'], loc=1)
 plt.show()
 
-ft_populations = fftpack.fft(data[:,1:], axis=0)
-frequencies = fftpack.fftfreq(data[:,1:].shape[0], data[1,0] - data[0,0])
-periods = 1 / frequencies
+ft_GI = fftpack.fft(data[:,1])
+ft_GII = fftpack.fft(data[:,2])
+ft_GTOT = fftpack.fft(data[:,3])
+freq_GI = fftpack.fftfreq(data[:,1].shape[0], data[1,0] - data[0,0])
+freq_GII = fftpack.fftfreq(data[:,2].shape[0], data[1,0] - data[0,0])
+freq_GTOT = fftpack.fftfreq(data[:,3].shape[0], data[1,0] - data[0,0])
+period_GI = 1 / freq_GI
+period_GII = 1 / freq_GII
+period_GTOT = 1 / freq_GTOT
+
+print(freq_GI)
+print(freq_GII)
+print(freq_GTOT)
 
 plt.figure()
-plt.plot(periods, abs(ft_populations), 'o')
-plt.xlim(0, 180)
-plt.xlabel('Period')
-plt.ylabel('Power')
+plt.plot(freq_GI, abs(ft_GI), 'o')
+plt.xlim(0, 1.01*np.max(freq_GI))
+plt.xlabel('Frequencies')
+plt.ylabel('Power - GI')
 plt.show()
-
-res_GI, cov_GI = optimize.curve_fit(model,data[:6,0],data[:6,1],p0=[0.3,1.0/20.0,0.0])
-res_GII, cov_GII = optimize.curve_fit(model,data[:-4,0],data[:-4,2],p0=[0.7,1.0/60.0,0.0])
-res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:-4,0],data[:-4,3],p0=[0.7,1.0/60.0,0.0])
-
-print(res_GI)
-print(res_GII)
-print(res_GTOT)
-
-angles = np.linspace(0., 150., num=360)
-angles1 = np.linspace(0., 60., num=120)
 
 plt.figure()
-plt.plot(data[:,0], data[:,1], 'ro')
-plt.plot(angles1, model(angles1, *res_GI), 'r-')
-plt.plot(data[:,0], data[:,2], 'bo')
-plt.plot(angles, model(angles, *res_GII), 'b-')
-plt.plot(data[:,0], data[:,3], 'go')
-plt.plot(angles, model(angles, *res_GTOT), 'g-')
-plt.xlabel('deltatheta')
-plt.ylabel('G/GO [-]')
-plt.legend(['GI,data', 'GI,interp','GII,data', 'GII,interp','GTOT,data','GTOT,interp'], loc=1)
-
+plt.plot(freq_GII, abs(ft_GII), 'o')
+plt.xlim(0, 1.01*np.max(freq_GI))
+plt.xlabel('Frequencies')
+plt.ylabel('Power - GII')
 plt.show()
+
+plt.figure()
+plt.plot(freq_GTOT, abs(ft_GTOT), 'o')
+plt.xlim(0, 1.01*np.max(freq_GI))
+plt.xlabel('Frequencies')
+plt.ylabel('Power - GTOT')
+plt.show()
+
+models = [model1,model2,model3,model4]
+titles = ['A*sin(B*x)','A*sin(B*x+C)','A*sin(B*x+C)+D','A*sin(B*x)+D']
+
+for m,model in enumerate(models):
+    res_GI, cov_GI = optimize.curve_fit(model,data[:6,0],data[:6,1],p0=[0.3,1.0/20.0,0.0,0.0])
+    res_GII, cov_GII = optimize.curve_fit(model,data[:,0],data[:,2],p0=[0.7,1.0/60.0,0.0,0.0])
+    res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:,0],data[:,3],p0=[0.7,1.0/60.0,0.0,0.0])
+
+    print(res_GI)
+    print(res_GII)
+    print(res_GTOT)
+
+    angles = np.linspace(0., 150., num=300)
+    angles1 = np.linspace(0., 60., num=120)
+
+    plt.figure()
+    plt.plot(data[:,0], data[:,1], 'ro')
+    plt.plot(angles1, model(angles1, *res_GI), 'r-')
+    plt.plot(data[:,0], data[:,2], 'bo')
+    plt.plot(angles, model(angles, *res_GII), 'b-')
+    plt.plot(data[:,0], data[:,3], 'go')
+    plt.plot(angles, model(angles, *res_GTOT), 'g-')
+    plt.xlabel('deltatheta')
+    plt.ylabel('G/GO [-]')
+    plt.title(titles[m])
+    plt.legend(['GI,data', 'GI,interp','GII,data', 'GII,interp','GTOT,data','GTOT,interp'], loc=1)
+
+    plt.show()

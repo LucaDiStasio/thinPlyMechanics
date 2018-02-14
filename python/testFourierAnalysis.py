@@ -34,7 +34,7 @@ import sys, os
 from os.path import isfile, join, exists
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy import fftpack, optimize 
+from scipy import fftpack, optimize
 
 def model(x,A,B,C):
     return (A*np.sin(B*x+C))
@@ -79,15 +79,20 @@ plt.xlabel('Period')
 plt.ylabel('Power')
 plt.show()
 
-res_GI, cov_GI = optimize.curve_fit(model,data[:,0],data[:,1])
-res_GII, cov_GII = optimize.curve_fit(model,data[:,0],data[:,2])
-res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:,0],data[:,3])
+res_GI, cov_GI = optimize.curve_fit(model,data[:6,0],data[:6,1],p0=[0.3,1.0/20.0,0.0])
+res_GII, cov_GII = optimize.curve_fit(model,data[:-4,0],data[:-4,2],p0=[0.7,1.0/60.0,0.0])
+res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:-4,0],data[:-4,3],p0=[0.7,1.0/60.0,0.0])
 
-angles = np.linspace(0., 180., num=360)
+print(res_GI)
+print(res_GII)
+print(res_GTOT)
+
+angles = np.linspace(0., 150., num=360)
+angles1 = np.linspace(0., 60., num=120)
 
 plt.figure()
 plt.plot(data[:,0], data[:,1], 'ro')
-plt.plot(angles, model(angles, *res_GI), 'r-')
+plt.plot(angles1, model(angles1, *res_GI), 'r-')
 plt.plot(data[:,0], data[:,2], 'bo')
 plt.plot(angles, model(angles, *res_GII), 'b-')
 plt.plot(data[:,0], data[:,3], 'go')

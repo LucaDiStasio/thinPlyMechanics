@@ -1012,7 +1012,7 @@ def add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath
         if fiberVertices[key]['coords'][0]==0.0 and fiberVertices[key]['coords'][1]==0.0:
             fiberOriginIndex = key
     if fiber['isCracked']:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'The fiber IS CRACKED',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'A DEBOND is present at the fiber/matrix interface',True)
         regionRadiuses = [fiber['R1'],fiber['R2'],fiber['R3'],fiber['R4']]
         circsectionsIndeces = []
         for R in regionRadiuses:
@@ -1023,11 +1023,12 @@ def add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath
             circsectionsIndeces.append(lastGeometryKey)
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
         if len(fiber['cracks'])>1:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'There is 1 crack',True)
-        else:
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'There are ' + str(len(fiber['cracks'])) + ' cracks',True)
-        for cNum,crack in enumerate(fiber['cracks']):
+        else:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'There is 1 crack',True)
+        for cNum,crackKey in enumerate(fiber['cracks'].keys()):
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Crack number ' + str(cNum),True)
+            crack = fiber['cracks'][crackKey]
             angles = [crack['theta']+crack['deltatheta']]
             if crack['isMeasured']:
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The crack IS SUBJECT TO MEASUREMENTS',True)
@@ -1038,18 +1039,38 @@ def add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The crack IS NOT SUBJECT TO MEASUREMENTS',True)
             if not crack['isSymm']:
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The crack IS NOT SYMMETRIC',True)
-                angles = [crack['theta']-crack['deltatheta']]
-                angles.append(crack['theta']-crack['deltatheta']+crack['deltapsi'])
-                angles.append(crack['theta']-crack['deltatheta']-crack['deltapsi'])
                 angles.append(crack['theta']-crack['deltatheta']-crack['deltapsi']-crack['deltaphi'])
+                angles.append(crack['theta']-crack['deltatheta']-crack['deltapsi'])
+                angles.append(crack['theta']-crack['deltatheta']+crack['deltapsi'])
+                angles.append(crack['theta']-crack['deltatheta'])
             else:
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The crack IS SYMMETRIC',True)
             constructionLinesIndeces = []
             for angle in angles:
-                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction line at = ' + str(angle) + ' deg ...',True)
-
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction line at = ' + str(angle) + ' deg',True)
+                fiberSketch.ConstructionLine(point1=(fiber['center'][0], fiber['center'][1]), angle=angle)
+                lastGeometryKey += 1
+                constructionLinesIndeces.append(lastGeometryKey)
+                fiberSketch.CoincidentConstraint(entity1=fiberVertices[fiberOriginIndex], entity2=fiberGeometry[lastGeometryKey],addUndoState=False)
+                reportSketchGeomElements(fiberGeometry,fiberVertices,logfilepath,baselogindent + 2*logindent,logindent)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw segment at = ' + str(angle) + ' deg',True)
+                Ax = fiber['center'][0] + fiber['R2']*np.cos(angle)
+                Ay = fiber['center'][1] + fiber['R2']*np.sin(angle)
+                Bx = fiber['center'][0] + fiber['R3']*np.cos(angle)
+                By = fiber['center'][1] + fiber['R3']*np.sin(angle)
+                fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By))
+                lastGeometryKey += 1
+                fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[circsectionsIndeces[1]], entity2=fiberGeometry[lastGeometryKey],addUndoState=False)
+                fiberSketch.CoincidentConstraint(entity1=fiberVertices[-2], entity2=fiberGeometry[circsectionsIndeces[1]],addUndoState=False)
+                fiberSketch.CoincidentConstraint(entity1=fiberVertices[-1], entity2=fiberGeometry[circsectionsIndeces[2]],addUndoState=False)
+                reportSketchGeomElements(fiberGeometry,fiberVertices,logfilepath,baselogindent + 2*logindent,logindent)
     else:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'The fiber IS NOT CRACKED',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'A DEBOND is present at the fiber/matrix interface',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)
+    pickedFaces = currentpart.faces.findAt(coordinates=(0.5*L, 0.5*L, 0))
+    RVEpart.PartitionFaceBySketch(faces=pickedFaces, sketch=fiberSketch)
+    fiberSketch.unsetPrimaryObject()
+    del model.sketches['fiberSketch']
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
 def add2DFullFiber(currentmodel,fiber,logfilepath,baselogindent,logindent):
@@ -1082,10 +1103,71 @@ def add2DFullFiber(currentmodel,fiber,logfilepath,baselogindent,logindent):
     fiberSketch.CircleByCenterPerimeter(center=(fiber['center'][0], fiber['center'][1]), point1=(fiber['center'][0]+fiber['Rf']*np.cos(45.0*np.pi/180.0), fiber['center'][1]+fiber['Rf']*np.sin(45.0*np.pi/180.0)))
     reportSketchGeomElements(sketchGeometry,sketchVertices,logfilepath,baselogindent + 2*logindent,logindent)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    if fiber['cracks']['isCracked']:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'The fiber IS CRACKED',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Identify indeces of fiber and its center point ...',True)
+    lastGeometryKey = 0
+    for key in fiberGeometry.keys():
+        lastGeometryKey = key
+        if 'ARC' in fiberGeometry[key]['curveType']:
+            fiberIndex = key
+    lastVerticesKey = 0
+    for key in fiberVertices.keys():
+        lastVerticesKey = key
+        if fiberVertices[key]['coords'][0]==0.0 and fiberVertices[key]['coords'][1]==0.0:
+            fiberOriginIndex = key
+    if fiber['isCracked']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'A DEBOND is present at the fiber/matrix interface',True)
+        regionRadiuses = [fiber['R1'],fiber['R2'],fiber['R3'],fiber['R4']]
+        circsectionsIndeces = []
+        for R in regionRadiuses:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw circular section with R = ' + str(R) + ' ...',True)
+            fiberSketch.CircleByCenterPerimeter(center=(fiber['center'][0], fiber['center'][1]), point1=(fiber['center'][0]+R*np.cos(45.0*np.pi/180.0), fiber['center'][1]+R*np.sin(45.0*np.pi/180.0)))
+            reportSketchGeomElements(fiberGeometry,fiberVertices,logfilepath,baselogindent + 2*logindent,logindent)
+            lastGeometryKey += 1
+            circsectionsIndeces.append(lastGeometryKey)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        if len(fiber['cracks'])>1:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'There are ' + str(len(fiber['cracks'])) + ' cracks',True)
+        else:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'There is 1 crack',True)
+        for cNum,crackKey in enumerate(fiber['cracks'].keys()):
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Crack number ' + str(cNum),True)
+            crack = fiber['cracks'][crackKey]
+            angles = [crack['theta']+crack['deltatheta']]
+            if crack['isMeasured']:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The crack IS SUBJECT TO MEASUREMENTS',True)
+                angles.append(crack['theta']+crack['deltatheta']-crack['deltapsi'])
+                angles.append(crack['theta']+crack['deltatheta']+crack['deltapsi'])
+                angles.append(crack['theta']+crack['deltatheta']+crack['deltapsi']+crack['deltaphi'])
+                angles.append(crack['theta']-crack['deltatheta']-crack['deltapsi']-crack['deltaphi'])
+                angles.append(crack['theta']-crack['deltatheta']-crack['deltapsi'])
+                angles.append(crack['theta']-crack['deltatheta']+crack['deltapsi'])
+                angles.append(crack['theta']-crack['deltatheta'])
+            else:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The crack IS NOT SUBJECT TO MEASUREMENTS',True)
+            constructionLinesIndeces = []
+            for angle in angles:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction line at = ' + str(angle) + ' deg',True)
+                fiberSketch.ConstructionLine(point1=(fiber['center'][0], fiber['center'][1]), angle=angle)
+                lastGeometryKey += 1
+                constructionLinesIndeces.append(lastGeometryKey)
+                fiberSketch.CoincidentConstraint(entity1=fiberVertices[fiberOriginIndex], entity2=fiberGeometry[lastGeometryKey],addUndoState=False)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw segment at = ' + str(angle) + ' deg',True)
+                Ax = fiber['center'][0] + fiber['R2']*np.cos(angle)
+                Ay = fiber['center'][1] + fiber['R2']*np.sin(angle)
+                Bx = fiber['center'][0] + fiber['R3']*np.cos(angle)
+                By = fiber['center'][1] + fiber['R3']*np.sin(angle)
+                fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By))
+                lastGeometryKey += 1
+                fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[circsectionsIndeces[1]], entity2=fiberGeometry[lastGeometryKey],addUndoState=False)
+                fiberSketch.CoincidentConstraint(entity1=fiberVertices[-2], entity2=fiberGeometry[circsectionsIndeces[1]],addUndoState=False)
+                fiberSketch.CoincidentConstraint(entity1=fiberVertices[-1], entity2=fiberGeometry[circsectionsIndeces[2]],addUndoState=False)
     else:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'The fiber IS NOT CRACKED',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'NO DEBOND is present at the fiber/matrix interface',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)
+    pickedFaces = currentpart.faces.findAt(coordinates=(0.5*L, 0.5*L, 0))
+    RVEpart.PartitionFaceBySketch(faces=pickedFaces, sketch=fiberSketch)
+    fiberSketch.unsetPrimaryObject()
+    del model.sketches['fiberSketch']
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
 def addMaterial(currentmodel,material,logfilepath,baselogindent,logindent):
@@ -1220,33 +1302,68 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 #                            Create RVE region
 #===============================================================================#
     skipLineToLogFile(logfilepath,'a',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating RVE region ...',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating RVE region',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
     create2DRVEregion(model,parameters['geometry']['RVE-type'],parameters['geometry']['L'],logfilepath,baselogindent + logindent,logindent)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
     mdb.save()
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 #===============================================================================#
 #                         Create fibers and debonds
 #===============================================================================#
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating fibers and debonds ...',True)
-    for fiber in parameters['fibers']:
-        if fiber['type'] == 'quarter':
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calling function: ',True)
 
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Successfully returned from function: ',True)
-        elif fiber['type'] == 'half':
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calling function: ',True)
+    for f,fiberKey in enumerate(parameters['fibers'].keys()):
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating Fiber n. ' + str(f+1),True)
+        fiber = parameters['fibers'][fiberKey]
+        if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
 
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Successfully returned from function: ',True)
-        else:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calling function: ',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+        elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
 
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Successfully returned from function: ',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+        elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+        elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+        elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+        elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+        elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+        elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+        elif fiber['type'] in ['FULL','full','Full']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                                 Sets creation
+#===============================================================================#
+
 
     mdb.save()
 

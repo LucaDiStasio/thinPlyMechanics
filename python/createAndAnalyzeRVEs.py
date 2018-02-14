@@ -1277,7 +1277,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Read and assign most used parameters to variables ...',True)
     baselogindent += logindent
     wd = parameters['input']['wd']
-    caefilename = parameters['input']['caefilename']
+    caefilename = parameters['input']['caefilename'].split('.')[0] + '.cae'
     modelname = parameters['input']['modelname']
     L = parameters['geometry']['L']
     Rf = parameters['geometry']['Rf']

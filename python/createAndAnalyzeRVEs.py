@@ -1786,7 +1786,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MATRIX-INTANNULUS',True)
 
     setsOfFacesData = [[0.0, R2, 0,'MATRIX-INTERMEDIATEANNULUS'],
-                       [0.0, Rf+0.5*(L-Rf), 0,'MATRIX-BODY']]
+                       [0.975*L, 0.975*L, 0,'MATRIX-BODY']]
 
 
     for setOfFacesData in setsOfFacesData:

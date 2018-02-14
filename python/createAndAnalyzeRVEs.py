@@ -2068,8 +2068,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         #nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
 
     if nTangential<parameters['Jintegral']['numberOfContours'] or nRadialFiber<parameters['Jintegral']['numberOfContours'] or nRadialMatrix<parameters['Jintegral']['numberOfContours']:
-        writeErrorToLogFile(logfilepath,'a','MESH SIZE','The provided element size around the crack tip is incompatible with the number of contour integral requested.\nContour integral option in ABAQUS is available only for quadrilateral and hexahedral elements.',True)
-        sys.exit(2)
+        parameters['Jintegral']['numberOfContours'] = int(np.floor(np.min([nTangential,nRadialFiber,nRadialMatrix])) - 1)
+        writeErrorToLogFile(logfilepath,'a','MESH SIZE','The provided element size around the crack tip is incompatible with the number of contour integral requested.\nContour integral option in ABAQUS is available only for quadrilateral and hexahedral elements.\nThe number of contour requested will be automatically adjusted to ' + str(parameters['Jintegral']['numberOfContours']),True)
 
     # assign mesh controls
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)

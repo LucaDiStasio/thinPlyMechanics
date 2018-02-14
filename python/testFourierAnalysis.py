@@ -34,9 +34,15 @@ import sys, os
 from os.path import isfile, join, exists
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy import fftpack
+from scipy import fftpack, optimize 
 
-wd = 'C:/02_Local-folder/01_Luca/01_WD/data/thinplymechanics'
+def model(x,A,B,C):
+    return (A*np.sin(B*x+C))
+
+plt.close("all")
+
+#wd = 'C:/02_Local-folder/01_Luca/01_WD/data/thinplymechanics'
+wd = 'C:/Users/lucdis/Documents/WD/data/thinplymechanics'
 filename = 'BEM-data.csv'
 
 with open(join(wd,filename),'r') as csv:
@@ -48,10 +54,10 @@ GII = []
 GTOT = []
 
 for line in lines[2:]:
-    theta.append(line.replace('\n','').split(',')[0])
-    GI.append(line.replace('\n','').split(',')[1])
-    GII.append(line.replace('\n','').split(',')[2])
-    GTOT.append(line.replace('\n','').split(',')[3])
+    theta.append(float(line.replace('\n','').split(',')[0]))
+    GI.append(float(line.replace('\n','').split(',')[1]))
+    GII.append(float(line.replace('\n','').split(',')[2]))
+    GTOT.append(float(line.replace('\n','').split(',')[3]))
 
 data = np.transpose(np.array([theta,GI,GII,GTOT]))
 
@@ -60,4 +66,34 @@ plt.plot(data[:,0], data[:,1:])
 plt.xlabel('deltatheta')
 plt.ylabel('G/GO [-]')
 plt.legend(['GI', 'GII', 'GTOT'], loc=1)
+plt.show()
+
+ft_populations = fftpack.fft(data[:,1:], axis=0)
+frequencies = fftpack.fftfreq(data[:,1:].shape[0], data[1,0] - data[0,0])
+periods = 1 / frequencies
+
+plt.figure()
+plt.plot(periods, abs(ft_populations), 'o')
+plt.xlim(0, 180)
+plt.xlabel('Period')
+plt.ylabel('Power')
+plt.show()
+
+res_GI, cov_GI = optimize.curve_fit(model,data[:,0],data[:,1])
+res_GII, cov_GII = optimize.curve_fit(model,data[:,0],data[:,2])
+res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:,0],data[:,3])
+
+angles = np.linspace(0., 180., num=360)
+
+plt.figure()
+plt.plot(data[:,0], data[:,1], 'ro')
+plt.plot(angles, model(angles, *res_GI), 'r-')
+plt.plot(data[:,0], data[:,2], 'bo')
+plt.plot(angles, model(angles, *res_GII), 'b-')
+plt.plot(data[:,0], data[:,3], 'go')
+plt.plot(angles, model(angles, *res_GTOT), 'g-')
+plt.xlabel('deltatheta')
+plt.ylabel('G/GO [-]')
+plt.legend(['GI,data', 'GI,interp','GII,data', 'GII,interp','GTOT,data','GTOT,interp'], loc=1)
+
 plt.show()

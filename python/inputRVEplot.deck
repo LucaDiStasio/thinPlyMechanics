@@ -1,0 +1,5 @@
+# everything after is a comment
+# keywords are divided by commas: keyword1, keyword2, ...
+# the corresponding value is introduced by @
+# variable type is introduced by $
+#

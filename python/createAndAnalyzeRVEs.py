@@ -3302,6 +3302,8 @@ def main(argv):
             dataFile = argv[a+1]
         elif '-iterables' in arg:
             iterablesFile = argv[a+1]
+        elif '-plot' in arg:
+            plotFile = argv[a+1]
         elif '-debug' in arg:
             debug = True
             print >> sys.__stdout__,(' ')
@@ -3330,6 +3332,13 @@ def main(argv):
         print >> sys.__stdout__,(' ')
         print >> sys.__stdout__,(' ')
         print >> sys.__stdout__,('!!! ERROR: missing iterables file !!!')
+        print >> sys.__stdout__,(' ')
+        print >> sys.__stdout__,(' ')
+        printHelp()
+    if 'plotFile' not in locals():
+        print >> sys.__stdout__,(' ')
+        print >> sys.__stdout__,(' ')
+        print >> sys.__stdout__,('!!! ERROR: missing plot file !!!')
         print >> sys.__stdout__,(' ')
         print >> sys.__stdout__,(' ')
         printHelp()
@@ -3505,6 +3514,17 @@ def main(argv):
 
     #=======================================================================
     # END - ITERABLES
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - PLOT SETTINGS
+    #=======================================================================
+
+    with open(join(inputDirectory,plotFile.split('.')[0]+'.deck'),'r') as deck:
+        decklines = deck.readlines()
+
+    #=======================================================================
+    # END - PLOT SETTINGS
     #=======================================================================
 
     #=======================================================================

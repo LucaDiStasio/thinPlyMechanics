@@ -1073,7 +1073,7 @@ def add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath
     del model.sketches['fiberSketch']
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
-def add2DFullFiber(currentmodel,fiber,logfilepath,baselogindent,logindent):
+def add2DFullFiber(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: add2DFullFiber()',True)
     # create geometrical transform to draw partition sketch
@@ -1320,41 +1320,41 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating Fiber n. ' + str(f+1),True)
         fiber = parameters['fibers'][fiberKey]
         if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
 
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
 
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
 
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
 
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
 
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
 
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
 
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
 
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['FULL','full','Full']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFullFiber(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
 
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFullFiber(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
 
     mdb.save()
 

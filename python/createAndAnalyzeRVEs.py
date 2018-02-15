@@ -1403,6 +1403,10 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     mdb.save()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of edges',True)
+    fiberEdgesSOUTHside = [] # [[fiber intersection 1 with side, fiber intersection 2 with side],...] fiber intersection 1 with side < fiber intersection 2 with side
+    fiberEdgesEASTside = []
+    fiberEdgesNORTHside = []
+    fiberEdgesWESTside = []
     for f,fiberKey in enumerate(parameters['fibers'].keys()):
         fiber = parameters['fibers'][fiberKey]
         Rf = fiber['Rf']
@@ -1410,20 +1414,32 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
             crackLimits = []
             if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
                 angle = 135.0
+                fiberEdgesEASTside = []
+                fiberEdgesSOUTHside = []
             elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
                 angle = 45.0
+                fiberEdgesWESTside = []
+                fiberEdgesSOUTHside = []
             elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
                 angle = 315.0
+                fiberEdgesWESTside = []
+                fiberEdgesNORTHside = []
             elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
                 angle = 225.0
+                fiberEdgesEASTside = []
+                fiberEdgesNORTHside = []
             elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
                 angle = 45.0
+                fiberEdgesSOUTHside = []
             elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
                 angle = 315.0
+                fiberEdgesNORTHside = []
             elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
                 angle = 135.0
+                fiberEdgesEASTside = []
             elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
                 angle = 45.0
+                fiberEdgesWESTside = []
             elif fiber['type'] in ['FULL','full','Full']:
                 angle = 45.0
             setsOfEdgesData = [[0.99*fiber['R1']*np.cos(angle*np.pi/180),0.99*fiber['R1']*np.sin(angle*np.pi/180),0.0,1.01*fiber['R1']*np.cos(angle*np.pi/180),1.01*fiber['R1']*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-FIRSTCIRCLE'],
@@ -1946,6 +1962,102 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: addMaterial(currentmodel,material,logfilepath,baselogindent,logindent)',True)
         addMaterial(model,material,logfilepath,baselogindent + 3*logindent,logindent)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: addMaterial(currentmodel,material,logfilepath,baselogindent,logindent)',True)
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                             Sections creation
+#===============================================================================#
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating sections ...',True)
+
+    for section in parameters['sections'].values():
+        if 'HomogeneousSolidSection' in section['type'] or 'Homogeneous Solid Section' in section['type'] or 'somogeneoussolidsection' in section['type'] or 'homogeneous solid section' in section['type'] or 'Homogeneous solid section' in section['type']:
+            mdb.models[modelname].HomogeneousSolidSection(name=section['name'],
+            material=section['material'], thickness=section['thickness'])
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                             Sections assignment
+#===============================================================================#
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Making section assignments ...',True)
+
+    for sectionRegion in parameters['sectionRegions'].values():
+        RVEpart.SectionAssignment(region=RVEpart.sets[sectionRegion['set']], sectionName=sectionRegion['name'], offset=sectionRegion['offsetValue'],offsetType=sectionRegion['offsetType'], offsetField=sectionRegion['offsetField'],thicknessAssignment=sectionRegion['thicknessAssignment'])
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                             Instance creation
+#===============================================================================#
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating instance ...',True)
+
+    model.rootAssembly.DatumCsysByDefault(CARTESIAN)
+    model.rootAssembly.Instance(name='RVE-assembly', part=RVEpart, dependent=OFF)
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                             Step creation
+#===============================================================================#
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating step ...',True)
+
+    model.StaticStep(name='Load-Step', previous='Initial',
+        minInc=parameters['step']['minimumIncrement'])
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                             Boundary conditions
+#===============================================================================#
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assigning boundary conditions ...',True)
+
+    # SOUTH side: symmetry line
+
+    model.YsymmBC(name='SymmetryBound', createStepName='Load-Step',
+        region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
+
+    # NORTH side
+
+    # if 'periodic' in parameters['boundaryConditions']['north']['type']:
+    #
+    # elif 'rigidbar' in parameters['boundaryConditions']['north']['type']:
+    #
+    # elif 'homogeneousdisplacement' in parameters['boundaryConditions']['north']['type']:
+    #
+    # else free
+
+    # EAST side
+
+    # if 'periodic' in parameters['boundaryConditions']['north']['type']:
+    #
+    # else free
+
+    # WEST side
+
+    # if 'periodic' in parameters['boundaryConditions']['north']['type']:
+    #
+    # else free
 
     mdb.save()
 

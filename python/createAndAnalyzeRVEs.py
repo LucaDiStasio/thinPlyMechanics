@@ -1543,43 +1543,191 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                 for setOfEdgesData in setsOfEdgesData:
                     defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
                 setOfEdgesData = []
-                restBoundedEdgesNames = []
+                restBoundedSecondCircleNames = []
+                restBoundedInterfaceCircleNames = []
+                restBoundedThirdCircleNames = []
                 crackLimits = np.array(crackLimits)
                 crackLimits = crackLimits[crackLimits[:,0].argsort()]
-                if len(crackLimits)>1:
-                    for p,pair in crackLimits[1:]:
-                        angle = 0.5*(pair[0]-crackLimits[p-1][1])
+                for p,pair in crackLimits[1:]:
+                    angle = 0.5*(pair[0]+crackLimits[p-1][1])
+                    setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                    restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                    restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                    restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
+                    lim1 = 90.0
+                    lim2 = 180.0
+                    if crackLimits[0][0]>lim1:
+                        angle = 0,5*(crackLimits[0][0]+lim1)
                         setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
                         restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
                         setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
-                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
                         setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
-                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
-                    if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
-
-                        angle = 135.0
-                    elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
-                        angle = 45.0
-                    elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
-                        angle = 315.0
-                    elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
-                        angle = 225.0
-                    elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
-                        angle = 45.0
-                    elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
-                        angle = 315.0
-                    elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
-                        angle = 135.0
-                    elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
-                        angle = 45.0
-                    elif fiber['type'] in ['FULL','full','Full']:
-                        angle = 0.5*(crackLimits[0][0]-crackLimits[-1][1])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    if crackLimits[-1][1]<lim2:
+                        angle = 0,5*(crackLimits[0][0]+lim2)
                         setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
                         restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
                         setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
-                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
                         setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
-                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
+                    lim1 = 0.0
+                    lim2 = 90.0
+                    if crackLimits[0][0]>lim1:
+                        angle = 0,5*(crackLimits[0][0]+lim1)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    if crackLimits[-1][1]<lim2:
+                        angle = 0,5*(crackLimits[0][0]+lim2)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
+                    lim1 = 270.0
+                    lim2 = 360.0
+                    if crackLimits[0][0]>lim1:
+                        angle = 0,5*(crackLimits[0][0]+lim1)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    if crackLimits[-1][1]<lim2:
+                        angle = 0,5*(crackLimits[0][0]+lim2)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
+                    lim1 = 180.0
+                    lim2 = 270.0
+                    if crackLimits[0][0]>lim1:
+                        angle = 0,5*(crackLimits[0][0]+lim1)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    if crackLimits[-1][1]<lim2:
+                        angle = 0,5*(crackLimits[0][0]+lim2)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
+                    lim1 = 0.0
+                    lim2 = 180.0
+                    if crackLimits[0][0]>lim1:
+                        angle = 0,5*(crackLimits[0][0]+lim1)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    if crackLimits[-1][1]<lim2:
+                        angle = 0,5*(crackLimits[0][0]+lim2)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
+                    lim1 = 180.0
+                    lim2 = 360.0
+                    if crackLimits[0][0]>lim1:
+                        angle = 0,5*(crackLimits[0][0]+lim1)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    if crackLimits[-1][1]<lim2:
+                        angle = 0,5*(crackLimits[0][0]+lim2)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
+                    lim1 = 90.0
+                    lim2 = 270.0
+                    if crackLimits[0][0]>lim1:
+                        angle = 0,5*(crackLimits[0][0]+lim1)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    if crackLimits[-1][1]<lim2:
+                        angle = 0,5*(crackLimits[0][0]+lim2)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
+                    lim1 = 90.0
+                    lim2 = -90.0
+                    if crackLimits[0][0]>lim1:
+                        angle = 0,5*(crackLimits[0][0]+lim1)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    if crackLimits[-1][1]<lim2:
+                        angle = 0,5*(crackLimits[0][0]+lim2)
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                elif fiber['type'] in ['FULL','full','Full']:
+                    angle = 0.5*(crackLimits[0][0]+crackLimits[-1][1])
+                    setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                    restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                    restBoundedInterfaceCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                    restBoundedThirdCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                booleanSets = []
+                for name in restBoundedSecondCircleNames:
+                    booleanSets.append(RVEpart.sets[name])
+                RVEpart.SetByBoolean(name='FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED', sets=booleanSets)
+                booleanSets = []
+                for name in restBoundedInterfaceCircleNames:
+                    booleanSets.append(RVEpart.sets[name])
+                RVEpart.SetByBoolean(name='FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED', sets=booleanSets)
+                booleanSets = []
+                for name in restBoundedThirdCircleNames:
+                    booleanSets.append(RVEpart.sets[name])
+                RVEpart.SetByBoolean(name='FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED', sets=booleanSets)
         else:
             if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
                 angle = 135.0

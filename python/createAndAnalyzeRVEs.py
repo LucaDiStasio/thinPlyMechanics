@@ -1760,7 +1760,57 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
         fiber = parameters['fibers'][fiberKey]
         Rf = fiber['Rf']
         if fiber['isCracked']:
+            fiberSets = []
+            matrixNeighSets = []
+            crackLimits = []
+            if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
+                angle = 135.0
+            elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
+                angle = 45.0
+            elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
+                angle = 315.0
+            elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
+                angle = 225.0
+            elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
+                angle = 45.0
+            elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
+                angle = 315.0
+            elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
+                angle = 135.0
+            elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
+                angle = 45.0
+            elif fiber['type'] in ['FULL','full','Full']:
+                angle = 45.0
+            setsOfFacesData = [[0.5*fiber['R1']*np.cos(angle), 0.5*fiber['R1']*np.sin(angle), 0.0,'FIBER'+str(f+1)+'-CORE'],
+                               [(fiber['R1']+0.5*(fiber['R2']-fiber['R1']))*np.cos(angle), (fiber['R1']+0.5*(fiber['R2']-fiber['R1']))*np.sin(angle), 0.0,'FIBER'+str(f+1)+'-FIRSTRING'],
+                               [(fiber['R3']+0.5*(fiber['R4']-fiber['R3']))*np.cos(angle), (fiber['R3']+0.5*(fiber['R4']-fiber['R3']))*np.sin(angle), 0.0,'FIBER'+str(f+1)+'-FOURTHRING']]
+            for setOfFacesData in setsOfFacesData:
+                defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
+                fiberSets.append(RVEpart.sets[setOfFacesData[-1]])
             for cNum,crackKey in enumerate(fiber['cracks'].keys()):
+
+        else:
+            if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
+                angle = 135.0
+            elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
+                angle = 45.0
+            elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
+                angle = 315.0
+            elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
+                angle = 225.0
+            elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
+                angle = 45.0
+            elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
+                angle = 315.0
+            elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
+                angle = 135.0
+            elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
+                angle = 45.0
+            elif fiber['type'] in ['FULL','full','Full']:
+                angle = 45.0
+            setsOfFacesData = [[0.5*Rf*np.cos(angle), 0.5*Rf*np.sin(angle), 0.0,'FIBER'+str(f+1)]]
+            for setOfFacesData in setsOfFacesData:
+                defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

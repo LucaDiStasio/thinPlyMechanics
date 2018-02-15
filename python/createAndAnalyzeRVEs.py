@@ -1316,44 +1316,62 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating fibers and debonds ...',True)
 
+    planeToSketch = model.parts['RVE'].faces[0]
+
     for f,fiberKey in enumerate(parameters['fibers'].keys()):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating Fiber n. ' + str(f+1),True)
         fiber = parameters['fibers'][fiberKey]
         if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
-
+            fiber['arcStart'] = 180.0
+            fiber['arcStop'] = 90.0
+            add2DFiberSection(model.parts['RVE'],model,planeToSketch,fiber,parameters['geometry']['L'],logfilepath,baselogindent + 4*logindent,logindent)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
-
+            fiber['arcStart'] = 90.0
+            fiber['arcStop'] = 0.0
+            add2DFiberSection(model.parts['RVE'],model,planeToSketch,fiber,parameters['geometry']['L'],logfilepath,baselogindent + 4*logindent,logindent)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
-
+            fiber['arcStart'] = 360.0
+            fiber['arcStop'] = 270.0
+            add2DFiberSection(model.parts['RVE'],model,planeToSketch,fiber,parameters['geometry']['L'],logfilepath,baselogindent + 4*logindent,logindent)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
-
+            fiber['arcStart'] = 270.0
+            fiber['arcStop'] = 180.0
+            add2DFiberSection(model.parts['RVE'],model,planeToSketch,fiber,parameters['geometry']['L'],logfilepath,baselogindent + 4*logindent,logindent)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
-
+            fiber['arcStart'] = 180.0
+            fiber['arcStop'] = 0.0
+            add2DFiberSection(model.parts['RVE'],model,planeToSketch,fiber,parameters['geometry']['L'],logfilepath,baselogindent + 4*logindent,logindent)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
-
+            fiber['arcStart'] = 360.0
+            fiber['arcStop'] = 180.0
+            add2DFiberSection(model.parts['RVE'],model,planeToSketch,fiber,parameters['geometry']['L'],logfilepath,baselogindent + 4*logindent,logindent)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
-
+            fiber['arcStart'] = 270.0
+            fiber['arcStop'] = 90.0
+            add2DFiberSection(model.parts['RVE'],model,planeToSketch,fiber,parameters['geometry']['L'],logfilepath,baselogindent + 4*logindent,logindent)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
-
+            fiber['arcStart'] = 90.0
+            fiber['arcStop'] = -90.0
+            add2DFiberSection(model.parts['RVE'],model,planeToSketch,fiber,parameters['geometry']['L'],logfilepath,baselogindent + 4*logindent,logindent)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
         elif fiber['type'] in ['FULL','full','Full']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: add2DFullFiber(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
-
+            add2DFullFiber(model.parts['RVE'],model,planeToSketch,fiber,parameters['geometry']['L'],logfilepath,baselogindent + 4*logindent,logindent)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: add2DFullFiber(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,baselogindent,logindent)',True)
 
     mdb.save()
@@ -1363,7 +1381,196 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#
 #                                 Sets creation
 #===============================================================================#
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create sets ...',True)
 
+    RVEpart = model.parts['RVE']
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of vertices',True)
+    for f,fiberKey in enumerate(parameters['fibers'].keys()):
+        fiber = parameters['fibers'][fiberKey]
+        Rf = fiber['Rf']
+        if fiber['isCracked']:
+            for cNum,crackKey in enumerate(fiber['cracks'].keys()):
+                crack = fiber['cracks'][crackKey]
+                angle = crack['theta'] + crack['deltatheta']
+                defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos(angle*np.pi/180),Rf*np.sin(angle*np.pi/180),0.0,0.001*Rf,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',logfilepath,baselogindent + 4*logindent,True)
+                if not crack['isSymm']:
+                    angle = crack['theta'] - crack['deltatheta']
+                    defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos(angle*np.pi/180),Rf*np.sin(angle*np.pi/180),0.0,0.001*Rf,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPNEG',logfilepath,baselogindent + 4*logindent,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of edges',True)
+    for f,fiberKey in enumerate(parameters['fibers'].keys()):
+        fiber = parameters['fibers'][fiberKey]
+        Rf = fiber['Rf']
+        if fiber['isCracked']:
+            crackLimits = []
+            if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
+                angle = 135.0
+            elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
+                angle = 45.0
+            elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
+                angle = 315.0
+            elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
+                angle = 225.0
+            elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
+                angle = 45.0
+            elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
+                angle = 315.0
+            elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
+                angle = 135.0
+            elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
+                angle = 45.0
+            elif fiber['type'] in ['FULL','full','Full']:
+                angle = 45.0
+            setsOfEdgesData = [[0.99*fiber['R1']*np.cos(angle*np.pi/180),0.99*fiber['R1']*np.sin(angle*np.pi/180),0.0,1.01*fiber['R1']*np.cos(angle*np.pi/180),1.01*fiber['R1']*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-FIRSTCIRCLE'],
+                               [0.99*fiber['R4']*np.cos(angle*np.pi/180),0.99*fiber['R4']*np.sin(angle*np.pi/180),0.0,1.01*fiber['R4']*np.cos(angle*np.pi/180),1.01*fiber['R4']*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-FOURTHCIRCLE']]
+            for setOfEdgesData in setsOfEdgesData:
+                defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+            for cNum,crackKey in enumerate(fiber['cracks'].keys()):
+                crack = fiber['cracks'][crackKey]
+                if crack['isMeasured'] and not crack['isSymm']:
+                    R2 = fiber['R2']
+                    R3 = fiber['R3']
+                    angleCrack = crack['theta']
+                    angleCT1 = crack['theta']+crack['deltatheta']
+                    angleCT2 = crack['theta']-crack['deltatheta']
+                    angleUpperRefineCrack = crack['theta']+crack['deltatheta']-crack['deltapsi']
+                    angleLowerRefineCrack = crack['theta']-crack['deltatheta']+crack['deltapsi']
+                    angleUpperFirstBound = crack['theta']+crack['deltatheta']+crack['deltapsi']
+                    angleLowerFirstBound = crack['theta']-crack['deltatheta']-crack['deltapsi']
+                    angleUpperSecondBound = crack['theta']+crack['deltatheta']+crack['deltapsi']+crack['deltaphi']
+                    angleLowerSecondBound = crack['theta']-crack['deltatheta']-crack['deltapsi']-crack['deltaphi']
+                    angleMiddleUpperRefineCrack = crack['theta']+crack['deltatheta']-0.5*crack['deltapsi']
+                    angleMiddleLowerRefineCrack = crack['theta']-crack['deltatheta']+0.5*crack['deltapsi']
+                    angleMiddleUpperFirstBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']
+                    angleMiddleLowerFirstBound = crack['theta']-crack['deltatheta']-0.5*crack['deltapsi']
+                    angleMiddleUpperSecondBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']+crack['deltaphi']
+                    angleMiddleLowerSecondBound = crack['theta']-crack['deltatheta']-0.5*crack['deltapsi']-crack['deltaphi']
+                    crackLimits.append([angleUpperSecondBound,angleLowerSecondBound])
+                    setsOfEdgesData = [[0.99*R2*np.cos(angleCrack*np.pi/180),0.99*R2*np.sin(angleCrack*np.pi/180),0.0,1.01*R2*np.cos(angleCrack*np.pi/180),1.01*R2*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER'],
+                                       [0.99*R2*np.cos(angleUpperRefineCrack*np.pi/180),0.99*R2*np.sin(angleUpperRefineCrack*np.pi/180),0.0,1.01*R2*np.cos(angleUpperRefineCrack*np.pi/180),1.01*R2*np.sin(angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERREFINECRACK'],
+                                       [0.99*R2*np.cos(angleUpperFirstBound*np.pi/180),0.99*R2*np.sin(angleUpperFirstBound*np.pi/180),0.0,1.01*R2*np.cos(angleUpperFirstBound*np.pi/180),1.01*R2*np.sin(angleUpperFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERFIRSTBOUN'],
+                                       [0.99*R2*np.cos(angleUpperSecondBound*np.pi/180),0.99*R2*np.sin(angleUpperSecondBound*np.pi/180),0.0,1.01*R2*np.cos(angleUpperSecondBound*np.pi/180),1.01*R2*np.sin(angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERSECONDBOUN'],
+                                       [0.99*Rf*np.cos(angleCrack*np.pi/180),0.99*Rf*np.sin(angleCrack*np.pi/180),0.0,1.01*Rf*np.cosangleCrack*np.pi/180),1.01*Rf*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-CRACKCENTER'],
+                                       [0.99*Rf*np.cos(angleUpperRefineCrack*np.pi/180),0.99*Rf*np.sin(angleUpperRefineCrack*np.pi/180),0.0,1.01*Rf*np.cos(angleUpperRefineCrack*np.pi/180),1.01*Rf*np.sin(angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERREFINECRACK'],
+                                       [0.99*Rf*np.cos(angleUpperFirstBound*np.pi/180),0.99*Rf*np.sin(angleUpperFirstBound*np.pi/180),0.0,1.01*Rf*np.cos(angleUpperFirstBound*np.pi/180),1.01*Rf*np.sin(angleUpperFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERFIRSTBOUN'],
+                                       [0.99*Rf*np.cos(angleUpperSecondBound*np.pi/180),0.99*Rf*np.sin(angleUpperSecondBound*np.pi/180),0.0,1.01*Rf*np.cos(angleUpperSecondBound*np.pi/180),1.01*Rf*np.sin(angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERSECONDBOUN'],
+                                       [0.99*R3*np.cos(angleCrack*np.pi/180),0.99*R3*np.sin(angleCrack*np.pi/180),0.0,1.01*R3*np.cosangleCrack*np.pi/180),1.01*R3*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-CRACKCENTER'],
+                                       [0.99*R3*np.cos(angleUpperRefineCrack*np.pi/180),0.99*R3*np.sin(angleUpperRefineCrack*np.pi/180),0.0,1.01*R3*np.cos(angleUpperRefineCrack*np.pi/180),1.01*R3*np.sin(angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-UPPERREFINECRACK'],
+                                       [0.99*R3*np.cos(angleUpperFirstBound*np.pi/180),0.99*R3*np.sin(angleUpperFirstBound*np.pi/180),0.0,1.01*R3*np.cos(angleUpperFirstBound*np.pi/180),1.01*R3*np.sin(angleUpperFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-UPPERFIRSTBOUN'],
+                                       [0.99*R3*np.cos(angleUpperSecondBound*np.pi/180),0.99*R3*np.sin(angleUpperSecondBound*np.pi/180),0.0,1.01*R3*np.cos(angleUpperSecondBound*np.pi/180),1.01*R3*np.sin(angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-UPPERSECONDBOUN'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleUpperRefineCrack*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleUpperRefineCrack*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleUpperRefineCrack*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERLOWERREFINEBOUND'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleUpperRefineCrack*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleUpperRefineCrack*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleUpperRefineCrack*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXLOWERREFINEBOUND'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleCT1*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleCT1*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleCT1*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleCT1*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERCRACKLINE'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleCT1*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleCT1*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleCT1*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleCT1*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXCRACKLINE'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleUpperFirstBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleUpperFirstBound*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleUpperFirstBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleUpperFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERUPPERREFINEBOUND'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleUpperFirstBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleUpperFirstBound*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleUpperFirstBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleUpperFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXUPPERREFINEBOUND'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleUpperSecondBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleUpperSecondBound*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleUpperSecondBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERUPPERBOUND'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleUpperSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleUpperSecondBound*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleUpperSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXUPPERBOUND'],
+                                       [0.99*R2*np.cos(angleLowerRefineCrack*np.pi/180),0.99*R2*np.sin(angleLowerRefineCrack*np.pi/180),0.0,1.01*R2*np.cos(angleLowerRefineCrack*np.pi/180),1.01*R2*np.sin(angleLowerRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-LOWERREFINECRACK'],
+                                       [0.99*R2*np.cos(angleLowerFirstBound*np.pi/180),0.99*R2*np.sin(angleLowerFirstBound*np.pi/180),0.0,1.01*R2*np.cos(angleLowerFirstBound*np.pi/180),1.01*R2*np.sin(angleLowerFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-LOWERFIRSTBOUN'],
+                                       [0.99*R2*np.cos(angleLowerSecondBound*np.pi/180),0.99*R2*np.sin(angleLowerSecondBound*np.pi/180),0.0,1.01*R2*np.cos(angleLowerSecondBound*np.pi/180),1.01*R2*np.sin(angleLowerSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-LOWERSECONDBOUN'],
+                                       [0.99*Rf*np.cos(angleLowerRefineCrack*np.pi/180),0.99*Rf*np.sin(angleLowerRefineCrack*np.pi/180),0.0,1.01*Rf*np.cos(angleLowerRefineCrack*np.pi/180),1.01*Rf*np.sin(angleLowerRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-LOWERREFINECRACK'],
+                                       [0.99*Rf*np.cos(angleLowerFirstBound*np.pi/180),0.99*Rf*np.sin(angleLowerFirstBound*np.pi/180),0.0,1.01*Rf*np.cos(angleLowerFirstBound*np.pi/180),1.01*Rf*np.sin(angleLowerFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-LOWERFIRSTBOUN'],
+                                       [0.99*Rf*np.cos(angleLowerSecondBound*np.pi/180),0.99*Rf*np.sin(angleLowerSecondBound*np.pi/180),0.0,1.01*Rf*np.cos(angleLowerSecondBound*np.pi/180),1.01*Rf*np.sin(angleLowerSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-LOWERSECONDBOUN'],
+                                       [0.99*R3*np.cos(angleLowerRefineCrack*np.pi/180),0.99*R3*np.sin(angleLowerRefineCrack*np.pi/180),0.0,1.01*R3*np.cos(angleLowerRefineCrack*np.pi/180),1.01*R3*np.sin(angleLowerRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-LOWERREFINECRACK'],
+                                       [0.99*R3*np.cos(angleLowerFirstBound*np.pi/180),0.99*R3*np.sin(angleLowerFirstBound*np.pi/180),0.0,1.01*R3*np.cos(angleLowerFirstBound*np.pi/180),1.01*R3*np.sin(angleLowerFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-LOWERFIRSTBOUN'],
+                                       [0.99*R3*np.cos(angleLowerSecondBound*np.pi/180),0.99*R3*np.sin(angleLowerSecondBound*np.pi/180),0.0,1.01*R3*np.cos(angleLowerSecondBound*np.pi/180),1.01*R3*np.sin(angleLowerSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-LOWERSECONDBOUN'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleLowerRefineCrack*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleLowerRefineCrack*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleLowerRefineCrack*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleLowerRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-FIBERLOWERREFINEBOUND'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleLowerRefineCrack*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleLowerRefineCrack*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleLowerRefineCrack*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleLowerRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-MATRIXLOWERREFINEBOUND'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleCT2*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleCT2*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleCT2*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleCT2*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-FIBERCRACKLINE'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleCT2*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleCT2*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleCT2*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleCT2*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-MATRIXCRACKLINE'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleLowerFirstBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleLowerFirstBound*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleLowerFirstBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleLowerFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-FIBERUPPERREFINEBOUND'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleLowerFirstBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleLowerFirstBound*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleLowerFirstBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleLowerFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-MATRIXUPPERREFINEBOUND'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleLowerSecondBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleLowerSecondBound*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleLowerSecondBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleLowerSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-FIBERUPPERBOUND'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleLowerSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleLowerSecondBound*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleLowerSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleLowerSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-MATRIXUPPERBOUND']]
+                elif crack['isMeasured'] and crack['isSymm']:
+                    R2 = fiber['R2']
+                    R3 = fiber['R3']
+                    angleCrack = 0.5*(crack['deltatheta']-crack['deltapsi'])
+                    angleCT1 = crack['theta']+crack['deltatheta']
+                    angleUpperRefineCrack = crack['theta']+crack['deltatheta']-crack['deltapsi']
+                    angleUpperFirstBound = crack['theta']+crack['deltatheta']+crack['deltapsi']
+                    angleUpperSecondBound = crack['theta']+crack['deltatheta']+crack['deltapsi']+crack['deltaphi']
+                    angleMiddleUpperRefineCrack = crack['theta']+crack['deltatheta']-0.5*crack['deltapsi']
+                    angleMiddleUpperFirstBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']
+                    angleMiddleUpperSecondBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']+crack['deltaphi']
+                    crackLimits.append([angleUpperSecondBound,crack['theta']])
+                    setsOfEdgesData = [[0.99*R2*np.cos(angleCrack*np.pi/180),0.99*R2*np.sin(angleCrack*np.pi/180),0.0,1.01*R2*np.cos(angleCrack*np.pi/180),1.01*R2*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER'],
+                                       [0.99*R2*np.cos(angleUpperRefineCrack*np.pi/180),0.99*R2*np.sin(angleUpperRefineCrack*np.pi/180),0.0,1.01*R2*np.cos(angleUpperRefineCrack*np.pi/180),1.01*R2*np.sin(angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERREFINECRACK'],
+                                       [0.99*R2*np.cos(angleUpperFirstBound*np.pi/180),0.99*R2*np.sin(angleUpperFirstBound*np.pi/180),0.0,1.01*R2*np.cos(angleUpperFirstBound*np.pi/180),1.01*R2*np.sin(angleUpperFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERFIRSTBOUN'],
+                                       [0.99*R2*np.cos(angleUpperSecondBound*np.pi/180),0.99*R2*np.sin(angleUpperSecondBound*np.pi/180),0.0,1.01*R2*np.cos(angleUpperSecondBound*np.pi/180),1.01*R2*np.sin(angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERSECONDBOUN'],
+                                       [0.99*Rf*np.cos(angleCrack*np.pi/180),0.99*Rf*np.sin(angleCrack*np.pi/180),0.0,1.01*Rf*np.cosangleCrack*np.pi/180),1.01*Rf*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-CRACKCENTER'],
+                                       [0.99*Rf*np.cos(angleUpperRefineCrack*np.pi/180),0.99*Rf*np.sin(angleUpperRefineCrack*np.pi/180),0.0,1.01*Rf*np.cos(angleUpperRefineCrack*np.pi/180),1.01*Rf*np.sin(angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERREFINECRACK'],
+                                       [0.99*Rf*np.cos(angleUpperFirstBound*np.pi/180),0.99*Rf*np.sin(angleUpperFirstBound*np.pi/180),0.0,1.01*Rf*np.cos(angleUpperFirstBound*np.pi/180),1.01*Rf*np.sin(angleUpperFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERFIRSTBOUN'],
+                                       [0.99*Rf*np.cos(angleUpperSecondBound*np.pi/180),0.99*Rf*np.sin(angleUpperSecondBound*np.pi/180),0.0,1.01*Rf*np.cos(angleUpperSecondBound*np.pi/180),1.01*Rf*np.sin(angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERSECONDBOUN'],
+                                       [0.99*R3*np.cos(angleCrack*np.pi/180),0.99*R3*np.sin(angleCrack*np.pi/180),0.0,1.01*R3*np.cosangleCrack*np.pi/180),1.01*R3*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-CRACKCENTER'],
+                                       [0.99*R3*np.cos(angleUpperRefineCrack*np.pi/180),0.99*R3*np.sin(angleUpperRefineCrack*np.pi/180),0.0,1.01*R3*np.cos(angleUpperRefineCrack*np.pi/180),1.01*R3*np.sin(angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-UPPERREFINECRACK'],
+                                       [0.99*R3*np.cos(angleUpperFirstBound*np.pi/180),0.99*R3*np.sin(angleUpperFirstBound*np.pi/180),0.0,1.01*R3*np.cos(angleUpperFirstBound*np.pi/180),1.01*R3*np.sin(angleUpperFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-UPPERFIRSTBOUN'],
+                                       [0.99*R3*np.cos(angleUpperSecondBound*np.pi/180),0.99*R3*np.sin(angleUpperSecondBound*np.pi/180),0.0,1.01*R3*np.cos(angleUpperSecondBound*np.pi/180),1.01*R3*np.sin(angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-UPPERSECONDBOUN'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleUpperRefineCrack*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleUpperRefineCrack*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleUpperRefineCrack*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERLOWERREFINEBOUND'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleUpperRefineCrack*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleUpperRefineCrack*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleUpperRefineCrack*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXLOWERREFINEBOUND'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleCT1*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleCT1*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleCT1*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleCT1*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERCRACKLINE'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleCT1*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleCT1*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleCT1*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleCT1*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXCRACKLINE'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleUpperFirstBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleUpperFirstBound*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleUpperFirstBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleUpperFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERUPPERREFINEBOUND'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleUpperFirstBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleUpperFirstBound*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleUpperFirstBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleUpperFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXUPPERREFINEBOUND'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleUpperSecondBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleUpperSecondBound*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleUpperSecondBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERUPPERBOUND'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleUpperSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleUpperSecondBound*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleUpperSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXUPPERBOUND']]
+                elif not crack['isMeasured'] and not crack['isSymm']:
+                    R2 = fiber['R2']
+                    R3 = fiber['R3']
+                    angleCrack = crack['theta']
+                    angleCT1 = crack['theta']+crack['deltatheta']
+                    angleCT2 = crack['theta']-crack['deltatheta']
+                    crackLimits.append([angleCT1,angleCT2])
+                    setsOfEdgesData = [[0.99*R2*np.cos(angleCrack*np.pi/180),0.99*R2*np.sin(angleCrack*np.pi/180),0.0,1.01*R2*np.cos(angleCrack*np.pi/180),1.01*R2*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER'],
+                                       [0.99*Rf*np.cos(angleCrack*np.pi/180),0.99*Rf*np.sin(angleCrack*np.pi/180),0.0,1.01*Rf*np.cosangleCrack*np.pi/180),1.01*Rf*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-CRACKCENTER'],
+                                       [0.99*R3*np.cos(angleCrack*np.pi/180),0.99*R3*np.sin(angleCrack*np.pi/180),0.0,1.01*R3*np.cosangleCrack*np.pi/180),1.01*R3*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-CRACKCENTER'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleCT1*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleCT1*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleCT1*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleCT1*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERCRACKLINE'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleCT1*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleCT1*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleCT1*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleCT1*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXCRACKLINE'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleCT2*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleCT2*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleCT2*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleCT2*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-FIBERCRACKLINE'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleCT2*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleCT2*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleCT2*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleCT2*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-MATRIXCRACKLINE']]
+                else:
+                    R2 = fiber['R2']
+                    R3 = fiber['R3']
+                    angleCrack = 0.5*(crack['deltatheta']-crack['deltapsi'])
+                    angleCT1 = crack['theta']+crack['deltatheta']
+                    crackLimits.append([angleCT1,crack['theta']])
+                    setsOfEdgesData = [[0.99*R2*np.cos(angleCrack*np.pi/180),0.99*R2*np.sin(angleCrack*np.pi/180),0.0,1.01*R2*np.cos(angleCrack*np.pi/180),1.01*R2*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER'],
+                                       [0.99*Rf*np.cos(angleCrack*np.pi/180),0.99*Rf*np.sin(angleCrack*np.pi/180),0.0,1.01*Rf*np.cosangleCrack*np.pi/180),1.01*Rf*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-CRACKCENTER'],
+                                       [0.99*R3*np.cos(angleCrack*np.pi/180),0.99*R3*np.sin(angleCrack*np.pi/180),0.0,1.01*R3*np.cosangleCrack*np.pi/180),1.01*R3*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-CRACKCENTER'],
+                                       [(R2+0.5*(Rf-R2))*np.cos(0.99*angleCT1*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleCT1*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleCT1*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleCT1*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERCRACKLINE'],
+                                       [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleCT1*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleCT1*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleCT1*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleCT1*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXCRACKLINE']]
+                for setOfEdgesData in setsOfEdgesData:
+                    defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        else:
+            if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
+                angle = 135.0
+            elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
+                angle = 45.0
+            elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
+                angle = 315.0
+            elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
+                angle = 225.0
+            elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
+                angle = 45.0
+            elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
+                angle = 315.0
+            elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
+                angle = 135.0
+            elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
+                angle = 45.0
+            elif fiber['type'] in ['FULL','full','Full']:
+                angle = 45.0
+            setsOfEdgesData = [[0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACE']]
+            for setOfEdgesData in setsOfEdgesData:
+                defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     mdb.save()
 

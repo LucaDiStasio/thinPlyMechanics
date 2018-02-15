@@ -1435,7 +1435,6 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                 R2 = fiber['R2']
                 R3 = fiber['R3']
                 if crack['isMeasured'] and not crack['isSymm']:
-
                     angleCrack = crack['theta']
                     angleCT1 = crack['theta']+crack['deltatheta']
                     angleCT2 = crack['theta']-crack['deltatheta']
@@ -1449,8 +1448,8 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                     angleMiddleLowerRefineCrack = crack['theta']-crack['deltatheta']+0.5*crack['deltapsi']
                     angleMiddleUpperFirstBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']
                     angleMiddleLowerFirstBound = crack['theta']-crack['deltatheta']-0.5*crack['deltapsi']
-                    angleMiddleUpperSecondBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']+crack['deltaphi']
-                    angleMiddleLowerSecondBound = crack['theta']-crack['deltatheta']-0.5*crack['deltapsi']-crack['deltaphi']
+                    angleMiddleUpperSecondBound = crack['theta']+crack['deltatheta']+crack['deltapsi']+0.5*crack['deltaphi']
+                    angleMiddleLowerSecondBound = crack['theta']-crack['deltatheta']-crack['deltapsi']-0.5*crack['deltaphi']
                     crackLimits.append(np.min([angleUpperSecondBound,angleLowerSecondBound]),np.max([angleUpperSecondBound,angleLowerSecondBound]))
                     setsOfEdgesData = [[0.99*R2*np.cos(angleCrack*np.pi/180),0.99*R2*np.sin(angleCrack*np.pi/180),0.0,1.01*R2*np.cos(angleCrack*np.pi/180),1.01*R2*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER'],
                                        [0.99*R2*np.cos(angleUpperRefineCrack*np.pi/180),0.99*R2*np.sin(angleUpperRefineCrack*np.pi/180),0.0,1.01*R2*np.cos(angleUpperRefineCrack*np.pi/180),1.01*R2*np.sin(angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERREFINECRACK'],
@@ -1497,7 +1496,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                     angleUpperSecondBound = crack['theta']+crack['deltatheta']+crack['deltapsi']+crack['deltaphi']
                     angleMiddleUpperRefineCrack = crack['theta']+crack['deltatheta']-0.5*crack['deltapsi']
                     angleMiddleUpperFirstBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']
-                    angleMiddleUpperSecondBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']+crack['deltaphi']
+                    angleMiddleUpperSecondBound = crack['theta']+crack['deltatheta']+crack['deltapsi']+0.5*crack['deltaphi']
                     crackLimits.append(np.min([angleUpperSecondBound,crack['theta']]),np.max([angleUpperSecondBound,crack['theta']]))
                     setsOfEdgesData = [[0.99*R2*np.cos(angleCrack*np.pi/180),0.99*R2*np.sin(angleCrack*np.pi/180),0.0,1.01*R2*np.cos(angleCrack*np.pi/180),1.01*R2*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER'],
                                        [0.99*R2*np.cos(angleUpperRefineCrack*np.pi/180),0.99*R2*np.sin(angleUpperRefineCrack*np.pi/180),0.0,1.01*R2*np.cos(angleUpperRefineCrack*np.pi/180),1.01*R2*np.sin(angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERREFINECRACK'],
@@ -1786,9 +1785,92 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                                [(fiber['R3']+0.5*(fiber['R4']-fiber['R3']))*np.cos(angle), (fiber['R3']+0.5*(fiber['R4']-fiber['R3']))*np.sin(angle), 0.0,'FIBER'+str(f+1)+'-FOURTHRING']]
             for setOfFacesData in setsOfFacesData:
                 defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
-                fiberSets.append(RVEpart.sets[setOfFacesData[-1]])
+            fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-CORE'])
+            fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-FIRSTRING'])
+            matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-FOURTHRING'])
             for cNum,crackKey in enumerate(fiber['cracks'].keys()):
-
+                crack = fiber['cracks'][crackKey]
+                R2 = fiber['R2']
+                R3 = fiber['R3']
+                Rring1 = 0.5*(Rf+R2)
+                Rring2 = 0.5*(Rf+R3)
+                if crack['isMeasured'] and not crack['isSymm']:
+                    angleCrack = crack['theta']+ 0.5*(crack['deltatheta']-crack['deltapsi']-crack['theta'])
+                    angleMiddleUpperRefineCrack = crack['theta']+crack['deltatheta']-0.5*crack['deltapsi']
+                    angleMiddleLowerRefineCrack = crack['theta']-crack['deltatheta']+0.5*crack['deltapsi']
+                    angleMiddleUpperFirstBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']
+                    angleMiddleLowerFirstBound = crack['theta']-crack['deltatheta']-0.5*crack['deltapsi']
+                    angleMiddleUpperSecondBound = crack['theta']+crack['deltatheta']+crack['deltapsi']+0.5*crack['deltaphi']
+                    angleMiddleLowerSecondBound = crack['theta']-crack['deltatheta']-crack['deltapsi']-0.5*crack['deltaphi']
+                    crackLimits.append(np.min([crack['theta']+crack['deltatheta']+crack['deltapsi']+crack['deltaphi'],crack['theta']-crack['deltatheta']-crack['deltapsi']-crack['deltaphi']]),np.max([crack['theta']+crack['deltatheta']+crack['deltapsi']+crack['deltaphi'],crack['theta']-crack['deltatheta']-crack['deltapsi']-crack['deltaphi']]))
+                    setsOfFacesData = [[Rring1*np.cos(angleCrack), Rring1*np.sin(angleCrack), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CRACKCENTER'],
+                                       [Rring1*np.cos(angleMiddleUpperRefineCrack), Rring1*np.sin(angleMiddleUpperRefineCrack), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CT1-CRACKREFINE'],
+                                       [Rring1*np.cos(angleMiddleUpperFirstBound), Rring1*np.sin(angleMiddleUpperFirstBound), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CT1-FIRSTBOUNDED'],
+                                       [Rring1*np.cos(angleMiddleUpperSecondBound), Rring1*np.sin(angleMiddleUpperSecondBound), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CT1-SECONDBOUNDED'],
+                                       [Rring2*np.cos(angleCrack), Rring2*np.sin(angleCrack), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CRACKCENTER'],
+                                       [Rring2*np.cos(angleMiddleUpperRefineCrack), Rring2*np.sin(angleMiddleUpperRefineCrack), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CT1-CRACKREFINE'],
+                                       [Rring2*np.cos(angleMiddleUpperFirstBound), Rring2*np.sin(angleMiddleUpperFirstBound), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CT1-FIRSTBOUNDED'],
+                                       [Rring2*np.cos(angleMiddleUpperSecondBound), Rring2*np.sin(angleMiddleUpperSecondBound), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CT1-SECONDBOUNDED'],
+                                       [Rring1*np.cos(angleMiddleLowerRefineCrack), Rring1*np.sin(angleMiddleLowerRefineCrack), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CT2-CRACKREFINE'],
+                                       [Rring1*np.cos(angleMiddleLowerFirstBound), Rring1*np.sin(angleMiddleLowerFirstBound), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CT2-FIRSTBOUNDED'],
+                                       [Rring1*np.cos(angleMiddleLowerSecondBound), Rring1*np.sin(angleMiddleLowerSecondBound), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CT2-SECONDBOUNDED'],
+                                       [Rring2*np.cos(angleMiddleLowerRefineCrack), Rring2*np.sin(angleMiddleLowerRefineCrack), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CT2-CRACKREFINE'],
+                                       [Rring2*np.cos(angleMiddleLowerFirstBound), Rring2*np.sin(angleMiddleLowerFirstBound), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CT2-FIRSTBOUNDED'],
+                                       [Rring2*np.cos(angleMiddleLowerSecondBound), Rring2*np.sin(angleMiddleLowerSecondBound), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CT2-SECONDBOUNDED']]
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CRACKCENTER'])
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CT1-CRACKREFINE'])
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CT1-FIRSTBOUNDED'])
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CT1-SECONDBOUNDED'])
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CT2-CRACKREFINE'])
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CT2-FIRSTBOUNDED'])
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CT2-SECONDBOUNDED'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CRACKCENTER'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CT1-CRACKREFINE'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CT1-FIRSTBOUNDED'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CT1-SECONDBOUNDED'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CT2-CRACKREFINE'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CT2-FIRSTBOUNDED'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CT2-SECONDBOUNDED'])
+                elif crack['isMeasured'] and crack['isSymm']:
+                    angleCrack = crack['theta']+ 0.5*(crack['deltatheta']-crack['deltapsi']-crack['theta'])
+                    angleMiddleUpperRefineCrack = crack['theta']+crack['deltatheta']-0.5*crack['deltapsi']
+                    angleMiddleUpperFirstBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']
+                    angleMiddleUpperSecondBound = crack['theta']+crack['deltatheta']+crack['deltapsi']+0.5*crack['deltaphi']
+                    crackLimits.append(np.min([crack['theta']+crack['deltatheta']+crack['deltapsi']+crack['deltaphi'],crack['theta']]),np.max([crack['theta']+crack['deltatheta']+crack['deltapsi']+crack['deltaphi'],crack['theta']]))
+                    setsOfFacesData = [[Rring1*np.cos(angleCrack), Rring1*np.sin(angleCrack), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CRACKCENTER'],
+                                       [Rring1*np.cos(angleMiddleUpperRefineCrack), Rring1*np.sin(angleMiddleUpperRefineCrack), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CT1-CRACKREFINE'],
+                                       [Rring1*np.cos(angleMiddleUpperFirstBound), Rring1*np.sin(angleMiddleUpperFirstBound), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CT1-FIRSTBOUNDED'],
+                                       [Rring1*np.cos(angleMiddleUpperSecondBound), Rring1*np.sin(angleMiddleUpperSecondBound), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CT1-SECONDBOUNDED'],
+                                       [Rring2*np.cos(angleCrack), Rring2*np.sin(angleCrack), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CRACKCENTER'],
+                                       [Rring2*np.cos(angleMiddleUpperRefineCrack), Rring2*np.sin(angleMiddleUpperRefineCrack), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CT1-CRACKREFINE'],
+                                       [Rring2*np.cos(angleMiddleUpperFirstBound), Rring2*np.sin(angleMiddleUpperFirstBound), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CT1-FIRSTBOUNDED'],
+                                       [Rring2*np.cos(angleMiddleUpperSecondBound), Rring2*np.sin(angleMiddleUpperSecondBound), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CT1-SECONDBOUNDED']]
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CRACKCENTER'])
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CT1-CRACKREFINE'])
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CT1-FIRSTBOUNDED'])
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CT1-SECONDBOUNDED'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CRACKCENTER'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CT1-CRACKREFINE'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CT1-FIRSTBOUNDED'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CT1-SECONDBOUNDED'])
+                elif not crack['isMeasured'] and not crack['isSymm']:
+                    angleCrack = crack['theta']+ 0.5*(crack['deltatheta']-crack['theta'])
+                    crackLimits.append(np.min([crack['deltatheta']+crack['theta'],crack['deltatheta']-crack['theta']]),np.max([crack['deltatheta']+crack['theta'],crack['deltatheta']-crack['theta']]))
+                    setsOfFacesData = [[Rring1*np.cos(angleCrack), Rring1*np.sin(angleCrack), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CRACKCENTER'],
+                                       [Rring2*np.cos(angleCrack), Rring2*np.sin(angleCrack), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CRACKCENTER']]
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CRACKCENTER'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CRACKCENTER'])
+                else:
+                    angleCrack = crack['theta']+ 0.5*(crack['deltatheta']-crack['theta'])
+                    crackLimits.append(np.min([crack['deltatheta']+crack['theta'],crack['theta']]),np.max([crack['deltatheta']+crack['theta'],crack['theta']]))
+                    setsOfFacesData = [[Rring1*np.cos(angleCrack), Rring1*np.sin(angleCrack), 0.0,'FIBER'+str(f+1)+'-SECONDRING-CRACKCENTER'],
+                                       [Rring2*np.cos(angleCrack), Rring2*np.sin(angleCrack), 0.0,'FIBER'+str(f+1)+'-THIRDRING-CRACKCENTER']]
+                    fiberSets.append(RVEpart.sets['FIBER'+str(f+1)+'-SECONDRING-CRACKCENTER'])
+                    matrixNeighSets.append(RVEpart.sets['FIBER'+str(f+1)+'-THIRDRING-CRACKCENTER'])
+                for setOfFacesData in setsOfFacesData:
+                    defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
+                RVEpart.SetByBoolean(name='FIBER'+str(f+1), sets=fiberSets)
+                RVEpart.SetByBoolean(name='FIBER'+str(f+1)+'-MATRIXNEIGHBORHOOD', sets=matrixNeighSets)
         else:
             if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
                 angle = 135.0
@@ -1812,6 +1894,42 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
             for setOfFacesData in setsOfFacesData:
                 defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
+    fiber = parameters['fibers'][parameters['fibers'].keys()[0]]
+    if fiber['isCracked']:
+        Rm = 1.01*fiber['R4']
+    else
+        Rm = 1.01*fiber['Rf']
+    if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
+        angle = 135.0
+    elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
+        angle = 45.0
+    elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
+        angle = 315.0
+    elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
+        angle = 225.0
+    elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
+        angle = 45.0
+    elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
+        angle = 315.0
+    elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
+        angle = 135.0
+    elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
+        angle = 45.0
+    elif fiber['type'] in ['FULL','full','Full']:
+        angle = 45.0
+    setsOfFacesData = [[Rm*np.cos(angle), Rm*np.sin(angle), 0.0,'MATRIX-BODY']]
+    for setOfFacesData in setsOfFacesData:
+        defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
+    matrixSets = [RVEpart.sets['MATRIX-BODY']]
+    rveSets = []
+    for f,fiberKey in parameters['fibers'].keys():
+        fiber = parameters['fibers'][fiberKey]
+        if fiber['isCracked']:
+            matrixSets.append(RVEpart.sets['FIBER'+str(f+1)+'-MATRIXNEIGHBORHOOD'])
+        rveSets.append(RVEpart.sets['FIBER'+str(f+1)])
+    RVEpart.SetByBoolean(name='MATRIX', sets=matrixSets)
+    rveSets.append(RVEpart.sets['MATRIX'])
+    RVEpart.SetByBoolean(name='RVE', sets=rveSets)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     mdb.save()

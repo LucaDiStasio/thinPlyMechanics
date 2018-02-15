@@ -1403,7 +1403,11 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     mdb.save()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of edges',True)
-    fiberEdgesSOUTHside = [] # [[fiber intersection 1 with side, fiber intersection 2 with side],...] fiber intersection 1 with side < fiber intersection 2 with side
+    fiberIntersectionsSOUTHside = [] # [[fiber intersection 1 with side, fiber intersection 2 with side],...] fiber intersection 1 with side < fiber intersection 2 with side
+    fiberIntersectionsEASTside = []
+    fiberIntersectionsNORTHside = []
+    fiberIntersectionsWESTside = []
+    fiberEdgesEASTside = []
     fiberEdgesEASTside = []
     fiberEdgesNORTHside = []
     fiberEdgesWESTside = []
@@ -1412,38 +1416,44 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
         Rf = fiber['Rf']
         if fiber['isCracked']:
             crackLimits = []
+            setsOfEdgesData = []
             if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
                 angle = 135.0
-                fiberEdgesEASTside = []
-                fiberEdgesSOUTHside = []
+                fiberIntersectionsEASTside = []
+                fiberIntersectionsSOUTHside = []
+                setsOfEdgesData.append([fiber['center'][0]-0.5*fiber['R1'],0.99*fiber['center'][1],0.0,fiber['center'][0]-0.5*fiber['R1'],1.01*fiber['center'][1],0.0,'FIBER'+str(f+1)+'-CORE-SOUTHEDGE'])
+                setsOfEdgesData.append([fiber['center'][0]-0.5*(fiber['R1']+fiber['R2']),0.99*fiber['center'][1],0.0,fiber['center'][0]-0.5*(fiber['R1']+fiber['R2']),1.01*fiber['center'][1],0.0,'FIBER'+str(f+1)+'-FIRSTRING-SOUTHEDGE'])
+                setsOfEdgesData.append([fiber['center'][0]-0.5*(fiber['R1']+fiber['R2']),0.99*fiber['center'][1],0.0,fiber['center'][0]-0.5*(fiber['Rf']+fiber['R2']),1.01*fiber['center'][1],0.0,'FIBER'+str(f+1)+'-SECONDRING-SOUTHEDGE'])
+                setsOfEdgesData.append([fiber['center'][0]-0.5*(fiber['Rf']+fiber['R3']),0.99*fiber['center'][1],0.0,fiber['center'][0]-0.5*(fiber['Rf']+fiber['R3']),1.01*fiber['center'][1],0.0,'FIBER'+str(f+1)+'-THIRDRING-SOUTHEDGE'])
+                setsOfEdgesData.append([fiber['center'][0]-0.5*(fiber['R3']+fiber['R4']),0.99*fiber['center'][1],0.0,fiber['center'][0]-0.5*(fiber['R3']+fiber['R4']),1.01*fiber['center'][1],0.0,'FIBER'+str(f+1)+'-FOURTHRING-SOUTHEDGE'])
             elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
                 angle = 45.0
-                fiberEdgesWESTside = []
-                fiberEdgesSOUTHside = []
+                fiberIntersectionsWESTside = []
+                fiberIntersectionsSOUTHside = []
             elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
                 angle = 315.0
-                fiberEdgesWESTside = []
-                fiberEdgesNORTHside = []
+                fiberIntersectionsWESTside = []
+                fiberIntersectionsNORTHside = []
             elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
                 angle = 225.0
-                fiberEdgesEASTside = []
-                fiberEdgesNORTHside = []
+                fiberIntersectionsEASTside = []
+                fiberIntersectionsNORTHside = []
             elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
                 angle = 45.0
-                fiberEdgesSOUTHside = []
+                fiberIntersectionsSOUTHside = []
             elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
                 angle = 315.0
-                fiberEdgesNORTHside = []
+                fiberIntersectionsNORTHside = []
             elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
                 angle = 135.0
-                fiberEdgesEASTside = []
+                fiberIntersectionsEASTside = []
             elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
                 angle = 45.0
-                fiberEdgesWESTside = []
+                fiberIntersectionsWESTside = []
             elif fiber['type'] in ['FULL','full','Full']:
                 angle = 45.0
-            setsOfEdgesData = [[0.99*fiber['R1']*np.cos(angle*np.pi/180),0.99*fiber['R1']*np.sin(angle*np.pi/180),0.0,1.01*fiber['R1']*np.cos(angle*np.pi/180),1.01*fiber['R1']*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-FIRSTCIRCLE'],
-                               [0.99*fiber['R4']*np.cos(angle*np.pi/180),0.99*fiber['R4']*np.sin(angle*np.pi/180),0.0,1.01*fiber['R4']*np.cos(angle*np.pi/180),1.01*fiber['R4']*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-FOURTHCIRCLE']]
+            setsOfEdgesData.append([0.99*fiber['R1']*np.cos(angle*np.pi/180),0.99*fiber['R1']*np.sin(angle*np.pi/180),0.0,1.01*fiber['R1']*np.cos(angle*np.pi/180),1.01*fiber['R1']*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-FIRSTCIRCLE'])
+            setsOfEdgesData.append([0.99*fiber['R4']*np.cos(angle*np.pi/180),0.99*fiber['R4']*np.sin(angle*np.pi/180),0.0,1.01*fiber['R4']*np.cos(angle*np.pi/180),1.01*fiber['R4']*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-FOURTHCIRCLE'])
             for setOfEdgesData in setsOfEdgesData:
                 defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
             for cNum,crackKey in enumerate(fiber['cracks'].keys()):

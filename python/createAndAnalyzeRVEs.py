@@ -1755,6 +1755,17 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     mdb.save()
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of faces',True)
+    for f,fiberKey in enumerate(parameters['fibers'].keys()):
+        fiber = parameters['fibers'][fiberKey]
+        Rf = fiber['Rf']
+        if fiber['isCracked']:
+            for cNum,crackKey in enumerate(fiber['cracks'].keys()):
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    mdb.save()
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 #===============================================================================#

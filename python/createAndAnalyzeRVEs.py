@@ -1432,9 +1432,10 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                 defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
             for cNum,crackKey in enumerate(fiber['cracks'].keys()):
                 crack = fiber['cracks'][crackKey]
+                R2 = fiber['R2']
+                R3 = fiber['R3']
                 if crack['isMeasured'] and not crack['isSymm']:
-                    R2 = fiber['R2']
-                    R3 = fiber['R3']
+
                     angleCrack = crack['theta']
                     angleCT1 = crack['theta']+crack['deltatheta']
                     angleCT2 = crack['theta']-crack['deltatheta']
@@ -1450,7 +1451,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                     angleMiddleLowerFirstBound = crack['theta']-crack['deltatheta']-0.5*crack['deltapsi']
                     angleMiddleUpperSecondBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']+crack['deltaphi']
                     angleMiddleLowerSecondBound = crack['theta']-crack['deltatheta']-0.5*crack['deltapsi']-crack['deltaphi']
-                    crackLimits.append([angleUpperSecondBound,angleLowerSecondBound])
+                    crackLimits.append(np.min([angleUpperSecondBound,angleLowerSecondBound]),np.max([angleUpperSecondBound,angleLowerSecondBound]))
                     setsOfEdgesData = [[0.99*R2*np.cos(angleCrack*np.pi/180),0.99*R2*np.sin(angleCrack*np.pi/180),0.0,1.01*R2*np.cos(angleCrack*np.pi/180),1.01*R2*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER'],
                                        [0.99*R2*np.cos(angleUpperRefineCrack*np.pi/180),0.99*R2*np.sin(angleUpperRefineCrack*np.pi/180),0.0,1.01*R2*np.cos(angleUpperRefineCrack*np.pi/180),1.01*R2*np.sin(angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERREFINECRACK'],
                                        [0.99*R2*np.cos(angleUpperFirstBound*np.pi/180),0.99*R2*np.sin(angleUpperFirstBound*np.pi/180),0.0,1.01*R2*np.cos(angleUpperFirstBound*np.pi/180),1.01*R2*np.sin(angleUpperFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERFIRSTBOUN'],
@@ -1489,8 +1490,6 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                                        [(R2+0.5*(Rf-R2))*np.cos(0.99*angleLowerSecondBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleLowerSecondBound*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleLowerSecondBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleLowerSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-FIBERUPPERBOUND'],
                                        [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleLowerSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleLowerSecondBound*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleLowerSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleLowerSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-MATRIXUPPERBOUND']]
                 elif crack['isMeasured'] and crack['isSymm']:
-                    R2 = fiber['R2']
-                    R3 = fiber['R3']
                     angleCrack = 0.5*(crack['deltatheta']-crack['deltapsi'])
                     angleCT1 = crack['theta']+crack['deltatheta']
                     angleUpperRefineCrack = crack['theta']+crack['deltatheta']-crack['deltapsi']
@@ -1499,7 +1498,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                     angleMiddleUpperRefineCrack = crack['theta']+crack['deltatheta']-0.5*crack['deltapsi']
                     angleMiddleUpperFirstBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']
                     angleMiddleUpperSecondBound = crack['theta']+crack['deltatheta']+0.5*crack['deltapsi']+crack['deltaphi']
-                    crackLimits.append([angleUpperSecondBound,crack['theta']])
+                    crackLimits.append(np.min([angleUpperSecondBound,crack['theta']]),np.max([angleUpperSecondBound,crack['theta']]))
                     setsOfEdgesData = [[0.99*R2*np.cos(angleCrack*np.pi/180),0.99*R2*np.sin(angleCrack*np.pi/180),0.0,1.01*R2*np.cos(angleCrack*np.pi/180),1.01*R2*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER'],
                                        [0.99*R2*np.cos(angleUpperRefineCrack*np.pi/180),0.99*R2*np.sin(angleUpperRefineCrack*np.pi/180),0.0,1.01*R2*np.cos(angleUpperRefineCrack*np.pi/180),1.01*R2*np.sin(angleUpperRefineCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERREFINECRACK'],
                                        [0.99*R2*np.cos(angleUpperFirstBound*np.pi/180),0.99*R2*np.sin(angleUpperFirstBound*np.pi/180),0.0,1.01*R2*np.cos(angleUpperFirstBound*np.pi/180),1.01*R2*np.sin(angleUpperFirstBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERFIRSTBOUN'],
@@ -1521,12 +1520,10 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                                        [(R2+0.5*(Rf-R2))*np.cos(0.99*angleUpperSecondBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleUpperSecondBound*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleUpperSecondBound*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERUPPERBOUND'],
                                        [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleUpperSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleUpperSecondBound*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleUpperSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXUPPERBOUND']]
                 elif not crack['isMeasured'] and not crack['isSymm']:
-                    R2 = fiber['R2']
-                    R3 = fiber['R3']
                     angleCrack = crack['theta']
                     angleCT1 = crack['theta']+crack['deltatheta']
                     angleCT2 = crack['theta']-crack['deltatheta']
-                    crackLimits.append([angleCT1,angleCT2])
+                    crackLimits.append(np.min([angleCT1,angleCT2]),np.max([angleCT1,angleCT2]))
                     setsOfEdgesData = [[0.99*R2*np.cos(angleCrack*np.pi/180),0.99*R2*np.sin(angleCrack*np.pi/180),0.0,1.01*R2*np.cos(angleCrack*np.pi/180),1.01*R2*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER'],
                                        [0.99*Rf*np.cos(angleCrack*np.pi/180),0.99*Rf*np.sin(angleCrack*np.pi/180),0.0,1.01*Rf*np.cosangleCrack*np.pi/180),1.01*Rf*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-CRACKCENTER'],
                                        [0.99*R3*np.cos(angleCrack*np.pi/180),0.99*R3*np.sin(angleCrack*np.pi/180),0.0,1.01*R3*np.cosangleCrack*np.pi/180),1.01*R3*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-CRACKCENTER'],
@@ -1535,11 +1532,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                                        [(R2+0.5*(Rf-R2))*np.cos(0.99*angleCT2*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(0.99*angleCT2*np.pi/180),0.0,(R2+0.5*(Rf-R2))*np.cos(1.01*angleCT2*np.pi/180),(R2+0.5*(Rf-R2))*np.sin(1.01*angleCT2*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-FIBERCRACKLINE'],
                                        [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleCT2*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleCT2*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleCT2*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleCT2*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-MATRIXCRACKLINE']]
                 else:
-                    R2 = fiber['R2']
-                    R3 = fiber['R3']
                     angleCrack = 0.5*(crack['deltatheta']-crack['deltapsi'])
                     angleCT1 = crack['theta']+crack['deltatheta']
-                    crackLimits.append([angleCT1,crack['theta']])
+                    crackLimits.append(np.min([angleCT1,crack['theta']]),np.max([angleCT1,crack['theta']]))
                     setsOfEdgesData = [[0.99*R2*np.cos(angleCrack*np.pi/180),0.99*R2*np.sin(angleCrack*np.pi/180),0.0,1.01*R2*np.cos(angleCrack*np.pi/180),1.01*R2*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER'],
                                        [0.99*Rf*np.cos(angleCrack*np.pi/180),0.99*Rf*np.sin(angleCrack*np.pi/180),0.0,1.01*Rf*np.cosangleCrack*np.pi/180),1.01*Rf*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-CRACKCENTER'],
                                        [0.99*R3*np.cos(angleCrack*np.pi/180),0.99*R3*np.sin(angleCrack*np.pi/180),0.0,1.01*R3*np.cosangleCrack*np.pi/180),1.01*R3*np.sin(angleCrack*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-CRACKCENTER'],
@@ -1547,6 +1542,44 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                                        [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleCT1*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleCT1*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleCT1*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleCT1*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXCRACKLINE']]
                 for setOfEdgesData in setsOfEdgesData:
                     defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+                setOfEdgesData = []
+                restBoundedEdgesNames = []
+                crackLimits = np.array(crackLimits)
+                crackLimits = crackLimits[crackLimits[:,0].argsort()]
+                if len(crackLimits)>1:
+                    for p,pair in crackLimits[1:]:
+                        angle = 0.5*(pair[0]-crackLimits[p-1][1])
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                    if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
+
+                        angle = 135.0
+                    elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
+                        angle = 45.0
+                    elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
+                        angle = 315.0
+                    elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
+                        angle = 225.0
+                    elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
+                        angle = 45.0
+                    elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
+                        angle = 315.0
+                    elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
+                        angle = 135.0
+                    elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
+                        angle = 45.0
+                    elif fiber['type'] in ['FULL','full','Full']:
+                        angle = 0.5*(crackLimits[0][0]-crackLimits[-1][1])
+                        setsOfEdgesData.append([0.99*R2*np.cos(angle*np.pi/180),0.99*R2*np.sin(angle*np.pi/180),0.0,1.01*R2*np.cos(angle*np.pi/180),1.01*R2*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-SECONDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*Rf*np.cos(angle*np.pi/180),0.99*Rf*np.sin(angle*np.pi/180),0.0,1.01*Rf*np.cos(angle*np.pi/180),1.01*Rf*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-INTERFACECIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
+                        setsOfEdgesData.append([0.99*R3*np.cos(angle*np.pi/180),0.99*R3*np.sin(angle*np.pi/180),0.0,1.01*R3*np.cos(angle*np.pi/180),1.01*R3*np.sin(angle*np.pi/180),0.0,'FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1)])
+                        restBoundedSecondCircleNames.append('FIBER'+str(f+1)+'-THIRDCIRCLE-RESTBOUNDED'+str(len(restBoundedSecondCircleNames)+1))
         else:
             if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
                 angle = 135.0

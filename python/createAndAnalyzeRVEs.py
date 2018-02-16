@@ -1172,7 +1172,7 @@ def add2DFullFiber(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,ba
 
 def addMaterial(currentmodel,material,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addMaterial()',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addMaterial(currentmodel,material,logfilepath,baselogindent,logindent)',True)
     currentmodel.Material(name=material['name'])
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'MATERIAL: ' + material['name'],True)
     try:
@@ -1259,6 +1259,14 @@ def addMaterial(currentmodel,material,logfilepath,baselogindent,logindent):
     except Exception, error:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  NO THERMAL CONDUCTIVITY PROPERTY',True)
         sys.exc_clear()
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+
+def applyBC(currentmodel,bc,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: applyBC(currentmodel,bc,logfilepath,baselogindent,logindent)',True)
+    if bc['type'] in ['YSYMM','ysymm','Ysymm','ySymm']:
+        model.YsymmBC(name=bc['name'], createStepName='Load-Step',
+            region=model.rootAssembly.instances['RVE-assembly'].sets[bc['set']], localCsys=None)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
 def assignMeshControls(thisModel,assemblyName,setName,elementShape,controls,logfile,indent,toScreen):
@@ -2276,7 +2284,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating materials ...',True)
-    for material in parameters['materials']:
+    for material in parameters['materials'].values():
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: addMaterial(currentmodel,material,logfilepath,baselogindent,logindent)',True)
         addMaterial(model,material,logfilepath,baselogindent + 3*logindent,logindent)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: addMaterial(currentmodel,material,logfilepath,baselogindent,logindent)',True)
@@ -2350,32 +2358,10 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assigning boundary conditions ...',True)
 
-    # SOUTH side: symmetry line
-
-    model.YsymmBC(name='SymmetryBound', createStepName='Load-Step',
-        region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
-
-    # NORTH side
-
-    # if 'periodic' in parameters['boundaryConditions']['north']['type']:
-    #
-    # elif 'rigidbar' in parameters['boundaryConditions']['north']['type']:
-    #
-    # elif 'homogeneousdisplacement' in parameters['boundaryConditions']['north']['type']:
-    #
-    # else free
-
-    # EAST side
-
-    # if 'periodic' in parameters['boundaryConditions']['north']['type']:
-    #
-    # else free
-
-    # WEST side
-
-    # if 'periodic' in parameters['boundaryConditions']['north']['type']:
-    #
-    # else free
+    for BC in parameters['BC'].values():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: addMaterial(currentmodel,material,logfilepath,baselogindent,logindent)',True)
+        applyBC(model,BC,logfilepath,baselogindent + 3*logindent,logindent)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: addMaterial(currentmodel,material,logfilepath,baselogindent,logindent)',True)
 
     mdb.save()
 

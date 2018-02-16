@@ -899,12 +899,12 @@ def create2Drectanglesketch(currentmodel,partName,partDimensionality,partType,si
     del currentmodel.sketches['__profile__']
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
-def create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent):
+def create2DRVEregion(currentmodel,rvetype,L,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
     # initialize parameters
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Initialize parameters ...',True)
-    if type=='quarter':
+    if rvetype=='quarter':
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Model: quarter of RVE',True)
         sizeOfSheet = 2*L
         Ax = 0.0
@@ -917,7 +917,7 @@ def create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent):
         Dy = 0.5*L
         Clabel = L
         Dlabel = L
-    elif type=='half':
+    elif rvetype=='half':
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  Model: quarter of RVE',True)
         sizeOfSheet = 3*L
         Ax = -L
@@ -1949,6 +1949,34 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     fiberIntersectionsEASTside = fiberIntersectionsEASTside[fiberIntersectionsEASTside[:,0].argsort()]
     fiberIntersectionsNORTHside = fiberIntersectionsNORTHside[fiberIntersectionsNORTHside[:,0].argsort()]
     fiberIntersectionsWESTside = fiberIntersectionsWESTside[fiberIntersectionsWESTside[:,0].argsort()]
+
+    if parameters['geometry']['RVE-type']=='quarter':
+        SWx = 0.0
+        SWy = 0.0
+        SEx = parameters['geometry']['L']
+        SEy = 0.0
+        NEx = parameters['geometry']['L']
+        NEy = parameters['geometry']['L']
+        NWx = 0.0
+        NWy = parameters['geometry']['L']
+    elif parameters['geometry']['RVE-type']=='half':
+        SWx = -parameters['geometry']['L']
+        SWy = 0.0
+        SEx = parameters['geometry']['L']
+        SEy = 0.0
+        NEx = parameters['geometry']['L']
+        NEy = parameters['geometry']['L']
+        NWx = -parameters['geometry']['L']
+        NWy = parameters['geometry']['L']
+    else:
+        SWx = -parameters['geometry']['L']
+        SWy = -parameters['geometry']['L']
+        SEx = parameters['geometry']['L']
+        SEy = -parameters['geometry']['L']
+        NEx = parameters['geometry']['L']
+        NEy = parameters['geometry']['L']
+        NWx = -parameters['geometry']['L']
+        NWy = parameters['geometry']['L']
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

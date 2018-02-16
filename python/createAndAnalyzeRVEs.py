@@ -1940,6 +1940,16 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
             for setOfEdgesData in setsOfEdgesData:
                 defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
+    fiberIntersectionsSOUTHside = np.array(fiberIntersectionsSOUTHside)
+    fiberIntersectionsEASTside = np.array(fiberIntersectionsEASTside)
+    fiberIntersectionsNORTHside = np.array(fiberIntersectionsNORTHside)
+    fiberIntersectionsWESTside = np.array(fiberIntersectionsWESTside)
+
+    fiberIntersectionsSOUTHside = fiberIntersectionsSOUTHside[fiberIntersectionsSOUTHside[:,0].argsort()]
+    fiberIntersectionsEASTside = fiberIntersectionsEASTside[fiberIntersectionsEASTside[:,0].argsort()]
+    fiberIntersectionsNORTHside = fiberIntersectionsNORTHside[fiberIntersectionsNORTHside[:,0].argsort()]
+    fiberIntersectionsWESTside = fiberIntersectionsWESTside[fiberIntersectionsWESTside[:,0].argsort()]
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     mdb.save()

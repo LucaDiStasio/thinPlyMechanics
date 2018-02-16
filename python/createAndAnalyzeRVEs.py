@@ -1940,16 +1940,6 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
             for setOfEdgesData in setsOfEdgesData:
                 defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
-    fiberIntersectionsSOUTHside = np.array(fiberIntersectionsSOUTHside)
-    fiberIntersectionsEASTside = np.array(fiberIntersectionsEASTside)
-    fiberIntersectionsNORTHside = np.array(fiberIntersectionsNORTHside)
-    fiberIntersectionsWESTside = np.array(fiberIntersectionsWESTside)
-
-    fiberIntersectionsSOUTHside = fiberIntersectionsSOUTHside[fiberIntersectionsSOUTHside[:,0].argsort()]
-    fiberIntersectionsEASTside = fiberIntersectionsEASTside[fiberIntersectionsEASTside[:,0].argsort()]
-    fiberIntersectionsNORTHside = fiberIntersectionsNORTHside[fiberIntersectionsNORTHside[:,0].argsort()]
-    fiberIntersectionsWESTside = fiberIntersectionsWESTside[fiberIntersectionsWESTside[:,0].argsort()]
-
     if parameters['geometry']['RVE-type']=='quarter':
         SWx = 0.0
         SWy = 0.0
@@ -1977,6 +1967,43 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
         NEy = parameters['geometry']['L']
         NWx = -parameters['geometry']['L']
         NWy = parameters['geometry']['L']
+
+    if len(fiberIntersectionsSOUTHside)>0:
+        fiberIntersectionsSOUTHside = np.array(fiberIntersectionsSOUTHside)
+        fiberIntersectionsSOUTHside = fiberIntersectionsSOUTHside[fiberIntersectionsSOUTHside[:,0].argsort()]
+
+        setsOfEdgesData = []
+        count = 0
+        if fiberIntersectionsSOUTHside[0,0]>SWx:
+            point = 0.5*(fiberIntersectionsSOUTHside[0,0]+SWx)
+            setsOfEdgesData.append([point,SEy-0.01,0.0,point,SEy+0.01,0.0,'MATRIX-SOUTHSIDE-SEG'+str(count+1)])
+            count += 1
+        for i,intersec in enumerate(fiberIntersectionsSOUTHside[1:]):
+            point = 0.5*(intersec[0]+fiberIntersectionsSOUTHside[i-1,1])
+            setsOfEdgesData.append([point,SEy-0.01,0.0,point,SEy+0.01,0.0,'MATRIX-SOUTHSIDE-SEG'+str(count+1)])
+            count += 1
+        if fiberIntersectionsSOUTHside[-1,1]<SEx:
+            point = 0.5*(fiberIntersectionsSOUTHside[-1,1]+SEx)
+            setsOfEdgesData.append([point,SEy-0.01,0.0,point,SEy+0.01,0.0,'MATRIX-SOUTHSIDE-SEG'+str(count+1)])
+            count += 1
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        for n in range(1,count+1):
+            fiberEdgesSOUTHside.append(RVEpart.sets['MATRIX-SOUTHSIDE-SEG'+str(n)])
+        RVEpart.SetByBoolean(name='SOUTHSIDE', sets=fiberEdgesSOUTHside)
+    else:
+        setsOfEdgesData = []
+        point = 0.5*(SEx+SWx)
+        setsOfEdgesData.append([point,SEy-0.01,0.0,point,SEy+0.01,0.0,'SOUTHSIDE'])
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+
+    fiberIntersectionsEASTside = np.array(fiberIntersectionsEASTside)
+    fiberIntersectionsNORTHside = np.array(fiberIntersectionsNORTHside)
+    fiberIntersectionsWESTside = np.array(fiberIntersectionsWESTside)
+    fiberIntersectionsEASTside = fiberIntersectionsEASTside[fiberIntersectionsEASTside[:,1].argsort()]
+    fiberIntersectionsNORTHside = fiberIntersectionsNORTHside[fiberIntersectionsNORTHside[:,0].argsort()]
+    fiberIntersectionsWESTside = fiberIntersectionsWESTside[fiberIntersectionsWESTside[:,1].argsort()]
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

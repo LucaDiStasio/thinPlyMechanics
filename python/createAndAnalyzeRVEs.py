@@ -1569,7 +1569,27 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                 fiberEdgesNORTHside.append(RVEpart.sets['FIBER'+str(f+1)+'-EASTFOURTHRING-NORTHEDGE'])
             elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
                 angle = 135.0
-                fiberIntersectionsEASTside = []
+                fiberIntersectionsEASTside.append([fiber['center'][1],fiber['center'][1]+fiber['R4']])
+                setsOfEdgesData.append([0.99*fiber['center'][0],fiber['center'][1]+0.5*fiber['R1'],0.0,1.01*fiber['center'][0],fiber['center'][1]+0.5*fiber['R1'],0.0,'FIBER'+str(f+1)+'-CORE-EASTEDGE'])
+                setsOfEdgesData.append([0.99*fiber['center'][0],fiber['center'][1]+0.5*(fiber['R1']+fiber['R2']),0.0,1.01*fiber['center'][0],fiber['center'][1]+0.5*(fiber['R1']+fiber['R2']),0.0,'FIBER'+str(f+1)+'-NORTHFIRSTRING-EASTEDGE'])
+                setsOfEdgesData.append([0.99*fiber['center'][0],fiber['center'][1]+0.5*(fiber['R1']+fiber['R2']),0.0,1.01*fiber['center'][0],fiber['center'][1]+0.5*(fiber['Rf']+fiber['R2']),0.0,'FIBER'+str(f+1)+'-NORTHSECONDRING-EASTEDGE'])
+                setsOfEdgesData.append([0.99*fiber['center'][0],fiber['center'][1]+0.5*(fiber['Rf']+fiber['R3']),0.0,1.01*fiber['center'][0],fiber['center'][1]+0.5*(fiber['Rf']+fiber['R3']),0.0,'FIBER'+str(f+1)+'-NORTHTHIRDRING-EASTEDGE'])
+                setsOfEdgesData.append([0.99*fiber['center'][0],fiber['center'][1]+0.5*(fiber['R3']+fiber['R4']),0.0,1.01*fiber['center'][0],fiber['center'][1]+0.5*(fiber['R3']+fiber['R4']),0.0,'FIBER'+str(f+1)+'-NORTHFOURTHRING-EASTEDGE'])
+                setsOfEdgesData.append([0.99*fiber['center'][0],fiber['center'][1]-0.5*(fiber['R1']+fiber['R2']),0.0,1.01*fiber['center'][0],fiber['center'][1]-0.5*(fiber['R1']+fiber['R2']),0.0,'FIBER'+str(f+1)+'-SOUTHFIRSTRING-EASTEDGE'])
+                setsOfEdgesData.append([0.99*fiber['center'][0],fiber['center'][1]-0.5*(fiber['R1']+fiber['R2']),0.0,1.01*fiber['center'][0],fiber['center'][1]-0.5*(fiber['Rf']+fiber['R2']),0.0,'FIBER'+str(f+1)+'-SOUTHSECONDRING-EASTEDGE'])
+                setsOfEdgesData.append([0.99*fiber['center'][0],fiber['center'][1]-0.5*(fiber['Rf']+fiber['R3']),0.0,1.01*fiber['center'][0],fiber['center'][1]-0.5*(fiber['Rf']+fiber['R3']),0.0,'FIBER'+str(f+1)+'-SOUTHTHIRDRING-EASTEDGE'])
+                setsOfEdgesData.append([0.99*fiber['center'][0],fiber['center'][1]-0.5*(fiber['R3']+fiber['R4']),0.0,1.01*fiber['center'][0],fiber['center'][1]-0.5*(fiber['R3']+fiber['R4']),0.0,'FIBER'+str(f+1)+'-SOUTHFOURTHRING-EASTEDGE'])
+                for setOfEdgesData in setsOfEdgesData:
+                    defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+                fiberEdgesEASTside.append(RVEpart.sets['FIBER'+str(f+1)+'-CORE-EASTEDGE'])
+                fiberEdgesEASTside.append(RVEpart.sets['FIBER'+str(f+1)+'-NORTHFIRSTRING-EASTEDGE'])
+                fiberEdgesEASTside.append(RVEpart.sets['FIBER'+str(f+1)+'-NORTHSECONDRING-EASTEDGE'])
+                fiberEdgesEASTside.append(RVEpart.sets['FIBER'+str(f+1)+'-NORTHTHIRDRING-EASTEDGE'])
+                fiberEdgesEASTside.append(RVEpart.sets['FIBER'+str(f+1)+'-NORTHFOURTHRING-EASTEDGE'])
+                fiberEdgesEASTside.append(RVEpart.sets['FIBER'+str(f+1)+'-SOUTHFIRSTRING-EASTEDGE'])
+                fiberEdgesEASTside.append(RVEpart.sets['FIBER'+str(f+1)+'-SOUTHSECONDRING-EASTEDGE'])
+                fiberEdgesEASTside.append(RVEpart.sets['FIBER'+str(f+1)+'-SOUTHTHIRDRING-EASTEDGE'])
+                fiberEdgesEASTside.append(RVEpart.sets['FIBER'+str(f+1)+'-SOUTHFOURTHRING-EASTEDGE'])
             elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
                 angle = 45.0
                 fiberIntersectionsWESTside = []

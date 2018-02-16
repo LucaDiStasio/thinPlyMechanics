@@ -1269,6 +1269,25 @@ def applyBC(currentmodel,bc,logfilepath,baselogindent,logindent):
             region=model.rootAssembly.instances['RVE-assembly'].sets[bc['set']], localCsys=None)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
+def applyLoad(currentmodel,parameters,load,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: applyLoad(currentmodel,load,logfilepath,baselogindent,logindent)',True)
+    if load['type'] in ['appliedstrain','appliedStrain','Applied Strain','applied strain']:
+        if load['type'] in ['x','X','1']:
+            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value']*L, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+        elif load['type'] in ['y','Y','2']:
+            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u2=load['value']*L, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+        elif load['type'] in ['z','Z','3']:
+            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u3=load['value']*L, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+    elif load['type'] in ['applieddisplacement','appliedDisplacement','Applied Displacement','applied displacement']:
+        if load['type'] in ['x','X','1']:
+            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'], amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+        elif load['type'] in ['y','Y','2']:
+            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u2=load['value'], amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+        elif load['type'] in ['z','Z','3']:
+            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u3=load['value'], amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+
 def assignMeshControls(thisModel,assemblyName,setName,elementShape,controls,logfile,indent,toScreen):
     thisModel.rootAssembly.setMeshControls(regions=(thisModel.rootAssembly.instances[assemblyName].sets[setName].faces), elemShape=elementShape, technique=controls)
     writeLineToLogFile(logfile,'a',indent + '-- ' + setName,toScreen)
@@ -2359,9 +2378,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assigning boundary conditions ...',True)
 
     for BC in parameters['BC'].values():
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: addMaterial(currentmodel,material,logfilepath,baselogindent,logindent)',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: applyBC(currentmodel,bc,logfilepath,baselogindent,logindent)',True)
         applyBC(model,BC,logfilepath,baselogindent + 3*logindent,logindent)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: addMaterial(currentmodel,material,logfilepath,baselogindent,logindent)',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: applyBC(currentmodel,bc,logfilepath,baselogindent,logindent)',True)
 
     mdb.save()
 
@@ -2375,13 +2394,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',2*logindent + 'Assigning loads ...',True)
 
     for load in parameters['loads'].values():
-        if 'appliedstrain' in load['type'] or 'appliedStrain' in load['type'] or 'Applied Strain' in load['type'] or 'applied strain' in load['type']:
-            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*L, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
-        elif 'applieddisplacement' in load['type'] or 'appliedDisplacement' in load['type'] or 'Applied Displacement' in load['type'] or 'applied displacement' in load['type']:
-            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0], amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
-        # elif 'appliedstress' in load['type'] or 'appliedStress' in load['type'] or 'Applied Stress' in load['type'] or 'applied stress' in load['type']:
-        #
-        # elif 'appliedforce' in load['type'] or 'appliedForce' in load['type'] or 'Applied Force' in load['type'] or 'applied Force' in load['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: applyLoad(currentmodel,load,logfilepath,baselogindent,logindent)',True)
+        applyLoad(model,parameters,load,logfilepath,baselogindent + 3*logindent,logindent)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Successfully returned from function: applyLoad(currentmodel,load,logfilepath,baselogindent,logindent)',True)
 
     mdb.save()
 

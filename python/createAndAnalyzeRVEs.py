@@ -2055,10 +2055,34 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
-
-
-    fiberIntersectionsWESTside = np.array(fiberIntersectionsWESTside)
-    fiberIntersectionsWESTside = fiberIntersectionsWESTside[fiberIntersectionsWESTside[:,0].argsort()]
+    if len(fiberIntersectionsWESTside)>0:
+        fiberIntersectionsWESTside = np.array(fiberIntersectionsWESTside)
+        fiberIntersectionsWESTside = fiberIntersectionsWESTside[fiberIntersectionsWESTside[:,0].argsort()]
+        setsOfEdgesData = []
+        count = 0
+        if fiberIntersectionsWESTside[0,0]>SWy:
+            point = 0.5*(fiberIntersectionsWESTside[0,0]+SWy)
+            setsOfEdgesData.append([SWx-0.01,point,0.0,SWx+0.01,point,0.0,'MATRIX-WESTSIDE-SEG'+str(count+1)])
+            count += 1
+        for i,intersec in enumerate(fiberIntersectionsWESTside[1:]):
+            point = 0.5*(intersec[0]+fiberIntersectionsWESTside[i-1,1])
+            setsOfEdgesData.append([SWx-0.01,point,0.0,SWx+0.01,point,0.0,'MATRIX-WESTSIDE-SEG'+str(count+1)])
+            count += 1
+        if fiberIntersectionsWESTside[-1,1]<NWy:
+            point = 0.5*(fiberIntersectionsWESTside[-1,1]+NWy)
+            setsOfEdgesData.append([SWx-0.01,point,0.0,SWx+0.01,point,0.0,'MATRIX-WESTSIDE-SEG'+str(count+1)])
+            count += 1
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        for n in range(1,count+1):
+            fiberEdgesWESTside.append(RVEpart.sets['MATRIX-WESTSIDE-SEG'+str(n)])
+        RVEpart.SetByBoolean(name='WESTSIDE', sets=fiberEdgesWESTside)
+    else:
+        setsOfEdgesData = []
+        point = 0.5*(SWy+NWy)
+        setsOfEdgesData.append([SWx-0.01,point,0.0,SWx+0.01,point,0.0,'WESTSIDE'])
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

@@ -2367,6 +2367,258 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
+#===============================================================================#
+#                                Applied load
+#===============================================================================#
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',2*logindent + 'Assigning loads ...',True)
+
+    for load in parameters['loads'].values():
+        if 'appliedstrain' in load['type'] or 'appliedStrain' in load['type'] or 'Applied Strain' in load['type'] or 'applied strain' in load['type']:
+            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*L, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+        elif 'applieddisplacement' in load['type'] or 'appliedDisplacement' in load['type'] or 'Applied Displacement' in load['type'] or 'applied displacement' in load['type']:
+            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0], amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+        # elif 'appliedstress' in load['type'] or 'appliedStress' in load['type'] or 'Applied Stress' in load['type'] or 'applied stress' in load['type']:
+        #
+        # elif 'appliedforce' in load['type'] or 'appliedForce' in load['type'] or 'Applied Force' in load['type'] or 'applied Force' in load['type']:
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                                   Crack
+#===============================================================================#
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating cracks ...',True)
+
+    # assign seam
+    model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
+
+    # contour integral
+    xC = Rf*np.cos((theta+deltatheta)*np.pi/180)
+    yC = Rf*np.sin((theta+deltatheta)*np.pi/180)
+    xA = Rf*np.cos((theta+1.025*deltatheta)*np.pi/180)
+    yA = -xC*(xA-xC)/yC + yC
+    model.rootAssembly.engineeringFeatures.ContourIntegral(name='Debond',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIP'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=0.5, collapsedElementAtTip=NONE)
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                                   Mesh
+#===============================================================================#
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating mesh ...',True)
+
+    nTangential = np.floor(deltapsi/delta)
+    nRadialFiber = np.floor(0.25/(delta*np.pi/180.0))
+    nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
+    nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['mesh']['size']['delta3'])
+    nTangential3 = np.floor(alpha/parameters['mesh']['size']['delta1'])
+    #nRadialFiber1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
+    if L>2*Rf:
+        nRadialMatrix = np.floor(0.25/(delta*np.pi/180.0))
+        #nRadialMatrix1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
+    else:
+        nRadialMatrix = np.floor(0.25*(L-Rf)/(delta*np.pi/180.0))
+        #nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
+
+    if nTangential<parameters['Jintegral']['numberOfContours'] or nRadialFiber<parameters['Jintegral']['numberOfContours'] or nRadialMatrix<parameters['Jintegral']['numberOfContours']:
+        parameters['Jintegral']['numberOfContours'] = int(np.floor(np.min([nTangential,nRadialFiber,nRadialMatrix])) - 1)
+        writeErrorToLogFile(logfilepath,'a','MESH SIZE','The provided element size around the crack tip is incompatible with the number of contour integral requested.\nContour integral option in ABAQUS is available only for quadrilateral and hexahedral elements.\nThe number of contour requested will be automatically adjusted to ' + str(parameters['Jintegral']['numberOfContours']),True)
+
+    # assign mesh controls
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
+
+    regionSets = [['FIBER-EXTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE],
+                    ['FIBER-EXTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
+                    ['FIBER-EXTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
+                    ['MATRIX-INTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE],
+                    ['MATRIX-INTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
+                    ['MATRIX-INTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
+                    ['FIBER-CENTER',QUAD_DOMINATED,FREE],
+                    ['FIBER-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
+                    ['FIBER-EXTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE],
+                    ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD_DOMINATED,FREE],
+                    ['MATRIX-INTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE],
+                    ['MATRIX-INTANNULUS-RESTBOUNDED',QUAD_DOMINATED,FREE],
+                    ['MATRIX-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
+                    ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
+
+    for regionSet in regionSets:
+        assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    # assign seeds
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
+
+
+
+    regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
+                    ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
+                    ['THIRDCIRCLE-UPPERCRACK',nTangential],
+                    ['THIRDCIRCLE-FIRSTBOUNDED',nTangential],
+                    ['FOURTHCIRCLE-UPPERCRACK',nTangential],
+                    ['FOURTHCIRCLE-FIRSTBOUNDED',nTangential],
+                    ['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber],
+                    ['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix],
+                    ['TRANSVERSALCUT-SECONDFIBER',nRadialFiber],
+                    ['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix],
+                    ['TRANSVERSALCUT-THIRDFIBER',nRadialFiber],
+                    ['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix],
+                    ['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber],
+                    ['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix],
+                    ['LOWERSIDE-CENTER',6],
+                    ['FIRSTCIRCLE',18],
+                    ['SECONDCIRCLE-SECONDBOUNDED',nTangential1],
+                    ['SECONDCIRCLE-RESTBOUNDED',nTangential2],
+                    ['THIRDCIRCLE-SECONDBOUNDED',nTangential1],
+                    ['THIRDCIRCLE-RESTBOUNDED',nTangential2],
+                    ['FOURTHCIRCLE-SECONDBOUNDED',nTangential1],
+                    ['FOURTHCIRCLE-RESTBOUNDED',nTangential2],
+                    ['TRANSVERSALCUT-FOURTHFIBER',nRadialFiber],
+                    ['TRANSVERSALCUT-FOURTHMATRIX',nRadialMatrix],
+                    ['SECONDCIRCLE-LOWERCRACK',nTangential3],
+                    ['THIRDCIRCLE-LOWERCRACK',nTangential3],
+                    ['FOURTHCIRCLE-LOWERCRACK',nTangential3],
+                    ['FIFTHCIRCLE',90],
+                    ['RIGHTSIDE',30],
+                    ['LEFTSIDE',30]]
+
+    #regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
+    #                ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
+    #                ['THIRDCIRCLE-UPPERCRACK',nTangential],
+    #                ['THIRDCIRCLE-FIRSTBOUNDED',nTangential],
+    #                ['FOURTHCIRCLE-UPPERCRACK',nTangential],
+    #                ['FOURTHCIRCLE-FIRSTBOUNDED',nTangential],
+    #                ['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber],
+    #                ['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix],
+    #                ['TRANSVERSALCUT-SECONDFIBER',nRadialFiber],
+    #                ['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix],
+    #                ['TRANSVERSALCUT-THIRDFIBER',nRadialFiber],
+    #                ['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix],
+    #                ['FIRSTCIRCLE',18],
+    #                ['THIRDCIRCLE-SECONDBOUNDED',nTangential1],
+    #                ['THIRDCIRCLE-RESTBOUNDED',nTangential2],
+    #                ['THIRDCIRCLE-LOWERCRACK',nTangential3],
+    #                ['FIFTHCIRCLE',90],
+    #                ['RIGHTSIDE',30],
+    #                ['LEFTSIDE',30]]
+
+    for regionSet in regionSets:
+        seedEdgeByNumber(model,'RVE-assembly',regionSet[0],regionSet[1],FINER,logfilepath,baselogindent + 3*logindent,True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    # select element type
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Selecting and assigning element types ...',True)
+
+    if 'first' in parameters['mesh']['elements']['order']:
+        elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
+        elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
+    elif 'second' in parameters['mesh']['elements']['order']:
+        elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
+        elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
+    model.rootAssembly.setElementType(regions=(model.rootAssembly.instances['RVE-assembly'].sets['RVE']), elemTypes=(elemType1, elemType2))
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    # mesh part
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Meshing part ...',True)
+    localStart = timeit.default_timer()
+
+    model.rootAssembly.generateMesh(regions=(model.rootAssembly.instances['RVE-assembly'],))
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Mesh creation time: ' + str(timeit.default_timer() - localStart) + ' [s]',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    mdb.save()
+
+    # extract mesh statistics
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extracting mesh statistics ...',True)
+
+    meshStats = model.rootAssembly.getMeshStats(regions=(model.rootAssembly.instances['RVE-assembly'],))
+
+    modelData = {}
+    modelData['numNodes'] =  meshStats.numNodes
+    modelData['numQuads'] =  meshStats.numQuadElems
+    modelData['numTris'] =  meshStats.numTriElems
+    modelData['numEls'] =  meshStats.numQuadElems + meshStats.numTriElems
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                                   Output
+#===============================================================================#
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating output requests ...',True)
+
+    # field output
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Field output ...',True)
+
+    model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('U','RF','S','E','EE','COORD',))
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    # history output
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'History output ...',True)
+
+    #model.HistoryOutputRequest(name='H-Output-1',createStepName='Load-Step')
+    model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+#===============================================================================#
+#                                Job creation
+#===============================================================================#
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set job name',True)
+    modelData['jobname'] = 'Job-Jintegral-' + modelname
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job',True)
+    mdb.Job(name='Job-Jintegral-' + modelname, model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=parameters['solver']['cpus'], numDomains=12,numGPUs=0)
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Submit job and wait for completion',True)
+    localStart = timeit.default_timer()
+    #mdb.jobs['Job-' + modelname].submit(consistencyChecking=OFF)
+    mdb.jobs['Job-Jintegral-' + modelname].writeInput(consistencyChecking=OFF)
+    mdb.jobs['Job-Jintegral-' + modelname].waitForCompletion()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Job time: ' + str(timeit.default_timer() - localStart) + ' [s]',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Closing database ...',True)
+    mdb.save()
+    mdb.close()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: createRVE(parameters,logfilepath,logindent)',True)
+
+    return modelData
+
 def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#
 #                               Parameters

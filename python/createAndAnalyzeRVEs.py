@@ -2459,22 +2459,25 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating mesh ...',True)
 
-    nTangential = np.floor(deltapsi/delta)
-    nRadialFiber = np.floor(0.25/(delta*np.pi/180.0))
-    nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
-    nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['mesh']['size']['delta3'])
-    nTangential3 = np.floor(alpha/parameters['mesh']['size']['delta1'])
-    #nRadialFiber1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
-    if L>2*Rf:
-        nRadialMatrix = np.floor(0.25/(delta*np.pi/180.0))
-        #nRadialMatrix1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
-    else:
-        nRadialMatrix = np.floor(0.25*(L-Rf)/(delta*np.pi/180.0))
-        #nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
-
-    if nTangential<parameters['Jintegral']['numberOfContours'] or nRadialFiber<parameters['Jintegral']['numberOfContours'] or nRadialMatrix<parameters['Jintegral']['numberOfContours']:
-        parameters['Jintegral']['numberOfContours'] = int(np.floor(np.min([nTangential,nRadialFiber,nRadialMatrix])) - 1)
-        writeErrorToLogFile(logfilepath,'a','MESH SIZE','The provided element size around the crack tip is incompatible with the number of contour integral requested.\nContour integral option in ABAQUS is available only for quadrilateral and hexahedral elements.\nThe number of contour requested will be automatically adjusted to ' + str(parameters['Jintegral']['numberOfContours']),True)
+    for f,fiber in parameters['fibers']:
+        if fiber['isCracked']:
+            Rf = fiber['Rf']
+            for cNum,crack in fiber['cracks']:
+                if crack['isMeasured'] && 'J-integral' in crack['measurement-methods']:
+                    fFiber = fiber['internalRadiusMultiplier']
+                    fMatrix = fiber['externalRadiusMultiplier']
+                    deltapsi = crack['deltapsi']
+                    delta = crack['delta']
+                    nTangential = np.floor(deltapsi/delta)
+                    nRadialFiber = np.floor(fFiber/(delta*np.pi/180.0))
+                    #nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
+                    #nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['mesh']['size']['delta3'])
+                    #nTangential3 = np.floor(alpha/parameters['mesh']['size']['delta1'])
+                    #nRadialFiber1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
+                    nRadialMatrix = np.floor(fMatrix/(delta*np.pi/180.0))
+                    if nTangential<crack['Jintegral']['numberOfContours'] or nRadialFiber<crack['Jintegral']['numberOfContours'] or nRadialMatrix<crack['Jintegral']['numberOfContours']:
+                        crack['Jintegral']['numberOfContours'] = int(np.floor(np.min([nTangential,nRadialFiber,nRadialMatrix])) - 1)
+                        writeErrorToLogFile(logfilepath,'a','MESH SIZE','FIBER N. ' + str(f+1) + ' CRACK N. ' + str(cNum+1) + '\nThe provided element size around the crack tip is incompatible with the number of contour integral requested.\nContour integral option in ABAQUS is available only for quadrilateral and hexahedral elements.\nThe number of contour requested will be automatically adjusted to ' + str(parameters['Jintegral']['numberOfContours']),True)
 
     # assign mesh controls
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
@@ -2484,83 +2487,104 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     for f,fiber in parameters['fibers']:
         regionSets.append(['FIBER'+str(f+1),QUAD_DOMINATED,FREE])
         if fiber['isCracked']:
-            isOneCrackMeasured = False
             for cNum,crack in fiber['cracks']:
                 if crack['isMeasured']:
-                    isOneCrackMeasured = True
-                    break
-            if isOneCrackMeasured:
-                for cNum,crack in fiber['cracks']:
-                    if crack['isMeasured']:
-                        regionSets.append(['FIBER'+str(f+1)+'-SECONDRING-CT1-CRACKREFINE',QUAD,STRUCTURED])
-                        regionSets.append(['FIBER'+str(f+1)+'-SECONDRING-CT1-FIRSTBOUNDED',QUAD,STRUCTURED])
-                        if not crack['isSymm']:
-                            regionSets.append(['FIBER'+str(f+1)+'-SECONDRING-CT2-CRACKREFINE',QUAD,STRUCTURED])
-                            regionSets.append(['FIBER'+str(f+1)+'-SECONDRING-CT2-FIRSTBOUNDED',QUAD,STRUCTURED])
+                    regionSets.append(['FIBER'+str(f+1)+'-SECONDRING-CT1-CRACKREFINE',QUAD,STRUCTURED])
+                    regionSets.append(['FIBER'+str(f+1)+'-SECONDRING-CT1-FIRSTBOUNDED',QUAD,STRUCTURED])
+                    if not crack['isSymm']:
+                        regionSets.append(['FIBER'+str(f+1)+'-SECONDRING-CT2-CRACKREFINE',QUAD,STRUCTURED])
+                        regionSets.append(['FIBER'+str(f+1)+'-SECONDRING-CT2-FIRSTBOUNDED',QUAD,STRUCTURED])
 
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
+
+    mdb.save()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # assign seeds
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
 
+    regionSets = [['WESTSIDE',parameters['mesh']['size']['westSide']],
+                  ['EASTSIDE',parameters['mesh']['size']['eastSide']]]
 
-
-    regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
-                    ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
-                    ['THIRDCIRCLE-UPPERCRACK',nTangential],
-                    ['THIRDCIRCLE-FIRSTBOUNDED',nTangential],
-                    ['FOURTHCIRCLE-UPPERCRACK',nTangential],
-                    ['FOURTHCIRCLE-FIRSTBOUNDED',nTangential],
-                    ['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber],
-                    ['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix],
-                    ['TRANSVERSALCUT-SECONDFIBER',nRadialFiber],
-                    ['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix],
-                    ['TRANSVERSALCUT-THIRDFIBER',nRadialFiber],
-                    ['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix],
-                    ['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber],
-                    ['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix],
-                    ['LOWERSIDE-CENTER',6],
-                    ['FIRSTCIRCLE',18],
-                    ['SECONDCIRCLE-SECONDBOUNDED',nTangential1],
-                    ['SECONDCIRCLE-RESTBOUNDED',nTangential2],
-                    ['THIRDCIRCLE-SECONDBOUNDED',nTangential1],
-                    ['THIRDCIRCLE-RESTBOUNDED',nTangential2],
-                    ['FOURTHCIRCLE-SECONDBOUNDED',nTangential1],
-                    ['FOURTHCIRCLE-RESTBOUNDED',nTangential2],
-                    ['TRANSVERSALCUT-FOURTHFIBER',nRadialFiber],
-                    ['TRANSVERSALCUT-FOURTHMATRIX',nRadialMatrix],
-                    ['SECONDCIRCLE-LOWERCRACK',nTangential3],
-                    ['THIRDCIRCLE-LOWERCRACK',nTangential3],
-                    ['FOURTHCIRCLE-LOWERCRACK',nTangential3],
-                    ['FIFTHCIRCLE',90],
-                    ['RIGHTSIDE',30],
-                    ['LEFTSIDE',30]]
-
-    #regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
-    #                ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
-    #                ['THIRDCIRCLE-UPPERCRACK',nTangential],
-    #                ['THIRDCIRCLE-FIRSTBOUNDED',nTangential],
-    #                ['FOURTHCIRCLE-UPPERCRACK',nTangential],
-    #                ['FOURTHCIRCLE-FIRSTBOUNDED',nTangential],
-    #                ['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber],
-    #                ['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix],
-    #                ['TRANSVERSALCUT-SECONDFIBER',nRadialFiber],
-    #                ['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix],
-    #                ['TRANSVERSALCUT-THIRDFIBER',nRadialFiber],
-    #                ['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix],
-    #                ['FIRSTCIRCLE',18],
-    #                ['THIRDCIRCLE-SECONDBOUNDED',nTangential1],
-    #                ['THIRDCIRCLE-RESTBOUNDED',nTangential2],
-    #                ['THIRDCIRCLE-LOWERCRACK',nTangential3],
-    #                ['FIFTHCIRCLE',90],
-    #                ['RIGHTSIDE',30],
-    #                ['LEFTSIDE',30]]
+    for f,fiber in enumerate(parameters['fibers'].values()):
+        if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
+            angle = 90.0
+        elif fiber['type'] in ['QUARTER-SW','quarter-sw','quarter-SW','Quarter-SW']:
+            angle = 90.0
+        elif fiber['type'] in ['QUARTER-NW','quarter-nw','quarter-NW','Quarter-NW']:
+            angle = 90.0
+        elif fiber['type'] in ['QUARTER-NE','quarter-ne','quarter-NE','Quarter-NE']:
+            angle = 90.0
+        elif fiber['type'] in ['HALF-S','half-s','half-S','Half-S']:
+            angle = 180.0
+        elif fiber['type'] in ['HALF-N','half-n','half-N','Half-N']:
+            angle = 180.0
+        elif fiber['type'] in ['HALF-E','half-e','half-E','Half-E']:
+            angle = 180.0
+        elif fiber['type'] in ['HALF-W','half-w','half-W','Half-W']:
+            angle = 180.0
+        elif fiber['type'] in ['FULL','full','Full']:
+            angle = 360.0
+        regionSets.append(['FIBER'+str(f+1)+'-INTERFACE',np.floor(angle/fiber['delta'])])
+        if fiber['isCracked']:
+            countMeasured = 0
+            for cNum,crack in enumerate(fiber['cracks'].values()):
+                if crack['isMeasured']:
+                    fFiber = fiber['internalRadiusMultiplier']
+                    fMatrix = fiber['externalRadiusMultiplier']
+                    if countMeasured == 0
+                        regionSets.append(['FIBER'+str(f+1)+'-FIRSTCIRCLE',np.floor(angle/fiber['deltaFirstcircle'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-FOURTHCIRCLE',np.floor(angle/fiber['deltaFourthcircle'])])
+                    countMeasured += 1
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERREFINECRACK',np.floor(crack['deltapsi']/crack['delta'])])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERFIRSTBOUN',np.floor(crack['deltapsi']/crack['delta'])])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-UPPERSECONDBOUN',np.floor(crack['deltaphi']/crack['deltaSecondbounded'])])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERREFINECRACK',np.floor(crack['deltapsi']/crack['delta'])])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERFIRSTBOUN',np.floor(crack['deltapsi']/crack['delta'])])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERSECONDBOUN',np.floor(crack['deltaphi']/crack['deltaSecondbounded'])])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-UPPERREFINECRACK',np.floor(crack['deltapsi']/crack['delta'])])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-UPPERFIRSTBOUN',np.floor(crack['deltapsi']/crack['delta'])])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-UPPERSECONDBOUN',np.floor(crack['deltaphi']/crack['deltaSecondbounded'])])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERLOWERREFINEBOUND',np.floor(fFiber/(crack['delta']*np.pi/180.0))])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXLOWERREFINEBOUND',np.floor(fMatrix/(crack['delta']*np.pi/180.0))])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERCRACKLINE',np.floor(fFiber/(crack['delta']*np.pi/180.0))])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXCRACKLINE',np.floor(fMatrix/(crack['delta']*np.pi/180.0))])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERUPPERREFINEBOUND',np.floor(fFiber/(crack['delta']*np.pi/180.0))])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXUPPERREFINEBOUND',np.floor(fMatrix/(crack['delta']*np.pi/180.0))])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-FIBERUPPERBOUND',np.floor(fFiber/(crack['delta']*np.pi/180.0))])
+                    regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXUPPERBOUND',np.floor(fMatrix/(crack['delta']*np.pi/180.0))])
+                    if not crack['isSymm']:
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER',np.floor(2*(crack['deltatheta']-crack['deltapsi'])/crack['deltaCrack'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-CRACKCENTER',np.floor(2*(crack['deltatheta']-crack['deltapsi'])/crack['deltaCrack'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-CRACKCENTER',np.floor(2*(crack['deltatheta']-crack['deltapsi'])/crack['deltaCrack'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-LOWERREFINECRACK',np.floor(crack['deltapsi']/crack['delta'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-LOWERFIRSTBOUN',np.floor(crack['deltapsi']/crack['delta'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-LOWERSECONDBOUN',np.floor(crack['deltaphi']/crack['deltaSecondbounded'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-LOWERREFINECRACK',np.floor(crack['deltapsi']/crack['delta'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-LOWERFIRSTBOUN',np.floor(crack['deltapsi']/crack['delta'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-LOWERSECONDBOUN',np.floor(crack['deltaphi']/crack['deltaSecondbounded'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-LOWERREFINECRACK',np.floor(crack['deltapsi']/crack['delta'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-LOWERFIRSTBOUN',np.floor(crack['deltapsi']/crack['delta'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-LOWERSECONDBOUN',np.floor(crack['deltaphi']/crack['deltaSecondbounded'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-FIBERLOWERREFINEBOUND',np.floor(fFiber/(crack['delta']*np.pi/180.0))])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-MATRIXLOWERREFINEBOUND',np.floor(fMatrix/(crack['delta']*np.pi/180.0))])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-FIBERCRACKLINE',np.floor(fFiber/(crack['delta']*np.pi/180.0))])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-MATRIXCRACKLINE',np.floor(fMatrix/(crack['delta']*np.pi/180.0))])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-FIBERUPPERREFINEBOUND',np.floor(fFiber/(crack['delta']*np.pi/180.0))])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-MATRIXUPPERREFINEBOUND',np.floor(fMatrix/(crack['delta']*np.pi/180.0))])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-FIBERUPPERBOUND',np.floor(fFiber/(crack['delta']*np.pi/180.0))])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-MATRIXUPPERBOUND',np.floor(fMatrix/(crack['delta']*np.pi/180.0))])
+                    else:
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER',np.floor((crack['deltatheta']-crack['deltapsi'])/crack['deltaCrack'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-CRACKCENTER',np.floor((crack['deltatheta']-crack['deltapsi'])/crack['deltaCrack'])])
+                        regionSets.append(['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-THIRDCIRCLE-CRACKCENTER',np.floor((crack['deltatheta']-crack['deltapsi'])/crack['deltaCrack'])])
 
     for regionSet in regionSets:
         seedEdgeByNumber(model,'RVE-assembly',regionSet[0],regionSet[1],FINER,logfilepath,baselogindent + 3*logindent,True)
+
+    mdb.save()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
@@ -2574,6 +2598,8 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
         elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
         elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
     model.rootAssembly.setElementType(regions=(model.rootAssembly.instances['RVE-assembly'].sets['RVE']), elemTypes=(elemType1, elemType2))
+
+    mdb.save()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
@@ -2622,8 +2648,19 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     # history output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'History output ...',True)
 
-    #model.HistoryOutputRequest(name='H-Output-1',createStepName='Load-Step')
-    model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+    for f, fiber in enumerate(parameters['fibers'].values()):
+        if fiber['isCracked']:
+            for cNum, crack in enumerate(fiber['cracks'].values()):
+                if crack['isMeasured'] and 'J-integral' in crack['measurement-methods'] and 'VCCT' in crack['measurement-methods']:
+                    model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='FIBER'+str(f+1)+'-DEBOND'+(cNum+1)+'CT1',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=2)
+                    if not crack['isSymm']:
+                        model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='FIBER'+str(f+1)+'-DEBOND'+(cNum+1)+'CT2',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=2)
+                elif crack['isMeasured'] and 'J-integral' in crack['measurement-methods']:
+                    model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='FIBER'+str(f+1)+'-DEBOND'+(cNum+1)+'CT1',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=crack['Jintegral']['numberOfContours'])
+                    if not crack['isSymm']:
+                        model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='FIBER'+str(f+1)+'-DEBOND'+(cNum+1)+'CT2',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=crack['Jintegral']['numberOfContours'])
+
+
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

@@ -2305,6 +2305,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
             matrixSets.append(RVEpart.sets['FIBER'+str(f+1)+'-MATRIXNEIGHBORHOOD'])
         rveSets.append(RVEpart.sets['FIBER'+str(f+1)])
     RVEpart.SetByBoolean(name='MATRIX', sets=matrixSets)
+    RVEpart.SetByBoolean(name='FIBERS', sets=rveSets)
     rveSets.append(RVEpart.sets['MATRIX'])
     RVEpart.SetByBoolean(name='RVE', sets=rveSets)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
@@ -2477,6 +2478,20 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     # assign mesh controls
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
+
+    regionSets = [['MATRIX-BODY',QUAD_DOMINATED,FREE]]
+
+    for f,fiber in parameters['fibers']:
+        if fiber['isCracked']:
+            isOneCrackMeasured = False
+            for cNum,crack in fiber['cracks']:
+                if crack['isMeasured']:
+                    isOneCrackMeasured = True
+                    break
+            if isOneCrackMeasured:
+
+            else:
+                regionSets.append(['FIBER',QUAD_DOMINATED,FREE])
 
     regionSets = [['FIBER-EXTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE],
                     ['FIBER-EXTANNULUS-UPPERCRACK',QUAD,STRUCTURED],

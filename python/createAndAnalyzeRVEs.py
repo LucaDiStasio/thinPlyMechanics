@@ -2482,6 +2482,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     regionSets = [['MATRIX-BODY',QUAD_DOMINATED,FREE]]
 
     for f,fiber in parameters['fibers']:
+        regionSets.append(['FIBER'+str(f+1),QUAD_DOMINATED,FREE])
         if fiber['isCracked']:
             isOneCrackMeasured = False
             for cNum,crack in fiber['cracks']:
@@ -2489,24 +2490,13 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                     isOneCrackMeasured = True
                     break
             if isOneCrackMeasured:
-
-            else:
-                regionSets.append(['FIBER',QUAD_DOMINATED,FREE])
-
-    regionSets = [['FIBER-EXTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE],
-                    ['FIBER-EXTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
-                    ['FIBER-EXTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
-                    ['MATRIX-INTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE],
-                    ['MATRIX-INTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
-                    ['MATRIX-INTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
-                    ['FIBER-CENTER',QUAD_DOMINATED,FREE],
-                    ['FIBER-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
-                    ['FIBER-EXTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE],
-                    ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD_DOMINATED,FREE],
-                    ['MATRIX-INTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE],
-                    ['MATRIX-INTANNULUS-RESTBOUNDED',QUAD_DOMINATED,FREE],
-                    ['MATRIX-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
-                    ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
+                for cNum,crack in fiber['cracks']:
+                    if crack['isMeasured']:
+                        regionSets.append(['FIBER'+str(f+1)+'-SECONDRING-CT1-CRACKREFINE',QUAD,STRUCTURED])
+                        regionSets.append(['FIBER'+str(f+1)+'-SECONDRING-CT1-FIRSTBOUNDED',QUAD,STRUCTURED])
+                        if not crack['isSymm']:
+                            regionSets.append(['FIBER'+str(f+1)+'-SECONDRING-CT2-CRACKREFINE',QUAD,STRUCTURED])
+                            regionSets.append(['FIBER'+str(f+1)+'-SECONDRING-CT2-FIRSTBOUNDED',QUAD,STRUCTURED])
 
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)

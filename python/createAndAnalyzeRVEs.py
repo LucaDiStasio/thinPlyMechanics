@@ -2645,6 +2645,8 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('U','RF','S','E','EE','COORD',))
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    mdb.save()
+
     # history output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'History output ...',True)
 
@@ -2659,8 +2661,6 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                     model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='FIBER'+str(f+1)+'-DEBOND'+(cNum+1)+'CT1',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=crack['Jintegral']['numberOfContours'])
                     if not crack['isSymm']:
                         model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='FIBER'+str(f+1)+'-DEBOND'+(cNum+1)+'CT2',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=crack['Jintegral']['numberOfContours'])
-
-
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
@@ -2679,7 +2679,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     modelData['jobname'] = 'Job-Jintegral-' + modelname
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job',True)
-    mdb.Job(name='Job-Jintegral-' + modelname, model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=parameters['solver']['cpus'], numDomains=12,numGPUs=0)
+    mdb.Job(name='Job-Jintegral-' + modelname, model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=parameters['solver']['cpus'], numDomains=parameters['solver']['cpus'],numGPUs=0)
 
     mdb.save()
 
@@ -2703,6 +2703,33 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: createRVE(parameters,logfilepath,logindent)',True)
 
     return modelData
+
+def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: modifyRVE(parameters,mdbData)',True)
+    skipLineToLogFile(logfilepath,'a',True)
+    # odb name and path
+    #odbname = mdbData['jobname'] + '.odb'
+    #odbfullpath = join(parameters['wd'],odbname)
+    # input file name and path
+    inpname = mdbData['jobname'] + '.inp'
+    inpfullpath = join(parameters['input']['wd'],inpname)
+    # modified input file name
+    modinpname = 'Job-VCCTandJintegral-' + parameters['input']['modelname'] + '.inp'
+    modinpfullpath = join(parameters['input']['wd'],modinpname)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Working directory: ' + parameters['input']['wd'],True)
+    #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database name: ' + odbname,True)
+    #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database full path: ' + join(parameters['wd'],odbname),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Input file name: ' + inpname,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Input file full path: ' + join(parameters['input']['wd'],inpname),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Modified input file name: ' + modinpname,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Modified input file full path: ' + join(parameters['input']['wd'],modinpname),True)
+    createABQinpfile(modinpname)
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading content of original input file ...',True)
+    with open(inpfullpath,'r') as inp:
+        inpfilelines = inp.readlines()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#

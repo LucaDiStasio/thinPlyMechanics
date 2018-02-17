@@ -2427,16 +2427,25 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     for f, fiber in enumerate(parameters['fibers'].values()):
         if fiber['isCracked']:
+            Rf = fiber['Rf']
             for cNum, crack in enumerate(fiber['cracks'].values()):
-    # assign seam
-    model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
-
-    # contour integral
-    xC = Rf*np.cos((theta+deltatheta)*np.pi/180)
-    yC = Rf*np.sin((theta+deltatheta)*np.pi/180)
-    xA = Rf*np.cos((theta+1.025*deltatheta)*np.pi/180)
-    yA = -xC*(xA-xC)/yC + yC
-    model.rootAssembly.engineeringFeatures.ContourIntegral(name='Debond',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIP'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=0.5, collapsedElementAtTip=NONE)
+                # assign seam
+                model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER'+str(f+1)+'-CRACK'+(cNum+1)])
+                if crack['isMeasured'] && 'J-integral' in crack['measurement-methods']:
+                    theta = crack['theta']
+                    deltatheta = crack['deltatheta']
+                    # contour integral
+                    xC = Rf*np.cos((theta+deltatheta)*np.pi/180)
+                    yC = Rf*np.sin((theta+deltatheta)*np.pi/180)
+                    xA = Rf*np.cos((theta+1.025*deltatheta)*np.pi/180)
+                    yA = -xC*(xA-xC)/yC + yC
+                    model.rootAssembly.engineeringFeatures.ContourIntegral(name='FIBER'+str(f+1)+'-DEBOND'+(cNum+1)+'CT1',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['FIBER'+str(f+1)+'-CRACK'+(cNum+1)],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=0.5, collapsedElementAtTip=NONE)
+                    if not crack['isSymm']:
+                        xC = Rf*np.cos((theta-deltatheta)*np.pi/180)
+                        yC = Rf*np.sin((theta-deltatheta)*np.pi/180)
+                        xA = Rf*np.cos((theta-1.025*deltatheta)*np.pi/180)
+                        yA = -xC*(xA-xC)/yC + yC
+                        model.rootAssembly.engineeringFeatures.ContourIntegral(name='FIBER'+str(f+1)+'-DEBOND'+(cNum+1)+'CT2',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['FIBER'+str(f+1)+'-CRACK'+(cNum+1)],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPNEG'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=0.5, collapsedElementAtTip=NONE)
 
     mdb.save()
 

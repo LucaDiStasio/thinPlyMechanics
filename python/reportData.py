@@ -183,13 +183,19 @@ def main(argv):
             for c,csvline in enumerate(csvlines[1:]):
                 for e,element in enumerate(csvline.replace('\n','').split(',')):
                     try:
-                        worksheet.write(c+1,e,float(element),numberFormat)
+                        if 'phiCZ' in csvlines[0][e]:
+                            worksheet.write(c+1,e,float(element)*180.0/np.pi,numberFormat)
+                        else:
+                            worksheet.write(c+1,e,float(element),numberFormat)
                     except Exception,error:
                         worksheet.write(c+1,e,str(element),numberFormat)
                         sys.exc_clear()
             for p,plot in enumerate(plotSettings):
                 chart = workbook.add_chart({'type': 'scatter',
                                             'subtype': 'smooth_with_markers'})
+                isGIinplot = False
+                isGIIinplot = False
+                isGTOTinplot = False
                 for curve in plot[:-3]:
                     chart.add_series({
                                         'name':       curve[2],

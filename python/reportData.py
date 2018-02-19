@@ -265,16 +265,38 @@ def main(argv):
                 sys.exc_clear()
             for c,csvline in enumerate(csvlines[1:]):
                 values = csvline.replace('\n','').split(',')
-                G0.append(values[])
-                GIvcctonly.append(values[])
-                GIIvcctonly.append(values[])
-                GTOTvcctonly.append(values[])
-                GIvcctjint.append(values[])
-                GIIvcctjint.append(values[])
-                GTOTvcctjint.append(values[])
-                LoverRf.append(values[])
-                Vff.append(values[])
-                phiCZ.append(values[])
+                if len(currentLoverRf)>0:
+                    if float(values[3])!=currentLoverRf[-1]:
+                        G0.append(currentG0)
+                        GIvcctonly.append(currentGIvcctonly)
+                        GIIvcctonly.append(currentGIIvcctonly)
+                        GTOTvcctonly.append(currentGTOTvcctonly)
+                        GIvcctjint.append(currentGIvcctjint)
+                        GIIvcctjint.append(currentGIIvcctjint)
+                        GTOTvcctjint.append(currentGTOTvcctjint)
+                        LoverRf.append(currentLoverRf)
+                        Vff.append(currentVff)
+                        phiCZ.append(currentphiCZ)
+                        currentG0 = []
+                        currentGIvcctonly = []
+                        currentGIIvcctonly = []
+                        currentGTOTvcctonly = []
+                        currentGIvcctjint = []
+                        currentGIIvcctjint = []
+                        currentGTOTvcctjint = []
+                        currentLoverRf = []
+                        currentVff = []
+                        currentphiCZ = []
+                currentG0.append(values[])
+                currentGIvcctonly.append(values[])
+                currentGIIvcctonly.append(values[])
+                currentGTOTvcctonly.append(values[])
+                currentGIvcctjint.append(values[])
+                currentGIIvcctjint.append(values[])
+                currentGTOTvcctjint.append(values[])
+                currentLoverRf.append(values[])
+                currentVff.append(values[])
+                currentphiCZ.append(values[])
 
 
 

@@ -287,16 +287,16 @@ def main(argv):
                         currentLoverRf = []
                         currentVff = []
                         currentphiCZ = []
-                currentG0.append(values[])
-                currentGIvcctonly.append(values[])
-                currentGIIvcctonly.append(values[])
-                currentGTOTvcctonly.append(values[])
-                currentGIvcctjint.append(values[])
-                currentGIIvcctjint.append(values[])
-                currentGTOTvcctjint.append(values[])
-                currentLoverRf.append(values[])
-                currentVff.append(values[])
-                currentphiCZ.append(values[])
+                currentG0.append(float(values[5]))
+                currentGIvcctonly.append(float(values[]))
+                currentGIIvcctonly.append(float(values[]))
+                currentGTOTvcctonly.append(float(values[]))
+                currentGIvcctjint.append(float(values[]))
+                currentGIIvcctjint.append(float(values[]))
+                currentGTOTvcctjint.append(float(values[]))
+                currentLoverRf.append(float(values[3]))
+                currentVff.append(float(values[]))
+                currentphiCZ.append(float(values[4]))
 
 
 

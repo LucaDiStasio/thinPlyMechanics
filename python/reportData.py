@@ -245,6 +245,16 @@ def main(argv):
         Vff = []
         phiCZ = []
 
+        currentG0 = []
+        currentGIvcctonly = []
+        currentGIIvcctonly = []
+        currentGTOTvcctonly = []
+        currentGIvcctjint = []
+        currentGIIvcctjint = []
+        currentGTOTvcctjint = []
+        currentLoverRf = []
+        currentVff = []
+        currentphiCZ = []
         for line in lines[1:]:
             csvPath = line.replace('\n','').split(',')[0]
             try:
@@ -255,6 +265,16 @@ def main(argv):
                 sys.exc_clear()
             for c,csvline in enumerate(csvlines[1:]):
                 values = csvline.replace('\n','').split(',')
+                G0.append(values[])
+                GIvcctonly.append(values[])
+                GIIvcctonly.append(values[])
+                GTOTvcctonly.append(values[])
+                GIvcctjint.append(values[])
+                GIIvcctjint.append(values[])
+                GTOTvcctjint.append(values[])
+                LoverRf.append(values[])
+                Vff.append(values[])
+                phiCZ.append(values[])
 
 
 

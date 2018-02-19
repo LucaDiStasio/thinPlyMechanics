@@ -66,6 +66,8 @@ def provideBEMdata():
     BEMdata['normGs'] = normGs
     return BEMdata
 
+def provideMatrixProperties():
+    props = {}
 
 def main(argv):
     # Read the command line, throw error if not option is provided

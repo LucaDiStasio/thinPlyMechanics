@@ -234,8 +234,9 @@ def main(argv):
 
         workbook.close()
 
-    if toLatex:
-        G0 = []
+    if toLatex: # only for errts file
+        G0stress = []
+        G0strain = []
         GIvcctonly = []
         GIIvcctonly = []
         GTOTvcctonly = []
@@ -246,7 +247,8 @@ def main(argv):
         Vff = []
         phiCZ = []
 
-        currentG0 = []
+        currentG0stress = []
+        currentG0strain = []
         currentGIvcctonly = []
         currentGIIvcctonly = []
         currentGTOTvcctonly = []
@@ -268,7 +270,8 @@ def main(argv):
                 values = csvline.replace('\n','').split(',')
                 if len(currentLoverRf)>0:
                     if float(values[3])!=currentLoverRf[-1]:
-                        G0.append(currentG0)
+                        G0stress.append(currentG0stress)
+                        G0strain.append(currentG0strain)
                         GIvcctonly.append(currentGIvcctonly)
                         GIIvcctonly.append(currentGIIvcctonly)
                         GTOTvcctonly.append(currentGTOTvcctonly)
@@ -278,7 +281,8 @@ def main(argv):
                         LoverRf.append(currentLoverRf)
                         Vff.append(currentVff)
                         phiCZ.append(currentphiCZ)
-                        currentG0 = []
+                        currentG0stress = []
+                        currentG0strain = []
                         currentGIvcctonly = []
                         currentGIIvcctonly = []
                         currentGTOTvcctonly = []
@@ -288,7 +292,7 @@ def main(argv):
                         currentLoverRf = []
                         currentVff = []
                         currentphiCZ = []
-                currentG0.append(float(values[5]))
+                currentG0stress.append(float(values[5]))
                 currentGIvcctonly.append(float(values[13]))
                 currentGIIvcctonly.append(float(values[14]))
                 currentGTOTvcctonly.append(float(values[15]))

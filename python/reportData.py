@@ -197,10 +197,34 @@ def main(argv):
                 isGIIinplot = False
                 isGTOTinplot = False
                 for curve in plot[:-3]:
+                    if 'GI' in csvlines[0][curve[1]]:
+                        isGIinplot = True
+                    elif 'GII' in csvlines[0][curve[1]]:
+                        isGIIinplot = True
+                    elif 'GTOT' in csvlines[0][curve[1]]:
+                        isGTOTinplot = True
                     chart.add_series({
                                         'name':       curve[2],
                                         'categories': [sheetName,1,curve[0],len(csvlines),curve[0]],
                                         'values':     [sheetName,1,curve[1],len(csvlines),curve[1]],
+                                    })
+                if isGIinplot:
+                    chart.add_series({
+                                        'name':       'GI-BEM',
+                                        'categories': [bemdataSheetname,1,0,15,0],
+                                        'values':     [bemdataSheetname,1,1,15,1],
+                                    })
+                if isGIIinplot:
+                    chart.add_series({
+                                        'name':       'GII-BEM',
+                                        'categories': [bemdataSheetname,1,0,15,0],
+                                        'values':     [bemdataSheetname,1,2,15,2],
+                                    })
+                if isGTOTinplot:
+                    chart.add_series({
+                                        'name':       'GTOT-BEM',
+                                        'categories': [bemdataSheetname,1,0,15,0],
+                                        'values':     [bemdataSheetname,1,3,15,3],
                                     })
                 chart.set_title ({'name': plot[-1]})
                 chart.set_x_axis({'name': plot[-3]})

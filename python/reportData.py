@@ -39,6 +39,7 @@ from datetime import datetime
 from time import strftime
 from platform import platform
 import matplotlib as plt
+import numpy as np
 import xlsxwriter
 import ast
 import getopt
@@ -295,7 +296,7 @@ def main(argv):
                 currentGIIvcctjint.append(float(values[17]))
                 currentGTOTvcctjint.append(float(values[18]))
                 currentLoverRf.append(float(values[3]))
-                currentVff.append(float(values[]))
+                currentVff.append(0.25*np.pi/float(values[3]))
                 currentphiCZ.append(float(values[4]))
 
 

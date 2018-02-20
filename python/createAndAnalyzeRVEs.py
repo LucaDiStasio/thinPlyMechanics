@@ -2534,7 +2534,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                 if crack['isMeasured']:
                     fFiber = fiber['internalRadiusMultiplier']
                     fMatrix = fiber['externalRadiusMultiplier']
-                    if countMeasured == 0
+                    if countMeasured == 0:
                         regionSets.append(['FIBER'+str(f+1)+'-FIRSTCIRCLE',np.floor(angle/fiber['deltaFirstcircle'])])
                         regionSets.append(['FIBER'+str(f+1)+'-FOURTHCIRCLE',np.floor(angle/fiber['deltaFourthcircle'])])
                     countMeasured += 1

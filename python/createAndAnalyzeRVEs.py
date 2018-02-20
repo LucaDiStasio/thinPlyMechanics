@@ -2274,7 +2274,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     fiber = parameters['fibers'][parameters['fibers'].keys()[0]]
     if fiber['isCracked']:
         Rm = 1.01*fiber['R4']
-    else
+    else:
         Rm = 1.01*fiber['Rf']
     if fiber['type'] in ['QUARTER-SE','quarter-se','quarter-SE','Quarter-SE']:
         angle = 135.0

@@ -34,6 +34,7 @@ Tested with Python 2.7 Anaconda 2.4.1 (64-bit) distribution in Windows 10.
 import sys
 import os
 from os.path import isfile, join, exists
+from shutil import copyfile
 from os import listdir, stat, makedirs
 from datetime import datetime
 from time import strftime
@@ -43,6 +44,233 @@ import numpy as np
 import xlsxwriter
 import ast
 import getopt
+
+#===============================================================================#
+#                                 Latex files
+#===============================================================================#
+
+def createLatexFile(folder,filename,documentclass,options=''):
+    if not exists(folder):
+        makedirs(folder)
+    with open(join(folder,filename + '.tex'),'w') as tex:
+        if options!='':
+            tex.write('\\documentclass[' + options + ']{' + documentclass + '}\n')
+        else:
+            tex.write('\\documentclass{' + documentclass + '}\n')
+        tex.write('\n')
+
+def writeLatexPackages(folder,filename,packages,options):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%                                 Packages and basic declarations\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('\n')
+        for i,package in enumerate(packages):
+            if options[i]!='':
+                tex.write('\\usepackage[' + options[i] + ']{' + package + '}\n')
+            else:
+                tex.write('\\usepackage{' + package + '}\n')
+        tex.write('\n')
+
+def writeLatexDocumentStarts(folder,filename):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%                                            DOCUMENT STARTS\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('\n')
+        tex.write('\\begin{document}\n')
+        tex.write('\n')
+
+def writeLatexDocumentEnds(folder,filename):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('\\end{document}\n')
+        tex.write('\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%                                            DOCUMENT ENDS\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('%----------------------------------------------------------------------------------------------%\n')
+        tex.write('\n')
+
+def writeLatexTikzPicStarts(folder,filename,options=''):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('%Tikz picture starts%\n')
+        tex.write('\n')
+        if options!='':
+            tex.write('\\begin{tikzpicture}[' + options + ']\n')
+        else:
+            tex.write('\\begin{tikzpicture}\n')
+
+def writeLatexTikzPicEnds(folder,filename):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('\\end{tikzpicture}\n')
+        tex.write('%Tikz picture ends%\n')
+        tex.write('\n')
+
+def writeLatexTikzAxisStarts(folder,filename,options):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('%Tikz axis starts%\n')
+        tex.write('\n')
+        if options!='':
+            tex.write('\\begin{axis}[' + options + ']\n')
+        else:
+            tex.write('\\begin{axis}\n')
+
+def writeLatexTikzAxisEnds(folder,filename):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('\\end{axis}\n')
+        tex.write('%Tikz axis ends%\n')
+        tex.write('\n')
+
+def writeLatexAddPlotTable(folder,filename,data,options):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\n')
+        tex.write('\\addplot')
+        if options!='':
+            tex.write('[' + options + ']\n')
+        tex.write('table{\n')
+        for element in data:
+            tex.write(str(element[0]) + ' ' + str(element[1]) + '\n')
+        tex.write('};\n')
+
+def writeLatexSinglePlot(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent):
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: writeLatexSinglePlot(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create latex file',True)
+    createLatexFile(folder,filename,'standalone')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Write latex packages',True)
+    writeLatexPackages(folder,filename,['inputenc','pgfplots','tikz'],['utf8','',''])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Document starts',True)
+    writeLatexDocumentStarts(folder,filename)
+    writeLatexTikzPicStarts(folder,filename,'')
+    writeLatexTikzAxisStarts(folder,filename,axoptions)
+    writeLatexAddPlotTable(folder,filename,data,dataoptions)
+    writeLatexTikzAxisEnds(folder,filename)
+    writeLatexTikzPicEnds(folder,filename)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Document ends',True)
+    writeLatexDocumentEnds(folder,filename)
+    if 'Windows' in system():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Windows command file',True)
+        cmdfile = join(folder,filename,'runlatex.cmd')
+        with open(cmdfile,'w') as cmd:
+            cmd.write('\n')
+            cmd.write('CD ' + folder + '\n')
+            cmd.write('\n')
+            cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Windows command file...',True)
+        try:
+            subprocess.call('cmd.exe /C ' + cmdfile)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        except Exception:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
+            sys.exc_clear()
+    elif 'Linux' in system():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Linux bash file',True)
+        bashfile = join(folder,filename,'runlatex.sh')
+        with open(bashfile,'w') as bsh:
+            bsh.write('#!/bin/bash\n')
+            bsh.write('\n')
+            bsh.write('cd ' + folder + '\n')
+            bsh.write('\n')
+            bsh.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Linux bash file...',True)
+            try:
+                writeLineToLogFile(logfilename,'a',baselogindent + 3*logindent + 'Change permissions to ' + bashfile ,True)
+                os.chmod(bashfile, 0o755)
+                writeLineToLogFile(logfilename,'a','Run bash file',True)
+                rc = call('.' + bashfile)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+            except Exception:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
+                sys.exc_clear()
+
+def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent):
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create latex file',True)
+    createLatexFile(folder,filename,'standalone')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Write latex packages',True)
+    writeLatexPackages(folder,filename,['inputenc','pgfplots','tikz'],['utf8','',''])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Document starts',True)
+    writeLatexDocumentStarts(folder,filename)
+    writeLatexTikzPicStarts(folder,filename,'')
+    writeLatexTikzAxisStarts(folder,filename,axoptions)
+    for k,datum in enumerate(data):
+        writeLatexAddPlotTable(folder,filename,datum,dataoptions[k])
+    writeLatexTikzAxisEnds(folder,filename)
+    writeLatexTikzPicEnds(folder,filename)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Document ends',True)
+    writeLatexDocumentEnds(folder,filename)
+    if 'Windows' in system():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Windows command file',True)
+        cmdfile = join(folder,'runlatex.cmd')
+        with open(cmdfile,'w') as cmd:
+            cmd.write('\n')
+            cmd.write('CD ' + folder + '\n')
+            cmd.write('\n')
+            cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Windows command file...',True)
+        try:
+            subprocess.call('cmd.exe /C ' + cmdfile)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        except Exception,error:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
+            sys.exc_clear()
+    elif 'Linux' in system():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Linux bash file',True)
+        bashfile = join(folder,filename,'runlatex.sh')
+        with open(bashfile,'w') as bsh:
+            bsh.write('#!/bin/bash\n')
+            bsh.write('\n')
+            bsh.write('cd ' + folder + '\n')
+            bsh.write('\n')
+            bsh.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Linux bash file...',True)
+            try:
+                writeLineToLogFile(logfilename,'a',baselogindent + 3*logindent + 'Change permissions to ' + bashfile ,True)
+                os.chmod(bashfile, 0o755)
+                writeLineToLogFile(logfilename,'a','Run bash file',True)
+                rc = call('.' + bashfile)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+            except Exception:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
+                sys.exc_clear()
+
+def writeLatexGenericCommand(folder,filename,command,options,arguments):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        if options!='' and arguments!='':
+            tex.write('\\'+ command +'[' + options + ']{' + arguments + '}\n')
+        elif options!='':
+            tex.write('\\'+ command +'{' + arguments + '}\n')
+        else:
+            tex.write('\\'+ command + '\n')
+        tex.write('\n')
+
+def writeLatexCustomLine(folder,filename,line):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write(line + '\n')
+
+def writeLatexSetLength(folder,filename,length,value):
+    with open(join(folder,filename + '.tex'),'a') as tex:
+        tex.write('\\setlength' +'{' + '\\' + length + '}' +'{' + value + '}\n')
+
+#===============================================================================#
+#                              Reference data
+#===============================================================================#
 
 def provideBEMdata():
     G0 = 7.52548E-06
@@ -68,13 +296,18 @@ def provideBEMdata():
 
 def provideMatrixProperties():
     props = {}
+    props['E'] = 3500.0
+    props['nu'] = 0.4
+    props['G'] = 0.5*props['E']/(1+props['nu'])
+    props['k-planestrain'] = 3-4*props['nu']
+    return props
 
 def main(argv):
     # Read the command line, throw error if not option is provided
     try:
-        opts, args = getopt.getopt(argv,'hw:i:o:f:e:l:',['help','Help',"workdir", "workdirectory", "wdir","inputfile", "input","out","outdir","outputfile","xlsx","outfile","excel","latex"])
+        opts, args = getopt.getopt(argv,'hw:i:o:f:e:l:d:',['help','Help',"workdir", "workdirectory", "wdir","inputfile", "input","out","outdir","outputfile","xlsx","outfile","excel","latex","sql"])
     except getopt.GetoptError:
-        print('reportDataToXlsx.py -w <working directory> -i <input file> -o <output directory> -f <output filename> -excel -latex')
+        print('reportDataToXlsx.py -w <working directory> -i <input file> -o <output directory> -f <output filename> --excel --latex --sql')
         sys.exit(2)
     # Parse the options and create corresponding variables
     for opt, arg in opts:
@@ -93,12 +326,12 @@ def main(argv):
             print('*****************************************************************************************************')
             print(' ')
             print('Program syntax:')
-            print('reportDataToXlsx.py -w <working directory> -i <input file> -o <output directory> -f <output filename> --excel --latex')
+            print('reportDataToXlsx.py -w <working directory> -i <input file> -o <output directory> -f <output filename> --excel --latex --sql')
             print(' ')
             print('Mandatory arguments:')
             print('-w <working directory>')
             print('-i <input file>')
-            print('at least one out of: -e --excel/-l --latex')
+            print('at least one out of: -e --excel/-l --latex/-d --sql')
             print(' ')
             print('Optional arguments:')
             print('-o <output directory>')
@@ -129,6 +362,8 @@ def main(argv):
             toExcel = True
         elif opt in ("-l", "-latex"):
             toLatex = True
+        elif opt in ("-d", "-sql"):
+            toSql = True
 
     # Check the existence of variables: if a required variable is missing, an error is thrown and program is terminated; if an optional variable is missing, it is set to the default value
     if 'workdir' not in locals():
@@ -141,7 +376,7 @@ def main(argv):
         outputfileBasename = datetime.now().strftime('%Y-%m-%d') + '_' + datetime.now().strftime('%H-%M-%S') + '_' + inputfile.split(".")[0]
     if 'outdir' not in locals():
         outdir = workdir
-    if 'toExcel' not in locals() and 'toLatex' not in locals():
+    if 'toExcel' not in locals() and 'toLatex' not in locals() and 'toSql' not in locals():
         print('Error: no output format specified.')
         sys.exit()
 
@@ -237,7 +472,19 @@ def main(argv):
         workbook.close()
 
     if toLatex: # only for errts file
-        G0stress = []
+
+        if not os.path.exists(join(reportFolder,'pics')):
+                os.mkdir(join(reportFolder,'pics'))
+
+        copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','Docmase_logo.jpg'),join(reportFolder,'pics','Docmase_logo.jpg'))
+        copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','erasmusmundus_logo.jpg'),join(reportFolder,'pics','erasmusmundus_logo.jpg'))
+        copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_slides','logo-eeigm.jpg'),join(reportFolder,'pics','logo-eeigm.jpg'))
+        copyfile(join('D:/01_Luca/06_WD/thinPlyMechanics/tex/Templates/Template_reports','lulea_logo1.jpg'),join(reportFolder,'pics','lulea_logo1.jpg'))
+
+        matrixProps = provideMatrixProperties()
+
+        G0meanstress = []
+        G0planestrainstress = []
         G0strain = []
         GIvcctonly = []
         GIIvcctonly = []
@@ -249,7 +496,8 @@ def main(argv):
         Vff = []
         phiCZ = []
 
-        currentG0stress = []
+        currentG0meanstress = []
+        currentG0planestrainstress = []
         currentG0strain = []
         currentGIvcctonly = []
         currentGIIvcctonly = []
@@ -262,17 +510,27 @@ def main(argv):
         currentphiCZ = []
         for line in lines[1:]:
             csvPath = line.replace('\n','').split(',')[0]
+            inputdataPath = '_'.join(line.replace('\n','').split(',')[0].split('_')[:-1]) + '_InputData' + '.csv'
             try:
                 with open(csvPath,'r') as csv:
                     csvlines = csv.readlines()
             except Exception,error:
                 continue
                 sys.exc_clear()
+            try:
+                with open(inputdataPath,'r') as csv:
+                    inputdatalines = csv.readlines()
+            except Exception,error:
+                continue
+                sys.exit(2)
+            epsxx = float(inputdatalines[1].replace('\n','').split(',')[5])
+            Rf = float(inputdatalines[1].replace('\n','').split(',')[0])
             for c,csvline in enumerate(csvlines[1:]):
                 values = csvline.replace('\n','').split(',')
                 if len(currentLoverRf)>0:
                     if float(values[3])!=currentLoverRf[-1]:
-                        G0stress.append(currentG0stress)
+                        G0meanstress.append(currentG0meanstress)
+                        G0planestrainstress.append(currentG0planestrainstress)
                         G0strain.append(currentG0strain)
                         GIvcctonly.append(currentGIvcctonly)
                         GIIvcctonly.append(currentGIIvcctonly)
@@ -294,7 +552,9 @@ def main(argv):
                         currentLoverRf = []
                         currentVff = []
                         currentphiCZ = []
-                currentG0stress.append(float(values[5]))
+                currentG0meanstress.append(float(values[5]))
+                currentG0planestrainstress.append(np.pi*Rf*(matrixProps['E']*epsxx/(1-matrixProps['nu']*matrixProps['nu']))*(matrixProps['E']*epsxx/(1-matrixProps['nu']*matrixProps['nu']))*(1+matrixProps['k-planestrain'])/(8.0*matrixProps['G'])))
+                currentG0strain.append(np.pi*Rf*(matrixProps['E']/(1-matrixProps['nu']*matrixProps['nu']))*epsxx*epsxx)
                 currentGIvcctonly.append(float(values[13]))
                 currentGIIvcctonly.append(float(values[14]))
                 currentGTOTvcctonly.append(float(values[15]))
@@ -304,6 +564,43 @@ def main(argv):
                 currentLoverRf.append(float(values[3]))
                 currentVff.append(0.25*np.pi/float(values[3]))
                 currentphiCZ.append(float(values[4]))
+        for s,valueSet in enumerate(GIvcctonly):
+            currentVff = Vff[s][0]
+            currentLoverRf = LoverRf[s][0]
+            GI = [np.array(GIvcctonly[s]),np.array(GIvcctjint[s])]
+            GII = [np.array(GIIvcctonly[s]),np.array(GIIvcctjint[s])]
+            GTOT = [np.array(GTOTvcctonly[s]),np.array(GTOTvcctjint[s])]
+            gMethod = ['VCCT only','VCCT/J-integral']
+            G0s = [G0meanstress[s],G0planestrainstress[s],G0strain[s]]
+            legendEntries = '{$GI/G0-FEM$,$GII/G0-FEM$,$GTOT/G0-FEM$,$GI/G0-BEM$,$GII/G0-BEM$,$GTOT/G0-BEM$}'
+            dataoptions.append('red!' + str(100.0*float(c)/float(len(plot[:-3]))) + '!blue')
+            for m,method in enumerate(gMethod):
+                titles = ['\\bf{Normalized Energy Release Rate, '+method+', $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{1+k_{m}}{8G_{m}}\\pi R_{f}\\left(\\frac{1}{2L}\\int_{-L}^{+L}\\sigma_{xx}\\left(L,z\\right)dz\\right)^{2}$}',
+                          '\\bf{Normalized Energy Release Rate, '+method+', $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{1+k_{m}}{8G_{m}}\\pi R_{f}\\left(\\frac{E_{m}}{1-\\nu^{2}}\\varepsilon_{xx}\\right)^{2}$}',
+                          '\\bf{Normalized Energy Release Rate, '+method+', $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{E_{m}}{1-\\nu^{2}}\\pi R_{f}\\varepsilon_{xx}^{2}$}']
+                for g,G0 in enumerate(G0s):
+                    axisoptions = 'width=30cm,\n ' \
+                                  'title={'+titles[g]+'},\n ' \
+                                  'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
+                                  'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                                  'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                                  'xlabel={$' + plot[-3] + '$},ylabel={$' + plot[-2] + '$},\n ' \
+                                  'xmin=' + str(xmin) + ',\n ' \
+                                  'xmax=' + str(xmax) + ',\n ' \
+                                  'ymin=' + str(ymin) + ',\n ' \
+                                  'ymax=' + str(ymax) + ',\n ' \
+                                  'tick align=outside,\n ' \
+                                  'tick label style={font=\\huge},\n ' \
+                                  'xmajorgrids,\n ' \
+                                  'x grid style={lightgray!92.026143790849673!black},\n ' \
+                                  'ymajorgrids,\n ' \
+                                  'y grid style={lightgray!92.026143790849673!black},\n ' \
+                                  'line width=0.5mm,\n ' \
+                                  'legend style={draw=white!80.0!black,font=\\fontsize{28}{24}\\selectfont,row sep=15pt},\n ' \
+                                  'legend entries={' + legendEntries + '},\n ' \
+                                  'legend image post style={xscale=2},\n ' \
+                                  'legend cell align={left}'
+            writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.tex',xyData,axisoptions,dataoptions,logfilefullpath,3*logindent,logindent)
 
 
 

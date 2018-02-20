@@ -573,6 +573,7 @@ def main(argv):
             currentVff = Vff[s][0]
             currentLoverRf = LoverRf[s][0]
             debondSize = np.array(deltatheta[s])
+            CZsize = np.array(phiCZ[s])
             GI = [np.array(GIvcctonly[s]),np.array(GIvcctjint[s])]
             GII = [np.array(GIIvcctonly[s]),np.array(GIIvcctjint[s])]
             GTOT = [np.array(GTOTvcctonly[s]),np.array(GTOTvcctjint[s])]
@@ -636,7 +637,7 @@ def main(argv):
             fileoptionName = ['G0-mean-stress',
                               'G0-plane-strain-stress',
                               'G0-strain']
-            legendEntries = '{$GI/G0-FEM,VCCT only$,$GI/G0-FEM,VCCT/J-integral$,$GI/G0-BEM$$}'
+            legendEntries = '{$GI/G0-FEM,VCCT only$,$GI/G0-FEM,VCCT/J-integral$,$GI/G0-BEM$}'
             dataoptions = ['red,smooth,mark=square*',
                            'blue,smooth,mark=square*',
                            'black,smooth,mark=square*']
@@ -655,7 +656,7 @@ def main(argv):
                               'xmin=' + str(0.0) + ',\n ' \
                               'xmax=' + str(160.0) + ',\n ' \
                               'ymin=' + str(0.0) + ',\n ' \
-                              'ymax=' + str([np.max(xyData[0][:,1]),np.max(xyData[1][:,1]),np.max(xyData[2][:,1])]) + ',\n ' \
+                              'ymax=' + str(np.max([np.max(xyData[0][:,1]),np.max(xyData[1][:,1]),np.max(xyData[2][:,1])])) + ',\n ' \
                               'tick align=outside,\n ' \
                               'tick label style={font=\\huge},\n ' \
                               'xmajorgrids,\n ' \
@@ -675,7 +676,7 @@ def main(argv):
             fileoptionName = ['G0-mean-stress',
                               'G0-plane-strain-stress',
                               'G0-strain']
-            legendEntries = '{$GII/G0-FEM,VCCT only$,$GII/G0-FEM,VCCT/J-integral$,$GII/G0-BEM$$}'
+            legendEntries = '{$GII/G0-FEM,VCCT only$,$GII/G0-FEM,VCCT/J-integral$,$GII/G0-BEM$}'
             dataoptions = ['red,smooth,mark=triangle*',
                            'blue,smooth,mark=triangle*',
                            'black,smooth,mark=triangle*']
@@ -694,7 +695,7 @@ def main(argv):
                               'xmin=' + str(0.0) + ',\n ' \
                               'xmax=' + str(160.0) + ',\n ' \
                               'ymin=' + str(0.0) + ',\n ' \
-                              'ymax=' + str([np.max(xyData[0][:,1]),np.max(xyData[1][:,1]),np.max(xyData[2][:,1])]) + ',\n ' \
+                              'ymax=' + str(np.max([np.max(xyData[0][:,1]),np.max(xyData[1][:,1]),np.max(xyData[2][:,1])])) + ',\n ' \
                               'tick align=outside,\n ' \
                               'tick label style={font=\\huge},\n ' \
                               'xmajorgrids,\n ' \
@@ -714,7 +715,7 @@ def main(argv):
             fileoptionName = ['G0-mean-stress',
                               'G0-plane-strain-stress',
                               'G0-strain']
-            legendEntries = '{$GTOT/G0-FEM,VCCT only$,$GTOT/G0-FEM,VCCT/J-integral$,$GTOT/G0-BEM$$}'
+            legendEntries = '{$GTOT/G0-FEM,VCCT only$,$GTOT/G0-FEM,VCCT/J-integral$,$GTOT/G0-BEM$}'
             dataoptions = ['red,smooth,mark=*',
                            'blue,smooth,mark=*',
                            'black,smooth,mark=*']
@@ -733,7 +734,7 @@ def main(argv):
                               'xmin=' + str(0.0) + ',\n ' \
                               'xmax=' + str(160.0) + ',\n ' \
                               'ymin=' + str(0.0) + ',\n ' \
-                              'ymax=' + str([np.max(xyData[0][:,1]),np.max(xyData[1][:,1]),np.max(xyData[2][:,1])]) + ',\n ' \
+                              'ymax=' + str(np.max([np.max(xyData[0][:,1]),np.max(xyData[1][:,1]),np.max(xyData[2][:,1])])) + ',\n ' \
                               'tick align=outside,\n ' \
                               'tick label style={font=\\huge},\n ' \
                               'xmajorgrids,\n ' \
@@ -747,7 +748,32 @@ def main(argv):
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
                 writeLatexMultiplePlots(outDir,'GTOT-Method-Comparison_Vff'+str(currentVff)+'-'+fileoptionName[g]+'.tex',xyData,axisoptions,dataoptions)
-
+            legendEntries = '{$Contact zone size$}'
+            dataoptions = ['blue,smooth,mark=*']
+            xyData = []
+            xyData.append(np.transpose(np.array([debondSize,CZsize])))
+            axisoptions = 'width=30cm,\n ' \
+                          'title={Contact zone size as function of debond size},\n ' \
+                          'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
+                          'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                          'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                          'xlabel={$\\Delta\\theta\\left[^{\\circ}\\right]$},ylabel={$\\Delta\\varphi\\left[^{\\circ}\\right]$},\n ' \
+                          'xmin=' + str(0.0) + ',\n ' \
+                          'xmax=' + str(160.0) + ',\n ' \
+                          'ymin=' + str(0.0) + ',\n ' \
+                          'ymax=' + str(np.max(CZsize)) + ',\n ' \
+                          'tick align=outside,\n ' \
+                          'tick label style={font=\\huge},\n ' \
+                          'xmajorgrids,\n ' \
+                          'xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0,160.0,170.0,180.0},\n ' \
+                          'x grid style={lightgray!92.026143790849673!black},\n ' \
+                          'ymajorgrids,\n ' \
+                          'y grid style={lightgray!92.026143790849673!black},\n ' \
+                          'line width=0.5mm,\n ' \
+                          'legend style={draw=white!80.0!black,font=\\fontsize{28}{24}\\selectfont,row sep=15pt},\n ' \
+                          'legend entries={' + legendEntries + '},\n ' \
+                          'legend image post style={xscale=2},\n ' \
+                          'legend cell align={left}'
 
 
 if __name__ == "__main__":

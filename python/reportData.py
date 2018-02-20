@@ -714,22 +714,22 @@ def main(argv):
             fileoptionName = ['G0-mean-stress',
                               'G0-plane-strain-stress',
                               'G0-strain']
-            legendEntries = '{$GI/G0-FEM,VCCT only$,$GI/G0-FEM,VCCT/J-integral$,$GI/G0-BEM$$}'
-            dataoptions = ['red,smooth,mark=square*',
-                           'blue,smooth,mark=square*',
-                           'black,smooth,mark=square*']
+            legendEntries = '{$GTOT/G0-FEM,VCCT only$,$GTOT/G0-FEM,VCCT/J-integral$,$GTOT/G0-BEM$$}'
+            dataoptions = ['red,smooth,mark=*',
+                           'blue,smooth,mark=*',
+                           'black,smooth,mark=*']
             for g,G0 in enumerate(G0s):
                 xyData = []
                 for m,method in enumerate(gMethod):
-                    normGI = GI[m]/GO
-                    xyData.append(np.transpose(np.array([debondSize,normGI])))
-                xyData.append(np.transpose(np.array([bemDSize,bemGI])))
+                    normGTOT = GTOT[m]/GO
+                    xyData.append(np.transpose(np.array([debondSize,normGTOT])))
+                xyData.append(np.transpose(np.array([bemDSize,bemGTOT])))
                 axisoptions = 'width=30cm,\n ' \
                               'title={'+titles[g]+'},\n ' \
                               'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
                               'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
                               'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
-                              'xlabel={$\\Delta\\theta\\left[^{\\circ}\\right]$},ylabel={$\\frac{G_{I}}{G_{0}}\\left[-\\right]$},\n ' \
+                              'xlabel={$\\Delta\\theta\\left[^{\\circ}\\right]$},ylabel={$\\frac{G_{TOT}}{G_{0}}\\left[-\\right]$},\n ' \
                               'xmin=' + str(0.0) + ',\n ' \
                               'xmax=' + str(160.0) + ',\n ' \
                               'ymin=' + str(0.0) + ',\n ' \
@@ -746,7 +746,7 @@ def main(argv):
                               'legend entries={' + legendEntries + '},\n ' \
                               'legend image post style={xscale=2},\n ' \
                               'legend cell align={left}'
-                writeLatexMultiplePlots(outDir,'GI-Method-Comparison_Vff'+str(currentVff)+'-'+fileoptionName[g]+'.tex',xyData,axisoptions,dataoptions)
+                writeLatexMultiplePlots(outDir,'GTOT-Method-Comparison_Vff'+str(currentVff)+'-'+fileoptionName[g]+'.tex',xyData,axisoptions,dataoptions)
 
 
 

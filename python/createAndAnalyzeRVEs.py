@@ -2463,7 +2463,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
         if fiber['isCracked']:
             Rf = fiber['Rf']
             for cNum,crack in fiber['cracks']:
-                if crack['isMeasured'] && 'J-integral' in crack['measurement-methods']:
+                if crack['isMeasured'] and 'J-integral' in crack['measurement-methods']:
                     fFiber = fiber['internalRadiusMultiplier']
                     fMatrix = fiber['externalRadiusMultiplier']
                     deltapsi = crack['deltapsi']

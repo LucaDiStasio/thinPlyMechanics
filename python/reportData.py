@@ -141,7 +141,7 @@ def writeLatexAddPlotTable(folder,filename,data,options):
             tex.write(str(element[0]) + ' ' + str(element[1]) + '\n')
         tex.write('};\n')
 
-def writeLatexSinglePlot(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent):
+def writeLatexSinglePlot(folder,filename,data,axoptions,dataoptions):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: writeLatexSinglePlot(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent)',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create latex file',True)
     createLatexFile(folder,filename,'standalone')
@@ -195,13 +195,13 @@ def writeLatexSinglePlot(folder,filename,data,axoptions,dataoptions,logfilepath,
                 writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
                 sys.exc_clear()
 
-def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent):
-    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent)',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create latex file',True)
+def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions):
+    print('In function: writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepath,baselogindent,logindent)',True)
+    print('Create latex file')
     createLatexFile(folder,filename,'standalone')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Write latex packages',True)
+    print('Write latex packages')
     writeLatexPackages(folder,filename,['inputenc','pgfplots','tikz'],['utf8','',''])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Document starts',True)
+    print('Document starts')
     writeLatexDocumentStarts(folder,filename)
     writeLatexTikzPicStarts(folder,filename,'')
     writeLatexTikzAxisStarts(folder,filename,axoptions)
@@ -209,27 +209,27 @@ def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepa
         writeLatexAddPlotTable(folder,filename,datum,dataoptions[k])
     writeLatexTikzAxisEnds(folder,filename)
     writeLatexTikzPicEnds(folder,filename)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Document ends',True)
+    print('Document ends')
     writeLatexDocumentEnds(folder,filename)
     if 'Windows' in system():
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Windows command file',True)
+        print('Create Windows command file')
         cmdfile = join(folder,'runlatex.cmd')
         with open(cmdfile,'w') as cmd:
             cmd.write('\n')
             cmd.write('CD ' + folder + '\n')
             cmd.write('\n')
             cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Windows command file...',True)
+        print('Executing Windows command file...')
         try:
             subprocess.call('cmd.exe /C ' + cmdfile)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+            print('... done.')
         except Exception,error:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
+            print('ERROR')
+            print(str(Exception))
+            print(str(error))
             sys.exc_clear()
     elif 'Linux' in system():
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create Linux bash file',True)
+        print('Create Linux bash file')
         bashfile = join(folder,filename,'runlatex.sh')
         with open(bashfile,'w') as bsh:
             bsh.write('#!/bin/bash\n')
@@ -237,17 +237,17 @@ def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepa
             bsh.write('cd ' + folder + '\n')
             bsh.write('\n')
             bsh.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Linux bash file...',True)
+            print('Executing Linux bash file...')
             try:
-                writeLineToLogFile(logfilename,'a',baselogindent + 3*logindent + 'Change permissions to ' + bashfile ,True)
+                print('Change permissions to ' + bashfile)
                 os.chmod(bashfile, 0o755)
-                writeLineToLogFile(logfilename,'a','Run bash file',True)
+                print('Run bash file')
                 rc = call('.' + bashfile)
-                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+                print('... done.')
             except Exception:
-                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)
-                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(Exception),True)
-                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(error),True)
+                print('ERROR')
+                print(str(Exception))
+                print(str(error))
                 sys.exc_clear()
 
 def writeLatexGenericCommand(folder,filename,command,options,arguments):
@@ -492,6 +492,7 @@ def main(argv):
         GIvcctjint = []
         GIIvcctjint = []
         GTOTvcctjint = []
+        deltatheta = []
         LoverRf = []
         Vff = []
         phiCZ = []
@@ -505,6 +506,7 @@ def main(argv):
         currentGIvcctjint = []
         currentGIIvcctjint = []
         currentGTOTvcctjint = []
+        currentdeltatheta = []
         currentLoverRf = []
         currentVff = []
         currentphiCZ = []
@@ -538,6 +540,7 @@ def main(argv):
                         GIvcctjint.append(currentGIvcctjint)
                         GIIvcctjint.append(currentGIIvcctjint)
                         GTOTvcctjint.append(currentGTOTvcctjint)
+                        deltatheta.append(currentdeltatheta)
                         LoverRf.append(currentLoverRf)
                         Vff.append(currentVff)
                         phiCZ.append(currentphiCZ)
@@ -549,6 +552,7 @@ def main(argv):
                         currentGIvcctjint = []
                         currentGIIvcctjint = []
                         currentGTOTvcctjint = []
+                        currentdeltatheta = []
                         currentLoverRf = []
                         currentVff = []
                         currentphiCZ = []
@@ -561,37 +565,62 @@ def main(argv):
                 currentGIvcctjint.append(float(values[16]))
                 currentGIIvcctjint.append(float(values[17]))
                 currentGTOTvcctjint.append(float(values[18]))
+                currentdeltatheta.append(float(values[0]))
                 currentLoverRf.append(float(values[3]))
                 currentVff.append(0.25*np.pi/float(values[3]))
                 currentphiCZ.append(float(values[4]))
         for s,valueSet in enumerate(GIvcctonly):
             currentVff = Vff[s][0]
             currentLoverRf = LoverRf[s][0]
+            debondSize = np.array(deltatheta[s])
             GI = [np.array(GIvcctonly[s]),np.array(GIvcctjint[s])]
             GII = [np.array(GIIvcctonly[s]),np.array(GIIvcctjint[s])]
             GTOT = [np.array(GTOTvcctonly[s]),np.array(GTOTvcctjint[s])]
             gMethod = ['VCCT only','VCCT/J-integral']
             G0s = [G0meanstress[s],G0planestrainstress[s],G0strain[s]]
             legendEntries = '{$GI/G0-FEM$,$GII/G0-FEM$,$GTOT/G0-FEM$,$GI/G0-BEM$,$GII/G0-BEM$,$GTOT/G0-BEM$}'
-            dataoptions.append('red!' + str(100.0*float(c)/float(len(plot[:-3]))) + '!blue')
+            dataoptions = ['red,smooth,mark=square*',
+                           'red,smooth,mark=triangle*',
+                           'red,smooth,mark=*',
+                           'black,smooth,mark=square*',
+                           'black,smooth,mark=triangle*',
+                           'black,smooth,mark=*',]
+            bemDSize = BEMdata['normGs'][:,0]
+            bemGI = BEMdata['normGs'][:,1]
+            bemGII = BEMdata['normGs'][:,2]
+            bemGTOT = BEMdata['normGs'][:,3]
             for m,method in enumerate(gMethod):
                 titles = ['\\bf{Normalized Energy Release Rate, '+method+', $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{1+k_{m}}{8G_{m}}\\pi R_{f}\\left(\\frac{1}{2L}\\int_{-L}^{+L}\\sigma_{xx}\\left(L,z\\right)dz\\right)^{2}$}',
                           '\\bf{Normalized Energy Release Rate, '+method+', $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{1+k_{m}}{8G_{m}}\\pi R_{f}\\left(\\frac{E_{m}}{1-\\nu^{2}}\\varepsilon_{xx}\\right)^{2}$}',
                           '\\bf{Normalized Energy Release Rate, '+method+', $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{E_{m}}{1-\\nu^{2}}\\pi R_{f}\\varepsilon_{xx}^{2}$}']
+                fileoptionName = ['G0-mean-stress',
+                                  'G0-plane-strain-stress',
+                                  'G0-strain']
                 for g,G0 in enumerate(G0s):
+                    normGI = GI[m]/GO
+                    normGII = GII[m]/GO
+                    normGTOT = GTOT[m]/GO
+                    xyData = []
+                    xyData.append(np.transpose(np.array([debondSize,normGI])))
+                    xyData.append(np.transpose(np.array([debondSize,normGII])))
+                    xyData.append(np.transpose(np.array([debondSize,normGTOT])))
+                    xyData.append(np.transpose(np.array([bemDSize,bemGI])))
+                    xyData.append(np.transpose(np.array([bemDSize,bemGII])))
+                    xyData.append(np.transpose(np.array([bemDSize,bemGTOT])))
                     axisoptions = 'width=30cm,\n ' \
                                   'title={'+titles[g]+'},\n ' \
                                   'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
                                   'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
                                   'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
-                                  'xlabel={$' + plot[-3] + '$},ylabel={$' + plot[-2] + '$},\n ' \
-                                  'xmin=' + str(xmin) + ',\n ' \
-                                  'xmax=' + str(xmax) + ',\n ' \
-                                  'ymin=' + str(ymin) + ',\n ' \
-                                  'ymax=' + str(ymax) + ',\n ' \
+                                  'xlabel={$\\Delta\\theta\\left[^{\\circ}\\right]$},ylabel={$\\frac{G_{\\left(\\cdot\\cdot\\right)}}{G_{0}}\\left[-\\right]$},\n ' \
+                                  'xmin=' + str(0.0) + ',\n ' \
+                                  'xmax=' + str(160.0) + ',\n ' \
+                                  'ymin=' + str(0.0) + ',\n ' \
+                                  'ymax=' + str([np.max(normGTOT),np.max(bemGTOT)]) + ',\n ' \
                                   'tick align=outside,\n ' \
                                   'tick label style={font=\\huge},\n ' \
                                   'xmajorgrids,\n ' \
+                                  'xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0,160.0,170.0,180.0},\n ' \
                                   'x grid style={lightgray!92.026143790849673!black},\n ' \
                                   'ymajorgrids,\n ' \
                                   'y grid style={lightgray!92.026143790849673!black},\n ' \
@@ -600,7 +629,124 @@ def main(argv):
                                   'legend entries={' + legendEntries + '},\n ' \
                                   'legend image post style={xscale=2},\n ' \
                                   'legend cell align={left}'
-            writeLatexMultiplePlots(outDir,plot[-1].replace(' ','-').replace('/','-').replace(',','') + '.tex',xyData,axisoptions,dataoptions,logfilefullpath,3*logindent,logindent)
+                    writeLatexMultiplePlots(outDir,'Gs-SUMMARY_Vff'+str(currentVff)+'-'+method.replace(' ','-').replace('/','-')+'-'+fileoptionName[g]+'.tex',xyData,axisoptions,dataoptions)
+            titles = ['\\bf{Normalized Mode I Energy Release Rate, $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{1+k_{m}}{8G_{m}}\\pi R_{f}\\left(\\frac{1}{2L}\\int_{-L}^{+L}\\sigma_{xx}\\left(L,z\\right)dz\\right)^{2}$}',
+                      '\\bf{Normalized Mode I Energy Release Rate, $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{1+k_{m}}{8G_{m}}\\pi R_{f}\\left(\\frac{E_{m}}{1-\\nu^{2}}\\varepsilon_{xx}\\right)^{2}$}',
+                      '\\bf{Normalized Mode I Energy Release Rate, $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{E_{m}}{1-\\nu^{2}}\\pi R_{f}\\varepsilon_{xx}^{2}$}']
+            fileoptionName = ['G0-mean-stress',
+                              'G0-plane-strain-stress',
+                              'G0-strain']
+            legendEntries = '{$GI/G0-FEM,VCCT only$,$GI/G0-FEM,VCCT/J-integral$,$GI/G0-BEM$$}'
+            dataoptions = ['red,smooth,mark=square*',
+                           'blue,smooth,mark=square*',
+                           'black,smooth,mark=square*']
+            for g,G0 in enumerate(G0s):
+                xyData = []
+                for m,method in enumerate(gMethod):
+                    normGI = GI[m]/GO
+                    xyData.append(np.transpose(np.array([debondSize,normGI])))
+                xyData.append(np.transpose(np.array([bemDSize,bemGI])))
+                axisoptions = 'width=30cm,\n ' \
+                              'title={'+titles[g]+'},\n ' \
+                              'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
+                              'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                              'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                              'xlabel={$\\Delta\\theta\\left[^{\\circ}\\right]$},ylabel={$\\frac{G_{I}}{G_{0}}\\left[-\\right]$},\n ' \
+                              'xmin=' + str(0.0) + ',\n ' \
+                              'xmax=' + str(160.0) + ',\n ' \
+                              'ymin=' + str(0.0) + ',\n ' \
+                              'ymax=' + str([np.max(xyData[0][:,1]),np.max(xyData[1][:,1]),np.max(xyData[2][:,1])]) + ',\n ' \
+                              'tick align=outside,\n ' \
+                              'tick label style={font=\\huge},\n ' \
+                              'xmajorgrids,\n ' \
+                              'xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0,160.0,170.0,180.0},\n ' \
+                              'x grid style={lightgray!92.026143790849673!black},\n ' \
+                              'ymajorgrids,\n ' \
+                              'y grid style={lightgray!92.026143790849673!black},\n ' \
+                              'line width=0.5mm,\n ' \
+                              'legend style={draw=white!80.0!black,font=\\fontsize{28}{24}\\selectfont,row sep=15pt},\n ' \
+                              'legend entries={' + legendEntries + '},\n ' \
+                              'legend image post style={xscale=2},\n ' \
+                              'legend cell align={left}'
+                writeLatexMultiplePlots(outDir,'GI-Method-Comparison_Vff'+str(currentVff)+'-'+fileoptionName[g]+'.tex',xyData,axisoptions,dataoptions)
+            titles = ['\\bf{Normalized Mode II Energy Release Rate, $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{1+k_{m}}{8G_{m}}\\pi R_{f}\\left(\\frac{1}{2L}\\int_{-L}^{+L}\\sigma_{xx}\\left(L,z\\right)dz\\right)^{2}$}',
+                      '\\bf{Normalized Mode II Energy Release Rate, $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{1+k_{m}}{8G_{m}}\\pi R_{f}\\left(\\frac{E_{m}}{1-\\nu^{2}}\\varepsilon_{xx}\\right)^{2}$}',
+                      '\\bf{Normalized Mode II Energy Release Rate, $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{E_{m}}{1-\\nu^{2}}\\pi R_{f}\\varepsilon_{xx}^{2}$}']
+            fileoptionName = ['G0-mean-stress',
+                              'G0-plane-strain-stress',
+                              'G0-strain']
+            legendEntries = '{$GII/G0-FEM,VCCT only$,$GII/G0-FEM,VCCT/J-integral$,$GII/G0-BEM$$}'
+            dataoptions = ['red,smooth,mark=triangle*',
+                           'blue,smooth,mark=triangle*',
+                           'black,smooth,mark=triangle*']
+            for g,G0 in enumerate(G0s):
+                xyData = []
+                for m,method in enumerate(gMethod):
+                    normGII = GII[m]/GO
+                    xyData.append(np.transpose(np.array([debondSize,normGII])))
+                xyData.append(np.transpose(np.array([bemDSize,bemGII])))
+                axisoptions = 'width=30cm,\n ' \
+                              'title={'+titles[g]+'},\n ' \
+                              'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
+                              'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                              'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                              'xlabel={$\\Delta\\theta\\left[^{\\circ}\\right]$},ylabel={$\\frac{G_{II}}{G_{0}}\\left[-\\right]$},\n ' \
+                              'xmin=' + str(0.0) + ',\n ' \
+                              'xmax=' + str(160.0) + ',\n ' \
+                              'ymin=' + str(0.0) + ',\n ' \
+                              'ymax=' + str([np.max(xyData[0][:,1]),np.max(xyData[1][:,1]),np.max(xyData[2][:,1])]) + ',\n ' \
+                              'tick align=outside,\n ' \
+                              'tick label style={font=\\huge},\n ' \
+                              'xmajorgrids,\n ' \
+                              'xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0,160.0,170.0,180.0},\n ' \
+                              'x grid style={lightgray!92.026143790849673!black},\n ' \
+                              'ymajorgrids,\n ' \
+                              'y grid style={lightgray!92.026143790849673!black},\n ' \
+                              'line width=0.5mm,\n ' \
+                              'legend style={draw=white!80.0!black,font=\\fontsize{28}{24}\\selectfont,row sep=15pt},\n ' \
+                              'legend entries={' + legendEntries + '},\n ' \
+                              'legend image post style={xscale=2},\n ' \
+                              'legend cell align={left}'
+                writeLatexMultiplePlots(outDir,'GII-Method-Comparison_Vff'+str(currentVff)+'-'+fileoptionName[g]+'.tex',xyData,axisoptions,dataoptions)
+            titles = ['\\bf{Normalized Total Energy Release Rate, $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{1+k_{m}}{8G_{m}}\\pi R_{f}\\left(\\frac{1}{2L}\\int_{-L}^{+L}\\sigma_{xx}\\left(L,z\\right)dz\\right)^{2}$}',
+                      '\\bf{Normalized Total Energy Release Rate, $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{1+k_{m}}{8G_{m}}\\pi R_{f}\\left(\\frac{E_{m}}{1-\\nu^{2}}\\varepsilon_{xx}\\right)^{2}$}',
+                      '\\bf{Normalized Total Energy Release Rate, $Vf_{f}='+str(currentVff)+'$, $\\frac{L}{R_{f}}='+str(currentLoverRf)+'$, $G_{0}=\\frac{E_{m}}{1-\\nu^{2}}\\pi R_{f}\\varepsilon_{xx}^{2}$}']
+            fileoptionName = ['G0-mean-stress',
+                              'G0-plane-strain-stress',
+                              'G0-strain']
+            legendEntries = '{$GI/G0-FEM,VCCT only$,$GI/G0-FEM,VCCT/J-integral$,$GI/G0-BEM$$}'
+            dataoptions = ['red,smooth,mark=square*',
+                           'blue,smooth,mark=square*',
+                           'black,smooth,mark=square*']
+            for g,G0 in enumerate(G0s):
+                xyData = []
+                for m,method in enumerate(gMethod):
+                    normGI = GI[m]/GO
+                    xyData.append(np.transpose(np.array([debondSize,normGI])))
+                xyData.append(np.transpose(np.array([bemDSize,bemGI])))
+                axisoptions = 'width=30cm,\n ' \
+                              'title={'+titles[g]+'},\n ' \
+                              'title style={font=\\fontsize{40}{8}\\selectfont},\n ' \
+                              'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                              'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
+                              'xlabel={$\\Delta\\theta\\left[^{\\circ}\\right]$},ylabel={$\\frac{G_{I}}{G_{0}}\\left[-\\right]$},\n ' \
+                              'xmin=' + str(0.0) + ',\n ' \
+                              'xmax=' + str(160.0) + ',\n ' \
+                              'ymin=' + str(0.0) + ',\n ' \
+                              'ymax=' + str([np.max(xyData[0][:,1]),np.max(xyData[1][:,1]),np.max(xyData[2][:,1])]) + ',\n ' \
+                              'tick align=outside,\n ' \
+                              'tick label style={font=\\huge},\n ' \
+                              'xmajorgrids,\n ' \
+                              'xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0,160.0,170.0,180.0},\n ' \
+                              'x grid style={lightgray!92.026143790849673!black},\n ' \
+                              'ymajorgrids,\n ' \
+                              'y grid style={lightgray!92.026143790849673!black},\n ' \
+                              'line width=0.5mm,\n ' \
+                              'legend style={draw=white!80.0!black,font=\\fontsize{28}{24}\\selectfont,row sep=15pt},\n ' \
+                              'legend entries={' + legendEntries + '},\n ' \
+                              'legend image post style={xscale=2},\n ' \
+                              'legend cell align={left}'
+                writeLatexMultiplePlots(outDir,'GI-Method-Comparison_Vff'+str(currentVff)+'-'+fileoptionName[g]+'.tex',xyData,axisoptions,dataoptions)
 
 
 

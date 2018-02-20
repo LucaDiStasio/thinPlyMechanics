@@ -2432,7 +2432,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
             for cNum, crack in enumerate(fiber['cracks'].values()):
                 # assign seam
                 model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['FIBER'+str(f+1)+'-CRACK'+(cNum+1)])
-                if crack['isMeasured'] && 'J-integral' in crack['measurement-methods']:
+                if crack['isMeasured'] and 'J-integral' in crack['measurement-methods']:
                     theta = crack['theta']
                     deltatheta = crack['deltatheta']
                     # contour integral

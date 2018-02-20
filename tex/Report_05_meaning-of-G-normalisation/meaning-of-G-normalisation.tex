@@ -102,7 +102,107 @@ In \cite{sevilla two fiber}, the same normalization parameter is used to analyze
 
 The question thus arises: what is the meaning of $G_{0}$? And consequently, what is the meaning of the normalized Energy Release Rates? How does the selection of this peculiar normalization value make results comparable across different material systems and ply geoemetries? In this brief note we will try to answer these questions.
 
+%------------------------------------------------------------------------------------------%
+%                             G0
+%------------------------------------------------------------------------------------------%
 
+\section{Analysis of $G_{0}$}
+
+Consider an infinite plate made of an isotropic homogeneous material with a central crack of length $2a$ in its center. We assume that the material is the same as matrix constituent of a composite, and thus we will use the pedix $m$ to identify the properties. Under an applied remote traction $\sigma_{0}$ perpendicular to the crack faces, the mode I Stress Intensity Factor (SIF) reads \cite{find ref}
+
+\begin{equation}
+\label{eq:cc-plate-k1}
+K_{I}^{CC} = \sigma_{0}\sqrt{\pi a}.
+\end{equation} 
+
+Across the literature on Linear Elastic Fracture Mechanics, in textbooks and handbooks, the expression in eq. \ref{eq:cc-plate-k1} has assumed the role of reference for the expression of Stress Intensity Factors for all possible modes of fracture and geometries. Thus, the SIF for any other arbitrary geometrical configuration of crack and sorrounding structure can be expressed as 
+
+\begin{equation}
+K_{mode} = \beta K_{ref}\quad\text{where}\quad K_{ref}=K_{I}^{CC}=\sigma_{0}\sqrt{\pi a}
+\end{equation}
+
+or, equivalently,
+
+\begin{equation}
+K_{mode} = \beta\sigma_{0}\sqrt{\pi a}
+\end{equation}
+
+where $\beta$ is the shape factor. Thus, evaluation of the SIF for a new configuration reduces to the determination of its shape factor.\\
+The corresponding energy release rate can be computed to be
+
+\begin{equation}
+G_{ref}=G_{I}^{CC}=\frac{\left(K_{I}^{CC}\right)^{2}}{E_{m}^{*}}.
+\end{equation}
+
+For plane strain,
+
+\begin{equation}
+E_{m}^{*}=\frac{E_{m}}{1-\nu^{2}}\quad\text{and thus}\quad G_{ref}=\frac{1-\nu^{2}}{E_{m}}\sigma_{0}^{2}\pi a,
+\end{equation}
+
+while for plane stress,
+
+\begin{equation}
+E_{m}^{*}=E_{m}\quad\text{and thus}\quad G_{ref}=\frac{\sigma_{0}^{2}\pi a}{E_{m}}.
+\end{equation}
+
+The energy release rate for the generic configuration thus reads
+
+\begin{equation}
+G_{mode}=\beta G_{ref},
+\end{equation}
+
+which particularizes to $G_{mode}=\beta\frac{1-\nu^{2}}{E_{m}}\sigma_{0}^{2}\pi a $ for plane strain, and $ G_{mode}=\beta\frac{\sigma_{0}^{2}\pi a}{E_{m}} $ for plane stress.\\
+A homogeneous isotropic materia has only $2$ independent parameters that determine its elastic behavior; thus it holds
+
+\begin{equation}
+G_{m}=\frac{E_{m}}{2\left(1+\nu_{m}\right)}.
+\end{equation}
+
+Let us consider once again the reference energy release rate for plane strain states and rework its expression
+
+\begin{equation}
+\label{eq:gref-planestrain}
+\begin{aligned}
+G_{ref}=&\frac{1-\nu_{m}^{2}}{E_{m}}\sigma_{0}^{2}\pi a=\\
+=&\frac{\left(1-\nu_{m}\right)\left(1+\nu_{m}\right)}{E_{m}}\sigma_{0}^{2}\pi a=\\
+=&\frac{\left(1-\nu_{m}\right)}{2G_{m}}\sigma_{0}^{2}\pi a=\\
+=&\frac{4}{4}\frac{\left(1-\nu_{m}\right)}{2G_{m}}\sigma_{0}^{2}\pi a=\\
+=&\frac{1+3-4\nu_{m}}{8G_{m}}\sigma_{0}^{2}\pi a=\\
+=&\frac{1+k_{m}}{8G_{m}}\sigma_{0}^{2}\pi a
+\end{aligned}
+\end{equation}
+
+where $k_{m}=3-4\nu_{m}$ is the Kolosov's constant for plane strain.\\
+Similarly, for plane stress
+
+\begin{equation}
+\label{eq:gref-planestress}
+\begin{aligned}
+G_{ref}=&\frac{\sigma_{0}^{2}\pi a}{E_{m}}=\\
+=&\frac{\sigma_{0}^{2}\pi a}{2G_{m}\left(1+\nu_{m}\right)}=\\
+=&\frac{4}{4}\frac{1}{2G_{m}\left(1+\nu_{m}\right)}\sigma_{0}^{2}\pi a\\
+=&\frac{1}{8G_{m}}\frac{4+\nu_{m}-\nu_{m}}{1+\nu_{m}}\sigma_{0}^{2}\pi a\\
+=&\frac{1}{8G_{m}}\left(\frac{1+\nu_{m}}{1+\nu_{m}}+\frac{3-\nu_{m}}{1+\nu_{m}}\right)\sigma_{0}^{2}\pi a=\\
+=&\frac{1+\frac{3-\nu_{m}}{1+\nu_{m}}}{8G_{m}}\sigma_{0}^{2}\pi a=\\%
+=&\frac{1+k_{m}}{8G_{m}}\sigma_{0}^{2}\pi a
+\end{aligned}
+\end{equation}
+
+where $k_{m}=\frac{3-\nu_{m}}{1+\nu_{m}}$ is the Kolosov's constant for plane stress.\\
+Recalling now eq. \ref{eq:G0} and comparing with eqs. \ref{eq:gref-planestrain} and \ref{eq:gref-planestress}, we can now identify a clear physical meaning: $G_{0}$ is the mode I energy release rate for a central crack of total length equal to the inclusion diameter $2R_{f}$ in an infinite plate made of the same material as the matrix. Furthermore, a historical purpose can be identified, as this formulation of $G_{0}$ allow for the expression of the energy release rates for the fiber/matrix interface problem as 
+
+\begin{equation}
+G_{I}=\beta_{I} G_{ref}\qquad G_{II}=\beta_{II} G_{ref},
+\end{equation}
+
+where $\beta_{I}$ and $\beta_{II}$ are respectively the mode I and mode II shape parameters and can now be identified as the functions $\frac{G_{I}}{G_{0}}$ and $\frac{G_{II}}{G_{0}}$ that represent a main part of the results of the fiber/matrix interface problem.
+
+%------------------------------------------------------------------------------------------%
+%                             	Critique and alternative formulations
+%------------------------------------------------------------------------------------------%
+
+\section{Critique and alternative formulations of $G_{0}$}
 
 %\clearpage
 %------------------------------------------------------------------------------------------%

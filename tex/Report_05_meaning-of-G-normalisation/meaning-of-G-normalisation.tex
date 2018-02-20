@@ -1,0 +1,150 @@
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%                                      FILE BEGINS
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%                                    DOCUMENT CLASS
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+\documentclass[a4paper]{jpconf}
+
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%                                       PACKAGES
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[caption=false]{subfig}
+\usepackage[makeroom]{cancel}
+
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%                                    DOCUMENT BEGINS
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+\begin{document}
+
+%------------------------------------------------------------------------------------------%
+%                                        HEADER
+%------------------------------------------------------------------------------------------%
+
+\title{On the meaning of the normalisation parameter $G_{0}$ and the normalised Energy Release Rates in the fiber/matrix interface problem}
+
+\author{Luca Di Stasio$^{1,2,a}$ , Janis Varna$^{2,b}$ and Zoubir Ayadi$^{1,c}$ }
+
+\address{$^{1}$SI2M, IJL, EEIGM, Universit\'e de Lorraine, 6 Rue Bastien Lepage, F-54010 Nancy, France\\$^{2}$Division of Polymer Engineering, Lule\aa\ University of Technology, SE-97187 Lule\aa , Sweden }
+
+{\vspace*{5pt}\address{E-mail: $^{a}$luca.di-stasio@univ-lorraine.fr, $^{b}$janis.varna@ltu.se, $^{c}$zoubir.ayadi@univ-lorraine.fr}}
+%\address{$^{a}$luca.di-stasio@univ-lorraine.fr}, \address{$^{b}$janis.varna@ltu.se}, \address{$^{c}$zoubir.ayadi@univ-lorraine.fr}
+
+%------------------------------------------------------------------------------------------%
+%                                       ABSTRACT
+%------------------------------------------------------------------------------------------%
+
+\begin{abstract}
+
+\end{abstract}
+
+%------------------------------------------------------------------------------------------%
+%                                   List of acronyms
+%------------------------------------------------------------------------------------------%
+
+\section*{List of acronyms}
+
+\begin{tabular}{ll}
+BEM &  Boundary Element Method\\
+ERR &  Energy Release Rate (here used as synonim of SERR)\\
+FEM &  Finite Element Method\\
+SERR &  Strain Energy Release Rate\\
+VCCT &  Virtual Crack Closure Technique\\
+\end{tabular}
+%\end{table}
+
+%------------------------------------------------------------------------------------------%
+%                                   List of symbols
+%------------------------------------------------------------------------------------------%
+
+\section*{List of symbols}
+
+%\begin{table}[!h]
+\begin{tabular}{lcl}
+
+\end{tabular}
+%\end{table}
+
+\clearpage
+%------------------------------------------------------------------------------------------%
+%                             Intro
+%------------------------------------------------------------------------------------------%
+
+\section{Introduction}
+
+The numerical analysis of the fiber/matrix interface has focused on the determination of mode mixity through the calculation of mode I and mode II energy release rates. In early papers, where the problem was solved in the complex domain by means of the Airy function and conformal transformations, it was shown that the stress field was due to oscillate in a very small region close to the crack tip. Thus, the evalution of stresses and stress intensity factors represents an ardous obstacle when to the discrete counterpart of the problem. \\
+Due to their definition as rates of energy change, the calculation of ERRs fits better into the frameworks of discrete procedures, whether the Finite Element Method (FEM) or the Boundary Element Method (BEM). Different variations of the same principle has been derived over the years, namely the Crack Closure Technique, the Crack Closure Integral, the Virtual Crack Closure Technique and the Virtual Crack Closure Integral. The idea at the core of these methods is that, given that the crack is propagating in a linear elastic medium, the energy released by the creation of a unit area of crack's surfaces is equal to the work needed to close the new created surfaces back together.\\
+Energy Release Rates have been so far reported in a normalized form, where a reference energy release rate $G_{0}$ is used as normalization parameter. In \cite{sevilla one fiber}, the authors claim that the use of 
+
+\begin{equation}
+\label{eq:G0}
+G_{0} = \frac{1+k_{m}}{8\mu_{m}}\sigma_{0}^{2}R_{f}\pi
+\end{equation} 
+
+would make the results comparable between different material systems. In equation \ref{eq:G0}, $k_{m}$ is the Kolosov constant for the matrix, which is equal to $3-4\nu$ for plane strain and $\frac{3-\nu}{1+\nu}$ for plane stress conditions, $\mu_{m}$ is the shear modulus of the matrix, $\sigma_{0}$ is the applied stress at the boundary and $R_{f}$ is the radius of the inclusion. \\
+In \cite{sevilla two fiber}, the same normalization parameter is used to analyze the effect of a neighbouring fiber on the Energy Release Rates. A similar use can be found in \cite{Linqi} It seems that the first apperance of $G_{0}$ can be retrieved in \cite{Toya}, soon followed by \cite{handbook of SIF} where a parametric study of Toya's analytical results is performed and tabulated. However, in Toya the normalization is performed for the maximum? stress at the crack tip, and its actual formulation is \textit{formula from toya}.
+
+The question thus arises: what is the meaning of $G_{0}$? And consequently, what is the meaning of the normalized Energy Release Rates? How does the selection of this peculiar normalization value make results comparable across different material systems and ply geoemetries? In this brief note we will try to answer these questions.
+
+
+
+%\clearpage
+%------------------------------------------------------------------------------------------%
+%                             CONCLUSIONS AND PERSPECTIVES
+%------------------------------------------------------------------------------------------%
+
+%\section{Conclusions}
+
+
+%------------------------------------------------------------------------------------------%
+%                                   ACKNOWLEDGEMENTS
+%------------------------------------------------------------------------------------------%
+%\ack
+%Luca Di Stasio gratefully acknowledges the support of the European School of Materials (EUSMAT) through the DocMASE Doctoral Programme and the European Commission through the Erasmus Mundus Programme.
+%\newpage
+%------------------------------------------------------------------------------------------%
+%                                      REFERENCES
+%------------------------------------------------------------------------------------------%
+\section*{References}
+\begin{thebibliography}{9}
+%\bibitem{author:year}author surname author initials (up to 10) year title {\it Journal} {\bf vol} (issue) pages
+% FEM
+\bibitem{Griffiths:1994}Griffiths  R. 1994 Stiffness matrix of the four-node quadrilateral element in closed form {\it Int. J. Numer. Meth. Eng.} {\bf 57} (2) 109--143
+% LEFM
+\bibitem{Krueger:2004}Krueger R. 2004 Virtual crack closure technique: History, approach, and applications {\it Appl. Mech. Rev.} {\bf 57} (2) 109--143
+\bibitem{abaqus:2016} ABAQUS 2016 ABAQUS 2016 Analysis User's Manual {\it Online Documentation Help: Dassault Syst\'emes} 
+\bibitem{Rice:1968}Rice J. R. 1968 A Path Independent Integral and the Approximate Analysis of Strain Concentration by Notches and Cracks {\it J. Appl. Mech.} {\bf 35} 379--386
+
+%\bibitem{author:year}
+\end{thebibliography}
+
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%                                    DOCUMENT ENDS
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+\end{document}
+
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%                                      FILE ENDS
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------------------%

@@ -5231,24 +5231,24 @@ def main(argv):
         localStart = timeit.default_timer()
         codeFolder = 'D:/01_Luca/06_WD/thinPlyMechanics/python'
         if 'Windows' in system():
-            writeLineToLogFile(logfilefullpath,'a',baselogindent + 2*logindent + 'Create Windows command file',True)
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Create Windows command file',True)
             cmdfile = join(RVEparams['output']['global']['directory'],'dataToXlsx.cmd')
             with open(cmdfile,'w') as cmd:
                 cmd.write('\n')
                 cmd.write('CD ' + RVEparams['output']['global']['directory'] + '\n')
                 cmd.write('\n')
                 cmd.write('python ' + join(codeFolder,'reportDataToXlsx' + '.py') + ' -w ' + RVEparams['output']['global']['directory'] + ' -i ' + logfilename.split('.')[0] + '_csvfileslist' + '.csv' + ' -f ' + RVEparams['input']['caefilename'] + '.xlsx' + '\n')
-            writeLineToLogFile(logfilefullpath,'a',baselogindent + 2*logindent + 'Executing Windows command file...',True)
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Executing Windows command file...',True)
             try:
                 subprocess.call('cmd.exe /C ' + cmdfile)
-                writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+                writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
             except Exception,error:
-                writeLineToLogFile(logfilefullpath,'a',baselogindent + 2*logindent + 'ERROR',True)
-                writeLineToLogFile(logfilefullpath,'a',baselogindent + 2*logindent + str(Exception),True)
-                writeLineToLogFile(logfilefullpath,'a',baselogindent + 2*logindent + str(error),True)
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + 'ERROR',True)
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + str(Exception),True)
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + str(error),True)
                 sys.exc_clear()
         elif 'Linux' in system():
-            writeLineToLogFile(logfilefullpath,'a',baselogindent + 2*logindent + 'Create Linux bash file',True)
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Create Linux bash file',True)
             bashfile = join(RVEparams['output']['global']['directory'],'dataToXlsx.sh')
             with open(bashfile,'w') as bsh:
                 bsh.write('#!/bin/bash\n')
@@ -5256,17 +5256,17 @@ def main(argv):
                 bsh.write('cd ' + RVEparams['output']['global']['directory'] + '\n')
                 bsh.write('\n')
                 bsh.write('python ' + join(codeFolder,'reportDataToXlsx' + '.py') + ' -w ' + RVEparams['output']['global']['directory'] + ' -i ' + logfilename.split('.')[0] + '_csvfileslist' + '.csv' + ' -f ' + RVEparams['input']['caefilename'] + '.xlsx' + '\n')
-                writeLineToLogFile(logfilefullpath,'a',baselogindent + 2*logindent + 'Executing Linux bash file...',True)
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Executing Linux bash file...',True)
                 try:
-                    writeLineToLogFile(logfilename,'a',baselogindent + 3*logindent + 'Change permissions to ' + bashfile ,True)
+                    writeLineToLogFile(logfilename,'a',3*logindent + 'Change permissions to ' + bashfile ,True)
                     os.chmod(bashfile, 0o755)
                     writeLineToLogFile(logfilename,'a','Run bash file',True)
                     rc = call('.' + bashfile)
-                    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+                    writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
                 except Exception:
-                    writeLineToLogFile(logfilefullpath,'a',baselogindent + 2*logindent + 'ERROR',True)
-                    writeLineToLogFile(logfilefullpath,'a',baselogindent + 2*logindent + str(Exception),True)
-                    writeLineToLogFile(logfilefullpath,'a',baselogindent + 2*logindent + str(error),True)
+                    writeLineToLogFile(logfilefullpath,'a',2*logindent + 'ERROR',True)
+                    writeLineToLogFile(logfilefullpath,'a',2*logindent + str(Exception),True)
+                    writeLineToLogFile(logfilefullpath,'a',2*logindent + str(error),True)
                     sys.exc_clear()
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)

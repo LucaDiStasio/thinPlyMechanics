@@ -302,6 +302,16 @@ def provideMatrixProperties():
     props['k-planestrain'] = 3-4*props['nu']
     return props
 
+def provideGFiberProperties():
+    props = {}
+    props['E'] = 3500.0
+    props['nu'] = 0.4
+    props['G'] = 0.5*props['E']/(1+props['nu'])
+    props['k-planestrain'] = 3-4*props['nu']
+    return props
+
+def computePlyTransverseModulus(Vff,Ef,Em):
+
 def main(argv):
     # Read the command line, throw error if not option is provided
     try:

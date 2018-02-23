@@ -311,6 +311,7 @@ def provideGFiberProperties():
     return props
 
 def computePlyTransverseModulus(Vff,Ef,Em):
+    return (Vff/Ef + (1.0-Vff)/Em)
 
 def main(argv):
     # Read the command line, throw error if not option is provided

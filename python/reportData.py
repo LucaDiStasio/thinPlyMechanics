@@ -496,7 +496,13 @@ def main(argv):
 
         G0meanstress = []
         G0planestrainstress = []
+        G0planestrainstressharmonic = []
+        G0planestrainstressrve = []
+        G0meanstressharmonic = []
+        G0meanstressrve = []
         G0strain = []
+        G0strainharmonic = []
+        G0strainrve = []
         GIvcctonly = []
         GIIvcctonly = []
         GTOTvcctonly = []
@@ -510,7 +516,13 @@ def main(argv):
 
         currentG0meanstress = []
         currentG0planestrainstress = []
+        currentG0planestrainstressharmonic = []
+        currentG0planestrainstressrve = []
+        currentG0meanstressharmonic = []
+        currentG0meanstressrve = []
         currentG0strain = []
+        currentG0strainharmonic = []
+        currentG0strainrve = []
         currentGIvcctonly = []
         currentGIIvcctonly = []
         currentGTOTvcctonly = []
@@ -544,7 +556,13 @@ def main(argv):
                     if float(values[3])!=currentLoverRf[-1]:
                         G0meanstress.append(currentG0meanstress)
                         G0planestrainstress.append(currentG0planestrainstress)
+                        G0planestrainstressharmonic.append(currentG0planestrainstressharmonic)
+                        G0planestrainstressrve.append(currentG0planestrainstressrve)
+                        G0meanstressharmonic.append(currentG0meanstressharmonic)
+                        G0meanstressrve.append(currentG0meanstressrve)
                         G0strain.append(currentG0strain)
+                        G0strainharmonic.append(currentG0strainharmonic)
+                        G0strainrve.append(currentG0strainrve)
                         GIvcctonly.append(currentGIvcctonly)
                         GIIvcctonly.append(currentGIIvcctonly)
                         GTOTvcctonly.append(currentGTOTvcctonly)
@@ -569,7 +587,13 @@ def main(argv):
                         currentphiCZ = []
                 currentG0meanstress.append(float(values[5]))
                 currentG0planestrainstress.append(np.pi*Rf*(matrixProps['E']*epsxx/(1-matrixProps['nu']*matrixProps['nu']))*(matrixProps['E']*epsxx/(1-matrixProps['nu']*matrixProps['nu']))*(1+matrixProps['k-planestrain'])/(8.0*matrixProps['G'])))
+                currentG0planestrainstressharmonic.append()
+                currentG0planestrainstressrve.append()
+                currentG0meanstressharmonic.append()
+                currentG0meanstressrve.append()
                 currentG0strain.append(np.pi*Rf*(matrixProps['E']/(1-matrixProps['nu']*matrixProps['nu']))*epsxx*epsxx)
+                currentG0strainharmonic.append()
+                currentG0strainrve.append()
                 currentGIvcctonly.append(float(values[13]))
                 currentGIIvcctonly.append(float(values[14]))
                 currentGTOTvcctonly.append(float(values[15]))

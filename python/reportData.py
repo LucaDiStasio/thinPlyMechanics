@@ -513,6 +513,10 @@ def main(argv):
         LoverRf = []
         Vff = []
         phiCZ = []
+        Y0atbound = []
+        sigmaXXatbound = []
+        sigmaZZatbound = []
+        sigmaXZatbound = []
 
         currentG0meanstress = []
         currentG0planestrainstress = []
@@ -533,9 +537,14 @@ def main(argv):
         currentLoverRf = []
         currentVff = []
         currentphiCZ = []
+        currentY0atbound = []
+        currentsigmaXXatbound = []
+        currentsigmaZZatbound = []
+        currentsigmaXZatbound = []
         for line in lines[1:]:
-            csvPath = line.replace('\n','').split(',')[0]
-            inputdataPath = '_'.join(line.replace('\n','').split(',')[0].split('_')[:-1]) + '_InputData' + '.csv'
+            csvPath = line.replace('\n','').split(',')[1]
+            inputdataPath = '_'.join(line.replace('\n','').split(',')[1].split('_')[:-1]) + '_InputData' + '.csv'
+            dataType = line.replace('\n','').split(',')[0]
             try:
                 with open(csvPath,'r') as csv:
                     csvlines = csv.readlines()
@@ -548,62 +557,71 @@ def main(argv):
             except Exception,error:
                 continue
                 sys.exit(2)
-            epsxx = float(inputdatalines[1].replace('\n','').split(',')[5])
-            Rf = float(inputdatalines[1].replace('\n','').split(',')[0])
-            for c,csvline in enumerate(csvlines[1:]):
-                values = csvline.replace('\n','').split(',')
-                if len(currentLoverRf)>0:
-                    if float(values[3])!=currentLoverRf[-1]:
-                        G0meanstress.append(currentG0meanstress)
-                        G0planestrainstress.append(currentG0planestrainstress)
-                        G0planestrainstressharmonic.append(currentG0planestrainstressharmonic)
-                        G0planestrainstressrve.append(currentG0planestrainstressrve)
-                        G0meanstressharmonic.append(currentG0meanstressharmonic)
-                        G0meanstressrve.append(currentG0meanstressrve)
-                        G0strain.append(currentG0strain)
-                        G0strainharmonic.append(currentG0strainharmonic)
-                        G0strainrve.append(currentG0strainrve)
-                        GIvcctonly.append(currentGIvcctonly)
-                        GIIvcctonly.append(currentGIIvcctonly)
-                        GTOTvcctonly.append(currentGTOTvcctonly)
-                        GIvcctjint.append(currentGIvcctjint)
-                        GIIvcctjint.append(currentGIIvcctjint)
-                        GTOTvcctjint.append(currentGTOTvcctjint)
-                        deltatheta.append(currentdeltatheta)
-                        LoverRf.append(currentLoverRf)
-                        Vff.append(currentVff)
-                        phiCZ.append(currentphiCZ)
-                        currentG0stress = []
-                        currentG0strain = []
-                        currentGIvcctonly = []
-                        currentGIIvcctonly = []
-                        currentGTOTvcctonly = []
-                        currentGIvcctjint = []
-                        currentGIIvcctjint = []
-                        currentGTOTvcctjint = []
-                        currentdeltatheta = []
-                        currentLoverRf = []
-                        currentVff = []
-                        currentphiCZ = []
-                currentG0meanstress.append(float(values[5]))
-                currentG0planestrainstress.append(np.pi*Rf*(matrixProps['E']*epsxx/(1-matrixProps['nu']*matrixProps['nu']))*(matrixProps['E']*epsxx/(1-matrixProps['nu']*matrixProps['nu']))*(1+matrixProps['k-planestrain'])/(8.0*matrixProps['G'])))
-                currentG0planestrainstressharmonic.append()
-                currentG0planestrainstressrve.append()
-                currentG0meanstressharmonic.append()
-                currentG0meanstressrve.append()
-                currentG0strain.append(np.pi*Rf*(matrixProps['E']/(1-matrixProps['nu']*matrixProps['nu']))*epsxx*epsxx)
-                currentG0strainharmonic.append()
-                currentG0strainrve.append()
-                currentGIvcctonly.append(float(values[13]))
-                currentGIIvcctonly.append(float(values[14]))
-                currentGTOTvcctonly.append(float(values[15]))
-                currentGIvcctjint.append(float(values[16]))
-                currentGIIvcctjint.append(float(values[17]))
-                currentGTOTvcctjint.append(float(values[18]))
-                currentdeltatheta.append(float(values[0]))
-                currentLoverRf.append(float(values[3]))
-                currentVff.append(0.25*np.pi/float(values[3]))
-                currentphiCZ.append(float(values[4]))
+            if 'ERRT' in dataType or 'ERRTS' in dataType or 'ERRTs' in dataType or 'errt' in dataType or 'errts' in dataType:
+                epsxx = float(inputdatalines[1].replace('\n','').split(',')[5])
+                Rf = float(inputdatalines[1].replace('\n','').split(',')[0])
+                for c,csvline in enumerate(csvlines[1:]):
+                    values = csvline.replace('\n','').split(',')
+                    if len(currentLoverRf)>0:
+                        if float(values[3])!=currentLoverRf[-1]:
+                            G0meanstress.append(currentG0meanstress)
+                            G0planestrainstress.append(currentG0planestrainstress)
+                            G0planestrainstressharmonic.append(currentG0planestrainstressharmonic)
+                            G0planestrainstressrve.append(currentG0planestrainstressrve)
+                            G0meanstressharmonic.append(currentG0meanstressharmonic)
+                            G0meanstressrve.append(currentG0meanstressrve)
+                            G0strain.append(currentG0strain)
+                            G0strainharmonic.append(currentG0strainharmonic)
+                            G0strainrve.append(currentG0strainrve)
+                            GIvcctonly.append(currentGIvcctonly)
+                            GIIvcctonly.append(currentGIIvcctonly)
+                            GTOTvcctonly.append(currentGTOTvcctonly)
+                            GIvcctjint.append(currentGIvcctjint)
+                            GIIvcctjint.append(currentGIIvcctjint)
+                            GTOTvcctjint.append(currentGTOTvcctjint)
+                            deltatheta.append(currentdeltatheta)
+                            LoverRf.append(currentLoverRf)
+                            Vff.append(currentVff)
+                            phiCZ.append(currentphiCZ)
+                            currentG0stress = []
+                            currentG0strain = []
+                            currentGIvcctonly = []
+                            currentGIIvcctonly = []
+                            currentGTOTvcctonly = []
+                            currentGIvcctjint = []
+                            currentGIIvcctjint = []
+                            currentGTOTvcctjint = []
+                            currentdeltatheta = []
+                            currentLoverRf = []
+                            currentVff = []
+                            currentphiCZ = []
+                    currentG0meanstress.append(float(values[5]))
+                    currentG0planestrainstress.append(np.pi*Rf*(matrixProps['E']*epsxx/(1-matrixProps['nu']*matrixProps['nu']))*(matrixProps['E']*epsxx/(1-matrixProps['nu']*matrixProps['nu']))*(1+matrixProps['k-planestrain'])/(8.0*matrixProps['G'])))
+                    currentG0planestrainstressharmonic.append()
+                    currentG0planestrainstressrve.append()
+                    currentG0meanstressharmonic.append()
+                    currentG0meanstressrve.append()
+                    currentG0strain.append(np.pi*Rf*(matrixProps['E']/(1-matrixProps['nu']*matrixProps['nu']))*epsxx*epsxx)
+                    currentG0strainharmonic.append()
+                    currentG0strainrve.append()
+                    currentGIvcctonly.append(float(values[13]))
+                    currentGIIvcctonly.append(float(values[14]))
+                    currentGTOTvcctonly.append(float(values[15]))
+                    currentGIvcctjint.append(float(values[16]))
+                    currentGIIvcctjint.append(float(values[17]))
+                    currentGTOTvcctjint.append(float(values[18]))
+                    currentdeltatheta.append(float(values[0]))
+                    currentLoverRf.append(float(values[3]))
+                    currentVff.append(0.25*np.pi/float(values[3]))
+                    currentphiCZ.append(float(values[4]))
+            elif 'stressesatboundary' in dataType or 'StressesAtBoundary' in dataType or 'stresses-at-boundary' in dataType or 'Stresses-At-Boundary' in dataType:
+                for c,csvline in enumerate(csvlines[1:]):
+                    values = csvline.replace('\n','').split(',')
+                    currentY0atbound.append(values[1])
+                    currentsigmaXXatbound.append(values[4])
+                    currentsigmaZZatbound.append(values[5])
+                    currentsigmaXZatbound.append(values[7]):
+
         for s,valueSet in enumerate(GIvcctonly):
             currentVff = Vff[s][0]
             currentLoverRf = LoverRf[s][0]

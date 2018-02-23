@@ -304,8 +304,8 @@ def provideMatrixProperties():
 
 def provideGFiberProperties():
     props = {}
-    props['E'] = 3500.0
-    props['nu'] = 0.4
+    props['E'] = 70000.0
+    props['nu'] = 0.2
     props['G'] = 0.5*props['E']/(1+props['nu'])
     props['k-planestrain'] = 3-4*props['nu']
     return props

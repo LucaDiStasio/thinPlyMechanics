@@ -369,11 +369,11 @@ def main(argv):
                 outdir = arg[:-1]
         elif opt in ("-f", "--outputfile","--xlsx","--outfile"):
             outputfileBasename = arg.split(".")[0]
-        elif opt in ("-e", "-excel"):
+        elif opt in ("-e", "--excel"):
             toExcel = True
-        elif opt in ("-l", "-latex"):
+        elif opt in ("-l", "--latex"):
             toLatex = True
-        elif opt in ("-d", "-sql"):
+        elif opt in ("-d", "--sql"):
             toSql = True
 
     # Check the existence of variables: if a required variable is missing, an error is thrown and program is terminated; if an optional variable is missing, it is set to the default value

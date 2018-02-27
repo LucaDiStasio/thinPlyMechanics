@@ -426,7 +426,7 @@ def main(argv):
             except Exception,error:
                 continue
                 sys.exc_clear()
-            sheetName = line.replace('\n','').split(',')[1]
+            sheetName = line.replace('\n','').split(',')[1].replace('deltatheta','')
             toPlot = bool(line.replace('\n','').split(',')[2])
             plotSettings = []
             if toPlot:

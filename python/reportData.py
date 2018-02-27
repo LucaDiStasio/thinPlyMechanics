@@ -390,6 +390,12 @@ def main(argv):
     if 'toExcel' not in locals() and 'toLatex' not in locals() and 'toSql' not in locals():
         print('Error: no output format specified.')
         sys.exit()
+    if 'toExcel' not in locals():
+        toExcel = False
+    if 'toLatex' not in locals():
+        toLatex = False
+    if 'toSql' not in locals():
+        toSql = False
 
     bemData = provideBEMdata()
 

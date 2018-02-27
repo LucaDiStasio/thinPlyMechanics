@@ -383,7 +383,7 @@ def main(argv):
     if 'inputfile' not in locals():
         print('Error: file list not provided.')
         sys.exit()
-    if 'outputfile' not in locals():
+    if 'outputfileBasename' not in locals():
         outputfileBasename = datetime.now().strftime('%Y-%m-%d') + '_' + datetime.now().strftime('%H-%M-%S') + '_' + inputfile.split(".")[0]
     if 'outdir' not in locals():
         outdir = workdir

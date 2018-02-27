@@ -620,7 +620,7 @@ def main(argv):
                     currentY0atbound.append(values[1])
                     currentsigmaXXatbound.append(values[4])
                     currentsigmaZZatbound.append(values[5])
-                    currentsigmaXZatbound.append(values[7]):
+                    currentsigmaXZatbound.append(values[7])
 
         for s,valueSet in enumerate(GIvcctonly):
             currentVff = Vff[s][0]

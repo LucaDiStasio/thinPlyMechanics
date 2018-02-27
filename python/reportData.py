@@ -406,7 +406,7 @@ def main(argv):
         worksheet = workbook.add_worksheet(bemdataSheetname)
         worksheet.write(0,0,'deltatheta [deg]',stringFormat)
         worksheet.write(0,1,'GI/G0 [-]',stringFormat)
-        vworksheet.write(0,2,'GII/G0 [-]',stringFormat)
+        worksheet.write(0,2,'GII/G0 [-]',stringFormat)
         worksheet.write(0,3,'GTOT/G0 [-]',stringFormat)
         for r,row in enumerate(bemData['normGs']):
             for c,value in enumerate(row):

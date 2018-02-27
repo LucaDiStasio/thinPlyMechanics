@@ -596,7 +596,7 @@ def main(argv):
                             currentVff = []
                             currentphiCZ = []
                     currentG0meanstress.append(float(values[5]))
-                    currentG0planestrainstress.append(np.pi*Rf*(matrixProps['E']*epsxx/(1-matrixProps['nu']*matrixProps['nu']))*(matrixProps['E']*epsxx/(1-matrixProps['nu']*matrixProps['nu']))*(1+matrixProps['k-planestrain'])/(8.0*matrixProps['G'])))
+                    currentG0planestrainstress.append(np.pi*Rf*(matrixProps['E']*epsxx/(1-matrixProps['nu']*matrixProps['nu']))*(matrixProps['E']*epsxx/(1-matrixProps['nu']*matrixProps['nu']))*(1+matrixProps['k-planestrain'])/(8.0*matrixProps['G']))
                     currentG0planestrainstressharmonic.append()
                     currentG0planestrainstressrve.append()
                     currentG0meanstressharmonic.append()

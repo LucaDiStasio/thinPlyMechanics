@@ -3109,7 +3109,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     setsOfEdgesData = [[0.001*Rf,0.001,0.0,0.001*Rf,-0.001,0.0,'LOWERSIDE-CENTER'],
                        [0.65*Rf,0.001,0.0,0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-RIGHT'],
-                       [-0.65*Rf,0.001,0.0,-0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-LEFT']]
+                       [-0.65*Rf,0.001,0.0,-0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-LEFT'],
+                       [0.99*L,0.001,0.0,0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-RIGHT'],
+                       [-0.99*L,0.001,0.0,-0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-LEFT']]
+
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
@@ -3148,7 +3151,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT'],RVEpart.sets['LOWERSIDE-FOURTHRING-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING',True)
 
-    RVEpart.SetByBoolean(name='LOWERSIDE', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING'],RVEpart.sets['LOWERSIDE-SECONDRING'],RVEpart.sets['LOWERSIDE-THIRDRING'],RVEpart.sets['LOWERSIDE-FOURTHRING']])
+    RVEpart.SetByBoolean(name='LOWERSIDE', sets=[RVEpart.sets['LOWERSIDE-CENTER'],RVEpart.sets['LOWERSIDE-FIRSTRING'],RVEpart.sets['LOWERSIDE-SECONDRING'],RVEpart.sets['LOWERSIDE-THIRDRING'],RVEpart.sets['LOWERSIDE-FOURTHRING'],RVEpart.sets['LOWERSIDE-MATRIXBULK-RIGHT'],RVEpart.sets['LOWERSIDE-MATRIXBULK-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE',True)
 
     setsOfEdgesData = [[0.001,L,0.0,-0.001,L,0.0,'UPPERSIDE'],

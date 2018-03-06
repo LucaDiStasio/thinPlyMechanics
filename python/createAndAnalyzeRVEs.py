@@ -384,7 +384,7 @@ def writeLatexSinglePlot(folder,filename,data,axoptions,dataoptions,logfilepath,
             cmd.write('\n')
             cmd.write('CD ' + folder + '\n')
             cmd.write('\n')
-            cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+            cmd.write('pdflatex ' + join(folder,filename.split('.')[0] + '.tex') + ' -job-name=' + filename.split('.')[0] + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Windows command file...',True)
         try:
             subprocess.call('cmd.exe /C ' + cmdfile)
@@ -402,7 +402,7 @@ def writeLatexSinglePlot(folder,filename,data,axoptions,dataoptions,logfilepath,
             bsh.write('\n')
             bsh.write('cd ' + folder + '\n')
             bsh.write('\n')
-            bsh.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+            bsh.write('pdflatex ' + join(folder,filename.split('.')[0] + '.tex') + ' -job-name=' + filename.split('.')[0] + '\n')
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Linux bash file...',True)
             try:
                 writeLineToLogFile(logfilename,'a',baselogindent + 3*logindent + 'Change permissions to ' + bashfile ,True)
@@ -439,7 +439,7 @@ def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepa
             cmd.write('\n')
             cmd.write('CD ' + folder + '\n')
             cmd.write('\n')
-            cmd.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+            cmd.write('pdflatex ' + join(folder,filename.split('.')[0] + '.tex') + ' -job-name=' + filename.split('.')[0] + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Windows command file...',True)
         try:
             subprocess.call('cmd.exe /C ' + cmdfile)
@@ -457,7 +457,7 @@ def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepa
             bsh.write('\n')
             bsh.write('cd ' + folder + '\n')
             bsh.write('\n')
-            bsh.write('pdflatex ' + join(folder,filename + '.tex') + ' -job-name=' + filename + '\n')
+            bsh.write('pdflatex ' + join(folder,filename.split('.')[0] + '.tex') + ' -job-name=' + filename.split('.')[0] + '\n')
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Executing Linux bash file...',True)
             try:
                 writeLineToLogFile(logfilename,'a',baselogindent + 3*logindent + 'Change permissions to ' + bashfile ,True)

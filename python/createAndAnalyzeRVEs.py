@@ -4532,6 +4532,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
+    rightsideStressdata = np.array(rightsideStressdata)
+    rightsideStressdata = rightsideStressdata[np.argsort(rightsideStressdata[:,1])]
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0, y0, x, y, sigma_xx, sigma_zz, sigma_yy, tau_xz')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],rightsideStressdata)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)

@@ -5334,10 +5334,6 @@ def main(argv):
                     writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
                     writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Number of curves: ' + str(len(plot[:-3])),True)
                     xyData = []
-                    xmin = 0.0
-                    xmax = 0.0
-                    ymin = 0.0
-                    ymax = 0.0
                     legendEntries = ''
                     dataoptions = []
                     for c,curve in enumerate(plot[:-3]):
@@ -5354,26 +5350,6 @@ def main(argv):
                                 yData.append(float(csvline.replace('\n','').split(',')[int(curve[1])]))
                         xyData.append(np.transpose([np.array(xData),np.array(yData)]))
                         if c>0:
-                            if np.min(xData)<xmin:
-                                xmin = np.min(xData)
-                        else:
-                            xmin = np.min(xData)
-                        if c>0:
-                            if np.max(xData)<xmax:
-                                xmax = np.max(xData)
-                        else:
-                            xmax = np.max(xData)
-                        if c>0:
-                            if np.min(yData)<ymin:
-                                ymin = np.min(yData)
-                        else:
-                            ymin = np.min(yData)
-                        if c>0:
-                            if np.max(yData)<ymax:
-                                ymax = np.max(yData)
-                        else:
-                            ymax = np.max(yData)
-                        if c>0:
                             legendEntries += ', '
                         legendEntries += '{$' + curve[2] + '$}'
                         dataoptions.append('red!' + str(100.0*float(c)/float(len(plot[:-3]))) + '!blue')
@@ -5383,10 +5359,6 @@ def main(argv):
                                   'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
                                   'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
                                   'xlabel={$' + plot[-3] + '$},ylabel={$' + plot[-2] + '$},\n ' \
-                                  'xmin=' + str(xmin) + ',\n ' \
-                                  'xmax=' + str(xmax) + ',\n ' \
-                                  'ymin=' + str(ymin) + ',\n ' \
-                                  'ymax=' + str(ymax) + ',\n ' \
                                   'tick align=outside,\n ' \
                                   'tick label style={font=\\huge},\n ' \
                                   'xmajorgrids,\n ' \
@@ -5423,10 +5395,6 @@ def main(argv):
                     writeLineToLogFile(logfilefullpath,'a',3*logindent + 'y-axis name: ' + plot[-2],True)
                     writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Number of curves: ' + str(len(plot[:-3])),True)
                     xyData = []
-                    xmin = 0.0
-                    xmax = 0.0
-                    ymin = 0.0
-                    ymax = 0.0
                     legendEntries = ''
                     dataoptions = []
                     for c,curve in enumerate(plot[:-3]):
@@ -5443,26 +5411,6 @@ def main(argv):
                                 yData.append(float(csvline.replace('\n','').split(',')[int(curve[1])]))
                         xyData.append(np.transpose([np.array(xData),np.array(yData)]))
                         if c>0:
-                            if np.min(xData)<xmin:
-                                xmin = np.min(xData)
-                        else:
-                            xmin = np.min(xData)
-                        if c>0:
-                            if np.max(xData)<xmax:
-                                xmax = np.max(xData)
-                        else:
-                            xmax = np.max(xData)
-                        if c>0:
-                            if np.min(yData)<ymin:
-                                ymin = np.min(yData)
-                        else:
-                            ymin = np.min(yData)
-                        if c>0:
-                            if np.max(yData)<ymax:
-                                ymax = np.max(yData)
-                        else:
-                            ymax = np.max(yData)
-                        if c>0:
                             legendEntries += ', '
                         legendEntries += '{$' + curve[2] + '$}'
                         dataoptions.append('red!' + str(100.0*float(c)/float(len(plot[:-3]))) + '!blue')
@@ -5472,10 +5420,6 @@ def main(argv):
                                   'xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north,font=\\fontsize{44}{40}\\selectfont},\n ' \
                                   'ylabel style={at={(axis description cs:-0.025,.5)},anchor=south,font=\\fontsize{44}{40}\\selectfont},\n ' \
                                   'xlabel={$' + plot[-3] + '$},ylabel={$' + plot[-2] + '$},\n ' \
-                                  'xmin=' + str(xmin) + ',\n ' \
-                                  'xmax=' + str(xmax) + ',\n ' \
-                                  'ymin=' + str(ymin) + ',\n ' \
-                                  'ymax=' + str(ymax) + ',\n ' \
                                   'tick align=outside,\n ' \
                                   'tick label style={font=\\huge},\n ' \
                                   'xmajorgrids,\n ' \

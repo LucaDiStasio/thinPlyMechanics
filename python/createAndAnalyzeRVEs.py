@@ -5234,7 +5234,7 @@ def main(argv):
     writeLineToLogFile(logfilefullpath,'a',logindent + '... done. ',True)
     if RVEparams['simulation-pipeline']['report-EXCEL']:
         skipLineToLogFile(logfilefullpath,'a',True)
-        writeLineToLogFile(logfilefullpath,'a',logindent + 'Begin reporting in latex',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Begin reporting in excel',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         codeFolder = 'D:/01_Luca/06_WD/thinPlyMechanics/python'
@@ -5245,7 +5245,7 @@ def main(argv):
                 cmd.write('\n')
                 cmd.write('CD ' + RVEparams['output']['global']['directory'] + '\n')
                 cmd.write('\n')
-                cmd.write('python ' + join(codeFolder,'reportDataToXlsx' + '.py') + ' -w ' + RVEparams['output']['global']['directory'] + ' -i ' + logfilename.split('.')[0] + '_csvfileslist' + '.csv' + ' -f ' + RVEparams['input']['caefilename'] + '.xlsx' + '\n')
+                cmd.write('python ' + join(codeFolder,'reportData' + '.py') + ' -w ' + RVEparams['output']['global']['directory'] + ' -i ' + logfilename.split('.')[0] + '_csvfileslist' + '.csv' + ' -o ' + RVEparams['output']['global']['directory']  + ' -f ' + RVEparams['input']['caefilename'] + '.xlsx' + ' --excel ' + '\n')
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Executing Windows command file...',True)
             try:
                 subprocess.call('cmd.exe /C ' + cmdfile)
@@ -5263,7 +5263,7 @@ def main(argv):
                 bsh.write('\n')
                 bsh.write('cd ' + RVEparams['output']['global']['directory'] + '\n')
                 bsh.write('\n')
-                bsh.write('python ' + join(codeFolder,'reportDataToXlsx' + '.py') + ' -w ' + RVEparams['output']['global']['directory'] + ' -i ' + logfilename.split('.')[0] + '_csvfileslist' + '.csv' + ' -f ' + RVEparams['input']['caefilename'] + '.xlsx' + '\n')
+                bsh.write('python ' + join(codeFolder,'reportData' + '.py') + ' -w ' + RVEparams['output']['global']['directory'] + ' -i ' + logfilename.split('.')[0] + '_csvfileslist' + '.csv' + ' -f ' + RVEparams['input']['caefilename'] + '.xlsx' + '\n')
                 writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Executing Linux bash file...',True)
                 try:
                     writeLineToLogFile(logfilename,'a',3*logindent + 'Change permissions to ' + bashfile ,True)

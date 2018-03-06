@@ -4601,12 +4601,14 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort fiber displacements ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort fiber displacements and angles...',True)
     fiberDisps = np.array(fiberDisps)[np.argsort(fiberAngles)].tolist()
+    fiberAngles = np.array(fiberAngles)[np.argsort(fiberAngles)].tolist()
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort matrix displacements ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort matrix displacements and angles...',True)
     matrixDisps = np.array(matrixDisps)[np.argsort(matrixAngles)].tolist()
+    matrixAngles = np.array(fiberAngles)[np.argsort(matrixAngles)].tolist()
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     crackDisps = []
@@ -4628,9 +4630,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],'beta, uR_fiber, uTheta_fiber, uR_matrix, uTheta_matrix, uR, uTheta')
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],'beta [deg], uR_fiber, uTheta_fiber, uR_matrix, uTheta_matrix, uR, uTheta')
     for s,dispset in enumerate(crackDisps):
-        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],[[fiberAngles[s],fiberDisps[s][0],fiberDisps[s][1],matrixDisps[s][0],matrixDisps[s][1],dispset[0],dispset[1]]])
+        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],[[fiberAngles[s]*180.0/np.pi,fiberDisps[s][0],fiberDisps[s][1],matrixDisps[s][0],matrixDisps[s][1],dispset[0],dispset[1]]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

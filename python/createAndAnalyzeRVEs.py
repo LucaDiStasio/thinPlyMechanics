@@ -4559,7 +4559,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute reference frame transformation ...',True)
 
     undefCracktipCoords = getFieldOutput(odb,-1,0,'COORD',fiberCracktip)
-    phiCT = np.arctan2(undefCracktipCoords.values[0].data[1],undefCracktipCoords.values[0].data[0])
+    phi = np.arctan2(undefCracktipCoords.values[0].data[1],undefCracktipCoords.values[0].data[0])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
@@ -4626,12 +4626,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute contact zone size ...',True)
     phiCZ = 0.0
-    phiSZ = 0.0
+    phiSZ = phi
     uRmax = np.max(uR)
     for d,disp in enumerate(uR):
         if disp<0.002*uRmax:
             phiSZ = fiberAngles[d]
-            phiCZ = phiCT - fiberAngles[d]
+            phiCZ = phi - fiberAngles[d]
             break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
@@ -4643,11 +4643,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     for tol in np.arange(0.0,1.525,0.025):
         tolCZ.append(tol)
         phiCZcurrent = 0.0
-        phiSZcurrent = phiCT
+        phiSZcurrent = phi
         for d,disp in enumerate(uR):
             if disp<tol*uRmax:
                 phiSZcurrent = fiberAngles[d]
-                phiCZcurrent = phiCT - fiberAngles[d]
+                phiCZcurrent = phi - fiberAngles[d]
                 break
         phiSZtol.append(phiSZcurrent)
         phiCZtol.append(phiCZcurrent)

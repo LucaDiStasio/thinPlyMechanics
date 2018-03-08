@@ -5026,7 +5026,7 @@ def main(argv):
                 dataList.append(float(dataString))
             values.append(dataList)
         elif  'list of string' in dataType:
-            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
+            listAsString = removeComment.split('@')[1].split('$')[0].replace('[','').replace(']','').split(',')
             dataList = []
             for dataString in listAsString:
                 dataList.append(str(dataString))
@@ -5045,7 +5045,7 @@ def main(argv):
         elif  'float' in dataType:
             values.append(float(removeComment.split('@')[1].split('$')[0].replace(' ','')))
         elif  'string' in dataType:
-            values.append(str(removeComment.split('@')[1].split('$')[0].replace(' ','')))
+            values.append(str(removeComment.split('@')[1].split('$')[0]))
         elif  'ABAQUS keyword' in dataType:
             values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0].replace(' ','')])
 

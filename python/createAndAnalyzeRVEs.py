@@ -4628,10 +4628,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     phiCZ = 0.0
     phiSZ = 0.0
     uRmax = np.max(uR)
-    for r,u in enumerate(uR):
-        if u<0.002*uRmax:
-            phiSZ = fiberAngles[r]
-            phiCZ = phiCT - fiberAngles[r]
+    for d,disp in enumerate(uR):
+        if disp<0.002*uRmax:
+            phiSZ = fiberAngles[d]
+            phiCZ = phiCT - fiberAngles[d]
+            break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)

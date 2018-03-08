@@ -4640,13 +4640,17 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     phiSZtol = []
     tolCZ = []
     uRmax = np.max(uR)
-    for tol in np.arange(0,1.525,0.025):
+    for tol in np.arange(0.0,1.525,0.025):
         tolCZ.append(tol)
+        phiCZcurrent = 0.0
+        phiSZcurrent = phiCT
         for d,disp in enumerate(uR):
             if disp<tol*uRmax:
-                phiSZtol.append(fiberAngles[d])
-                phiCZtol.append(phiCT - fiberAngles[d])
+                phiSZcurrent = fiberAngles[d]
+                phiCZcurrent = phiCT - fiberAngles[d]
                 break
+        phiSZtol.append(phiSZcurrent)
+        phiCZtol.append(phiCZcurrent)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)

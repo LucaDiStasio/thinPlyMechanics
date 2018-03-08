@@ -5149,7 +5149,7 @@ def main(argv):
         RVEparams['output']['local']['filenames']['Jintegral'] = RVEparams['input']['modelname'] + '-Jintegral'
         RVEparams['output']['local']['filenames']['stressesatboundary'] = RVEparams['input']['modelname'] + '-stressesatboundary'
         RVEparams['output']['local']['filenames']['crackdisplacements'] = RVEparams['input']['modelname'] + '-crackdisplacements'
-        parameters['output']['local']['filenames']['contactzonetolerance'] = RVEparams['input']['modelname'] + '-contactzonetol'
+        RVEparams['output']['local']['filenames']['contactzonetolerance'] = RVEparams['input']['modelname'] + '-contactzonetol'
 
         RVEparams['output']['report']['local']['directory'].append(join(RVEparams['output']['global']['directory'],RVEparams['input']['modelname']))
         RVEparams['output']['report']['local']['filenames']['Jintegral'].append(RVEparams['input']['modelname'] + '-Jintegral')

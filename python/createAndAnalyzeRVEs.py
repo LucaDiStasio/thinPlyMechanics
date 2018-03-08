@@ -4559,7 +4559,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute reference frame transformation ...',True)
 
     undefCracktipCoords = getFieldOutput(odb,-1,0,'COORD',fiberCracktip)
-    phi = np.arctan2(undefCracktipCoords.values[0].data[1],undefCracktipCoords.values[0].data[0])
+    phiCT = np.arctan2(undefCracktipCoords.values[0].data[1],undefCracktipCoords.values[0].data[0])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
@@ -4628,10 +4628,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     phiCZ = 0.0
     phiSZ = 0.0
     uRmax = np.max(uR)
-    for s,dispset in enumerate(crackDisps):
-        if dispset[0]<0.002*uRmax:
-            phiSZ = fiberAngles[s]
-            phiCZ = phi - fiberAngles[s]
+    for r,u in enumerate(uR):
+        if u<0.002*uRmax:
+            phiSZ = fiberAngles[r]
+            phiCZ = phiCT - fiberAngles[r]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)

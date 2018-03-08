@@ -4635,10 +4635,27 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Analyze tolerance of contact zone size estimation...',True)
+    phiCZtol = []
+    phiSZtol = []
+    tolCZ = []
+    uRmax = np.max(uR)
+    for tol in np.arange(0,1.525,0.025):
+        tolCZ.append(tol)
+        for d,disp in enumerate(uR):
+            if disp<tol*uRmax:
+                phiSZtol.append(fiberAngles[d])
+                phiCZtol.append(phiCT - fiberAngles[d])
+                break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],'beta [deg], uR_fiber, uTheta_fiber, uR_matrix, uTheta_matrix, uR, uTheta')
     for s,dispset in enumerate(crackDisps):
         appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],[[fiberAngles[s]*180.0/np.pi,fiberDisps[s][0],fiberDisps[s][1],matrixDisps[s][0],matrixDisps[s][1],dispset[0],dispset[1]]])
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['contactzonetolerance'],'tol [%], phiSZ [deg], phiCZ [deg]')
+    for s,tol in enumerate(tolCZ):
+        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['contactzonetolerance'],[[tol,phiSZtol[s]*180.0/np.pi,phiCZtol[s]*180.0/np.pi]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -5132,15 +5149,18 @@ def main(argv):
         RVEparams['output']['local']['filenames']['Jintegral'] = RVEparams['input']['modelname'] + '-Jintegral'
         RVEparams['output']['local']['filenames']['stressesatboundary'] = RVEparams['input']['modelname'] + '-stressesatboundary'
         RVEparams['output']['local']['filenames']['crackdisplacements'] = RVEparams['input']['modelname'] + '-crackdisplacements'
+        parameters['output']['local']['filenames']['contactzonetolerance'] = RVEparams['input']['modelname'] + '-contactzonetol'
 
         RVEparams['output']['report']['local']['directory'].append(join(RVEparams['output']['global']['directory'],RVEparams['input']['modelname']))
         RVEparams['output']['report']['local']['filenames']['Jintegral'].append(RVEparams['input']['modelname'] + '-Jintegral')
         RVEparams['output']['report']['local']['filenames']['stressesatboundary'].append(RVEparams['input']['modelname'] + '-stressesatboundary')
         RVEparams['output']['report']['local']['filenames']['crackdisplacements'].append(RVEparams['input']['modelname'] + '-crackdisplacements')
+        RVEparams['output']['report']['local']['filenames']['contactzonetolerance'].append(RVEparams['input']['modelname'] + '-contactzonetol')
 
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Params='+variationString,RVEparams['plot']['local']['Jintegral']['toPlot'],RVEparams['plot']['local']['Jintegral']['variables']]])
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Params='+variationString,RVEparams['plot']['local']['stressatboundary']['toPlot'],RVEparams['plot']['local']['stressatboundary']['variables']]])
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Params='+variationString,RVEparams['plot']['local']['crackdisplacements']['toPlot'],RVEparams['plot']['local']['crackdisplacements']['variables']]])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['contactzonetolerance']+'.csv'),'TolCZ-Params='+variationString,RVEparams['plot']['local']['contactzonetolerance']['toPlot'],RVEparams['plot']['local']['contactzonetolerance']['variables']]])
 
         timedataList.append(RVEparams['input']['modelname'])
 

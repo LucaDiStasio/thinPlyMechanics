@@ -5251,7 +5251,7 @@ def main(argv):
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Executing Windows command file...',True)
             try:
                 subprocess.call('cmd.exe /C ' + cmdfile)
-                writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
             except Exception,error:
                 writeLineToLogFile(logfilefullpath,'a',2*logindent + 'ERROR',True)
                 writeLineToLogFile(logfilefullpath,'a',2*logindent + str(Exception),True)
@@ -5268,11 +5268,11 @@ def main(argv):
                 bsh.write('python ' + join(codeFolder,'reportData' + '.py') + ' -w ' + RVEparams['output']['global']['directory'] + ' -i ' + logfilename.split('.')[0] + '_csvfileslist' + '.csv' + ' -f ' + RVEparams['input']['caefilename'] + '.xlsx' + '\n')
                 writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Executing Linux bash file...',True)
                 try:
-                    writeLineToLogFile(logfilename,'a',3*logindent + 'Change permissions to ' + bashfile ,True)
+                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Change permissions to ' + bashfile ,True)
                     os.chmod(bashfile, 0o755)
-                    writeLineToLogFile(logfilename,'a','Run bash file',True)
+                    writeLineToLogFile(logfilefullpath,'a','Run bash file',True)
                     rc = call('.' + bashfile)
-                    writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
+                    writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
                 except Exception:
                     writeLineToLogFile(logfilefullpath,'a',2*logindent + 'ERROR',True)
                     writeLineToLogFile(logfilefullpath,'a',2*logindent + str(Exception),True)

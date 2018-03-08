@@ -1,1 +1,1 @@
-prompt $D$S$T$S$P$G && cd D:/01*/07*/03*/Curved* && abaqus CAE noGUI=D:/01_Luca/06_WD/thinPlyMechanics/python/createAndAnalyzeRVEs.py -- -dir D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData -data inputRVEdataL1_195.deck -iterables inputRVEiterablesL1_195.deck -plot inputRVEplot
+prompt $D$S$T$S$P$G && cd D:/01*/07*/03*/Curved* && abaqus CAE noGUI=D:/01_Luca/06_WD/thinPlyMechanics/python/createAndAnalyzeRVEs.py -- -dir D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData -data inputRVEdataL1_98.deck -iterables inputRVEiterablesL1_98.deck -plot inputRVEplot

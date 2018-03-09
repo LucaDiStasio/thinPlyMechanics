@@ -4633,10 +4633,29 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         uTheta.append(matrixDisps[s][1]-dispset[1])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute normalized crack displacements ...',True)
+    normedcrackDisps = []
+    normedbeta = []
+    uRmax = np.max(uR)
+    uRavg = np.mean(uR)
+    uThetamax = np.max(uTheta)
+    uThetaavg = np.mean(uTheta)
+    uRweightavg = 0.0
+    uThetaweightavg = 0.0
+    for s, angle in enumerate(fiberAngles[:-1]):
+        uRweightavg += (fiberAngles[s+1]-angle)*(uR[s+1]+uR[s])
+        uThetaweightavg += (fiberAngles[s+1]-angle)*(uTheta[s+1]+uTheta[s])
+    uRweightavg /= 2*phi
+    uThetaweightavg /= 2*phi
+    for s,dispset in enumerate(crackDisps):
+        normedbeta.append(fiberAngles[s]/phi)
+        normedcrackDisps.append([dispset[0]/uRmax,dispset[0]/uRmean,dispset[0]/uRweightavg,dispset[1]/uThetamax,dispset[1]/uThetamean,dispset[1]/uThetaweightavg])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute contact zone size ...',True)
     phiCZ = 0.0
     phiSZ = phi
-    uRmax = np.max(uR)
+    #uRmax = np.max(uR)
     for d,disp in enumerate(uR):
         if disp<0.002*uRmax:
             phiSZ = fiberAngles[d]
@@ -4648,7 +4667,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     phiCZtol = []
     phiSZtol = []
     tolCZ = []
-    uRmax = np.max(uR)
+    #uRmax = np.max(uR)
     for tol in np.arange(0.0,1.525,0.025):
         tolCZ.append(tol)
         phiCZcurrent = 0.0
@@ -4663,9 +4682,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],'beta [deg], uR_fiber, uTheta_fiber, uR_matrix, uTheta_matrix, uR, uTheta')
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],'beta [deg], uR_fiber, uTheta_fiber, uR_matrix, uTheta_matrix, uR, uTheta, beta/deltatheta [-],  uR/max(uR), uR/mean(uR), uR/weightmean(uR), uTheta/max(uTheta), uTheta/mean(uTheta), uR/weightmean(uTheta)')
     for s,dispset in enumerate(crackDisps):
-        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],[[fiberAngles[s]*180.0/np.pi,fiberDisps[s][0],fiberDisps[s][1],matrixDisps[s][0],matrixDisps[s][1],dispset[0],dispset[1]]])
+        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],[[fiberAngles[s]*180.0/np.pi,fiberDisps[s][0],fiberDisps[s][1],matrixDisps[s][0],matrixDisps[s][1],dispset[0],dispset[1],normedbeta[s],normedcrackDisps[s][0],normedcrackDisps[s][1],normedcrackDisps[s][2],normedcrackDisps[s][3],normedcrackDisps[s][4],normedcrackDisps[s][5]]])
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['contactzonetolerance'],'tol [%], phiSZ [deg], phiCZ [deg]')
     for s,tol in enumerate(tolCZ):
         appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['contactzonetolerance'],[[tol,phiSZtol[s]*180.0/np.pi,phiCZtol[s]*180.0/np.pi]])

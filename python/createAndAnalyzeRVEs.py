@@ -4531,10 +4531,19 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     meanSigmaxx /= len(rightsideStressdata)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute normalized coordinates and axial stress ...',True)
+    for s,stress in enumerate(rightsideStressdata):
+        stress.append(stress[1]/parameters['geometry']['L'])
+        stress.append(stress[4]/maxSigmaxx)
+        stress.append(stress[4]/minSigmaxx)
+        stress.append(stress[4]/meanSigmaxx)
+        rightsideStressdata[s] = stress
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
     rightsideStressdata = np.array(rightsideStressdata)
     rightsideStressdata = rightsideStressdata[np.argsort(rightsideStressdata[:,1])]
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0, y0, x, y, sigma_xx, sigma_zz, sigma_yy, tau_xz')
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0 [um], y0 [um], x [um], y [um], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], y0/L [-],  sigma_xx/max(sigma_xx) [-],  sigma_xx/min(sigma_xx) [-],  sigma_xx/avg(sigma_xx) [-]')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],rightsideStressdata)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

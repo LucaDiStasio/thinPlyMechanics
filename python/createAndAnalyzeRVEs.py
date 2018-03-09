@@ -4522,13 +4522,17 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     maxSigmaxx = rightsideStressdata[0][4]
     minSigmaxx = rightsideStressdata[0][4]
     meanSigmaxx = 0.0
-    for stress in rightsideStressdata:
+    weightmeanSigmaxx = 0.0
+    for s,stress in enumerate(rightsideStressdata):
+        if s>0:
+            weightmeanSigmaxx += (stress[1]-rightsideStressdata[s-1][1])*(stress[4]+rightsideStressdata[s-1][4])
         meanSigmaxx += stress[4]
         if stress[4]>maxSigmaxx:
             maxSigmaxx = stress[4]
         elif stress[4]<minSigmaxx:
             minSigmaxx = stress[4]
     meanSigmaxx /= len(rightsideStressdata)
+    weightmeanSigmaxx /= 2*parameters['geometry']['L']
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute normalized coordinates and axial stress ...',True)
@@ -4537,13 +4541,14 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         stress.append(stress[4]/maxSigmaxx)
         stress.append(stress[4]/minSigmaxx)
         stress.append(stress[4]/meanSigmaxx)
+        stress.append(stress[4]/weightmeanSigmaxx)
         rightsideStressdata[s] = stress
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
     rightsideStressdata = np.array(rightsideStressdata)
     rightsideStressdata = rightsideStressdata[np.argsort(rightsideStressdata[:,1])]
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0 [um], y0 [um], x [um], y [um], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], y0/L [-],  sigma_xx/max(sigma_xx) [-],  sigma_xx/min(sigma_xx) [-],  sigma_xx/avg(sigma_xx) [-]')
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0 [um], y0 [um], x [um], y [um], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], y0/L [-],  sigma_xx/max(sigma_xx) [-],  sigma_xx/min(sigma_xx) [-],  sigma_xx/avg(sigma_xx) [-],  sigma_xx/weightavg(sigma_xx) [-]')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],rightsideStressdata)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

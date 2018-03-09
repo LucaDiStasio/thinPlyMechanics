@@ -4654,7 +4654,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     uThetaweightavg /= 2*phi
     for s,dispset in enumerate(crackDisps):
         normedbeta.append(fiberAngles[s]/phi)
-        normedcrackDisps.append([dispset[0]/uRmax,dispset[0]/uRmean,dispset[0]/uRweightavg,dispset[1]/uThetamax,dispset[1]/uThetamean,dispset[1]/uThetaweightavg])
+        normedcrackDisps.append([dispset[0]/uRmax,dispset[0]/uRavg,dispset[0]/uRweightavg,dispset[1]/uThetamax,dispset[1]/uThetaavg,dispset[1]/uThetaweightavg])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute contact zone size ...',True)

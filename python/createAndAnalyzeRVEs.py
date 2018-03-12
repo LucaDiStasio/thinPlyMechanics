@@ -4673,7 +4673,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     phiSZtol = []
     tolCZ = []
     #uRmax = np.max(uR)
-    for tol in np.arange(0.0,1.525,0.025):
+    for tol in np.arange(0.0,0.01525,0.00025):
         tolCZ.append(tol)
         phiCZcurrent = 0.0
         phiSZcurrent = phi

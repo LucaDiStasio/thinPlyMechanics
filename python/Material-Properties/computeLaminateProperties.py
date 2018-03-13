@@ -152,11 +152,11 @@ def RoM(Vf,rhof,ELf,ETf,nuf,alphaf,rhom,ELm,ETm,num,alpham):
     rhoc = rhof*Vf + rhom*Vm
     E1 = ELf*Vf + ELm*Vm
     E2 = 1.0/(Vf/ETf + Vm/ETm)
-    nu12 = *nuf*Vf + num*Vm
+    nu12 = nuf*Vf + num*Vm
     G12 = 1/(Vf/Gf + Vm/Gm)
     nu21 = nu12*(E2/E1)
     nu23 = nu12*(1 - nu21)/(1 - nu12)
-    G23 = 0.5*E2)/(1 + nu23)
+    G23 = 0.5*E2/(1 + nu23)
     alpha1 = (ELf*alphaf*Vf + ELm*alpham*Vm)/(ELf*Vf + ELm*Vm)
     alpha2 = (1 + nuf)*alphaf*Vf + (1 + num)*alpham*Vm - alpha1*nu12
     return rhoc,E1,E2,nu12,nu21,G12,nu23,G23,alpha1,alpha2

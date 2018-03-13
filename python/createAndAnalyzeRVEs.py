@@ -3551,7 +3551,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['FIBER-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
                     ['FIBER-EXTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE],
                     ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD_DOMINATED,FREE],
-                    ['MATRIX-INTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE],
+                    ['MATRIX-INTANNULUS-SECONDBOUNDED',TRI,FREE],
                     ['MATRIX-INTANNULUS-RESTBOUNDED',TRI,FREE],
                     ['MATRIX-INTERMEDIATEANNULUS',TRI,FREE],
                     ['MATRIX-BODY',QUAD_DOMINATED,FREE]]

@@ -3449,6 +3449,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     # NORTH side
 
+    if 'vCoupling' in parameters['BC']['northSide']:
+
     # if 'periodic' in parameters['boundaryConditions']['north']['type']:
     #
     # elif 'rigidbar' in parameters['boundaryConditions']['north']['type']:

@@ -4373,7 +4373,9 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     if 'vCoupling' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: coupled vertical displacements',True)
-
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*MPC' + '\n')
+            inp.write(' SLIDER, UPPERSIDE-WITHOUT-CORNERS, ' + str(northwestIndex) + ', ' + str(northeastIndex) + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)
     with open(modinpfullpath,'a') as inp:

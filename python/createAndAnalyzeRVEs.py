@@ -4343,6 +4343,20 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write('*NSET, NSET=FIRSTBOUNDED-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
             inp.write(' ' + str(firstBehindCracktipDummyIndex) + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write north side without corners node sets ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=UPPERSIDE-WITHOUT-CORNERS, INSTANCE=RVE-assembly' + '\n')
+        line = ''
+        for n,node in enumerate(northSideWithoutCornersNodeset):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write equation definitions ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*EQUATION' + '\n')

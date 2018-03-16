@@ -3813,6 +3813,35 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACK','crack']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading north side node set and saving to list ...',True)
+    northSideNodeset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    northSideNodeset.append(int(index))
+            store = False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    northSideNodeset.append(int(index))
+        elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['UPPERSIDE','upperside']:
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading north-east corner node set and saving to variable ...',True)
+    for l,line in enumerate(inpfilelines):
+        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['NE-CORNER','ne-corner']:
+            northeastIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading north-west corner node set  and saving to variable ...',True)
+    for l,line in enumerate(inpfilelines):
+        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['NW-CORNER','nw-corner']:
+            northwestIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack faces element set and saving to list ...',True)
     crackfacesElementset = []
     store = False
@@ -4321,6 +4350,11 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(' 3' + '\n')
             inp.write(' FIBER-NODE-FIRSTBOUNDED,2,1,MATRIX-NODE-FIRSTBOUNDED,2,-1,FIRSTBOUNDED-DUMMY-NODE,2,-1' + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'vCoupling' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: coupled vertical displacements',True)
+
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*SURFACE, NAME=FiberSurface, TYPE=ELEMENT' + '\n')

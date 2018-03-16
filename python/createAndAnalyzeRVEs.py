@@ -3096,6 +3096,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # sets of vertices
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of vertices',True)
     defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIP',logfilepath,baselogindent + 4*logindent,True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.01*L/30,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.01*L/30,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # sets of edges
@@ -3448,8 +3450,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
 
     # NORTH side
-
-    if 'vCoupling' in parameters['BC']['northSide']:
 
     # if 'periodic' in parameters['boundaryConditions']['north']['type']:
     #

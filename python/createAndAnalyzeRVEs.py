@@ -4027,6 +4027,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-FIRSTBOUNDED','matrix-intannulus-firstbounded']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-WITHOUT-CORNERS ...',True)
+    northSideWithoutCornersNodeset = []
+    for node in northSideNodeset:
+        if not node in [northeastIndex,northwestIndex]:
+            northSideWithoutCornersNodeset.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)
     numNodes = mdbData['numNodes']
     numEls = mdbData['numEls']

@@ -4343,7 +4343,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write('*NSET, NSET=FIRSTBOUNDED-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
             inp.write(' ' + str(firstBehindCracktipDummyIndex) + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write north side without corners node sets ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write north side node sets ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*NSET, NSET=UPPERSIDE-WITHOUT-CORNERS, INSTANCE=RVE-assembly' + '\n')
         line = ''
@@ -4356,6 +4356,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 line += ' ' + str(node) + ','
         if len(line)>0:
             inp.write(line + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=NORTHWEST-CORNER, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(northwestIndex) + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=NORTHEAST-CORNER, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(northeastIndex) + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write equation definitions ...',True)
     with open(modinpfullpath,'a') as inp:
@@ -4375,7 +4381,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: coupled vertical displacements',True)
         with open(modinpfullpath,'a') as inp:
             inp.write('*MPC' + '\n')
-            inp.write(' SLIDER, UPPERSIDE-WITHOUT-CORNERS, ' + str(northwestIndex) + ', ' + str(northeastIndex) + '\n')
+            inp.write(' SLIDER, UPPERSIDE-WITHOUT-CORNERS, NORTHWEST-CORNER, NORTHEAST-CORNER' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)
     with open(modinpfullpath,'a') as inp:

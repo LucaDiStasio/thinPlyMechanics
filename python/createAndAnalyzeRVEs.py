@@ -4049,10 +4049,6 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     nodes[cracktipDummyIndex] = [-5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix crack tip node with index ' + str(matrixCracktipIndex) + ' and coordinates (' + str(nodes[cracktipIndex][0]) + ', '+ str(nodes[cracktipIndex][1]) + ')',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(cracktipDummyIndex)+ ' and coordinates (' + str(-5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
-    if 'vkinCouplingmeanside' in parameters['BC']['northSide']['type']:
-        northsideBCdummyIndex = numNodes + 1000 + 10
-        nodes[northsideBCdummyIndex] = [0.0,2*parameters['geometry']['L']]
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating dummy node for north side BC with index ' + str(northsideBCdummyIndex)+ ' and coordinates (' + str(0.0) + ', '+ str(2*parameters['geometry']['L']) + ')',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the crack tip',True)
     fiberElswithCracktip = []
     matrixElswithCracktip = []
@@ -4434,13 +4430,6 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(' NW-CORNER, 2, 1, NE-CORNER, 2, -1' + '\n')
             inp.write(' 3' + '\n')
             inp.write(' UPPERSIDE-WITHOUT-CORNERS, 2, 1, NW-CORNER, 2, -0.5, NE-CORNER, 2, -0.5' + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    elif 'vkinCouplingmeanside' in parameters['BC']['northSide']['type']:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: kinematic coupling with north-west corner as reference node',True)
-        with open(modinpfullpath,'a') as inp:
-            inp.write('*KINEMATIC COUPLING, REF NODE = NORTHWEST-CORNER' + '\n')
-            inp.write(' UPPERSIDE-WITHOUT-NWCORNER, 2' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)
     with open(modinpfullpath,'a') as inp:

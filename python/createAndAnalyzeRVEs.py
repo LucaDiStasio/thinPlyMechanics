@@ -4387,6 +4387,11 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         inp.write('*NSET, NSET=NORTHEAST-CORNER, INSTANCE=RVE-assembly' + '\n')
         inp.write(' ' + str(northeastIndex) + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'ulinearCoupling' in parameters['BC']['northSide']['type'] or 'vkinCouplingmeanside' in parameters['BC']['northSide']['type']:
+        with open(modinpfullpath,'a') as inp:
+            for n,node in enumerate(northSideWithoutCornersNodeset):
+                inp.write('*NSET, NSET=NORTHSIDE-N'+ str(n+1) +', INSTANCE=RVE-assembly' + '\n')
+                inp.write(' ' + str(node) + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write equation definitions ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*EQUATION' + '\n')
@@ -4431,6 +4436,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(' 3' + '\n')
             inp.write(' UPPERSIDE-WITHOUT-CORNERS, 2, 1, NW-CORNER, 2, -0.5, NE-CORNER, 2, -0.5' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'ulinearCoupling' inparameters['BC']['northSide']['type']:
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*EQUATION' + '\n')
+            inp.write(' 2' + '\n')
+            for n,node in enumerate(northSideWithoutCornersNodeset):
+                inp.write(' NORTHSIDE-N'+ str(n+1) +', 1, 1, NE-CORNER, 1, ' + str(-nodes[node][0]/parameters['geometry']['L']) + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*SURFACE, NAME=FiberSurface, TYPE=ELEMENT' + '\n')

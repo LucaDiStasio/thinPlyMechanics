@@ -4049,6 +4049,10 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     nodes[cracktipDummyIndex] = [-5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix crack tip node with index ' + str(matrixCracktipIndex) + ' and coordinates (' + str(nodes[cracktipIndex][0]) + ', '+ str(nodes[cracktipIndex][1]) + ')',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(cracktipDummyIndex)+ ' and coordinates (' + str(-5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
+    if 'vkinCouplingmeanside' in parameters['BC']['northSide']['type']:
+        northsideBCdummyIndex = numNodes + 1000 + 10
+        nodes[northsideBCdummyIndex] = [0.0,2*parameters['geometry']['L']]
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating dummy node for north side BC with index ' + str(northsideBCdummyIndex)+ ' and coordinates (' + str(0.0) + ', '+ str(2*parameters['geometry']['L']) + ')',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the crack tip',True)
     fiberElswithCracktip = []
     matrixElswithCracktip = []

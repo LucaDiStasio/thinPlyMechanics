@@ -4423,10 +4423,13 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     elif 'vkinCouplingmeancorners' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: kinematic coupling with north-west corner as reference node',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: nw and ne vertical displacements are set to be equal and all other points are set to this value',True)
         with open(modinpfullpath,'a') as inp:
-            inp.write('*KINEMATIC COUPLING, REF NODE = NORTHWEST-CORNER' + '\n')
-            inp.write(' UPPERSIDE-WITHOUT-NWCORNER, 2' + '\n')
+            inp.write('*EQUATION' + '\n')
+            inp.write(' 2' + '\n')
+            inp.write(' NW-CORNER, 2, 1, NE-CORNER, 2, -1' + '\n')
+            inp.write(' 3' + '\n')
+            inp.write(' UPPERSIDE-WITHOUT-CORNERS, 2, 1, NW-CORNER, 2, -0.5, NE-CORNER, 2, -0.5' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     elif 'vkinCouplingmeanside' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)

@@ -2810,13 +2810,20 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # create rectangle
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw a rectangle ...',True)
-    RVEsketch.rectangle(point1=(-L, 0.0), point2=(L,L))
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        RVEsketch.rectangle(point1=(-L, 0.0), point2=(L,L+Lply))
+    else:
+        RVEsketch.rectangle(point1=(-L, 0.0), point2=(L,L))
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # set dimension labels
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Set dimension labels ...',True)
     v = RVEsketch.vertices
-    RVEsketch.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(-1.1*L,0.5*L), value=L)
-    RVEsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(0.0,1.1*L), value=2*L)
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        RVEsketch.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(-1.1*L,0.5*(L+Lply)), value=(L+Lply))
+        RVEsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(0.0,1.1*(L+Lply)), value=2*L)
+    else:
+        RVEsketch.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(-1.1*L,0.5*L), value=L)
+        RVEsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(0.0,1.1*L), value=2*L)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # assign to part
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign sketch geometry to the part ...',True)
@@ -3064,6 +3071,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for key in fiberVertices.keys():
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(key) + '] = ' + str(fiberVertices[key]),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # if bounding ply is present, draw interface line
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw ply interface line ...',True)
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)
     pickedFaces = RVEfaces.findAt(coordinates=(0.0, 0.5*L, 0))

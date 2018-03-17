@@ -4436,12 +4436,43 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(' 3' + '\n')
             inp.write(' UPPERSIDE-WITHOUT-CORNERS, 2, 1, NW-CORNER, 2, -0.5, NE-CORNER, 2, -0.5' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    elif 'vkinCouplingmeanside' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: mean vertical displacement over all nodes is taken as reference',True)
+        with open(modinpfullpath,'a') as inp:
+            nEq = len(northSideWithoutCornersNodeset)+2
+            inp.write('*EQUATION' + '\n')
+            for n in range(0,nEq):
+                inp.write(' ' + str(int(nEq)) + '\n')
+                line = ''
+                for m in range(0,nEq):
+                    if m==n:
+                        coeff = -nEq*(1.0-1.0/nEq)
+                    else:
+                        coeff = 1.0
+                    if m==0:
+                        nodeName = 'NW-CORNER'
+                    elif m==1:
+                        nodeName = 'NE-CORNER'
+                    else:
+                        nodeName = 'NORTHSIDE-N'+ str(m+1-2)
+                    line += ' ' + nodeName + ', 2, ' + str(coeff) + ','
+                    if m>0 and (m+1)%4==0:
+                        line += '\n'
+                        inp.write(line)
+                        line = ''
+                if len(line)>0:
+                    line += '\n'
+                    inp.write(line)
     if 'ulinearCoupling' inparameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: applied linear horizontal displacement',True)
         with open(modinpfullpath,'a') as inp:
             inp.write('*EQUATION' + '\n')
             inp.write(' 2' + '\n')
             for n,node in enumerate(northSideWithoutCornersNodeset):
                 inp.write(' NORTHSIDE-N'+ str(n+1) +', 1, 1, NE-CORNER, 1, ' + str(-nodes[node][0]/parameters['geometry']['L']) + '\n')
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*SURFACE, NAME=FiberSurface, TYPE=ELEMENT' + '\n')

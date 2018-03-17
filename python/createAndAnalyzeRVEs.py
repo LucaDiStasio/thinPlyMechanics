@@ -3077,9 +3077,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw ply interface line ...',True)
         fiberSketch.Line(point1=(-L,L),point2=(L,L)) # fiberGeometry[19]
         # check this based on past log files!!!
-        fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[18],addUndoState=False)
-        fiberSketch.CoincidentConstraint(entity1=fiberVertices[21], entity2=fiberGeometry[7],addUndoState=False)
-        fiberSketch.CoincidentConstraint(entity1=fiberVertices[22], entity2=fiberGeometry[9],addUndoState=False)
+        #fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[18],addUndoState=False)
+        #fiberSketch.CoincidentConstraint(entity1=fiberVertices[21], entity2=fiberGeometry[7],addUndoState=False)
+        #fiberSketch.CoincidentConstraint(entity1=fiberVertices[22], entity2=fiberGeometry[9],addUndoState=False)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)
     pickedFaces = RVEfaces.findAt(coordinates=(0.0, 0.5*L, 0))

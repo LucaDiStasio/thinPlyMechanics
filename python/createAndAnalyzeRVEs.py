@@ -2745,6 +2745,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     modelname = parameters['input']['modelname']
     L = parameters['geometry']['L']
     Rf = parameters['geometry']['Rf']
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        tRatio = parameters['BC']['northSide']['tRatio']
+        Lply = tRatio*(2*L)
     theta = 0.0
     deltatheta = parameters['geometry']['deltatheta'] # in degrees !!!
     deltapsi = parameters['mesh']['size']['deltapsi'] # in degrees !!!
@@ -2765,6 +2768,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'L: ' + str(L),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Rf: ' + str(Rf),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'L/Rf: ' + str(L/Rf),True)
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Lply: ' + str(Lply),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'theta: ' + str(theta),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'deltatheta: ' + str(deltatheta),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'deltapsi: ' + str(deltapsi),True)

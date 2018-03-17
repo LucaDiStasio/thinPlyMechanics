@@ -4357,6 +4357,30 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         if len(line)>0:
             inp.write(line + '\n')
     with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=UPPERSIDE-WITHOUT-NECORNER, INSTANCE=RVE-assembly' + '\n')
+        line = ' ' + str(northwestIndex) + ','
+        for n,node in enumerate(northSideWithoutCornersNodeset):
+            if (n+1)>0 and (n+1)%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=UPPERSIDE-WITHOUT-NWCORNER, INSTANCE=RVE-assembly' + '\n')
+        line = ' ' + str(northeastIndex) + ','
+        for n,node in enumerate(northSideWithoutCornersNodeset):
+            if (n+1)>0 and (n+1)%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    with open(modinpfullpath,'a') as inp:
         inp.write('*NSET, NSET=NORTHWEST-CORNER, INSTANCE=RVE-assembly' + '\n')
         inp.write(' ' + str(northwestIndex) + '\n')
     with open(modinpfullpath,'a') as inp:
@@ -4376,12 +4400,40 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(' 3' + '\n')
             inp.write(' FIBER-NODE-FIRSTBOUNDED,2,1,MATRIX-NODE-FIRSTBOUNDED,2,-1,FIRSTBOUNDED-DUMMY-NODE,2,-1' + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    if 'vCoupling' in parameters['BC']['northSide']['type']:
+    if 'vgeomCoupling' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: coupled vertical displacements',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: geometric coupling',True)
         with open(modinpfullpath,'a') as inp:
             inp.write('*MPC' + '\n')
             inp.write(' SLIDER, UPPERSIDE-WITHOUT-CORNERS, NORTHWEST-CORNER, NORTHEAST-CORNER' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    elif 'vkinrightCoupling' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: kinematic coupling with north-east corner as reference node',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*KINEMATIC COUPLING, REF NODE = NORTHEAST-CORNER' + '\n')
+            inp.write(' UPPERSIDE-WITHOUT-NECORNER, 2' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    elif 'vkinleftCoupling' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: kinematic coupling with north-west corner as reference node',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*KINEMATIC COUPLING, REF NODE = NORTHWEST-CORNER' + '\n')
+            inp.write(' UPPERSIDE-WITHOUT-NWCORNER, 2' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    elif 'vkinCouplingmeancorners' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: kinematic coupling with north-west corner as reference node',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*KINEMATIC COUPLING, REF NODE = NORTHWEST-CORNER' + '\n')
+            inp.write(' UPPERSIDE-WITHOUT-NWCORNER, 2' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    elif 'vkinCouplingmeanside' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: kinematic coupling with north-west corner as reference node',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*KINEMATIC COUPLING, REF NODE = NORTHWEST-CORNER' + '\n')
+            inp.write(' UPPERSIDE-WITHOUT-NWCORNER, 2' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)
     with open(modinpfullpath,'a') as inp:

@@ -5457,6 +5457,10 @@ def main(argv):
         timedataList.append(np.sum(timedataList[1:]))
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME',[timedataList])
 
+        if RVEparams['simulation-pipeline']['archive-ODB']:
+            copyfile(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.odb'),join(RVEparams['output']['archive']['directory'],inputfilename.split('.')[0]+'.odb'))
+
+
         if debug:
             break
 

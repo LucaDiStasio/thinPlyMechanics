@@ -5550,6 +5550,17 @@ def main(argv):
         if debug:
             break
 
+    if RVEparams['simulation-pipeline']['archive-CAE']:
+        skipLineToLogFile(logfilefullpath,'a',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Moving CAE to archive... ',True)
+        try:
+            copyfile(join(parameters['input']['wd'],parameters['input']['caefilename']+'.cae'),join(RVEparams['output']['archive']['directory'],parameters['input']['caefilename']+'.cae'))
+            os.remove(join(parameters['input']['wd'],parameters['input']['caefilename']+'.cae'))
+            writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+        except Exception, error:
+            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+            sys.exc_clear()
+
     #=======================================================================
     # END - ANALYSIS
     #=======================================================================

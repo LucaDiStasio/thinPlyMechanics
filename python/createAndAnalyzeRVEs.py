@@ -5468,11 +5468,71 @@ def main(argv):
                 writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
                 sys.exc_clear()
 
-        if  RVEparams['simulation-pipeline']['remove-ODB']:
+        if  RVEparams['simulation-pipeline']['remove-DAT']:
             skipLineToLogFile(logfilefullpath,'a',True)
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove from working directory... ',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .dat file from working directory... ',True)
             try:
-                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.odb'))
+                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.dat'))
+                writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+            except Exception, error:
+                writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+                sys.exc_clear()
+
+        if  RVEparams['simulation-pipeline']['remove-PRT']:
+            skipLineToLogFile(logfilefullpath,'a',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .prt file from working directory... ',True)
+            try:
+                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.prt'))
+                writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+            except Exception, error:
+                writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+                sys.exc_clear()
+
+        if  RVEparams['simulation-pipeline']['remove-STA']:
+            skipLineToLogFile(logfilefullpath,'a',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .sta file from working directory... ',True)
+            try:
+                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.sta'))
+                writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+            except Exception, error:
+                writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+                sys.exc_clear()
+
+        if  RVEparams['simulation-pipeline']['remove-SIM']:
+            skipLineToLogFile(logfilefullpath,'a',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .sim file from working directory... ',True)
+            try:
+                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.sim'))
+                writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+            except Exception, error:
+                writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+                sys.exc_clear()
+
+        if  RVEparams['simulation-pipeline']['remove-MSG']:
+            skipLineToLogFile(logfilefullpath,'a',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .msg file from working directory... ',True)
+            try:
+                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.msg'))
+                writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+            except Exception, error:
+                writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+                sys.exc_clear()
+
+        if  RVEparams['simulation-pipeline']['remove-INP']:
+            skipLineToLogFile(logfilefullpath,'a',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .inp file from working directory... ',True)
+            try:
+                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.inp'))
+                writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+            except Exception, error:
+                writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+                sys.exc_clear()
+
+        if  RVEparams['simulation-pipeline']['remove-COM']:
+            skipLineToLogFile(logfilefullpath,'a',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .com file from working directory... ',True)
+            try:
+                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.com'))
                 writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
             except Exception, error:
                 writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)

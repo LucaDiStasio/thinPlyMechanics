@@ -5458,8 +5458,25 @@ def main(argv):
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME',[timedataList])
 
         if RVEparams['simulation-pipeline']['archive-ODB']:
-            copyfile(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.odb'),join(RVEparams['output']['archive']['directory'],inputfilename.split('.')[0]+'.odb'))
+            skipLineToLogFile(logfilefullpath,'a',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Moving ODB to archive... ',True)
+            try:
+                copyfile(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.odb'),join(RVEparams['output']['archive']['directory'],inputfilename.split('.')[0]+'.odb'))
+                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.odb'))
+                writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+            except Exception, error:
+                writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+                sys.exc_clear()
 
+        if  RVEparams['simulation-pipeline']['remove-ODB']:
+            skipLineToLogFile(logfilefullpath,'a',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove from working directory... ',True)
+            try:
+                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.odb'))
+                writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+            except Exception, error:
+                writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+                sys.exc_clear()
 
         if debug:
             break

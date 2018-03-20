@@ -4524,7 +4524,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 if len(line)>0:
                     line += '\n'
                     inp.write(line)
-    if 'ulinearCoupling' inparameters['BC']['northSide']['type']:
+    if 'ulinearCoupling' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: applied linear horizontal displacement',True)
         with open(modinpfullpath,'a') as inp:

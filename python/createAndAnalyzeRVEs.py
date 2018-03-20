@@ -4585,13 +4585,13 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(line)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if  parameters['simulation-pipeline']['remove-INP']:
-        skipLineToLogFile(logfilefullpath,'a',True)
-        writeLineToLogFile(logfilefullpath,'a',baselogindent + 3*logindent + 'Remove .inp file from working directory... ',True)
+        skipLineToLogFile(logfilepath,'a',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Remove .inp file from working directory... ',True)
         try:
             os.remove(inpfullpath)
-            writeLineToLogFile(logfilefullpath,'a',baselogindent + 3*logindent + '... done.',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         except Exception, error:
-            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+            writeErrorToLogFile(logfilepath,'a',Exception,error,True)
             sys.exc_clear()
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     return modinpname

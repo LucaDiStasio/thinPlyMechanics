@@ -3609,8 +3609,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['MATRIX-INTANNULUS-SECONDBOUNDED',TRI,FREE],
                     ['MATRIX-INTANNULUS-RESTBOUNDED',TRI,FREE],
                     ['MATRIX-INTERMEDIATEANNULUS',TRI,FREE],
-                    ['MATRIX-BODY',QUAD_DOMINATED,FREE],
-                    ['BOUNDING-PLY',QUAD_DOMINATED,FREE]]
+                    ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
+
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        regionSets.append(['BOUNDING-PLY',QUAD_DOMINATED,FREE])
 
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
@@ -3649,10 +3651,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['SECONDCIRCLE-LOWERCRACK',nTangential3],
                     ['THIRDCIRCLE-LOWERCRACK',nTangential3],
                     ['FOURTHCIRCLE-LOWERCRACK',nTangential3],
-                    ['FIFTHCIRCLE',90],
-                    ['RIGHTSIDE',30],
-                    ['LEFTSIDE',30]]
+                    ['FIFTHCIRCLE',90]]
 
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        regionSets.append(['RIGHTSIDE',int(np.ceil(30*(1+2*tRatio)))])
+        regionSets.append(['LEFTSIDE',int(np.ceil(30*(1+2*tRatio)))])
+    else:
+        regionSets.append(['RIGHTSIDE',30])
+        regionSets.append(['LEFTSIDE',30])
     #regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
     #                ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
     #                ['THIRDCIRCLE-UPPERCRACK',nTangential],

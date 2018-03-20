@@ -3119,8 +3119,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # sets of vertices
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of vertices',True)
     defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIP',logfilepath,baselogindent + 4*logindent,True)
-    defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.01*L/30,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-    defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.01*L/30,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.01*L/30,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.01*L/30,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,L,(L+Lply),0.0,0.01*L/30,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,-L,(L+Lply),0.0,0.01*L/30,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    else:
+        defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.01*L/30,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.01*L/30,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # sets of edges
@@ -3179,18 +3185,32 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     RVEpart.SetByBoolean(name='LOWERSIDE', sets=[RVEpart.sets['LOWERSIDE-CENTER'],RVEpart.sets['LOWERSIDE-FIRSTRING'],RVEpart.sets['LOWERSIDE-SECONDRING'],RVEpart.sets['LOWERSIDE-THIRDRING'],RVEpart.sets['LOWERSIDE-FOURTHRING'],RVEpart.sets['LOWERSIDE-MATRIXBULK-RIGHT'],RVEpart.sets['LOWERSIDE-MATRIXBULK-LEFT']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE',True)
 
-    setsOfEdgesData = [[0.001,L,0.0,-0.001,L,0.0,'UPPERSIDE'],
-                       [0.99*L,0.5*L,0.0,1.01*L,0.5*L,0.0,'RIGHTSIDE'],
-                       [-0.99*L,0.5*L,0.0,-1.01*L,0.5*L,0.0,'LEFTSIDE'],
-                       [0.49*Rf*np.cos((theta+deltatheta)*np.pi/180),0.49*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.51*Rf*np.cos((theta+deltatheta)*np.pi/180),0.51*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,'FIRSTCIRCLE'],
+    setsOfEdgesData = [[0.49*Rf*np.cos((theta+deltatheta)*np.pi/180),0.49*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.51*Rf*np.cos((theta+deltatheta)*np.pi/180),0.51*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,'FIRSTCIRCLE'],
                        [0.74*Rf*np.cos(0.5*alpha*np.pi/180),0.74*Rf*np.sin(0.5*alpha*np.pi/180),0.0,0.76*Rf*np.cos(0.5*alpha*np.pi/180),0.76*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'SECONDCIRCLE-LOWERCRACK'],
                        [0.74*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-UPPERCRACK'],
                        [0.74*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-FIRSTBOUNDED'],
                        [0.74*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,0.76*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'SECONDCIRCLE-SECONDBOUNDED'],
                        [0.74*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.74*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,0.76*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.76*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'SECONDCIRCLE-RESTBOUNDED']]
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        setsOfEdgesData.append([0.001,L,0.0,-0.001,L,0.0,'PLYINTERFACE'])
+        setsOfEdgesData.append([0.99*L,0.5*L,0.0,1.01*L,0.5*L,0.0,'LOWER-RIGHTSIDE'])
+        setsOfEdgesData.append([-0.99*L,0.5*L,0.0,-1.01*L,0.5*L,0.0,'LOWER-LEFTSIDE'])
+        setsOfEdgesData.append([0.001,L,0.0,-0.001,(L+Lply),0.0,'UPPERSIDE'])
+        setsOfEdgesData.append([0.99*L,L+0.5*Lply,0.0,1.01*L,L+0.5*Lply,0.0,'UPPER-RIGHTSIDE'])
+        setsOfEdgesData.append([-0.99*L,L+0.5*Lply,0.0,-1.01*L,L+0.5*Lply,0.0,'UPPER-LEFTSIDE'])
+    else:
+        setsOfEdgesData.append([0.001,L,0.0,-0.001,L,0.0,'UPPERSIDE'])
+        setsOfEdgesData.append([0.99*L,0.5*L,0.0,1.01*L,0.5*L,0.0,'RIGHTSIDE'])
+        setsOfEdgesData.append([-0.99*L,0.5*L,0.0,-1.01*L,0.5*L,0.0,'LEFTSIDE'])
+
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        RVEpart.SetByBoolean(name='RIGHTSIDE', sets=[RVEpart.sets['LOWER-RIGHTSIDE'],RVEpart.sets['UPPER-RIGHTSIDE']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RIGHTSIDE',True)
+        RVEpart.SetByBoolean(name='LEFTSIDE', sets=[RVEpart.sets['LOWER-LEFTSIDE'],RVEpart.sets['UPPER-LEFTSIDE']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LEFTSIDE',True)
     RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-LOWERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE',True)
 

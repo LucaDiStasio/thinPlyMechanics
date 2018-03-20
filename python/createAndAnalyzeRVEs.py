@@ -4584,7 +4584,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         for line in inpfilelines[endCI+1:]:
             inp.write(line)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    if  params['simulation-pipeline']['remove-INP']:
+    if  parameters['simulation-pipeline']['remove-INP']:
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',baselogindent + 3*logindent + 'Remove .inp file from working directory... ',True)
         try:

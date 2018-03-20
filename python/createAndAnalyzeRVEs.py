@@ -5507,8 +5507,8 @@ def main(argv):
             skipLineToLogFile(logfilefullpath,'a',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Moving ODB to archive... ',True)
             try:
-                copyfile(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.odb'),join(RVEparams['output']['archive']['directory'],inputfilename.split('.')[0]+'.odb'))
-                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.odb'))
+                copyfile(join(RVEparams['input']['wd'],inputfilename.split('.')[0]+'.odb'),join(RVEparams['output']['archive']['directory'],inputfilename.split('.')[0]+'.odb'))
+                os.remove(join(RVEparams['input']['wd'],inputfilename.split('.')[0]+'.odb'))
                 writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
             except Exception, error:
                 writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
@@ -5518,7 +5518,7 @@ def main(argv):
             skipLineToLogFile(logfilefullpath,'a',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .dat file from working directory... ',True)
             try:
-                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.dat'))
+                os.remove(join(RVEparams['input']['wd'],inputfilename.split('.')[0]+'.dat'))
                 writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
             except Exception, error:
                 writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
@@ -5528,7 +5528,7 @@ def main(argv):
             skipLineToLogFile(logfilefullpath,'a',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .prt file from working directory... ',True)
             try:
-                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.prt'))
+                os.remove(join(RVEparams['input']['wd'],inputfilename.split('.')[0]+'.prt'))
                 writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
             except Exception, error:
                 writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
@@ -5538,7 +5538,7 @@ def main(argv):
             skipLineToLogFile(logfilefullpath,'a',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .sta file from working directory... ',True)
             try:
-                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.sta'))
+                os.remove(join(RVEparams['input']['wd'],inputfilename.split('.')[0]+'.sta'))
                 writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
             except Exception, error:
                 writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
@@ -5548,7 +5548,7 @@ def main(argv):
             skipLineToLogFile(logfilefullpath,'a',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .sim file from working directory... ',True)
             try:
-                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.sim'))
+                os.remove(join(RVEparams['input']['wd'],inputfilename.split('.')[0]+'.sim'))
                 writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
             except Exception, error:
                 writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
@@ -5558,7 +5558,7 @@ def main(argv):
             skipLineToLogFile(logfilefullpath,'a',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .msg file from working directory... ',True)
             try:
-                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.msg'))
+                os.remove(join(RVEparams['input']['wd'],inputfilename.split('.')[0]+'.msg'))
                 writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
             except Exception, error:
                 writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
@@ -5568,7 +5568,7 @@ def main(argv):
             skipLineToLogFile(logfilefullpath,'a',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .inp file from working directory... ',True)
             try:
-                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.inp'))
+                os.remove(join(RVEparams['input']['wd'],inputfilename.split('.')[0]+'.inp'))
                 writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
             except Exception, error:
                 writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
@@ -5578,7 +5578,7 @@ def main(argv):
             skipLineToLogFile(logfilefullpath,'a',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .com file from working directory... ',True)
             try:
-                os.remove(join(parameters['input']['wd'],inputfilename.split('.')[0]+'.com'))
+                os.remove(join(RVEparams['input']['wd'],inputfilename.split('.')[0]+'.com'))
                 writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
             except Exception, error:
                 writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
@@ -5591,8 +5591,8 @@ def main(argv):
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Moving CAE to archive... ',True)
         try:
-            copyfile(join(parameters['input']['wd'],parameters['input']['caefilename']+'.cae'),join(RVEparams['output']['archive']['directory'],parameters['input']['caefilename']+'.cae'))
-            os.remove(join(parameters['input']['wd'],parameters['input']['caefilename']+'.cae'))
+            copyfile(join(RVEparams['input']['wd'],RVEparams['input']['caefilename']+'.cae'),join(RVEparams['output']['archive']['directory'],RVEparams['input']['caefilename']+'.cae'))
+            os.remove(join(RVEparams['input']['wd'],RVEparams['input']['caefilename']+'.cae'))
             writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
         except Exception, error:
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)

@@ -3609,7 +3609,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['MATRIX-INTANNULUS-SECONDBOUNDED',TRI,FREE],
                     ['MATRIX-INTANNULUS-RESTBOUNDED',TRI,FREE],
                     ['MATRIX-INTERMEDIATEANNULUS',TRI,FREE],
-                    ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
+                    ['MATRIX-BODY',QUAD_DOMINATED,FREE],
+                    ['BOUNDING-PLY',QUAD_DOMINATED,FREE]]
 
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)

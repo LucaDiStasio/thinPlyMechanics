@@ -3300,15 +3300,25 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     setsOfFacesData = [[0.0, R2, 0,'MATRIX-INTERMEDIATEANNULUS'],
                        [0.975*L, 0.975*L, 0,'MATRIX-BODY']]
 
-
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
     RVEpart.SetByBoolean(name='MATRIX', sets=[RVEpart.sets['MATRIX-BODY'],RVEpart.sets['MATRIX-INTERMEDIATEANNULUS'],RVEpart.sets['MATRIX-INTANNULUS']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MATRIX',True)
 
-    RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        setsOfFacesData = [[0.975*L, 0.975*(L+Lply), 0,'BOUNDING-PLY']]
+        for setOfFacesData in setsOfFacesData:
+            defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
+
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
+        RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['BOUNDING-PLY']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
+    else:
+        RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

@@ -1,8 +1,0 @@
-\select@language {english}
-\contentsline {section}{List of Acronyms}{iii}
-\contentsline {section}{List of Symbols}{v}
-\contentsline {section}{Abstract}{vii}
-\contentsline {section}{\numberline {1}Introduction}{1}
-\contentsline {section}{\numberline {2}Second section}{3}
-\contentsline {section}{\numberline {A}First appendix}{5}
-\contentsline {section}{References}{7}

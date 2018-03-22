@@ -1,0 +1,1 @@
+cd C:/Abaqus_WD && abaqus CAE noGUI=C:/02_Local-folder/01_Luca/01_WD/thinPlyMechanics/python/createAndAnalyzeRVEs.py -- -dir C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData -data inputRVEdataL1_0992.deck -iterables inputRVEiterablesL1_0992.deck -plot inputRVEplot

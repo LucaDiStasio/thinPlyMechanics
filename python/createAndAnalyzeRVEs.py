@@ -4615,27 +4615,27 @@ def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
         mdb.jobs[inpfile.split('.')[0]].waitForCompletion()
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     except Exception, error:
-        writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+        writeErrorToLogFile(logfilepath,'a',Exception,error,True)
         sys.exc_clear()
         if 'Windows' in system():
-            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Create Windows command file',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'Create Windows command file',True)
             cmdfile = join(wd,'executeABAanalysis.cmd')
             with open(cmdfile,'w') as cmd:
                 cmd.write('\n')
                 cmd.write('CD ' + wd + '\n')
                 cmd.write('\n')
                 cmd.write('abaqus analysis job=' + inpfile.split('.')[0] + ' interactive cpus=' + str(ncpus) + '\n')
-            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Executing Windows command file...',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'Executing Windows command file...',True)
             try:
                 subprocess.call('cmd.exe /C ' + cmdfile)
-                writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
+                writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
             except Exception,error:
-                writeLineToLogFile(logfilefullpath,'a',2*logindent + 'ERROR',True)
-                writeLineToLogFile(logfilefullpath,'a',2*logindent + str(Exception),True)
-                writeLineToLogFile(logfilefullpath,'a',2*logindent + str(error),True)
+                writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)
+                writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
+                writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
                 sys.exc_clear()
         elif 'Linux' in system():
-            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Create Linux bash file',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'Create Linux bash file',True)
             bashfile = join(wd,'executeABAanalysis.sh')
             with open(bashfile,'w') as bsh:
                 bsh.write('#!/bin/bash\n')
@@ -4643,17 +4643,17 @@ def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
                 bsh.write('cd ' + wd + '\n')
                 bsh.write('\n')
                 bsh.write('abaqus analysis job=' + inpfile.split('.')[0] + ' interactive cpus=' + str(ncpus) + '\n')
-                writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Executing Linux bash file...',True)
+                writeLineToLogFile(logfilepath,'a',2*logindent + 'Executing Linux bash file...',True)
                 try:
-                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Change permissions to ' + bashfile ,True)
+                    writeLineToLogFile(logfilepath,'a',3*logindent + 'Change permissions to ' + bashfile ,True)
                     os.chmod(bashfile, 0o755)
-                    writeLineToLogFile(logfilefullpath,'a','Run bash file',True)
+                    writeLineToLogFile(logfilepath,'a','Run bash file',True)
                     rc = call('.' + bashfile)
-                    writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
+                    writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
                 except Exception:
-                    writeLineToLogFile(logfilefullpath,'a',2*logindent + 'ERROR',True)
-                    writeLineToLogFile(logfilefullpath,'a',2*logindent + str(Exception),True)
-                    writeLineToLogFile(logfilefullpath,'a',2*logindent + str(error),True)
+                    writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)
+                    writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
+                    writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
                     sys.exc_clear()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

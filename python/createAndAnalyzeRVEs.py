@@ -4602,11 +4602,17 @@ def runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job ...',True)
     mdb.JobFromInputFile(name=inpfile.split('.')[0],inputFileName=inpfile,type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=12, numDomains=12,numGPUs=0)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Submit job ...',True)
     mdb.jobs[inpfile.split('.')[0]].submit(consistencyChecking=OFF)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Wait for completion ...',True)
     mdb.jobs[inpfile.split('.')[0]].waitForCompletion()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,baselogindent,logindent)',True)

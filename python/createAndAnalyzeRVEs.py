@@ -4602,7 +4602,7 @@ def runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job ' + inpfile.split('.')[0] + ' from input file ' + inpfile,True)
     mdb.JobFromInputFile(name=inpfile.split('.')[0],inputFileName=inpfile,type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=12, numDomains=12,numGPUs=0)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 

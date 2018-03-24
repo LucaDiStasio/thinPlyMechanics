@@ -5349,7 +5349,8 @@ def main(argv):
     RVEparams['output']['global']['filenames']['performances'] = basename + '_ABQ-Performances'
     RVEparams['output']['global']['filenames']['energyreleaserate'] = basename + '_ERRTS'
 
-    logfilename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_ABQ-RVE-generation-and-analysis' + '.log'
+    #logfilename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_ABQ-RVE-generation-and-analysis' + '.log'
+    logfilename = 'ABQ-RVE-generation-and-analysis' + '.log'
     logfilefullpath = join(workDir,logfilename)
     logindent = '    '
 

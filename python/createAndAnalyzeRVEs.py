@@ -4596,26 +4596,68 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     return modinpname
 
-def runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent):
+def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: runRVEsimulation(wd,inpfile)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent)',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job ' + inpfile.split('.')[0] + ' from input file ' + inpfile,True)
-    mdb.JobFromInputFile(name=inpfile.split('.')[0],inputFileName=inpfile,type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=12, numDomains=12,numGPUs=0)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    try:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job ' + inpfile.split('.')[0] + ' from input file ' + inpfile,True)
+        mdb.JobFromInputFile(name=inpfile.split('.')[0],inputFileName=inpfile,type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=ncpus, numDomains=12,numGPUs=0)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Submit job ...',True)
-    mdb.jobs[inpfile.split('.')[0]].submit(consistencyChecking=OFF)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Submit job ...',True)
+        mdb.jobs[inpfile.split('.')[0]].submit(consistencyChecking=OFF)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Wait for completion ...',True)
-    mdb.jobs[inpfile.split('.')[0]].waitForCompletion()
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Wait for completion ...',True)
+        mdb.jobs[inpfile.split('.')[0]].waitForCompletion()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    except Exception, error:
+        writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+        sys.exc_clear()
+        if 'Windows' in system():
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Create Windows command file',True)
+            cmdfile = join(wd,'executeABAanalysis.cmd')
+            with open(cmdfile,'w') as cmd:
+                cmd.write('\n')
+                cmd.write('CD ' + wd + '\n')
+                cmd.write('\n')
+                cmd.write('abaqus analysis job=' + inpfile.split('.')[0] + ' interactive cpus=' + str(ncpus) + '\n')
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Executing Windows command file...',True)
+            try:
+                subprocess.call('cmd.exe /C ' + cmdfile)
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
+            except Exception,error:
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + 'ERROR',True)
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + str(Exception),True)
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + str(error),True)
+                sys.exc_clear()
+        elif 'Linux' in system():
+            writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Create Linux bash file',True)
+            bashfile = join(wd,'executeABAanalysis.sh')
+            with open(bashfile,'w') as bsh:
+                bsh.write('#!/bin/bash\n')
+                bsh.write('\n')
+                bsh.write('cd ' + wd + '\n')
+                bsh.write('\n')
+                bsh.write('abaqus analysis job=' + inpfile.split('.')[0] + ' interactive cpus=' + str(ncpus) + '\n')
+                writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Executing Linux bash file...',True)
+                try:
+                    writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Change permissions to ' + bashfile ,True)
+                    os.chmod(bashfile, 0o755)
+                    writeLineToLogFile(logfilefullpath,'a','Run bash file',True)
+                    rc = call('.' + bashfile)
+                    writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
+                except Exception:
+                    writeLineToLogFile(logfilefullpath,'a',2*logindent + 'ERROR',True)
+                    writeLineToLogFile(logfilefullpath,'a',2*logindent + str(Exception),True)
+                    writeLineToLogFile(logfilefullpath,'a',2*logindent + str(error),True)
+                    sys.exc_clear()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,baselogindent,logindent)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,ncpus,baselogindent,logindent)',True)
 
 def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
@@ -5471,16 +5513,16 @@ def main(argv):
 
         #================= run ABAQUS simulation
         skipLineToLogFile(logfilefullpath,'a',True)
-        writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent)',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent)',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
             if RVEparams['simulation-pipeline']['analyze-ODB']:
-                runRVEsimulation(RVEparams['input']['wd'],inputfilename,logfilefullpath,logindent,logindent)
+                runRVEsimulation(RVEparams['input']['wd'],inputfilename,RVEparams['solver']['cpus'],logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: runRVEsimulation(wd,inpfile,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent)',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
         except Exception, error:

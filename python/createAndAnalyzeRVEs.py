@@ -4671,11 +4671,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract performances...',True)
     try:
-        performances = getPerfs(wd,[odbname.split('.')[0]],logfilepath,baselogindent + 2*logindent,logindent)
+        appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['performances'],[getPerfs(wd,[odbname.split('.')[0]],logfilepath,baselogindent + 2*logindent,logindent)[1]])
     except Exception,e:
         writeErrorToLogFile(logfilepath,'a',Exception,e,True)
         sys.exc_clear()
-    appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['performances'],[performances[1]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract performances

@@ -3761,16 +3761,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set job name',True)
     modelData['jobname'] = 'Job-Jintegral-' + modelname
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job',True)
-    mdb.Job(name='Job-Jintegral-' + modelname, model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=parameters['solver']['cpus'], numDomains=12,numGPUs=0)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job with name ' + modelData['jobname'],True)
+    mdb.Job(name=modelData['jobname'], model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=parameters['solver']['cpus'], numDomains=12,numGPUs=0)
 
     mdb.save()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Submit job and wait for completion',True)
     localStart = timeit.default_timer()
     #mdb.jobs['Job-' + modelname].submit(consistencyChecking=OFF)
-    mdb.jobs['Job-Jintegral-' + modelname].writeInput(consistencyChecking=OFF)
-    mdb.jobs['Job-Jintegral-' + modelname].waitForCompletion()
+    mdb.jobs[modelData['jobname']].writeInput(consistencyChecking=OFF)
+    mdb.jobs[modelData['jobname']].waitForCompletion()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Job time: ' + str(timeit.default_timer() - localStart) + ' [s]',True)
 

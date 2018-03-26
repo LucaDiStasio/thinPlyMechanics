@@ -4980,8 +4980,6 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     del phiSZtol
     del phiCZtol
     del tolCZ
-    del uR
-    del uTheta
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

@@ -4694,6 +4694,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
+    del JintegralsWithDistance
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract J-integral results
@@ -4820,6 +4821,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     rightsideStressdata = rightsideStressdata[np.argsort(rightsideStressdata[:,1])]
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0 [um], y0 [um], x [um], y [um], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], y0/L [-],  sigma_xx/max(sigma_xx) [-],  sigma_xx/min(sigma_xx) [-],  sigma_xx/avg(sigma_xx) [-],  sigma_xx/weightavg(sigma_xx) [-]')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],rightsideStressdata)
+    del rightsideStressdata
+    del rightsideStress
+    del rightsideDefcoords
+    del rightsideUndefcoords
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -4964,6 +4969,19 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     for s,tol in enumerate(tolCZ):
         appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['contactzonetolerance'],[[tol,phiSZtol[s]*180.0/np.pi,phiCZtol[s]*180.0/np.pi]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    del fiberAngles
+    del matrixAngles
+    del fiberDisps
+    del matrixDisps
+    del crackDisps
+    del normedbeta
+    del normedcrackDisps
+    del phiSZtol
+    del phiCZtol
+    del tolCZ
+    del uR
+    del uTheta
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

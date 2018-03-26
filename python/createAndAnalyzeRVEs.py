@@ -5424,10 +5424,10 @@ def main(argv):
 
 
     createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist','ABSOLUTE PATH, NAME, TO PLOT, PLOT VARIABLES')
-    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata']+'.csv'),'MODEL-DATA',RVEparams['plot']['global']['inputdata']['toPlot'],RVEparams['plot']['global']['inputdata']['variables']]])
-    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate']+'.csv'),'GLOBAL-ERRTS',RVEparams['plot']['global']['errts']['toPlot'],RVEparams['plot']['global']['errts']['variables']]])
-    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME'+'.csv'),'GLOBAL-TIME',RVEparams['plot']['global']['globaltime']['toPlot'],RVEparams['plot']['global']['globaltime']['variables']]])
-    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances']+'.csv'),'GLOBAL-ABQperformances',RVEparams['plot']['global']['abqperf']['toPlot'],RVEparams['plot']['global']['abqperf']['variables']]])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata']+'.csv'),'MODEL-DATA',RVEparams['plot']['global']['inputdata']['toPlot'],RVEparams['plot']['global']['inputdata']['variables']]])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate']+'.csv'),'GLOBAL-ERRTS',RVEparams['plot']['global']['errts']['toPlot'],RVEparams['plot']['global']['errts']['variables']]])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME'+'.csv'),'GLOBAL-TIME',RVEparams['plot']['global']['globaltime']['toPlot'],RVEparams['plot']['global']['globaltime']['variables']]])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances']+'.csv'),'GLOBAL-ABQperformances',RVEparams['plot']['global']['abqperf']['toPlot'],RVEparams['plot']['global']['abqperf']['variables']]])
 
     createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances'],'PROJECT NAME, NUMBER OF CPUS [-], USER TIME [s], SYSTEM TIME [s], USER TIME/TOTAL CPU TIME [%], SYSTEM TIME/TOTAL CPU TIME [%], TOTAL CPU TIME [s], WALLCLOCK TIME [s], WALLCLOCK TIME [m], WALLCLOCK TIME [h], WALLCLOCK TIME/TOTAL CPU TIME [%], ESTIMATED FLOATING POINT OPERATIONS PER ITERATION [-], MINIMUM REQUIRED MEMORY [MB], MEMORY TO MINIMIZE I/O [MB], TOTAL NUMBER OF ELEMENTS [-], NUMBER OF ELEMENTS DEFINED BY THE USER [-], NUMBER OF ELEMENTS DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF NODES [-], NUMBER OF NODES DEFINED BY THE USER [-], NUMBER OF NODES DEFINED BY THE PROGRAM [-], TOTAL NUMBER OF VARIABLES [-]')
 
@@ -5480,10 +5480,10 @@ def main(argv):
         RVEparams['output']['report']['local']['filenames']['crackdisplacements'].append(RVEparams['input']['modelname'] + '-crackdisplacements')
         RVEparams['output']['report']['local']['filenames']['contactzonetolerance'].append(RVEparams['input']['modelname'] + '-contactzonetol')
 
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Params='+variationString,RVEparams['plot']['local']['Jintegral']['toPlot'],RVEparams['plot']['local']['Jintegral']['variables']]])
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Params='+variationString,RVEparams['plot']['local']['stressatboundary']['toPlot'],RVEparams['plot']['local']['stressatboundary']['variables']]])
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Params='+variationString,RVEparams['plot']['local']['crackdisplacements']['toPlot'],RVEparams['plot']['local']['crackdisplacements']['variables']]])
-        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['contactzonetolerance']+'.csv'),'TolCZ-Params='+variationString,RVEparams['plot']['local']['contactzonetolerance']['toPlot'],RVEparams['plot']['local']['contactzonetolerance']['variables']]])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Params='+variationString,RVEparams['plot']['local']['Jintegral']['toPlot'],RVEparams['plot']['local']['Jintegral']['variables']]])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Params='+variationString,RVEparams['plot']['local']['stressatboundary']['toPlot'],RVEparams['plot']['local']['stressatboundary']['variables']]])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Params='+variationString,RVEparams['plot']['local']['crackdisplacements']['toPlot'],RVEparams['plot']['local']['crackdisplacements']['variables']]])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['contactzonetolerance']+'.csv'),'TolCZ-Params='+variationString,RVEparams['plot']['local']['contactzonetolerance']['toPlot'],RVEparams['plot']['local']['contactzonetolerance']['variables']]])
 
         timedataList.append(RVEparams['input']['modelname'])
 
@@ -5683,7 +5683,7 @@ def main(argv):
                 cmd.write('\n')
                 cmd.write('CD ' + RVEparams['output']['global']['directory'] + '\n')
                 cmd.write('\n')
-                cmd.write('python ' + join(codeFolder,'reportData' + '.py') + ' -w ' + RVEparams['output']['global']['directory'] + ' -i ' + logfilename.split('.')[0] + '_csvfileslist' + '.csv' + ' -o ' + RVEparams['output']['global']['directory']  + ' -f ' + RVEparams['input']['caefilename'] + '.xlsx' + ' --excel ' + '\n')
+                cmd.write('python ' + join(codeFolder,'reportData' + '.py') + ' -w ' + RVEparams['output']['global']['directory'] + ' -i ' + logfilename.split('.')[0].split('_')[-1] + '_csvfileslist' + '.csv' + ' -o ' + RVEparams['output']['global']['directory']  + ' -f ' + RVEparams['input']['caefilename'] + '.xlsx' + ' --excel ' + '\n')
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Executing Windows command file...',True)
             try:
                 subprocess.call('cmd.exe /C ' + cmdfile)
@@ -5701,7 +5701,7 @@ def main(argv):
                 bsh.write('\n')
                 bsh.write('cd ' + RVEparams['output']['global']['directory'] + '\n')
                 bsh.write('\n')
-                bsh.write('python ' + join(codeFolder,'reportData' + '.py') + ' -w ' + RVEparams['output']['global']['directory'] + ' -i ' + logfilename.split('.')[0] + '_csvfileslist' + '.csv' + ' -f ' + RVEparams['input']['caefilename'] + '.xlsx' + '\n')
+                bsh.write('python ' + join(codeFolder,'reportData' + '.py') + ' -w ' + RVEparams['output']['global']['directory'] + ' -i ' + logfilename.split('.')[0].split('_')[-1] + '_csvfileslist' + '.csv' + ' -f ' + RVEparams['input']['caefilename'] + '.xlsx' + '\n')
                 writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Executing Linux bash file...',True)
                 try:
                     writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Change permissions to ' + bashfile ,True)

@@ -4492,9 +4492,9 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         with open(modinpfullpath,'a') as inp:
             inp.write('*EQUATION' + '\n')
             inp.write(' 2' + '\n')
-            inp.write(' NW-CORNER, 2, 1, NE-CORNER, 2, -1' + '\n')
+            inp.write(' NORTHWEST-CORNER, 2, 1, NORTHEAST-CORNER, 2, -1' + '\n')
             inp.write(' 3' + '\n')
-            inp.write(' UPPERSIDE-WITHOUT-CORNERS, 2, 1, NW-CORNER, 2, -0.5, NE-CORNER, 2, -0.5' + '\n')
+            inp.write(' UPPERSIDE-WITHOUT-CORNERS, 2, 1, NORTHWEST-CORNER, 2, -0.5, NORTHEAST-CORNER, 2, -0.5' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     elif 'vkinCouplingmeanside' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
@@ -4511,9 +4511,9 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                     else:
                         coeff = 1.0
                     if m==0:
-                        nodeName = 'NW-CORNER'
+                        nodeName = 'NORTHWEST-CORNER'
                     elif m==1:
-                        nodeName = 'NE-CORNER'
+                        nodeName = 'NORTHEAST-CORNER'
                     else:
                         nodeName = 'NORTHSIDE-N'+ str(m+1-2)
                     line += ' ' + nodeName + ', 2, ' + str(coeff) + ','

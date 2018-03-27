@@ -2840,10 +2840,14 @@ def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     northwestIndex = readNodesetFromInpFile(inpfullpath,'NW-CORNER',1,logfilepath,baselogindent + logindent,logindent)
     for f, fiber in enumerate(parameters['fibers'].values()):
         if fiber['isCracked']:
-            if crack['isMeasured'] and 'VCCT' in crack['measurement-methods']:
-                if not crack['isSymm']:
-
-                else:
+            for cNum,crackKey in enumerate(fiber['cracks'].keys()):
+                crack = fiber['cracks'][crackKey]
+                if crack['isMeasured'] and 'VCCT' in crack['measurement-methods']:
+                    if not crack['isSymm']:
+                        ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
+                        ctnegIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPNEG',1,logfilepath,baselogindent + logindent,logindent)
+                    else:
+                        ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
 
 def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#

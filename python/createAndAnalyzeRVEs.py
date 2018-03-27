@@ -2730,6 +2730,43 @@ def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     with open(inpfullpath,'r') as inp:
         inpfilelines = inp.readlines()
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading nodes and saving to dictionary ...',True)
+    nodes = {}
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            nodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[2])]
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Stored node ' + str(int(line.replace('\n','').split(',')[0])) + ' with coordinates (' + str(float(line.replace('\n','').split(',')[1])) + ', ' + str(float(line.replace('\n','').split(',')[2])) + ')',True)
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node section ends at line ' + str(l),True)
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'No more to go',True)
+            store = False
+            break
+        elif store == True:
+            nodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[2])]
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Stored node ' + str(int(line.replace('\n','').split(',')[0])) + ' with coordinates (' + str(float(line.replace('\n','').split(',')[1])) + ', ' + str(float(line.replace('\n','').split(',')[2])) + ')',True)
+        elif ('*Node' in line or '*NODE' in line) and len(inpfilelines[l+1].replace('\n','').split(','))==3:
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node section starts at line ' + str(l),True)
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading quadrilateral elements and saving to dictionary ...',True)
+    quads = {}
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            quadIndex = int(line.replace('\n','').split(',')[0])
+            quads[quadIndex] = []
+            for node in line.replace('\n','').split(',')[1:]:
+                quads[quadIndex].append(int(node))
+            store = False
+            break
+        elif store == True:
+            quadIndex = int(line.replace('\n','').split(',')[0])
+            quads[quadIndex] = []
+            for node in line.replace('\n','').split(',')[1:]:
+                quads[quadIndex].append(int(node))
+        elif ('*Element, type=CPE8' in line or '*ELEMENT, type=CPE8' in line or '*Element, type=CPE4' in line or '*ELEMENT, type=CPE4' in line) and (len(inpfilelines[l+1].replace('\n','').split(','))==5 or len(inpfilelines[l+1].replace('\n','').split(','))==9):
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#

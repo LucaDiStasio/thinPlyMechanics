@@ -252,11 +252,36 @@ def readQuadsFromInpFile(inpfullpath,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
     return allquads
 
-
-def readNodesetFromInpFile(inpfullpath,name,expLength):
+def readNodesetFromInpFile(inpfullpath,name,expLength,logfilepath,baselogindent,logindent):
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Reading content of original input file ...',True)
+    with open(inpfullpath,'r') as inp:
+        inpfilelines = inp.readlines()
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
     if expLength>1:
-
+        writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Reading node set ' + name + ' and saving to list ...',True)
+        nodeset = []
+        store = False
+        for l,line in enumerate(inpfilelines):
+            if store == True and '*' in inpfilelines[l+1]:
+                for index in line.replace('\n','').split(','):
+                    if index!='' and index!=' ':
+                        nodeset.append(int(index))
+                store = False
+                break
+            elif store == True:
+                for index in line.replace('\n','').split(','):
+                    if index!='' and index!=' ':
+                        nodeset.append(int(index))
+            elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in [name.lower(),name.upper()]:
+                store = True
     else:
+        writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Reading node set ' + name + ' and saving to variable ...',True)
+        for l,line in enumerate(inpfilelines):
+            if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in [name.lower(),name.upper()]:
+                nodeset = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+                break
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+    return nodeset
 
 #===============================================================================#
 #                                 Log files
@@ -2786,23 +2811,7 @@ def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     nodes = readNodesFromInpFile(inpfullpath,logfilepath,baselogindent + logindent,logindent)
     quads = readQuadsFromInpFile(inpfullpath,logfilepath,baselogindent + logindent,logindent)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading north side node set and saving to list ...',True)
-    northSideNodeset = []
-    store = False
-    for l,line in enumerate(inpfilelines):
-        if store == True and '*' in inpfilelines[l+1]:
-            for index in line.replace('\n','').split(','):
-                if index!='' and index!=' ':
-                    northSideNodeset.append(int(index))
-            store = False
-            break
-        elif store == True:
-            for index in line.replace('\n','').split(','):
-                if index!='' and index!=' ':
-                    northSideNodeset.append(int(index))
-        elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['UPPERSIDE','upperside']:
-            store = True
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    northSideNodeset = readQuadsFromInpFile(inpfullpath,'UPPERSIDE',100,logfilepath,baselogindent + logindent,logindent)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading north-east corner node set and saving to variable ...',True)
     for l,line in enumerate(inpfilelines):
         if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['NE-CORNER','ne-corner']:

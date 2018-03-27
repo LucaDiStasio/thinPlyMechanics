@@ -5080,12 +5080,52 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     del fiberCrackfaceDisps
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate matrix displacements ...',True)
-    for value in matrixCrackfaceDisps.values:
-        node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
-        undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
-        beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
-        matrixAngles.append(beta)
-        matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
+    for v,value in enumerate(matrixCrackfaceDisps.values):
+        try:
+            node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
+        except Exception, error:
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'at node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'in odb.rootAssembly.instances[\'RVE-ASSEMBLY\'].getNodeFromLabel(value.nodeLabel)',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
+            sys.exit(2)
+        try:
+            undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
+        except Exception, error:
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'at node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'in undefCoords = getFieldOutput(odb,-1,0,\'COORD\',node)',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
+            sys.exit(2)
+        try:
+            beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
+        except Exception, error:
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'at node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'in beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
+            sys.exit(2)
+        try:
+            matrixAngles.append(beta)
+        except Exception, error:
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'at node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'in matrixAngles.append(beta)',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
+            sys.exit(2)
+        try:
+            matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
+        except Exception, error:
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'at node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + 'in matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])',True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
+            sys.exit(2)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     del matrixCrackfaceDisps

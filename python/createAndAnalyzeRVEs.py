@@ -307,6 +307,24 @@ def readElementsetFromInpFile(inpfullpath,name,logfilepath,baselogindent,loginde
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
     return elementset
 
+def readNodesFromNodesInpFile(inpfullpath,logfilepath,baselogindent,logindent):
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Reading nodes from included input file ...',True)
+    with open(inpfullpath,'r') as inp:
+        inpfilelines = inp.readlines()
+    allnodes = {}
+    for line in inpfilelines:
+        allnodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[2])]
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+    return allnodes
+
+def writeNodesToNodesInpFile(inpfullpath,allnodes,logfilepath,baselogindent,logindent):
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Writing nodes to included input file ...',True)
+    with open(inpfullpath,'w') as inp:
+        inp.write('*NODE' + '\n')
+        for key in allnodes.keys():
+            inp.write(' ' + str(key) + ', ' + allnodes[key][0] + ', ' + allnodes[key][1] + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+
 #===============================================================================#
 #                                 Log files
 #===============================================================================#
@@ -2850,7 +2868,7 @@ def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Total number of quadrilateral elements = ' + str(numQuads),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Total number of triangular elements = ' + str(numTris),True)
     skipLineToLogFile(logfilepath,'a',True)
-    nodes = readNodesFromInpFile(inpfullpath,logfilepath,baselogindent + logindent,logindent)
+    writeNodesToNodesInpFile(nodesinpfullpath,readNodesFromInpFile(inpfullpath,logfilepath,baselogindent + 2*logindent,logindent),logfilepath,baselogindent + logindent,logindent)
     quads = readQuadsFromInpFile(inpfullpath,logfilepath,baselogindent + logindent,logindent)
     northSideNodeset = readNodesetFromInpFile(inpfullpath,'UPPERSIDE',100,logfilepath,baselogindent + logindent,logindent)
     northeastIndex = readNodesetFromInpFile(inpfullpath,'NE-CORNER',1,logfilepath,baselogindent + logindent,logindent)

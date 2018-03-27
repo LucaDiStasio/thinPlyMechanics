@@ -336,9 +336,9 @@ def readQuadsFromQuadsInpFile(inpfullpath,logfilepath,baselogindent,logindent):
         nodesId = []
         for node in nodes:
             nodesId.append(int(node))
-        allquads[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[2])]
+        allquads[id] = nodesId
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
-    return allnodes
+    return allquads
 
 def writeQuadsToQuadsInpFile(inpfullpath,allquads,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Writing quads to included input file ...',True)
@@ -2895,7 +2895,7 @@ def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Total number of triangular elements = ' + str(numTris),True)
     skipLineToLogFile(logfilepath,'a',True)
     writeNodesToNodesInpFile(nodesinpfullpath,readNodesFromInpFile(inpfullpath,logfilepath,baselogindent + 2*logindent,logindent),logfilepath,baselogindent + logindent,logindent)
-    quads = readQuadsFromInpFile(inpfullpath,logfilepath,baselogindent + logindent,logindent)
+    writeQuadsToQuadsInpFile(nodesinpfullpath,readQuadsFromInpFile(inpfullpath,logfilepath,baselogindent + 2*logindent,logindent),logfilepath,baselogindent + logindent,logindent)
     northSideNodeset = readNodesetFromInpFile(inpfullpath,'UPPERSIDE',100,logfilepath,baselogindent + logindent,logindent)
     northeastIndex = readNodesetFromInpFile(inpfullpath,'NE-CORNER',1,logfilepath,baselogindent + logindent,logindent)
     northwestIndex = readNodesetFromInpFile(inpfullpath,'NW-CORNER',1,logfilepath,baselogindent + logindent,logindent)

@@ -2815,22 +2815,29 @@ def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent)',True)
     skipLineToLogFile(logfilepath,'a',True)
-    # odb name and path
-    #odbname = mdbData['jobname'] + '.odb'
-    #odbfullpath = join(parameters['wd'],odbname)
     # input file name and path
     inpname = mdbData['jobname'] + '.inp'
     inpfullpath = join(parameters['input']['wd'],inpname)
     # modified input file name
     modinpname = 'Job-VCCTandJintegral-' + parameters['input']['modelname'] + '.inp'
+    nodesinpname = 'N-' + parameters['input']['modelname'].replace('-','') + '.inp'
+    quadsinpname = 'Q-' + parameters['input']['modelname'].replace('-','') + '.inp'
+    surfsetsinpname = 'S-' + parameters['input']['modelname'].replace('-','') + '.inp'
     modinpfullpath = join(parameters['input']['wd'],modinpname)
+    nodesinpfullpath = join(parameters['input']['wd'],nodesinpname)
+    quadsinpfullpath = join(parameters['input']['wd'],quadsinpname)
+    surfsetsinpfullpath = join(parameters['input']['wd'],surfsetsinpname)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Working directory: ' + parameters['input']['wd'],True)
-    #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database name: ' + odbname,True)
-    #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database full path: ' + join(parameters['wd'],odbname),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Input file name: ' + inpname,True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Input file full path: ' + join(parameters['input']['wd'],inpname),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Modified input file name: ' + modinpname,True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Modified input file full path: ' + join(parameters['input']['wd'],modinpname),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Nodes input file name: ' + nodesinpname,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Nodes input file full path: ' + join(parameters['input']['wd'],nodesinpname),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Quads input file name: ' + quadsinpname,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Quads input file full path: ' + join(parameters['input']['wd'],quadsinpname),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Surface sets input file name: ' + surfsetsinpname,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Surface sets input file full path: ' + join(parameters['input']['wd'],surfsetsinpname),True)
     createABQinpfile(modinpname)
     skipLineToLogFile(logfilepath,'a',True)
     numNodes = mdbData['numNodes']

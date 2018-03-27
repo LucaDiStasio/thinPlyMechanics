@@ -2812,18 +2812,8 @@ def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     nodes = readNodesFromInpFile(inpfullpath,logfilepath,baselogindent + logindent,logindent)
     quads = readQuadsFromInpFile(inpfullpath,logfilepath,baselogindent + logindent,logindent)
     northSideNodeset = readQuadsFromInpFile(inpfullpath,'UPPERSIDE',100,logfilepath,baselogindent + logindent,logindent)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading north-east corner node set and saving to variable ...',True)
-    for l,line in enumerate(inpfilelines):
-        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['NE-CORNER','ne-corner']:
-            northeastIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
-            break
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading north-west corner node set  and saving to variable ...',True)
-    for l,line in enumerate(inpfilelines):
-        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['NW-CORNER','nw-corner']:
-            northwestIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
-            break
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    northeastIndex = readQuadsFromInpFile(inpfullpath,'NE-CORNER',1,logfilepath,baselogindent + logindent,logindent)
+    northwestIndex = readQuadsFromInpFile(inpfullpath,'NW-CORNER',1,logfilepath,baselogindent + logindent,logindent)
     for f, fiber in enumerate(parameters['fibers'].values()):
         if fiber['isCracked']:
             if crack['isMeasured'] and 'VCCT' in crack['measurement-methods']:

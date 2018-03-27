@@ -2833,6 +2833,16 @@ def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Modified input file full path: ' + join(parameters['input']['wd'],modinpname),True)
     createABQinpfile(modinpname)
     skipLineToLogFile(logfilepath,'a',True)
+    numNodes = mdbData['numNodes']
+    numEls = mdbData['numEls']
+    numQuads = mdbData['numQuads']
+    numTris = mdbData['numTris']
+    lastNodeIndex = numNodes + 1000
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Total number of nodes = ' + str(numNodes),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Total number of elements = ' + str(numEls),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Total number of quadrilateral elements = ' + str(numQuads),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Total number of triangular elements = ' + str(numTris),True)
+    skipLineToLogFile(logfilepath,'a',True)
     nodes = readNodesFromInpFile(inpfullpath,logfilepath,baselogindent + logindent,logindent)
     quads = readQuadsFromInpFile(inpfullpath,logfilepath,baselogindent + logindent,logindent)
     northSideNodeset = readNodesetFromInpFile(inpfullpath,'UPPERSIDE',100,logfilepath,baselogindent + logindent,logindent)

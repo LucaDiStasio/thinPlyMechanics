@@ -283,6 +283,30 @@ def readNodesetFromInpFile(inpfullpath,name,expLength,logfilepath,baselogindent,
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
     return nodeset
 
+def readElementsetFromInpFile(inpfullpath,name,logfilepath,baselogindent,logindent):
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Reading content of original input file ...',True)
+    with open(inpfullpath,'r') as inp:
+        inpfilelines = inp.readlines()
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Reading element set ' + name + ' and saving to list ...',True)
+    elementset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    elementset.append(int(index))
+            store = False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    elementset.append(int(index))
+        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in [name.lower(),name.upper()]:
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+    return elementset
+
 #===============================================================================#
 #                                 Log files
 #===============================================================================#
@@ -2811,12 +2835,15 @@ def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     nodes = readNodesFromInpFile(inpfullpath,logfilepath,baselogindent + logindent,logindent)
     quads = readQuadsFromInpFile(inpfullpath,logfilepath,baselogindent + logindent,logindent)
-    northSideNodeset = readQuadsFromInpFile(inpfullpath,'UPPERSIDE',100,logfilepath,baselogindent + logindent,logindent)
-    northeastIndex = readQuadsFromInpFile(inpfullpath,'NE-CORNER',1,logfilepath,baselogindent + logindent,logindent)
-    northwestIndex = readQuadsFromInpFile(inpfullpath,'NW-CORNER',1,logfilepath,baselogindent + logindent,logindent)
+    northSideNodeset = readNodesetFromInpFile(inpfullpath,'UPPERSIDE',100,logfilepath,baselogindent + logindent,logindent)
+    northeastIndex = readNodesetFromInpFile(inpfullpath,'NE-CORNER',1,logfilepath,baselogindent + logindent,logindent)
+    northwestIndex = readNodesetFromInpFile(inpfullpath,'NW-CORNER',1,logfilepath,baselogindent + logindent,logindent)
     for f, fiber in enumerate(parameters['fibers'].values()):
         if fiber['isCracked']:
             if crack['isMeasured'] and 'VCCT' in crack['measurement-methods']:
+                if not crack['isSymm']:
+
+                else:
 
 def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#

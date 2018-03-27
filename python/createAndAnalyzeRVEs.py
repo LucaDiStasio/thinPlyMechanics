@@ -5063,9 +5063,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     fiberAngles = []
-    matrixAngles = []
     fiberDisps = []
-    matrixDisps = []
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate fiber displacements ...',True)
     for value in fiberCrackfaceDisps.values:
@@ -5078,6 +5076,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     del fiberCrackfaceDisps
+
+    matrixAngles = []
+    matrixDisps = []
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate matrix displacements ...',True)
     for v,value in enumerate(matrixCrackfaceDisps.values):

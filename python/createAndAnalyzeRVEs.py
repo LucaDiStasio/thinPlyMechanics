@@ -312,7 +312,7 @@ def readNodesFromNodesInpFile(inpfullpath,logfilepath,baselogindent,logindent):
     with open(inpfullpath,'r') as inp:
         inpfilelines = inp.readlines()
     allnodes = {}
-    for line in inpfilelines:
+    for line in inpfilelines[1:]:
         allnodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[2])]
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
     return allnodes
@@ -322,7 +322,33 @@ def writeNodesToNodesInpFile(inpfullpath,allnodes,logfilepath,baselogindent,logi
     with open(inpfullpath,'w') as inp:
         inp.write('*NODE' + '\n')
         for key in allnodes.keys():
-            inp.write(' ' + str(key) + ', ' + allnodes[key][0] + ', ' + allnodes[key][1] + '\n')
+            inp.write(' ' + str(key) + ', ' + str(allnodes[key][0]) + ', ' + str(allnodes[key][1]) + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+
+def readQuadsFromQuadsInpFile(inpfullpath,logfilepath,baselogindent,logindent):
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Reading quads from included input file ...',True)
+    with open(inpfullpath,'r') as inp:
+        inpfilelines = inp.readlines()
+    allquads = {}
+    for line in inpfilelines:
+        id = int(line.replace('\n','').split(',')[0])
+        nodes = line.replace('\n','').split(',')[1:]
+        nodesId = []
+        for node in nodes:
+            nodesId.append(int(node))
+        allquads[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[2])]
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+    return allnodes
+
+def writeQuadsToQuadsInpFile(inpfullpath,allquads,logfilepath,baselogindent,logindent):
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Writing quads to included input file ...',True)
+    with open(inpfullpath,'w') as inp:
+        inp.write('*ELEMENT, TYPE=CPE' + str(int(len(allquads[allquads.keys()[0]]))) + '\n')
+        for key in allquads.keys():
+            line = ' ' + str(key)
+            for n,node in enumerate(allquads[key]):
+                line += ', ' + str(node)
+            inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
 #===============================================================================#

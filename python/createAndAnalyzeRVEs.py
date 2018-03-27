@@ -1814,7 +1814,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                                        [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleLowerSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleLowerSecondBound*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleLowerSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleLowerSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT2-MATRIXUPPERBOUND']]
                     for setOfEdgesData in setsOfEdgesData:
                         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-                    booleanSetsNames = ['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER','FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERREFINECRACK','FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-LOWERREFINECRACK']
+                    booleanSetsNames = ['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-CRACKCENTER','FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERREFINECRACK','FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-LOWERREFINECRACK']
                     booleanSets = []
                     for setName in booleanSetsNames:
                         booleanSets.append(RVEpart.sets[setName])
@@ -1851,7 +1851,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
                                        [(Rf+0.5*(R3-Rf))*np.cos(0.99*angleUpperSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(0.99*angleUpperSecondBound*np.pi/180),0.0,(Rf+0.5*(R3-Rf))*np.cos(1.01*angleUpperSecondBound*np.pi/180),(Rf+0.5*(R3-Rf))*np.sin(1.01*angleUpperSecondBound*np.pi/180),0.0,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CT1-MATRIXUPPERBOUND']]
                     for setOfEdgesData in setsOfEdgesData:
                         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-                    booleanSetsNames = ['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-SECONDCIRCLE-CRACKCENTER','FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERREFINECRACK']
+                    booleanSetsNames = ['FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-CRACKCENTER','FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-INTERFACECIRCLE-UPPERREFINECRACK']
                     booleanSets = []
                     for setName in booleanSetsNames:
                         booleanSets.append(RVEpart.sets[setName])
@@ -2813,7 +2813,7 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
 def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: modifyRVE(parameters,mdbData)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent)',True)
     skipLineToLogFile(logfilepath,'a',True)
     # odb name and path
     #odbname = mdbData['jobname'] + '.odb'
@@ -2843,6 +2843,7 @@ def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             for cNum,crackKey in enumerate(fiber['cracks'].keys()):
                 crack = fiber['cracks'][crackKey]
                 if crack['isMeasured'] and 'VCCT' in crack['measurement-methods']:
+                    crackfacesNodeset = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1),1,logfilepath,baselogindent + logindent,logindent)
                     if not crack['isSymm']:
                         ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
                         ctnegIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPNEG',1,logfilepath,baselogindent + logindent,logindent)

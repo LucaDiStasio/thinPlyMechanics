@@ -4883,6 +4883,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             fiberDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    del fiberCrackfaceDisps
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate matrix displacements ...',True)
     for value in matrixCrackfaceDisps.values:
         node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
@@ -4891,6 +4893,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         matrixAngles.append(beta)
         matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    del matrixCrackfaceDisps
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort fiber displacements and angles...',True)
     fiberDisps = np.array(fiberDisps)[np.argsort(fiberAngles)].tolist()

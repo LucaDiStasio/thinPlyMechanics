@@ -2856,10 +2856,16 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     return modelData
 
 def addVCCTnodesAtCrackTip(parameters,lastNodeIndex,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addVCCTnodesAtCrackTip(parameters,lastNodeIndex,logfilepath,baselogindent,logindent)',True)
+    skipLineToLogFile(logfilepath,'a',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
-def addVCCTnodes(parameters,lastNodeIndex,logfilepath,baselogindent,logindent):
+def addVCCTnodes(parameters,nodesfullfile,quadsfullfile,lastNodeIndex,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addVCCTnodes(parameters,nodesfullfile,quadsfullfile,lastNodeIndex,logfilepath,baselogindent,logindent)',True)
+    skipLineToLogFile(logfilepath,'a',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 

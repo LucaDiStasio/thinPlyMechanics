@@ -2866,7 +2866,19 @@ def addVCCTnodes(parameters,nodesfullfile,quadsfullfile,lastNodeIndex,logfilepat
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addVCCTnodes(parameters,nodesfullfile,quadsfullfile,lastNodeIndex,logfilepath,baselogindent,logindent)',True)
     skipLineToLogFile(logfilepath,'a',True)
-
+    nodes = readNodesFromNodesInpFile(nodesfullfile,logfilepath,baselogindent + logindent,logindent)
+    quads = readQuadsFromQuadsInpFile(quadsfullfile,logfilepath,baselogindent + logindent,logindent)
+    for f, fiber in enumerate(parameters['fibers'].values()):
+        if fiber['isCracked']:
+            for cNum,crackKey in enumerate(fiber['cracks'].keys()):
+                crack = fiber['cracks'][crackKey]
+                if crack['isMeasured'] and 'VCCT' in crack['measurement-methods']:
+                    crackfacesNodeset = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1),1,logfilepath,baselogindent + logindent,logindent)
+                    if not crack['isSymm']:
+                        ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
+                        ctnegIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPNEG',1,logfilepath,baselogindent + logindent,logindent)
+                    else:
+                        ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
 def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
@@ -2909,21 +2921,11 @@ def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Total number of triangular elements = ' + str(numTris),True)
     skipLineToLogFile(logfilepath,'a',True)
     writeNodesToNodesInpFile(nodesinpfullpath,readNodesFromInpFile(inpfullpath,logfilepath,baselogindent + 2*logindent,logindent),logfilepath,baselogindent + logindent,logindent)
-    writeQuadsToQuadsInpFile(nodesinpfullpath,readQuadsFromInpFile(inpfullpath,logfilepath,baselogindent + 2*logindent,logindent),logfilepath,baselogindent + logindent,logindent)
+    writeQuadsToQuadsInpFile(quadsinpfullpath,readQuadsFromInpFile(inpfullpath,logfilepath,baselogindent + 2*logindent,logindent),logfilepath,baselogindent + logindent,logindent)
     northSideNodeset = readNodesetFromInpFile(inpfullpath,'UPPERSIDE',100,logfilepath,baselogindent + logindent,logindent)
     northeastIndex = readNodesetFromInpFile(inpfullpath,'NE-CORNER',1,logfilepath,baselogindent + logindent,logindent)
     northwestIndex = readNodesetFromInpFile(inpfullpath,'NW-CORNER',1,logfilepath,baselogindent + logindent,logindent)
-    for f, fiber in enumerate(parameters['fibers'].values()):
-        if fiber['isCracked']:
-            for cNum,crackKey in enumerate(fiber['cracks'].keys()):
-                crack = fiber['cracks'][crackKey]
-                if crack['isMeasured'] and 'VCCT' in crack['measurement-methods']:
-                    crackfacesNodeset = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1),1,logfilepath,baselogindent + logindent,logindent)
-                    if not crack['isSymm']:
-                        ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
-                        ctnegIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPNEG',1,logfilepath,baselogindent + logindent,logindent)
-                    else:
-                        ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
+
 
 def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#

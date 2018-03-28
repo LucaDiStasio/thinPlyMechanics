@@ -2859,13 +2859,17 @@ def addVCCTnodesAtCrack(inpfullpath,parameters,nodes,quads,fNum,crNum,crack,last
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addVCCTnodesAtCrackTip(parameters,lastNodeIndex,logfilepath,baselogindent,logindent)',True)
     skipLineToLogFile(logfilepath,'a',True)
-    ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
-    fiberBondedElset = readElementsetFromInpFile(inpfullpath,name,logfilepath,baselogindent + logindent,logindent)
-    fiberDebondedElset = readElementsetFromInpFile(inpfullpath,name,logfilepath,baselogindent + logindent,logindent)
-    matrixBondedElset = readElementsetFromInpFile(inpfullpath,name,logfilepath,baselogindent + logindent,logindent)
-    matrixDebondedElset = readElementsetFromInpFile(inpfullpath,name,logfilepath,baselogindent + logindent,logindent)
+    ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(fNum+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
+    fiberBondedElset = readElementsetFromInpFile(inpfullpath,'FIBER'+str(fNum+1)+'-SECONDRING-CT1-FIRSTBOUNDED',logfilepath,baselogindent + logindent,logindent)
+    fiberDebondedElset = readElementsetFromInpFile(inpfullpath,'FIBER'+str(fNum+1)+'-SECONDRING-CT1-CRACKREFINE',logfilepath,baselogindent + logindent,logindent)
+    matrixBondedElset = readElementsetFromInpFile(inpfullpath,'FIBER'+str(fNum+1)+'-THIRDRING-CT1-FIRSTBOUNDED',logfilepath,baselogindent + logindent,logindent)
+    matrixDebondedElset = readElementsetFromInpFile(inpfullpath,'FIBER'+str(fNum+1)+'-THIRDRING-CT1-CRACKREFINE',logfilepath,baselogindent + logindent,logindent)
     if not crack['isSymm']:
         ctnegIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPNEG',1,logfilepath,baselogindent + logindent,logindent)
+        fiberBondedElset = readElementsetFromInpFile(inpfullpath,'FIBER'+str(fNum+1)+'-SECONDRING-CT2-FIRSTBOUNDED',logfilepath,baselogindent + logindent,logindent)
+        fiberDebondedElset = readElementsetFromInpFile(inpfullpath,'FIBER'+str(fNum+1)+'-SECONDRING-CT2-CRACKREFINE',logfilepath,baselogindent + logindent,logindent)
+        matrixBondedElset = readElementsetFromInpFile(inpfullpath,'FIBER'+str(fNum+1)+'-THIRDRING-CT2-FIRSTBOUNDED',logfilepath,baselogindent + logindent,logindent)
+        matrixDebondedElset = readElementsetFromInpFile(inpfullpath,'FIBER'+str(fNum+1)+'-THIRDRING-CT2-CRACKREFINE',logfilepath,baselogindent + logindent,logindent)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 

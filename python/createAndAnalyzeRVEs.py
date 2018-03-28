@@ -2859,6 +2859,13 @@ def addVCCTnodesAtCrack(inpfullpath,parameters,nodes,quads,fNum,crNum,crack,last
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addVCCTnodesAtCrackTip(parameters,lastNodeIndex,logfilepath,baselogindent,logindent)',True)
     skipLineToLogFile(logfilepath,'a',True)
+    matrixCracktipIndex = lastNodeIndex + 1
+    cracktipDummyIndex = lastNodeIndex + 2
+    lastNodeIndex += 2
+    if 'second' in parameters['mesh']['elements']['order']:
+        matrixFbCracktipIndex = lastNodeIndex + 1
+        fbCracktipDummyIndex = lastNodeIndex + 2
+        lastNodeIndex += 2
     ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(fNum+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
     fiberBondedElset = readElementsetFromInpFile(inpfullpath,'FIBER'+str(fNum+1)+'-SECONDRING-CT1-FIRSTBOUNDED',logfilepath,baselogindent + logindent,logindent)
     fiberDebondedElset = readElementsetFromInpFile(inpfullpath,'FIBER'+str(fNum+1)+'-SECONDRING-CT1-CRACKREFINE',logfilepath,baselogindent + logindent,logindent)

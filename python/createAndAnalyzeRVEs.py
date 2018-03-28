@@ -2855,15 +2855,15 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     return modelData
 
-def addVCCTnodesAtCrack(parameters,fNum,crNum,crack,lastNodeIndex,logfilepath,baselogindent,logindent):
+def addVCCTnodesAtCrack(parameters,nodes,quads,fNum,crNum,crack,lastNodeIndex,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addVCCTnodesAtCrackTip(parameters,lastNodeIndex,logfilepath,baselogindent,logindent)',True)
     skipLineToLogFile(logfilepath,'a',True)
+    ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
+    readElementsetFromInpFile(inpfullpath,name,logfilepath,baselogindent,logindent)
     if not crack['isSymm']:
-        ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
         ctnegIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPNEG',1,logfilepath,baselogindent + logindent,logindent)
-    else:
-        ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
+
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
 def addVCCTnodes(parameters,nodesfullfile,quadsfullfile,lastNodeIndex,logfilepath,baselogindent,logindent):

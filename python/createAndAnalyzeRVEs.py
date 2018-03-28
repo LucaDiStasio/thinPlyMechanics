@@ -2855,11 +2855,15 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     return modelData
 
-def addVCCTnodesAtCrackTip(parameters,lastNodeIndex,logfilepath,baselogindent,logindent):
+def addVCCTnodesAtCrack(parameters,fNum,crNum,crack,lastNodeIndex,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addVCCTnodesAtCrackTip(parameters,lastNodeIndex,logfilepath,baselogindent,logindent)',True)
     skipLineToLogFile(logfilepath,'a',True)
-
+    if not crack['isSymm']:
+        ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
+        ctnegIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPNEG',1,logfilepath,baselogindent + logindent,logindent)
+    else:
+        ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
 def addVCCTnodes(parameters,nodesfullfile,quadsfullfile,lastNodeIndex,logfilepath,baselogindent,logindent):
@@ -2874,11 +2878,7 @@ def addVCCTnodes(parameters,nodesfullfile,quadsfullfile,lastNodeIndex,logfilepat
                 crack = fiber['cracks'][crackKey]
                 if crack['isMeasured'] and 'VCCT' in crack['measurement-methods']:
                     crackfacesNodeset = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1),1,logfilepath,baselogindent + logindent,logindent)
-                    if not crack['isSymm']:
-                        ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
-                        ctnegIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPNEG',1,logfilepath,baselogindent + logindent,logindent)
-                    else:
-                        ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
+
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
 def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):

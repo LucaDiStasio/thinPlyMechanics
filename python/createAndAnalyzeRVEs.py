@@ -2855,12 +2855,15 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     return modelData
 
-def addVCCTnodesAtCrack(parameters,nodes,quads,fNum,crNum,crack,lastNodeIndex,logfilepath,baselogindent,logindent):
+def addVCCTnodesAtCrack(inpfullpath,parameters,nodes,quads,fNum,crNum,crack,lastNodeIndex,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addVCCTnodesAtCrackTip(parameters,lastNodeIndex,logfilepath,baselogindent,logindent)',True)
     skipLineToLogFile(logfilepath,'a',True)
     ctposIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPPOS',1,logfilepath,baselogindent + logindent,logindent)
-    readElementsetFromInpFile(inpfullpath,name,logfilepath,baselogindent,logindent)
+    fiberBondedElset = readElementsetFromInpFile(inpfullpath,name,logfilepath,baselogindent + logindent,logindent)
+    fiberDebondedElset = readElementsetFromInpFile(inpfullpath,name,logfilepath,baselogindent + logindent,logindent)
+    matrixBondedElset = readElementsetFromInpFile(inpfullpath,name,logfilepath,baselogindent + logindent,logindent)
+    matrixDebondedElset = readElementsetFromInpFile(inpfullpath,name,logfilepath,baselogindent + logindent,logindent)
     if not crack['isSymm']:
         ctnegIndex = readNodesetFromInpFile(inpfullpath,'FIBER'+str(f+1)+'-CRACK'+str(cNum+1)+'-CRACKTIPNEG',1,logfilepath,baselogindent + logindent,logindent)
 

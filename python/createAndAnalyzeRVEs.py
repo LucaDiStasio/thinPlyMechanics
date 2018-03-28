@@ -5082,57 +5082,17 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate matrix displacements ...',True)
     for v,value in enumerate(matrixCrackfaceDisps.values):
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'At node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute odb.rootAssembly.instances[\'RVE-ASSEMBLY\'].getNodeFromLabel(value.nodeLabel)',True)
-        try:
-            node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
-        except Exception, error:
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'at node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'in odb.rootAssembly.instances[\'RVE-ASSEMBLY\'].getNodeFromLabel(value.nodeLabel)',True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
-            sys.exit(2)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute undefCoords = getFieldOutput(odb,-1,0,\'COORD\',node)',True)
-        try:
-            undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
-        except Exception, error:
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'at node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'in undefCoords = getFieldOutput(odb,-1,0,\'COORD\',node)',True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
-            sys.exit(2)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])',True)
-        try:
-            beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
-        except Exception, error:
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'at node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'in beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])',True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
-            sys.exit(2)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute matrixAngles.append(beta)',True)
-        try:
-            matrixAngles.append(beta)
-        except Exception, error:
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'at node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'in matrixAngles.append(beta)',True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
-            sys.exit(2)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])',True)
-        try:
-            matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
-        except Exception, error:
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'at node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + 'in matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])',True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
-            writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
-            sys.exit(2)
+        #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'At node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
+        #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute odb.rootAssembly.instances[\'RVE-ASSEMBLY\'].getNodeFromLabel(value.nodeLabel)',True)
+        node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
+        #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute undefCoords = getFieldOutput(odb,-1,0,\'COORD\',node)',True)
+        undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
+        #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])',True)
+        beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
+        #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute matrixAngles.append(beta)',True)
+        matrixAngles.append(beta)
+        #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])',True)
+        matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     del matrixCrackfaceDisps

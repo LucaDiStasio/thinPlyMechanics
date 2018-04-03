@@ -297,7 +297,7 @@
 
 \begin{center}
 \begin{minipage}{\textwidth}
-\begin{block}{\rule[-0.6ex]{0pt}{50pt}\centering\LARGE Ultra-thin Fiber Reinforced Polymer Composite (FRPC) Laminates: an Introduction}
+\begin{block}{\rule[-0.6ex]{0pt}{50pt}\centering\LARGE L'industrie a\'erospatiale face aux d\'efis du futur : perspectives et enjeux}
 \vspace{1cm}
 \begin{columns}
 \begin{column}{0.375\textwidth}
@@ -346,23 +346,16 @@
 	\begin{minipage}{\textwidth}
 		\begin{alertblock}{\rule[-0.6ex]{0pt}{50pt}\centering\LARGE Objectifs \& Approche}
 			\begin{columns}
-				\begin{column}{0.475\textwidth}
+				\begin{column}{0.6\textwidth}
    					 \begin{center}
-						\textbf{What do we want to achieve?}\\[5pt]
-							\begin{itemize}
-    								\item Investigate the influence of volume fraction, material properties, thin ply thickness and bounding plies' thicknesses on crack initiation\\[10pt]
-    								\item $G_{*c}=G_{*c}\left(\theta_{debond},\Delta\theta_{debond}, E_{\left(\cdot\cdot\right)}, \nu_{\left(\cdot\cdot\right)}, G_{\left(\right)},VF_{f}, t_{ply}, \frac{t_{ply}}{t_{bounding\ plies}}\right)$
-							\end{itemize}
+						\textbf{\LARGE Que-est qu'on veut atteindre ?}\\[5pt]
+						 \LARGE $G_{*c}=G_{*c}\left(\theta_{debond},\Delta\theta_{debond}, E_{\left(\cdot\cdot\right)}, \nu_{\left(\cdot\cdot\right)}, G_{\left(\right)},VF_{f}, t_{ply}, \frac{t_{ply}}{t_{bounding\ plies}}\right)$
    					\end{center}
 				\end{column}
-				\begin{column}{0.475\textwidth}  %%<--- here
+				\begin{column}{0.4\textwidth}  %%<--- here
    					\begin{center}
-						\textbf{How do we want to achieve it?}\\[5pt]
-						\begin{itemize}
-    							\item Design and categorization of several Representative Volume Elements (RVEs)
-    							\item Automated generation of RVEs geometry and FEM model
-    							\item Finite Element Simulations (in Abaqus)
-						\end{itemize}
+						\textbf{\LARGE Comment on veut l'atteindre ?}\\[5pt]
+						 \LARGE M\'ethode des \'el\'ements finis (MEF)
    					\end{center}
 				\end{column}
 			\end{columns}
@@ -383,20 +376,21 @@
    \includegraphics[width=\columnwidth]{laminate-section.pdf}
 \end{figure}
 \begin{columns}
-\begin{column}{0.25\columnwidth}
-\end{column}
-\begin{column}{0.5\columnwidth}
+\begin{column}{0.4\columnwidth}
 \begin{itemize}
 \small
-\item[$\color{blue}\checkmark$]2D space
-\item[$\color{blue}\checkmark$]Linear elastic materials
-\item[$\color{blue}\checkmark$]Displacement control
-\item[$\color{blue}\checkmark$]Dirichlet-type boundary conditions
-\item[$\color{blue}\checkmark$]Linear elastic fracture mechanics
-\item[$\color{blue}\checkmark$]Contact interaction\\[5pt]
+\item[$\color{blue}\checkmark$]Espace 2D
+\item[$\color{blue}\checkmark$]Solide \'elastique lin\'eaire
+\item[$\color{blue}\checkmark$]Pilot\'e en d\'eplacement
 \end{itemize}
 \end{column}
-\begin{column}{0.25\columnwidth}
+\begin{column}{0.6\columnwidth}
+\begin{itemize}
+\small
+\item[$\color{blue}\checkmark$]Conditions aux limites de Dirichlet
+\item[$\color{blue}\checkmark$]M\'ecanique lin\'eaire \'elastique de la rupture
+\item[$\color{blue}\checkmark$]Interactions de contact
+\end{itemize}
 \end{column}
 \end{columns}
 \end{center}
@@ -536,24 +530,26 @@
 \begin{columns}[totalwidth=0.925\textwidth]
 %\begin{column}{0.05\linewidth}
 %\end{column}
-\begin{column}{0.45\textwidth}
+\begin{column}{0.4\textwidth}
 %\begin{center}
 \begin{block}{\rule[-0.6ex]{0pt}{50pt}\centering Remerciements}
 \centering\scriptsize The support of the European Commission through the Erasmus Mundus Programme is thankfully aknowledged.
 \end{block}
 %\end{center}
 \end{column}
-\begin{column}{0.45\textwidth}
+\begin{column}{0.5\textwidth}
 %\begin{center}
 \begin{block}{\rule[-0.6ex]{0pt}{50pt}\centering R\'ef\'erences}
 \centering
 \tiny
 \begin{enumerate}
-\item[{[}1{]}] NTPT makes world's thinnest prepeg even thinner. (2017, February 10). Retrieved from http://www.thinplytechnology.com/news-159-ntpta-makes-world-s-thinnest-prepreg-even-thinner
-\item[{[}2{]}] oXeon TECHNOLOGIES. (2017, February 10). Retrieved from http://oxeon.se/technologies/
-\item[{[}3{]}] Donald L. Flaggs, Murat H. Kural; Experimental Determination of the In Situ Transverse Lamina Strength in Graphite/Epoxy Laminates.  Journal of Composite Materials, 1982; 16(2).
-\item[{[}4{]}] Toya, M.; A crack along the interface of a circular inclusion embedded in an infinite solid. Journal of the Mechanics and Physics of Solids, 1974; 22(5), pp. 325-348.
-\item[{[}5{]}] Par\'is, F., Cano, J., and Varna, J.; The fiber-matrix interface crack - a numerical analysis using boundary elements. Int. J. Fract., 1990; 82(1), pp. 11-29.
+\item[{[}1{]}] UN General Assembly, Transforming our world: the 2030 Agenda for Sustainable Development, 21 October 2015, A/RES/70/1, available at: http://www.refworld.org/docid/57b6e3e44.html [accessed 3 April 2018]
+\item[{[}2{]}] Kawabe K., Tomoda S. and Matsuo T. 1997 A pneumatic process for spreading reinforcing fiber tow {\it\tiny Proc. 42nd Int. SAMPE USA (Anaheim, CA, USA)} 65--76
+\item[{[}3{]}] Flaggs D. L. and Kural M. H. 1982 Experimental Determination of the In Situ Transverse Lamina Strength in Graphite/Epoxy Laminates {\it \tiny J. Compos. Mater.} {\bf \tiny 16} (2) 103--116
+\item[{[}4{]}] Toya M. 1974 A crack along the interface of a circular inclusion embedded in an infinite solid. {\it \tiny J. Mech. Phys. Solids} {\bf \tiny 22} (5) 325--348
+\item[{[}5{]}] Par\'is F., Cano J., and Varna J. 1990 The fiber-matrix interface crack - a numerical analysis using boundary elements {\it \tiny  Int. J. Fract.} {\bf \tiny 82} (1) 11--29
+\item[{[}6{]}] Krueger R. 2004 Virtual crack closure technique: History, approach, and applications {\it\tiny Appl. Mech. Rev.} {\bf\tiny 57} (2) 109--143
+\item[{[}7{]}] Rice J. R. 1968 A Path Independent Integral and the Approximate Analysis of Strain Concentration by Notches and Cracks {\it\tiny J. Appl. Mech.} {\bf\tiny 35} 379--386
 \end{enumerate}
 \end{block}
 %\end{center}

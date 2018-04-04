@@ -4739,8 +4739,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: applied linear horizontal displacement',True)
         with open(modinpfullpath,'a') as inp:
             inp.write('*EQUATION' + '\n')
-            inp.write(' 2' + '\n')
             for n,node in enumerate(northSideWithoutCornersNodeset):
+                inp.write(' 2' + '\n')
                 inp.write(' NORTHSIDE-N'+ str(n+1) +', 1, 1, NORTHEAST-CORNER, 1, ' + str(-nodes[node][0]/parameters['geometry']['L']) + '\n')
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)

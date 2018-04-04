@@ -4741,7 +4741,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write('*EQUATION' + '\n')
             inp.write(' 2' + '\n')
             for n,node in enumerate(northSideWithoutCornersNodeset):
-                inp.write(' NORTHSIDE-N'+ str(n+1) +', 1, 1, NE-CORNER, 1, ' + str(-nodes[node][0]/parameters['geometry']['L']) + '\n')
+                inp.write(' NORTHSIDE-N'+ str(n+1) +', 1, 1, NORTHEAST-CORNER, 1, ' + str(-nodes[node][0]/parameters['geometry']['L']) + '\n')
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)
     with open(modinpfullpath,'a') as inp:

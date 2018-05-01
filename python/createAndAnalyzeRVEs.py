@@ -3558,6 +3558,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     valuelist = []
                 valuelist.append(value)
             tuplelist.append(tuple(valuelist))
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(tuplelist),True)
             mdb.models[modelname].materials[material['name']].Elastic(type=material['elastic']['type'],table=tuple(tuplelist))
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  ELASTIC',True)
             line = '    '

@@ -3635,6 +3635,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 #===============================================================================#
+#                     Material orientations creation
+#===============================================================================#
+
+if 'boundingPly' in parameters['BC']['northSide']['type']:
+    RVEpart.MaterialOrientation(region='BOUNDING-PLY',orientationType=GLOBAL)
+    #RVEpart.MaterialOrientation(region='BOUNDING-PLY',orientationType=SYSTEM,localCsys=RVEpart.DatumCsysByDefault(coordSysType=CARTESIAN,name='BoundingPlyRefSystem'))
+    
+#===============================================================================#
 #                             Sections creation
 #===============================================================================#
 

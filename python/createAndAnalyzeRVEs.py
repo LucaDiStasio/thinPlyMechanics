@@ -4548,7 +4548,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         inp.write(' 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0' + '\n')
         inp.write('*SOLID SECTION, ELSET=BOUNDING-PLY, MATERIAL=UD, ORIENTATION=BOUNDINGPLY-CREF' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
         with open(modinpfullpath,'a') as inp:
             for line in inpfilelines[boundingplySolidsection+1:endAssembly]:
                 inp.write(line)

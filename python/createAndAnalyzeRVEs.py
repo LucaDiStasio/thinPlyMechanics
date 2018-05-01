@@ -5390,7 +5390,7 @@ def main(argv):
     # units are already the ones used in simulation, not SI
 
     ABQbuiltinDict = {'ISOTROPIC':ISOTROPIC,
-                      'ENGINEERING_CONSTANTS':ENGINEERING CONSTANTS,
+                      'ENGINEERING_CONSTANTS':ENGINEERING_CONSTANTS,
                       'MIDDLE_SURFACE':MIDDLE_SURFACE,
                       'FROM_SECTION':FROM_SECTION}
 

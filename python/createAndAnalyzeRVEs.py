@@ -3568,6 +3568,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + line,True)
         except Exception, error:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  NO ELASTIC PROPERTY',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + str(error),True)
             #sys.exit(2)
             sys.exc_clear()
         try:
@@ -3590,6 +3592,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + line,True)
         except Exception, error:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  NO DENSITY PROPERTY',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + str(error),True)
             sys.exc_clear()
         try:
             values = material['thermalexpansion']['values']
@@ -3611,6 +3615,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + line,True)
         except Exception, error:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  NO THERMAL EXPANSION PROPERTY',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + str(error),True)
             sys.exc_clear()
         try:
             values = material['thermalconductivity']['values']
@@ -3632,6 +3638,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + line,True)
         except Exception, error:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  NO THERMAL CONDUCTIVITY PROPERTY',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + str(Exception),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + str(error),True)
             sys.exc_clear()
 
     mdb.save()

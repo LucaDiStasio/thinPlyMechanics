@@ -4487,8 +4487,9 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify bounding ply solid section definition ...',True)
         for l,line in enumerate(inpfilelines):
             if ('*Solid Section' in line or '*SOLID SECTION' in line) and ('*BOUNDING-PLY' in line or '*bounding-ply' in line):
-                boundingplySolidsection = l
+                boundingplySolidsectionLine = l
             break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Bounding ply solid section definition at line ' + str(boundingplySolidsectionLine),True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify end of assembly section  ...',True)
     for l,line in enumerate(inpfilelines):
@@ -4540,7 +4541,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
         with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[elementSecStop+1:boundingplySolidsection]:
+            for line in inpfilelines[elementSecStop+1:boundingplySolidsectionLine]:
                 inp.write(line)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating local orientation for bounding UD ply ...',True)
@@ -4550,7 +4551,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
         with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[boundingplySolidsection+1:endAssembly]:
+            for line in inpfilelines[boundingplySolidsectionLine+1:endAssembly]:
                 inp.write(line)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     else:

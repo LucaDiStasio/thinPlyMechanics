@@ -4545,9 +4545,10 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 inp.write(line)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating local orientation for bounding UD ply ...',True)
-        inp.write('*ORIENTATION, NAME=BOUNDINGPLY-CREF, DEFINITION=COORDINATES, SYSTEM=RECTANGULAR' + '\n')
-        inp.write(' 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0' + '\n')
-        inp.write('*SOLID SECTION, ELSET=BOUNDING-PLY, MATERIAL=UD, ORIENTATION=BOUNDINGPLY-CREF' + '\n')
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*ORIENTATION, NAME=BOUNDINGPLY-CREF, DEFINITION=COORDINATES, SYSTEM=RECTANGULAR' + '\n')
+            inp.write(' 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0' + '\n')
+            inp.write('*SOLID SECTION, ELSET=BOUNDING-PLY, MATERIAL=UD, ORIENTATION=BOUNDINGPLY-CREF' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
         with open(modinpfullpath,'a') as inp:

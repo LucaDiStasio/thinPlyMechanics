@@ -3635,16 +3635,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 #===============================================================================#
-#                     Material orientations creation
-#===============================================================================#
-
-    if 'boundingPly' in parameters['BC']['northSide']['type']:
-        skipLineToLogFile(logfilepath,'a',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating local orientation for bounding UD ply ...',True)
-        RVEpart.MaterialOrientation(region='BOUNDING-PLY',orientationType=SYSTEM,localCsys=RVEpart.DatumCsysByDefault(coordSysType=CARTESIAN,name='BoundingPlyRefSystem'))
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    
-#===============================================================================#
 #                             Sections creation
 #===============================================================================#
 
@@ -4493,6 +4483,13 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             started = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Element section begins at line ' + str(elementSecStart) + ' and ends at line ' + str(elementSecStop),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify bounding ply solid section definition ...',True)
+        for l,line in enumerate(inpfilelines):
+            if ('*Solid Section' in line or '*SOLID SECTION' in line) and ('*BOUNDING-PLY' in line or '*bounding-ply' in line):
+                boundingplySolidsection = l
+            break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify end of assembly section  ...',True)
     for l,line in enumerate(inpfilelines):
         if '*End Assembly' in line or '*END ASSEMBLY' in line:
@@ -4540,11 +4537,28 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 line += ', ' + str(node)
             inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-    with open(modinpfullpath,'a') as inp:
-        for line in inpfilelines[elementSecStop+1:endAssembly]:
-            inp.write(line)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[elementSecStop+1:boundingplySolidsection]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating local orientation for bounding UD ply ...',True)
+        inp.write('*ORIENTATION, NAME=BOUNDINGPLY-CREF, DEFINITION=COORDINATES, SYSTEM=RECTANGULAR' + '\n')
+        inp.write(' 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0' + '\n')
+        inp.write('*SOLID SECTION, ELSET=BOUNDING-PLY, MATERIAL=UD, ORIENTATION=BOUNDINGPLY-CREF' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[boundingplySolidsection+1:endAssembly]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    else:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[elementSecStop+1:endAssembly]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write crack faces node and element sets ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*NSET, NSET=FIBER-CRACKFACE-NODES, INSTANCE=RVE-assembly' + '\n')

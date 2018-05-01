@@ -3553,12 +3553,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             tuplelist = []
             valuelist = []
             for v,value in enumerate(values):
-                if v>0 and v%18==0:
-                    tuplelist.append(tuple(valuelist))
-                    valuelist = []
                 valuelist.append(value)
             tuplelist.append(tuple(valuelist))
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(tuplelist),True)
             mdb.models[modelname].materials[material['name']].Elastic(type=material['elastic']['type'],table=tuple(tuplelist))
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  ELASTIC',True)
             line = '    '
@@ -3578,9 +3574,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             tuplelist = []
             valuelist = []
             for v,value in enumerate(values):
-                if v>0 and v%8==0:
-                    tuplelist.append(tuple(valuelist))
-                    valuelist = []
                 valuelist.append(value)
             tuplelist.append(tuple(valuelist))
             mdb.models[modelname].materials[material['name']].Density(table=tuple(tuplelist))
@@ -3601,9 +3594,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             tuplelist = []
             valuelist = []
             for v,value in enumerate(values):
-                if v>0 and v%8==0:
-                    tuplelist.append(tuple(valuelist))
-                    valuelist = []
                 valuelist.append(value)
             tuplelist.append(tuple(valuelist))
             mdb.models[modelname].materials[material['name']].Expansion(type=material['thermalexpansion']['type'],table=tuple(tuplelist))
@@ -3624,9 +3614,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             tuplelist = []
             valuelist = []
             for v,value in enumerate(values):
-                if v>0 and v%8==0:
-                    tuplelist.append(tuple(valuelist))
-                    valuelist = []
                 valuelist.append(value)
             tuplelist.append(tuple(valuelist))
             mdb.models[modelname].materials[material['name']].Conductivity(type=material['thermalconductivity']['type'],table=tuple(tuplelist))

@@ -4488,7 +4488,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         for l,line in enumerate(inpfilelines):
             if ('*Solid Section' in line or '*SOLID SECTION' in line) and ('*BOUNDING-PLY' in line or '*bounding-ply' in line):
                 boundingplySolidsectionLine = l
-            break
+                break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Bounding ply solid section definition at line ' + str(boundingplySolidsectionLine),True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify end of assembly section  ...',True)

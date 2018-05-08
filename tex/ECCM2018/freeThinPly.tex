@@ -23,7 +23,7 @@
 \def\meshfactwo{0.75}
 \def\meshfacthree{0.5}
 \def\thetavalue{0}
-\def\deltatheta{15}
+\def\deltatheta{30}
 
 %----------------------------------------------------------------------------------------------%
 %                               Definition of dependent parameters
@@ -38,7 +38,7 @@
 \pgfmathsetmacro\l{0.5*\Rf*sqrt(\pivalue/\Vff)}
 
 \def\domlim{1.28*\l}
-\def\loadlim{1.197*\l}
+\def\loadlim{1.15*\l}
 \def\loadlabel{0.2*\Rf}
 \def\cornerlabel{1.077*\l}
 
@@ -106,98 +106,35 @@
 \tikzstyle{axes}=[]
 
 \draw (\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+\draw[draw=red,line width=2pt](\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+
+\draw (2*\l+\Rf,0)arc (0:360:\Rf);
+\draw[draw=red,line width=2pt](2*\l-\costhetaup,-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
+
+\draw (-2*\l+\Rf,0)arc (0:360:\Rf);
+\draw[draw=red,line width=2pt](-2*\l-\costhetaup,-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
+
+\draw (4*\l+\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+\draw[draw=red,line width=2pt](4*\l+\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+
+\draw (-4*\l+\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+\draw[draw=red,line width=2pt](-4*\l+\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
 
 \begin{scope}[style=axes]
-  \draw[->] (-\domlim,0) -- (\domlim,0) node[right] {$\underline{i}, x$};
-  \draw[->] (0,-\domlim-\tratio*\l) -- (0,\domlim+\tratio*\l) node[above] {$\underline{k}, z$};
+  \draw[->] (-5.1*\l,0) -- (5.1*\l,0) node[right] {$\underline{i}, x$};
+  \draw[->] (0,-1.2*\l) -- (0,1.2*\l) node[above] {$\underline{k}, z$};
 \end{scope}
 
 \pgfmathsetmacro\ltot{\l+\tratio*\l}
 
-% \draw[->] (\l, -\ltot) -- (\loadlim,-\ltot);
-%  \draw[->] (\l, -0.9*\ltot) -- (\loadlim, -0.9*\ltot);
-% \draw[->] (\l, -0.8*\ltot) -- (\loadlim,-0.8*\ltot);
-% \draw[->] (\l,-0.7*\ltot) -- (\loadlim,-0.7*\ltot);
-% \draw[->] (\l,-0.6*\ltot) -- (\loadlim,-0.6*\ltot);
-% \draw[->] (\l,-\half{\ltot}) -- (\loadlim,-\half{\ltot});
-% \draw[->] (\l, -0.4*\ltot) -- (\loadlim, -0.4*\ltot);
-% \draw[->] (\l,-0.3*\ltot) -- (\loadlim,-0.3*\ltot);
-% \draw[->] (\l,-0.2*\ltot) -- (\loadlim,-0.2*\ltot);
-% \draw[->] (\l,-0.1*\ltot) -- (\loadlim,-0.1*\ltot);
-% \draw[->] (\l,-0.0*\ltot) -- (\loadlim,-0.0*\ltot);
-% \draw[->] (\l,0.1*\ltot) -- (\loadlim,0.1*\ltot);
-% \draw[->] (\l,0.2*\ltot) -- (\loadlim,0.2*\ltot);
-% \draw[->] (\l,0.3*\ltot) -- (\loadlim,0.3*\ltot);
-% \draw[->] (\l,0.4*\ltot) -- (\loadlim,0.4*\ltot);
-% \draw[->] (\l,\half{\ltot}) -- (\loadlim,\half{\ltot});
-% \draw[->] (\l,0.6*\ltot) -- (\loadlim,0.6*\ltot);
-% \draw[->] (\l,0.7*\ltot) -- (\loadlim,0.7*\ltot);
-% \draw[->] (\l,0.8*\ltot) -- (\loadlim,0.8*\ltot);
-% \draw[->] (\l,0.9*\ltot) -- (\loadlim,0.9*\ltot);
-% \draw[->] (\l, -0.95*\ltot) -- (\loadlim, -0.95*\ltot);
-% \draw[->] (\l, -0.85*\ltot) -- (\loadlim,-0.85*\ltot);
-% \draw[->] (\l,-0.75*\ltot) -- (\loadlim,-0.75*\ltot);
-% \draw[->] (\l,-0.65*\ltot) -- (\loadlim,-0.65*\ltot);
-% \draw[->] (\l,-0.55*\ltot) -- (\loadlim,-0.55*\ltot);
-% \draw[->] (\l, -0.45*\ltot) -- (\loadlim, -0.45*\ltot);
-% \draw[->] (\l,-0.35*\ltot) -- (\loadlim,-0.35*\ltot);
-% \draw[->] (\l,-0.25*\ltot) -- (\loadlim,-0.25*\ltot);
-% \draw[->] (\l,-0.15*\ltot) -- (\loadlim,-0.15*\ltot);
-% \draw[->] (\l,-0.05*\ltot) -- (\loadlim,-0.05*\ltot);
-% \draw[->] (\l,0.05*\ltot) -- (\loadlim,0.05*\ltot);
-% \draw[->] (\l,0.15*\ltot) -- (\loadlim,0.15*\ltot);
-% \draw[->] (\l,0.25*\ltot) -- (\loadlim,0.25*\ltot);
-% \draw[->] (\l,0.35*\ltot) -- (\loadlim,0.35*\ltot);
-% \draw[->] (\l,0.45*\ltot) -- (\loadlim,0.45*\ltot);
-% \draw[->] (\l,0.55*\ltot) -- (\loadlim,0.55*\ltot);
-% \draw[->] (\l,0.65*\ltot) -- (\loadlim,0.65*\ltot);
-% \draw[->] (\l,0.75*\ltot) -- (\loadlim,0.75*\ltot);
-% \draw[->] (\l,0.85*\ltot) -- (\loadlim,0.85*\ltot);
-% \draw[->] (\l,0.95*\ltot) -- (\loadlim,0.95*\ltot);
-% \draw[->] (\l,\ltot) -- (\loadlim,\ltot);
-% 
-% \draw[->] (-\l,-\ltot) -- (-\loadlim,-\ltot);
-%  \draw[->] (-\l, -0.9*\ltot) -- (-\loadlim, -0.9*\ltot);
-% \draw[->] (-\l,-0.8*\ltot) -- (-\loadlim,-0.8*\ltot);
-% \draw[->] (-\l,-0.7*\ltot) -- (-\loadlim,-0.7*\ltot);
-% \draw[->] (-\l,-0.6*\ltot) -- (-\loadlim,-0.6*\ltot);
-% \draw[->] (-\l,-\half{\ltot}) -- (-\loadlim,-\half{\ltot});
-% \draw[->] (-\l, -0.4*\ltot) -- (-\loadlim, -0.4*\ltot);
-% \draw[->] (-\l,-0.3*\ltot) -- (-\loadlim,-0.3*\ltot);
-% \draw[->] (-\l,-0.2*\ltot) -- (-\loadlim,-0.2*\ltot);
-% \draw[->] (-\l,-0.1*\ltot) -- (-\loadlim,-0.1*\ltot);
-% \draw[->] (-\l,-0.0*\ltot) -- (-\loadlim,-0.0*\ltot);
-% \draw[->] (-\l,0.1*\ltot) -- (-\loadlim,0.1*\ltot);
-% \draw[->] (-\l,0.2*\ltot) -- (-\loadlim,0.2*\ltot);
-% \draw[->] (-\l,0.3*\ltot) -- (-\loadlim,0.3*\ltot);
-% \draw[->] (-\l,0.4*\ltot) -- (-\loadlim,0.4*\ltot);
-% \draw[->] (-\l,\half{\ltot}) -- (-\loadlim,\half{\ltot});
-% \draw[->] (-\l,0.6*\ltot) -- (-\loadlim,0.6*\ltot);
-% \draw[->] (-\l,0.7*\ltot) -- (-\loadlim,0.7*\ltot);
-% \draw[->] (-\l,0.8*\ltot) -- (-\loadlim,0.8*\ltot);
-% \draw[->] (-\l,0.9*\ltot) -- (-\loadlim,0.9*\ltot);
-% \draw[->] (-\l, -0.95*\ltot) -- (-\loadlim, -0.95*\ltot);
-% \draw[->] (-\l, -0.85*\ltot) -- (-\loadlim,-0.85*\ltot);
-% \draw[->] (-\l,-0.75*\ltot) -- (-\loadlim,-0.75*\ltot);
-% \draw[->] (-\l,-0.65*\ltot) -- (-\loadlim,-0.65*\ltot);
-% \draw[->] (-\l,-0.55*\ltot) -- (-\loadlim,-0.55*\ltot);
-% \draw[->] (-\l, -0.45*\ltot) -- (-\loadlim, -0.45*\ltot);
-% \draw[->] (-\l,-0.35*\ltot) -- (-\loadlim,-0.35*\ltot);
-% \draw[->] (-\l,-0.25*\ltot) -- (-\loadlim,-0.25*\ltot);
-% \draw[->] (-\l,-0.15*\ltot) -- (-\loadlim,-0.15*\ltot);
-% \draw[->] (-\l,-0.05*\ltot) -- (-\loadlim,-0.05*\ltot);
-% \draw[->] (-\l,0.05*\ltot) -- (-\loadlim,0.05*\ltot);
-% \draw[->] (-\l,0.15*\ltot) -- (-\loadlim,0.15*\ltot);
-% \draw[->] (-\l,0.25*\ltot) -- (-\loadlim,0.25*\ltot);
-% \draw[->] (-\l,0.35*\ltot) -- (-\loadlim,0.35*\ltot);
-% \draw[->] (-\l,0.45*\ltot) -- (-\loadlim,0.45*\ltot);
-% \draw[->] (-\l,0.55*\ltot) -- (-\loadlim,0.55*\ltot);
-% \draw[->] (-\l,0.65*\ltot) -- (-\loadlim,0.65*\ltot);
-% \draw[->] (-\l,0.75*\ltot) -- (-\loadlim,0.75*\ltot);
-% \draw[->] (-\l,0.85*\ltot) -- (-\loadlim,0.85*\ltot);
-% \draw[->] (-\l,0.95*\ltot) -- (-\loadlim,0.95*\ltot);
-% \draw[->] (-\l,\ltot) -- (-\loadlim,\ltot);
+\foreach \x in {0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1}
+{\draw[->] (\l, -\x*\l) -- (\loadlim,-\x*\l);
+\draw[->] (-\l, -\x*\l) -- (-\loadlim,-\x*\l);
+\draw[->] (\l, \x*\l) -- (\loadlim,\x*\l);
+\draw[->] (-\l, \x*\l) -- (-\loadlim,\x*\l);}
 
+%\draw (\loadlim,\l)--(\loadlim,-\l);
+%\draw (-\loadlim,\l)--(-\loadlim,-\l);
 
 \draw (-\l,-\l) -- (-\l,\l);
 \draw (-5*\l,\l) -- (5*\l,\l) ;
@@ -205,6 +142,8 @@
 \draw (5*\l,-\l) -- (-5*\l,-\l);
 \draw (3*\l,\l) -- (3*\l,-\l);
 \draw (-3*\l,\l) -- (-3*\l,-\l);
+\draw (5*\l,\l) -- (5*\l,-\l);
+\draw (-5*\l,\l) -- (-5*\l,-\l);
 
 %\draw (-\l,\l+\tratio*\l) -- (\l,\l+\tratio*\l);
 %\draw (-\l,-\l-\tratio*\l) -- (\l,-\l-\tratio*\l);
@@ -218,8 +157,8 @@
 
 \draw (-\l,\half{\l}) node[black,right] {$l$};
 \draw (-\l,-\half{\l}) node[black,right] {$l$};
-\draw (\half{\l},\l) node[black,above] {$l$};
-\draw (-\half{\l},\l) node[black,above] {$l$};
+\draw (\half{\l},0.99*\l) node[black,below] {$l$};
+\draw (-\half{\l},0.99*\l) node[black,below] {$l$};
 
 %\draw (\domlim,\loadlabel) node[black,right] {$\bar{u}_{x}=\bar{\varepsilon}_{x}\cdot l$};
 %\draw (-\domlim,-\loadlabel) node[black,left] {$\bar{u}_{x}=\bar{\varepsilon}_{x}\cdot l$};
@@ -266,7 +205,7 @@
 \filldraw[fill=blue!20,draw=blue!50!black](0.3*\costheta*\Rf,0.3*\sintheta*\Rf) -- (0.6*\costheta*\Rf,0.6*\sintheta*\Rf) arc(\thetavalue:\thetaup:0.6*\Rf) --  (0.3*\costhetaup*\Rf,0.3*\sinthetaup*\Rf) arc(\thetaup:\thetavalue:0.3*\Rf);
 \draw (0.45*\costhetahalfup*\Rf,0.45*\sinthetahalfup*\Rf) node[blue!50!black] {$\Delta\theta$};
 
-\draw[draw=red,line width=2pt](\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+
 
 \draw (0,0)--(\costheta,\sintheta);
 \draw (0,0)--(\costhetabot,\sinthetabot);

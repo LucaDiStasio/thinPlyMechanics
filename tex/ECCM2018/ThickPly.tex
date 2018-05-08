@@ -117,16 +117,45 @@
 \draw[line width=1.25mm] (-2*\l-\costhetaup,-\sinthetaup,0)arc (180+\thetaup:360+90+\thetaup:\Rf);
 \draw[draw=red,line width=1.25mm](-2*\l-\costhetaup,-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
 
-
 \draw[line width=1.25mm] (4*\l+\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
 \draw[draw=red,line width=1.25mm](4*\l+\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
 
 \draw[line width=1.25mm] (-4*\l+\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
 \draw[draw=red,line width=1.25mm](-4*\l+\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
 
+\draw[line width=1.25mm] (\costhetaup,2*\l+\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+\draw[draw=red,line width=1.25mm](\costhetaup,2*\l+\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+
+\draw[line width=1.25mm] (2*\l-\costhetaup,2*\l-\sinthetaup,0)arc (180+\thetaup:360+90+\thetaup:\Rf);
+\draw[draw=red,line width=1.25mm](2*\l-\costhetaup,2*\l-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
+
+\draw[line width=1.25mm] (-2*\l-\costhetaup,2*\l-\sinthetaup,0)arc (180+\thetaup:360+90+\thetaup:\Rf);
+\draw[draw=red,line width=1.25mm](-2*\l-\costhetaup,2*\l-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
+
+\draw[line width=1.25mm] (4*\l+\costhetaup,2*\l+\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+\draw[draw=red,line width=1.25mm](4*\l+\costhetaup,2*\l+\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+
+\draw[line width=1.25mm] (-4*\l+\costhetaup,2*\l+\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+\draw[draw=red,line width=1.25mm](-4*\l+\costhetaup,2*\l+\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+
+\draw[line width=1.25mm] (\costhetaup,-2*\l+\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+\draw[draw=red,line width=1.25mm](\costhetaup,-2*\l+\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+
+\draw[line width=1.25mm] (2*\l-\costhetaup,-2*\l-\sinthetaup,0)arc (180+\thetaup:360+90+\thetaup:\Rf);
+\draw[draw=red,line width=1.25mm](2*\l-\costhetaup,-2*\l-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
+
+\draw[line width=1.25mm] (-2*\l-\costhetaup,-2*\l-\sinthetaup,0)arc (180+\thetaup:360+90+\thetaup:\Rf);
+\draw[draw=red,line width=1.25mm](-2*\l-\costhetaup,-2*\l-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
+
+\draw[line width=1.25mm] (4*\l+\costhetaup,-2*\l+\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+\draw[draw=red,line width=1.25mm](4*\l+\costhetaup,-2*\l+\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+
+\draw[line width=1.25mm] (-4*\l+\costhetaup,-2*\l+\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+\draw[draw=red,line width=1.25mm](-4*\l+\costhetaup,-2*\l+\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+
 \begin{scope}[style=axes]
   \draw[->,line width=0.75mm] (-5.1*\l,0) -- (5.1*\l,0) node[right] {\Huge$\underline{i}, x$};
-  \draw[->,line width=0.75mm] (0,-4.2*\l) -- (0,4.2*\l) node[above] {\Huge$\underline{k}, z$};
+  \draw[->,line width=0.75mm] (0,-3.2*\l) -- (0,3.2*\l) node[above] {\Huge$\underline{k}, z$};
 \end{scope}
 
 \pgfmathsetmacro\ltot{\l+\tratio*\l}
@@ -140,20 +169,24 @@
 %\draw (\loadlim,\l)--(\loadlim,-\l);
 %\draw (-\loadlim,\l)--(-\loadlim,-\l);
 
+\draw[dashed,line width=1mm] (-\l,-\l) -- (\l,-\l);
+\draw[dashed,line width=1mm] (-\l,\l) -- (\l,\l);
 \draw[dashed,line width=1mm] (-\l,-\l) -- (-\l,\l);
 %\draw[line width=2mm] (\l,\l) -- (\l,-\l);
 %\draw[line width=2mm] (-\l,\l) -- (\l,\l) ;
-\draw[line width=1.25mm] (-5*\l,\l) -- (5*\l,\l) ;
+%\draw[line width=1.25mm] (-5*\l,\l) -- (5*\l,\l) ;
 %\draw[line width=1mm] (\l,\l) -- (5*\l,\l) ;
 \draw[dashed,line width=1mm] (\l,-\l) -- (\l,\l) ;
-\draw[line width=1.25mm] (-5*\l,-\l) -- (5*\l,-\l) ;
+%\draw[line width=1.25mm] (-5*\l,-\l) -- (5*\l,-\l) ;
 %\draw[line width=1mm] (\l,-\l) -- (5*\l,-\l) ;
 %\draw[line width=1mm] (3*\l,\l) -- (3*\l,-\l);
 %\draw[line width=1mm] (-3*\l,\l) -- (-3*\l,-\l);
-\draw[line width=1.25mm] (5*\l,\l) -- (5*\l,-\l);
-\draw[line width=1.25mm] (-5*\l,\l) -- (-5*\l,-\l);
-\draw[line width=1.25mm] (-5*\l,\l) -- (-5*\l,4*\l) -- (5*\l,4*\l) -- (5*\l,\l);
-\draw[line width=1.25mm] (-5*\l,-\l) -- (-5*\l,-4*\l) -- (5*\l,-4*\l) -- (5*\l,-\l);
+\draw[line width=1.25mm] (5*\l,3*\l) -- (5*\l,-3*\l);
+\draw[line width=1.25mm] (-5*\l,3*\l) -- (-5*\l,-3*\l);
+\draw[line width=1.25mm] (-5*\l,3*\l) -- (5*\l,3*\l);
+\draw[line width=1.25mm] (-5*\l,-3*\l) -- (5*\l,-3*\l);
+%\draw[line width=1.25mm] (-5*\l,\l) -- (-5*\l,4*\l) -- (5*\l,4*\l) -- (5*\l,\l);
+%\draw[line width=1.25mm] (-5*\l,-\l) -- (-5*\l,-4*\l) -- (5*\l,-4*\l) -- (5*\l,-\l);
 
 
 %\draw (-\l,\l+\tratio*\l) -- (\l,\l+\tratio*\l);

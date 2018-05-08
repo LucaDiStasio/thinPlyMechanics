@@ -38,8 +38,8 @@
 \pgfmathsetmacro\l{0.5*\Rf*sqrt(\pivalue/\Vff)}
 
 \def\domlim{1.28*\l}
-\def\loadlim{1.15*\l}
-\def\loadlabel{0.2*\Rf}
+\def\loadlim{1.2*\l}
+\def\loadlabel{0.5*\l}
 \def\cornerlabel{1.077*\l}
 
 \def\thetabot{\thetavalue-\deltatheta}
@@ -111,49 +111,45 @@
 \draw[line width=1.25mm] (\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
 \draw[draw=red,line width=1.25mm](\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
 
-\draw[line width=1.25mm] (2*\l-\costhetaup,-\sinthetaup,0)arc (180+\thetaup:360+90+\thetaup:\Rf);
-\draw[draw=red,line width=1.25mm](2*\l-\costhetaup,-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
-
-\draw[line width=1.25mm] (-2*\l-\costhetaup,-\sinthetaup,0)arc (180+\thetaup:360+90+\thetaup:\Rf);
-\draw[draw=red,line width=1.25mm](-2*\l-\costhetaup,-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
-
-
-\draw[line width=1.25mm] (4*\l+\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
-\draw[draw=red,line width=1.25mm](4*\l+\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
-
-\draw[line width=1.25mm] (-4*\l+\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
-\draw[draw=red,line width=1.25mm](-4*\l+\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+%\draw[line width=1.25mm] (2*\l-\costhetaup,-\sinthetaup,0)arc (180+\thetaup:360+90+\thetaup:\Rf);
+%\draw[draw=red,line width=1.25mm](2*\l-\costhetaup,-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
+%
+%\draw[line width=1.25mm] (-2*\l-\costhetaup,-\sinthetaup,0)arc (180+\thetaup:360+90+\thetaup:\Rf);
+%\draw[draw=red,line width=1.25mm](-2*\l-\costhetaup,-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
+%
+%
+%\draw[line width=1.25mm] (4*\l+\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+%\draw[draw=red,line width=1.25mm](4*\l+\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+%
+%\draw[line width=1.25mm] (-4*\l+\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
+%\draw[draw=red,line width=1.25mm](-4*\l+\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
 
 \begin{scope}[style=axes]
-  \draw[->,line width=0.75mm] (-5.1*\l,0) -- (5.1*\l,0) node[right] {\Huge$\underline{i}, x$};
-  \draw[->,line width=0.75mm] (0,-4.2*\l) -- (0,4.2*\l) node[above] {\Huge$\underline{k}, z$};
+  \draw[->,line width=0.75mm] (-1.25*\loadlim,0) -- (1.1*\loadlim,0) node[right] {\Huge$\underline{i}, x$};
+  \draw[->,line width=0.75mm] (0,-1.25*\l) -- (0,1.2*\l) node[above] {\Huge$\underline{k}, z$};
 \end{scope}
 
 \pgfmathsetmacro\ltot{\l+\tratio*\l}
 
-%\foreach \x in {0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1}
-%{\draw[->] (\l, -\x*\l) -- (\loadlim,-\x*\l);
-%\draw[->] (-\l, -\x*\l) -- (-\loadlim,-\x*\l);
-%\draw[->] (\l, \x*\l) -- (\loadlim,\x*\l);
-%\draw[->] (-\l, \x*\l) -- (-\loadlim,\x*\l);}
+\foreach \x in {0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1}
+{\draw[->,line width=0.75mm] (\l, -\x*\l) -- (\loadlim,-\x*\l);
+\draw[->,line width=0.75mm] (-\l, -\x*\l) -- (-\loadlim,-\x*\l);
+\draw[->,line width=0.75mm] (\l, \x*\l) -- (\loadlim,\x*\l);
+\draw[->,line width=0.75mm] (-\l, \x*\l) -- (-\loadlim,\x*\l);}
 
 %\draw (\loadlim,\l)--(\loadlim,-\l);
 %\draw (-\loadlim,\l)--(-\loadlim,-\l);
 
-\draw[dashed,line width=1mm] (-\l,-\l) -- (-\l,\l);
+\draw[line width=1.25mm] (-\l,-\l) -- (-\l,\l);
 %\draw[line width=2mm] (\l,\l) -- (\l,-\l);
 %\draw[line width=2mm] (-\l,\l) -- (\l,\l) ;
-\draw[line width=1.25mm] (-5*\l,\l) -- (5*\l,\l) ;
+\draw[line width=1.25mm] (-\l,\l) -- (\l,\l) ;
 %\draw[line width=1mm] (\l,\l) -- (5*\l,\l) ;
-\draw[dashed,line width=1mm] (\l,-\l) -- (\l,\l) ;
-\draw[line width=1.25mm] (-5*\l,-\l) -- (5*\l,-\l) ;
+\draw[line width=1.25mm] (\l,-\l) -- (\l,\l) ;
+\draw[line width=1.25mm] (-\l,-\l) -- (\l,-\l) ;
 %\draw[line width=1mm] (\l,-\l) -- (5*\l,-\l) ;
 %\draw[line width=1mm] (3*\l,\l) -- (3*\l,-\l);
 %\draw[line width=1mm] (-3*\l,\l) -- (-3*\l,-\l);
-\draw[line width=1.25mm] (5*\l,\l) -- (5*\l,-\l);
-\draw[line width=1.25mm] (-5*\l,\l) -- (-5*\l,-\l);
-\draw[line width=1.25mm] (-5*\l,\l) -- (-5*\l,4*\l) -- (5*\l,4*\l) -- (5*\l,\l);
-\draw[line width=1.25mm] (-5*\l,-\l) -- (-5*\l,-4*\l) -- (5*\l,-4*\l) -- (5*\l,-\l);
 
 %\draw (-\l,\l+\tratio*\l) -- (\l,\l+\tratio*\l);
 %\draw (-\l,-\l-\tratio*\l) -- (\l,-\l-\tratio*\l);
@@ -170,8 +166,8 @@
 %\draw (\half{\l},0.99*\l) node[black,below] {$l$};
 %\draw (-\half{\l},0.99*\l) node[black,below] {$l$};
 
-%\draw (\domlim,\loadlabel) node[black,right] {$\bar{u}_{x}=\bar{\varepsilon}_{x}\cdot l$};
-%\draw (-\domlim,-\loadlabel) node[black,left] {$\bar{u}_{x}=\bar{\varepsilon}_{x}\cdot l$};
+\draw (\domlim,\loadlabel) node[black,right] {\Huge$\bar{u}_{x}=\bar{\varepsilon}_{x} l$};
+\draw (-\domlim,-\loadlabel) node[black,left] {\Huge$\bar{u}_{x}=\bar{\varepsilon}_{x} l$};
 
 %\draw (\l,0.95*\l) node[black,left] {$C\equiv\left(+l,+l\right)$};
 %\draw (-\l,0.95*\l) node[black,right] {$D\equiv\left(-l,+l\right)$};

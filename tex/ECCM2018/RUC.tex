@@ -17,13 +17,13 @@
 %----------------------------------------------------------------------------------------------%
 
 \def\Rf{1}
-\def\Vff{0.5}
+\def\Vff{0.3}
 \def\tratio{0.75}
 \def\meshfacone{0.2}
 \def\meshfactwo{0.75}
 \def\meshfacthree{0.5}
 \def\thetavalue{0}
-\def\deltatheta{50}
+\def\deltatheta{25}
 
 %----------------------------------------------------------------------------------------------%
 %                               Definition of dependent parameters
@@ -44,6 +44,9 @@
 
 \def\thetabot{\thetavalue-\deltatheta}
 \def\thetaup{\thetavalue+\deltatheta}
+
+\def\thetabotcz{-50}
+\def\thetaupcz{50}
 
 \def\thetabotsymm{180-\deltatheta}
 \def\thetaupsymm{180+\deltatheta}
@@ -68,6 +71,12 @@
 
 \pgfmathsetmacro\costhetaup{cos(\thetaup)}
 \pgfmathsetmacro\sinthetaup{sin(\thetaup)}
+
+\pgfmathsetmacro\costhetabotcz{cos(\thetabotcz)}
+\pgfmathsetmacro\sinthetabotcz{sin(\thetabotcz)}
+
+\pgfmathsetmacro\costhetaupcz{cos(\thetaupcz)}
+\pgfmathsetmacro\sinthetaupcz{sin(\thetaupcz)}
 
 \pgfmathsetmacro\costhetahalfbot{cos(\thetahalfbot)}
 \pgfmathsetmacro\sinthetahalfbot{sin(\thetahalfbot)}
@@ -108,8 +117,20 @@
 
 \tikzstyle{axes}=[]
 
-\draw[line width=1.25mm] (\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
-\draw[draw=red,line width=1.25mm](\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+\draw[draw=green!50!black,line width=0.75mm] (1.25*\costhetaupcz,1.25*\sinthetaupcz)arc (50:\thetaup:1.25*\Rf);
+\draw[draw=green!50!black,line width=0.75mm] (1.25*\costhetabot,1.25*\sinthetabot)arc (\thetabot:-50:1.25*\Rf);
+\draw[draw=green!50!black,dashed,line width=0.75mm] (\costhetaupcz,\sinthetaupcz) -- (1.25*\costhetaupcz,1.25*\sinthetaupcz);
+\draw[draw=green!50!black,dashed,line width=0.75mm] (\costhetabot,\sinthetabot) -- (1.25*\costhetabot,1.25*\sinthetabot);
+\draw[draw=green!50!black,dashed,line width=0.75mm] (\costhetaup,\sinthetaup) -- (1.25*\costhetaup,1.25*\sinthetaup);
+\draw[draw=green!50!black,dashed,line width=0.75mm] (\costhetabotcz,\sinthetabotcz) -- (1.25*\costhetabotcz,1.25*\sinthetabotcz);
+
+
+\filldraw[fill=red!20, draw=red]([shift=(\crackstartangle:\IM*\Rf)]0.9*\costheta*\Rf,0.9*\sintheta*\Rf) arc (\crackstartangle:\crackstopangle:\IM*\Rf) --  (\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
+\draw[draw=red, line width=1.25mm]([shift=(\crackstartangle:\IM*\Rf)]0.9*\costheta*\Rf,0.9*\sintheta*\Rf) arc (\crackstartangle:\crackstopangle:\IM*\Rf);
+\draw[line width=1.25mm] (\costhetaupcz,\sinthetaupcz)arc (50:360-50:\Rf);
+\draw[draw=red,line width=1.25mm](\costhetaupcz,\sinthetaupcz) arc(50:-50:\Rf);
+
+
 
 %\draw[line width=1.25mm] (2*\l-\costhetaup,-\sinthetaup,0)arc (180+\thetaup:360+90+\thetaup:\Rf);
 %\draw[draw=red,line width=1.25mm](2*\l-\costhetaup,-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
@@ -123,11 +144,6 @@
 %
 %\draw[line width=1.25mm] (-4*\l+\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
 %\draw[draw=red,line width=1.25mm](-4*\l+\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
-
-\begin{scope}[style=axes]
-  \draw[->,line width=0.75mm] (-1.25*\loadlim,0) -- (1.1*\loadlim,0) node[right] {\Huge$\underline{i}, x$};
-  \draw[->,line width=0.75mm] (0,-1.25*\l) -- (0,1.2*\l) node[above] {\Huge$\underline{k}, z$};
-\end{scope}
 
 \pgfmathsetmacro\ltot{\l+\tratio*\l}
 
@@ -166,8 +182,8 @@
 %\draw (\half{\l},0.99*\l) node[black,below] {$l$};
 %\draw (-\half{\l},0.99*\l) node[black,below] {$l$};
 
-\draw (\domlim,\loadlabel) node[black,right] {\Huge$\bar{u}_{x}=\bar{\varepsilon}_{x} l$};
-\draw (-\domlim,-\loadlabel) node[black,left] {\Huge$\bar{u}_{x}=\bar{\varepsilon}_{x} l$};
+\draw (\domlim,\loadlabel) node[black,right] {\Huge$\bar{u}_{x}=\bar{\varepsilon}_{x}L$};
+\draw (-\domlim,-\loadlabel) node[black,left] {\Huge$\bar{u}_{x}=\bar{\varepsilon}_{x}L$};
 
 %\draw (\l,0.95*\l) node[black,left] {$C\equiv\left(+l,+l\right)$};
 %\draw (-\l,0.95*\l) node[black,right] {$D\equiv\left(-l,+l\right)$};
@@ -198,25 +214,31 @@
 %\draw (\costhetabot*\Rf,\sinthetabot*\Rf) node[black,below] {$I$};
 %\draw (\costhetaup*\Rf,\sinthetaup*\Rf) node[black,above] {$L$};
 %\draw (\costheta*\Rf,\sintheta*\Rf) node[black,below] {$H$};
-\draw (\costheta*1.1*\Rf,\sintheta*1.1*\Rf) node[red!50!black,above] {\Huge$a$};
+
 %\draw (\costhetahalfup*\Rf,\sinthetahalfup*\Rf) node[black,above] {$\Gamma_{3}$};
 %\draw (0.95*\costhetabot*\Rf,1.1*\sinthetabot*\Rf) node[black,left] {$\Gamma_{2}$};
 
 %\filldraw[fill=green!20,draw=green!50!black] (0,0) -- (0.3*\Rf,0) arc(0:\thetavalue:0.3*\Rf);
 %\draw (\thetadraw:0.2*\Rf) node[green!50!black] {$\theta$};
 
-\filldraw[fill=blue!20,draw=blue!50!black,line width=0.75mm](0.3*\costhetabot*\Rf,0.3*\sinthetabot*\Rf) -- (0.6*\costhetabot*\Rf,0.6*\sinthetabot*\Rf) arc(\thetabot:\thetavalue:0.6*\Rf) --  (0,0);
-\draw (0.45*\costhetahalfbot*\Rf,0.45*\sinthetahalfbot*\Rf ) node[blue!50!black] {\Huge$\Delta\theta$};
+\filldraw[fill=blue!20,draw=blue!50!black,line width=0.75mm](0.3*\costhetabotcz*\Rf,0.3*\sinthetabotcz*\Rf) -- (0.6*\costhetabotcz*\Rf,0.6*\sinthetabotcz*\Rf) arc(\thetabotcz:\thetavalue:0.6*\Rf) --  (0,0);
+\draw (0.35*\costhetahalfbot*\Rf,0.7*\sinthetahalfbot*\Rf ) node[blue!50!black] {\Huge$\Delta\theta$};
 
-\filldraw[fill=blue!20,draw=blue!50!black,line width=0.75mm](0.3*\costheta*\Rf,0.3*\sintheta*\Rf) -- (0.6*\costheta*\Rf,0.6*\sintheta*\Rf) arc(\thetavalue:\thetaup:0.6*\Rf) --  (0,0);
-\draw (0.45*\costhetahalfup*\Rf,0.45*\sinthetahalfup*\Rf) node[blue!50!black] {\Huge$\Delta\theta$};
+\filldraw[fill=blue!20,draw=blue!50!black,line width=0.75mm](0.3*\costheta*\Rf,0.3*\sintheta*\Rf) -- (0.6*\costheta*\Rf,0.6*\sintheta*\Rf) arc(\thetavalue:\thetaupcz:0.6*\Rf) --  (0,0);
+\draw (0.35*\costhetahalfup*\Rf,0.7*\sinthetahalfup*\Rf) node[blue!50!black] {\Huge$\Delta\theta$};
 
+\draw (1.15*\costhetaup*\Rf,1.8*\sinthetaup*\Rf) node[green!50!black,right] {\Huge$\Delta\Phi$};
+\draw (1.15*\costhetaup*\Rf,-1.8*\sinthetaup*\Rf) node[green!50!black,right] {\Huge$\Delta\Phi$};
 
-
-\draw[line width=0.75mm] (0,0)--(\costheta,\sintheta);
-\draw[line width=0.75mm] (0,0)--(\costhetabot,\sinthetabot);
+%\draw[line width=0.75mm] (0,0)--(\costheta,\sintheta);
+\draw[line width=0.75mm] (0,0)--(\costhetabotcz,\sinthetabotcz);
 \draw[line width=0.75mm] (0,0)--(-\Rf*\cosfourtyfive,\Rf*\cosfourtyfive);
-\draw[line width=0.75mm] (0,0)--(\costhetaup,\sinthetaup);
+\draw[line width=0.75mm] (0,0)--(\costhetaupcz,\sinthetaupcz);
+
+\begin{scope}[style=axes]
+  \draw[->,line width=0.75mm] (-1.25*\loadlim,0) -- (1.1*\loadlim,0) node[right] {\Huge$x$};
+  \draw[->,line width=0.75mm] (0,-1.25*\l) -- (0,1.2*\l) node[above] {\Huge$z$};
+\end{scope}
 
 \end{tikzpicture}
 

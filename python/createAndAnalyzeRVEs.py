@@ -3863,8 +3863,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['FIFTHCIRCLE',90]]
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        regionSets.append(['RIGHTSIDE',int(np.floor(30*(2+math.log10(tRatio))))])
-    regionSets.append(['LEFTSIDE',int(np.floor(30*(2+math.log10(tRatio))))])
+        regionSets.append(['LOWER-RIGHTSIDE',int(np.floor(30))])
+        regionSets.append(['LOWER-LEFTSIDE',int(np.floor(30))])
+        regionSets.append(['UPPER-RIGHTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
+        regionSets.append(['UPPER-LEFTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
     else:
         regionSets.append(['RIGHTSIDE',30])
         regionSets.append(['LEFTSIDE',30])

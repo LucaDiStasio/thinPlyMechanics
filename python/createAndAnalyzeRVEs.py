@@ -41,6 +41,7 @@ Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 '''
 import sys, os
 import numpy as np
+import math
 import subprocess
 from os.path import isfile, join, exists
 from platform import platform,system
@@ -3862,8 +3863,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['FIFTHCIRCLE',90]]
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        regionSets.append(['RIGHTSIDE',int(np.ceil(30*(1+2*tRatio)))])
-        regionSets.append(['LEFTSIDE',int(np.ceil(30*(1+2*tRatio)))])
+        regionSets.append(['RIGHTSIDE',int(np.floor(30*(2+math.log10(tRatio)))))])
+    regionSets.append(['LEFTSIDE',int(np.floor(30*(2+math.log10(tRatio)))))])
     else:
         regionSets.append(['RIGHTSIDE',30])
         regionSets.append(['LEFTSIDE',30])

@@ -3947,12 +3947,13 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # field output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Field output ...',True)
 
-    if 'boundingPly' in parameters['BC']['northSide']['type']:
-        model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets['MAIN-PLY'],variables=('U','RF','S','E','EE','COORD',))
-        model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'],variables=('COORD','S'))
-        model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'],variables=('COORD','S'))
-    else:
-        model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('U','RF','S','E','EE','COORD',))
+    #if 'boundingPly' in parameters['BC']['northSide']['type']:
+    #    model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets['MAIN-PLY'],variables=('U','RF','S','E','EE','COORD',))
+    #    model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'],variables=('COORD','S'))
+    #    model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'],variables=('COORD','S'))
+    #else:
+    #    model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('U','RF','S','E','EE','COORD',))
+    model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('U','RF','S','E','EE','COORD',))
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # history output
@@ -5032,10 +5033,13 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute minimum, maximum and mean stress ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Initialize variables...',True)
     maxSigmaxx = rightsideStressdata[0][4]
     minSigmaxx = rightsideStressdata[0][4]
     meanSigmaxx = 0.0
     weightmeanSigmaxx = 0.0
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '...done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Start for loop...',True)
     for s,stress in enumerate(rightsideStressdata):
         if s>0:
             weightmeanSigmaxx += (stress[1]-rightsideStressdata[s-1][1])*(stress[4]+rightsideStressdata[s-1][4])
@@ -5044,6 +5048,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             maxSigmaxx = stress[4]
         elif stress[4]<minSigmaxx:
             minSigmaxx = stress[4]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '...done.',True)
     meanSigmaxx /= len(rightsideStressdata)
     weightmeanSigmaxx /= 2*parameters['geometry']['L']
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)

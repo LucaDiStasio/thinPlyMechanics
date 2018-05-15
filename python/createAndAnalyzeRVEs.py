@@ -3942,8 +3942,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # field output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Field output ...',True)
 
-    #region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']]
-    model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('U','RF','S','E','EE','COORD',))
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets['MAIN-PLY'],variables=('U','RF','S','E','EE','COORD',))
+        model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'],variables=('U','S'))
+        model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'],variables=('U','S'))
+    else:
+        model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('U','RF','S','E','EE','COORD',))
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # history output

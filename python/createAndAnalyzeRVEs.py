@@ -3818,7 +3818,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        regionSets.append(['BOUNDING-PLY',QUAD_DOMINATED,FREE])
+        regionSets.append(['BOUNDING-PLY',TRI,FREE])
 
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)

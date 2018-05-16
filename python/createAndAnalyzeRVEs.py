@@ -2956,20 +2956,33 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     modelname = parameters['input']['modelname']
     L = parameters['geometry']['L']
     Rf = parameters['geometry']['Rf']
+    Ay = 0.0
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         tRatio = parameters['BC']['northSide']['tRatio']
         Lply = tRatio*(2*L)
+        By = L + Lply
+    else:
+        By = L
     if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
         wRatioRight = parameters['BC']['rightSide']['wRatio']
         wRatioLeft = parameters['BC']['leftSide']['wRatio']
         wRightPly = wRatioRight*(2*L)
         wLeftPly = wRatioLeft*(2*L)
+        Ax = -(L+wLeftPly)
+        Bx = L+wRightPly
     elif 'boundingPly' in parameters['BC']['rightSide']['type']:
         wRatioRight = parameters['BC']['rightSide']['wRatio']
         wRightPly = wRatioRight*(2*L)
+        Ax = -L
+        Bx = L+wRightPly
     elif 'boundingPly' in parameters['BC']['leftSide']['type']:
         wRatioLeft = parameters['BC']['leftSide']['wRatio']
         wLeftPly = wRatioLeft*(2*L)
+        Ax = -(L+wLeftPly)
+        Bx = L
+    else:
+        Ax = -L
+        Bx = L
     theta = 0.0
     deltatheta = parameters['geometry']['deltatheta'] # in degrees !!!
     deltapsi = parameters['mesh']['size']['deltapsi'] # in degrees !!!
@@ -3039,10 +3052,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # create rectangle
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw a rectangle ...',True)
-    if 'boundingPly' in parameters['BC']['northSide']['type']:
-        RVEsketch.rectangle(point1=(-L, 0.0), point2=(L,L+Lply))
-    else:
-        RVEsketch.rectangle(point1=(-L, 0.0), point2=(L,L))
+    RVEsketch.rectangle(point1=(Ax,Ay), point2=(Bx,By))
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # set dimension labels
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Set dimension labels ...',True)

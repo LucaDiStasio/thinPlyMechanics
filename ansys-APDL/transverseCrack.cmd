@@ -28,6 +28,21 @@ K, 5, L, t
 L, 4, 5
 L, 2, 3
 
+! Define Element Type
+
+ET,1,PLANE82
+KEYOPT,1,3,3		! Plane stress element with thickness
+
+! Define Material Properties
+
+MP,EX,1,200000        ! mp,Young's modulus,material number,value
+MP,PRXY,1,0.3         ! mp,Poisson's ratio,material number,value
+
+! Define the number of elements each line is to be divided into
+AESIZE,ALL,5    	  ! lesize,all areas,size of element
+
+! Area Meshing
+AMESH,ALL	  		! amesh, all areas
 
 FINISH              ! Finish pre-processing
 

@@ -28,14 +28,25 @@ tTotal = t + tBPly
 
 BLC4, 0.0, 0.0, L, tTotal
 
-K, 1, 0.0, a
-K, 2, w, 0.0
-K, 3, w, t
-K, 4, 0.0, t
-K, 5, L, t
+K, 1, 0.0, 0.0
+K, 2, L, 0.0
+K, 3, L, tTOT
+K, 4, 0.0, tTOT
 
-L, 4, 5
+K, 5, w, 0.0
+K, 6, w, t
+K, 7, 0.0, t
+K, 8, L, t
+
+K, 9, 0.0, a
+
+L, 1, 2
 L, 2, 3
+L, 3, 4
+L, 4, 1
+
+L, 7, 8
+L, 5, 6
 
 ! Define Element Type
 

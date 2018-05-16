@@ -50,8 +50,8 @@ L, 5, 6
 
 ! Define Element Type
 
-ET,1,PLANE83
-KEYOPT,1,3,3		! Plane stress element with thickness
+ET,1,PLANE83,0,,2      ! Quadratic plane strain quadrilaterals 
+ET,1,PLANE83,1,,2      ! Quadratic plane strain triangles
 
 ! Define Material Properties
 

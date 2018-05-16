@@ -3448,15 +3448,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                        [0.74*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-FIRSTBOUNDED'],
                        [0.74*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,0.76*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'SECONDCIRCLE-SECONDBOUNDED'],
                        [0.74*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.74*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,0.76*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.76*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'SECONDCIRCLE-RESTBOUNDED']]
+    setsOfEdgesData.append([0.0,0.99*By,0.0,0.0,1.01*By,0.0,'UPPERSIDE'])
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         setsOfEdgesData.append([0.001,L,0.0,-0.001,L,0.0,'PLYINTERFACE'])
-        setsOfEdgesData.append([0.99*L,0.5*L,0.0,1.01*L,0.5*L,0.0,'LOWER-RIGHTSIDE'])
-        setsOfEdgesData.append([-0.99*L,0.5*L,0.0,-1.01*L,0.5*L,0.0,'LOWER-LEFTSIDE'])
-        setsOfEdgesData.append([0.001,L,0.0,-0.001,(L+Lply),0.0,'UPPERSIDE'])
-        setsOfEdgesData.append([0.99*L,L+0.5*Lply,0.0,1.01*L,L+0.5*Lply,0.0,'UPPER-RIGHTSIDE'])
-        setsOfEdgesData.append([-0.99*L,L+0.5*Lply,0.0,-1.01*L,L+0.5*Lply,0.0,'UPPER-LEFTSIDE'])
+        setsOfEdgesData.append([0.99*Bx,0.5*L,0.0,1.01*Bx,0.5*L,0.0,'LOWER-RIGHTSIDE'])
+        setsOfEdgesData.append([0.99*Ax,0.5*L,0.0,1.01*Ax,0.5*L,0.0,'LOWER-LEFTSIDE'])
+        setsOfEdgesData.append([0.99*Bx,L+0.5*Lply,0.0,1.01*Bx,L+0.5*Lply,0.0,'UPPER-RIGHTSIDE'])
+        setsOfEdgesData.append([0.99*Ax,L+0.5*Lply,0.0,1.01*Ax,L+0.5*Lply,0.0,'UPPER-LEFTSIDE'])
     else:
-        setsOfEdgesData.append([0.001,L,0.0,-0.001,L,0.0,'UPPERSIDE'])
         setsOfEdgesData.append([0.99*L,0.5*L,0.0,1.01*L,0.5*L,0.0,'RIGHTSIDE'])
         setsOfEdgesData.append([-0.99*L,0.5*L,0.0,-1.01*L,0.5*L,0.0,'LEFTSIDE'])
 
@@ -3567,11 +3566,36 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfFacesData = [[0.975*L, 0.975*(L+Lply), 0,'BOUNDING-PLY']]
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
+    if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
+        setsOfFacesData = [[0.975*Bx, 0.5*L, 0,'RIGHT-HOMOGENIZED-CROSSPLY'],
+                           [0.975*Ax, 0.5*L, 0,'LEFT-HOMOGENIZED-CROSSPLY']]
+        for setOfFacesData in setsOfFacesData:
+            defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        RVEpart.SetByBoolean(name='HOMOGENIZED-CROSSPLY', sets=[RVEpart.sets['RIGHT-HOMOGENIZED-CROSSPLY'],RVEpart.sets['LEFT-HOMOGENIZED-CROSSPLY']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- HOMOGENIZED-CROSSPLY',True)
+    elif 'boundingPly' in parameters['BC']['rightSide']['type']:
+        setsOfFacesData = [[0.975*Bx, 0.5*L, 0,'HOMOGENIZED-CROSSPLY']]
+        for setOfFacesData in setsOfFacesData:
+            defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
+    elif 'boundingPly' in parameters['BC']['leftSide']['type']:
+        setsOfFacesData = [[0.975*Ax, 0.5*L, 0,'HOMOGENIZED-CROSSPLY']]
+        for setOfFacesData in setsOfFacesData:
+            defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
-    if 'boundingPly' in parameters['BC']['northSide']['type']:
+    if 'boundingPly' in parameters['BC']['northSide']['type'] and ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']):
+        RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
+        RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['HOMOGENIZED-CROSSPLY'],RVEpart.sets['BOUNDING-PLY']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
+    elif 'boundingPly' in parameters['BC']['northSide']['type']:
         RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
         RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['BOUNDING-PLY']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
+    elif 'boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']:
+        RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
+        RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['HOMOGENIZED-CROSSPLY']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
     else:
         RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
@@ -3790,7 +3814,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     for load in parameters['loads'].values():
         if 'appliedstrain' in load['type'] or 'appliedStrain' in load['type'] or 'Applied Strain' in load['type'] or 'applied strain' in load['type']:
-            model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*L, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+            if 'right' in load['set'] or 'Right' in load['set'] or 'RIGHT' in load['set']:
+                model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*Bx, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+            elif 'left' in load['set'] or 'Left' in load['set'] or 'LEFT' in load['set']:
+                model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*(-Ax), amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
         elif 'applieddisplacement' in load['type'] or 'appliedDisplacement' in load['type'] or 'Applied Displacement' in load['type'] or 'applied displacement' in load['type']:
             model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0], amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
         elif 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:

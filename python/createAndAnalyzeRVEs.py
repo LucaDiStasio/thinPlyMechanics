@@ -3949,20 +3949,22 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # field output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Field output ...',True)
 
-    if 'boundingPly' in parameters['BC']['northSide']['type']:
-        model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets['MAIN-PLY'],variables=('U','RF','S','E','EE','COORD',))
-        model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'],variables=('U','RF','S','E','EE','COORD',))
-        model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'],variables=('U','RF','S','E','EE','COORD',))
-    else:
-        model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('U','RF','S','E','EE','COORD',))
+    for step in parameters['steps'].values():
+        if 'boundingPly' in parameters['BC']['northSide']['type']:
+            model.FieldOutputRequest(name='F-Output-1',createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['MAIN-PLY'],variables=('U','RF','S','E','EE','COORD',))
+            model.FieldOutputRequest(name='F-Output-1',createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'],variables=('U','RF','S','E','EE','COORD',))
+            model.FieldOutputRequest(name='F-Output-1',createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'],variables=('U','RF','S','E','EE','COORD',))
+        else:
+            model.FieldOutputRequest(name='F-Output-1',createStepName=step['name'],variables=('U','RF','S','E','EE','COORD',))
     #model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('U','RF','S','E','EE','COORD',))
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # history output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'History output ...',True)
 
-    #model.HistoryOutputRequest(name='H-Output-1',createStepName='Load-Step')
-    model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+    for step in parameters['steps'].values():
+        model.HistoryOutputRequest(name='H-Output-1',createStepName=step['name'])
+        model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

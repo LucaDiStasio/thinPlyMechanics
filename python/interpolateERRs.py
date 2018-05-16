@@ -33,12 +33,26 @@ Tested with Python 2.7 Anaconda 2.4.1 (64-bit) distribution in Windows 10.
 
 import sys
 #import os
-#from os.path import isfile, join, exists
+from os.path import isfile, join, exists
 #from os import listdir, stat, makedirs
 #from datetime import datetime
 #from time import strftime
 #from platform import platform
-import openpyxl
+from openpyxl import load_workbook
+
+def readData(wd,workbook):
+    wb = load_workbook(filename=join(wd,workbook), read_only=True)
+    gIvcctWorksheet = wb['GI']
+    gIjintWorksheet = wb['GI']
+    gIIvcctWorksheet = wb['GI']
+    gTOTvcctWorksheet = wb['GI']
+    gTOTjintWorksheet = wb['GI']
+    czWorksheet = wb['GI']
+    szWorksheet = wb['GI']
+
+for row in ws.rows:
+    for cell in row:
+        print(cell.value)
 
 
 

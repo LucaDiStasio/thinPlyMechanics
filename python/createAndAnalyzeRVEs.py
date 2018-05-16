@@ -3897,6 +3897,13 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         regionSets.append(['BOUNDING-PLY',TRI,FREE])
+    if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
+        regionSets.append(['RIGHT-HOMOGENIZED-CROSSPLY',TRI,FREE])
+        regionSets.append(['LEFT-HOMOGENIZED-CROSSPLY',TRI,FREE])
+    elif 'boundingPly' in parameters['BC']['rightSide']['type']:
+        regionSets.append(['RIGHT-HOMOGENIZED-CROSSPLY',TRI,FREE])
+    elif 'boundingPly' in parameters['BC']['leftSide']['type']:
+        regionSets.append(['LEFT-HOMOGENIZED-CROSSPLY',TRI,FREE])
 
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)

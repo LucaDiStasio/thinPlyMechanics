@@ -3310,7 +3310,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # if bounding ply is present, draw interface line
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw ply upper interface line ...',True)
-        fiberSketch.Line(point1=(Ax,L),point2=(Bx,L)) # fiberGeometry[19]
+        fiberSketch.Line(point1=(Ax,L),point2=(Bx,L)) 
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
         for key in fiberGeometry.keys():
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(key) + '] = ' + str(fiberGeometry[key]),True)
@@ -3320,7 +3320,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw ply right interface line ...',True)
-        fiberSketch.Line(point1=(L,0.0),point2=(L,L)) # fiberGeometry[19]
+        fiberSketch.Line(point1=(L,0.0),point2=(L,L)) 
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
         for key in fiberGeometry.keys():
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(key) + '] = ' + str(fiberGeometry[key]),True)
@@ -3330,7 +3330,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw ply left interface line ...',True)
-        fiberSketch.Line(point1=(-L,0.0),point2=(-L,L)) # fiberGeometry[19]
+        fiberSketch.Line(point1=(-L,0.0),point2=(-L,L)) 
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
         for key in fiberGeometry.keys():
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(key) + '] = ' + str(fiberGeometry[key]),True)

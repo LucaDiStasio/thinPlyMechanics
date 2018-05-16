@@ -3913,8 +3913,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # assign seeds
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
 
-
-
     regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
                     ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
                     ['THIRDCIRCLE-UPPERCRACK',nTangential],

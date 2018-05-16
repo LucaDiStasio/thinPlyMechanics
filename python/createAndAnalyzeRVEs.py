@@ -4030,7 +4030,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Field output ...',True)
 
     for step in parameters['steps'].values():
-        if 'boundingPly' in parameters['BC']['northSide']['type']:
+        if 'boundingPly' in parameters['BC']['northSide']['type'] or 'boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']:
             model.FieldOutputRequest(name='F-Output-1',createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['MAIN-PLY'],variables=('U','RF','S','E','EE','COORD',))
             model.FieldOutputRequest(name='F-Output-1',createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'],variables=('U','RF','S','E','EE','COORD',))
             model.FieldOutputRequest(name='F-Output-1',createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'],variables=('U','RF','S','E','EE','COORD',))

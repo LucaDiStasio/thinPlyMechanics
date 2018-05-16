@@ -5191,7 +5191,137 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     if len(parameters['steps'])>1:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
-
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements on fiber ...',True)
+        fiberCrackfaceDisps = getFieldOutput(odb,-1,-1,'U',fiberCrackfaceNodes)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements on matrix ...',True)
+        matrixCrackfaceDisps = getFieldOutput(odb,-1,-1,'U',matrixCrackfaceNodes)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        fiberAngles = []
+        fiberDisps = []
+    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate fiber displacements ...',True)
+        for value in fiberCrackfaceDisps.values:
+            if value.nodeLabel!=undefCracktipCoords.values[0].nodeLabel:
+                node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
+                undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
+                beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
+                fiberAngles.append(beta)
+                fiberDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        del fiberCrackfaceDisps
+    
+        matrixAngles = []
+        matrixDisps = []
+    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate matrix displacements ...',True)
+        for v,value in enumerate(matrixCrackfaceDisps.values):
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'At node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute odb.rootAssembly.instances[\'RVE-ASSEMBLY\'].getNodeFromLabel(value.nodeLabel)',True)
+            node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute undefCoords = getFieldOutput(odb,-1,0,\'COORD\',node)',True)
+            undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])',True)
+            beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute matrixAngles.append(beta)',True)
+            matrixAngles.append(beta)
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])',True)
+            matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        del matrixCrackfaceDisps
+    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort fiber displacements and angles...',True)
+        fiberDisps = np.array(fiberDisps)[np.argsort(fiberAngles)].tolist()
+        fiberAngles = np.array(fiberAngles)[np.argsort(fiberAngles)].tolist()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort matrix displacements and angles...',True)
+        matrixDisps = np.array(matrixDisps)[np.argsort(matrixAngles)].tolist()
+        matrixAngles = np.array(fiberAngles)[np.argsort(matrixAngles)].tolist()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        crackDisps = []
+        uR = []
+        uTheta = []
+    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute crack displacements ...',True)
+        for s,dispset in enumerate(fiberDisps):
+            crackDisps.append([matrixDisps[s][0]-dispset[0],matrixDisps[s][1]-dispset[1]])
+            uR.append(matrixDisps[s][0]-dispset[0])
+            uTheta.append(matrixDisps[s][1]-dispset[1])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute normalized crack displacements ...',True)
+        normedcrackDisps = []
+        normedbeta = []
+        uRmax = np.max(uR)
+        uRavg = np.mean(uR)
+        uThetamax = np.max(uTheta)
+        uThetaavg = np.mean(uTheta)
+        uRweightavg = 0.0
+        uThetaweightavg = 0.0
+        for s, angle in enumerate(fiberAngles[:-1]):
+            uRweightavg += (fiberAngles[s+1]-angle)*(uR[s+1]+uR[s])
+            uThetaweightavg += (fiberAngles[s+1]-angle)*(uTheta[s+1]+uTheta[s])
+        uRweightavg /= 2*phi
+        uThetaweightavg /= 2*phi
+        for s,dispset in enumerate(crackDisps):
+            normedbeta.append(fiberAngles[s]/phi)
+            normedcrackDisps.append([dispset[0]/uRmax,dispset[0]/uRavg,dispset[0]/uRweightavg,dispset[1]/uThetamax,dispset[1]/uThetaavg,dispset[1]/uThetaweightavg])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute contact zone size ...',True)
+        phiCZ = 0.0
+        phiSZ = phi
+        #uRmax = np.max(uR)
+        for d,disp in enumerate(uR):
+            if disp<0.002*uRmax:
+                phiSZ = fiberAngles[d]
+                phiCZ = phi - fiberAngles[d]
+                break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Analyze tolerance of contact zone size estimation...',True)
+        phiCZtol = []
+        phiSZtol = []
+        tolCZ = []
+        #uRmax = np.max(uR)
+        for tol in np.arange(0.0,0.01525,0.00025):
+            tolCZ.append(tol)
+            phiCZcurrent = 0.0
+            phiSZcurrent = phi
+            for d,disp in enumerate(uR):
+                if disp<tol*uRmax:
+                    phiSZcurrent = fiberAngles[d]
+                    phiCZcurrent = phi - fiberAngles[d]
+                    break
+            phiSZtol.append(phiSZcurrent)
+            phiCZtol.append(phiCZcurrent)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalcrackdisplacements'],'beta [deg], uR_fiber, uTheta_fiber, uR_matrix, uTheta_matrix, uR, uTheta, beta/deltatheta [-],  uR/max(uR), uR/mean(uR), uR/weightmean(uR), uTheta/max(uTheta), uTheta/mean(uTheta), uR/weightmean(uTheta)')
+        for s,dispset in enumerate(crackDisps):
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalcrackdisplacements'],[[fiberAngles[s]*180.0/np.pi,fiberDisps[s][0],fiberDisps[s][1],matrixDisps[s][0],matrixDisps[s][1],dispset[0],dispset[1],normedbeta[s],normedcrackDisps[s][0],normedcrackDisps[s][1],normedcrackDisps[s][2],normedcrackDisps[s][3],normedcrackDisps[s][4],normedcrackDisps[s][5]]])
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalcontactzonetolerance'],'tol [%], phiSZ [deg], phiCZ [deg]')
+        for s,tol in enumerate(tolCZ):
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalcontactzonetolerance'],[[tol,phiSZtol[s]*180.0/np.pi,phiCZtol[s]*180.0/np.pi]])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        del fiberAngles
+        del matrixAngles
+        del fiberDisps
+        del matrixDisps
+        del crackDisps
+        del normedbeta
+        del normedcrackDisps
+        del phiSZtol
+        del phiCZtol
+        del tolCZ
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> MECHANICAL STEP <--',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements on fiber ...',True)

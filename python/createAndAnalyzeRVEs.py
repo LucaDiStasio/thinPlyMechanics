@@ -3761,7 +3761,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating step ...',True)
 
     for step in parameters['steps'].values():
-        model.StaticStep(name=step['name'], previous=step['previous'],minInc=parameters['step']['minimumIncrement'])
+        model.StaticStep(name=step['name'], previous=step['previous'],minInc=step['minimumIncrement'])
 
     mdb.save()
 

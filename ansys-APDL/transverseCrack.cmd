@@ -12,4 +12,4 @@ tRatio = 1  ! [-]  ratio of bounding ply thickness to main ply
 
 ! Create Geometry
 
-BLC4, XCORNER, YCORNER, WIDTH, HEIGHT, DEPTH
+BLC4, 0.0, 0.0, L, t

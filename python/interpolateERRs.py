@@ -41,6 +41,19 @@ from os.path import isfile, join, exists
 from openpyxl import load_workbook
 
 def readData(wd,workbook):
+    data = {}
+    boundaryCase = ['free','geomcoupling','fixedv','fixedvlinearu']
+    Vf = [0.000079,0.0001,0.2,0.3,0.4,0.5,0.55,0.6,0.65]
+    theta = [10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0]
+    for case in boundaryCase:
+        for v,value in enumerate(Vf):
+            data['GI']['VCCT'][case][v+1] = {'Vf':value,'theta':theta,'values':[]}
+            data['GI']['Jint'][case][v+1] = {'Vf':value,'theta':theta,'values':[]}
+            data['GII'][case][v+1] = {'Vf':value,'theta':theta,'values':[]}
+            data['GTOT']['VCCT'][case][v+1] = {'Vf':value,'theta':theta,'values':[]}
+            data['GTOT']['Jint'][case][v+1] = {'Vf':value,'theta':theta,'values':[]}
+            data['CZ'][case][v+1] = {'Vf':value,'theta':theta,'values':[]}
+            data['SZ'][case][v+1] = {'Vf':value,'theta':theta,'values':[]}
     wb = load_workbook(filename=join(wd,workbook), read_only=True)
     gIvcctWorksheet = wb['GI']
     gIjintWorksheet = wb['GI']
@@ -49,6 +62,8 @@ def readData(wd,workbook):
     gTOTjintWorksheet = wb['GI']
     czWorksheet = wb['GI']
     szWorksheet = wb['GI']
+
+    return data
 
 for row in ws.rows:
     for cell in row:

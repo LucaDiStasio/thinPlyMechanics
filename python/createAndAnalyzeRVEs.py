@@ -3374,14 +3374,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # sets of vertices
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of vertices',True)
     defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIP',logfilepath,baselogindent + 4*logindent,True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,Bx,By,0.0,0.01*L/30,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,Ax,By,0.0,0.01*L/30,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.01*L/30,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-        defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.01*L/30,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
-        defineSetOfVerticesByBoundingSphere(RVEpart,L,(L+Lply),0.0,0.01*L/30,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-        defineSetOfVerticesByBoundingSphere(RVEpart,-L,(L+Lply),0.0,0.01*L/30,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
-    else:
-        defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.01*L/30,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-        defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.01*L/30,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,Bx,L,0.0,0.01*L/30,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,Ax,L,0.0,0.01*L/30,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    if 'boundingPly' in parameters['BC']['rightSide']['type']:
+        defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.01*L/30,'RIGHTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    if 'boundingPly' in parameters['BC']['leftSide']['type']:
+        defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.01*L/30,'LEFTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # sets of edges

@@ -3057,12 +3057,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # set dimension labels
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Set dimension labels ...',True)
     v = RVEsketch.vertices
-    if 'boundingPly' in parameters['BC']['northSide']['type']:
-        RVEsketch.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(-1.1*L,0.5*(L+Lply)), value=(L+Lply))
-        RVEsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(0.0,1.1*(L+Lply)), value=2*L)
-    else:
-        RVEsketch.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(-1.1*L,0.5*L), value=L)
-        RVEsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(0.0,1.1*L), value=2*L)
+    RVEsketch.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(1.1*Ax,0.5*By), value=By)
+    RVEsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(0.0,1.1*By), value=(-Ax+Bx))
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # assign to part
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign sketch geometry to the part ...',True)

@@ -4559,7 +4559,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             for line in inpfilelines[elementSecStop+1:boundingplySolidsectionLine]:
                 inp.write(line)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating local orientation for bounding UD ply ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating local orientation for bounding ply ...',True)
         with open(modinpfullpath,'a') as inp:
             inp.write('*ORIENTATION, NAME=BOUNDINGPLY-CREF, DEFINITION=COORDINATES, SYSTEM=RECTANGULAR' + '\n')
             inp.write(' 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0' + '\n')
@@ -5110,6 +5110,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # BEGIN - compute contact zone
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute contact zone ...',True)
+
+    if len(parameters['steps'])>1:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
+
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> MECHANICAL STEP <--',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements on fiber ...',True)
     fiberCrackfaceDisps = getFieldOutput(odb,-1,-1,'U',fiberCrackfaceNodes)

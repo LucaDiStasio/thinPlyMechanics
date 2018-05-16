@@ -3690,8 +3690,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating step ...',True)
 
-    model.StaticStep(name='Load-Step', previous='Initial',
-        minInc=parameters['step']['minimumIncrement'])
+    for step in parameters['steps'].values():
+        model.StaticStep(name=step['name'], previous=step['previous'],minInc=parameters['step']['minimumIncrement'])
 
     mdb.save()
 
@@ -3744,11 +3744,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     for load in parameters['loads'].values():
         if 'appliedstrain' in load['type'] or 'appliedStrain' in load['type'] or 'Applied Strain' in load['type'] or 'applied strain' in load['type']:
-            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*L, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+            model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*L, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
         elif 'applieddisplacement' in load['type'] or 'appliedDisplacement' in load['type'] or 'Applied Displacement' in load['type'] or 'applied displacement' in load['type']:
-            model.DisplacementBC(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0], amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+            model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0], amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
         elif 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
-            model.Pressure(name=load['name'],createStepName='Load-Step',region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], magnitude=load['value'],distributionType=UNIFORM)
+            model.Pressure(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], magnitude=load['value'],distributionType=UNIFORM)
         # elif 'appliedstress' in load['type'] or 'appliedStress' in load['type'] or 'Applied Stress' in load['type'] or 'applied stress' in load['type']:
         #
         # elif 'appliedforce' in load['type'] or 'appliedForce' in load['type'] or 'Applied Force' in load['type'] or 'applied Force' in load['type']:

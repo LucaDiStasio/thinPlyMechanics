@@ -27,3 +27,10 @@ K, 5, L, t
 
 L, 4, 5
 L, 2, 3
+
+
+FINISH              ! Finish pre-processing
+
+/SOLU               ! Enter the solution processor
+
+ANTYPE,0			! Analysis type,static

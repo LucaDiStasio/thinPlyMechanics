@@ -2956,33 +2956,33 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     modelname = parameters['input']['modelname']
     L = parameters['geometry']['L']
     Rf = parameters['geometry']['Rf']
-    Ay = 0.0
+    CornerAy = 0.0
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         tRatio = parameters['BC']['northSide']['tRatio']
         Lply = tRatio*(2*L)
-        By = L + Lply
+        CornerBy = L + Lply
     else:
-        By = L
+        CornerBy = L
     if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
         wRatioRight = parameters['BC']['rightSide']['wRatio']
         wRatioLeft = parameters['BC']['leftSide']['wRatio']
         wRightPly = wRatioRight*(2*L)
         wLeftPly = wRatioLeft*(2*L)
-        Ax = -(L+wLeftPly)
-        Bx = L+wRightPly
+        CornerAx = -(L+wLeftPly)
+        CornerBx = L+wRightPly
     elif 'boundingPly' in parameters['BC']['rightSide']['type']:
         wRatioRight = parameters['BC']['rightSide']['wRatio']
         wRightPly = wRatioRight*(2*L)
-        Ax = -L
-        Bx = L+wRightPly
+        CornerAx = -L
+        CornerBx = L+wRightPly
     elif 'boundingPly' in parameters['BC']['leftSide']['type']:
         wRatioLeft = parameters['BC']['leftSide']['wRatio']
         wLeftPly = wRatioLeft*(2*L)
-        Ax = -(L+wLeftPly)
-        Bx = L
+        CornerAx = -(L+wLeftPly)
+        CornerBx = L
     else:
-        Ax = -L
-        Bx = L
+        CornerAx = -L
+        CornerBx = L
     theta = 0.0
     deltatheta = parameters['geometry']['deltatheta'] # in degrees !!!
     deltapsi = parameters['mesh']['size']['deltapsi'] # in degrees !!!
@@ -3052,13 +3052,13 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # create rectangle
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw a rectangle ...',True)
-    RVEsketch.rectangle(point1=(Ax,Ay), point2=(Bx,By))
+    RVEsketch.rectangle(point1=(CornerAx,CornerAy), point2=(CornerBx,CornerBy))
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # set dimension labels
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Set dimension labels ...',True)
     v = RVEsketch.vertices
-    RVEsketch.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(1.1*Ax,0.5*By), value=By)
-    RVEsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(0.0,1.1*By), value=(-Ax+Bx))
+    RVEsketch.ObliqueDimension(vertex1=v[0], vertex2=v[1], textPoint=(1.1*CornerAx,0.5*CornerBy), value=CornerBy)
+    RVEsketch.ObliqueDimension(vertex1=v[1], vertex2=v[2], textPoint=(0.0,1.1*CornerBy), value=(-CornerAx+CornerBx))
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # assign to part
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign sketch geometry to the part ...',True)
@@ -3310,7 +3310,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # if bounding ply is present, draw interface line
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw ply upper interface line ...',True)
-        fiberSketch.Line(point1=(Ax,L),point2=(Bx,L)) 
+        fiberSketch.Line(point1=(CornerAx,L),point2=(CornerBx,L)) 
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
         for key in fiberGeometry.keys():
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(key) + '] = ' + str(fiberGeometry[key]),True)
@@ -3374,11 +3374,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # sets of vertices
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of vertices',True)
     defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIP',logfilepath,baselogindent + 4*logindent,True)
-    defineSetOfVerticesByBoundingSphere(RVEpart,Bx,By,0.0,0.01*L/30,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-    defineSetOfVerticesByBoundingSphere(RVEpart,Ax,By,0.0,0.01*L/30,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,CornerBy,0.0,0.01*L/30,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,CornerBy,0.0,0.01*L/30,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        defineSetOfVerticesByBoundingSphere(RVEpart,Bx,L,0.0,0.01*L/30,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-        defineSetOfVerticesByBoundingSphere(RVEpart,Ax,L,0.0,0.01*L/30,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L,0.0,0.01*L/30,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L,0.0,0.01*L/30,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
         defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.01*L/30,'RIGHTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
@@ -3448,13 +3448,13 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                        [0.74*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-FIRSTBOUNDED'],
                        [0.74*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,0.76*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'SECONDCIRCLE-SECONDBOUNDED'],
                        [0.74*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.74*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,0.76*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.76*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'SECONDCIRCLE-RESTBOUNDED']]
-    setsOfEdgesData.append([0.0,0.99*By,0.0,0.0,1.01*By,0.0,'UPPERSIDE'])
+    setsOfEdgesData.append([0.0,0.99*CornerBy,0.0,0.0,1.01*CornerBy,0.0,'UPPERSIDE'])
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         setsOfEdgesData.append([0.001,L,0.0,-0.001,L,0.0,'PLYINTERFACE'])
-        setsOfEdgesData.append([0.99*Bx,0.5*L,0.0,1.01*Bx,0.5*L,0.0,'LOWER-RIGHTSIDE'])
-        setsOfEdgesData.append([0.99*Ax,0.5*L,0.0,1.01*Ax,0.5*L,0.0,'LOWER-LEFTSIDE'])
-        setsOfEdgesData.append([0.99*Bx,L+0.5*Lply,0.0,1.01*Bx,L+0.5*Lply,0.0,'UPPER-RIGHTSIDE'])
-        setsOfEdgesData.append([0.99*Ax,L+0.5*Lply,0.0,1.01*Ax,L+0.5*Lply,0.0,'UPPER-LEFTSIDE'])
+        setsOfEdgesData.append([0.99*CornerBx,0.5*L,0.0,1.01*CornerBx,0.5*L,0.0,'LOWER-RIGHTSIDE'])
+        setsOfEdgesData.append([0.99*CornerAx,0.5*L,0.0,1.01*CornerAx,0.5*L,0.0,'LOWER-LEFTSIDE'])
+        setsOfEdgesData.append([0.99*CornerBx,L+0.5*Lply,0.0,1.01*CornerBx,L+0.5*Lply,0.0,'UPPER-RIGHTSIDE'])
+        setsOfEdgesData.append([0.99*CornerAx,L+0.5*Lply,0.0,1.01*CornerAx,L+0.5*Lply,0.0,'UPPER-LEFTSIDE'])
     else:
         setsOfEdgesData.append([0.99*L,0.5*L,0.0,1.01*L,0.5*L,0.0,'RIGHTSIDE'])
         setsOfEdgesData.append([-0.99*L,0.5*L,0.0,-1.01*L,0.5*L,0.0,'LEFTSIDE'])
@@ -3567,18 +3567,18 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
-        setsOfFacesData = [[0.975*Bx, 0.5*L, 0,'RIGHT-HOMOGENIZED-CROSSPLY'],
-                           [0.975*Ax, 0.5*L, 0,'LEFT-HOMOGENIZED-CROSSPLY']]
+        setsOfFacesData = [[0.975*CornerBx, 0.5*L, 0,'RIGHT-HOMOGENIZED-CROSSPLY'],
+                           [0.975*CornerAx, 0.5*L, 0,'LEFT-HOMOGENIZED-CROSSPLY']]
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
         RVEpart.SetByBoolean(name='HOMOGENIZED-CROSSPLY', sets=[RVEpart.sets['RIGHT-HOMOGENIZED-CROSSPLY'],RVEpart.sets['LEFT-HOMOGENIZED-CROSSPLY']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- HOMOGENIZED-CROSSPLY',True)
     elif 'boundingPly' in parameters['BC']['rightSide']['type']:
-        setsOfFacesData = [[0.975*Bx, 0.5*L, 0,'HOMOGENIZED-CROSSPLY']]
+        setsOfFacesData = [[0.975*CornerBx, 0.5*L, 0,'HOMOGENIZED-CROSSPLY']]
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
     elif 'boundingPly' in parameters['BC']['leftSide']['type']:
-        setsOfFacesData = [[0.975*Ax, 0.5*L, 0,'HOMOGENIZED-CROSSPLY']]
+        setsOfFacesData = [[0.975*CornerAx, 0.5*L, 0,'HOMOGENIZED-CROSSPLY']]
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 

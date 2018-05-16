@@ -50,7 +50,7 @@ L, 5, 6
 
 ! Define Element Type
 
-ET,1,PLANE82
+ET,1,PLANE83
 KEYOPT,1,3,3		! Plane stress element with thickness
 
 ! Define Material Properties

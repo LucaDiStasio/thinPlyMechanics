@@ -5009,6 +5009,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # BEGIN - extract J-integral results
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting J-integral results ...',True)
+    
+    if len(parameters['steps'])>1:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
+        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> MECHANICAL STEP <--',True)
+        
     try:
         Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'])
     except Exception,e:
@@ -5465,7 +5471,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # BEGIN - compute VCCT
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute VCCT ...',True)
-
+    
+    if len(parameters['steps'])>1:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
+        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> MECHANICAL STEP <--',True)
+        
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract forces and displacements ...',True)
 
     RFcracktip = getFieldOutput(odb,-1,-1,'RF',cracktipDummyNode)

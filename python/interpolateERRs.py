@@ -116,7 +116,7 @@ def interpolateData(outdir,data,boundaryCases):
                 if y>maxValue:
                     maxIndex = i
                     maxValue = y
-            res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0])
+            res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0],method='dogbox')
             angles = np.linspace(0.0, xs[-1]+5, num=300)
             plt.figure()
             plt.plot(vfData['theta'], vfData['values'], 'ko')

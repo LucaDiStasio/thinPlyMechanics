@@ -35,8 +35,8 @@ import sys
 #import os
 from os.path import isfile, join, exists
 #from os import listdir, stat, makedirs
-#from datetime import datetime
-#from time import strftime
+from datetime import datetime
+from time import strftime
 #from platform import platform
 from openpyxl import load_workbook
 import matplotlib.pyplot as plt
@@ -92,8 +92,11 @@ def readData(wd,workbook,boundaryCase):
             data['SZ'][case][v+1] = {'Vf':value,'theta':theta,'values':values}
     return data
 
-def interpolateData(data,boundaryCases):
+def interpolateData(outdir,data,boundaryCases):
 
+    for c,case in enumerate(boundaryCase):
+        for vf in data['GI']['VCCT'][case]:
+            filename =
     res_GI, cov_GI = optimize.curve_fit(model,data[:6,0],data[:6,1],p0=[0.3,1.0/20.0,0.0,0.0])
     res_GII, cov_GII = optimize.curve_fit(model,data[:,0],data[:,2],p0=[0.7,1.0/60.0,0.0,0.0])
     res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:,0],data[:,3],p0=[0.7,1.0/60.0,0.0,0.0])

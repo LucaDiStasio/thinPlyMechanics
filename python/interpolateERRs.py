@@ -111,6 +111,18 @@ def interpolateData(outdir,data,boundaryCases):
                     maxIndex = i
                     maxValue = y
             res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0])
+            angles = np.linspace(xs[0]-5, xs[-1]+5, num=300)
+            plt.figure()
+            plt.plot(data[:,0], data[:,1], 'ro')
+            plt.plot(angles1, model(angles1, *res_GI), 'r-')
+            plt.plot(data[:,0], data[:,2], 'bo')
+            plt.plot(angles, model(angles, *res_GII), 'b-')
+            plt.plot(data[:,0], data[:,3], 'go')
+            plt.plot(angles, model(angles, *res_GTOT), 'g-')
+            plt.xlabel('deltatheta')
+            plt.ylabel('G/GO [-]')
+            plt.title(titles[m])
+            plt.legend(['GI,data', 'GI,interp','GII,data', 'GII,interp','GTOT,data','GTOT,interp'], loc=1)
 
     res_GII, cov_GII = optimize.curve_fit(model,data[:,0],data[:,2],p0=[0.7,1.0/60.0,0.0,0.0])
     res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:,0],data[:,3],p0=[0.7,1.0/60.0,0.0,0.0])

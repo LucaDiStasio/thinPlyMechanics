@@ -264,13 +264,53 @@ def interpolateData(outdir,data,boundaryCase):
             plt.legend(['data', 'interpolant'], loc=1)
             savefig(join(outdir,filename + '.png'), bbox_inches='tight')
 
-def writeData(outdir,workbook,data,boundaryCase):
-
+def writeData(outdir,workbookname,data,boundaryCase):
+    wb = Workbook()
+    gIvcctWorksheet = wb.create_sheet(title='GI-VCCT')
+    gIvcctWorksheet['A1'] = 'GI-VCCT'
+    gIvcctWorksheet['A2'] = 'BOUNDARY CONDITIONS'
+    gIvcctWorksheet['A3'] = 'NORTH'
+    gIvcctWorksheet['B3'] = 'SOUTH'
+    gIvcctWorksheet['C3'] = 'EAST'
+    gIvcctWorksheet['D3'] = 'WEST'
+    gIvcctWorksheet['E3'] = 'Vf [%]'
+    gIvcctWorksheet['F3'] = 'Value at no debond [J/m^2]'
+    gIvcctWorksheet['G2'] = 'Coefficients'
+    gIvcctWorksheet['G3'] = 'A [J/m^2]'
+    gIvcctWorksheet['H3'] = 'B [1/°]'
+    gIvcctWorksheet['I3'] = 'C [°]'
+    gIvcctWorksheet['J3'] = 'D [J/m^2]'
+    gIvcctWorksheet['K2'] = 'Covariance'
+    gIvcctWorksheet['K3'] = 'cov(1,1)'
+    gIvcctWorksheet['L3'] = 'cov(1,2)'
+    gIvcctWorksheet['M3'] = 'cov(1,3)'
+    gIvcctWorksheet['N3'] = 'cov(1,4)'
+    gIvcctWorksheet['O3'] = 'cov(2,1)'
+    gIvcctWorksheet['P3'] = 'cov(2,2)'
+    gIvcctWorksheet['Q3'] = 'cov(2,3)'
+    gIvcctWorksheet['R3'] = 'cov(2,4)'
+    gIvcctWorksheet['S3'] = 'cov(3,1)'
+    gIvcctWorksheet['T3'] = 'cov(3,2)'
+    gIvcctWorksheet['O3'] = 'cov(3,3)'
+    gIvcctWorksheet['P3'] = 'cov(3,4)'
+    gIvcctWorksheet['Q3'] = 'cov(4,1)'
+    gIvcctWorksheet['R3'] = 'cov(4,2)'
+    gIvcctWorksheet['S3'] = 'cov(4,3)'
+    gIvcctWorksheet['T3'] = 'cov(4,4)'
+    gIvcctWorksheet['U3'] = 'std err [J/m^2]'
+    gIjintWorksheet = wb.create_sheet(title='GI-Jint')
+    gIIvcctWorksheet = wb.create_sheet(title='GII-VCCT')
+    gTOTvcctWorksheet = wb.create_sheet(title='GTOT-VCCT')
+    gTOTjintWorksheet = wb.create_sheet(title='GTOT-Jint')
+    wb.save(filename = join(outdir,workbookname))
 
 def main(argv):
 
     inpDir = 'C:/Abaqus_WD'
     outdir = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/Interpolation'
+
+    if not os.path.exists(outdir):
+            os.mkdir(outdir)
 
     boundaryCases = ['free','geomcoupling','fixedv','fixedvlinearu']
 

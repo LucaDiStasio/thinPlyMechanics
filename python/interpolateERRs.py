@@ -40,6 +40,9 @@ from os.path import isfile, join, exists
 #from platform import platform
 from openpyxl import load_workbook
 
+def model(x,A,B,C,D):
+    return (A*np.sin(B*x)+D)
+
 def readData(wd,workbook,boundaryCase):
     wb = load_workbook(filename=join(wd,workbook), read_only=True)
     gIvcctWorksheet = wb['GI-VCCT']

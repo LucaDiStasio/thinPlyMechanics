@@ -52,6 +52,9 @@ rc('text', usetex=True)
 def model(x,A,B,C,D):
     return (A*np.sin(B*x+C)+D)
 
+def linear(x,A,B):
+    return (A*x+B)
+
 def readData(wd,workbook,boundaryCase):
     wb = load_workbook(filename=join(wd,workbook), read_only=True)
     gIvcctWorksheet = wb['GI-VCCT']
@@ -232,6 +235,9 @@ def interpolateData(outdir,data,boundaryCases):
             plt.legend(['data', 'interpolant'], loc=1)
             savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for v,vfData in enumerate(data['CZ'][case]):
+            filename = datetime.now().strftime('%Y-%m-%d') + '_ContactZone-Interpolation_' + case + '_Vf' + str(vfData['Vf'])
+            xs = vfData['theta']
+            ys = vfData['values']
 
 
 

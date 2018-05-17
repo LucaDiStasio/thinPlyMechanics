@@ -427,11 +427,17 @@ def writeData(outdir,workbookname,data,boundaryCase):
     gTOTjintWorksheet['T3'] = 'cov(4,4)'
     gTOTjintWorksheet['U3'] = 'std err [J/m^2]'
     wb.save(filename = join(outdir,workbookname))
+    Vf = [0.000079,0.0001,0.2,0.3,0.4,0.5,0.55,0.6,0.65]
+    nVf = len(Vf)
+    initVf = 4
 
 def main(argv):
 
     inpDir = 'C:/Abaqus_WD'
     outdir = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/Interpolation'
+
+    inpWorkbook = ''
+    outWorkbook = ''
 
     if not os.path.exists(outdir):
             os.mkdir(outdir)

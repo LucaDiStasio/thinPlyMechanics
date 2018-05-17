@@ -426,10 +426,50 @@ def writeData(outdir,workbookname,data,boundaryCase):
     gTOTjintWorksheet['S3'] = 'cov(4,3)'
     gTOTjintWorksheet['T3'] = 'cov(4,4)'
     gTOTjintWorksheet['U3'] = 'std err [J/m^2]'
-    wb.save(filename = join(outdir,workbookname))
+    czWorksheet = wb.create_sheet(title='ContactZone')
+    gTOTjintWorksheet['A1'] = 'Contact zone'
+    gTOTjintWorksheet['A2'] = 'BOUNDARY CONDITIONS'
+    gTOTjintWorksheet['A3'] = 'NORTH'
+    gTOTjintWorksheet['B3'] = 'SOUTH'
+    gTOTjintWorksheet['C3'] = 'EAST'
+    gTOTjintWorksheet['D3'] = 'WEST'
+    gTOTjintWorksheet['E3'] = 'Vf [%]'
+    gTOTjintWorksheet['F2'] = 'Coefficients'
+    gTOTjintWorksheet['F3'] = 'A [%/°]'
+    gTOTjintWorksheet['G3'] = 'B [%]'
+    gTOTjintWorksheet['H2'] = 'Covariance'
+    gTOTjintWorksheet['H3'] = 'cov(1,1)'
+    gTOTjintWorksheet['I3'] = 'cov(1,2)'
+    gTOTjintWorksheet['J3'] = 'cov(2,1)'
+    gTOTjintWorksheet['K3'] = 'cov(2,2)'
+    gTOTjintWorksheet['L3'] = 'std err [%]'
     Vf = [0.000079,0.0001,0.2,0.3,0.4,0.5,0.55,0.6,0.65]
     nVf = len(Vf)
     initVf = 4
+    for c,case in enumerate(boundaryCase):
+        gIvcctWorksheet['A'+str(initVf+c*nVf)] = case
+        gIvcctWorksheet['B'+str(initVf+c*nVf)] = 'Ysymm'
+        gIvcctWorksheet['C'+str(initVf+c*nVf)] = 'epsx=1%'
+        gIvcctWorksheet['D'+str(initVf+c*nVf)] = 'epsx=1%'
+        gIvcctWorksheet['A'+str(initVf+c*nVf)] = case
+        gIvcctWorksheet['B'+str(initVf+c*nVf)] = 'Ysymm'
+        gIvcctWorksheet['C'+str(initVf+c*nVf)] = 'epsx=1%'
+        gIvcctWorksheet['D'+str(initVf+c*nVf)] = 'epsx=1%'
+        gIvcctWorksheet['A'+str(initVf+c*nVf)] = case
+        gIvcctWorksheet['B'+str(initVf+c*nVf)] = 'Ysymm'
+        gIvcctWorksheet['C'+str(initVf+c*nVf)] = 'epsx=1%'
+        gIvcctWorksheet['D'+str(initVf+c*nVf)] = 'epsx=1%'
+        gIvcctWorksheet['A'+str(initVf+c*nVf)] = case
+        gIvcctWorksheet['B'+str(initVf+c*nVf)] = 'Ysymm'
+        gIvcctWorksheet['C'+str(initVf+c*nVf)] = 'epsx=1%'
+        gIvcctWorksheet['D'+str(initVf+c*nVf)] = 'epsx=1%'
+        gIvcctWorksheet['A'+str(initVf+c*nVf)] = case
+        gIvcctWorksheet['B'+str(initVf+c*nVf)] = 'Ysymm'
+        gIvcctWorksheet['C'+str(initVf+c*nVf)] = 'epsx=1%'
+        gIvcctWorksheet['D'+str(initVf+c*nVf)] = 'epsx=1%'
+        for v,value in enumerate(Vf):
+
+    wb.save(filename = join(outdir,workbookname))
 
 def main(argv):
 

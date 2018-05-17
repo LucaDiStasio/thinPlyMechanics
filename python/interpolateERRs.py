@@ -95,8 +95,15 @@ def readData(wd,workbook,boundaryCase):
 def interpolateData(outdir,data,boundaryCases):
 
     for c,case in enumerate(boundaryCase):
-        for vf in data['GI']['VCCT'][case]:
-            filename =
+        for v,vfData in enumerate(data['GI']['VCCT'][case]):
+            czStart = -1
+            for a,angle in data['CZ'][case][v]['values']:
+                if angle>0.0:
+                    czStart = a
+                    break
+            filename = datetime.now().strftime('%Y-%m-%d') + '_GI-VCCT-Interpolation_' + case + '_Vf' + str(vfData['Vf'])
+            xs = vfData['theta'][:czStart]
+            ys = vfData['values'][:czStart]
     res_GI, cov_GI = optimize.curve_fit(model,data[:6,0],data[:6,1],p0=[0.3,1.0/20.0,0.0,0.0])
     res_GII, cov_GII = optimize.curve_fit(model,data[:,0],data[:,2],p0=[0.7,1.0/60.0,0.0,0.0])
     res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:,0],data[:,3],p0=[0.7,1.0/60.0,0.0,0.0])

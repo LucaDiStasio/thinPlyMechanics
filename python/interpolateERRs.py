@@ -125,30 +125,9 @@ def interpolateData(outdir,data,boundaryCases):
             plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
             plt.title(r'Interpolation of GI-VCCT, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0 + '%$')
             plt.legend(['data', 'interpolant'], loc=1)
+            savefig(filename + '.png', bbox_inches='tight')
 
-    res_GII, cov_GII = optimize.curve_fit(model,data[:,0],data[:,2],p0=[0.7,1.0/60.0,0.0,0.0])
-    res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:,0],data[:,3],p0=[0.7,1.0/60.0,0.0,0.0])
-
-    print(res_GI)
-    print(res_GII)
-    print(res_GTOT)
-
-    angles = np.linspace(0., 150., num=300)
-    angles1 = np.linspace(0., 60., num=120)
-
-    plt.figure()
-    plt.plot(data[:,0], data[:,1], 'ro')
-    plt.plot(angles1, model(angles1, *res_GI), 'r-')
-    plt.plot(data[:,0], data[:,2], 'bo')
-    plt.plot(angles, model(angles, *res_GII), 'b-')
-    plt.plot(data[:,0], data[:,3], 'go')
-    plt.plot(angles, model(angles, *res_GTOT), 'g-')
-    plt.xlabel('deltatheta')
-    plt.ylabel('G/GO [-]')
-    plt.title(titles[m])
-    plt.legend(['GI,data', 'GI,interp','GII,data', 'GII,interp','GTOT,data','GTOT,interp'], loc=1)
-
-    savefig('foo.png', bbox_inches='tight')
+    
 
 def main(argv):
 

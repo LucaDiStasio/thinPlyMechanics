@@ -104,7 +104,14 @@ def interpolateData(outdir,data,boundaryCases):
             filename = datetime.now().strftime('%Y-%m-%d') + '_GI-VCCT-Interpolation_' + case + '_Vf' + str(vfData['Vf'])
             xs = vfData['theta'][:czStart]
             ys = vfData['values'][:czStart]
-            res, cov = optimize.curve_fit(model,data[:6,0],data[:6,1],p0=[0.3,1.0/20.0,0.0,0.0])
+            maxIndex = 0
+            maxValue = vfData['values'][maxIndex]
+            for i,y in enumerate(ys):
+                if y>maxValue:
+                    maxIndex = i
+                    maxValue = y
+            res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0])
+
     res_GII, cov_GII = optimize.curve_fit(model,data[:,0],data[:,2],p0=[0.7,1.0/60.0,0.0,0.0])
     res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:,0],data[:,3],p0=[0.7,1.0/60.0,0.0,0.0])
 

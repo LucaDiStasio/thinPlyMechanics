@@ -263,6 +263,7 @@ def interpolateData(outdir,data,boundaryCase):
             plt.title(r'Interpolation of normalized contact zone size, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0 + '%$')
             plt.legend(['data', 'interpolant'], loc=1)
             savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+    return data
 
 def writeData(outdir,workbookname,data,boundaryCase):
     wb = Workbook()
@@ -638,20 +639,36 @@ def writeData(outdir,workbookname,data,boundaryCase):
             series = Series(y, x, title=case)
             chartD.series.append(series)
         ws.add_chart(chartDeb, "AC2")
+        ws.add_chart(chartA, "AC8")
+        ws.add_chart(chartB, "AC14")
+        ws.add_chart(chartC, "AC20")
+        ws.add_chart(chartD, "AC26")
+    chartA = LineChart()
+    chartA.style = 13
+    chartA.y_axis.title = 'A [%]'
+    chartA.x_axis.title = 'Vf [%]'
+    for c,case in enumerate(boundaryCase):
+        x = Reference(czWorksheet, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
+        y = Reference(czWorksheet, min_col=6, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
+        series = Series(y, x, title=case)
+        chartA.series.append(series)
+    czWorksheet.add_chart(chartA, "AC2")
     wb.save(filename = join(outdir,workbookname))
 
 def main(argv):
 
     inpDir = 'C:/Abaqus_WD'
-    outdir = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/Interpolation'
+    outDir = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/Interpolation'
 
-    inpWorkbook = ''
-    outWorkbook = ''
+    inpWorkbook = 'sweepDeltathetaVffBCs-GF.xlsx'
+    outWorkbook = 'sweepDeltathetaVffBCs-GF_Interpolation.xlsx'
 
     if not os.path.exists(outdir):
             os.mkdir(outdir)
 
     boundaryCases = ['free','geomcoupling','fixedv','fixedvlinearu']
+    
+    writeData(outDir,outWorkbook,interpolateData(outDir,readData(inpDir,inpWorkbook,boundaryCases),boundaryCases),boundaryCases)
 
 
 

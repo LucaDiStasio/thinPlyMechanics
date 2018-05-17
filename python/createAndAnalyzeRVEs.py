@@ -5322,6 +5322,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalcontactzonetolerance'],[[tol,phiSZtol[s]*180.0/np.pi,phiCZtol[s]*180.0/np.pi]])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+        uRthermal = uR
+        uThetathermal = uTheta
+        phiCZthermal = phiCZ
+        phiSZthermal = phiSZ
+
         del fiberAngles
         del matrixAngles
         del fiberDisps

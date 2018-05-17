@@ -293,6 +293,15 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outdir,odbna
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '.. done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Filter undeformed and deformed coordinates ...',True)
+
+    undefPoints = []
+    defPoints = []
+
+    for value in thirdcircleundefCoords.values:
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '.. done.',True)
+
 def main(argv):
 
     matfolder = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/02_Material-Properties'

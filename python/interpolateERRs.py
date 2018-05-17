@@ -595,15 +595,28 @@ def writeData(outdir,workbookname,data,boundaryCase):
             czWorksheet['J'+str(initVf+c*nVf+v)] = data['CZ'][case][v]['cov'][1][0]
             czWorksheet['K'+str(initVf+c*nVf+v)] = data['CZ'][case][v]['cov'][1][1]
             czWorksheet['L'+str(initVf+c*nVf+v)] = data['CZ'][case][v]['std']
-    chartA = LineChart()
-    chartA.style = 13
-    chartA.y_axis.title = 'A [J/m^2]'
-    chartA.x_axis.title = 'Vf [%]'
-    for c,case in enumerate(boundaryCase):
-    y = Reference(ws, min_col=i, min_row=1, max_row=7)
-    y = Reference(ws, min_col=i, min_row=1, max_row=7)
-    series = Series(values, xvalues, title_from_data=True)
-    chart.series.append(series)
+    for ws in [gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]:
+        chartA = LineChart()
+        chartA.style = 13
+        chartA.y_axis.title = 'A [J/m^2]'
+        chartA.x_axis.title = 'Vf [%]'
+        chartB = LineChart()
+        chartB.style = 13
+        chartB.y_axis.title = 'B [1/°]'
+        chartB.x_axis.title = 'Vf [%]'
+        chartC = LineChart()
+        chartC.style = 13
+        chartC.y_axis.title = 'C [°]'
+        chartC.x_axis.title = 'Vf [%]'
+        chartD = LineChart()
+        chartD.style = 13
+        chartD.y_axis.title = 'D [J/m^2]'
+        chartD.x_axis.title = 'Vf [%]'
+        for c,case in enumerate(boundaryCase):
+            x = Reference(ws, min_col=i, min_row=1, max_row=7)
+            y = Reference(ws, min_col=i, min_row=1, max_row=7)
+            series = Series(values, xvalues, title_from_data=True)
+            chartA.series.append(series)
     wb.save(filename = join(outdir,workbookname))
 
 def main(argv):

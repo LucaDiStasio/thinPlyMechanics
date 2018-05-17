@@ -97,7 +97,7 @@ def readData(wd,workbook,boundaryCase):
             data['CZ'][case][v+1] = {'Vf':value,'theta':theta,'values':values}
     return data
 
-def interpolateData(outdir,data,boundaryCases):
+def interpolateData(outdir,data,boundaryCase):
     for c,case in enumerate(boundaryCase):
         for v,vfData in enumerate(data['GI']['VCCT'][case]):
             czStart = -1
@@ -124,7 +124,7 @@ def interpolateData(outdir,data,boundaryCases):
             plt.figure()
             plt.plot(vfData['theta'], vfData['values'], 'ko')
             plt.plot(angles, model(angles, *res), 'b-')
-            plt.xlabel(r'$\Delta\theta$')
+            plt.xlabel(r'$\Delta\theta [^{\circ}]$')
             plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
             plt.title(r'Interpolation of GI-VCCT, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0 + '%$')
             plt.legend(['data', 'interpolant'], loc=1)
@@ -154,7 +154,7 @@ def interpolateData(outdir,data,boundaryCases):
             plt.figure()
             plt.plot(vfData['theta'], vfData['values'], 'ko')
             plt.plot(angles, model(angles, *res), 'b-')
-            plt.xlabel(r'$\Delta\theta$')
+            plt.xlabel(r'$\Delta\theta [^{\circ}]$')
             plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
             plt.title(r'Interpolation of GI-Jint, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0 + '%$')
             plt.legend(['data', 'interpolant'], loc=1)
@@ -179,8 +179,8 @@ def interpolateData(outdir,data,boundaryCases):
             plt.figure()
             plt.plot(vfData['theta'], vfData['values'], 'ko')
             plt.plot(angles, model(angles, *res), 'b-')
-            plt.xlabel(r'$\Delta\theta$')
-            plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
+            plt.xlabel(r'$\Delta\theta [^{\circ}]$')
+            plt.ylabel(r'$G_{II} [\frac{J}{m^{2}}]$')
             plt.title(r'Interpolation of GII-VCCT, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0 + '%$')
             plt.legend(['data', 'interpolant'], loc=1)
             savefig(join(outdir,filename + '.png'), bbox_inches='tight')
@@ -204,8 +204,8 @@ def interpolateData(outdir,data,boundaryCases):
             plt.figure()
             plt.plot(vfData['theta'], vfData['values'], 'ko')
             plt.plot(angles, model(angles, *res), 'b-')
-            plt.xlabel(r'$\Delta\theta$')
-            plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
+            plt.xlabel(r'$\Delta\theta [^{\circ}]$')
+            plt.ylabel(r'$G_{TOT} [\frac{J}{m^{2}}]$')
             plt.title(r'Interpolation of GTOT-VCCT, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0 + '%$')
             plt.legend(['data', 'interpolant'], loc=1)
             savefig(join(outdir,filename + '.png'), bbox_inches='tight')
@@ -229,8 +229,8 @@ def interpolateData(outdir,data,boundaryCases):
             plt.figure()
             plt.plot(vfData['theta'], vfData['values'], 'ko')
             plt.plot(angles, model(angles, *res), 'b-')
-            plt.xlabel(r'$\Delta\theta$')
-            plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
+            plt.xlabel(r'$\Delta\theta [^{\circ}]$')
+            plt.ylabel(r'$G_{TOT} [\frac{J}{m^{2}}]$')
             plt.title(r'Interpolation of GTOT-Jint, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0 + '%$')
             plt.legend(['data', 'interpolant'], loc=1)
             savefig(join(outdir,filename + '.png'), bbox_inches='tight')
@@ -242,7 +242,12 @@ def interpolateData(outdir,data,boundaryCases):
                     break
             filename = datetime.now().strftime('%Y-%m-%d') + '_ContactZone-Interpolation_' + case + '_Vf' + str(vfData['Vf'])
             xs = vfData['theta'][czStart:]
-            ys = vfData['values'][czStart:]
+            phis = []
+            for p,phi in enumerate(vfData['values']):
+                phis.append(100*phi/vfData['theta'][p])
+            ys = phis[czStart:]
+            for p,phi in enumerate(phis):
+                ys = 100*phi/xs[p]
             res, cov = optimize.curve_fit(linear,xs,ys,method='dogbox')
             stderr = np.sqrt(np.diag(cov))
             angles = np.linspace(xs[0], xs[-1]+5, num=300)
@@ -250,15 +255,16 @@ def interpolateData(outdir,data,boundaryCases):
             data['CZ'][case][v]['cov'] = cov
             data['CZ'][case][v]['std'] = stderr
             plt.figure()
-            plt.plot(vfData['theta'], vfData['values'], 'ko')
-            plt.plot(angles, model(angles, *res), 'b-')
-            plt.xlabel(r'$\Delta\theta$')
-            plt.ylabel(r'$\Delta\Phi [^]$')
+            plt.plot(vfData['theta'], phis, 'ko')
+            plt.plot(angles, linear(angles, *res), 'b-')
+            plt.xlabel(r'$\Delta\theta [^{\circ}]$')
+            plt.ylabel(r'$\frac{\Delta\Phi}{\Delta\theta} [%]$')
             plt.title(r'Interpolation of normalized contact zone size, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0 + '%$')
             plt.legend(['data', 'interpolant'], loc=1)
             savefig(join(outdir,filename + '.png'), bbox_inches='tight')
 
-
+def writeData(outdir,workbook,data,boundaryCase):
+    
 
 def main(argv):
 

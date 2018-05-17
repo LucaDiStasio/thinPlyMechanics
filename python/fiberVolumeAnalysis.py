@@ -255,47 +255,6 @@ def extractAndSaveFieldOutput(odbObj,step,frameN,folder,filename,ext,fieldOutput
                     line += ', ' + str(datum)
                 csv.write(line + '\n')
 
-def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
-
-    set = getSingleNodeSet(odbObj,part,subset)
-
-    disp = getFieldOutput(odbObj,-1,-1,'U',set)
-
-    countdisp = 0
-    meandisp = 0
-
-    for value in disp.values:
-        countdisp += 1
-        meandisp += value.data[component]
-    meandisp /= countdisp
-
-    force = getFieldOutput(odbObj,-1,-1,'RF',set)
-
-    totalforce = 0
-
-    for value in force.values:
-        totalforce += value.data[component]
-
-    return meandisp,totalforce
-
-
-#===============================================================================#
-#===============================================================================#
-#                       Data extraction sets
-#===============================================================================#
-#===============================================================================#
-
-#===============================================================================#
-#   extractFromODBoutputSet01
-#
-#   For Single Fiber RVE model
-#
-#   Extract coordinates of nodes and integration points, displacements, strains,
-#   stresses, displacements and reactions at boundaries, displacements and stresses
-#   at interfaces, Abaqus VCCT results
-#
-#===============================================================================#
-
 def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outdir,odbname):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outdir,odbname)',True)
@@ -316,8 +275,11 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outdir,odbna
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting node sets ...',True)
 
-    rightSide = getSingleNodeSet(odb,'RVE-ASSEMBLY','RIGHTSIDE')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- RIGHTSIDE',True)
+    thirdcircle = getSingleNodeSet(odb,'RVE-ASSEMBLY','THIRDCIRCLE')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- THIRDCIRCLE',True)
+
+    matrixcrackface = getSingleNodeSet(odb,'RVE-ASSEMBLY','MATRIX-CRACKFACE-NODES')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKFACE-NODES',True)
 
 
 

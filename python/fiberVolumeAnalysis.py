@@ -48,7 +48,7 @@ from datetime import datetime
 from time import strftime, sleep
 from platform import platform
 import getopt
-import numpy
+import numpy as np
 from odbAccess import *
 from abaqusConstants import *
 from odbMaterial import *
@@ -309,6 +309,18 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outdir,odbna
     for value in thirdcircledefCoords.values:
         if not value.nodeLabel in matrixcrackfaceNodeLabels:
             defPoints.append([value.data[0],value.data[1]])
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '.. done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute area by trapezoidal integration ...',True)
+
+    undefPoints = np.array(undefPoints)
+    undefPoints = undefPoints[np.argsort(undefPoints[:,0])]
+    defPoints = np.array(defPoints)
+    defPoints = defPoints[np.argsort(defPoints[:,0])]
+
+    undefA = 0.0
+    defA = 0.0
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '.. done.',True)
 

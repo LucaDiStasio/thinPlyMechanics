@@ -42,8 +42,7 @@ Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 
 '''
 
-from os.path import isfile, join, exists
-from os import makedirs
+import os
 from datetime import datetime
 from time import strftime, sleep
 from platform import platform
@@ -54,6 +53,29 @@ from abaqusConstants import *
 from odbMaterial import *
 from odbSection import *
 import re
+
+#===============================================================================#
+#===============================================================================#
+#                              I/O functions
+#===============================================================================#
+#===============================================================================#
+
+#===============================================================================#
+#                                 Log files
+#===============================================================================#
+
+def writeLineToLogFile(logFileFullPath,mode,line,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write(line + '\n')
+    if toScreen:
+        print >> sys.__stdout__,(line + '\n')
+
+def skipLineToLogFile(logFileFullPath,mode,toScreen):
+    with open(logFileFullPath,mode) as log:
+        log.write('\n')
+    if toScreen:
+        print >> sys.__stdout__,('\n')
+
 
 #===============================================================================#
 #===============================================================================#
@@ -255,9 +277,9 @@ def extractAndSaveFieldOutput(odbObj,step,frameN,folder,filename,ext,fieldOutput
                     line += ', ' + str(datum)
                 csv.write(line + '\n')
 
-def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outdir,odbname):
+def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,odbname):
     skipLineToLogFile(logfilepath,'a',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outdir,odbname)',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,odbname)',True)
     #=======================================================================
     # BEGIN - open ODB
     #=======================================================================
@@ -322,26 +344,43 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outdir,odbna
     undefA = 0.0
     defA = 0.0
 
+    for p in range(1,len(undefPoints)):
+        undefA += 0.5*(undefPoints[p,1]+undefPoints[p-1,1])*(undefPoints[p,0]-undefPoints[p-1,0])
+        defA += 0.5*(defPoints[p,1]+defPoints[p-1,1])*(defPoints[p,0]-defPoints[p-1,0])
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '.. done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,odbname)',True)
+
+    return [undefA,A,A/undefA,100.0*A/undefA,A-undefA,(A-undefA)/undefA]
 
 def main(argv):
 
-    matfolder = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/02_Material-Properties'
+    workDir = 'C:/Abaqus_WD'
+    inpDir = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM'
+    outdir = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/FiberVolumeChange'
 
-    #workdir = 'D:/01_Luca/07_Data/03_FEM'
-    #workdir = 'D:/01_Luca/07_Data/03_FEM/StraightInterface/Full'
-    workdir = 'D:/01_Luca/07_Data/03_FEM/CurvedInterface'
-    #workdir = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM'
-    #workdir = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/CurvedInterface'
-    #workdir = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/StraightInterface/Full'
-    #workdir = 'H:/01_Luca/07_DocMASE/07_Data/03_FEM/StraightInterface/Quarter'
+    odbs = ['Job-VCCTandJintegral-RVE1_0992-Half-SD-vkmcul_deltatheta10_0',
+            'Job-VCCTandJintegral-RVE1_0992-Half-SD-vkmcul_deltatheta150_0']
 
-    #statusfile = '2017-06-23_AbaqusParametricRun_2017-06-23_16-57-17.sta'
-    #statusfile = '2017-06-23_AbaqusParametricRun_SecondPart.sta'
-    statusfile = '2017-06-23_AbaqusParametricRun_All.sta'
+    logfilename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_fiberVolumeChange' + '.log'
+    logfilefullpath = join(workDir,logfilename)
+    logindent = '    '
 
-    settingsfile = 'D:/01_Luca/07_Data/03_FEM/postProcessorSettings.csv'
+    if not os.path.exists(outdir):
+            os.mkdir(outdir)
 
+    with open(logfilefullpath,'w') as log:
+        log.write('Calculation of fiber volume change with Abaqus Python' + '\n')
+
+    results = []
+    for odb in odbs:
+        results.append(calculateFiberAreaChange(logfilefullpath,'',logindent,inpDir,outdir,odb))
+
+    with open(join(outdir,datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_fiberVolumeChange' + '.csv'),'w') as csv:
+        cas.write('undeformed area [um^2], deformed area [um^2], ratio [-], ratio [%], change [um], change [%]' + '\n')
+        for result in results:
+            line =
 
 
 

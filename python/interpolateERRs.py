@@ -60,7 +60,6 @@ def readData(wd,workbook,boundaryCase):
     gTOTvcctWorksheet = wb['GTOT-VCCT']
     gTOTjintWorksheet = wb['GTOT-Jint']
     czWorksheet = wb['ContactZone']
-    szWorksheet = wb['SeparationZone']
     data = {}
     Vf = [0.000079,0.0001,0.2,0.3,0.4,0.5,0.55,0.6,0.65]
     Vfcolumns = {0.000079:'F',0.0001:'G',0.2:'H',0.3:'I',0.4:'J',0.5:'K',0.55:'L',0.6:'M',0.65:'N'}
@@ -93,10 +92,6 @@ def readData(wd,workbook,boundaryCase):
             for n in range(0,nTheta):
                 values.append(czWorksheet[Vfcolumns[value]+str(4+c*nTheta+n)].value)
             data['CZ'][case][v+1] = {'Vf':value,'theta':theta,'values':values}
-            values = []
-            for n in range(0,nTheta):
-                values.append(szWorksheet[Vfcolumns[value]+str(4+c*nTheta+n)].value)
-            data['SZ'][case][v+1] = {'Vf':value,'theta':theta,'values':values}
     return data
 
 def interpolateData(outdir,data,boundaryCases):
@@ -236,6 +231,7 @@ def interpolateData(outdir,data,boundaryCases):
             plt.title(r'Interpolation of GTOT-Jint, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0 + '%$')
             plt.legend(['data', 'interpolant'], loc=1)
             savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+        for v,vfData in enumerate(data['CZ'][case]):
 
 
 

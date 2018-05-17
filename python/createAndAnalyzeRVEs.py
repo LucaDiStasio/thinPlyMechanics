@@ -5990,7 +5990,7 @@ def main(argv):
     RVEparams['output']['global']['filenames']['inputdata'] = basename + '_InputData'
     RVEparams['output']['global']['filenames']['performances'] = basename + '_ABQ-Performances'
     RVEparams['output']['global']['filenames']['energyreleaserate'] = basename + '_ERRTS'
-    if len(parameters['steps'])>1:
+    if len(RVEparams['steps'])>1:
         RVEparams['output']['global']['filenames']['thermalenergyreleaserate'] = basename + '_thermalERRTS'
 
     logfilename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_ABQ-RVE-generation-and-analysis' + '.log'
@@ -6013,7 +6013,7 @@ def main(argv):
     createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist','ABSOLUTE PATH, NAME, TO PLOT, PLOT VARIABLES')
     appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata']+'.csv'),'MODEL-DATA',RVEparams['plot']['global']['inputdata']['toPlot'],RVEparams['plot']['global']['inputdata']['variables']]])
     appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate']+'.csv'),'GLOBAL-ERRTS',RVEparams['plot']['global']['errts']['toPlot'],RVEparams['plot']['global']['errts']['variables']]])
-    if len(parameters['steps'])>1:
+    if len(RVEparams['steps'])>1:
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['thermalenergyreleaserate']+'.csv'),'GLOBAL-THERMALERRTS',RVEparams['plot']['global']['errts']['toPlot'],RVEparams['plot']['global']['errts']['variables']]])
     appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME'+'.csv'),'GLOBAL-TIME',RVEparams['plot']['global']['globaltime']['toPlot'],RVEparams['plot']['global']['globaltime']['variables']]])
     appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['performances']+'.csv'),'GLOBAL-ABQperformances',RVEparams['plot']['global']['abqperf']['toPlot'],RVEparams['plot']['global']['abqperf']['variables']]])
@@ -6026,7 +6026,7 @@ def main(argv):
     else:
         titleline = 'deltatheta [deg],Rf,L,L/Rf,phiCZ [deg],G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ [deg],xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement'
     createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate'],titleline)
-    if len(parameters['steps'])>1:
+    if len(RVEparams['steps'])>1:
         createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['thermalenergyreleaserate'],titleline)
 
     skipLineToLogFile(logfilefullpath,'a',True)
@@ -6076,7 +6076,7 @@ def main(argv):
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Params='+variationString,RVEparams['plot']['local']['crackdisplacements']['toPlot'],RVEparams['plot']['local']['crackdisplacements']['variables']]])
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['contactzonetolerance']+'.csv'),'TolCZ-Params='+variationString,RVEparams['plot']['local']['contactzonetolerance']['toPlot'],RVEparams['plot']['local']['contactzonetolerance']['variables']]])
 
-        if len(parameters['steps'])>1:
+        if len(RVEparams['steps'])>1:
             RVEparams['output']['local']['filenames']['thermalJintegral'] = RVEparams['input']['modelname'] + '-thermalJintegral'
             RVEparams['output']['local']['filenames']['thermalcrackdisplacements'] = RVEparams['input']['modelname'] + '-thermalcrackdisplacements'
             RVEparams['output']['local']['filenames']['thermalcontactzonetolerance'] = RVEparams['input']['modelname'] + '-thermalcontactzonetol'

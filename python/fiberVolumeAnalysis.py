@@ -281,6 +281,11 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outdir,odbna
     matrixcrackface = getSingleNodeSet(odb,'RVE-ASSEMBLY','MATRIX-CRACKFACE-NODES')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKFACE-NODES',True)
 
+    thirdcircleundefCoords = getFieldOutput(odb,-1,0,'COORD',thirdcircle)
+    thirdcircledefCoords = getFieldOutput(odb,-1,1,'COORD',thirdcircle)
+
+    matrixcrackfaceundefCoords = getFieldOutput(odb,-1,0,'COORD',matrixcrackface)
+    matrixcrackfacedefCoords = getFieldOutput(odb,-1,1,'COORD',matrixcrackface)
 
 
 def main(argv):

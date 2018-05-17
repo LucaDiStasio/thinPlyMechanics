@@ -120,12 +120,18 @@ for m,model in enumerate(models):
     res_GII, cov_GII = optimize.curve_fit(model,data[:,0],data[:,2],p0=[0.7,1.0/60.0,0.0,0.0])
     res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:,0],data[:,3],p0=[0.7,1.0/60.0,0.0,0.0])
 
+    print('res_GI')
     print(res_GI)
+    print('res_GII')
     print(res_GII)
+    print('res_GTOT')
     print(res_GTOT)
 
+    print('cov_GI')
     print(cov_GI)
+    print('cov_GII')
     print(cov_GII)
+    print('cov_GTOT')
     print(cov_GTOT)
 
     angles = np.linspace(0., 150., num=300)

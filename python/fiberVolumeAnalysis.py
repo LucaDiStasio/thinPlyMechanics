@@ -296,96 +296,28 @@ def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
 #
 #===============================================================================#
 
-def extractFromODBoutputSet01(wd,project,tol):
-    print('Starting post-processing on project ' + project + '\n')
-    # define database name
-    odbname = project + '.odb'
-    odbfullpath = join(wd,project,'abaqus',odbname)
-    # define input file name
-    inpname = project + '.inp'
-    inpfullpath = join(wd,project,'abqinp',inpname)
-    # define csv output folder
-    csvfolder = join(wd,project,'csv')
-    # open odb
-    print('Open odb ' + odbname + ' in folder ' + join(wd,project,'abaqus') + ' ...\n')
-    try:
-        odb = openOdb(path=odbfullpath)
-    except Exception,e:
-        print('An error occurred:')
-        print(str(Exception))
-        print(str(e))
-        sys.exc_clear()
-        return
-    print('...done.\n')
+def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outdir,odbname):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outdir,odbname)',True)
     #=======================================================================
-    # get first and last frame
+    # BEGIN - open ODB
     #=======================================================================
-    print('\n')
-    print('Get first and last frame...\n')
-    firstFrame,lastFrame = getFirstAndLastFrameLastStep(odb)
-    print('...done.\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Opening ODB database ' + odbname + ' in directory ' + wd + ' ...',True)
+    if '.odb' not in odbname:
+        odbname += '.odb'
+    odbfullpath = join(wd,odbname)
+    odb = openOdb(path=odbfullpath)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
-    # get deformed nodes
+    # END - open ODB
     #=======================================================================
-    print('\n')
-    print('Get deformed nodes...\n')
+    #=======================================================================
+    # BEGIN - extract node sets
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting node sets ...',True)
 
-    nodes = getAndSaveAllNodes(odb,-1,-1,csvfolder,'defnodesCoords','.csv')
-    intpoints = getAndSaveAllIntPoints(odb,-1,-1,csvfolder,'defintpointCoords','.csv')
-
-    boundaryNodeSetsData = [[-1,-1,'PART-1-1','SW-CORNERNODE'],
-                            [-1,-1,'PART-1-1','SE-CORNERNODE'],
-                            [-1,-1,'PART-1-1','NE-CORNERNODE'],
-                            [-1,-1,'PART-1-1','NW-CORNERNODE'],
-                            [-1,-1,'PART-1-1','LOWERSIDE-NODES-WITHOUT-CORNERS'],
-                            [-1,-1,'PART-1-1','RIGHTSIDE-NODES-WITHOUT-CORNERS'],
-                            [-1,-1,'PART-1-1','UPPERSIDE-NODES-WITHOUT-CORNERS'],
-                            [-1,-1,'PART-1-1','LEFTSIDE-NODES-WITHOUT-CORNERS']]
-    extractAndSaveNodesCoordinates(odb,boundaryNodeSetsData,csvfolder,'defboundaryNodesCoords','.csv')
-
-    interfaceNodeSetsData = [[-1,-1,'PART-1-1','FIBERSURFACE-NODES'],
-                            [-1,-1,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES']]
-    extractAndSaveNodesCoordinates(odb,interfaceNodeSetsData,csvfolder,'deffiberInterfaceNodesCoords','.csv')
-
-    print('...done.\n')
-    #=======================================================================
-    # get undeformed nodes
-    #=======================================================================
-    print('\n')
-    print('Get undeformed nodes...\n')
-
-    undefNodes = getAndSaveAllNodes(odb,-1,0,csvfolder,'undefnodesCoords','.csv')
-    undefIntpoints = getAndSaveAllIntPoints(odb,-1,0,csvfolder,'undefintpointCoords','.csv')
-
-    undefBoundaryNodeSetsData = [[-1,0,'PART-1-1','SW-CORNERNODE'],
-                            [-1,0,'PART-1-1','SE-CORNERNODE'],
-                            [-1,0,'PART-1-1','NE-CORNERNODE'],
-                            [-1,0,'PART-1-1','NW-CORNERNODE'],
-                            [-1,0,'PART-1-1','LOWERSIDE-NODES-WITHOUT-CORNERS'],
-                            [-1,0,'PART-1-1','RIGHTSIDE-NODES-WITHOUT-CORNERS'],
-                            [-1,0,'PART-1-1','UPPERSIDE-NODES-WITHOUT-CORNERS'],
-                            [-1,0,'PART-1-1','LEFTSIDE-NODES-WITHOUT-CORNERS']]
-    extractAndSaveNodesCoordinates(odb,undefBoundaryNodeSetsData,csvfolder,'undefboundaryNodesCoords','.csv')
-
-    undefInterfaceNodeSetsData = [[-1,0,'PART-1-1','FIBERSURFACE-NODES'],
-                                  [-1,0,'PART-1-1','MATRIXSURFACEATFIBERINTERFACE-NODES']]
-    extractAndSaveNodesCoordinates(odb,undefInterfaceNodeSetsData,csvfolder,'undeffiberInterfaceNodesCoords','.csv')
-
-    print('...done.\n')
-    #=======================================================================
-    # get fiber and matrix elements' and nodes' subsets
-    #=======================================================================
-    fiberNodes = getSingleNodeSet(odb,'PART-1-1','FIBER-NODES')
-    matrixNodes = getSingleNodeSet(odb,'PART-1-1','MATRIX-NODES')
-    fiberElements = getSingleElementSet(odb,'PART-1-1','FIBER-ELEMENTS')
-    matrixElements = getSingleElementSet(odb,'PART-1-1','MATRIX-ELEMENTS')
-    #=======================================================================
-    # get displacements
-    #=======================================================================
-    print('\n')
-    print('Get displacements in the entire model...\n')
-
-    extractAndSaveFieldOutput(odb,-1,-1,csvfolder,'all-displacements','.csv','U')
+    rightSide = getSingleNodeSet(odb,'RVE-ASSEMBLY','RIGHTSIDE')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- RIGHTSIDE',True)
 
 
 
@@ -407,7 +339,7 @@ def main(argv):
 
     settingsfile = 'D:/01_Luca/07_Data/03_FEM/postProcessorSettings.csv'
 
-    
+
 
 
 if __name__ == "__main__":

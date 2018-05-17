@@ -43,7 +43,7 @@ import matplotlib.pyplot as plt
 from scipy import fftpack
 
 def model(x,A,B,C,D):
-    return (A*np.sin(B*x)+D)
+    return (A*np.sin(B*x+C)+D)
 
 def readData(wd,workbook,boundaryCase):
     wb = load_workbook(filename=join(wd,workbook), read_only=True)
@@ -104,7 +104,7 @@ def interpolateData(outdir,data,boundaryCases):
             filename = datetime.now().strftime('%Y-%m-%d') + '_GI-VCCT-Interpolation_' + case + '_Vf' + str(vfData['Vf'])
             xs = vfData['theta'][:czStart]
             ys = vfData['values'][:czStart]
-    res_GI, cov_GI = optimize.curve_fit(model,data[:6,0],data[:6,1],p0=[0.3,1.0/20.0,0.0,0.0])
+            res, cov = optimize.curve_fit(model,data[:6,0],data[:6,1],p0=[0.3,1.0/20.0,0.0,0.0])
     res_GII, cov_GII = optimize.curve_fit(model,data[:,0],data[:,2],p0=[0.7,1.0/60.0,0.0,0.0])
     res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:,0],data[:,3],p0=[0.7,1.0/60.0,0.0,0.0])
 

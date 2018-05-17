@@ -495,10 +495,6 @@ def writeData(outdir,workbookname,data,boundaryCase):
             gIvcctWorksheet['Y'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v]['cov'][3][2]
             gIvcctWorksheet['Z'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v]['cov'][3][3]
             gIvcctWorksheet['AA'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v]['std']
-            chartA = LineChart()
-            chartA.style = 13
-            chartA.y_axis.title = 'Size'
-            chartA.x_axis.title = 'Vf [%]'
             gIjintWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
             gIjintWorksheet['F'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v]['valueAtNoDebond']
             gIjintWorksheet['G'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v]['coeff'][0]
@@ -599,7 +595,15 @@ def writeData(outdir,workbookname,data,boundaryCase):
             czWorksheet['J'+str(initVf+c*nVf+v)] = data['CZ'][case][v]['cov'][1][0]
             czWorksheet['K'+str(initVf+c*nVf+v)] = data['CZ'][case][v]['cov'][1][1]
             czWorksheet['L'+str(initVf+c*nVf+v)] = data['CZ'][case][v]['std']
-
+    chartA = LineChart()
+    chartA.style = 13
+    chartA.y_axis.title = 'A [J/m^2]'
+    chartA.x_axis.title = 'Vf [%]'
+    for c,case in enumerate(boundaryCase):
+    y = Reference(ws, min_col=i, min_row=1, max_row=7)
+    y = Reference(ws, min_col=i, min_row=1, max_row=7)
+    series = Series(values, xvalues, title_from_data=True)
+    chart.series.append(series)
     wb.save(filename = join(outdir,workbookname))
 
 def main(argv):

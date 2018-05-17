@@ -38,6 +38,7 @@ from os.path import isfile, join, exists
 from datetime import datetime
 from time import strftime
 #from platform import platform
+from openpyxl import Workbook
 from openpyxl import load_workbook
 import numpy as np
 from scipy import fftpack
@@ -264,9 +265,12 @@ def interpolateData(outdir,data,boundaryCase):
             savefig(join(outdir,filename + '.png'), bbox_inches='tight')
 
 def writeData(outdir,workbook,data,boundaryCase):
-    
+
 
 def main(argv):
+
+    inpDir = 'C:/Abaqus_WD'
+    outdir = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/Interpolation'
 
     boundaryCases = ['free','geomcoupling','fixedv','fixedvlinearu']
 

@@ -39,6 +39,8 @@ from os.path import isfile, join, exists
 #from time import strftime
 #from platform import platform
 from openpyxl import load_workbook
+import matplotlib.pyplot as plt
+from scipy import fftpack
 
 def model(x,A,B,C,D):
     return (A*np.sin(B*x)+D)

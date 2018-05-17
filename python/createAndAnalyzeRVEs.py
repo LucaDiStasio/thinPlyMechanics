@@ -3776,8 +3776,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     # SOUTH side: symmetry line
 
-    model.YsymmBC(name='SymmetryBound', createStepName='Load-Step',
-        region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
+    for step in parameters['steps'].values():
+        model.YsymmBC(name='SymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
 
     # NORTH side
 

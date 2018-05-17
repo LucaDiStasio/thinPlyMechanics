@@ -596,6 +596,10 @@ def writeData(outdir,workbookname,data,boundaryCase):
             czWorksheet['K'+str(initVf+c*nVf+v)] = data['CZ'][case][v]['cov'][1][1]
             czWorksheet['L'+str(initVf+c*nVf+v)] = data['CZ'][case][v]['std']
     for ws in [gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]:
+        chartDeb = LineChart()
+        chartDeb.style = 13
+        chartDeb.y_axis.title = 'G(0°) [J/m^2]'
+        chartDeb.x_axis.title = 'Vf [%]'
         chartA = LineChart()
         chartA.style = 13
         chartA.y_axis.title = 'A [J/m^2]'
@@ -613,10 +617,27 @@ def writeData(outdir,workbookname,data,boundaryCase):
         chartD.y_axis.title = 'D [J/m^2]'
         chartD.x_axis.title = 'Vf [%]'
         for c,case in enumerate(boundaryCase):
-            x = Reference(ws, min_col=i, min_row=1, max_row=7)
-            y = Reference(ws, min_col=i, min_row=1, max_row=7)
-            series = Series(values, xvalues, title_from_data=True)
+            x = Reference(ws, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
+            y = Reference(ws, min_col=6, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
+            series = Series(y, x, title=case)
+            chartDeb.series.append(series)
+            x = Reference(ws, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
+            y = Reference(ws, min_col=7, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
+            series = Series(y, x, title=case)
             chartA.series.append(series)
+            x = Reference(ws, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
+            y = Reference(ws, min_col=8, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
+            series = Series(y, x, title=case)
+            chartB.series.append(series)
+            x = Reference(ws, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
+            y = Reference(ws, min_col=9, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
+            series = Series(y, x, title=case)
+            chartC.series.append(series)
+            x = Reference(ws, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
+            y = Reference(ws, min_col=10, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
+            series = Series(y, x, title=case)
+            chartD.series.append(series)
+        ws.add_chart(chartDeb, "AC2")
     wb.save(filename = join(outdir,workbookname))
 
 def main(argv):

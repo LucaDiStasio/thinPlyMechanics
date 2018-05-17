@@ -117,6 +117,7 @@ def interpolateData(data,boundaryCases):
     plt.title(titles[m])
     plt.legend(['GI,data', 'GI,interp','GII,data', 'GII,interp','GTOT,data','GTOT,interp'], loc=1)
 
+    savefig('foo.png', bbox_inches='tight')
 
 def main(argv):
 

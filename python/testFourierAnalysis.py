@@ -124,6 +124,10 @@ for m,model in enumerate(models):
     print(res_GII)
     print(res_GTOT)
 
+    print(cov_GI)
+    print(cov_GII)
+    print(cov_GTOT)
+
     angles = np.linspace(0., 150., num=300)
     angles1 = np.linspace(0., 60., num=120)
 

@@ -298,7 +298,17 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outdir,odbna
     undefPoints = []
     defPoints = []
 
+    matrixcrackfaceNodeLabels = []
+    for value in matrixcrackfaceundefCoords.values:
+        matrixcrackfaceNodeLabels.append(value.nodeLabel)
+
     for value in thirdcircleundefCoords.values:
+        if not value.nodeLabel in matrixcrackfaceNodeLabels:
+            undefPoints.append([value.data[0],value.data[1]])
+
+    for value in thirdcircledefCoords.values:
+        if not value.nodeLabel in matrixcrackfaceNodeLabels:
+            defPoints.append([value.data[0],value.data[1]])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '.. done.',True)
 

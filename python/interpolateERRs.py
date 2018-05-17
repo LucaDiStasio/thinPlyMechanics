@@ -39,6 +39,7 @@ from datetime import datetime
 from time import strftime
 #from platform import platform
 from openpyxl import load_workbook
+import numpy as np
 from scipy import fftpack
 import matplotlib.pyplot as plt
 from matplotlib import rc
@@ -117,7 +118,11 @@ def interpolateData(outdir,data,boundaryCases):
                     maxIndex = i
                     maxValue = y
             res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0],method='dogbox')
+            stderr = np.sqrt(np.diag(cov))
             angles = np.linspace(0.0, xs[-1]+5, num=300)
+            data['GI']['VCCT'][case][v]['coeff'] = res
+            data['GI']['VCCT'][case][v]['cov'] = cov
+            data['GI']['VCCT'][case][v]['std'] = stderr
             plt.figure()
             plt.plot(vfData['theta'], vfData['values'], 'ko')
             plt.plot(angles, model(angles, *res), 'b-')

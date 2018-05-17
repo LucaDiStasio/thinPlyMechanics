@@ -235,9 +235,28 @@ def interpolateData(outdir,data,boundaryCases):
             plt.legend(['data', 'interpolant'], loc=1)
             savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for v,vfData in enumerate(data['CZ'][case]):
+            czStart = -1
+            for a,angle in vfData['values']:
+                if angle>0.0:
+                    czStart = a
+                    break
             filename = datetime.now().strftime('%Y-%m-%d') + '_ContactZone-Interpolation_' + case + '_Vf' + str(vfData['Vf'])
-            xs = vfData['theta']
-            ys = vfData['values']
+            xs = vfData['theta'][czStart:]
+            ys = vfData['values'][czStart:]
+            res, cov = optimize.curve_fit(linear,xs,ys,method='dogbox')
+            stderr = np.sqrt(np.diag(cov))
+            angles = np.linspace(xs[0], xs[-1]+5, num=300)
+            data['CZ'][case][v]['coeff'] = res
+            data['CZ'][case][v]['cov'] = cov
+            data['CZ'][case][v]['std'] = stderr
+            plt.figure()
+            plt.plot(vfData['theta'], vfData['values'], 'ko')
+            plt.plot(angles, model(angles, *res), 'b-')
+            plt.xlabel(r'$\Delta\theta$')
+            plt.ylabel(r'$\Delta\Phi [^]$')
+            plt.title(r'Interpolation of normalized contact zone size, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0 + '%$')
+            plt.legend(['data', 'interpolant'], loc=1)
+            savefig(join(outdir,filename + '.png'), bbox_inches='tight')
 
 
 

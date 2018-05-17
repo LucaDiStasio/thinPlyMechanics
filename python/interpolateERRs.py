@@ -55,13 +55,13 @@ def readData(wd,workbook):
             data['CZ'][case][v+1] = {'Vf':value,'theta':theta,'values':[]}
             data['SZ'][case][v+1] = {'Vf':value,'theta':theta,'values':[]}
     wb = load_workbook(filename=join(wd,workbook), read_only=True)
-    gIvcctWorksheet = wb['GI']
-    gIjintWorksheet = wb['GI']
-    gIIvcctWorksheet = wb['GI']
-    gTOTvcctWorksheet = wb['GI']
-    gTOTjintWorksheet = wb['GI']
-    czWorksheet = wb['GI']
-    szWorksheet = wb['GI']
+    gIvcctWorksheet = wb['GI-VCCT']
+    gIjintWorksheet = wb['GI-Jint']
+    gIIvcctWorksheet = wb['GII-VCCT']
+    gTOTvcctWorksheet = wb['GTOT-VCCT']
+    gTOTjintWorksheet = wb['GTOT-Jint']
+    czWorksheet = wb['ContactZone']
+    szWorksheet = wb['SeparationZone']
 
     return data
 

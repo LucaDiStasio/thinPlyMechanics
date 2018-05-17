@@ -39,8 +39,14 @@ from datetime import datetime
 from time import strftime
 #from platform import platform
 from openpyxl import load_workbook
-import matplotlib.pyplot as plt
 from scipy import fftpack
+import matplotlib.pyplot as plt
+from matplotlib import rc
+rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+## for Palatino and other serif fonts use:
+#rc('font',**{'family':'serif','serif':['Palatino']})
+rc('text', usetex=True)
+
 
 def model(x,A,B,C,D):
     return (A*np.sin(B*x+C)+D)
@@ -113,12 +119,8 @@ def interpolateData(outdir,data,boundaryCases):
             res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0])
             angles = np.linspace(xs[0]-5, xs[-1]+5, num=300)
             plt.figure()
-            plt.plot(data[:,0], data[:,1], 'ro')
-            plt.plot(angles1, model(angles1, *res_GI), 'r-')
-            plt.plot(data[:,0], data[:,2], 'bo')
-            plt.plot(angles, model(angles, *res_GII), 'b-')
-            plt.plot(data[:,0], data[:,3], 'go')
-            plt.plot(angles, model(angles, *res_GTOT), 'g-')
+            plt.plot(vfData['theta'], vfData['values'], 'ko')
+            plt.plot(angles, model(angles, *res), 'b-')
             plt.xlabel('deltatheta')
             plt.ylabel('G/GO [-]')
             plt.title(titles[m])

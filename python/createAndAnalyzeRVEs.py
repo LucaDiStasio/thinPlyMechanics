@@ -4991,6 +4991,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     wd = parameters['input']['wd']
 
+    if len(parameters['steps'])>1:
+        initialStep = -2
+    else:
+        initialStep = -1
     #=======================================================================
     # BEGIN - extract performances
     #=======================================================================
@@ -5108,7 +5112,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along the right side ...',True)
-    rightsideUndefcoords = getFieldOutput(odb,-1,0,'COORD',rightSide)
+    rightsideUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',rightSide)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, x, y, sigma_xx, sigma_zz, sigma_yy, tau_xz ...',True)
@@ -5182,7 +5186,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute reference frame transformation ...',True)
 
-    undefCracktipCoords = getFieldOutput(odb,-1,0,'COORD',fiberCracktip)
+    undefCracktipCoords = getFieldOutput(odb,initialStep,0,'COORD',fiberCracktip)
     phi = np.arctan2(undefCracktipCoords.values[0].data[1],undefCracktipCoords.values[0].data[0])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -5198,11 +5202,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     if len(parameters['steps'])>1:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements on fiber ...',True)
-        fiberCrackfaceDisps = getFieldOutput(odb,1,-1,'U',fiberCrackfaceNodes)
+        fiberCrackfaceDisps = getFieldOutput(odb,-2,-1,'U',fiberCrackfaceNodes)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements on matrix ...',True)
-        matrixCrackfaceDisps = getFieldOutput(odb,1,-1,'U',matrixCrackfaceNodes)
+        matrixCrackfaceDisps = getFieldOutput(odb,-2,-1,'U',matrixCrackfaceNodes)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
         fiberAngles = []
@@ -5212,7 +5216,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         for value in fiberCrackfaceDisps.values:
             if value.nodeLabel!=undefCracktipCoords.values[0].nodeLabel:
                 node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
-                undefCoords = getFieldOutput(odb,1,0,'COORD',node)
+                undefCoords = getFieldOutput(odb,initialStep,0,'COORD',node)
                 beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
                 fiberAngles.append(beta)
                 fiberDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
@@ -5229,7 +5233,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute odb.rootAssembly.instances[\'RVE-ASSEMBLY\'].getNodeFromLabel(value.nodeLabel)',True)
             node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
             #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute undefCoords = getFieldOutput(odb,-1,0,\'COORD\',node)',True)
-            undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
+            undefCoords = getFieldOutput(odb,initialStep,0,'COORD',node)
             #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])',True)
             beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
             #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute matrixAngles.append(beta)',True)
@@ -5345,7 +5349,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     for value in fiberCrackfaceDisps.values:
         if value.nodeLabel!=undefCracktipCoords.values[0].nodeLabel:
             node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
-            undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
+            undefCoords = getFieldOutput(odb,initialStep,0,'COORD',node)
             beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
             fiberAngles.append(beta)
             fiberDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
@@ -5362,7 +5366,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute odb.rootAssembly.instances[\'RVE-ASSEMBLY\'].getNodeFromLabel(value.nodeLabel)',True)
         node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
         #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute undefCoords = getFieldOutput(odb,-1,0,\'COORD\',node)',True)
-        undefCoords = getFieldOutput(odb,-1,0,'COORD',node)
+        undefCoords = getFieldOutput(odb,initialStep,0,'COORD',node)
         #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])',True)
         beta = np.arctan2(undefCoords.values[0].data[1],undefCoords.values[0].data[0])
         #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute matrixAngles.append(beta)',True)
@@ -5476,14 +5480,14 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract forces and displacements ...',True)
 
-        RFcracktip = getFieldOutput(odb,-1,-1,'RF',cracktipDummyNode)
+        RFcracktip = getFieldOutput(odb,-2,-1,'RF',cracktipDummyNode)
         if 'second' in parameters['mesh']['elements']['order']:
-            RFfirstbounded = getFieldOutput(odb,-1,-1,'RF',firstboundedDummyNode)
-        fiberCracktipDisplacement = getFieldOutput(odb,-1,-1,'U',fiberCracktipDispMeas)
-        matrixCracktipDisplacement = getFieldOutput(odb,-1,-1,'U',matrixCracktipDispMeas)
+            RFfirstbounded = getFieldOutput(odb,-2,-1,'RF',firstboundedDummyNode)
+        fiberCracktipDisplacement = getFieldOutput(odb,-2,-1,'U',fiberCracktipDispMeas)
+        matrixCracktipDisplacement = getFieldOutput(odb,-2,-1,'U',matrixCracktipDispMeas)
         if 'second' in parameters['mesh']['elements']['order']:
-            fiberFirstboundedDisplacement = getFieldOutput(odb,-1,-1,'U',fiberFirstboundedDispMeas)
-            matrixFirstboundedDisplacement = getFieldOutput(odb,-1,-1,'U',matrixFirstboundedDispMeas)
+            fiberFirstboundedDisplacement = getFieldOutput(odb,-2,-1,'U',fiberFirstboundedDispMeas)
+            matrixFirstboundedDisplacement = getFieldOutput(odb,-2,-1,'U',matrixFirstboundedDispMeas)
 
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

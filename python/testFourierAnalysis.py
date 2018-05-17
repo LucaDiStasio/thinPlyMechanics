@@ -116,12 +116,12 @@ models = [model1,model2,model3,model4]
 titles = ['A*sin(B*x)','A*sin(B*x+C)','A*sin(B*x+C)+D','A*sin(B*x)+D']
 
 for m,model in enumerate(models):
-    res_GI, cov_GI = optimize.curve_fit(model,data[:6,0],data[:6,1],p0=[0.3,1.0/20.0,0.0,0.0])
-    res_GII, cov_GII = optimize.curve_fit(model,data[:,0],data[:,2],p0=[0.7,1.0/60.0,0.0,0.0])
-    res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:,0],data[:,3],p0=[0.7,1.0/60.0,0.0,0.0])
+    res_GI, cov_GI = optimize.curve_fit(model,data[:6,0],data[:6,1],p0=[0.3,1.0/20.0,0.0,0.0],method='dogbox')
+    res_GII, cov_GII = optimize.curve_fit(model,data[:,0],data[:,2],p0=[0.7,1.0/60.0,0.0,0.0],method='dogbox')
+    res_GTOT, cov_GTOT = optimize.curve_fit(model,data[:,0],data[:,3],p0=[0.7,1.0/60.0,0.0,0.0],method='dogbox')
 
     print(titles[m])
-    
+
     print('res_GI')
     print(res_GI)
     print('res_GII')

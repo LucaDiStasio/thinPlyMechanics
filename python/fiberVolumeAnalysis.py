@@ -378,9 +378,14 @@ def main(argv):
         results.append(calculateFiberAreaChange(logfilefullpath,'',logindent,inpDir,outdir,odb))
 
     with open(join(outdir,datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_fiberVolumeChange' + '.csv'),'w') as csv:
-        cas.write('undeformed area [um^2], deformed area [um^2], ratio [-], ratio [%], change [um], change [%]' + '\n')
+        csv.write('undeformed area [um^2], deformed area [um^2], ratio [-], ratio [%], change [um], change [%]' + '\n')
         for result in results:
-            line =
+            line = ''
+            for v,value in enumerate(result):
+                if v>0:
+                    line += ', '
+                line += str(value)
+        csv.write(line + '\n')
 
 
 

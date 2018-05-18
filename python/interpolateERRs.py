@@ -620,7 +620,10 @@ def writeData(outdir,workbookname,data,boundaryCase):
             gIvcctWorksheet['X'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][3][1]
             gIvcctWorksheet['Y'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][3][2]
             gIvcctWorksheet['Z'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][3][3]
-            gIvcctWorksheet['AA'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['std']
+            gIvcctWorksheet['AA'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['std'][0]
+            gIvcctWorksheet['AB'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['std'][1]
+            gIvcctWorksheet['AC'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['std'][2]
+            gIvcctWorksheet['AD'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['std'][3]
             gIjintWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
             gIjintWorksheet['F'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['valueAtNoDebond']
             gIjintWorksheet['G'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['coeff'][0]
@@ -643,7 +646,10 @@ def writeData(outdir,workbookname,data,boundaryCase):
             gIjintWorksheet['X'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][3][1]
             gIjintWorksheet['Y'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][3][2]
             gIjintWorksheet['Z'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][3][3]
-            gIjintWorksheet['AA'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['std']
+            gIjintWorksheet['AA'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['std'][0]
+            gIjintWorksheet['AB'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['std'][1]
+            gIjintWorksheet['AC'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['std'][2]
+            gIjintWorksheet['AD'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['std'][3]
             gIIvcctWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
             gIIvcctWorksheet['F'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['valueAtNoDebond']
             gIIvcctWorksheet['G'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['coeff'][0]
@@ -666,7 +672,10 @@ def writeData(outdir,workbookname,data,boundaryCase):
             gIIvcctWorksheet['X'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][3][1]
             gIIvcctWorksheet['Y'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][3][2]
             gIIvcctWorksheet['Z'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][3][3]
-            gIIvcctWorksheet['AA'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['std']
+            gIIvcctWorksheet['AA'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['std'][0]
+            gIIvcctWorksheet['AB'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['std'][1]
+            gIIvcctWorksheet['AC'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['std'][2]
+            gIIvcctWorksheet['AD'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['std'][3]
             gTOTvcctWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
             gTOTvcctWorksheet['F'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['valueAtNoDebond']
             gTOTvcctWorksheet['G'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['coeff'][0]
@@ -689,7 +698,10 @@ def writeData(outdir,workbookname,data,boundaryCase):
             gTOTvcctWorksheet['X'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][3][1]
             gTOTvcctWorksheet['Y'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][3][2]
             gTOTvcctWorksheet['Z'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][3][3]
-            gTOTvcctWorksheet['AA'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['std']
+            gTOTvcctWorksheet['AA'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['std'][0]
+            gTOTvcctWorksheet['AB'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['std'][1]
+            gTOTvcctWorksheet['AC'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['std'][2]
+            gTOTvcctWorksheet['AD'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['std'][3]
             gTOTjintWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
             gTOTjintWorksheet['F'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['valueAtNoDebond']
             gTOTjintWorksheet['G'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['coeff'][0]
@@ -712,7 +724,10 @@ def writeData(outdir,workbookname,data,boundaryCase):
             gTOTjintWorksheet['X'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][3][1]
             gTOTjintWorksheet['Y'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][3][2]
             gTOTjintWorksheet['Z'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][3][3]
-            gTOTjintWorksheet['AA'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['std']
+            gTOTjintWorksheet['AA'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['std'][0]
+            gTOTjintWorksheet['AB'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['std'][1]
+            gTOTjintWorksheet['AC'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['std'][2]
+            gTOTjintWorksheet['AD'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['std'][3]
             czWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
             czWorksheet['F'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['coeff'][0]
             czWorksheet['G'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['coeff'][1]
@@ -720,7 +735,8 @@ def writeData(outdir,workbookname,data,boundaryCase):
             czWorksheet['I'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['cov'][0][1]
             czWorksheet['J'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['cov'][1][0]
             czWorksheet['K'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['cov'][1][1]
-            czWorksheet['L'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['std']
+            czWorksheet['L'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['std'][0]
+            czWorksheet['M'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['std'][1]
     for ws in [gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]:
         chartDeb = LineChart()
         chartDeb.style = 13

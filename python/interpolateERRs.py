@@ -157,8 +157,8 @@ def interpolateData(outdir,data,boundaryCase):
             plt.plot(angles, model(angles, *res), 'b-')
             plt.xlabel(r'$\Delta\theta [^{\circ}]$')
             plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
-            plt.title(r'Interpolation of GI-Jint, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0 + '%$')
-            plt.legend(['data', 'interpolant'], loc=1)
+            plt.title(r'Interpolation of GI-Jint, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0) + '%$')
+            plt.legend(('data', 'interpolant'), loc=1)
             savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for v,vfData in enumerate(data['GII']['VCCT'][case]):
             filename = datetime.now().strftime('%Y-%m-%d') + '_GII-VCCT-Interpolation_' + case + '_Vf' + str(vfData['Vf'])

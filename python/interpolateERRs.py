@@ -70,7 +70,22 @@ def readData(wd,workbook,boundaryCase):
     theta = [10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0]
     nTheta = len(theta)
     initTheta = 4
+    data['GI'] = {}
+    data['GII'] = {}
+    data['GTOT'] = {}
+    data['CZ'] = {}
+    data['GI']['VCCT'] = {}
+    data['GI']['Jint'] = {}
+    data['GII']['VCCT'] = {}
+    data['GTOT']['VCCT'] = {}
+    data['GTOT']['Jint'] = {}
     for c,case in enumerate(boundaryCase):
+        data['CZ'][case] = {}
+        data['GI']['VCCT'][case] = {}
+        data['GI']['Jint'][case] = {}
+        data['GII']['VCCT'][case] = {}
+        data['GTOT']['VCCT'][case] = {}
+        data['GTOT']['Jint'][case] = {}
         for v,value in enumerate(Vf):
             values = []
             for n in range(0,nTheta):

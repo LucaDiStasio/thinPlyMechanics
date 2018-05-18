@@ -41,7 +41,7 @@ from time import strftime
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from openpyxl.chart import (
-    LineChart,
+    ScatterChart,
     Reference,
     Series
 )
@@ -749,22 +749,22 @@ def writeData(outdir,workbookname,data,boundaryCase):
         chartDeb.y_axis.title = 'G(0) [J/m^2]'
         chartDeb.x_axis.title = 'Vf [%]'
         chartA = ScatterChart()
-        chartA.title = 'A'
+        chartA.title = 'Amplitude'
         chartA.style = 13
         chartA.y_axis.title = 'A [J/m^2]'
         chartA.x_axis.title = 'Vf [%]'
         chartB = ScatterChart()
-        chartB.title = 'B'
+        chartB.title = 'Spatial frequency'
         chartB.style = 13
         chartB.y_axis.title = 'B [1/deg]'
         chartB.x_axis.title = 'Vf [%]'
         chartC = ScatterChart()
-        chartC.title = 'C'
+        chartC.title = 'Phase'
         chartC.style = 13
         chartC.y_axis.title = 'C [deg]'
         chartC.x_axis.title = 'Vf [%]'
         chartD = ScatterChart()
-        chartD.title = 'D'
+        chartD.title = 'Offset'
         chartD.style = 13
         chartD.y_axis.title = 'D [J/m^2]'
         chartD.x_axis.title = 'Vf [%]'

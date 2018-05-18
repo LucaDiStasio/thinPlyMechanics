@@ -4577,30 +4577,30 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             started = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Element section begins at line ' + str(elementSecStart) + ' and ends at line ' + str(elementSecStop),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    if 'boundingPly' in parameters['BC']['northSide']['type']:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify bounding ply solid section definition ...',True)
-        for l,line in enumerate(inpfilelines):
-            if '*Solid Section, elset=BOUNDING-PLY, material=UD' in line:
-                boundingplySolidsectionLine = l
-                break
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Bounding ply solid section definition at line ' + str(boundingplySolidsectionLine),True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    if 'boundingPly' in parameters['BC']['rightSide']['type']:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify right adjacent ply solid section definition ...',True)
-        for l,line in enumerate(inpfilelines):
-            if '*Solid Section, elset=RIGHT-HOMOGENIZED-CROSSPLY, material=UD' in line:
-                rightplySolidsectionLine = l
-                break
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Adjacent ply solid section definition at line ' + str(boundingplySolidsectionLine),True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    if 'boundingPly' in parameters['BC']['leftSide']['type']:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify left adjacent ply solid section definition ...',True)
-        for l,line in enumerate(inpfilelines):
-            if '*Solid Section, elset=LEFT-HOMOGENIZED-CROSSPLY, material=UD' in line:
-                leftplySolidsectionLine = l
-                break
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Adjacent ply solid section definition at line ' + str(boundingplySolidsectionLine),True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    # if 'boundingPly' in parameters['BC']['northSide']['type']:
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify bounding ply solid section definition ...',True)
+    #     for l,line in enumerate(inpfilelines):
+    #         if '*Solid Section, elset=BOUNDING-PLY, material=UD' in line:
+    #             boundingplySolidsectionLine = l
+    #             break
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Bounding ply solid section definition at line ' + str(boundingplySolidsectionLine),True)
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    # if 'boundingPly' in parameters['BC']['rightSide']['type']:
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify right adjacent ply solid section definition ...',True)
+    #     for l,line in enumerate(inpfilelines):
+    #         if '*Solid Section, elset=RIGHT-HOMOGENIZED-CROSSPLY, material=UD' in line:
+    #             rightplySolidsectionLine = l
+    #             break
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Adjacent ply solid section definition at line ' + str(boundingplySolidsectionLine),True)
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    # if 'boundingPly' in parameters['BC']['leftSide']['type']:
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify left adjacent ply solid section definition ...',True)
+    #     for l,line in enumerate(inpfilelines):
+    #         if '*Solid Section, elset=LEFT-HOMOGENIZED-CROSSPLY, material=UD' in line:
+    #             leftplySolidsectionLine = l
+    #             break
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Adjacent ply solid section definition at line ' + str(boundingplySolidsectionLine),True)
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify end of assembly section  ...',True)
     for l,line in enumerate(inpfilelines):
         if '*End Assembly' in line or '*END ASSEMBLY' in line:
@@ -4648,29 +4648,34 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 line += ', ' + str(node)
             inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    if 'boundingPly' in parameters['BC']['northSide']['type']:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[elementSecStop+1:boundingplySolidsectionLine]:
-                inp.write(line)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating local orientation for bounding ply ...',True)
-        with open(modinpfullpath,'a') as inp:
-            inp.write('*ORIENTATION, NAME=BOUNDINGPLY-CREF, DEFINITION=COORDINATES, SYSTEM=RECTANGULAR' + '\n')
-            inp.write(' 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0' + '\n')
-            inp.write('*SOLID SECTION, ELSET=BOUNDING-PLY, MATERIAL=UD, ORIENTATION=BOUNDINGPLY-CREF' + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[boundingplySolidsectionLine+1:endAssembly]:
-                inp.write(line)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    else:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[elementSecStop+1:endAssembly]:
-                inp.write(line)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    # if 'boundingPly' in parameters['BC']['northSide']['type']:
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    #     with open(modinpfullpath,'a') as inp:
+    #         for line in inpfilelines[elementSecStop+1:boundingplySolidsectionLine]:
+    #             inp.write(line)
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating local orientation for bounding ply ...',True)
+    #     with open(modinpfullpath,'a') as inp:
+    #         inp.write('*ORIENTATION, NAME=BOUNDINGPLY-CREF, DEFINITION=COORDINATES, SYSTEM=RECTANGULAR' + '\n')
+    #         inp.write(' 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0' + '\n')
+    #         inp.write('*SOLID SECTION, ELSET=BOUNDING-PLY, MATERIAL=UD, ORIENTATION=BOUNDINGPLY-CREF' + '\n')
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    #     with open(modinpfullpath,'a') as inp:
+    #         for line in inpfilelines[boundingplySolidsectionLine+1:endAssembly]:
+    #             inp.write(line)
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    # else:
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    #     with open(modinpfullpath,'a') as inp:
+    #         for line in inpfilelines[elementSecStop+1:endAssembly]:
+    #             inp.write(line)
+    #     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        for line in inpfilelines[elementSecStop+1:endAssembly]:
+            inp.write(line)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write crack faces node and element sets ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*NSET, NSET=FIBER-CRACKFACE-NODES, INSTANCE=RVE-assembly' + '\n')

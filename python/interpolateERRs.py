@@ -43,6 +43,7 @@ from openpyxl import load_workbook
 from openpyxl.chart import (
     LineChart,
     Reference,
+    Series
 )
 import numpy as np
 from scipy import optimize

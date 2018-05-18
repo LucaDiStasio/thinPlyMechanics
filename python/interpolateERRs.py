@@ -41,7 +41,7 @@ from time import strftime
 from openpyxl import Workbook
 from openpyxl import load_workbook
 import numpy as np
-from scipy import fftpack
+from scipy import optimize
 import matplotlib.pyplot as plt
 from matplotlib import rc
 rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
@@ -115,18 +115,17 @@ def readData(wd,workbook,boundaryCase):
 
 def interpolateData(outdir,data,boundaryCase):
     for c,case in enumerate(boundaryCase):
-        for vI,vfData in enumerate(data['GI']['VCCT'][case]):
-            v = vI+1
+        for vI,vfData in enumerate(data['GI']['VCCT'][case].keys()):
             czStart = -1
-            for a,angle in enumerate(data['CZ'][case][v]['values']):
+            for a,angle in enumerate(data['CZ'][case][vfData]['values']):
                 if angle>0.0:
                     czStart = a
                     break
-            filename = datetime.now().strftime('%Y-%m-%d') + '_GI-VCCT-Interpolation_' + case + '_Vf' + str(vfData['Vf'])
-            xs = vfData['theta'][:czStart]
-            ys = vfData['values'][:czStart]
+            filename = datetime.now().strftime('%Y-%m-%d') + '_GI-VCCT-Interpolation_' + case + '_Vf' + str(data['GI']['VCCT'][case][vfData]['Vf'])
+            xs = data['GI']['VCCT'][case][vfData]['theta'][:czStart]
+            ys = data['GI']['VCCT'][case][vfData]['values'][:czStart]
             maxIndex = 0
-            maxValue = vfData['values'][maxIndex]
+            maxValue = data['GI']['VCCT'][case][vfData]['values'][maxIndex]
             for i,y in enumerate(ys):
                 if y>maxValue:
                     maxIndex = i
@@ -153,11 +152,11 @@ def interpolateData(outdir,data,boundaryCase):
                 if angle>0.0:
                     czStart = a
                     break
-            filename = datetime.now().strftime('%Y-%m-%d') + '_GI-Jint-Interpolation_' + case + '_Vf' + str(vfData['Vf'])
+            filename = datetime.now().strftime('%Y-%m-%d') + '_GI-Jint-Interpolation_' + case + '_Vf' + str(data['GI']['VCCT'][case][vfData]['Vf'])
             xs = vfData['theta'][:czStart]
             ys = vfData['values'][:czStart]
             maxIndex = 0
-            maxValue = vfData['values'][maxIndex]
+            maxValue = data['GI']['VCCT'][case][vfData]['values'][maxIndex]
             for i,y in enumerate(ys):
                 if y>maxValue:
                     maxIndex = i

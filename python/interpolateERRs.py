@@ -98,7 +98,7 @@ def readData(wd,workbook,boundaryCase):
             values = []
             for n in range(0,nTheta):
                 values.append(gIIvcctWorksheet[Vfcolumns[value]+str(4+c*nTheta+n)].value)
-            data['GII'][case][v+1] = {'Vf':value,'theta':theta,'values':values}
+            data['GII']['VCCT'][case][v+1] = {'Vf':value,'theta':theta,'values':values}
             values = []
             for n in range(0,nTheta):
                 values.append(gTOTvcctWorksheet[Vfcolumns[value]+str(4+c*nTheta+n)].value)

@@ -4948,39 +4948,102 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         inp.write('*SURFACE INTERACTION, NAME=CrackFacesContact' + '\n')
         inp.write(' 1.0' + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-    with open(modinpfullpath,'a') as inp:
-        for line in inpfilelines[endAssembly+1:startBC]:
-            inp.write(line)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
-    with open(modinpfullpath,'a') as inp:
-        inp.write('BOUNDARY CONDITIONS' + '\n')
-        inp.write('**' + '\n')
-        inp.write('*BOUNDARY, OP=MOD' + '\n')
-        inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
-        inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
-        inp.write('**' + '\n')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-    with open(modinpfullpath,'a') as inp:
-        for line in inpfilelines[startBC+1:startCI]:
-            inp.write(line)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
-    crackName = inpfilelines[startCI].replace('\n','').split(',')[1].split('=')[1]
-    nContours = inpfilelines[startCI].replace('\n','').split(',')[2].split('=')[1]
-    qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
-    qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
-    with open(modinpfullpath,'a') as inp:
-        inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
-        inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-    with open(modinpfullpath,'a') as inp:
-        for line in inpfilelines[endCI+1:]:
-            inp.write(line)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if len(parameters['steps'])>1:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[endAssembly+1:startTempStep+2]:
+                inp.write(line)   
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('** BOUNDARY CONDITIONS' + '\n')
+            inp.write('**' + '\n')
+            inp.write('*BOUNDARY, OP=MOD' + '\n')
+            inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
+            inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+            inp.write('**' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[startTempStep+2:startTempCI]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
+        crackName = inpfilelines[startTempCI].replace('\n','').split(',')[1].split('=')[1]
+        nContours = inpfilelines[startTempCI].replace('\n','').split(',')[2].split('=')[1]
+        qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
+        qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
+            inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[startTempCI+2:startLoadStep+2]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('** BOUNDARY CONDITIONS' + '\n')
+            inp.write('**' + '\n')
+            inp.write('*BOUNDARY, OP=MOD' + '\n')
+            inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
+            inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+            inp.write('**' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[startLoadStep+2:startLoadCI]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
+        crackName = inpfilelines[startLoadCI].replace('\n','').split(',')[1].split('=')[1]
+        nContours = inpfilelines[startLoadCI].replace('\n','').split(',')[2].split('=')[1]
+        qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
+        qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
+            inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[startLoadCI+2:]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    else:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[endAssembly+1:startBC]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('** BOUNDARY CONDITIONS' + '\n')
+            inp.write('**' + '\n')
+            inp.write('*BOUNDARY, OP=MOD' + '\n')
+            inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
+            inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+            inp.write('**' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[startBC+1:startCI]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
+        crackName = inpfilelines[startCI].replace('\n','').split(',')[1].split('=')[1]
+        nContours = inpfilelines[startCI].replace('\n','').split(',')[2].split('=')[1]
+        qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
+        qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
+            inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[endCI+1:]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if  parameters['simulation-pipeline']['remove-INP']:
         skipLineToLogFile(logfilepath,'a',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Remove .inp file from working directory... ',True)

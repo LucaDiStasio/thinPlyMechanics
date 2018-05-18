@@ -4629,19 +4629,33 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             endAssembly = l
             break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of boundary conditions section  ...',True)
-    for l,line in enumerate(inpfilelines):
-        if '** BOUNDARY CONDITIONS' in line or '** Boundary Conditions' in line:
-            startBC = l
-            break
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of contour integral section  ...',True)
-    for l,line in enumerate(inpfilelines):
-        if '*CONTOUR INTEGRAL' in line or '*Contour Integral' in line:
-            startCI = l
-            endCI = l+1
-            break
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if len(parameters['steps'])>1:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of thermal boundary conditions section  ...',True)
+        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of mechanical boundary conditions section  ...',True)
+        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of thermal contour integral section  ...',True)
+        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of mechanical contour integral section  ...',True)
+        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    else:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of boundary conditions section  ...',True)
+        for l,line in enumerate(inpfilelines):
+            if '** BOUNDARY CONDITIONS' in line or '** Boundary Conditions' in line:
+                startBC = l
+                break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of contour integral section  ...',True)
+        for l,line in enumerate(inpfilelines):
+            if '*CONTOUR INTEGRAL' in line or '*Contour Integral' in line:
+                startCI = l
+                endCI = l+1
+                break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
     with open(modinpfullpath,'a') as inp:
         for line in inpfilelines[:nodeSecStart]:

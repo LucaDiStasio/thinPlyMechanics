@@ -122,7 +122,7 @@ def interpolateData(outdir,data,boundaryCase):
                 if angle>0.0:
                     czStart = a
                     break
-            filename = datetime.now().strftime('%Y-%m-%d') + '_GI-VCCT-Interpolation_' + case + '_' + str(VfData) + '_Vf' + str(data['GI']['VCCT'][case][vfData]['Vf'])
+            filename = datetime.now().strftime('%Y-%m-%d') + '_GI-VCCT-Interpolation_' + case + '_' + str(vfData) + '_Vf' + str(data['GI']['VCCT'][case][vfData]['Vf'])
             xs = data['GI']['VCCT'][case][vfData]['theta'][:czStart]
             ys = data['GI']['VCCT'][case][vfData]['values'][:czStart]
             maxIndex = 0
@@ -169,7 +169,7 @@ def interpolateData(outdir,data,boundaryCase):
                 if angle>0.0:
                     czStart = a
                     break
-            filename = datetime.now().strftime('%Y-%m-%d') + '_GI-Jint-Interpolation_' + case + '_' + str(VfData) + '_Vf' + str(data['GI']['Jint'][case][vfData]['Vf'])
+            filename = datetime.now().strftime('%Y-%m-%d') + '_GI-Jint-Interpolation_' + case + '_' + str(vfData) + '_Vf' + str(data['GI']['Jint'][case][vfData]['Vf'])
             xs = data['GI']['Jint'][case][vfData]['theta'][:czStart]
             ys = data['GI']['Jint'][case][vfData]['values'][:czStart]
             maxIndex = 0
@@ -211,7 +211,7 @@ def interpolateData(outdir,data,boundaryCase):
                 sys.exc_clear()
         for vI,vfData in enumerate(data['GII']['VCCT'][case].keys()):
             print('GII, Vf ' + str(data['GII']['VCCT'][case][vfData]['Vf']) + ', ' + case)
-            filename = datetime.now().strftime('%Y-%m-%d') + '_GII-VCCT-Interpolation_' + case + '_' + str(VfData) + '_Vf' + str(data['GII']['VCCT'][case][vfData]['Vf'])
+            filename = datetime.now().strftime('%Y-%m-%d') + '_GII-VCCT-Interpolation_' + case + '_' + str(vfData) + '_Vf' + str(data['GII']['VCCT'][case][vfData]['Vf'])
             refValue = data['GII']['VCCT'][case][vfData]['values'][0]
             rangeEnd = -1
             for v,value in enumerate(data['GII']['VCCT'][case][vfData]['values']):
@@ -244,7 +244,7 @@ def interpolateData(outdir,data,boundaryCase):
             plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['GTOT']['VCCT'][case].keys()):
             print('GTOT VCCT, Vf ' + str(data['GTOT']['VCCT'][case][vfData]['Vf']) + ', ' + case)
-            filename = datetime.now().strftime('%Y-%m-%d') + '_GTOT-VCCT-Interpolation_' + case + '_' + str(VfData) + '_Vf' + str(data['GTOT']['VCCT'][case][vfData]['Vf'])
+            filename = datetime.now().strftime('%Y-%m-%d') + '_GTOT-VCCT-Interpolation_' + case + '_' + str(vfData) + '_Vf' + str(data['GTOT']['VCCT'][case][vfData]['Vf'])
             refValue = data['GII']['VCCT'][case][vfData]['values'][0]
             rangeEnd = -1
             for v,value in enumerate(data['GII']['VCCT'][case][vfData]['values']):
@@ -292,7 +292,7 @@ def interpolateData(outdir,data,boundaryCase):
                 sys.exc_clear()
         for vI,vfData in enumerate(data['GTOT']['Jint'][case].keys()):
             print('GTOT Jint, Vf ' + str(data['GTOT']['Jint'][case][vfData]['Vf']) + ', ' + case)
-            filename = datetime.now().strftime('%Y-%m-%d') + '_GTOT-Jint-Interpolation_' + case + '_' + str(VfData) + '_Vf' + str(data['GTOT']['Jint'][case][vfData]['Vf'])
+            filename = datetime.now().strftime('%Y-%m-%d') + '_GTOT-Jint-Interpolation_' + case + '_' + str(vfData) + '_Vf' + str(data['GTOT']['Jint'][case][vfData]['Vf'])
             refValue = data['GII']['VCCT'][case][vfData]['values'][0]
             rangeEnd = -1
             for v,value in enumerate(data['GII']['VCCT'][case][vfData]['values']):
@@ -345,7 +345,7 @@ def interpolateData(outdir,data,boundaryCase):
                 if angle>0.0:
                     czStart = a
                     break
-            filename = datetime.now().strftime('%Y-%m-%d') + '_ContactZone-Interpolation_' + case + '_' + str(VfData) + '_Vf' + str(data['CZ'][case][vfData]['Vf'])
+            filename = datetime.now().strftime('%Y-%m-%d') + '_ContactZone-Interpolation_' + case + '_' + str(vfData) + '_Vf' + str(data['CZ'][case][vfData]['Vf'])
             xs = data['CZ'][case][vfData]['theta'][czStart:]
             phis = []
             for p,phi in enumerate(data['CZ'][case][vfData]['values']):

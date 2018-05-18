@@ -3623,7 +3623,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#
     
     if 'boundingPly' in parameters['BC']['northSide']['type'] or 'boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']:
-        RVEpart.DatumCsysByThreePoints
+        RVEpart.DatumCsysByThreePoints(name='refOrientation',coordSysType=CARTESIAN,origin=RVEpart.DatumPointByCoordinate(...),point1=RVEpart.DatumPointByCoordinate(...),point2=RVEpart.DatumPointByCoordinate(...))
         
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         RVEpart.MaterialOrientiation(orientationType=SYSTEM,region=,localCsys=)

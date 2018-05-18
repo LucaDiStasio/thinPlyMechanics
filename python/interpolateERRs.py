@@ -151,7 +151,7 @@ def interpolateData(outdir,data,boundaryCase):
             except Exception, error:
                 data['GI']['VCCT'][case][vfData]['coeff'] = [0,0,0,0]
                 data['GI']['VCCT'][case][vfData]['cov'] = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-                data['GI']['VCCT'][case][vfData]['std'] = 0
+                data['GI']['VCCT'][case][vfData]['std'] = [0,0,0,0]
                 data['GI']['VCCT'][case][vfData]['valueAtNoDebond'] = 0
                 plt.figure()
                 plt.plot(data['GI']['VCCT'][case][vfData]['theta'], data['GI']['VCCT'][case][vfData]['values'], 'ko')
@@ -198,7 +198,7 @@ def interpolateData(outdir,data,boundaryCase):
             except Exception, error:
                 data['GI']['Jint'][case][vfData]['coeff'] = [0,0,0,0]
                 data['GI']['Jint'][case][vfData]['cov'] = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-                data['GI']['Jint'][case][vfData]['std'] = 0
+                data['GI']['Jint'][case][vfData]['std'] = [0,0,0,0]
                 data['GI']['Jint'][case][vfData]['valueAtNoDebond'] = 0
                 plt.figure()
                 plt.plot(data['GI']['Jint'][case][vfData]['theta'], data['GI']['Jint'][case][vfData]['values'], 'ko')
@@ -279,7 +279,7 @@ def interpolateData(outdir,data,boundaryCase):
             except Exception, error:
                 data['GTOT']['VCCT'][case][vfData]['coeff'] = [0,0,0,0]
                 data['GTOT']['VCCT'][case][vfData]['cov'] = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-                data['GTOT']['VCCT'][case][vfData]['std'] = 0
+                data['GTOT']['VCCT'][case][vfData]['std'] = [0,0,0,0]
                 data['GTOT']['VCCT'][case][vfData]['valueAtNoDebond'] = 0
                 plt.figure()
                 plt.plot(data['GTOT']['VCCT'][case][vfData]['theta'], data['GTOT']['VCCT'][case][vfData]['values'], 'ko')
@@ -327,7 +327,7 @@ def interpolateData(outdir,data,boundaryCase):
             except Exception, error:
                 data['GTOT']['VCCT'][case][vfData]['coeff'] = [0,0,0,0]
                 data['GTOT']['VCCT'][case][vfData]['cov'] = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-                data['GTOT']['VCCT'][case][vfData]['std'] = 0
+                data['GTOT']['VCCT'][case][vfData]['std'] = [0,0,0,0]
                 data['GTOT']['VCCT'][case][vfData]['valueAtNoDebond'] = 0
                 plt.figure()
                 plt.plot(data['GTOT']['Jint'][case][vfData]['theta'], data['GTOT']['Jint'][case][vfData]['values'], 'ko')

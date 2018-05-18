@@ -32,7 +32,7 @@ Tested with Python 2.7 Anaconda 2.4.1 (64-bit) distribution in Windows 10.
 '''
 
 import sys
-#import os
+import os
 from os.path import isfile, join, exists
 #from os import listdir, stat, makedirs
 from datetime import datetime

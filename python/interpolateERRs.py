@@ -161,6 +161,7 @@ def interpolateData(outdir,data,boundaryCase):
                 plt.legend(('data', 'interpolant: FAILED'), loc='best')
                 plt.grid(True)
                 plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+                sys.exc_clear()
         for vI,vfData in enumerate(data['GI']['Jint'][case].keys()):
             print('GI Jint, Vf ' + str(data['GI']['Jint'][case][vfData]['Vf']) + ', ' + case)
             czStart = -1
@@ -210,6 +211,7 @@ def interpolateData(outdir,data,boundaryCase):
                 plt.legend(('data', 'interpolant:FAILED'), loc='best')
                 plt.grid(True)
                 plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+                sys.exc_clear()
         for vI,vfData in enumerate(data['GII']['VCCT'][case].keys()):
             print('GII, Vf ' + str(data['GII']['VCCT'][case][vfData]['Vf']) + ', ' + case)
             filename = datetime.now().strftime('%Y-%m-%d') + '_GII-VCCT-Interpolation_' + case + '_Vf' + str(data['GII']['VCCT'][case][vfData]['Vf'])
@@ -290,6 +292,7 @@ def interpolateData(outdir,data,boundaryCase):
                 plt.legend(('data', 'interpolant: FAILED'), loc='best')
                 plt.grid(True)
                 plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+                sys.exc_clear()
         for vI,vfData in enumerate(data['GTOT']['Jint'][case].keys()):
             print('GTOT Jint, Vf ' + str(data['GTOT']['Jint'][case][vfData]['Vf']) + ', ' + case)
             filename = datetime.now().strftime('%Y-%m-%d') + '_GTOT-Jint-Interpolation_' + case + '_Vf' + str(data['GTOT']['Jint'][case][vfData]['Vf'])
@@ -337,6 +340,7 @@ def interpolateData(outdir,data,boundaryCase):
                 plt.legend(('data', 'interpolant: FAILED'), loc='best')
                 plt.grid(True)
                 plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+                sys.exc_clear()
         for vI,vfData in enumerate(data['CZ'][case].keys()):
             print('CZ, Vf ' + str(data['CZ'][case][vfData]['Vf']) + ', ' + case)
             czStart = -1

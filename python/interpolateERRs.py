@@ -128,7 +128,7 @@ def interpolateData(outdir,data,boundaryCase):
             plt.xlabel(r'$\Delta\theta [^{\circ}]$')
             plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
             plt.title(r'Interpolation of GI-VCCT, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0 + '%$')
-            plt.legend(['data', 'interpolant'], loc=1)
+            plt.legend(('data', 'interpolant'), loc='best')
             savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for v,vfData in enumerate(data['GI']['Jint'][case]):
             czStart = -1

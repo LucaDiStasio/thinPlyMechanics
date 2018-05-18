@@ -663,8 +663,8 @@ def main(argv):
     inpWorkbook = 'sweepDeltathetaVffBCs-GF.xlsx'
     outWorkbook = 'sweepDeltathetaVffBCs-GF_Interpolation.xlsx'
 
-    if not os.path.exists(outdir):
-            os.mkdir(outdir)
+    if not os.path.exists(outDir):
+            os.mkdir(outDir)
 
     boundaryCases = ['free','geomcoupling','fixedv','fixedvlinearu']
     

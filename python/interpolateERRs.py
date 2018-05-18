@@ -144,6 +144,7 @@ def interpolateData(outdir,data,boundaryCase):
             plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
             plt.title(r'Interpolation of GI-VCCT, ' + case + ', ' + str(data['GI']['VCCT'][case][vfData]['Vf']*100.0) + '\% $V_{f}$')
             plt.legend(('data', 'interpolant'), loc='best')
+            plt.grid(True)
             plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['GI']['Jint'][case]):
             v = vI+1
@@ -173,9 +174,10 @@ def interpolateData(outdir,data,boundaryCase):
             plt.plot(angles, model(angles, *res), 'b-')
             plt.xlabel(r'$\Delta\theta [^{\circ}]$')
             plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
-            plt.title(r'Interpolation of GI-Jint, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0) + '%$')
-            plt.legend(('data', 'interpolant'), loc=1)
-            savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+            plt.title(r'Interpolation of GI-Jint, ' + case + ', ' + str(data['GI']['VCCT'][case][vfData]['Vf']*100.0) + '\% $V_{f}$')
+            plt.legend(('data', 'interpolant'), loc='best')
+            plt.grid(True)
+            plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['GII']['VCCT'][case]):
             v = vI+1
             filename = datetime.now().strftime('%Y-%m-%d') + '_GII-VCCT-Interpolation_' + case + '_Vf' + str(vfData['Vf'])
@@ -199,9 +201,10 @@ def interpolateData(outdir,data,boundaryCase):
             plt.plot(angles, model(angles, *res), 'b-')
             plt.xlabel(r'$\Delta\theta [^{\circ}]$')
             plt.ylabel(r'$G_{II} [\frac{J}{m^{2}}]$')
-            plt.title(r'Interpolation of GII-VCCT, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0) + '%$')
-            plt.legend(('data', 'interpolant'), loc=1)
-            savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+            plt.title(r'Interpolation of GII-VCCT, ' + case + ', ' + str(data['GI']['VCCT'][case][vfData]['Vf']*100.0) + '\% $V_{f}$')
+            plt.legend(('data', 'interpolant'), loc='best')
+            plt.grid(True)
+            plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['GTOT']['VCCT'][case]):
             v = vI+1
             filename = datetime.now().strftime('%Y-%m-%d') + '_GTOT-VCCT-Interpolation_' + case + '_Vf' + str(vfData['Vf'])
@@ -225,9 +228,10 @@ def interpolateData(outdir,data,boundaryCase):
             plt.plot(angles, model(angles, *res), 'b-')
             plt.xlabel(r'$\Delta\theta [^{\circ}]$')
             plt.ylabel(r'$G_{TOT} [\frac{J}{m^{2}}]$')
-            plt.title(r'Interpolation of GTOT-VCCT, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0) + '%$')
-            plt.legend(('data', 'interpolant'), loc=1)
-            savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+            plt.title(r'Interpolation of GTOT-VCCT, ' + case + ', ' + str(data['GI']['VCCT'][case][vfData]['Vf']*100.0) + '\% $V_{f}$')
+            plt.legend(('data', 'interpolant'), loc='best')
+            plt.grid(True)
+            plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['GTOT']['Jint'][case]):
             v = vI+1
             filename = datetime.now().strftime('%Y-%m-%d') + '_GTOT-Jint-Interpolation_' + case + '_Vf' + str(vfData['Vf'])
@@ -251,9 +255,10 @@ def interpolateData(outdir,data,boundaryCase):
             plt.plot(angles, model(angles, *res), 'b-')
             plt.xlabel(r'$\Delta\theta [^{\circ}]$')
             plt.ylabel(r'$G_{TOT} [\frac{J}{m^{2}}]$')
-            plt.title(r'Interpolation of GTOT-Jint, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0) + '%$')
-            plt.legend(('data', 'interpolant'), loc=1)
-            savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+            plt.title(r'Interpolation of GTOT-Jint, ' + case + ', ' + str(data['GI']['VCCT'][case][vfData]['Vf']*100.0) + '\% $V_{f}$')
+            plt.legend(('data', 'interpolant'), loc='best')
+            plt.grid(True)
+            plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['CZ'][case]):
             v = vI+1
             czStart = -1
@@ -280,9 +285,10 @@ def interpolateData(outdir,data,boundaryCase):
             plt.plot(angles, linear(angles, *res), 'b-')
             plt.xlabel(r'$\Delta\theta [^{\circ}]$')
             plt.ylabel(r'$\frac{\Delta\Phi}{\Delta\theta} [%]$')
-            plt.title(r'Interpolation of normalized contact zone size, ' + case + ', $V_{f}=' + str(vfData['Vf']*100.0) + '%$')
-            plt.legend(('data', 'interpolant'), loc=1)
-            savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+            plt.title(r'Interpolation of normalized contact zone size, ' + case + ', ' + str(data['GI']['VCCT'][case][vfData]['Vf']*100.0) + '\% $V_{f}$')
+            plt.legend(('data', 'interpolant'), loc='best')
+            plt.grid(True)
+            plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
     return data
 
 def writeData(outdir,workbookname,data,boundaryCase):

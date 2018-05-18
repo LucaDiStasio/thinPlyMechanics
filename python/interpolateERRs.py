@@ -118,7 +118,7 @@ def interpolateData(outdir,data,boundaryCase):
         for vI,vfData in enumerate(data['GI']['VCCT'][case]):
             v = vI+1
             czStart = -1
-            for a,angle in data['CZ'][case][v]['values']:
+            for a,angle in enumerate(data['CZ'][case][v]['values']):
                 if angle>0.0:
                     czStart = a
                     break
@@ -149,7 +149,7 @@ def interpolateData(outdir,data,boundaryCase):
         for vI,vfData in enumerate(data['GI']['Jint'][case]):
             v = vI+1
             czStart = -1
-            for a,angle in data['CZ'][case][v]['values']:
+            for a,angle in enumerate(data['CZ'][case][v]['values']):
                 if angle>0.0:
                     czStart = a
                     break
@@ -258,7 +258,7 @@ def interpolateData(outdir,data,boundaryCase):
         for vI,vfData in enumerate(data['CZ'][case]):
             v = vI+1
             czStart = -1
-            for a,angle in vfData['values']:
+            for a,angle in enumerate(vfData['values']):
                 if angle>0.0:
                     czStart = a
                     break

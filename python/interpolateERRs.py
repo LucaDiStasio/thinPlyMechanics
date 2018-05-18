@@ -323,7 +323,7 @@ def interpolateData(outdir,data,boundaryCase):
             plt.plot(data['CZ'][case][vfData]['theta'], phis, 'ko')
             plt.plot(angles, linear(angles, *res), 'b-')
             plt.xlabel(r'$\Delta\theta [^{\circ}]$')
-            plt.ylabel(r'$\frac{\Delta\Phi}{\Delta\theta} [%]$')
+            plt.ylabel(r'$\frac{\Delta\Phi}{\Delta\theta} [\%]$')
             plt.title(r'Interpolation of normalized contact zone size, ' + case + ', ' + str(data['CZ'][case][vfData]['Vf']*100.0) + '\% $V_{f}$')
             plt.legend(('data', 'interpolant'), loc='best')
             plt.grid(True)

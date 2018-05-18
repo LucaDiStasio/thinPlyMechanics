@@ -116,7 +116,7 @@ def readData(wd,workbook,boundaryCase):
 def interpolateData(outdir,data,boundaryCase):
     for c,case in enumerate(boundaryCase):
         for vI,vfData in enumerate(data['GI']['VCCT'][case].keys()):
-            print('GI VCCT, Vf ' + str(str(data['GI']['VCCT'][case][vfData]['Vf']) + ', ' + case)
+            print('GI VCCT, Vf ' + str(data['GI']['VCCT'][case][vfData]['Vf']) + ', ' + case)
             czStart = -1
             for a,angle in enumerate(data['CZ'][case][vfData]['values']):
                 if angle>0.0:
@@ -148,7 +148,7 @@ def interpolateData(outdir,data,boundaryCase):
             plt.grid(True)
             plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['GI']['Jint'][case].keys()):
-            print('GI Jint, Vf ' + str(str(data['GI']['Jint'][case][vfData]['Vf']) + ', ' + case)
+            print('GI Jint, Vf ' + str(data['GI']['Jint'][case][vfData]['Vf']) + ', ' + case)
             czStart = -1
             for a,angle in enumerate(data['CZ'][case][vfData]['values']):
                 if angle>0.0:
@@ -180,7 +180,7 @@ def interpolateData(outdir,data,boundaryCase):
             plt.grid(True)
             plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['GII']['VCCT'][case].keys()):
-            print('GII, Vf ' + str(str(data['GII']['VCCT'][case][vfData]['Vf']) + ', ' + case)
+            print('GII, Vf ' + str(data['GII']['VCCT'][case][vfData]['Vf']) + ', ' + case)
             filename = datetime.now().strftime('%Y-%m-%d') + '_GII-VCCT-Interpolation_' + case + '_Vf' + str(data['GII']['VCCT'][case][vfData]['Vf'])
             refValue = data['GII']['VCCT'][case][vfData]['values'][0]
             rangeEnd = -1
@@ -213,7 +213,7 @@ def interpolateData(outdir,data,boundaryCase):
             plt.grid(True)
             plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['GTOT']['VCCT'][case].keys()):
-            print('GTOT VCCT, Vf ' + str(str(data['GTOT']['VCCT'][case][vfData]['Vf']) + ', ' + case)
+            print('GTOT VCCT, Vf ' + str(data['GTOT']['VCCT'][case][vfData]['Vf']) + ', ' + case)
             filename = datetime.now().strftime('%Y-%m-%d') + '_GTOT-VCCT-Interpolation_' + case + '_Vf' + str(data['GTOT']['VCCT'][case][vfData]['Vf'])
             refValue = data['GII']['VCCT'][case][vfData]['values'][0]
             rangeEnd = -1
@@ -260,7 +260,7 @@ def interpolateData(outdir,data,boundaryCase):
                 plt.grid(True)
                 plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['GTOT']['Jint'][case].keys()):
-            print('GTOT Jint, Vf ' + str(str(data['GTOT']['Jint'][case][vfData]['Vf']) + ', ' + case)
+            print('GTOT Jint, Vf ' + str(data['GTOT']['Jint'][case][vfData]['Vf']) + ', ' + case)
             filename = datetime.now().strftime('%Y-%m-%d') + '_GTOT-Jint-Interpolation_' + case + '_Vf' + str(data['GTOT']['Jint'][case][vfData]['Vf'])
             refValue = data['GII']['VCCT'][case][vfData]['values'][0]
             rangeEnd = -1
@@ -307,7 +307,7 @@ def interpolateData(outdir,data,boundaryCase):
                 plt.grid(True)
                 plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['CZ'][case].keys()):
-            print('CZ, Vf ' + str(str(data['CZ'][case][vfData]['Vf']) + ', ' + case)
+            print('CZ, Vf ' + str(data['CZ'][case][vfData]['Vf']) + ', ' + case)
             czStart = -1
             for a,angle in enumerate(data['CZ'][case][vfData]['values']):
                 if angle>0.0:

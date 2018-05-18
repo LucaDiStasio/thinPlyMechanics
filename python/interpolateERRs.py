@@ -746,31 +746,26 @@ def writeData(outdir,workbookname,data,boundaryCase):
         chartDeb = ScatterChart()
         chartDeb.title = 'Value at no debond'
         chartDeb.style = 13
-        chartDeb.varyColors = True
         chartDeb.y_axis.title = 'G(0) [J/m^2]'
         chartDeb.x_axis.title = 'Vf [%]'
         chartA = ScatterChart()
         chartA.title = 'Amplitude'
         chartA.style = 13
-        chartA.varyColors = True
         chartA.y_axis.title = 'A [J/m^2]'
         chartA.x_axis.title = 'Vf [%]'
         chartB = ScatterChart()
         chartB.title = 'Spatial frequency'
         chartB.style = 13
-        chartB.varyColors = True
         chartB.y_axis.title = 'B [1/deg]'
         chartB.x_axis.title = 'Vf [%]'
         chartC = ScatterChart()
         chartC.title = 'Phase'
         chartC.style = 13
-        chartC.varyColors = True
         chartC.y_axis.title = 'C [deg]'
         chartC.x_axis.title = 'Vf [%]'
         chartD = ScatterChart()
         chartD.title = 'Offset'
         chartD.style = 13
-        chartD.varyColors = True
         chartD.y_axis.title = 'D [J/m^2]'
         chartD.x_axis.title = 'Vf [%]'
         for c,case in enumerate(boundaryCase):
@@ -802,7 +797,6 @@ def writeData(outdir,workbookname,data,boundaryCase):
     chartA = ScatterChart()
     chartA.title = 'Amplitude'
     chartA.style = 13
-    chartA.varyColors = True
     chartA.y_axis.title = 'A [%]'
     chartA.x_axis.title = 'Vf [%]'
     for c,case in enumerate(boundaryCase):

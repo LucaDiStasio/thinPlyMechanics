@@ -5720,7 +5720,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         else:
             GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
 
-        GTOTv2 = Jintegrals[-1]
+        GTOTv2 = thermalJintegrals[-1]
 
         GIv2 = GTOTv2 - GIIv2
 

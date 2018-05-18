@@ -40,6 +40,10 @@ from time import strftime
 #from platform import platform
 from openpyxl import Workbook
 from openpyxl import load_workbook
+from openpyxl.chart import (
+    LineChart,
+    Reference,
+)
 import numpy as np
 from scipy import optimize
 import matplotlib.pyplot as plt

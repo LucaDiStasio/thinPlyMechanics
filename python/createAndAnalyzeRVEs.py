@@ -3592,10 +3592,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
         RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['BOUNDING-PLY']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
-    elif 'boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']:
+    elif 'boundingPly' in parameters['BC']['rightSide']['type']:
         RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
-        RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['HOMOGENIZED-CROSSPLY']])
+        RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['RIGHT-HOMOGENIZED-CROSSPLY']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
+    elif 'boundingPly' in parameters['BC']['leftSide']['type']:
+        RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
+        RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['LEFT-HOMOGENIZED-CROSSPLY']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
     else:
         RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])

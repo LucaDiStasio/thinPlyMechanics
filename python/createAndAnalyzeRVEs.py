@@ -963,12 +963,15 @@ def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
 
     return meandisp,totalforce
 
-def getJintegrals(wd,sim,ncontours):
+def getJintegrals(wd,sim,ncontours,stepN):
     with open(join(wd,sim + '.dat'),'r') as dat:
         lines = dat.readlines()
+    for l,line in enumerate(lines):
+        if 'S T E P       ' + str(stepN) + '     S T A T I C   A N A L Y S I S' in line:
+            stepStart = l
     values = []
     for l,line in enumerate(lines):
-        if 'J - I N T E G R A L   E S T I M A T E S' in line:
+        if 'J - I N T E G R A L   E S T I M A T E S' in line and l>stepStart:
             for n in range(1,int(np.ceil(ncontours/5))+1):
                 if n>1:
                     temp = filter(lambda x: x!=' ' and x!='', lines[l+6+int(np.ceil(ncontours/5))+n].replace('\n','').split(' '))
@@ -5151,20 +5154,42 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     if len(parameters['steps'])>1:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
-
+        try:
+            Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'],1)
+        except Exception,e:
+            writeErrorToLogFile(logfilepath,'a',Exception,e,True)
+            sys.exc_clear()
+        JintegralsWithDistance = []
+        for v,value in enumerate(Jintegrals):
+            JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalJintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
+        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalJintegral'],JintegralsWithDistance)
+        del JintegralsWithDistance
+        thermalJintegrals = Jintegrals
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> MECHANICAL STEP <--',True)
-
-    try:
-        Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'])
-    except Exception,e:
-        writeErrorToLogFile(logfilepath,'a',Exception,e,True)
-        sys.exc_clear()
-    JintegralsWithDistance = []
-    for v,value in enumerate(Jintegrals):
-        JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
-    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
-    del JintegralsWithDistance
+        try:
+            Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'],2)
+        except Exception,e:
+            writeErrorToLogFile(logfilepath,'a',Exception,e,True)
+            sys.exc_clear()
+        JintegralsWithDistance = []
+        for v,value in enumerate(Jintegrals):
+            JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
+        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
+        del JintegralsWithDistance
+    else:
+        try:
+            Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'],1)
+        except Exception,e:
+            writeErrorToLogFile(logfilepath,'a',Exception,e,True)
+            sys.exc_clear()
+        JintegralsWithDistance = []
+        for v,value in enumerate(Jintegrals):
+            JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
+        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
+        del JintegralsWithDistance
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract J-integral results

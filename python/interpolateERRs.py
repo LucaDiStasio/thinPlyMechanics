@@ -196,9 +196,6 @@ def interpolateData(outdir,data,boundaryCase):
                 plt.grid(True)
                 plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
             except Exception, error:
-                res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0],method='dogbox')
-                stderr = np.sqrt(np.diag(cov))
-                angles = np.linspace(0.0, xs[-1]+5, num=300)
                 data['GI']['Jint'][case][vfData]['coeff'] = [0,0,0,0]
                 data['GI']['Jint'][case][vfData]['cov'] = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
                 data['GI']['Jint'][case][vfData]['std'] = 0

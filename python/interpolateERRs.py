@@ -743,23 +743,28 @@ def writeData(outdir,workbookname,data,boundaryCase):
             czWorksheet['L'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['std'][0]
             czWorksheet['M'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['std'][1]
     for ws in [gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]:
-        chartDeb = LineChart()
+        chartDeb = ScatterChart()
+        chartDeb.title = 'Value at no debond'
         chartDeb.style = 13
         chartDeb.y_axis.title = 'G(0) [J/m^2]'
         chartDeb.x_axis.title = 'Vf [%]'
-        chartA = LineChart()
+        chartA = ScatterChart()
+        chartA.title = 'A'
         chartA.style = 13
         chartA.y_axis.title = 'A [J/m^2]'
         chartA.x_axis.title = 'Vf [%]'
-        chartB = LineChart()
+        chartB = ScatterChart()
+        chartB.title = 'B'
         chartB.style = 13
         chartB.y_axis.title = 'B [1/deg]'
         chartB.x_axis.title = 'Vf [%]'
-        chartC = LineChart()
+        chartC = ScatterChart()
+        chartC.title = 'C'
         chartC.style = 13
         chartC.y_axis.title = 'C [deg]'
         chartC.x_axis.title = 'Vf [%]'
-        chartD = LineChart()
+        chartD = ScatterChart()
+        chartD.title = 'D'
         chartD.style = 13
         chartD.y_axis.title = 'D [J/m^2]'
         chartD.x_axis.title = 'Vf [%]'
@@ -789,7 +794,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
         ws.add_chart(chartB, "AF14")
         ws.add_chart(chartC, "AF20")
         ws.add_chart(chartD, "AF26")
-    chartA = LineChart()
+    chartA = ScatterChart()
     chartA.style = 13
     chartA.y_axis.title = 'A [%]'
     chartA.x_axis.title = 'Vf [%]'

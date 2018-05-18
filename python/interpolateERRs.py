@@ -179,10 +179,16 @@ def interpolateData(outdir,data,boundaryCase):
             plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['GII']['VCCT'][case].keys()):
             filename = datetime.now().strftime('%Y-%m-%d') + '_GII-VCCT-Interpolation_' + case + '_Vf' + str(data['GII']['VCCT'][case][vfData]['Vf'])
-            xs = data['GII']['VCCT'][case][vfData]['theta']
-            ys = data['GII']['VCCT'][case][vfData]['values']
+            refValue = data['GII']['VCCT'][case][vfData]['values'][0]
+            rangeEnd = -1
+            for v,value in enumerate(data['GII']['VCCT'][case][vfData]['values']):
+                if value<0.95*refValue:
+                    rangeEnd = v
+                    break
+            xs = data['GII']['VCCT'][case][vfData]['theta'][:rangeEnd]
+            ys = data['GII']['VCCT'][case][vfData]['values'][:rangeEnd]
             maxIndex = 0
-            maxValue = data['GII']['VCCT'][case][vfData]['values'][maxIndex]
+            maxValue = ys[maxIndex]
             for i,y in enumerate(ys):
                 if y>maxValue:
                     maxIndex = i
@@ -205,10 +211,16 @@ def interpolateData(outdir,data,boundaryCase):
             plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['GTOT']['VCCT'][case].keys()):
             filename = datetime.now().strftime('%Y-%m-%d') + '_GTOT-VCCT-Interpolation_' + case + '_Vf' + str(data['GTOT']['VCCT'][case][vfData]['Vf'])
-            xs = data['GTOT']['VCCT'][case][vfData]['theta']
-            ys = data['GTOT']['VCCT'][case][vfData]['values']
+            refValue = data['GII']['VCCT'][case][vfData]['values'][0]
+            rangeEnd = -1
+            for v,value in enumerate(data['GII']['VCCT'][case][vfData]['values']):
+                if value<0.95*refValue:
+                    rangeEnd = v
+                    break
+            xs = data['GTOT']['VCCT'][case][vfData]['theta'][:rangeEnd]
+            ys = data['GTOT']['VCCT'][case][vfData]['values'][:rangeEnd]
             maxIndex = 0
-            maxValue = data['GTOT']['VCCT'][case][vfData]['values'][maxIndex]
+            maxValue = ys[maxIndex]
             for i,y in enumerate(ys):
                 if y>maxValue:
                     maxIndex = i
@@ -231,10 +243,16 @@ def interpolateData(outdir,data,boundaryCase):
             plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
         for vI,vfData in enumerate(data['GTOT']['Jint'][case].keys()):
             filename = datetime.now().strftime('%Y-%m-%d') + '_GTOT-Jint-Interpolation_' + case + '_Vf' + str(data['GTOT']['Jint'][case][vfData]['Vf'])
-            xs = data['GTOT']['Jint'][case][vfData]['theta']
-            ys = data['GTOT']['Jint'][case][vfData]['values']
+            refValue = data['GII']['VCCT'][case][vfData]['values'][0]
+            rangeEnd = -1
+            for v,value in enumerate(data['GII']['VCCT'][case][vfData]['values']):
+                if value<0.95*refValue:
+                    rangeEnd = v
+                    break
+            xs = data['GTOT']['Jint'][case][vfData]['theta'][:rangeEnd]
+            ys = data['GTOT']['Jint'][case][vfData]['values'][:rangeEnd]
             maxIndex = 0
-            maxValue = data['GTOT']['Jint'][case][vfData]['values'][maxIndex]
+            maxValue = ys[maxIndex]
             for i,y in enumerate(ys):
                 if y>maxValue:
                     maxIndex = i

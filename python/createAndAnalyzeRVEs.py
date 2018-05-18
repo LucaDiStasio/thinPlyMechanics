@@ -4584,7 +4584,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify right adjacent ply solid section definition ...',True)
         for l,line in enumerate(inpfilelines):
-            if '*Solid Section, elset=BOUNDING-PLY, material=UD' in line:
+            if '*Solid Section, elset=RIGHT-HOMOGENIZED-CROSSPLY, material=UD' in line:
                 boundingplySolidsectionLine = l
                 break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Adjacent ply solid section definition at line ' + str(boundingplySolidsectionLine),True)
@@ -4592,7 +4592,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify left adjacent ply solid section definition ...',True)
         for l,line in enumerate(inpfilelines):
-            if '*Solid Section, elset=BOUNDING-PLY, material=UD' in line:
+            if '*Solid Section, elset=LEFT-HOMOGENIZED-CROSSPLY, material=UD' in line:
                 boundingplySolidsectionLine = l
                 break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Adjacent ply solid section definition at line ' + str(boundingplySolidsectionLine),True)

@@ -3582,11 +3582,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
-    if 'boundingPly' in parameters['BC']['northSide']['type'] and ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']):
+    if 'boundingPly' in parameters['BC']['northSide']['type'] and 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
         RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
         RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['HOMOGENIZED-CROSSPLY'],RVEpart.sets['BOUNDING-PLY']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
+    elif 'boundingPly' in parameters['BC']['northSide']['type'] and 'boundingPly' in parameters['BC']['rightSide']['type']:
+        
+    elif 'boundingPly' in parameters['BC']['northSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
+            
     elif 'boundingPly' in parameters['BC']['northSide']['type']:
         RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
@@ -3617,7 +3621,20 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#
 #                             Material Orientation
 #===============================================================================#
-
+    
+    if 'boundingPly' in parameters['BC']['northSide']['type'] or 'boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']:
+        RVEpart.DatumCsysByThreePoints
+        
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        RVEpart.MaterialOrientiation(orientationType=SYSTEM,region=,localCsys=)
+        
+    if 'boundingPly' in parameters['BC']['rightSide']['type']:
+        RVEpart.MaterialOrientiation()
+        
+    if 'boundingPly' in parameters['BC']['leftSide']['type']:
+        RVEpart.MaterialOrientiation()
+        
+        
 #===============================================================================#
 #                             Materials creation
 #===============================================================================#

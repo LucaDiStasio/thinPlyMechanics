@@ -325,10 +325,10 @@ def interpolateData(outdir,data,boundaryCase):
                 plt.grid(True)
                 plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
             except Exception, error:
-                data['GTOT']['VCCT'][case][vfData]['coeff'] = [0,0,0,0]
-                data['GTOT']['VCCT'][case][vfData]['cov'] = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-                data['GTOT']['VCCT'][case][vfData]['std'] = [0,0,0,0]
-                data['GTOT']['VCCT'][case][vfData]['valueAtNoDebond'] = 0
+                data['GTOT']['Jint'][case][vfData]['coeff'] = [0,0,0,0]
+                data['GTOT']['Jint'][case][vfData]['cov'] = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+                data['GTOT']['Jint'][case][vfData]['std'] = [0,0,0,0]
+                data['GTOT']['Jint'][case][vfData]['valueAtNoDebond'] = 0
                 plt.figure()
                 plt.plot(data['GTOT']['Jint'][case][vfData]['theta'], data['GTOT']['Jint'][case][vfData]['values'], 'ko')
                 plt.xlabel(r'$\Delta\theta [^{\circ}]$')

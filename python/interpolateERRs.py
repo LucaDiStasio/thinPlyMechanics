@@ -313,8 +313,6 @@ def interpolateData(outdir,data,boundaryCase):
             for p,phi in enumerate(data['CZ'][case][vfData]['values']):
                 phis.append(100*phi/data['CZ'][case][vfData]['theta'][p])
             ys = phis[czStart:]
-            for p,phi in enumerate(phis):
-                ys = 100*phi/xs[p]
             res, cov = optimize.curve_fit(linear,xs,ys,method='dogbox')
             stderr = np.sqrt(np.diag(cov))
             angles = np.linspace(xs[0], xs[-1]+5, num=300)

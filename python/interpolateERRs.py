@@ -763,7 +763,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
         chartB.x_axis.title = 'Vf [%]'
         chartC = ScatterChart()
         chartC.title = 'Phase'
-        chartC.style = '13
+        chartC.style = 13
         chartC.varyColors = True
         chartC.y_axis.title = 'C [deg]'
         chartC.x_axis.title = 'Vf [%]'

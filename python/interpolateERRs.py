@@ -744,7 +744,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
     for ws in [gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]:
         chartDeb = LineChart()
         chartDeb.style = 13
-        chartDeb.y_axis.title = 'G(0°) [J/m^2]'
+        chartDeb.y_axis.title = 'G(0) [J/m^2]'
         chartDeb.x_axis.title = 'Vf [%]'
         chartA = LineChart()
         chartA.style = 13
@@ -752,11 +752,11 @@ def writeData(outdir,workbookname,data,boundaryCase):
         chartA.x_axis.title = 'Vf [%]'
         chartB = LineChart()
         chartB.style = 13
-        chartB.y_axis.title = 'B [1/°]'
+        chartB.y_axis.title = 'B [1/deg]'
         chartB.x_axis.title = 'Vf [%]'
         chartC = LineChart()
         chartC.style = 13
-        chartC.y_axis.title = 'C [°]'
+        chartC.y_axis.title = 'C [deg]'
         chartC.x_axis.title = 'Vf [%]'
         chartD = LineChart()
         chartD.style = 13

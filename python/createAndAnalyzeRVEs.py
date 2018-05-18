@@ -4630,11 +4630,17 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if len(parameters['steps'])>1:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of thermal boundary conditions section  ...',True)
-        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of thermal step section  ...',True)
+        for l,line in enumerate(inpfilelines):
+            if '*Step, name=Temp-Step' in line or '*STEP, NAME=TEMP-STEP' in line:
+                startTempStep = l
+                break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of mechanical boundary conditions section  ...',True)
-        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of mechanical step section  ...',True)
+        for l,line in enumerate(inpfilelines):
+            if '*Step, name=Load-Step' in line or '*STEP, NAME=LOAD-STEP' in line:
+                startTempStep = l
+                break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of thermal contour integral section  ...',True)
         

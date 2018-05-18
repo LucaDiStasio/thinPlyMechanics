@@ -3623,16 +3623,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#
     
     if 'boundingPly' in parameters['BC']['northSide']['type'] or 'boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']:
-        RVEpart.DatumCsysByThreePoints(name='refOrientation',coordSysType=CARTESIAN,origin=RVEpart.DatumPointByCoordinate(...),point1=RVEpart.DatumPointByCoordinate(...),point2=RVEpart.DatumPointByCoordinate(...))
+        RVEpart.DatumCsysByThreePoints(name='refOrientation',coordSysType=CARTESIAN,origin=RVEpart.DatumPointByCoordinate(coords=(0.0,0.0,0.0)),point1=RVEpart.DatumPointByCoordinate(coords=(1.0,0.0,0.0)),point2=RVEpart.DatumPointByCoordinate(coords=(1.0,1.0,0.0)))
         
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        RVEpart.MaterialOrientiation(orientationType=SYSTEM,region=,localCsys=)
+        RVEpart.MaterialOrientiation(orientationType=SYSTEM,region=RVEpart.sets['BOUNDING-PLY'],localCsys=RVEpart.features['refOrientation'])
         
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
-        RVEpart.MaterialOrientiation()
+        RVEpart.MaterialOrientiation(orientationType=SYSTEM,region=RVEpart.sets['RIGHT-HOMOGENIZED-CROSSPLY'],localCsys=RVEpart.features['refOrientation'])
         
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
-        RVEpart.MaterialOrientiation()
+        RVEpart.MaterialOrientiation(orientationType=SYSTEM,region=RVEpart.sets['LEFT-HOMOGENIZED-CROSSPLY'],localCsys=RVEpart.features['refOrientation'])
         
         
 #===============================================================================#

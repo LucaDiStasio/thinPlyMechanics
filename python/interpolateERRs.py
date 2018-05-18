@@ -779,11 +779,11 @@ def writeData(outdir,workbookname,data,boundaryCase):
             y = Reference(ws, min_col=10, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
             series = Series(y, x, title=case)
             chartD.series.append(series)
-        ws.add_chart(chartDeb, "AC2")
-        ws.add_chart(chartA, "AC8")
-        ws.add_chart(chartB, "AC14")
-        ws.add_chart(chartC, "AC20")
-        ws.add_chart(chartD, "AC26")
+        ws.add_chart(chartDeb, "AF2")
+        ws.add_chart(chartA, "AF8")
+        ws.add_chart(chartB, "AF14")
+        ws.add_chart(chartC, "AF20")
+        ws.add_chart(chartD, "AF26")
     chartA = LineChart()
     chartA.style = 13
     chartA.y_axis.title = 'A [%]'
@@ -793,7 +793,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
         y = Reference(czWorksheet, min_col=6, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
         series = Series(y, x, title=case)
         chartA.series.append(series)
-    czWorksheet.add_chart(chartA, "AC2")
+    czWorksheet.add_chart(chartA, "O2")
     wb.save(filename = join(outdir,workbookname))
 
 def main(argv):

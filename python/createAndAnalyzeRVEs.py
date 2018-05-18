@@ -3574,11 +3574,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         RVEpart.SetByBoolean(name='HOMOGENIZED-CROSSPLY', sets=[RVEpart.sets['RIGHT-HOMOGENIZED-CROSSPLY'],RVEpart.sets['LEFT-HOMOGENIZED-CROSSPLY']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- HOMOGENIZED-CROSSPLY',True)
     elif 'boundingPly' in parameters['BC']['rightSide']['type']:
-        setsOfFacesData = [[0.975*CornerBx, 0.5*L, 0,'HOMOGENIZED-CROSSPLY']]
+        setsOfFacesData = [[0.975*CornerBx, 0.5*L, 0,'RIGHT-HOMOGENIZED-CROSSPLY']]
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
     elif 'boundingPly' in parameters['BC']['leftSide']['type']:
-        setsOfFacesData = [[0.975*CornerAx, 0.5*L, 0,'HOMOGENIZED-CROSSPLY']]
+        setsOfFacesData = [[0.975*CornerAx, 0.5*L, 0,'LEFT-HOMOGENIZED-CROSSPLY']]
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
@@ -3897,12 +3897,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         regionSets.append(['BOUNDING-PLY',TRI,FREE])
-    if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
+    if 'boundingPly' in parameters['BC']['rightSide']['type']:
         regionSets.append(['RIGHT-HOMOGENIZED-CROSSPLY',TRI,FREE])
-        regionSets.append(['LEFT-HOMOGENIZED-CROSSPLY',TRI,FREE])
-    elif 'boundingPly' in parameters['BC']['rightSide']['type']:
-        regionSets.append(['RIGHT-HOMOGENIZED-CROSSPLY',TRI,FREE])
-    elif 'boundingPly' in parameters['BC']['leftSide']['type']:
+    if 'boundingPly' in parameters['BC']['leftSide']['type']:
         regionSets.append(['LEFT-HOMOGENIZED-CROSSPLY',TRI,FREE])
 
     for regionSet in regionSets:
@@ -4583,6 +4580,22 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 boundingplySolidsectionLine = l
                 break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Bounding ply solid section definition at line ' + str(boundingplySolidsectionLine),True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'boundingPly' in parameters['BC']['rightSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify right adjacent ply solid section definition ...',True)
+        for l,line in enumerate(inpfilelines):
+            if '*Solid Section, elset=BOUNDING-PLY, material=UD' in line:
+                boundingplySolidsectionLine = l
+                break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Adjacent ply solid section definition at line ' + str(boundingplySolidsectionLine),True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'boundingPly' in parameters['BC']['leftSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify left adjacent ply solid section definition ...',True)
+        for l,line in enumerate(inpfilelines):
+            if '*Solid Section, elset=BOUNDING-PLY, material=UD' in line:
+                boundingplySolidsectionLine = l
+                break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Adjacent ply solid section definition at line ' + str(boundingplySolidsectionLine),True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify end of assembly section  ...',True)
     for l,line in enumerate(inpfilelines):

@@ -745,26 +745,31 @@ def writeData(outdir,workbookname,data,boundaryCase):
     for ws in [gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]:
         chartDeb = ScatterChart()
         chartDeb.title = 'Value at no debond'
+        chart.varyColors = True
         chartDeb.style = 13
         chartDeb.y_axis.title = 'G(0) [J/m^2]'
         chartDeb.x_axis.title = 'Vf [%]'
         chartA = ScatterChart()
         chartA.title = 'Amplitude'
+        chartA.varyColors = True
         chartA.style = 13
         chartA.y_axis.title = 'A [J/m^2]'
         chartA.x_axis.title = 'Vf [%]'
         chartB = ScatterChart()
         chartB.title = 'Spatial frequency'
+        chartB.varyColors = True
         chartB.style = 13
         chartB.y_axis.title = 'B [1/deg]'
         chartB.x_axis.title = 'Vf [%]'
         chartC = ScatterChart()
         chartC.title = 'Phase'
+        chartC.varyColors = True
         chartC.style = 13
         chartC.y_axis.title = 'C [deg]'
         chartC.x_axis.title = 'Vf [%]'
         chartD = ScatterChart()
         chartD.title = 'Offset'
+        chartD.varyColors = True
         chartD.style = 13
         chartD.y_axis.title = 'D [J/m^2]'
         chartD.x_axis.title = 'Vf [%]'
@@ -796,6 +801,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
         ws.add_chart(chartD, "AF26")
     chartA = ScatterChart()
     chartA.title = 'Amplitude'
+    chartA.varyColors = True
     chartA.style = 13
     chartA.y_axis.title = 'A [%]'
     chartA.x_axis.title = 'Vf [%]'

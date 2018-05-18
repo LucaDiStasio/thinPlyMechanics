@@ -225,7 +225,7 @@ def interpolateData(outdir,data,boundaryCase):
                 if y>maxValue:
                     maxIndex = i
                     maxValue = y
-            res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0],method='dogbox')
+            res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0],method='dogbox', maxfev=1000)
             stderr = np.sqrt(np.diag(cov))
             angles = np.linspace(0.0, xs[-1]+5, num=300)
             data['GTOT']['VCCT'][case][vfData]['coeff'] = res
@@ -257,7 +257,7 @@ def interpolateData(outdir,data,boundaryCase):
                 if y>maxValue:
                     maxIndex = i
                     maxValue = y
-            res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0],method='dogbox')
+            res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0],method='dogbox', maxfev=1000)
             stderr = np.sqrt(np.diag(cov))
             angles = np.linspace(0.0, xs[-1]+5, num=300)
             data['GTOT']['Jint'][case][vfData]['coeff'] = res

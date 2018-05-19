@@ -3452,7 +3452,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                        [0.74*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,0.76*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'SECONDCIRCLE-SECONDBOUNDED'],
                        [0.74*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.74*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,0.76*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.76*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'SECONDCIRCLE-RESTBOUNDED']]
     if ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']) and not 'boundingPly' in parameters['BC']['northSide']['type']:
-        
+        setsOfEdgesData.append([0.0,0.99*CornerBy,0.0,0.0,1.01*CornerBy,0.0,'CENTER-RUC-UPPERSIDE'])
+        if 'boundingPly' in parameters['BC']['rightSide']['type']:
+            setsOfEdgesData.append([0.99*CornerBx,0.99*CornerBy,0.0,0.99*CornerBx,1.01*CornerBy,0.0,'RIGHT-HOMOPLY-UPPERSIDE'])
+        if 'boundingPly' in parameters['BC']['rightSide']['type']:
+            setsOfEdgesData.append([0.99*CornerAx,0.99*CornerBy,0.0,0.99*CornerAx,1.01*CornerBy,0.0,'LEFT-HOMOPLY-UPPERSIDE'])
     else:
         setsOfEdgesData.append([0.0,0.99*CornerBy,0.0,0.0,1.01*CornerBy,0.0,'UPPERSIDE'])
     if 'boundingPly' in parameters['BC']['northSide']['type']:

@@ -369,7 +369,7 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outDir,odbna
     
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,odbname)',True)
 
-    return [undefA,A,A/undefA,100.0*A/undefA,A-undefA,(A-undefA)/undefA]
+    return [undefA,defA,defA/undefA,100.0*defA/undefA,defA-undefA,(defA-undefA)/undefA]
 
 def main(argv):
 

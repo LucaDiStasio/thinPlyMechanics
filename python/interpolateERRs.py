@@ -399,8 +399,8 @@ def writeData(outdir,workbookname,data,boundaryCase):
         ws.write(2,5,'Value at no debond [J/m^2]')
         ws.write(1,6,'Coefficients')
         ws.write(2,6,'A [J/m^2]')
-        ws.write(2,7,'B [1/°]')
-        ws.write(2,8,'C [°]')
+        ws.write(2,7,'B [1/deg]')
+        ws.write(2,8,'C [deg]')
         ws.write(2,9,'D [J/m^2]')
         ws.write(1,10,'Covariance')
         ws.write(2,10,'cov(1,1)')
@@ -421,8 +421,8 @@ def writeData(outdir,workbookname,data,boundaryCase):
         ws.write(2,25,'cov(4,4)')
         ws.write(1,26,'std err')
         ws.write(2,26,'A [J/m^2]')
-        ws.write(2,27,'B [1/°]')
-        ws.write(2,28,'C [°]')
+        ws.write(2,27,'B [1/deg]')
+        ws.write(2,28,'C [deg]')
         ws.write(2,29,'D [J/m^2]')
     czWorksheet = workbook.add_worksheet('ContactZone')
     czWorksheet.write(0,0,'Contact zone')
@@ -441,7 +441,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
     czWorksheet.write(0,9,'cov(2,1)')
     czWorksheet.write(0,10,'cov(2,2)')
     czWorksheet.write(0,11,'std err')
-    czWorksheet.write(0,11,'A [%/°]')
+    czWorksheet.write(0,11,'A [%/deg]')
     czWorksheet.write(0,12,'B [%]')
     Vf = [0.000079,0.0001,0.2,0.3,0.4,0.5,0.55,0.6,0.65]
     nVf = len(Vf)
@@ -561,7 +561,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
     chartA = workbook.add_chart({'type': 'scatter','subtype': 'line_with_markers'})
     chartA.set_title ({'name': 'Percentual increment of contact zone'})
     chartA.set_y_axis({'name': 'CZ/DS/unit increment [%/deg]'})
-    chartA.set_x_axis({'name': 'Vf [%]'})
+    chartA.set_x_axis({'name': 'Vf []'})
     for c,case in enumerate(boundaryCase):
         chartA.add_series({
                             'name':       case,

@@ -376,6 +376,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
     gIIvcctWorksheet = wb.add_worksheet(title='GII-VCCT')
     gTOTvcctWorksheet = wb.add_worksheet(title='GTOT-VCCT')
     gTOTjintWorksheet = wb.add_worksheet(title='GTOT-Jint')
+    wsNames = ['GI-VCCT','GI-Jint','GII-VCCT','GTOT-VCCT','GTOT-Jint']
     gIvcctWorksheet.write(0,0,'GI-VCCT')
     gIjintWorksheet.write(0,0,'GI-Jint')
     gIIvcctWorksheet.write(0,0,'GII-VCCT')
@@ -520,6 +521,11 @@ def writeData(outdir,workbookname,data,boundaryCase):
         chartDeb.set_y_axis({'name': 'D [J/m^2]'})
         chartDeb.set_x_axis({'name': 'Vf [%]'})
         for c,case in enumerate(boundaryCase):
+            chartDeb.add_series({
+                                'name':       case,
+                                'categories': [sheetName,1,curve[0],len(csvlines),curve[0]],
+                                'values':     [sheetName,1,curve[1],len(csvlines),curve[1]],
+                            })
             x = Reference(ws, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
             y = Reference(ws, min_col=6, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
             series = Series(y, x, title=case)

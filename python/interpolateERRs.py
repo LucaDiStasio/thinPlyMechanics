@@ -427,14 +427,14 @@ def writeData(outdir,workbookname,data,boundaryCase):
     czWorksheet.write(0,5,'Coefficients')
     czWorksheet.write(0,5,'A [%/°]')
     czWorksheet.write(0,6,'B [%]')
-    czWorksheet.write(0,6,'Covariance')
-    czWorksheet.write(0,6,'cov(1,1)')
-    czWorksheet.write(0,7,'cov(1,2)')
-    czWorksheet.write(0,8,'cov(2,1)')
-    czWorksheet.write(0,9,'cov(2,2)')
-    czWorksheet.write(0,10,'std err')
-    czWorksheet.write(0,10,'A [%/°]')
-    czWorksheet.write(0,11,'B [%]')
+    czWorksheet.write(0,7,'Covariance')
+    czWorksheet.write(0,7,'cov(1,1)')
+    czWorksheet.write(0,8,'cov(1,2)')
+    czWorksheet.write(0,9,'cov(2,1)')
+    czWorksheet.write(0,10,'cov(2,2)')
+    czWorksheet.write(0,11,'std err')
+    czWorksheet.write(0,11,'A [%/°]')
+    czWorksheet.write(0,12,'B [%]')
     Vf = [0.000079,0.0001,0.2,0.3,0.4,0.5,0.55,0.6,0.65]
     nVf = len(Vf)
     initVf = 3
@@ -454,120 +454,50 @@ def writeData(outdir,workbookname,data,boundaryCase):
                     gIvcctWorksheet.write(initVf+c*nVf+v,10+4*r+col,cov)
             for c,coeff in enumerate(data['GI']['VCCT'][case][v+1]['std']):
                 gIvcctWorksheet.write(initVf+c*nVf+v,26+c,coeff)
-            
-            gIjintWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
-            gIjintWorksheet['F'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['valueAtNoDebond']
-            gIjintWorksheet['G'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['coeff'][0]
-            gIjintWorksheet['H'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['coeff'][1]
-            gIjintWorksheet['I'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['coeff'][2]
-            gIjintWorksheet['J'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['coeff'][3]
-            gIjintWorksheet['K'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][0][0]
-            gIjintWorksheet['L'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][0][1]
-            gIjintWorksheet['M'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][0][2]
-            gIjintWorksheet['N'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][0][3]
-            gIjintWorksheet['O'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][1][0]
-            gIjintWorksheet['P'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][1][1]
-            gIjintWorksheet['Q'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][1][2]
-            gIjintWorksheet['R'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][1][3]
-            gIjintWorksheet['S'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][2][0]
-            gIjintWorksheet['T'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][2][1]
-            gIjintWorksheet['U'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][2][2]
-            gIjintWorksheet['V'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][2][3]
-            gIjintWorksheet['W'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][3][0]
-            gIjintWorksheet['X'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][3][1]
-            gIjintWorksheet['Y'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][3][2]
-            gIjintWorksheet['Z'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['cov'][3][3]
-            gIjintWorksheet['AA'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['std'][0]
-            gIjintWorksheet['AB'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['std'][1]
-            gIjintWorksheet['AC'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['std'][2]
-            gIjintWorksheet['AD'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['std'][3]
-            gIIvcctWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
-            gIIvcctWorksheet['F'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['valueAtNoDebond']
-            gIIvcctWorksheet['G'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['coeff'][0]
-            gIIvcctWorksheet['H'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['coeff'][1]
-            gIIvcctWorksheet['I'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['coeff'][2]
-            gIIvcctWorksheet['J'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['coeff'][3]
-            gIIvcctWorksheet['K'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][0][0]
-            gIIvcctWorksheet['L'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][0][1]
-            gIIvcctWorksheet['M'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][0][2]
-            gIIvcctWorksheet['N'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][0][3]
-            gIIvcctWorksheet['O'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][1][0]
-            gIIvcctWorksheet['P'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][1][1]
-            gIIvcctWorksheet['Q'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][1][2]
-            gIIvcctWorksheet['R'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][1][3]
-            gIIvcctWorksheet['S'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][2][0]
-            gIIvcctWorksheet['T'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][2][1]
-            gIIvcctWorksheet['U'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][2][2]
-            gIIvcctWorksheet['V'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][2][3]
-            gIIvcctWorksheet['W'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][3][0]
-            gIIvcctWorksheet['X'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][3][1]
-            gIIvcctWorksheet['Y'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][3][2]
-            gIIvcctWorksheet['Z'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['cov'][3][3]
-            gIIvcctWorksheet['AA'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['std'][0]
-            gIIvcctWorksheet['AB'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['std'][1]
-            gIIvcctWorksheet['AC'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['std'][2]
-            gIIvcctWorksheet['AD'+str(initVf+c*nVf+v)] = data['GII']['VCCT'][case][v+1]['std'][3]
-            gTOTvcctWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
-            gTOTvcctWorksheet['F'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['valueAtNoDebond']
-            gTOTvcctWorksheet['G'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['coeff'][0]
-            gTOTvcctWorksheet['H'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['coeff'][1]
-            gTOTvcctWorksheet['I'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['coeff'][2]
-            gTOTvcctWorksheet['J'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['coeff'][3]
-            gTOTvcctWorksheet['K'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][0][0]
-            gTOTvcctWorksheet['L'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][0][1]
-            gTOTvcctWorksheet['M'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][0][2]
-            gTOTvcctWorksheet['N'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][0][3]
-            gTOTvcctWorksheet['O'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][1][0]
-            gTOTvcctWorksheet['P'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][1][1]
-            gTOTvcctWorksheet['Q'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][1][2]
-            gTOTvcctWorksheet['R'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][1][3]
-            gTOTvcctWorksheet['S'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][2][0]
-            gTOTvcctWorksheet['T'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][2][1]
-            gTOTvcctWorksheet['U'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][2][2]
-            gTOTvcctWorksheet['V'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][2][3]
-            gTOTvcctWorksheet['W'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][3][0]
-            gTOTvcctWorksheet['X'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][3][1]
-            gTOTvcctWorksheet['Y'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][3][2]
-            gTOTvcctWorksheet['Z'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['cov'][3][3]
-            gTOTvcctWorksheet['AA'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['std'][0]
-            gTOTvcctWorksheet['AB'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['std'][1]
-            gTOTvcctWorksheet['AC'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['std'][2]
-            gTOTvcctWorksheet['AD'+str(initVf+c*nVf+v)] = data['GTOT']['VCCT'][case][v+1]['std'][3]
-            gTOTjintWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
-            gTOTjintWorksheet['F'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['valueAtNoDebond']
-            gTOTjintWorksheet['G'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['coeff'][0]
-            gTOTjintWorksheet['H'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['coeff'][1]
-            gTOTjintWorksheet['I'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['coeff'][2]
-            gTOTjintWorksheet['J'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['coeff'][3]
-            gTOTjintWorksheet['K'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][0][0]
-            gTOTjintWorksheet['L'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][0][1]
-            gTOTjintWorksheet['M'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][0][2]
-            gTOTjintWorksheet['N'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][0][3]
-            gTOTjintWorksheet['O'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][1][0]
-            gTOTjintWorksheet['P'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][1][1]
-            gTOTjintWorksheet['Q'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][1][2]
-            gTOTjintWorksheet['R'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][1][3]
-            gTOTjintWorksheet['S'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][2][0]
-            gTOTjintWorksheet['T'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][2][1]
-            gTOTjintWorksheet['U'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][2][2]
-            gTOTjintWorksheet['V'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][2][3]
-            gTOTjintWorksheet['W'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][3][0]
-            gTOTjintWorksheet['X'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][3][1]
-            gTOTjintWorksheet['Y'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][3][2]
-            gTOTjintWorksheet['Z'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['cov'][3][3]
-            gTOTjintWorksheet['AA'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['std'][0]
-            gTOTjintWorksheet['AB'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['std'][1]
-            gTOTjintWorksheet['AC'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['std'][2]
-            gTOTjintWorksheet['AD'+str(initVf+c*nVf+v)] = data['GTOT']['Jint'][case][v+1]['std'][3]
-            czWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
-            czWorksheet['F'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['coeff'][0]
-            czWorksheet['G'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['coeff'][1]
-            czWorksheet['H'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['cov'][0][0]
-            czWorksheet['I'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['cov'][0][1]
-            czWorksheet['J'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['cov'][1][0]
-            czWorksheet['K'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['cov'][1][1]
-            czWorksheet['L'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['std'][0]
-            czWorksheet['M'+str(initVf+c*nVf+v)] = data['CZ'][case][v+1]['std'][1]
+            gIjintWorksheet.write(initVf+c*nVf+v,4,100*value)
+            gIjintWorksheet.write(initVf+c*nVf+v,5,data['GI']['Jint'][case][v+1]['valueAtNoDebond'])
+            for c,coeff in enumerate(data['GI']['Jint'][case][v+1]['coeff']):
+                gIjintWorksheet.write(initVf+c*nVf+v,6+c,coeff)
+            for r,row in enumerate(data['GI']['Jint'][case][v+1]['cov']):
+                for col,cov in enumerate(row):
+                    gIjintWorksheet.write(initVf+c*nVf+v,10+4*r+col,cov)
+            for c,coeff in enumerate(data['GI']['Jint'][case][v+1]['std']):
+                gIjintWorksheet.write(initVf+c*nVf+v,26+c,coeff)
+            gIIvcctWorksheet.write(initVf+c*nVf+v,4,100*value)
+            gIIvcctWorksheet.write(initVf+c*nVf+v,5,data['GII']['VCCT'][case][v+1]['valueAtNoDebond'])
+            for c,coeff in enumerate(data['GII']['VCCT'][case][v+1]['coeff']):
+                gIIvcctWorksheet.write(initVf+c*nVf+v,6+c,coeff)
+            for r,row in enumerate(data['GII']['VCCT'][case][v+1]['cov']):
+                for col,cov in enumerate(row):
+                    gIIvcctWorksheet.write(initVf+c*nVf+v,10+4*r+col,cov)
+            for c,coeff in enumerate(data['GII']['VCCT'][case][v+1]['std']):
+                gIIvcctWorksheet.write(initVf+c*nVf+v,26+c,coeff)    
+            gTOTvcctWorksheet.write(initVf+c*nVf+v,4,100*value)
+            gTOTvcctWorksheet.write(initVf+c*nVf+v,5,data['GTOT']['VCCT'][case][v+1]['valueAtNoDebond'])
+            for c,coeff in enumerate(data['GTOT']['VCCT'][case][v+1]['coeff']):
+                gTOTvcctWorksheet.write(initVf+c*nVf+v,6+c,coeff)
+            for r,row in enumerate(data['GTOT']['VCCT'][case][v+1]['cov']):
+                for col,cov in enumerate(row):
+                    gTOTvcctWorksheet.write(initVf+c*nVf+v,10+4*r+col,cov)
+            for c,coeff in enumerate(data['GTOT']['VCCT'][case][v+1]['std']):
+                gTOTvcctWorksheet.write(initVf+c*nVf+v,26+c,coeff)
+            gTOTjintWorksheet.write(initVf+c*nVf+v,4,100*value)
+            gTOTjintWorksheet.write(initVf+c*nVf+v,5,data['GTOT']['Jint'][case][v+1]['valueAtNoDebond'])
+            for c,coeff in enumerate(data['GTOT']['Jint'][case][v+1]['coeff']):
+                gTOTjintWorksheet.write(initVf+c*nVf+v,6+c,coeff)
+            for r,row in enumerate(data['GTOT']['Jint'][case][v+1]['cov']):
+                for col,cov in enumerate(row):
+                    gTOTjintWorksheet.write(initVf+c*nVf+v,10+4*r+col,cov)
+            for c,coeff in enumerate(data['GTOT']['Jint'][case][v+1]['std']):
+                gTOTjintWorksheet.write(initVf+c*nVf+v,26+c,coeff)
+            czWorksheet.write(initVf+c*nVf+v,4,100*value)
+            for c,coeff in enumerate(data['CZ'][case][v+1]['coeff']):
+                czWorksheet.write(initVf+c*nVf+v,5+c,coeff)
+            for r,row in enumerate(data['CZ'][case][v+1]['cov']):
+                for col,cov in enumerate(row):
+                    czWorksheet.write(initVf+c*nVf+v,7+4*r+col,cov)
+            for c,coeff in enumerate(data['CZ'][case][v+1]['std']):
+                czWorksheet.write(initVf+c*nVf+v,11+c,coeff)
     for ws in [gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]:
         chartDeb = ScatterChart()
         chartDeb.title = 'Value at no debond'

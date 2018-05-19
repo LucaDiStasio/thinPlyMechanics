@@ -370,12 +370,12 @@ def interpolateData(outdir,data,boundaryCase):
     return data
 
 def writeData(outdir,workbookname,data,boundaryCase):
-    wb = xlsxwriter.Workbook(join(outdir,workbookname))
-    gIvcctWorksheet = wb.add_worksheet(title='GI-VCCT')
-    gIjintWorksheet = wb.add_worksheet(title='GI-Jint')
-    gIIvcctWorksheet = wb.add_worksheet(title='GII-VCCT')
-    gTOTvcctWorksheet = wb.add_worksheet(title='GTOT-VCCT')
-    gTOTjintWorksheet = wb.add_worksheet(title='GTOT-Jint')
+    workbook = xlsxwriter.Workbook(join(outdir,workbookname))
+    gIvcctWorksheet = workbook.add_worksheet(title='GI-VCCT')
+    gIjintWorksheet = workbook.add_worksheet(title='GI-Jint')
+    gIIvcctWorksheet = workbook.add_worksheet(title='GII-VCCT')
+    gTOTvcctWorksheet = workbook.add_worksheet(title='GTOT-VCCT')
+    gTOTjintWorksheet = workbook.add_worksheet(title='GTOT-Jint')
     wsNames = ['GI-VCCT','GI-Jint','GII-VCCT','GTOT-VCCT','GTOT-Jint']
     gIvcctWorksheet.write(0,0,'GI-VCCT')
     gIjintWorksheet.write(0,0,'GI-Jint')
@@ -546,24 +546,23 @@ def writeData(outdir,workbookname,data,boundaryCase):
                                 'categories': [wsNames[wsIndex],initVf+c*nVf,4,initVf+(c+1)*nVf-1,4],
                                 'values':     [wsNames[wsIndex],initVf+c*nVf,9,initVf+(c+1)*nVf-1,9],
                             })
-        ws.add_chart(chartDeb, "AF2")
-        ws.add_chart(chartA, "AF8")
-        ws.add_chart(chartB, "AF14")
-        ws.add_chart(chartC, "AF20")
-        ws.add_chart(chartD, "AF26")
-    chartA = ScatterChart()
-    chartA.title = 'Amplitude'
-    chartA.varyColors = True
-    chartA.style = 13
-    chartA.y_axis.title = 'A [%]'
-    chartA.x_axis.title = 'Vf [%]'
+        ws.insert_chart(2,32, chartDeb)
+        ws.insert_chart(15,32, chartA)
+        ws.insert_chart(30,32, chartB)
+        ws.insert_chart(45,32, chartC)
+        ws.insert_chart(60,32, chartD)
+    chartA = workbook.add_chart({'type': 'scatter','subtype': 'line_with_markers'})
+    chartA.set_title ({'name': 'Percentual increment of contact zone'})
+    chartA.set_y_axis({'name': 'CZ/DS/unit increment [%/deg]'})
+    chartA.set_x_axis({'name': 'Vf [%]'})
     for c,case in enumerate(boundaryCase):
-        x = Reference(czWorksheet, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
-        y = Reference(czWorksheet, min_col=6, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
-        series = Series(y, x, title=case)
-        chartA.series.append(series)
-    czWorksheet.add_chart(chartA, "O2")
-    wb.save(filename = join(outdir,workbookname))
+        chartA.add_series({
+                            'name':       case,
+                            'categories': ['ContactZone',initVf+c*nVf,4,initVf+(c+1)*nVf-1,4],
+                            'values':     ['ContactZone',initVf+c*nVf,5,initVf+(c+1)*nVf-1,5],
+                        })
+    czWorksheet.insert_chart(2,15,chartA)
+    workbook.close()
 
 def main(argv):
 

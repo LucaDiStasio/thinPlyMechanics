@@ -3635,6 +3635,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         refOrigin = RVEpart.DatumPointByCoordinate(coords=(0.0,0.0,0.0))
         refP1 = RVEpart.DatumPointByCoordinate(coords=(1.0,0.0,0.0))
         refP2 = RVEpart.DatumPointByCoordinate(coords=(1.0,1.0,0.0))
+        print(RVEpart.datums)
         RVEpart.DatumCsysByThreePoints(name='refOrientation',coordSysType=CARTESIAN,origin=RVEpart.datums[-3],point1=RVEpart.datums[-2],point2=RVEpart.datums[-1])
         writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
         

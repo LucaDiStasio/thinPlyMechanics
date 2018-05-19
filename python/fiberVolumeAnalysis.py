@@ -43,7 +43,7 @@ Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 '''
 
 import os
-from os import join
+from os.path import join
 from datetime import datetime
 from time import strftime, sleep
 from platform import platform

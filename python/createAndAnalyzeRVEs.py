@@ -3637,17 +3637,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to BOUNDING-PLY ...',True)
-        RVEpart.MaterialOrientiation(orientationType=SYSTEM,region=RVEpart.sets['BOUNDING-PLY'],localCsys=RVEpart.features['refOrientation'])
+        RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['BOUNDING-PLY'],localCsys=RVEpart.features['refOrientation'])
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
         
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to RIGHT-HOMOGENIZED-CROSSPLY ...',True)
-        RVEpart.MaterialOrientiation(orientationType=SYSTEM,region=RVEpart.sets['RIGHT-HOMOGENIZED-CROSSPLY'],localCsys=RVEpart.features['refOrientation'])
+        RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['RIGHT-HOMOGENIZED-CROSSPLY'],localCsys=RVEpart.features['refOrientation'])
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
         
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to LEFT-HOMOGENIZED-CROSSPLY ...',True)
-        RVEpart.MaterialOrientiation(orientationType=SYSTEM,region=RVEpart.sets['LEFT-HOMOGENIZED-CROSSPLY'],localCsys=RVEpart.features['refOrientation'])
+        RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['LEFT-HOMOGENIZED-CROSSPLY'],localCsys=RVEpart.features['refOrientation'])
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
         
         

@@ -3632,15 +3632,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'boundingPly' in parameters['BC']['northSide']['type'] or 'boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']:
         skipLineToLogFile(logfilepath,'a',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating reference system for material orientation ...',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create origin',True)
-        refOrigin = RVEpart.DatumPointByCoordinate(coords=(0.0,0.0,0.0))
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create point on x-axis',True)
-        refP1 = RVEpart.DatumPointByCoordinate(coords=(1.0,0.0,0.0))
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create point in x-y plane',True)
-        refP2 = RVEpart.DatumPointByCoordinate(coords=(1.0,1.0,0.0))
-        print(RVEpart.datums)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create cartesian reference system given 3 points',True)
-        RVEpart.DatumCsysByThreePoints(name='refOrientation',coordSysType=CARTESIAN,origin=RVEpart.datums[-3],point1=RVEpart.datums[-2],point2=RVEpart.datums[-1])
+        RVEpart.DatumCsysByThreePoints(name='refOrientation',coordSysType=CARTESIAN,origin=(0.0,0.0,0.0),point1=(1.0,0.0,0.0),point2=(1.0,1.0,0.0))
         writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
         
     if 'boundingPly' in parameters['BC']['northSide']['type']:

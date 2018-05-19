@@ -370,7 +370,7 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outDir,odbna
 def main(argv):
 
     workDir = 'C:/Abaqus_WD'
-    inpDir = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM'
+    inpDir = 'C:/Abaqus_WD'
     outdir = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/FiberVolumeChange'
 
     odbs = ['Job-VCCTandJintegral-RVE1_0992-Half-SD-vkmcul_deltatheta10_0',

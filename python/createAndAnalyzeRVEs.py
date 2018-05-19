@@ -3473,7 +3473,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
     
     if ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']) and not 'boundingPly' in parameters['BC']['northSide']['type']:
-        if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']
+        if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']:
             RVEpart.SetByBoolean(name='UPPERSIDE', sets=[RVEpart.sets['CENTER-RUC-UPPERSIDE'],RVEpart.sets['RIGHT-HOMOPLY-UPPERSIDE'],RVEpart.sets['LEFT-HOMOPLY-UPPERSIDE']])
         elif 'boundingPly' in parameters['BC']['rightSide']['type']:
             RVEpart.SetByBoolean(name='UPPERSIDE', sets=[RVEpart.sets['CENTER-RUC-UPPERSIDE'],RVEpart.sets['RIGHT-HOMOPLY-UPPERSIDE']])

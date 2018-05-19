@@ -372,185 +372,51 @@ def interpolateData(outdir,data,boundaryCase):
 def writeData(outdir,workbookname,data,boundaryCase):
     wb = xlsxwriter.Workbook(join(outdir,workbookname))
     gIvcctWorksheet = wb.add_worksheet(title='GI-VCCT')
-    gIvcctWorksheet.write(0,0,'GI-VCCT')
-    gIvcctWorksheet.write(1,0,'BOUNDARY CONDITIONS')
-    gIvcctWorksheet.write(2,0,'NORTH')
-    gIvcctWorksheet.write(2,1,'SOUTH')
-    gIvcctWorksheet.write(2,2,'EAST')
-    gIvcctWorksheet.write(2,3,'WEST')
-    gIvcctWorksheet.write(2,4,'Vf [%]')
-    gIvcctWorksheet.write(2,5,'Value at no debond [J/m^2]')
-    gIvcctWorksheet.write(1,6,'Coefficients')
-    gIvcctWorksheet.write(2,6,'A [J/m^2]')
-    gIvcctWorksheet.write(2,7,'B [1/°]')
-    gIvcctWorksheet.write(2,8,'C [°]')
-    gIvcctWorksheet.write(2,9,'D [J/m^2]')
-    gIvcctWorksheet.write(1,10,'Covariance')
-    gIvcctWorksheet.write(2,10,'cov(1,1)')
-    gIvcctWorksheet.write(2,11,'cov(1,2)')
-    gIvcctWorksheet.write(2,12,'cov(1,3)')
-    gIvcctWorksheet.write(2,13,'cov(1,4)')
-    gIvcctWorksheet.write(2,14,'cov(2,1)')
-    gIvcctWorksheet.write(2,15,'cov(2,2)')
-    gIvcctWorksheet.write(2,16,'cov(2,3)')
-    gIvcctWorksheet.write(2,17,'cov(2,4)')
-    gIvcctWorksheet.write(2,18,'cov(3,1)')
-    gIvcctWorksheet.write(2,19,'cov(3,2)')
-    gIvcctWorksheet.write(2,20,'cov(3,3)')
-    gIvcctWorksheet.write(2,21,'cov(3,4)')
-    gIvcctWorksheet.write(2,22,'cov(4,1)')
-    gIvcctWorksheet.write(2,23,'cov(4,2)')
-    gIvcctWorksheet.write(2,24,'cov(4,3)')
-    gIvcctWorksheet.write(2,25,'cov(4,4)')
-    gIvcctWorksheet.write(1,26,'std err')
-    gIvcctWorksheet.write(2,26,'A [J/m^2]')
-    gIvcctWorksheet.write(2,27,'B [1/°]')
-    gIvcctWorksheet.write(2,28,'C [°]')
-    gIvcctWorksheet.write(2,29,'D [J/m^2]')
     gIjintWorksheet = wb.add_worksheet(title='GI-Jint')
-    gIjintWorksheet['A1'] = 'GI-Jint'
-    gIjintWorksheet['A2'] = 'BOUNDARY CONDITIONS'
-    gIjintWorksheet['A3'] = 'NORTH'
-    gIjintWorksheet['B3'] = 'SOUTH'
-    gIjintWorksheet['C3'] = 'EAST'
-    gIjintWorksheet['D3'] = 'WEST'
-    gIjintWorksheet['E3'] = 'Vf [%]'
-    gIjintWorksheet['F3'] = 'Value at no debond [J/m^2]'
-    gIjintWorksheet['G2'] = 'Coefficients'
-    gIjintWorksheet['G3'] = 'A [J/m^2]'
-    gIjintWorksheet['H3'] = 'B [1/°]'
-    gIjintWorksheet['I3'] = 'C [°]'
-    gIjintWorksheet['J3'] = 'D [J/m^2]'
-    gIjintWorksheet['K2'] = 'Covariance'
-    gIjintWorksheet['K3'] = 'cov(1,1)'
-    gIjintWorksheet['L3'] = 'cov(1,2)'
-    gIjintWorksheet['M3'] = 'cov(1,3)'
-    gIjintWorksheet['N3'] = 'cov(1,4)'
-    gIjintWorksheet['O3'] = 'cov(2,1)'
-    gIjintWorksheet['P3'] = 'cov(2,2)'
-    gIjintWorksheet['Q3'] = 'cov(2,3)'
-    gIjintWorksheet['R3'] = 'cov(2,4)'
-    gIjintWorksheet['S3'] = 'cov(3,1)'
-    gIjintWorksheet['T3'] = 'cov(3,2)'
-    gIjintWorksheet['U3'] = 'cov(3,3)'
-    gIjintWorksheet['V3'] = 'cov(3,4)'
-    gIjintWorksheet['W3'] = 'cov(4,1)'
-    gIjintWorksheet['X3'] = 'cov(4,2)'
-    gIjintWorksheet['Y3'] = 'cov(4,3)'
-    gIjintWorksheet['Z3'] = 'cov(4,4)'
-    gIjintWorksheet['AA2'] = 'std err'
-    gIjintWorksheet['AA3'] = 'A [J/m^2]'
-    gIjintWorksheet['AB3'] = 'B [1/°]'
-    gIjintWorksheet['AC3'] = 'C [°]'
-    gIjintWorksheet['AD3'] = 'D [J/m^2]'
     gIIvcctWorksheet = wb.add_worksheet(title='GII-VCCT')
-    gIIvcctWorksheet['A1'] = 'GII-VCCT'
-    gIIvcctWorksheet['A2'] = 'BOUNDARY CONDITIONS'
-    gIIvcctWorksheet['A3'] = 'NORTH'
-    gIIvcctWorksheet['B3'] = 'SOUTH'
-    gIIvcctWorksheet['C3'] = 'EAST'
-    gIIvcctWorksheet['D3'] = 'WEST'
-    gIIvcctWorksheet['E3'] = 'Vf [%]'
-    gIIvcctWorksheet['F3'] = 'Value at no debond [J/m^2]'
-    gIIvcctWorksheet['G2'] = 'Coefficients'
-    gIIvcctWorksheet['G3'] = 'A [J/m^2]'
-    gIIvcctWorksheet['H3'] = 'B [1/°]'
-    gIIvcctWorksheet['I3'] = 'C [°]'
-    gIIvcctWorksheet['J3'] = 'D [J/m^2]'
-    gIIvcctWorksheet['K2'] = 'Covariance'
-    gIIvcctWorksheet['K3'] = 'cov(1,1)'
-    gIIvcctWorksheet['L3'] = 'cov(1,2)'
-    gIIvcctWorksheet['M3'] = 'cov(1,3)'
-    gIIvcctWorksheet['N3'] = 'cov(1,4)'
-    gIIvcctWorksheet['O3'] = 'cov(2,1)'
-    gIIvcctWorksheet['P3'] = 'cov(2,2)'
-    gIIvcctWorksheet['Q3'] = 'cov(2,3)'
-    gIIvcctWorksheet['R3'] = 'cov(2,4)'
-    gIIvcctWorksheet['S3'] = 'cov(3,1)'
-    gIIvcctWorksheet['T3'] = 'cov(3,2)'
-    gIIvcctWorksheet['U3'] = 'cov(3,3)'
-    gIIvcctWorksheet['V3'] = 'cov(3,4)'
-    gIIvcctWorksheet['W3'] = 'cov(4,1)'
-    gIIvcctWorksheet['X3'] = 'cov(4,2)'
-    gIIvcctWorksheet['Y3'] = 'cov(4,3)'
-    gIIvcctWorksheet['Z3'] = 'cov(4,4)'
-    gIIvcctWorksheet['AA2'] = 'std err'
-    gIIvcctWorksheet['AA3'] = 'A [J/m^2]'
-    gIIvcctWorksheet['AB3'] = 'B [1/°]'
-    gIIvcctWorksheet['AC3'] = 'C [°]'
-    gIIvcctWorksheet['AD3'] = 'D [J/m^2]'
     gTOTvcctWorksheet = wb.add_worksheet(title='GTOT-VCCT')
-    gTOTvcctWorksheet['A1'] = 'GTOT-VCCT'
-    gTOTvcctWorksheet['A2'] = 'BOUNDARY CONDITIONS'
-    gTOTvcctWorksheet['A3'] = 'NORTH'
-    gTOTvcctWorksheet['B3'] = 'SOUTH'
-    gTOTvcctWorksheet['C3'] = 'EAST'
-    gTOTvcctWorksheet['D3'] = 'WEST'
-    gTOTvcctWorksheet['E3'] = 'Vf [%]'
-    gTOTvcctWorksheet['F3'] = 'Value at no debond [J/m^2]'
-    gTOTvcctWorksheet['G2'] = 'Coefficients'
-    gTOTvcctWorksheet['G3'] = 'A [J/m^2]'
-    gTOTvcctWorksheet['H3'] = 'B [1/°]'
-    gTOTvcctWorksheet['I3'] = 'C [°]'
-    gTOTvcctWorksheet['J3'] = 'D [J/m^2]'
-    gTOTvcctWorksheet['K2'] = 'Covariance'
-    gTOTvcctWorksheet['K3'] = 'cov(1,1)'
-    gTOTvcctWorksheet['L3'] = 'cov(1,2)'
-    gTOTvcctWorksheet['M3'] = 'cov(1,3)'
-    gTOTvcctWorksheet['N3'] = 'cov(1,4)'
-    gTOTvcctWorksheet['O3'] = 'cov(2,1)'
-    gTOTvcctWorksheet['P3'] = 'cov(2,2)'
-    gTOTvcctWorksheet['Q3'] = 'cov(2,3)'
-    gTOTvcctWorksheet['R3'] = 'cov(2,4)'
-    gTOTvcctWorksheet['S3'] = 'cov(3,1)'
-    gTOTvcctWorksheet['T3'] = 'cov(3,2)'
-    gTOTvcctWorksheet['U3'] = 'cov(3,3)'
-    gTOTvcctWorksheet['V3'] = 'cov(3,4)'
-    gTOTvcctWorksheet['W3'] = 'cov(4,1)'
-    gTOTvcctWorksheet['X3'] = 'cov(4,2)'
-    gTOTvcctWorksheet['Y3'] = 'cov(4,3)'
-    gTOTvcctWorksheet['Z3'] = 'cov(4,4)'
-    gTOTvcctWorksheet['AA2'] = 'std err'
-    gTOTvcctWorksheet['AA3'] = 'A [J/m^2]'
-    gTOTvcctWorksheet['AB3'] = 'B [1/°]'
-    gTOTvcctWorksheet['AC3'] = 'C [°]'
-    gTOTvcctWorksheet['AD3'] = 'D [J/m^2]'
     gTOTjintWorksheet = wb.add_worksheet(title='GTOT-Jint')
-    gTOTjintWorksheet['A1'] = 'GTOT-Jint'
-    gTOTjintWorksheet['A2'] = 'BOUNDARY CONDITIONS'
-    gTOTjintWorksheet['A3'] = 'NORTH'
-    gTOTjintWorksheet['B3'] = 'SOUTH'
-    gTOTjintWorksheet['C3'] = 'EAST'
-    gTOTjintWorksheet['D3'] = 'WEST'
-    gTOTjintWorksheet['E3'] = 'Vf [%]'
-    gTOTjintWorksheet['F3'] = 'Value at no debond [J/m^2]'
-    gTOTjintWorksheet['G2'] = 'Coefficients'
-    gTOTjintWorksheet['G3'] = 'A [J/m^2]'
-    gTOTjintWorksheet['H3'] = 'B [1/°]'
-    gTOTjintWorksheet['I3'] = 'C [°]'
-    gTOTjintWorksheet['J3'] = 'D [J/m^2]'
-    gTOTjintWorksheet['K2'] = 'Covariance'
-    gTOTjintWorksheet['K3'] = 'cov(1,1)'
-    gTOTjintWorksheet['L3'] = 'cov(1,2)'
-    gTOTjintWorksheet['M3'] = 'cov(1,3)'
-    gTOTjintWorksheet['N3'] = 'cov(1,4)'
-    gTOTjintWorksheet['O3'] = 'cov(2,1)'
-    gTOTjintWorksheet['P3'] = 'cov(2,2)'
-    gTOTjintWorksheet['Q3'] = 'cov(2,3)'
-    gTOTjintWorksheet['R3'] = 'cov(2,4)'
-    gTOTjintWorksheet['S3'] = 'cov(3,1)'
-    gTOTjintWorksheet['T3'] = 'cov(3,2)'
-    gTOTjintWorksheet['U3'] = 'cov(3,3)'
-    gTOTjintWorksheet['V3'] = 'cov(3,4)'
-    gTOTjintWorksheet['W3'] = 'cov(4,1)'
-    gTOTjintWorksheet['X3'] = 'cov(4,2)'
-    gTOTjintWorksheet['Y3'] = 'cov(4,3)'
-    gTOTjintWorksheet['Z3'] = 'cov(4,4)'
-    gTOTjintWorksheet['AA2'] = 'std err'
-    gTOTjintWorksheet['AA3'] = 'A [J/m^2]'
-    gTOTjintWorksheet['AB3'] = 'B [1/°]'
-    gTOTjintWorksheet['AC3'] = 'C [°]'
-    gTOTjintWorksheet['AD3'] = 'D [J/m^2]'
+    gIvcctWorksheet.write(0,0,'GI-VCCT')
+    gIjintWorksheet.write(0,0,'GI-Jint')
+    gIIvcctWorksheet.write(0,0,'GII-VCCT')
+    gTOTvcctWorksheet.write(0,0,'GTOT-VCCT')
+    gTOTjintWorksheet.write(0,0,'GTOT-Jint')    
+    for ws in [gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]:
+        ws.write(1,0,'BOUNDARY CONDITIONS')
+        ws.write(2,0,'NORTH')
+        ws.write(2,1,'SOUTH')
+        ws.write(2,2,'EAST')
+        ws.write(2,3,'WEST')
+        ws.write(2,4,'Vf [%]')
+        ws.write(2,5,'Value at no debond [J/m^2]')
+        ws.write(1,6,'Coefficients')
+        ws.write(2,6,'A [J/m^2]')
+        ws.write(2,7,'B [1/°]')
+        ws.write(2,8,'C [°]')
+        ws.write(2,9,'D [J/m^2]')
+        ws.write(1,10,'Covariance')
+        ws.write(2,10,'cov(1,1)')
+        ws.write(2,11,'cov(1,2)')
+        ws.write(2,12,'cov(1,3)')
+        ws.write(2,13,'cov(1,4)')
+        ws.write(2,14,'cov(2,1)')
+        ws.write(2,15,'cov(2,2)')
+        ws.write(2,16,'cov(2,3)')
+        ws.write(2,17,'cov(2,4)')
+        ws.write(2,18,'cov(3,1)')
+        ws.write(2,19,'cov(3,2)')
+        ws.write(2,20,'cov(3,3)')
+        ws.write(2,21,'cov(3,4)')
+        ws.write(2,22,'cov(4,1)')
+        ws.write(2,23,'cov(4,2)')
+        ws.write(2,24,'cov(4,3)')
+        ws.write(2,25,'cov(4,4)')
+        ws.write(1,26,'std err')
+        ws.write(2,26,'A [J/m^2]')
+        ws.write(2,27,'B [1/°]')
+        ws.write(2,28,'C [°]')
+        ws.write(2,29,'D [J/m^2]')
+    
     czWorksheet = wb.add_worksheet(title='ContactZone')
     czWorksheet['A1'] = 'Contact zone'
     czWorksheet['A2'] = 'BOUNDARY CONDITIONS'

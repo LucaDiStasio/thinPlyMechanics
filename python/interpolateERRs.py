@@ -499,7 +499,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
                     czWorksheet.write(initVf+c*nVf+v,7+4*r+col,cov)
             for c,coeff in enumerate(data['CZ'][case][v+1]['std']):
                 czWorksheet.write(initVf+c*nVf+v,11+c,coeff)
-    for ws in [gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]:
+    for wsIndex,ws in enumerate([gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]):
         chartDeb = workbook.add_chart({'type': 'scatter','subtype': 'line_with_markers'})
         chartDeb.set_title ({'name': 'Value at no debond'})
         chartDeb.set_y_axis({'name': 'G(0) [J/m^2]'})
@@ -523,29 +523,29 @@ def writeData(outdir,workbookname,data,boundaryCase):
         for c,case in enumerate(boundaryCase):
             chartDeb.add_series({
                                 'name':       case,
-                                'categories': [sheetName,1,curve[0],len(csvlines),curve[0]],
-                                'values':     [sheetName,1,curve[1],len(csvlines),curve[1]],
+                                'categories': [wsNames[wsIndex],initVf+c*nVf,4,initVf+(c+1)*nVf-1,4],
+                                'values':     [wsNames[wsIndex],initVf+c*nVf,5,initVf+(c+1)*nVf-1,5],
                             })
-            x = Reference(ws, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
-            y = Reference(ws, min_col=6, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
-            series = Series(y, x, title=case)
-            chartDeb.series.append(series)
-            x = Reference(ws, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
-            y = Reference(ws, min_col=7, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
-            series = Series(y, x, title=case)
-            chartA.series.append(series)
-            x = Reference(ws, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
-            y = Reference(ws, min_col=8, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
-            series = Series(y, x, title=case)
-            chartB.series.append(series)
-            x = Reference(ws, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
-            y = Reference(ws, min_col=9, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
-            series = Series(y, x, title=case)
-            chartC.series.append(series)
-            x = Reference(ws, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
-            y = Reference(ws, min_col=10, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
-            series = Series(y, x, title=case)
-            chartD.series.append(series)
+            chartA.add_series({
+                                'name':       case,
+                                'categories': [wsNames[wsIndex],initVf+c*nVf,4,initVf+(c+1)*nVf-1,4],
+                                'values':     [wsNames[wsIndex],initVf+c*nVf,6,initVf+(c+1)*nVf-1,6],
+                            })
+            chartB.add_series({
+                                'name':       case,
+                                'categories': [wsNames[wsIndex],initVf+c*nVf,4,initVf+(c+1)*nVf-1,4],
+                                'values':     [wsNames[wsIndex],initVf+c*nVf,7,initVf+(c+1)*nVf-1,7],
+                            })
+            chartC.add_series({
+                                'name':       case,
+                                'categories': [wsNames[wsIndex],initVf+c*nVf,4,initVf+(c+1)*nVf-1,4],
+                                'values':     [wsNames[wsIndex],initVf+c*nVf,8,initVf+(c+1)*nVf-1,8],
+                            })
+            chartD.add_series({
+                                'name':       case,
+                                'categories': [wsNames[wsIndex],initVf+c*nVf,4,initVf+(c+1)*nVf-1,4],
+                                'values':     [wsNames[wsIndex],initVf+c*nVf,9,initVf+(c+1)*nVf-1,9],
+                            })
         ws.add_chart(chartDeb, "AF2")
         ws.add_chart(chartA, "AF8")
         ws.add_chart(chartB, "AF14")

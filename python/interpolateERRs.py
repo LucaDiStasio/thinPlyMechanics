@@ -440,37 +440,21 @@ def writeData(outdir,workbookname,data,boundaryCase):
     initVf = 3
     for c,case in enumerate(boundaryCase):
         for ws in [gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet,czWorksheet]:
-        ws.write(initVf+c*nVf,0,case)
-        ws.write(initVf+c*nVf,1,'Ysymm')
-        ws.write(initVf+c*nVf,2,'epsx=1%')
-        ws.write(initVf+c*nVf,3,'epsx=1%')
+            ws.write(initVf+c*nVf,0,case)
+            ws.write(initVf+c*nVf,1,'Ysymm')
+            ws.write(initVf+c*nVf,2,'epsx=1%')
+            ws.write(initVf+c*nVf,3,'epsx=1%')
         for v,value in enumerate(Vf):
-            gIvcctWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
-            gIvcctWorksheet['F'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['valueAtNoDebond']
-            gIvcctWorksheet['G'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['coeff'][0]
-            gIvcctWorksheet['H'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['coeff'][1]
-            gIvcctWorksheet['I'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['coeff'][2]
-            gIvcctWorksheet['J'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['coeff'][3]
-            gIvcctWorksheet['K'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][0][0]
-            gIvcctWorksheet['L'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][0][1]
-            gIvcctWorksheet['M'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][0][2]
-            gIvcctWorksheet['N'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][0][3]
-            gIvcctWorksheet['O'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][1][0]
-            gIvcctWorksheet['P'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][1][1]
-            gIvcctWorksheet['Q'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][1][2]
-            gIvcctWorksheet['R'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][1][3]
-            gIvcctWorksheet['S'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][2][0]
-            gIvcctWorksheet['T'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][2][1]
-            gIvcctWorksheet['U'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][2][2]
-            gIvcctWorksheet['V'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][2][3]
-            gIvcctWorksheet['W'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][3][0]
-            gIvcctWorksheet['X'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][3][1]
-            gIvcctWorksheet['Y'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][3][2]
-            gIvcctWorksheet['Z'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['cov'][3][3]
-            gIvcctWorksheet['AA'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['std'][0]
-            gIvcctWorksheet['AB'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['std'][1]
-            gIvcctWorksheet['AC'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['std'][2]
-            gIvcctWorksheet['AD'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['std'][3]
+            gIvcctWorksheet.write(initVf+c*nVf+v,4,100*value)
+            gIvcctWorksheet.write(initVf+c*nVf+v,5,data['GI']['VCCT'][case][v+1]['valueAtNoDebond'])
+            for c,coeff in enumerate(data['GI']['VCCT'][case][v+1]['coeff']):
+                gIvcctWorksheet.write(initVf+c*nVf+v,6+c,coeff)
+            for r,row in enumerate(data['GI']['VCCT'][case][v+1]['cov']):
+                for col,cov in enumerate(row):
+                    gIvcctWorksheet.write(initVf+c*nVf+v,10+4*r+col,cov)
+            for c,coeff in enumerate(data['GI']['VCCT'][case][v+1]['std']):
+                gIvcctWorksheet.write(initVf+c*nVf+v,26+c,coeff)
+            
             gIjintWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
             gIjintWorksheet['F'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['valueAtNoDebond']
             gIjintWorksheet['G'+str(initVf+c*nVf+v)] = data['GI']['Jint'][case][v+1]['coeff'][0]

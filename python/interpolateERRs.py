@@ -378,11 +378,11 @@ def interpolateData(outdir,data,boundaryCase):
 
 def writeData(outdir,workbookname,data,boundaryCase):
     workbook = xlsxwriter.Workbook(join(outdir,workbookname))
-    gIvcctWorksheet = workbook.add_worksheet(title='GI-VCCT')
-    gIjintWorksheet = workbook.add_worksheet(title='GI-Jint')
-    gIIvcctWorksheet = workbook.add_worksheet(title='GII-VCCT')
-    gTOTvcctWorksheet = workbook.add_worksheet(title='GTOT-VCCT')
-    gTOTjintWorksheet = workbook.add_worksheet(title='GTOT-Jint')
+    gIvcctWorksheet = workbook.add_worksheet('GI-VCCT')
+    gIjintWorksheet = workbook.add_worksheet('GI-Jint')
+    gIIvcctWorksheet = workbook.add_worksheet('GII-VCCT')
+    gTOTvcctWorksheet = workbook.add_worksheet('GTOT-VCCT')
+    gTOTjintWorksheet = workbook.add_worksheet('GTOT-Jint')
     wsNames = ['GI-VCCT','GI-Jint','GII-VCCT','GTOT-VCCT','GTOT-Jint']
     gIvcctWorksheet.write(0,0,'GI-VCCT')
     gIjintWorksheet.write(0,0,'GI-Jint')
@@ -424,7 +424,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
         ws.write(2,27,'B [1/°]')
         ws.write(2,28,'C [°]')
         ws.write(2,29,'D [J/m^2]')
-    czWorksheet = wb.add_worksheet(title='ContactZone')
+    czWorksheet = wb.add_worksheet('ContactZone')
     czWorksheet.write(0,0,'Contact zone')
     czWorksheet.write(0,0,'BOUNDARY CONDITIONS')
     czWorksheet.write(0,0,'NORTH')

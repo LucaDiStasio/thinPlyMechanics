@@ -169,20 +169,20 @@ def interpolateData(outdir,data,boundaryCase):
                     plt.grid(True)
                     plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
                     sys.exc_clear()
-                    except Exception, error:
-                        data['GI']['VCCT'][case][vfData]['coeff'] = [0,0,0,0]
-                        data['GI']['VCCT'][case][vfData]['cov'] = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-                        data['GI']['VCCT'][case][vfData]['std'] = [0,0,0,0]
-                        data['GI']['VCCT'][case][vfData]['valueAtNoDebond'] = 0
-                        plt.figure()
-                        plt.plot(data['GI']['VCCT'][case][vfData]['theta'], data['GI']['VCCT'][case][vfData]['values'], 'ko')
-                        plt.xlabel(r'$\Delta\theta [^{\circ}]$')
-                        plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
-                        plt.title(r'Interpolation of GI-VCCT, ' + case + ', ' + str(data['GI']['VCCT'][case][vfData]['Vf']*100.0) + '\% $V_{f}$')
-                        plt.legend(('data', 'interpolant: FAILED'), loc='best')
-                        plt.grid(True)
-                        plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
-                        sys.exc_clear()
+                except Exception, error:
+                    data['GI']['VCCT'][case][vfData]['coeff'] = [0,0,0,0]
+                    data['GI']['VCCT'][case][vfData]['cov'] = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+                    data['GI']['VCCT'][case][vfData]['std'] = [0,0,0,0]
+                    data['GI']['VCCT'][case][vfData]['valueAtNoDebond'] = 0
+                    plt.figure()
+                    plt.plot(data['GI']['VCCT'][case][vfData]['theta'], data['GI']['VCCT'][case][vfData]['values'], 'ko')
+                    plt.xlabel(r'$\Delta\theta [^{\circ}]$')
+                    plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
+                    plt.title(r'Interpolation of GI-VCCT, ' + case + ', ' + str(data['GI']['VCCT'][case][vfData]['Vf']*100.0) + '\% $V_{f}$')
+                    plt.legend(('data', 'interpolant: FAILED'), loc='best')
+                    plt.grid(True)
+                    plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+                    sys.exc_clear()
             plt.close("all")
         for vI,vfData in enumerate(data['GI']['Jint'][case].keys()):
             print('GI Jint, Vf ' + str(data['GI']['Jint'][case][vfData]['Vf']) + ', ' + case)

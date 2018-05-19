@@ -95,7 +95,11 @@ def getFirstAndLastFrameLastStep(odbObj):
     return first, last
 
 def getSingleNodeSet(odbObj,part,set):
-    return odbObj.rootAssembly.instances[part].nodeSets[set]
+    if part==None:
+        result = odbObj.rootAssembly.nodeSets[nodeSet]
+    else:
+        result = odbObj.rootAssembly.instances[part].nodeSets[nodeSet]
+    return result
 
 def getSingleElementSet(odbObj,part,set):
     return odbObj.rootAssembly.instances[part].elementSets[set]
@@ -301,7 +305,7 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outDir,odbna
     thirdcircle = getSingleNodeSet(odb,'RVE-ASSEMBLY','THIRDCIRCLE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- THIRDCIRCLE',True)
 
-    matrixcrackface = getSingleNodeSet(odb,'RVE-ASSEMBLY','MATRIX-CRACKFACE-NODES')
+    matrixcrackface = getSingleNodeSet(odb,None,'MATRIX-CRACKFACE-NODES')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKFACE-NODES',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '.. done.',True)

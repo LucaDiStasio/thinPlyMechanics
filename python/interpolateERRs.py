@@ -416,54 +416,34 @@ def writeData(outdir,workbookname,data,boundaryCase):
         ws.write(2,27,'B [1/°]')
         ws.write(2,28,'C [°]')
         ws.write(2,29,'D [J/m^2]')
-    
     czWorksheet = wb.add_worksheet(title='ContactZone')
-    czWorksheet['A1'] = 'Contact zone'
-    czWorksheet['A2'] = 'BOUNDARY CONDITIONS'
-    czWorksheet['A3'] = 'NORTH'
-    czWorksheet['B3'] = 'SOUTH'
-    czWorksheet['C3'] = 'EAST'
-    czWorksheet['D3'] = 'WEST'
-    czWorksheet['E3'] = 'Vf [%]'
-    czWorksheet['F2'] = 'Coefficients'
-    czWorksheet['F3'] = 'A [%/°]'
-    czWorksheet['G3'] = 'B [%]'
-    czWorksheet['H2'] = 'Covariance'
-    czWorksheet['H3'] = 'cov(1,1)'
-    czWorksheet['I3'] = 'cov(1,2)'
-    czWorksheet['J3'] = 'cov(2,1)'
-    czWorksheet['K3'] = 'cov(2,2)'
-    czWorksheet['L2'] = 'std err'
-    czWorksheet['L3'] = 'A [%/°]'
-    czWorksheet['M3'] = 'B [%]'
+    czWorksheet.write(0,0,'Contact zone')
+    czWorksheet.write(0,0,'BOUNDARY CONDITIONS')
+    czWorksheet.write(0,0,'NORTH')
+    czWorksheet.write(0,1,'SOUTH')
+    czWorksheet.write(0,2,'EAST')
+    czWorksheet.write(0,3,'WEST')
+    czWorksheet.write(0,4,'Vf [%]')
+    czWorksheet.write(0,5,'Coefficients')
+    czWorksheet.write(0,5,'A [%/°]')
+    czWorksheet.write(0,6,'B [%]')
+    czWorksheet.write(0,6,'Covariance')
+    czWorksheet.write(0,6,'cov(1,1)')
+    czWorksheet.write(0,7,'cov(1,2)')
+    czWorksheet.write(0,8,'cov(2,1)')
+    czWorksheet.write(0,9,'cov(2,2)')
+    czWorksheet.write(0,10,'std err')
+    czWorksheet.write(0,10,'A [%/°]')
+    czWorksheet.write(0,11,'B [%]')
     Vf = [0.000079,0.0001,0.2,0.3,0.4,0.5,0.55,0.6,0.65]
     nVf = len(Vf)
-    initVf = 4
+    initVf = 3
     for c,case in enumerate(boundaryCase):
-        gIvcctWorksheet['A'+str(initVf+c*nVf)] = case
-        gIvcctWorksheet['B'+str(initVf+c*nVf)] = 'Ysymm'
-        gIvcctWorksheet['C'+str(initVf+c*nVf)] = 'epsx=1%'
-        gIvcctWorksheet['D'+str(initVf+c*nVf)] = 'epsx=1%'
-        gIjintWorksheet['A'+str(initVf+c*nVf)] = case
-        gIjintWorksheet['B'+str(initVf+c*nVf)] = 'Ysymm'
-        gIjintWorksheet['C'+str(initVf+c*nVf)] = 'epsx=1%'
-        gIjintWorksheet['D'+str(initVf+c*nVf)] = 'epsx=1%'
-        gIIvcctWorksheet['A'+str(initVf+c*nVf)] = case
-        gIIvcctWorksheet['B'+str(initVf+c*nVf)] = 'Ysymm'
-        gIIvcctWorksheet['C'+str(initVf+c*nVf)] = 'epsx=1%'
-        gIIvcctWorksheet['D'+str(initVf+c*nVf)] = 'epsx=1%'
-        gTOTvcctWorksheet['A'+str(initVf+c*nVf)] = case
-        gTOTvcctWorksheet['B'+str(initVf+c*nVf)] = 'Ysymm'
-        gTOTvcctWorksheet['C'+str(initVf+c*nVf)] = 'epsx=1%'
-        gTOTvcctWorksheet['D'+str(initVf+c*nVf)] = 'epsx=1%'
-        gTOTjintWorksheet['A'+str(initVf+c*nVf)] = case
-        gTOTjintWorksheet['B'+str(initVf+c*nVf)] = 'Ysymm'
-        gTOTjintWorksheet['C'+str(initVf+c*nVf)] = 'epsx=1%'
-        gTOTjintWorksheet['D'+str(initVf+c*nVf)] = 'epsx=1%'
-        czWorksheet['A'+str(initVf+c*nVf)] = case
-        czWorksheet['B'+str(initVf+c*nVf)] = 'Ysymm'
-        czWorksheet['C'+str(initVf+c*nVf)] = 'epsx=1%'
-        czWorksheet['D'+str(initVf+c*nVf)] = 'epsx=1%'
+        for ws in [gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet,czWorksheet]:
+        ws.write(initVf+c*nVf,0,case)
+        ws.write(initVf+c*nVf,1,'Ysymm')
+        ws.write(initVf+c*nVf,2,'epsx=1%')
+        ws.write(initVf+c*nVf,3,'epsx=1%')
         for v,value in enumerate(Vf):
             gIvcctWorksheet['E'+str(initVf+c*nVf+v)] = 100*value
             gIvcctWorksheet['F'+str(initVf+c*nVf+v)] = data['GI']['VCCT'][case][v+1]['valueAtNoDebond']

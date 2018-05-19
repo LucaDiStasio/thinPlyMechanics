@@ -369,7 +369,7 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outDir,odbna
     
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,odbname)',True)
 
-    return [undefA,defA,defA/undefA,100.0*defA/undefA,defA-undefA,(defA-undefA)/undefA]
+    return [0.5*np.pi,undefA,defA,defA/undefA,100.0*defA/undefA,defA-undefA,(defA-undefA)/undefA]
 
 def main(argv):
 
@@ -395,7 +395,7 @@ def main(argv):
         results.append(calculateFiberAreaChange(logfilefullpath,'',logindent,inpDir,outdir,odb))
 
     with open(join(outdir,datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_fiberVolumeChange' + '.csv'),'w') as csv:
-        csv.write('undeformed area [um^2], deformed area [um^2], ratio [-], ratio [%], change [um], change [%]' + '\n')
+        csv.write('theoretical area [um^2], undeformed area [um^2], deformed area [um^2], ratio [-], ratio [%], change [um], change [%]' + '\n')
         for result in results:
             line = ''
             for v,value in enumerate(result):

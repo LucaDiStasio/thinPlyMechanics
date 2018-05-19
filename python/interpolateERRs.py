@@ -455,57 +455,57 @@ def writeData(outdir,workbookname,data,boundaryCase):
         for v,value in enumerate(Vf):
             gIvcctWorksheet.write(initVf+c*nVf+v,4,100*value)
             gIvcctWorksheet.write(initVf+c*nVf+v,5,data['GI']['VCCT'][case][v+1]['valueAtNoDebond'])
-            for c,coeff in enumerate(data['GI']['VCCT'][case][v+1]['coeff']):
-                gIvcctWorksheet.write(initVf+c*nVf+v,6+c,coeff)
+            for cIndex,coeff in enumerate(data['GI']['VCCT'][case][v+1]['coeff']):
+                gIvcctWorksheet.write(initVf+c*nVf+v,6+cIndex,coeff)
             for r,row in enumerate(data['GI']['VCCT'][case][v+1]['cov']):
                 for col,cov in enumerate(row):
                     gIvcctWorksheet.write(initVf+c*nVf+v,10+4*r+col,cov)
-            for c,coeff in enumerate(data['GI']['VCCT'][case][v+1]['std']):
-                gIvcctWorksheet.write(initVf+c*nVf+v,26+c,coeff)
+            for cIndex,coeff in enumerate(data['GI']['VCCT'][case][v+1]['std']):
+                gIvcctWorksheet.write(initVf+c*nVf+v,26+cIndex,coeff)
             gIjintWorksheet.write(initVf+c*nVf+v,4,100*value)
             gIjintWorksheet.write(initVf+c*nVf+v,5,data['GI']['Jint'][case][v+1]['valueAtNoDebond'])
-            for c,coeff in enumerate(data['GI']['Jint'][case][v+1]['coeff']):
-                gIjintWorksheet.write(initVf+c*nVf+v,6+c,coeff)
+            for cIndex,coeff in enumerate(data['GI']['Jint'][case][v+1]['coeff']):
+                gIjintWorksheet.write(initVf+c*nVf+v,6+cIndex,coeff)
             for r,row in enumerate(data['GI']['Jint'][case][v+1]['cov']):
                 for col,cov in enumerate(row):
                     gIjintWorksheet.write(initVf+c*nVf+v,10+4*r+col,cov)
-            for c,coeff in enumerate(data['GI']['Jint'][case][v+1]['std']):
-                gIjintWorksheet.write(initVf+c*nVf+v,26+c,coeff)
+            for cIndex,coeff in enumerate(data['GI']['Jint'][case][v+1]['std']):
+                gIjintWorksheet.write(initVf+c*nVf+v,26+cIndex,coeff)
             gIIvcctWorksheet.write(initVf+c*nVf+v,4,100*value)
             gIIvcctWorksheet.write(initVf+c*nVf+v,5,data['GII']['VCCT'][case][v+1]['valueAtNoDebond'])
-            for c,coeff in enumerate(data['GII']['VCCT'][case][v+1]['coeff']):
-                gIIvcctWorksheet.write(initVf+c*nVf+v,6+c,coeff)
+            for cIndex,coeff in enumerate(data['GII']['VCCT'][case][v+1]['coeff']):
+                gIIvcctWorksheet.write(initVf+c*nVf+v,6+cIndex,coeff)
             for r,row in enumerate(data['GII']['VCCT'][case][v+1]['cov']):
                 for col,cov in enumerate(row):
                     gIIvcctWorksheet.write(initVf+c*nVf+v,10+4*r+col,cov)
-            for c,coeff in enumerate(data['GII']['VCCT'][case][v+1]['std']):
-                gIIvcctWorksheet.write(initVf+c*nVf+v,26+c,coeff)    
+            for cIndex,coeff in enumerate(data['GII']['VCCT'][case][v+1]['std']):
+                gIIvcctWorksheet.write(initVf+c*nVf+v,26+cIndex,coeff)    
             gTOTvcctWorksheet.write(initVf+c*nVf+v,4,100*value)
             gTOTvcctWorksheet.write(initVf+c*nVf+v,5,data['GTOT']['VCCT'][case][v+1]['valueAtNoDebond'])
-            for c,coeff in enumerate(data['GTOT']['VCCT'][case][v+1]['coeff']):
-                gTOTvcctWorksheet.write(initVf+c*nVf+v,6+c,coeff)
+            for cIndex,coeff in enumerate(data['GTOT']['VCCT'][case][v+1]['coeff']):
+                gTOTvcctWorksheet.write(initVf+c*nVf+v,6+cIndex,coeff)
             for r,row in enumerate(data['GTOT']['VCCT'][case][v+1]['cov']):
                 for col,cov in enumerate(row):
                     gTOTvcctWorksheet.write(initVf+c*nVf+v,10+4*r+col,cov)
-            for c,coeff in enumerate(data['GTOT']['VCCT'][case][v+1]['std']):
-                gTOTvcctWorksheet.write(initVf+c*nVf+v,26+c,coeff)
+            for cIndex,coeff in enumerate(data['GTOT']['VCCT'][case][v+1]['std']):
+                gTOTvcctWorksheet.write(initVf+c*nVf+v,26+cIndex,coeff)
             gTOTjintWorksheet.write(initVf+c*nVf+v,4,100*value)
             gTOTjintWorksheet.write(initVf+c*nVf+v,5,data['GTOT']['Jint'][case][v+1]['valueAtNoDebond'])
-            for c,coeff in enumerate(data['GTOT']['Jint'][case][v+1]['coeff']):
-                gTOTjintWorksheet.write(initVf+c*nVf+v,6+c,coeff)
+            for cIndex,coeff in enumerate(data['GTOT']['Jint'][case][v+1]['coeff']):
+                gTOTjintWorksheet.write(initVf+c*nVf+v,6+cIndex,coeff)
             for r,row in enumerate(data['GTOT']['Jint'][case][v+1]['cov']):
                 for col,cov in enumerate(row):
                     gTOTjintWorksheet.write(initVf+c*nVf+v,10+4*r+col,cov)
-            for c,coeff in enumerate(data['GTOT']['Jint'][case][v+1]['std']):
-                gTOTjintWorksheet.write(initVf+c*nVf+v,26+c,coeff)
+            for cIndex,coeff in enumerate(data['GTOT']['Jint'][case][v+1]['std']):
+                gTOTjintWorksheet.write(initVf+c*nVf+v,26+cIndex,coeff)
             czWorksheet.write(initVf+c*nVf+v,4,100*value)
-            for c,coeff in enumerate(data['CZ'][case][v+1]['coeff']):
-                czWorksheet.write(initVf+c*nVf+v,5+c,coeff)
+            for cIndex,coeff in enumerate(data['CZ'][case][v+1]['coeff']):
+                czWorksheet.write(initVf+c*nVf+v,5+cIndex,coeff)
             for r,row in enumerate(data['CZ'][case][v+1]['cov']):
                 for col,cov in enumerate(row):
                     czWorksheet.write(initVf+c*nVf+v,7+4*r+col,cov)
-            for c,coeff in enumerate(data['CZ'][case][v+1]['std']):
-                czWorksheet.write(initVf+c*nVf+v,11+c,coeff)
+            for cIndex,coeff in enumerate(data['CZ'][case][v+1]['std']):
+                czWorksheet.write(initVf+c*nVf+v,11+cIndex,coeff)
     for wsIndex,ws in enumerate([gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]):
         chartDeb = workbook.add_chart({'type': 'scatter','subtype': 'line_with_markers'})
         chartDeb.set_title ({'name': 'Value at no debond'})

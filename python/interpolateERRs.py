@@ -433,7 +433,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
     czWorksheet.write(0,3,'WEST')
     czWorksheet.write(0,4,'Vf [%]')
     czWorksheet.write(0,5,'Coefficients')
-    czWorksheet.write(0,5,'A [%/°]')
+    czWorksheet.write(0,5,'A [%/deg]')
     czWorksheet.write(0,6,'B [%]')
     czWorksheet.write(0,7,'Covariance')
     czWorksheet.write(0,7,'cov(1,1)')

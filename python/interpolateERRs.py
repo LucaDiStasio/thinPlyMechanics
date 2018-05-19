@@ -424,7 +424,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
         ws.write(2,27,'B [1/°]')
         ws.write(2,28,'C [°]')
         ws.write(2,29,'D [J/m^2]')
-    czWorksheet = wb.add_worksheet('ContactZone')
+    czWorksheet = workbook.add_worksheet('ContactZone')
     czWorksheet.write(0,0,'Contact zone')
     czWorksheet.write(0,0,'BOUNDARY CONDITIONS')
     czWorksheet.write(0,0,'NORTH')

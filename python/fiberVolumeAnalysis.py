@@ -355,7 +355,7 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outDir,odbna
         csv.write('x0 [um], y0 [um], x [um], y [um]' + '\n')
         for p in range(0,len(undefPoints)):
             line = ''
-            for v,value in enumerate([undefPoints[p,0],undefPoints[p,1]],defPoints[p,0],defPoints[p,1]]):
+            for v,value in enumerate([undefPoints[p,0],undefPoints[p,1],defPoints[p,0],defPoints[p,1]]):
                 if v>0:
                     line += ', '
                 line += str(value)

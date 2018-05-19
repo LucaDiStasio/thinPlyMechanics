@@ -370,8 +370,8 @@ def interpolateData(outdir,data,boundaryCase):
     return data
 
 def writeData(outdir,workbookname,data,boundaryCase):
-    wb = Workbook()
-    gIvcctWorksheet = wb.create_sheet(title='GI-VCCT')
+    wb = xlsxwriter.Workbook(join(outdir,workbookname))
+    gIvcctWorksheet = wb.add_worksheet(title='GI-VCCT')
     gIvcctWorksheet['A1'] = 'GI-VCCT'
     gIvcctWorksheet['A2'] = 'BOUNDARY CONDITIONS'
     gIvcctWorksheet['A3'] = 'NORTH'
@@ -407,7 +407,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
     gIvcctWorksheet['AB3'] = 'B [1/°]'
     gIvcctWorksheet['AC3'] = 'C [°]'
     gIvcctWorksheet['AD3'] = 'D [J/m^2]'
-    gIjintWorksheet = wb.create_sheet(title='GI-Jint')
+    gIjintWorksheet = wb.add_worksheet(title='GI-Jint')
     gIjintWorksheet['A1'] = 'GI-Jint'
     gIjintWorksheet['A2'] = 'BOUNDARY CONDITIONS'
     gIjintWorksheet['A3'] = 'NORTH'
@@ -443,7 +443,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
     gIjintWorksheet['AB3'] = 'B [1/°]'
     gIjintWorksheet['AC3'] = 'C [°]'
     gIjintWorksheet['AD3'] = 'D [J/m^2]'
-    gIIvcctWorksheet = wb.create_sheet(title='GII-VCCT')
+    gIIvcctWorksheet = wb.add_worksheet(title='GII-VCCT')
     gIIvcctWorksheet['A1'] = 'GII-VCCT'
     gIIvcctWorksheet['A2'] = 'BOUNDARY CONDITIONS'
     gIIvcctWorksheet['A3'] = 'NORTH'
@@ -479,7 +479,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
     gIIvcctWorksheet['AB3'] = 'B [1/°]'
     gIIvcctWorksheet['AC3'] = 'C [°]'
     gIIvcctWorksheet['AD3'] = 'D [J/m^2]'
-    gTOTvcctWorksheet = wb.create_sheet(title='GTOT-VCCT')
+    gTOTvcctWorksheet = wb.add_worksheet(title='GTOT-VCCT')
     gTOTvcctWorksheet['A1'] = 'GTOT-VCCT'
     gTOTvcctWorksheet['A2'] = 'BOUNDARY CONDITIONS'
     gTOTvcctWorksheet['A3'] = 'NORTH'
@@ -515,7 +515,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
     gTOTvcctWorksheet['AB3'] = 'B [1/°]'
     gTOTvcctWorksheet['AC3'] = 'C [°]'
     gTOTvcctWorksheet['AD3'] = 'D [J/m^2]'
-    gTOTjintWorksheet = wb.create_sheet(title='GTOT-Jint')
+    gTOTjintWorksheet = wb.add_worksheet(title='GTOT-Jint')
     gTOTjintWorksheet['A1'] = 'GTOT-Jint'
     gTOTjintWorksheet['A2'] = 'BOUNDARY CONDITIONS'
     gTOTjintWorksheet['A3'] = 'NORTH'
@@ -551,7 +551,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
     gTOTjintWorksheet['AB3'] = 'B [1/°]'
     gTOTjintWorksheet['AC3'] = 'C [°]'
     gTOTjintWorksheet['AD3'] = 'D [J/m^2]'
-    czWorksheet = wb.create_sheet(title='ContactZone')
+    czWorksheet = wb.add_worksheet(title='ContactZone')
     czWorksheet['A1'] = 'Contact zone'
     czWorksheet['A2'] = 'BOUNDARY CONDITIONS'
     czWorksheet['A3'] = 'NORTH'

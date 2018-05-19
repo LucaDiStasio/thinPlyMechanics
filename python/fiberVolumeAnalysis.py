@@ -94,7 +94,7 @@ def getFirstAndLastFrameLastStep(odbObj):
     first, last = getFirstAndLastFrame(odbObj,-1)
     return first, last
 
-def getSingleNodeSet(odbObj,part,set):
+def getSingleNodeSet(odbObj,part,nodeSet):
     if part==None:
         result = odbObj.rootAssembly.nodeSets[nodeSet]
     else:

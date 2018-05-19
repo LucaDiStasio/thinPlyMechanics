@@ -313,10 +313,10 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outDir,odbna
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting undeformed and deformed coordinates ...',True)
 
     thirdcircleundefCoords = getFieldOutput(odb,-1,0,'COORD',thirdcircle)
-    thirdcircledefCoords = getFieldOutput(odb,-1,1,'COORD',thirdcircle)
+    thirdcircledefCoords = getFieldOutput(odb,-1,-1,'COORD',thirdcircle)
 
     matrixcrackfaceundefCoords = getFieldOutput(odb,-1,0,'COORD',matrixcrackface)
-    matrixcrackfacedefCoords = getFieldOutput(odb,-1,1,'COORD',matrixcrackface)
+    matrixcrackfacedefCoords = getFieldOutput(odb,-1,-1,'COORD',matrixcrackface)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '.. done.',True)
 
@@ -349,9 +349,6 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outDir,odbna
     undefA = 0.0
     defA = 0.0
     
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(undefPoints),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(defPoints),True)
-    
     for p in range(1,len(undefPoints)):
         undefA += 0.5*(undefPoints[p,1]+undefPoints[p-1,1])*(undefPoints[p,0]-undefPoints[p-1,0])
         defA += 0.5*(defPoints[p,1]+defPoints[p-1,1])*(defPoints[p,0]-defPoints[p-1,0])
@@ -367,7 +364,7 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outDir,odbna
                 if v>0:
                     line += ', '
                 line += str(value)
-        csv.write(line + '\n')
+            csv.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '.. done.',True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,odbname)',True)

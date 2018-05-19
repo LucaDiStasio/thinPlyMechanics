@@ -499,36 +499,26 @@ def writeData(outdir,workbookname,data,boundaryCase):
             for c,coeff in enumerate(data['CZ'][case][v+1]['std']):
                 czWorksheet.write(initVf+c*nVf+v,11+c,coeff)
     for ws in [gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]:
-        chartDeb = ScatterChart()
-        chartDeb.title = 'Value at no debond'
-        chart.varyColors = True
-        chartDeb.style = 13
-        chartDeb.y_axis.title = 'G(0) [J/m^2]'
-        chartDeb.x_axis.title = 'Vf [%]'
-        chartA = ScatterChart()
-        chartA.title = 'Amplitude'
-        chartA.varyColors = True
-        chartA.style = 13
-        chartA.y_axis.title = 'A [J/m^2]'
-        chartA.x_axis.title = 'Vf [%]'
-        chartB = ScatterChart()
-        chartB.title = 'Spatial frequency'
-        chartB.varyColors = True
-        chartB.style = 13
-        chartB.y_axis.title = 'B [1/deg]'
-        chartB.x_axis.title = 'Vf [%]'
-        chartC = ScatterChart()
-        chartC.title = 'Phase'
-        chartC.varyColors = True
-        chartC.style = 13
-        chartC.y_axis.title = 'C [deg]'
-        chartC.x_axis.title = 'Vf [%]'
-        chartD = ScatterChart()
-        chartD.title = 'Offset'
-        chartD.varyColors = True
-        chartD.style = 13
-        chartD.y_axis.title = 'D [J/m^2]'
-        chartD.x_axis.title = 'Vf [%]'
+        chartDeb = workbook.add_chart({'type': 'scatter','subtype': 'line_with_markers'})
+        chartDeb.set_title ({'name': 'Value at no debond'})
+        chartDeb.set_y_axis({'name': 'G(0) [J/m^2]'})
+        chartDeb.set_x_axis({'name': 'Vf [%]'})
+        chartA = workbook.add_chart({'type': 'scatter','subtype': 'line_with_markers'})
+        chartA.set_title ({'name': 'Amplitude'})
+        chartA.set_y_axis({'name': 'A [J/m^2]'})
+        chartA.set_x_axis({'name': 'Vf [%]'})
+        chartB = workbook.add_chart({'type': 'scatter','subtype': 'line_with_markers'})
+        chartDeb.set_title ({'name': 'Spatial frequency'})
+        chartDeb.set_y_axis({'name': 'B [1/deg]'})
+        chartDeb.set_x_axis({'name': 'Vf [%]'})
+        chartC = workbook.add_chart({'type': 'scatter','subtype': 'line_with_markers'})
+        chartDeb.set_title ({'name': 'Phase'})
+        chartDeb.set_y_axis({'name': 'C [deg]'})
+        chartDeb.set_x_axis({'name': 'Vf [%]'})
+        chartD = workbook.add_chart({'type': 'scatter','subtype': 'line_with_markers'})
+        chartDeb.set_title ({'name': 'Offset'})
+        chartDeb.set_y_axis({'name': 'D [J/m^2]'})
+        chartDeb.set_x_axis({'name': 'Vf [%]'})
         for c,case in enumerate(boundaryCase):
             x = Reference(ws, min_col=5, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)
             y = Reference(ws, min_col=6, min_row=initVf+c*nVf, max_row=initVf+(c+1)*nVf-1)

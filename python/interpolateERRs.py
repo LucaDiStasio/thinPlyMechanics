@@ -137,7 +137,7 @@ def interpolateData(outdir,data,boundaryCase):
                 res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0],method='dogbox')
                 stderr = np.sqrt(np.diag(cov))
                 angles = np.linspace(0.0, xs[-1]+5, num=300)
-                data['GI']['VCCT'][case][vfData]['coeff'] = res
+                data['GI']['VCCT'][case][vfData]['coeff'] = [res[0],res[1],res[2]*180.0/np.pi,res[-1]]
                 data['GI']['VCCT'][case][vfData]['cov'] = cov
                 data['GI']['VCCT'][case][vfData]['std'] = stderr
                 data['GI']['VCCT'][case][vfData]['valueAtNoDebond'] = model(0.0, *res)
@@ -152,10 +152,10 @@ def interpolateData(outdir,data,boundaryCase):
                 plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
             except Exception, error:
                 try:
-                    res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],-90.0,0.0],method='dogbox')
+                    res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],-0.5*np.pi,0.0],method='dogbox')
                     stderr = np.sqrt(np.diag(cov))
                     angles = np.linspace(0.0, xs[-1]+5, num=300)
-                    data['GI']['VCCT'][case][vfData]['coeff'] = res
+                    data['GI']['VCCT'][case][vfData]['coeff'] = [res[0],res[1],res[2]*180.0/np.pi,res[-1]]
                     data['GI']['VCCT'][case][vfData]['cov'] = cov
                     data['GI']['VCCT'][case][vfData]['std'] = stderr
                     data['GI']['VCCT'][case][vfData]['valueAtNoDebond'] = model(0.0, *res)
@@ -204,7 +204,7 @@ def interpolateData(outdir,data,boundaryCase):
                 res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0],method='dogbox')
                 stderr = np.sqrt(np.diag(cov))
                 angles = np.linspace(0.0, xs[-1]+5, num=300)
-                data['GI']['Jint'][case][vfData]['coeff'] = res
+                data['GI']['Jint'][case][vfData]['coeff'] = [res[0],res[1],res[2]*180.0/np.pi,res[-1]]
                 data['GI']['Jint'][case][vfData]['cov'] = cov
                 data['GI']['Jint'][case][vfData]['std'] = stderr
                 data['GI']['Jint'][case][vfData]['valueAtNoDebond'] = model(0.0, *res)
@@ -219,10 +219,10 @@ def interpolateData(outdir,data,boundaryCase):
                 plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
             except Exception, error:
                 try:
-                    res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],-90.0,0.0],method='dogbox')
+                    res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],-0.5*np.pi,0.0],method='dogbox')
                     stderr = np.sqrt(np.diag(cov))
                     angles = np.linspace(0.0, xs[-1]+5, num=300)
-                    data['GI']['Jint'][case][vfData]['coeff'] = res
+                    data['GI']['Jint'][case][vfData]['coeff'] = [res[0],res[1],res[2]*180.0/np.pi,res[-1]]
                     data['GI']['Jint'][case][vfData]['cov'] = cov
                     data['GI']['Jint'][case][vfData]['std'] = stderr
                     data['GI']['Jint'][case][vfData]['valueAtNoDebond'] = model(0.0, *res)
@@ -271,7 +271,7 @@ def interpolateData(outdir,data,boundaryCase):
             res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0],method='dogbox')
             stderr = np.sqrt(np.diag(cov))
             angles = np.linspace(0.0, xs[-1]+5, num=300)
-            data['GII']['VCCT'][case][vfData]['coeff'] = res
+            data['GII']['VCCT'][case][vfData]['coeff'] = [res[0],res[1],res[2]*180.0/np.pi,res[-1]]
             data['GII']['VCCT'][case][vfData]['cov'] = cov
             data['GII']['VCCT'][case][vfData]['std'] = stderr
             data['GII']['VCCT'][case][vfData]['valueAtNoDebond'] = model(0.0, *res)
@@ -306,7 +306,7 @@ def interpolateData(outdir,data,boundaryCase):
                 res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0],method='dogbox')
                 stderr = np.sqrt(np.diag(cov))
                 angles = np.linspace(0.0, xs[-1]+5, num=300)
-                data['GTOT']['VCCT'][case][vfData]['coeff'] = res
+                data['GTOT']['VCCT'][case][vfData]['coeff'] = [res[0],res[1],res[2]*180.0/np.pi,res[-1]]
                 data['GTOT']['VCCT'][case][vfData]['cov'] = cov
                 data['GTOT']['VCCT'][case][vfData]['std'] = stderr
                 data['GTOT']['VCCT'][case][vfData]['valueAtNoDebond'] = model(0.0, *res)
@@ -321,10 +321,10 @@ def interpolateData(outdir,data,boundaryCase):
                 plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
             except Exception, error:
                 try:
-                    res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],-90.0,0.0],method='dogbox')
+                    res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],-0.5*np.pi,0.0],method='dogbox')
                     stderr = np.sqrt(np.diag(cov))
                     angles = np.linspace(0.0, xs[-1]+5, num=300)
-                    data['GTOT']['VCCT'][case][vfData]['coeff'] = res
+                    data['GTOT']['VCCT'][case][vfData]['coeff'] = [res[0],res[1],res[2]*180.0/np.pi,res[-1]]
                     data['GTOT']['VCCT'][case][vfData]['cov'] = cov
                     data['GTOT']['VCCT'][case][vfData]['std'] = stderr
                     data['GTOT']['VCCT'][case][vfData]['valueAtNoDebond'] = model(0.0, *res)
@@ -374,7 +374,7 @@ def interpolateData(outdir,data,boundaryCase):
                 res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],0.0,0.0],method='dogbox')
                 stderr = np.sqrt(np.diag(cov))
                 angles = np.linspace(0.0, xs[-1]+5, num=300)
-                data['GTOT']['Jint'][case][vfData]['coeff'] = res
+                data['GTOT']['Jint'][case][vfData]['coeff'] = [res[0],res[1],res[2]*180.0/np.pi,res[-1]]
                 data['GTOT']['Jint'][case][vfData]['cov'] = cov
                 data['GTOT']['Jint'][case][vfData]['std'] = stderr
                 data['GTOT']['Jint'][case][vfData]['valueAtNoDebond'] = model(0.0, *res)
@@ -389,10 +389,10 @@ def interpolateData(outdir,data,boundaryCase):
                 plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
             except Exception, error:
                 try:
-                    res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],-90.0,0.0],method='dogbox')
+                    res, cov = optimize.curve_fit(model,xs,ys,p0=[maxValue,1.0/xs[maxIndex],-0.5*np.pi,0.0],method='dogbox')
                     stderr = np.sqrt(np.diag(cov))
                     angles = np.linspace(0.0, xs[-1]+5, num=300)
-                    data['GTOT']['Jint'][case][vfData]['coeff'] = res
+                    data['GTOT']['Jint'][case][vfData]['coeff'] = [res[0],res[1],res[2]*180.0/np.pi,res[-1]]
                     data['GTOT']['Jint'][case][vfData]['cov'] = cov
                     data['GTOT']['Jint'][case][vfData]['std'] = stderr
                     data['GTOT']['Jint'][case][vfData]['valueAtNoDebond'] = model(0.0, *res)

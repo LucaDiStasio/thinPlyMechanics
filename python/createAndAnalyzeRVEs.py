@@ -3635,9 +3635,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         RVEpart.DatumCsysByThreePoints(name='refOrientation',coordSysType=CARTESIAN,origin=(0.0,0.0,0.0),point1=(1.0,0.0,0.0),point2=(1.0,1.0,0.0))
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
     
-    #print >> sys.__stdout__,(RVEpart.__members__)
-    #print >> sys.__stdout__,(RVEpart.features['refOrientation'].id)
-    
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to BOUNDING-PLY ...',True)
         RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['BOUNDING-PLY'],localCsys=RVEpart.datums[RVEpart.features['refOrientation'].id])
@@ -3645,12 +3642,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to RIGHT-HOMOGENIZED-CROSSPLY ...',True)
-        RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['RIGHT-HOMOGENIZED-CROSSPLY'],localCsys=RVEpart.datums[-1])
+        RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['RIGHT-HOMOGENIZED-CROSSPLY'],localCsys=RVEpart.datums[RVEpart.features['refOrientation'].id])
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
         
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to LEFT-HOMOGENIZED-CROSSPLY ...',True)
-        RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['LEFT-HOMOGENIZED-CROSSPLY'],localCsys=RVEpart.datums[-1])
+        RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['LEFT-HOMOGENIZED-CROSSPLY'],localCsys=RVEpart.datums[RVEpart.features['refOrientation'].id])
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
         
         

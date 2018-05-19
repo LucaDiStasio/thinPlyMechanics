@@ -277,7 +277,7 @@ def extractAndSaveFieldOutput(odbObj,step,frameN,folder,filename,ext,fieldOutput
                     line += ', ' + str(datum)
                 csv.write(line + '\n')
 
-def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,odbname):
+def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outDir,odbname):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,odbname)',True)
     #=======================================================================
@@ -349,7 +349,19 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,odbname):
         defA += 0.5*(defPoints[p,1]+defPoints[p-1,1])*(defPoints[p,0]-defPoints[p-1,0])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '.. done.',True)
-
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Save fiber profiles to files...',True)
+    with open(join(outDir,datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_FiberProfiles' + '.csv'),'w') as csv:
+        csv.write('x0 [um], y0 [um], x [um], y [um]' + '\n')
+        for p in range(0,len(undefPoints)):
+            line = ''
+            for v,value in enumerate([undefPoints[p,0],undefPoints[p,1]],defPoints[p,0],defPoints[p,1]]):
+                if v>0:
+                    line += ', '
+                line += str(value)
+        csv.write(line + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '.. done.',True)
+    
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,odbname)',True)
 
     return [undefA,A,A/undefA,100.0*A/undefA,A-undefA,(A-undefA)/undefA]

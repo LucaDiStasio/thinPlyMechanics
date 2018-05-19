@@ -373,8 +373,8 @@ def main(argv):
     inpDir = 'C:/Abaqus_WD'
     outdir = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/FiberVolumeChange'
 
-    odbs = ['Job-VCCTandJintegral-RVE1_0992-Half-SD-vkmcul_deltatheta10_0',
-            'Job-VCCTandJintegral-RVE1_0992-Half-SD-vkmcul_deltatheta150_0']
+    odbs = ['RVE10',
+            'RVE150']
 
     logfilename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_fiberVolumeChange' + '.log'
     logfilefullpath = join(workDir,logfilename)

@@ -348,7 +348,10 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outDir,odbna
 
     undefA = 0.0
     defA = 0.0
-
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Length of undef points: ' + str(len(undefPoints)),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Length of def points: ' + str(len(defPoints)),True)
+    
     for p in range(1,len(undefPoints)):
         undefA += 0.5*(undefPoints[p,1]+undefPoints[p-1,1])*(undefPoints[p,0]-undefPoints[p-1,0])
         defA += 0.5*(defPoints[p,1]+defPoints[p-1,1])*(defPoints[p,0]-defPoints[p-1,0])

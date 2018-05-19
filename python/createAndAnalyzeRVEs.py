@@ -3455,7 +3455,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfEdgesData.append([0.0,0.99*CornerBy,0.0,0.0,1.01*CornerBy,0.0,'CENTER-RUC-UPPERSIDE'])
         if 'boundingPly' in parameters['BC']['rightSide']['type']:
             setsOfEdgesData.append([0.99*CornerBx,0.99*CornerBy,0.0,0.99*CornerBx,1.01*CornerBy,0.0,'RIGHT-HOMOPLY-UPPERSIDE'])
-        if 'boundingPly' in parameters['BC']['rightSide']['type']:
+        if 'boundingPly' in parameters['BC']['leftSide']['type']:
             setsOfEdgesData.append([0.99*CornerAx,0.99*CornerBy,0.0,0.99*CornerAx,1.01*CornerBy,0.0,'LEFT-HOMOPLY-UPPERSIDE'])
     else:
         setsOfEdgesData.append([0.0,0.99*CornerBy,0.0,0.0,1.01*CornerBy,0.0,'UPPERSIDE'])
@@ -3471,7 +3471,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-
+    
+    if ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']) and not 'boundingPly' in parameters['BC']['northSide']['type']:
+        if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']
+            RVEpart.SetByBoolean(name='UPPERSIDE', sets=[RVEpart.sets['CENTER-RUC-UPPERSIDE'],RVEpart.sets['RIGHT-HOMOPLY-UPPERSIDE'],RVEpart.sets['LEFT-HOMOPLY-UPPERSIDE']])
+        elif 'boundingPly' in parameters['BC']['rightSide']['type']:
+            RVEpart.SetByBoolean(name='UPPERSIDE', sets=[RVEpart.sets['CENTER-RUC-UPPERSIDE'],RVEpart.sets['RIGHT-HOMOPLY-UPPERSIDE']])
+        elif 'boundingPly' in parameters['BC']['leftSide']['type']:
+            RVEpart.SetByBoolean(name='UPPERSIDE', sets=[RVEpart.sets['CENTER-RUC-UPPERSIDE'],RVEpart.sets['LEFT-HOMOPLY-UPPERSIDE']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- UPPERSIDE',True)
+        
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         RVEpart.SetByBoolean(name='RIGHTSIDE', sets=[RVEpart.sets['LOWER-RIGHTSIDE'],RVEpart.sets['UPPER-RIGHTSIDE']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RIGHTSIDE',True)

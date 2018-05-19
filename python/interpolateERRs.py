@@ -579,7 +579,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
                 czWorksheet.write(initVf+c*nVf+v,5+cIndex,coeff)
             for r,row in enumerate(data['CZ'][case][v+1]['cov']):
                 for col,cov in enumerate(row):
-                    czWorksheet.write(initVf+c*nVf+v,7+4*r+col,cov)
+                    czWorksheet.write(initVf+c*nVf+v,7+2*r+col,cov)
             for cIndex,coeff in enumerate(data['CZ'][case][v+1]['std']):
                 czWorksheet.write(initVf+c*nVf+v,11+cIndex,coeff)
     for wsIndex,ws in enumerate([gIvcctWorksheet,gIjintWorksheet,gIIvcctWorksheet,gTOTvcctWorksheet,gTOTjintWorksheet]):
@@ -637,7 +637,7 @@ def writeData(outdir,workbookname,data,boundaryCase):
     chartA = workbook.add_chart({'type': 'scatter','subtype': 'line_with_markers'})
     chartA.set_title ({'name': 'Percentual increment of contact zone'})
     chartA.set_y_axis({'name': 'CZ/DS/unit increment [%/deg]'})
-    chartA.set_x_axis({'name': 'Vf []'})
+    chartA.set_x_axis({'name': 'Vf [%]'})
     for c,case in enumerate(boundaryCase):
         chartA.add_series({
                             'name':       case,

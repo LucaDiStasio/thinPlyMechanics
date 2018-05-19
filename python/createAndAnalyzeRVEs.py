@@ -3639,7 +3639,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create point in x-y plane',True)
         refP2 = RVEpart.DatumPointByCoordinate(coords=(1.0,1.0,0.0))
         print(RVEpart.datums)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create cartesina reference system given 3 points',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create cartesian reference system given 3 points',True)
         RVEpart.DatumCsysByThreePoints(name='refOrientation',coordSysType=CARTESIAN,origin=RVEpart.datums[-3],point1=RVEpart.datums[-2],point2=RVEpart.datums[-1])
         writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
         

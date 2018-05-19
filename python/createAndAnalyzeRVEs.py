@@ -3635,8 +3635,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         RVEpart.DatumCsysByThreePoints(name='refOrientation',coordSysType=CARTESIAN,origin=(0.0,0.0,0.0),point1=(1.0,0.0,0.0),point2=(1.0,1.0,0.0))
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
     
-    for datum in RVEpart.datums:
-        print(datum)
+    print(RVEpart.datums.keys())
+    for key in RVEpart.datums.keys():
+        print(RVEpart.datums[key])
             
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to BOUNDING-PLY ...',True)

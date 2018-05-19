@@ -349,8 +349,8 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outDir,odbna
     undefA = 0.0
     defA = 0.0
     
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Length of undef points: ' + str(len(undefPoints)),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Length of def points: ' + str(len(defPoints)),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(undefPoints),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + str(defPoints),True)
     
     for p in range(1,len(undefPoints)):
         undefA += 0.5*(undefPoints[p,1]+undefPoints[p-1,1])*(undefPoints[p,0]-undefPoints[p-1,0])
@@ -359,7 +359,7 @@ def calculateFiberAreaChange(logfilepath,baselogindent,logindent,wd,outDir,odbna
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '.. done.',True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Save fiber profiles to files...',True)
-    with open(join(outDir,datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_FiberProfiles' + '.csv'),'w') as csv:
+    with open(join(outDir,datetime.now().strftime('%Y-%m-%d') + '_FiberProfiles_' + odbname.split('.')[0] + '.csv'),'w') as csv:
         csv.write('x0 [um], y0 [um], x [um], y [um]' + '\n')
         for p in range(0,len(undefPoints)):
             line = ''
@@ -383,7 +383,7 @@ def main(argv):
     odbs = ['RVE10',
             'RVE150']
 
-    logfilename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_fiberVolumeChange' + '.log'
+    logfilename = datetime.now().strftime('%Y-%m-%d') + '_fiberVolumeChange' + '.log'
     logfilefullpath = join(workDir,logfilename)
     logindent = '    '
 
@@ -395,7 +395,9 @@ def main(argv):
 
     results = []
     for odb in odbs:
+        writeLineToLogFile(logfilefullpath,'a','ODB: ' + odb,True)
         results.append(calculateFiberAreaChange(logfilefullpath,'',logindent,inpDir,outdir,odb))
+        writeLineToLogFile(logfilefullpath,'a','... done.',True)
 
     with open(join(outdir,datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_fiberVolumeChange' + '.csv'),'w') as csv:
         csv.write('theoretical area [um^2], undeformed area [um^2], deformed area [um^2], ratio [-], ratio [%], change [um], change [%]' + '\n')

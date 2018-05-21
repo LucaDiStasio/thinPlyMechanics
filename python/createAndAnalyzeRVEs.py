@@ -3642,6 +3642,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfFacesData = [[0.975*L, 0.975*(L+Lply), 0,'BOUNDING-PLY']]
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
+    
     if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
         setsOfFacesData = [[0.975*CornerBx, 0.5*L, 0,'RIGHT-HOMOGENIZED-CROSSPLY'],
                            [0.975*CornerAx, 0.5*L, 0,'LEFT-HOMOGENIZED-CROSSPLY']]
@@ -3657,7 +3658,18 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfFacesData = [[0.975*CornerAx, 0.5*L, 0,'LEFT-HOMOGENIZED-CROSSPLY']]
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
-
+    
+    setsOfFacesData = []
+    booleanSets = []
+    if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+        for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+            setsOfFacesData.append([(nFiber+1)*L, 0.5*Rf, 0,'RIGHT-FIBER'+str(nFiber+1)])
+        for setOfFacesData in setsOfFacesData:
+            defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
+            booleanSets.append(RVEpart.sets[setOfFacesData[-1]])
+        RVEpart.SetByBoolean(name='RIGHT-FIBERS', sets=booleanSets)
+        
+    
     if 'boundingPly' in parameters['BC']['northSide']['type'] and 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
         RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)

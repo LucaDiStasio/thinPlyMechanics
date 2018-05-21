@@ -3760,12 +3760,19 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 #                             Material Orientation
 #===============================================================================#
     
-    if 'boundingPly' in parameters['BC']['northSide']['type'] or 'boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']:
-        skipLineToLogFile(logfilepath,'a',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating reference system for material orientation ...',True)
-        RVEpart.DatumCsysByThreePoints(name='refOrientation',coordSysType=CARTESIAN,origin=(0.0,0.0,0.0),point1=(1.0,0.0,0.0),point2=(1.0,1.0,0.0))
-        writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating reference system for material orientation ...',True)
+    RVEpart.DatumCsysByThreePoints(name='refOrientation',coordSysType=CARTESIAN,origin=(0.0,0.0,0.0),point1=(1.0,0.0,0.0),point2=(1.0,1.0,0.0))
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to FIBER ...',True)
+    RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['FIBER'],localCsys=RVEpart.datums[RVEpart.features['refOrientation'].id])
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to MATRIX ...',True)
+    RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['MATRIX'],localCsys=RVEpart.datums[RVEpart.features['refOrientation'].id])
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+        
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to BOUNDING-PLY ...',True)
         RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['BOUNDING-PLY'],localCsys=RVEpart.datums[RVEpart.features['refOrientation'].id])

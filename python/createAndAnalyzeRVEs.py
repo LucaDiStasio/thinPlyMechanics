@@ -3668,7 +3668,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
             booleanSets.append(RVEpart.sets[setOfFacesData[-1]])
         RVEpart.SetByBoolean(name='RIGHT-FIBERS', sets=booleanSets)
-        
+    
+    setsOfFacesData = []
+    booleanSets = []
+    if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+        for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+            setsOfFacesData.append([-(nFiber+1)*L, 0.5*Rf, 0,'LEFT-FIBER'+str(nFiber+1)])
+        for setOfFacesData in setsOfFacesData:
+            defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
+            booleanSets.append(RVEpart.sets[setOfFacesData[-1]])
+        RVEpart.SetByBoolean(name='LEFT-FIBERS', sets=booleanSets)    
     
     if 'boundingPly' in parameters['BC']['northSide']['type'] and 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
         RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])

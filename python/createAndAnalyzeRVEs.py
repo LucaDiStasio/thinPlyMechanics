@@ -2966,19 +2966,31 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         CornerBy = L + Lply
     else:
         CornerBy = L
-    if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
-        wRatioRight = parameters['BC']['rightSide']['wRatio']
-        wRatioLeft = parameters['BC']['leftSide']['wRatio']
+    if ('boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']) or ('adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type']):
+        if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
+            wRatioRight = parameters['BC']['rightSide']['wRatio']
+            wRatioLeft = parameters['BC']['leftSide']['wRatio']
+        else:
+            wRatioRight = parameters['BC']['rightSide']['nFibers']
+            wRatioLeft = parameters['BC']['leftSide']['nFibers']
         wRightPly = wRatioRight*(2*L)
         wLeftPly = wRatioLeft*(2*L)
         CornerAx = -(L+wLeftPly)
         CornerBx = L+wRightPly
-    elif 'boundingPly' in parameters['BC']['rightSide']['type']:
+    elif 'boundingPly' in parameters['BC']['rightSide']['type'] or 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+        if 'boundingPly' in parameters['BC']['rightSide']['type']:
+            wRatioRight = parameters['BC']['rightSide']['wRatio']
+        else:
+            wRatioRight = parameters['BC']['rightSide']['nFibers']
         wRatioRight = parameters['BC']['rightSide']['wRatio']
         wRightPly = wRatioRight*(2*L)
         CornerAx = -L
         CornerBx = L+wRightPly
-    elif 'boundingPly' in parameters['BC']['leftSide']['type']:
+    elif 'boundingPly' in parameters['BC']['leftSide']['type'] or 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+        if 'boundingPly' in parameters['BC']['leftSide']['type']:
+            wRatioLeft = parameters['BC']['leftSide']['wRatio']
+        else:
+            wRatioLeft = parameters['BC']['leftSide']['nFibers']
         wRatioLeft = parameters['BC']['leftSide']['wRatio']
         wLeftPly = wRatioLeft*(2*L)
         CornerAx = -(L+wLeftPly)

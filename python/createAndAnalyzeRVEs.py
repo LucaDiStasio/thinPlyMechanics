@@ -3356,7 +3356,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers to the right ...',True)
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-            
+            fiberSketch.ArcByCenterEnds(center=((nFiber+1)*2*L, -0.5*L), point1=((nFiber+1)*2*L-Rf, -0.5*L), point2=((nFiber+1)*2*L+Rf,-0.5*L), direction=CLOCKWISE)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
         for key in fiberGeometry.keys():
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(key) + '] = ' + str(fiberGeometry[key]),True)
@@ -3366,7 +3366,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers to the left ...',True)
-        
+        for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
+            fiberSketch.ArcByCenterEnds(center=(-(nFiber+1)*2*L, -0.5*L), point1=(-(nFiber+1)*2*L-Rf, -0.5*L), point2=(-(nFiber+1)*2*L+Rf,-0.5*L), direction=CLOCKWISE)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
         for key in fiberGeometry.keys():
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(key) + '] = ' + str(fiberGeometry[key]),True)

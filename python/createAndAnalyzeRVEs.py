@@ -3481,9 +3481,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     setsOfEdgesData = []
     
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
-        setsOfEdgesData.append([0.99*Bx,0.001,0.0,0.99*Bx,-0.001,0.0,'LOWERSIDE-RIGHT-HOMOGENIZED-PLY'])
+        setsOfEdgesData.append([0.99*CornerBx,0.001,0.0,0.99*CornerBx,-0.001,0.0,'LOWERSIDE-RIGHT-HOMOGENIZED-PLY'])
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
-        setsOfEdgesData.append([0.99*Ax,0.001,0.0,0.99*Ax,-0.001,0.0,'LOWERSIDE-LEFT-HOMOGENIZED-PLY'])
+        setsOfEdgesData.append([0.99*CornerAx,0.001,0.0,0.99*CornerAx,-0.001,0.0,'LOWERSIDE-LEFT-HOMOGENIZED-PLY'])
     
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)

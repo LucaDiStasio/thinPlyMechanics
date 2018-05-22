@@ -1505,10 +1505,13 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         CornerAx = -L
         CornerBx = L
     theta = 0.0
-    deltatheta = parameters['geometry']['deltatheta'] # in degrees !!!
+    deltatheta = parameters['geometry']['deltatheta'] # in degrees !!! 2*deltatheta = angular size of debond
+    kinkPhi = parameters['geometry']['kink']['phi'] # in degrees !!! kink direction with respect to radial direction
+    kinkRelExt = parameters['geometry']['kink']['relativeExtension'] # length of kink = relativeExtension*Rf
+    
     deltapsi = parameters['mesh']['size']['deltapsi'] # in degrees !!!
     deltaphi = parameters['mesh']['size']['deltaphi'] # in degrees !!!
-    delta = parameters['mesh']['size']['delta'] # in degrees !!!
+    deltaRatio = parameters['mesh']['size']['deltaRatio'] # length of element at crack tip = deltaRatio*Rf
     minElNum = parameters['mesh']['elements']['minElNum']
     if ((theta+deltatheta-deltapsi)<=0.0 or (theta+deltatheta-deltapsi)/delta<minElNum) and ((theta+deltatheta+deltapsi+deltaphi)>=180.0 or (180.0-(theta+deltatheta+deltapsi+deltaphi))/delta<minElNum):
         deltapsi = 0.6*((180.0-(theta+deltatheta))-np.max([0.5*(theta+deltatheta),0.1*(180.0-(theta+deltatheta)),minElnum*delta]))

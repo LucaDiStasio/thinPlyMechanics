@@ -5833,6 +5833,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             yRFfirstbounded = RFfirstbounded.values[0].data[1]
             rRFfirstbounded = np.cos(phi)*xRFfirstbounded + np.sin(phi)*yRFfirstbounded
             thetaRFfirstbounded = -np.sin(phi)*xRFfirstbounded + np.cos(phi)*yRFfirstbounded
+            if isPressureLoadedCrack:
+                rRFcracktip -= uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/6
+                rRFfirstbounded -= 2*uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/3
+        else:
+            if isPressureLoadedCrack:
+                rRFcracktip -= uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/2
 
         xfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[0]
         yfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[1]

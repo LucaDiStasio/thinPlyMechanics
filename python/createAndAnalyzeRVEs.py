@@ -5803,6 +5803,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         for load in parameters['loads'].values():
             if ('appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']) and 'Temp-Step' in load['stepName'] and 'CRACK' in load['set']:
                 isPressureLoadedCrack = True
+                uniformP = load['value']
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pressure loaded crack faces are present, corrected VCCT will be used.',True)
                 break
         if not isPressureLoadedCrack:
@@ -5935,8 +5936,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         rRFfirstbounded = np.cos(phi)*xRFfirstbounded + np.sin(phi)*yRFfirstbounded
         thetaRFfirstbounded = -np.sin(phi)*xRFfirstbounded + np.cos(phi)*yRFfirstbounded
         if isPressureLoadedCrack:
-            rRFcracktip -= /6
-            rRFfirstbounded -= 2*parameters['']/3
+            rRFcracktip -= uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/6
+            rRFfirstbounded -= 2*uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/3
+    else:
+        if isPressureLoadedCrack:
+            rRFcracktip -= uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/2
+        
 
     xfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[0]
     yfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[1]

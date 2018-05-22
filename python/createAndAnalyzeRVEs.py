@@ -5894,10 +5894,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     for load in parameters['loads'].values():
         if ('appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']) and 'Load-Step' in load['stepName'] and 'CRACK' in load['set']:
             isPressureLoadedCrack = True
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pressure loaded crack faces are present, corrected VCCT will be used',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pressure loaded crack faces are present, corrected VCCT will be used.',True)
             break
     if not isPressureLoadedCrack:
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract forces and displacements ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pressure loaded crack faces are not present.',True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract forces and displacements ...',True)
 

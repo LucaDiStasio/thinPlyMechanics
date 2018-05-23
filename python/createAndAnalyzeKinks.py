@@ -1645,16 +1645,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # draw construction lines to identify kink and kink's region
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction lines to identify kink''s position, direction and region ...',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kink''s position',True)
-    s1.ConstructionLine(point1=(0.0, -0.5*L), angle=deltatheta)
+    s1.ConstructionLine(point1=(0.0, -0.5*L), angle=deltatheta)#fiberGeometry[7]
     s1.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[7], addUndoState=False)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kink''s direction',True)
-    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)), angle=kinPhiX)
+    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)), angle=kinPhiX)#fiberGeometry[8]
     s1.CoincidentConstraint(entity1=fiberVertices[7], entity2=fiberGeometry[8], addUndoState=False)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kink''s region',True)
-    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+kinkExt*np.cos((kinPhiX+90)*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+kinkExt*np.sin((kinPhiX+90)*np.pi/180)), angle=deltatheta)
-    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+kinkExt*np.cos((kinPhiX+90+180)*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+kinkExt*np.sin((kinPhiX+90+180)*np.pi/180)), angle=deltatheta)
-    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+kinkExt*np.cos(kinPhiX*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+kinkExt*np.sin(kinPhiX*np.pi/180)), angle=kinPhiX+90)
-    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+2*kinkExt*np.cos(kinPhiX*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+2*kinkExt*np.sin(kinPhiX*np.pi/180)), angle=kinPhiX+90)
+    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+kinkExt*np.cos((kinPhiX+90)*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+kinkExt*np.sin((kinPhiX+90)*np.pi/180)), angle=deltatheta)#fiberGeometry[9]
+    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+kinkExt*np.cos((kinPhiX+90+180)*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+kinkExt*np.sin((kinPhiX+90+180)*np.pi/180)), angle=deltatheta)#fiberGeometry[10]
+    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+kinkExt*np.cos(kinPhiX*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+kinkExt*np.sin(kinPhiX*np.pi/180)), angle=kinPhiX+90)#fiberGeometry[11]
+    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+2*kinkExt*np.cos(kinPhiX*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+2*kinkExt*np.sin(kinPhiX*np.pi/180)), angle=kinPhiX+90)#fiberGeometry[12]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
     for key in fiberGeometry.keys():
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(key) + '] = ' + str(fiberGeometry[key]),True)

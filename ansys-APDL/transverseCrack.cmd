@@ -8,11 +8,10 @@
 
 Vf = ! [-] Fiber volume fraction
 
-L = 1       ! [mm] length of the element
-t = 1       ! [mm] 2t = thickness of the element
-tRatio = 1  ! [-]  ratio of bounding ply thickness to main ply
-a = 0.5     ! [mm] 2a = crack length
-w = 0.1     ! [mm] width of refined mesh region along the crack
+t = 1             ! [mm] 2t = thickness of the element
+tRatio = 1        ! [-]  ratio of bounding ply thickness to main ply
+atRatio = 0.1     ! [-]  ratio of crack length to main ply thickness
+rhon = 0.01       ! [-]  normalized crack density
 
 EL = ! [MPa] UD longitudinal Young's modulus
 ET = ! [MPa] UD transverse Young's modulus
@@ -21,8 +20,11 @@ nuTT = ! [-] UD transverse Poisson ratio
 GL = ! [MPa] UD in-plane shear modulus
 GT = ! [MPa] UD transverse shear modulus
 
-tBPly = tRatio*(2*t)
-tTotal = t + tBPly
+L = t/rhon        ! [mm] length of the RVE
+a = atRatio*t     ! [mm] 2a = crack length
+
+tBPly = tRatio*(2*t) ! [mm] thickness of the bounding ply
+tTotal = t + tBPly   ! [mm] thickness of the bounding ply
 
 ! Create Geometry
 

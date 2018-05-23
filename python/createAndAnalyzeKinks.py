@@ -1632,8 +1632,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     #raw_input()
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # draw fiber
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fiber and circular sections for mesh generation ...',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Fiber',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fiber ...',True)
     fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-Rf, -0.5*L), point2=(Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[6]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
     for key in fiberGeometry.keys():
@@ -1642,6 +1641,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for key in fiberVertices.keys():
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(key) + '] = ' + str(fiberVertices[key]),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    
+    
+    
     # calculate angles for construction lines
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calculate angles for construction lines ...',True)
     alpha = theta + deltatheta - deltapsi

@@ -35,20 +35,20 @@ K, 2, L, 0.0
 K, 3, L, tTOT
 K, 4, 0.0, tTOT
 
-K, 5, w, 0.0
-K, 6, w, t
-K, 7, 0.0, t
-K, 8, L, t
+K, 5, 0.0, t
+K, 6, L, t
 
-K, 9, 0.0, a
+K, 7, 0.0, a
+K, 8, a, 0.0
+K, 9, a, t
 
 L, 1, 2
 L, 2, 3
 L, 3, 4
 L, 4, 1
 
-L, 7, 8
 L, 5, 6
+L, 8, 9
 
 ! Define Element Type
 

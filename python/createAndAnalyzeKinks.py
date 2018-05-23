@@ -1664,9 +1664,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     #raw_input()
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # draw lines to identify kink and kink's region
-    
-    s1.Line(point1=(16.5233403099701, -10.6750000000175), point2=(22.4093371387207, 
-        -3.66034213336388))
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw lines to identify kink''s position, direction and region ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kink',True)
+    s1.Line(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)), point2=(0.0+Rf*np.cos(deltatheta*np.pi/180)+2*kinkExt*np.cos(kinPhiX*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+2*kinkExt*np.sin(kinPhiX*np.pi/180)))
     s1.CoincidentConstraint(entity1=v[17], entity2=g[6], addUndoState=False)
     s1.CoincidentConstraint(entity1=v[18], entity2=g[23], addUndoState=False)
     

@@ -1507,8 +1507,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     theta = 0.0
     deltatheta = parameters['geometry']['deltatheta'] # in degrees !!! 2*deltatheta = angular size of debond
     kinkPhi = parameters['geometry']['kink']['phi'] # in degrees !!! kink direction with respect to radial direction
+    kinkPhiX = deltatheta + kinkPhi  # in degrees !!! kink direction with respect to horizontal direction
     kinkRelExt = parameters['geometry']['kink']['relativeExtension'] # length of kink = relativeExtension*Rf
-    
+    kinkExt = kinkRelExt*Rf
     deltapsi = parameters['mesh']['size']['deltapsi'] # in degrees !!!
     deltaphi = parameters['mesh']['size']['deltaphi'] # in degrees !!!
     deltaRatio = parameters['mesh']['size']['deltaRatio'] # length of element at crack tip = deltaRatio*Rf
@@ -1643,13 +1644,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # draw construction lines to identify kink and kink's region
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction lines to identify kink''s position, direction and region ...',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kink'' position',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kink''s position',True)
     s1.ConstructionLine(point1=(0.0, -0.5*L), angle=deltatheta)
     s1.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[7], addUndoState=False)
-    
-    
-    
-    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kink''s direction',True)
+    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)), angle=kinPhiX)
+    s1.CoincidentConstraint(entity1=fiberVertices[7], entity2=fiberGeometry[8], addUndoState=False)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kink''s region',True)
+    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+kinkExt*np.cos((kinPhiX+90)*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+kinkExt*np.sin((kinPhiX+90)*np.pi/180)), angle=deltatheta)
+    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+kinkExt*np.cos((kinPhiX+90+180)*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+kinkExt*np.sin((kinPhiX+90+180)*np.pi/180)), angle=deltatheta)
+    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+kinkExt*np.cos(kinPhiX*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+kinkExt*np.sin(kinPhiX*np.pi/180)), angle=kinPhiX+90)
+    s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+2*kinkExt*np.cos(kinPhiX*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+2*kinkExt*np.sin(kinPhiX*np.pi/180)), angle=kinPhiX+90)
     
     
     # calculate angles for construction lines

@@ -1655,6 +1655,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+kinkExt*np.cos((kinPhiX+90+180)*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+kinkExt*np.sin((kinPhiX+90+180)*np.pi/180)), angle=deltatheta)
     s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+kinkExt*np.cos(kinPhiX*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+kinkExt*np.sin(kinPhiX*np.pi/180)), angle=kinPhiX+90)
     s1.ConstructionLine(point1=(0.0+Rf*np.cos(deltatheta*np.pi/180)+2*kinkExt*np.cos(kinPhiX*np.pi/180), -0.5*L+Rf*np.sin(deltatheta*np.pi/180)+2*kinkExt*np.sin(kinPhiX*np.pi/180)), angle=kinPhiX+90)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
+    for key in fiberGeometry.keys():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(key) + '] = ' + str(fiberGeometry[key]),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberVertices)) + ' vertices',True)
+    for key in fiberVertices.keys():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(key) + '] = ' + str(fiberVertices[key]),True)
+    #raw_input()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # draw lines to identify kink and kink's region
+    
+    
     
     
     # calculate angles for construction lines

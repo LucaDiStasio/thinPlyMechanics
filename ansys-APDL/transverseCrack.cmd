@@ -28,27 +28,36 @@ tTotal = t + tBPly   ! [mm] thickness of the bounding ply
 
 ! Create Geometry
 
-BLC4, 0.0, 0.0, L, tTotal
+! Points
 
-K, 1, 0.0, 0.0
-K, 2, L, 0.0
-K, 3, L, tTOT
-K, 4, 0.0, tTOT
+K, 1, 0.0, 0.0     ! SW corner
+K, 2, L, 0.0       ! SE corner
+K, 3, L, tTOT      ! NE corner
+K, 4, 0.0, tTOT    ! NW corner
 
-K, 5, 0.0, t
-K, 6, L, t
+K, 5, 0.0, t       ! W corner of ply interface
+K, 6, L, t         ! E corner of ply interface
 
-K, 7, 0.0, a
-K, 8, a, 0.0
-K, 9, a, t
+K, 7, 0.0, a       ! crack tip
+K, 8, a, 0.0       ! S corner of refined area interface
+K, 9, a, t         ! N corner of refined area interface
 
-L, 1, 2
-L, 2, 3
-L, 3, 4
-L, 4, 1
+! Lines
 
-L, 5, 6
-L, 8, 9
+L, 1, 2            !1
+L, 2, 6            !2
+L, 6, 3            !3
+L, 3, 4            !4
+L, 4, 5            !5
+L, 5, 1            !6
+
+L, 5, 6            !7, ply interface
+L, 8, 9            !8, refined area interface
+
+! Areas
+
+al, 1, 2, 7, 6     ! lower ply
+al, 7, 3, 4, 5     ! upper ply
 
 ! Define Element Type
 

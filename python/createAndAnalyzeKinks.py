@@ -1641,6 +1641,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for key in fiberVertices.keys():
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberVertices[' + str(key) + '] = ' + str(fiberVertices[key]),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # draw construction lines to identify kink and kink's region
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction lines to identify kink''s position, direction and region ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kink'' position',True)
+    s1.ConstructionLine(point1=(0.0, -0.5*L), angle=deltatheta)
+    s1.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[7], addUndoState=False)
+    
+    
+    
     
     
     

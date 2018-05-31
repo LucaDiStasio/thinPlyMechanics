@@ -5569,13 +5569,13 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             radP = np.sqrt(defcoords.values[0].data[0]*defcoords.values[0].data[0]+defcoords.values[0].data[1]*defcoords.values[0].data[1])
             angP = np.arctan2(defcoords.values[0].data[1],defcoords.values[0].data[0])
             sigRR,sigTT,tauRT = rotateStress2D(stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[3],theta)
-            thirdcircleStressdata.append([value.data[0],value.data[1],radP0,angP0*180.0/np.pi,defcoords.values[0].data[0],defcoords.values[0].data[1],radP,angP*180.0/np.pi,stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3],sigRR,sigTT,tauRT])
+            thirdcircleStressdata.append([value.data[0],value.data[1],radP0,angP0*180.0/np.pi,(angP0*180.0/np.pi-parameters['geometry']['deltatheta'])/(180.0-parameters['geometry']['deltatheta']),defcoords.values[0].data[0],defcoords.values[0].data[1],radP,angP*180.0/np.pi,(angP*180.0/np.pi-parameters['geometry']['deltatheta'])/(180.0-parameters['geometry']['deltatheta']),stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3],sigRR,sigTT,tauRT])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
     thirdcircleStressdata = np.array(thirdcircleStressdata)
     thirdcircleStressdata = thirdcircleStressdata[np.argsort(thirdcircleStressdata[:,0])]
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],'x0 [um], y0 [um], R0 [um], theta0 [°], x [um], y [um], R [um], theta [°], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], sigma_rr [MPa], sigma_tt [MPa], tau_rt [MPa]')
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],'x0 [um], y0 [um], R0 [um], theta0 [°], (theta0-deltatheta)/(180-deltatheta) [-], x [um], y [um], R [um], theta [°], (theta-deltatheta)/(180-deltatheta) [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], sigma_rr [MPa], sigma_tt [MPa], tau_rt [MPa]')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],lowersideStressdata)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     

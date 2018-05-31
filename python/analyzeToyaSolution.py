@@ -60,4 +60,4 @@ km = 3-4*num
 alpha = (muf*(km+1)-mum*(kf+1))/(muf*(km+1)+mum*(kf+1))
 beta = (muf*(km-1)-mum*(kf-1))/(muf*(km+1)+mum*(kf+1))
 
-epsilon = 0.5*
+epsilon = 0.5*np.log((1-beta)/(1+beta))/np.pi

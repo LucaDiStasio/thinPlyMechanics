@@ -5525,6 +5525,29 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     
     #=======================================================================
+    # BEGIN - extract stresses along the bonded interface
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along the bonded interface ...',True)
+    
+    crackfaceNodes = []
+    crackfaceUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',fiberCrackfaceNodes)
+    for value in crackfaceUndefcoords.values:
+        if value.nodeLabel not in crackfaceNodes:
+            crackfaceNodes.append(value.nodeLabel)
+    crackfaceUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',matrixCrackfaceNodes)
+    for value in crackfaceUndefcoords.values:
+        if value.nodeLabel not in crackfaceNodes:
+            crackfaceNodes.append(value.nodeLabel)
+    del crackfaceUndefcoords
+    
+    del crackfaceNodes
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - extract stresses along the bonded interface
+    #=======================================================================
+    
+    #=======================================================================
     # BEGIN - compute G0
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute G0...',True)

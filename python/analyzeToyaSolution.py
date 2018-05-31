@@ -68,7 +68,7 @@ def coeffF(theta,eps,alpha):
     return (d(theta,eps,alpha)*(d(theta,eps,alpha)-2*c(theta,eps)*np.cos(theta))+c(theta,eps)*c(theta,eps))/(8*c(theta,eps))
 
 def G(theta,eps,alpha):
-    def np.sin(theta)*coeffF(theta,eps,alpha)
+    return np.sin(theta)*coeffF(theta,eps,alpha)
 
 plt.close("all")
 

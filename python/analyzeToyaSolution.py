@@ -83,14 +83,14 @@ epsilon = 0.5*np.log((1-beta)/(1+beta))/np.pi
 
 coeffs = [epsilon,alpha]
 
-angles = np.linspace(0.0, 100.0, num=300)
+angles = np.linspace(0.0, 180, num=300)
 
 # Gs = []
 # for angle in angles:
 #     Gs.append(G(angles,epsilon,alpha))
 
 plt.figure()
-plt.plot(angles, np.sin(angles), 'b-')
+plt.plot(angles, G(angles*np.pi/180.0,*coeffs), 'b-')
 plt.xlabel(r'$\Delta\theta [^{\circ}]$')
 plt.ylabel(r'$G [-]$')
 plt.title(r'Analytical solution from Toya')

@@ -104,7 +104,23 @@ plt.plot(angles, numCoeffF(angles*np.pi/180.0,*coeffs), 'c-')
 plt.xlabel(r'$\Delta\theta [^{\circ}]$')
 plt.ylabel(r'$G [-]$')
 plt.title(r'Analytical solution from Toya')
-plt.legend(('Full', r'$sin(\Delta\theta)$','Amplitude function',r'$\frac{1}{8c(\Delta\theta)}$','Numerator'), loc='best')
+plt.legend(('Full', r'$sin(\Delta\theta)$','Amplitude function',r'$\frac{1}{8c(\Delta\theta)}$','Numerator'),loc='best')
 plt.grid(True)
 plt.show()
 #plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+
+maxIndex = 0
+Gs = G(angles*np.pi/180.0,*coeffs)
+for v,value in enumerate(Gs):
+    if value > Gs[maxIndex]:
+        maxIndex = v
+
+plt.figure()
+plt.plot(angles, G(angles*np.pi/180.0,*coeffs), 'b-')
+plt.plot(angles, Gs[maxIndex]*np.sin(angles*np.pi/180.0), 'k-')
+plt.xlabel(r'$\Delta\theta [^{\circ}]$')
+plt.ylabel(r'$G [-]$')
+plt.title(r'Analytical solution from Toya')
+plt.legend(('Full', r'$Asin(\Delta\theta)$'),loc='best')
+plt.grid(True)
+plt.show()

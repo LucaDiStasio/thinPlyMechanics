@@ -5546,6 +5546,23 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     thirdcircleUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',thirdCircle)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, R0, theta0, x, y, R, theta, sigma_xx, sigma_zz, sigma_yy, tau_xz, sigma_rr, sigma_tt, tau_rt ...',True)
+    thirdcircleStressdata = []
+    for value in thirdcircleUndefcoords.values:
+        if value.nodeLabel not in crackfaceNodes:
+            node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
+            stress = getFieldOutput(odb,-1,-1,'S',node,3)
+            defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
+            radP0 = np.sqrt(value.data[0]*value.data[0]+value.data[1]*value.data[1])
+            angP0 = np.arctan2(value.data[1],value.data[0])
+            radP = np.sqrt(defcoords.values[0].data[0]*defcoords.values[0].data[0]+defcoords.values[0].data[1]*defcoords.values[0].data[1])
+            angP = np.arctan2(defcoords.values[0].data[1],defcoords.values[0].data[0])
+            sigRR = 
+            sigTT = 
+            tauRT = 
+            lowersideStressdata.append([value.data[0],value.data[1],radP0,angP0,defcoords.values[0].data[0],defcoords.values[0].data[1],radP,angP,stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3]])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
     del crackfaceNodes
     del thirdCircle
     

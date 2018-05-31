@@ -641,6 +641,17 @@ def writeLatexSetLength(folder,filename,length,value):
     with open(join(folder,filename + '.tex'),'a') as tex:
         tex.write('\\setlength' +'{' + '\\' + length + '}' +'{' + value + '}\n')
 
+#===============================================================================#
+#===============================================================================#
+#                        General purpose functions
+#===============================================================================#
+#===============================================================================#
+
+def rotateStress2D(sigXX,sigYY,tauXY,theta):
+    sig11 = sigXX*np.cos(theta)*np.cos(theta)+sigYY*np.sin(theta)*np.sin(theta)+2*tauXY*np.sin(theta)*np.cos(theta)
+    sig22 = sigXX*np.sin(theta)*np.sin(theta)+sigYY*np.cos(theta)*np.cos(theta)-2*tauXY*np.sin(theta)*np.cos(theta)
+    tau12 = (sigYY-sigXX)*np.sin(theta)*np.cos(theta)+tauXY*(np.cos(theta)*np.cos(theta)-np.sin(theta)*np.sin(theta))
+    return sig11,sig22,tau12
 
 #===============================================================================#
 #===============================================================================#
@@ -5557,12 +5568,19 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             angP0 = np.arctan2(value.data[1],value.data[0])
             radP = np.sqrt(defcoords.values[0].data[0]*defcoords.values[0].data[0]+defcoords.values[0].data[1]*defcoords.values[0].data[1])
             angP = np.arctan2(defcoords.values[0].data[1],defcoords.values[0].data[0])
-            sigRR = 
-            sigTT = 
-            tauRT = 
-            lowersideStressdata.append([value.data[0],value.data[1],radP0,angP0,defcoords.values[0].data[0],defcoords.values[0].data[1],radP,angP,stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3]])
+            sigRR,sigTT,tauRT = rotateStress2D(stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[3],theta)
+            thirdcircleStressdata.append([value.data[0],value.data[1],radP0,angP0*180.0/np.pi,defcoords.values[0].data[0],defcoords.values[0].data[1],radP,angP*180.0/np.pi,stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3],sigRR,sigTT,tauRT])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
+    thirdcircleStressdata = np.array(thirdcircleStressdata)
+    thirdcircleStressdata = thirdcircleStressdata[np.argsort(thirdcircleStressdata[:,0])]
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],'x0 [um], y0 [um], R0 [um], theta0 [°], x [um], y [um], R [um], theta [°], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], sigma_rr [MPa], sigma_tt [MPa], tau_rt [MPa]')
+    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],lowersideStressdata)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+    del lowersideStressdata
+    del lowersideUndefcoords
     del crackfaceNodes
     del thirdCircle
     

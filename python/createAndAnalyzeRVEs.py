@@ -5424,13 +5424,13 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses at the boundary ...',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stresses along the right side ...',True)
-    rightsideStress = getFieldOutput(odb,-1,-1,'S',rightSide,3)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    # writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stresses along the right side ...',True)
+    # rightsideStress = getFieldOutput(odb,-1,-1,'S',rightSide,3)
+    # writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract deformed coordinates along the right side ...',True)
-    rightsideDefcoords = getFieldOutput(odb,-1,-1,'COORD',rightSide)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    # writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract deformed coordinates along the right side ...',True)
+    # rightsideDefcoords = getFieldOutput(odb,-1,-1,'COORD',rightSide)
+    # writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along the right side ...',True)
     rightsideUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',rightSide)
@@ -5482,8 +5482,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0 [um], y0 [um], x [um], y [um], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], y0/L [-],  sigma_xx/max(sigma_xx) [-],  sigma_xx/min(sigma_xx) [-],  sigma_xx/avg(sigma_xx) [-],  sigma_xx/weightavg(sigma_xx) [-]')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],rightsideStressdata)
     del rightsideStressdata
-    del rightsideStress
-    del rightsideDefcoords
+    # del rightsideStress
+    # del rightsideDefcoords
     del rightsideUndefcoords
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
@@ -5495,7 +5495,31 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # BEGIN - extract stresses along symmetry line
     #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along symmetry line ...',True)
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along symmetry line ...',True)
+    lowersideUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',lowerSide)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, x0/Rf, x, y, x/Rf, sigma_xx, sigma_zz, sigma_yy, tau_xz ...',True)
+    lowersideStressdata = []
+    for value in lowersideUndefcoords.values:
+        node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
+        stress = getFieldOutput(odb,-1,-1,'S',node,3)
+        defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
+        lowersideStressdata.append([value.data[0],value.data[1],value.data[0]/parameters['geometry']['Rf'],defcoords.values[0].data[0],defcoords.values[0].data[1],defcoords.values[0].data[0]/parameters['geometry']['Rf'],stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3]])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
+    lowersideStressdata = np.array(lowersideStressdata)
+    lowersideStressdata = lowersideStressdata[np.argsort(lowersideStressdata[:,0])]
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatsymmetryline'],'x0 [um], y0 [um], x0/Rf [-], x [um], y [um], x/Rf [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa]')
+    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatsymmetryline'],lowersideStressdata)
+    del lowersideStressdata
+    del lowersideUndefcoords
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract stresses along symmetry line
     #=======================================================================

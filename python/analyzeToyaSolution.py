@@ -45,3 +45,19 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 # for Palatino and other serif fonts use:
 #rc('font',**{'family':'serif','serif':['Palatino']})
 rc('text', usetex=True)
+
+Ef = 
+nuf = 
+Em = 
+num = 
+
+muf = 0.5*Ef/(1+nuf)
+mum = 0.5*Em/(1+num)
+
+kf = 3-4*nuf
+km = 3-4*num
+
+alpha = (muf*(km+1)-mum*(kf+1))/(muf*(km+1)+mum*(kf+1))
+beta = (muf*(km-1)-mum*(kf-1))/(muf*(km+1)+mum*(kf+1))
+
+epsilon = 0.5*

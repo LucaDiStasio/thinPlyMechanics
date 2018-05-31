@@ -46,6 +46,9 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 #rc('font',**{'family':'serif','serif':['Palatino']})
 rc('text', usetex=True)
 
+def model(x,A,B,C,D):
+    return (A*np.sin(B*x+C)+D)
+    
 def dundursParams(Ef,nuf,Em,num):
     muf = 0.5*Ef/(1+nuf)
     mum = 0.5*Em/(1+num)
@@ -117,10 +120,30 @@ for v,value in enumerate(Gs):
 
 plt.figure()
 plt.plot(angles, G(angles*np.pi/180.0,*coeffs), 'b-')
-plt.plot(angles, Gs[maxIndex]*np.sin(angles*np.pi/180.0), 'k-')
+plt.plot(angles[:2*maxIndex], Gs[maxIndex]*np.sin((90/angles[maxIndex])*angles[:2*maxIndex]*np.pi/180.0), 'r-')
 plt.xlabel(r'$\Delta\theta [^{\circ}]$')
 plt.ylabel(r'$G [-]$')
 plt.title(r'Analytical solution from Toya')
-plt.legend(('Full', r'$Asin(\Delta\theta)$'),loc='best')
+plt.legend(('Full', r'$Asin(B\Delta\theta)$'),loc='best')
+plt.grid(True)
+plt.show()
+
+angles2 = np.linspace(0.0, 115, num=300)
+
+maxIndex = 0
+ys = numCoeffF(angles2*np.pi/180.0,*coeffs)
+for v,value in enumerate(ys):
+    if value > ys[maxIndex]:
+        maxIndex = v
+
+res, cov = optimize.curve_fit(model,angles2,ys,p0=[ys[maxIndex],1.0/angles2[maxIndex],0.0,0.0],method='dogbox')
+
+plt.figure()
+plt.plot(angles, numCoeffF(angles*np.pi/180.0,*coeffs), 'b-')
+plt.plot(angles2, model(angles2,*res), 'r-')
+plt.xlabel(r'$\Delta\theta [^{\circ}]$')
+plt.ylabel(r'$G [-]$')
+plt.title(r'Analytical solution from Toya')
+plt.legend(('Full', r'$Asin(B\Delta\theta)$'),loc='best')
 plt.grid(True)
 plt.show()

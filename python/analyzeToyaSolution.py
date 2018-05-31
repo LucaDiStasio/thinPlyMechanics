@@ -58,24 +58,24 @@ def dundursParams(Ef,nuf,Em,num):
     
     return dundA,dundB
 
-def c(theta,epsil):
+def c(theta,epsil,alpha):
     return 2*np.exp(-2*epsil*(theta-np.pi))
     
 def d(theta,epsil,alpha):
     return -(4-(1-alpha)*(1+4*epsil*epsil)*np.sin(theta)*np.sin(theta))/(3+alpha-(1-alpha)*(np.cos(theta)-2*epsil*np.sin(theta))*np.exp(2*epsil*(theta-np.pi)))
 
 def coeffF(theta,epsil,alpha):
-    return (d(theta,epsil,alpha)*(d(theta,epsil,alpha)-2*c(theta,epsil)*np.cos(theta))+c(theta,epsil)*c(theta,epsil))/(8*c(theta,epsil))
+    return (d(theta,epsil,alpha)*(d(theta,epsil,alpha)-2*c(theta,epsil,alpha)*np.cos(theta))+c(theta,epsil,alpha)*c(theta,epsil,alpha))
 
 def G(theta,epsil,alpha):
-    return np.sin(theta*coeffF(theta,epsil,alpha))
+    return np.sin(theta)*coeffF(theta,epsil,alpha)/(8*c(theta,epsil,alpha))
 
 plt.close("all")
 
-Ef = 70.0 # [GPa]
-nuf = 0.2 # [-]
-Em = 3.5 # [GPa]
-num = 0.4 # [-]
+Ef = 70.8 # [GPa]
+nuf = 0.22 # [-]
+Em = 2.79 # [GPa]
+num = 0.33 # [-]
 
 alpha,beta = dundursParams(Ef,nuf,Em,num)
 
@@ -90,7 +90,7 @@ angles = np.linspace(0.0, 100.0, num=300)
 #     Gs.append(G(angles,epsilon,alpha))
 
 plt.figure()
-plt.plot(angles, G(angles,*coeffs), 'b-')
+plt.plot(angles, np.sin(angles), 'b-')
 plt.xlabel(r'$\Delta\theta [^{\circ}]$')
 plt.ylabel(r'$G [-]$')
 plt.title(r'Analytical solution from Toya')

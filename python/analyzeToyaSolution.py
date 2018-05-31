@@ -58,17 +58,17 @@ def dundursParams(Ef,nuf,Em,num):
     
     return dundA,dundB
 
-def c(theta,eps):
-    return 2*np.exp(-2*eps(theta-np.pi))
+def c(theta,epsil):
+    return 2*np.exp(-2*epsil*(theta-np.pi))
     
-def d(theta,eps,alpha):
-    return -(4-(1-alpha)*(1+4*eps*eps)*np.sin(theta)*np.sin(theta))/(3+alpha-(1-alpha)*(np.cos(theta)-2*eps*np.sin(theta))*np.exp(2*eps*(theta-np.pi)))
+def d(theta,epsil,alpha):
+    return -(4-(1-alpha)*(1+4*epsil*epsil)*np.sin(theta)*np.sin(theta))/(3+alpha-(1-alpha)*(np.cos(theta)-2*epsil*np.sin(theta))*np.exp(2*epsil*(theta-np.pi)))
 
-def coeffF(theta,eps,alpha):
-    return (d(theta,eps,alpha)*(d(theta,eps,alpha)-2*c(theta,eps)*np.cos(theta))+c(theta,eps)*c(theta,eps))/(8*c(theta,eps))
+def coeffF(theta,epsil,alpha):
+    return (d(theta,epsil,alpha)*(d(theta,epsil,alpha)-2*c(theta,epsil)*np.cos(theta))+c(theta,epsil)*c(theta,epsil))/(8*c(theta,epsil))
 
-def G(theta,eps,alpha):
-    return np.sin(theta)*coeffF(theta,eps,alpha)
+def G(theta,epsil,alpha):
+    return np.sin(theta*coeffF(theta,epsil,alpha))
 
 plt.close("all")
 
@@ -81,10 +81,16 @@ alpha,beta = dundursParams(Ef,nuf,Em,num)
 
 epsilon = 0.5*np.log((1-beta)/(1+beta))/np.pi
 
-angles = np.linspace(0.0, 180.0, num=300)
+coeffs = [epsilon,alpha]
+
+angles = np.linspace(0.0, 100.0, num=300)
+
+# Gs = []
+# for angle in angles:
+#     Gs.append(G(angles,epsilon,alpha))
 
 plt.figure()
-plt.plot(angles, G(angles,epsilon,alpha), 'b-')
+plt.plot(angles, G(angles,*coeffs), 'b-')
 plt.xlabel(r'$\Delta\theta [^{\circ}]$')
 plt.ylabel(r'$G [-]$')
 plt.title(r'Analytical solution from Toya')

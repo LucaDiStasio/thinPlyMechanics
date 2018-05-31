@@ -6516,6 +6516,8 @@ def main(argv):
         RVEparams['output']['local']['directory'] = join(RVEparams['output']['global']['directory'],RVEparams['input']['modelname'])
         RVEparams['output']['local']['filenames']['Jintegral'] = RVEparams['input']['modelname'] + '-Jintegral'
         RVEparams['output']['local']['filenames']['stressesatboundary'] = RVEparams['input']['modelname'] + '-stressesatboundary'
+        RVEparams['output']['local']['filenames']['stressesatsymmetryline'] = RVEparams['input']['modelname'] + '-stressesatsymmetryline'
+        RVEparams['output']['local']['filenames']['stressesatbondedinterface'] = RVEparams['input']['modelname'] + '-stressesatbondedinterface'
         RVEparams['output']['local']['filenames']['crackdisplacements'] = RVEparams['input']['modelname'] + '-crackdisplacements'
         RVEparams['output']['local']['filenames']['contactzonetolerance'] = RVEparams['input']['modelname'] + '-contactzonetol'
 
@@ -6527,6 +6529,8 @@ def main(argv):
 
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['Jintegral']+'.csv'),'Jintegral-Params='+variationString,RVEparams['plot']['local']['Jintegral']['toPlot'],RVEparams['plot']['local']['Jintegral']['variables']]])
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatboundary']+'.csv'),'StressAtBoundary-Params='+variationString,RVEparams['plot']['local']['stressatboundary']['toPlot'],RVEparams['plot']['local']['stressatboundary']['variables']]])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatsymmetryline']+'.csv'),'StressAtSymmLine-Params='+variationString,RVEparams['plot']['local']['stressatsymmetryline']['toPlot'],RVEparams['plot']['local']['stressatsymmetryline']['variables']]])
+        appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['stressesatbondedinterface']+'.csv'),'StressAtBondInter-Params='+variationString,RVEparams['plot']['local']['stressatbondedinterface']['toPlot'],RVEparams['plot']['local']['stressatbondedinterface']['variables']]])
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['crackdisplacements']+'.csv'),'CrackDisps-Params='+variationString,RVEparams['plot']['local']['crackdisplacements']['toPlot'],RVEparams['plot']['local']['crackdisplacements']['variables']]])
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['local']['directory'],RVEparams['output']['local']['filenames']['contactzonetolerance']+'.csv'),'TolCZ-Params='+variationString,RVEparams['plot']['local']['contactzonetolerance']['toPlot'],RVEparams['plot']['local']['contactzonetolerance']['variables']]])
 

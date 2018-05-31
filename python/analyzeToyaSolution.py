@@ -66,9 +66,12 @@ def d(theta,epsil,alpha):
 
 def numCoeffF(theta,epsil,alpha):
     return (d(theta,epsil,alpha)*(d(theta,epsil,alpha)-2*c(theta,epsil,alpha)*np.cos(theta))+c(theta,epsil,alpha)*c(theta,epsil,alpha))
+
+def denCoeffF(theta,epsil,alpha):
+    return 1/(8*c(theta,epsil,alpha))
     
 def coeffF(theta,epsil,alpha):
-    return numCoeffF(theta,epsil,alpha)/(8*c(theta,epsil,alpha))
+    return numCoeffF(theta,epsil,alpha)*denCoeffF(theta,epsil,alpha)
 
 def G(theta,epsil,alpha):
     return np.sin(theta)*coeffF(theta,epsil,alpha)
@@ -95,11 +98,12 @@ angles = np.linspace(0.0, 180, num=300)
 plt.figure()
 plt.plot(angles, G(angles*np.pi/180.0,*coeffs), 'b-')
 plt.plot(angles, np.sin(angles*np.pi/180.0), 'k-')
-#plt.plot(angles, G(angles*np.pi/180.0,*coeffs), 'b-')
+plt.plot(angles, coeffF(angles*np.pi/180.0,*coeffs), 'r-')
+plt.plot(angles, denCoeffF(angles*np.pi/180.0,*coeffs), 'g-')
 plt.xlabel(r'$\Delta\theta [^{\circ}]$')
 plt.ylabel(r'$G [-]$')
 plt.title(r'Analytical solution from Toya')
-plt.legend(('Full', r'$sin(\Delta\theta)$'), loc='best')
+plt.legend(('Full', r'$sin(\Delta\theta)$','Amplitude function',r'$\frac{1}{8c(\Delta\theta)}$'), loc='best')
 plt.grid(True)
 plt.show()
 #plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')

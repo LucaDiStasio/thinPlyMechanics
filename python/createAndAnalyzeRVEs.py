@@ -5800,6 +5800,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
         
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Check if crack faces are pressure-loaded in this step ...',True)
+        isPressureLoadedCrack = False
         for load in parameters['loads'].values():
             if ('appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']) and 'Temp-Step' in load['stepName'] and 'CRACK' in load['set']:
                 isPressureLoadedCrack = True

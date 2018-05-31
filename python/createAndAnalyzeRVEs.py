@@ -5529,6 +5529,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along the bonded interface ...',True)
     
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract node labels of crack faces ...',True)
     crackfaceNodes = []
     crackfaceUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',fiberCrackfaceNodes)
     for value in crackfaceUndefcoords.values:
@@ -5539,8 +5540,14 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         if value.nodeLabel not in crackfaceNodes:
             crackfaceNodes.append(value.nodeLabel)
     del crackfaceUndefcoords
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along the bonded interface ...',True)
+    thirdcircleUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',thirdCircle)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     del crackfaceNodes
+    del thirdCircle
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

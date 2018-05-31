@@ -46,10 +46,10 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 #rc('font',**{'family':'serif','serif':['Palatino']})
 rc('text', usetex=True)
 
-Ef = 
-nuf = 
-Em = 
-num = 
+Ef = 70.0 # [GPa]
+nuf = 0.2 # [-]
+Em = 3.5 # [GPa]
+num = 0.4 # [-]
 
 muf = 0.5*Ef/(1+nuf)
 mum = 0.5*Em/(1+num)

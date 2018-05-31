@@ -5368,6 +5368,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting node sets ...',True)
 
+    lowerSide = getSingleNodeSet(odb,'RVE-ASSEMBLY','LOWERSIDE')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- LOWERSIDE',True)
+    
     rightSide = getSingleNodeSet(odb,'RVE-ASSEMBLY','RIGHTSIDE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- RIGHTSIDE',True)
 

@@ -46,18 +46,35 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 #rc('font',**{'family':'serif','serif':['Palatino']})
 rc('text', usetex=True)
 
+def dundursParams(Ef,nuf,Em,num):
+    muf = 0.5*Ef/(1+nuf)
+    mum = 0.5*Em/(1+num)
+    
+    kf = 3-4*nuf
+    km = 3-4*num
+    
+    dundA = (muf*(km+1)-mum*(kf+1))/(muf*(km+1)+mum*(kf+1))
+    dundB = (muf*(km-1)-mum*(kf-1))/(muf*(km+1)+mum*(kf+1))
+    
+    return dundA,dundB
+
+def c(theta,eps):
+    return 2*np.exp(-2*eps(theta-np.pi))
+    
+def d(theta,eps,alpha):
+    return -(4-(1-alpha)*(1+4*eps*eps)*np.sin(theta)*np.sin(theta))/(3+alpha-(1-alpha)*(np.cos(theta)-2*eps*np.sin(theta))*np.exp(2*eps*(theta-np.pi)))
+
+def coeffF(theta,eps,alpha):
+    return (d(theta,eps,alpha)*(d(theta,eps,alpha)-2*c(theta,eps)*np.cos(theta))+c(theta,eps)*c(theta,eps))/(8*c(theta,eps))
+
+def G(theta,eps,alpha):
+    def np.sin(theta)*coeffF(theta,eps,alpha)
+    
 Ef = 70.0 # [GPa]
 nuf = 0.2 # [-]
 Em = 3.5 # [GPa]
 num = 0.4 # [-]
 
-muf = 0.5*Ef/(1+nuf)
-mum = 0.5*Em/(1+num)
-
-kf = 3-4*nuf
-km = 3-4*num
-
-alpha = (muf*(km+1)-mum*(kf+1))/(muf*(km+1)+mum*(kf+1))
-beta = (muf*(km-1)-mum*(kf-1))/(muf*(km+1)+mum*(kf+1))
+alpha,beta = dundursParams(Ef,nuf,Em,num)
 
 epsilon = 0.5*np.log((1-beta)/(1+beta))/np.pi

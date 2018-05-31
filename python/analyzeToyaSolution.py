@@ -69,7 +69,9 @@ def coeffF(theta,eps,alpha):
 
 def G(theta,eps,alpha):
     def np.sin(theta)*coeffF(theta,eps,alpha)
-    
+
+plt.close("all")
+
 Ef = 70.0 # [GPa]
 nuf = 0.2 # [-]
 Em = 3.5 # [GPa]
@@ -78,3 +80,15 @@ num = 0.4 # [-]
 alpha,beta = dundursParams(Ef,nuf,Em,num)
 
 epsilon = 0.5*np.log((1-beta)/(1+beta))/np.pi
+
+angles = np.linspace(0.0, 180.0, num=300)
+
+plt.figure()
+plt.plot(angles, G(angles,epsilon,alpha), 'b-')
+plt.xlabel(r'$\Delta\theta [^{\circ}]$')
+plt.ylabel(r'$G [-]$')
+plt.title(r'Analytical solution from Toya')
+plt.legend(('Full', 'interpolant'), loc='best')
+plt.grid(True)
+plt.show()
+#plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')

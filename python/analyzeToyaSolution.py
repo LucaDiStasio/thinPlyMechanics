@@ -64,11 +64,14 @@ def c(theta,epsil,alpha):
 def d(theta,epsil,alpha):
     return -(4-(1-alpha)*(1+4*epsil*epsil)*np.sin(theta)*np.sin(theta))/(3+alpha-(1-alpha)*(np.cos(theta)-2*epsil*np.sin(theta))*np.exp(2*epsil*(theta-np.pi)))
 
-def coeffF(theta,epsil,alpha):
+def numCoeffF(theta,epsil,alpha):
     return (d(theta,epsil,alpha)*(d(theta,epsil,alpha)-2*c(theta,epsil,alpha)*np.cos(theta))+c(theta,epsil,alpha)*c(theta,epsil,alpha))
+    
+def coeffF(theta,epsil,alpha):
+    return numCoeffF(theta,epsil,alpha)/(8*c(theta,epsil,alpha))
 
 def G(theta,epsil,alpha):
-    return np.sin(theta)*coeffF(theta,epsil,alpha)/(8*c(theta,epsil,alpha))
+    return np.sin(theta)*coeffF(theta,epsil,alpha)
 
 plt.close("all")
 
@@ -91,10 +94,12 @@ angles = np.linspace(0.0, 180, num=300)
 
 plt.figure()
 plt.plot(angles, G(angles*np.pi/180.0,*coeffs), 'b-')
+plt.plot(angles, np.sin(angles*np.pi/180.0), 'k-')
+#plt.plot(angles, G(angles*np.pi/180.0,*coeffs), 'b-')
 plt.xlabel(r'$\Delta\theta [^{\circ}]$')
 plt.ylabel(r'$G [-]$')
 plt.title(r'Analytical solution from Toya')
-plt.legend(('Full', 'interpolant'), loc='best')
+plt.legend(('Full', r'$sin(\Delta\theta)$'), loc='best')
 plt.grid(True)
 plt.show()
 #plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')

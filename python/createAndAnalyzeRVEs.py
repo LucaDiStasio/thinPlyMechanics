@@ -3674,7 +3674,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     booleanSets = []
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-            setsOfFacesData.append([(nFiber+1)*L, 0.5*Rf, 0.0,'RIGHT-FIBER'+str(nFiber+1)])
+            setsOfFacesData.append([(nFiber+1)*2*L, 0.25*Rf, 0.0,'RIGHT-FIBER'+str(nFiber+1)])
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
             booleanSets.append(RVEpart.sets[setOfFacesData[-1]])
@@ -3684,7 +3684,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     booleanSets = []
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-            setsOfFacesData.append([-(nFiber+1)*L, 0.5*Rf, 0.0,'LEFT-FIBER'+str(nFiber+1)])
+            setsOfFacesData.append([-(nFiber+1)*2*L, 0.25*Rf, 0.0,'LEFT-FIBER'+str(nFiber+1)])
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
             booleanSets.append(RVEpart.sets[setOfFacesData[-1]])

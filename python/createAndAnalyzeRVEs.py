@@ -5568,9 +5568,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             angP0 = np.arctan2(value.data[1],value.data[0])
             radP = np.sqrt(defcoords.values[0].data[0]*defcoords.values[0].data[0]+defcoords.values[0].data[1]*defcoords.values[0].data[1])
             angP = np.arctan2(defcoords.values[0].data[1],defcoords.values[0].data[0])
-            sigRR,sigTT,tauRT = rotateStress2D(stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[3],theta)
+            sigRR,sigTT,tauRT = rotateStress2D(stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[3],angP0)
             thirdcircleStressdata.append([value.data[0],value.data[1],radP0,angP0*180.0/np.pi,(angP0*180.0/np.pi-parameters['geometry']['deltatheta'])/(180.0-parameters['geometry']['deltatheta']),defcoords.values[0].data[0],defcoords.values[0].data[1],radP,angP*180.0/np.pi,(angP*180.0/np.pi-parameters['geometry']['deltatheta'])/(180.0-parameters['geometry']['deltatheta']),stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3],sigRR,sigTT,tauRT])
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
     thirdcircleStressdata = np.array(thirdcircleStressdata)

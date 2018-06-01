@@ -3500,8 +3500,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             setsOfEdgesData.append([(nFiber+1)*L,0.001,0.0,(nFiber+1)*L,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)],
                                    [(nFiber+1)*L-1.01*Rf,0.0,(nFiber+1)*L-1.01*Rf,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)+'-LEFTMAT'],
                                    [(nFiber+1)*L+1.01*Rf,0.0,(nFiber+1)*L+1.01*Rf,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)+'-RIGHTMAT'])
-    if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
-        for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+    if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+        for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
             setsOfEdgesData.append([-(nFiber+1)*L,0.001,0.0,-(nFiber+1)*L,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)],
                                    [-(nFiber+1)*L-1.01*Rf,0.0,-(nFiber+1)*L-1.01*Rf,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)+'-LEFTMAT'],
                                    [-(nFiber+1)*L+1.01*Rf,0.0,-(nFiber+1)*L+1.01*Rf,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)+'-RIGHTMAT'])

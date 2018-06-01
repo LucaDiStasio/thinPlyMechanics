@@ -3508,7 +3508,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                                    
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-        lowerSideSets.append(RVEpart.sets[setsOfEdgesData[-1]])
+        lowerSideSets.append(RVEpart.sets[setOfEdgesData[-1]])
         
     RVEpart.SetByBoolean(name='LOWERSIDE', sets=lowerSideSets)
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE',True)

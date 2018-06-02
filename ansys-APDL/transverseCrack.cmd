@@ -56,7 +56,8 @@ L, 8, 9            !8, refined area interface
 
 ! Areas
 
-al, 1, 2, 7, 6     ! lower ply
+al, 1, 8, 9, 6     ! lower ply, refined area
+al, 8, 2, 7, 9     ! lower ply, coarse area
 al, 7, 3, 4, 5     ! upper ply
 
 ! Define Element Type

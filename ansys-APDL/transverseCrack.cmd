@@ -153,6 +153,13 @@ DL, 7, ,SYMM
 DL, 3, ,UX,appliedDisp
 DL, 4, ,UY,appliedDisp
 
+! Apply pressure, if present
+! SFL, Line, Lab, VALI, VALJ, VAL2I, VAL2J
+*IF, uniP, GT, 0.0, THEN
+   SFL, 8, PRES, uniP
+*ENDIF
+
+
 SOLVE                ! Solve the problem
 
 FINISH               ! Finish the solution processor

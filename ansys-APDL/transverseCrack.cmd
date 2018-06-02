@@ -46,21 +46,31 @@ K, 11, a, a         ! E corner in refined area interface
 
 ! Lines
 
-L, 1, 2            !1
-L, 2, 6            !2
-L, 6, 3            !3
-L, 3, 4            !4
-L, 4, 5            !5
-L, 5, 1            !6
+L, 1, 8            !1
+L, 8, 2            !2
+L, 2, 6            !3
+L, 6, 3            !4
+L, 3, 4            !5
+L, 4, 5            !6
+L, 5, 10           !7
+L, 10, 1           !8
 
-L, 5, 6            !7, ply interface
-L, 8, 9            !8, refined area interface
+L, 5, 9            !9, ply interface
+L, 9, 6            !10, ply interface
+L, 8, 11           !11, refined area interface
+L, 11, 9           !12, refined area interface
+L, 10, 11          !13, refined area mid-interface
 
 ! Areas
 
-al, 1, 8, 9, 6     ! lower ply, refined area
-al, 8, 2, 7, 9     ! lower ply, coarse area
-al, 7, 3, 4, 5     ! upper ply
+AL, 1, 11, 13, 8     ! lower ply, lower refined area
+AL, 13, 12, 9, 7     ! lower ply, upper refined area
+AL, 2, 3, 10, 11, 12 ! lower ply, coarse area
+AL, 9, 10, 4, 5, 6   ! upper ply
+
+! Seed the edges
+! LESIZE, NL1, SIZE, ANGSIZ, NDIV, SPACE, KFORC, LAYER1, LAYER2, KYNDIV
+LESIZE, 
 
 ! Define Element Type
 

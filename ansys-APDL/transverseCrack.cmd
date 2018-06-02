@@ -41,6 +41,8 @@ K, 6, L, t         ! E corner of ply interface
 K, 7, 0.0, a       ! crack tip
 K, 8, a, 0.0       ! S corner of refined area interface
 K, 9, a, t         ! N corner of refined area interface
+K, 10, 0.0, a       ! W corner in refined area interface
+K, 11, a, a         ! E corner in refined area interface
 
 ! Lines
 

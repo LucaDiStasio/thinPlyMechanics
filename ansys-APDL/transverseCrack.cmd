@@ -162,8 +162,15 @@ DL, 4, ,UY,appliedDisp
 ! Define the crack tip
 CM,CRACKTIP,NODE
 
-! J-integral
+! VCCT
 CINT,NEW,1
+CINT,TYPE,VCCT
+CINT,CTNCP,CRACKTIP
+CINT,SYMM,ON
+!OUTRES,CINT,10   ! output CINT results every 10 substeps
+
+! J-integral
+CINT,NEW,2
 CINT,CTNC,CRACKTIP
 CINT,SYMM,ON
 CINT,NCON,nContours

@@ -12,6 +12,7 @@ t = 1             ! [mm] 2t = thickness of the element
 tRatio = 1        ! [-]  ratio of bounding ply thickness to main ply
 atRatio = 0.1     ! [-]  ratio of crack length to main ply thickness
 rhon = 0.01       ! [-]  normalized crack density
+daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) to crack length
 
 EL = ! [MPa] UD longitudinal Young's modulus
 ET = ! [MPa] UD transverse Young's modulus
@@ -25,6 +26,8 @@ a = atRatio*t     ! [mm] 2a = crack length
 
 tBPly = tRatio*(2*t) ! [mm] thickness of the bounding ply
 tTotal = t + tBPly   ! [mm] thickness of the bounding ply
+
+elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 
 ! Create Geometry
 
@@ -125,7 +128,6 @@ MSHKEY, 1
 AMESH, 1, 2, 1
 MSHKEY, 0
 AMESH, 3, 4, 1
-
 
 FINISH              ! Finish pre-processing
 

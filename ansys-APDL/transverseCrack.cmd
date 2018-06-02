@@ -70,7 +70,13 @@ AL, 9, 10, 4, 5, 6   ! upper ply
 
 ! Seed the edges
 ! LESIZE, NL1, SIZE, ANGSIZ, NDIV, SPACE, KFORC, LAYER1, LAYER2, KYNDIV
-LESIZE, 
+LESIZE, 1, elSize
+LESIZE, 11, elSize
+LESIZE, 13, elSize
+LESIZE, 8, elSize
+LESIZE, 12, elSize
+LESIZE, 9, elSize
+LESIZE, 7, elSize
 
 ! Define Element Type
 

@@ -63,10 +63,10 @@ L, 10, 11          !13, refined area mid-interface
 
 ! Areas
 
-AL, 1, 11, 13, 8     ! lower ply, lower refined area
-AL, 13, 12, 9, 7     ! lower ply, upper refined area
-AL, 2, 3, 10, 11, 12 ! lower ply, coarse area
-AL, 9, 10, 4, 5, 6   ! upper ply
+AL, 1, 11, 13, 8     ! 1, lower ply, lower refined area
+AL, 13, 12, 9, 7     ! 2, lower ply, upper refined area
+AL, 2, 3, 10, 11, 12 ! 3, lower ply, coarse area
+AL, 9, 10, 4, 5, 6   ! 4, upper ply
 
 ! Seed the edges
 ! LESIZE, NL1, SIZE, ANGSIZ, NDIV, SPACE, KFORC, LAYER1, LAYER2, KYNDIV
@@ -82,6 +82,14 @@ LESIZE, 7, elSize
 
 ET,1,PLANE83,0,,2      ! Quadratic plane strain quadrilaterals 
 ET,1,PLANE83,1,,2      ! Quadratic plane strain triangles
+
+! Generate mesh
+! MSHKEY, KEY (0 == free, 1 == mapped)
+! AMESH, NA1, NA2, NINC
+MSHKEY, 1
+AMESH, 1, 2, 1
+MSHKEY, 0
+AMESH, 3, 4, 1
 
 ! Define Material Properties
 
@@ -103,12 +111,6 @@ MP,NUXZ,2,nuLT    ! mp,Poisson's ratio,material number,value
 MP,GXY,2,GLT      ! mp,Poisson's ratio,material number,value
 MP,GYZ,2,GTT      ! mp,Poisson's ratio,material number,value
 MP,GXZ,2,GLT      ! mp,Poisson's ratio,material number,value
-
-! Define the number of elements each line is to be divided into
-AESIZE,ALL,5    	  ! lesize,all areas,size of element
-
-! Area Meshing
-AMESH,ALL	  		! amesh, all areas
 
 FINISH              ! Finish pre-processing
 

@@ -159,6 +159,15 @@ DL, 4, ,UY,appliedDisp
    SFL, 8, PRES, uniP
 *ENDIF
 
+! Define the crack tip
+CM,CRACKTIP,NODE
+
+! J-integral
+CINT,NEW,1
+CINT,CTNC,CRACKTIP
+CINT,SYMM,ON
+CINT,NCON,nContours
+!OUTRES,CINT,10  ! output J-integral every 10 substeps
 
 SOLVE                ! Solve the problem
 

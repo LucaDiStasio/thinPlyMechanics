@@ -68,6 +68,39 @@ AL, 13, 12, 9, 7     ! 2, lower ply, upper refined area
 AL, 2, 3, 10, 11, 12 ! 3, lower ply, coarse area
 AL, 9, 10, 4, 5, 6   ! 4, upper ply
 
+! Define Material Properties
+
+MP,EX,1,ET        ! 1 is cross-ply, 2 is ud-ply 
+MP,EY,1,ET        ! 1 is cross-ply, 2 is ud-ply
+MP,EZ,1,EL        ! 1 is cross-ply, 2 is ud-ply
+MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
+MP,NUYZ,1,nuLT    ! mp,Poisson's ratio,material number,value
+MP,NUXZ,1,nuLT    ! mp,Poisson's ratio,material number,value
+MP,GXY,1,GTT      ! mp,Poisson's ratio,material number,value
+MP,GYZ,1,GLT      ! mp,Poisson's ratio,material number,value
+MP,GXZ,1,GLT      ! mp,Poisson's ratio,material number,value
+MP,EX,2,EL        ! 1 is cross-ply, 2 is ud-ply 
+MP,EY,2,ET        ! 1 is cross-ply, 2 is ud-ply
+MP,EZ,2,ET        ! 1 is cross-ply, 2 is ud-ply
+MP,NUXY,2,nuLT    ! mp,Poisson's ratio,material number,value
+MP,NUYZ,2,nuTT    ! mp,Poisson's ratio,material number,value
+MP,NUXZ,2,nuLT    ! mp,Poisson's ratio,material number,value
+MP,GXY,2,GLT      ! mp,Poisson's ratio,material number,value
+MP,GYZ,2,GTT      ! mp,Poisson's ratio,material number,value
+MP,GXZ,2,GLT      ! mp,Poisson's ratio,material number,value
+
+! Assign properties to areas
+! ASEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP
+! AATT, MAT, REAL, TYPE, ESYS, SECN
+ASEL, S, 1
+AATT, 1
+ASEL, S, 2
+AATT, 1
+ASEL, S, 3
+AATT, 1
+ASEL, S, 4
+AATT, 2
+
 ! Seed the edges
 ! LESIZE, NL1, SIZE, ANGSIZ, NDIV, SPACE, KFORC, LAYER1, LAYER2, KYNDIV
 LESIZE, 1, elSize
@@ -91,26 +124,6 @@ AMESH, 1, 2, 1
 MSHKEY, 0
 AMESH, 3, 4, 1
 
-! Define Material Properties
-
-MP,EX,1,ET        ! 1 is cross-ply, 2 is ud-ply 
-MP,EY,1,ET        ! 1 is cross-ply, 2 is ud-ply
-MP,EZ,1,EL        ! 1 is cross-ply, 2 is ud-ply
-MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
-MP,NUYZ,1,nuLT    ! mp,Poisson's ratio,material number,value
-MP,NUXZ,1,nuLT    ! mp,Poisson's ratio,material number,value
-MP,GXY,1,GTT      ! mp,Poisson's ratio,material number,value
-MP,GYZ,1,GLT      ! mp,Poisson's ratio,material number,value
-MP,GXZ,1,GLT      ! mp,Poisson's ratio,material number,value
-MP,EX,2,EL        ! 1 is cross-ply, 2 is ud-ply 
-MP,EY,2,ET        ! 1 is cross-ply, 2 is ud-ply
-MP,EZ,2,ET        ! 1 is cross-ply, 2 is ud-ply
-MP,NUXY,2,nuLT    ! mp,Poisson's ratio,material number,value
-MP,NUYZ,2,nuTT    ! mp,Poisson's ratio,material number,value
-MP,NUXZ,2,nuLT    ! mp,Poisson's ratio,material number,value
-MP,GXY,2,GLT      ! mp,Poisson's ratio,material number,value
-MP,GYZ,2,GTT      ! mp,Poisson's ratio,material number,value
-MP,GXZ,2,GLT      ! mp,Poisson's ratio,material number,value
 
 FINISH              ! Finish pre-processing
 

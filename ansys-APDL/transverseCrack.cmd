@@ -6,6 +6,8 @@
 
 ! Parameters
 
+! ===> START INPUT DATA
+
 Vf = ! [-] Fiber volume fraction
 
 t = 1             ! [mm] 2t = thickness of the element
@@ -13,6 +15,7 @@ tRatio = 1        ! [-]  ratio of bounding ply thickness to main ply
 atRatio = 0.1     ! [-]  ratio of crack length to main ply thickness
 rhon = 0.01       ! [-]  normalized crack density
 daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) to crack length
+epsx = 0.01       ! [-]  applied strain
 
 EL = ! [MPa] UD longitudinal Young's modulus
 ET = ! [MPa] UD transverse Young's modulus
@@ -21,6 +24,8 @@ nuTT = ! [-] UD transverse Poisson ratio
 GL = ! [MPa] UD in-plane shear modulus
 GT = ! [MPa] UD transverse shear modulus
 
+! ===> END INPUT DATA
+
 L = t/rhon        ! [mm] length of the RVE
 a = atRatio*t     ! [mm] 2a = crack length
 
@@ -28,6 +33,8 @@ tBPly = tRatio*(2*t) ! [mm] thickness of the bounding ply
 tTotal = t + tBPly   ! [mm] thickness of the bounding ply
 
 elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
+
+appliedDisp = epsx*L ! [mm] applied displacement
 
 ! Create Geometry
 
@@ -133,4 +140,20 @@ FINISH              ! Finish pre-processing
 
 /SOLU               ! Enter the solution processor
 
-ANTYPE,0			! Analysis type,static
+ANTYPE,0            ! Analysis type,static
+
+
+! Define Displacement Constraints on Lines   (dl command)
+! DL, LINE, AREA, Lab, Value1, Value2
+DL, 1, ,SYMM
+DL, 2, ,SYMM
+DL, 6, ,SYMM
+DL, 7, ,SYMM
+DL, 3, ,UX,appliedDisp
+DL, 4, ,UY,appliedDisp
+
+SOLVE                ! Solve the problem
+
+FINISH               ! Finish the solution processor
+
+SAVE                 ! Save your work to the database

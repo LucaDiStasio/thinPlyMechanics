@@ -3014,6 +3014,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         CornerBx = L
     theta = parameters['geometry']['theta'] # in degrees !!!
     deltatheta = parameters['geometry']['deltatheta'] # in degrees !!!
+    if theta-deltatheta<=0.0:
+        skipLineToLogFile(logfilepath,'a',True)
+        writeErrorToLogFile(logfilepath,'a','GEOMETRY','The provided debond geometry is not correct: the debond ends at or under the symmetry line at 0 degree'),True)
+        sys.exit(2)
+    elif theta+deltatheta>=180.0:
+        skipLineToLogFile(logfilepath,'a',True)
+        writeErrorToLogFile(logfilepath,'a','GEOMETRY','The provided debond geometry is not correct: the debond ends at or under the symmetry line at 180 degree'),True)
+        sys.exit(2)
     deltapsi = parameters['mesh']['size']['deltapsi'] # in degrees !!!
     deltaphi = parameters['mesh']['size']['deltaphi'] # in degrees !!!
     delta = parameters['mesh']['size']['delta'] # in degrees !!!

@@ -3264,6 +3264,37 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # if theta != 0, construct second crack tip
     if np.abs(theta)>0.0:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Construct second crack tip ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calculate angles for construction lines ...',True)
+        alpha = theta - deltatheta + deltapsi
+        beta = theta - deltatheta - deltapsi
+        gamma = theta - deltatheta - deltapsi - deltaphi
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        # draw construction lines
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction lines ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(theta+deltatheta) + ' deg',True)
+        fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=(theta+deltatheta)) # fiberGeometry[11]
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[11],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(alpha) + ' deg',True)
+        fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=alpha) # fiberGeometry[12]
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[12],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(beta) + ' deg',True)
+        fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=beta) # fiberGeometry[13]
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[13],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(gamma) + ' deg',True)
+        fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=gamma) # fiberGeometry[14]
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[14],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        # draw angular sections to identify the crack and for mesh generation
         
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # if bounding ply is present, draw interface line

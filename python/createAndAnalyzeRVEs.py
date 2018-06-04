@@ -3274,7 +3274,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         # draw construction lines
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction lines ...',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(theta+deltatheta) + ' deg',True)
-        fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=(theta+deltatheta)) # fiberGeometry[19]
+        fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=(theta-deltatheta)) # fiberGeometry[19]
         fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[19],addUndoState=False)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         #raw_input()
@@ -3295,7 +3295,63 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         #raw_input()
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
         # draw angular sections to identify the crack and for mesh generation
-        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'draw angular sections to identify the crack and for mesh generation ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute internal and external radii ...',True)
+        Rint = 0.75*Rf
+        if L>2*Rf:
+            Rext = 1.25*Rf
+        else:
+            Rext = Rf+0.25*(L-Rf)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create first circular section ...',True)
+        Ax = Rint*np.cos(alpha*np.pi/180.0)
+        Ay = -0.5*L+Rint*np.sin(alpha*np.pi/180.0)
+        Bx = Rext*np.cos(alpha*np.pi/180.0)
+        By = -0.5*L+Rext*np.sin(alpha*np.pi/180.0)
+        fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[15]
+        fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[15],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[15], entity2=fiberGeometry[7],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[16], entity2=fiberGeometry[9],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create second circular section ...',True)
+        Ax = Rint*np.cos((theta+deltatheta)*np.pi/180.0)
+        Ay = -0.5*L+Rint*np.sin((theta+deltatheta)*np.pi/180.0)
+        Bx = Rext*np.cos((theta+deltatheta)*np.pi/180.0)
+        By = -0.5*L+Rext*np.sin((theta+deltatheta)*np.pi/180.0)
+        fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[16]
+        fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[16],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[17], entity2=fiberGeometry[7],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[18], entity2=fiberGeometry[9],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create third circular section ...',True)
+        Ax = Rint*np.cos(beta*np.pi/180.0)
+        Ay = -0.5*L+Rint*np.sin(beta*np.pi/180.0)
+        Bx = Rext*np.cos(beta*np.pi/180.0)
+        By = -0.5*L+Rext*np.sin(beta*np.pi/180.0)
+        fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[17]
+        fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[17],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[19], entity2=fiberGeometry[7],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[20], entity2=fiberGeometry[9],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create fourth circular section ...',True)
+        Ax = Rint*np.cos(gamma*np.pi/180.0)
+        Ay = -0.5*L+Rint*np.sin(gamma*np.pi/180.0)
+        Bx = Rext*np.cos(gamma*np.pi/180.0)
+        By = -0.5*L+Rext*np.sin(gamma*np.pi/180.0)
+        fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[18]
+        fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[18],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[21], entity2=fiberGeometry[7],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[22], entity2=fiberGeometry[9],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # if bounding ply is present, draw interface line
     if 'boundingPly' in parameters['BC']['northSide']['type']:

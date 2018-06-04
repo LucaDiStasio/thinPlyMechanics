@@ -2971,8 +2971,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     L = parameters['geometry']['L']
     Rf = parameters['geometry']['Rf']
     CornerAy = 0.0
-    if 'boundingPly' in parameters['BC']['northSide']['type']:
-        tRatio = parameters['BC']['northSide']['tRatio']
+    if 'boundingPly' in parameters['BC']['northSide']['type'] or 'adjacentFibers' in parameters['BC']['northSide']['type']:
+        if 'adjacentFibers' in parameters['BC']['northSide']['type']:
+            tRatio = parameters['BC']['northSide']['nFibers']
+        else:
+            tRatio = parameters['BC']['northSide']['tRatio']
         Lply = tRatio*(2*L)
         CornerBy = L + Lply
     else:
@@ -3066,7 +3069,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     model = mdb.models[modelname]
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 #===============================================================================#
-#                             Parts creation
+#                             Parts creation fiberSketch.CircleByCenterPerimeter(center=(fiber['center'][0], fiber['center'][1]), point1=(fiber['center'][0]+fiber['Rf']*np.cos(45.0*np.pi/180.0), fiber['center'][1]+fiber['Rf']*np.sin(45.0*np.pi/180.0)))
 #===============================================================================#
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating part ...',True)

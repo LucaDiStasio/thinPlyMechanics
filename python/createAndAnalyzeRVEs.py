@@ -4167,6 +4167,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         regionSets.append(['RIGHT-HOMOGENIZED-CROSSPLY',QUAD_DOMINATED,FREE])
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
         regionSets.append(['LEFT-HOMOGENIZED-CROSSPLY',QUAD_DOMINATED,FREE])
+    if 'adjacentFibers' in parameters['BC']['northSide']['type']:
+        regionSets.append(['UPPER-FIBERS',QUAD_DOMINATED,FREE])
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         regionSets.append(['RIGHT-FIBERS',QUAD_DOMINATED,FREE])
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:

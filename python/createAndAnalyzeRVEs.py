@@ -3371,6 +3371,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers above ...',True)
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
             fiberSketch.CircleByCenterPerimeter(center=(0.0, -0.5*L+(nFiber+1)*2*L), point1=(Rf, -0.5*L+(nFiber+1)*2*L))
+        if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+            for mFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+                for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
+                    fiberSketch.CircleByCenterPerimeter(center=((mFiber+1)*2*L, -0.5*L+(nFiber+1)*2*L), point1=((mFiber+1)*2*L+Rf, -0.5*L+(nFiber+1)*2*L))
+        if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+            for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
+                for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
+                    fiberSketch.CircleByCenterPerimeter(center=(-(mFiber+1)*2*L, -0.5*L+(nFiber+1)*2*L), point1=(-(mFiber+1)*2*L+Rf, -0.5*L+(nFiber+1)*2*L))
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
         for key in fiberGeometry.keys():
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(key) + '] = ' + str(fiberGeometry[key]),True)

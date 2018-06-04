@@ -3760,6 +3760,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
         RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['LEFT-HOMOGENIZED-CROSSPLY'],RVEpart.sets['BOUNDING-PLY']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
+    elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'boundingPly' in parameters['BC']['rightSide']['type']:
+        RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
+        RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['RIGHT-HOMOGENIZED-CROSSPLY'],RVEpart.sets['UPPER-FIBERS']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
+    elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
+        RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
+        RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['LEFT-HOMOGENIZED-CROSSPLY'],RVEpart.sets['UPPER-FIBERS']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
     elif 'boundingPly' in parameters['BC']['leftSide']['type'] and 'boundingPly' in parameters['BC']['rightSide']['type']:
         RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
@@ -3775,6 +3785,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
         RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['LEFT-FIBERS'],RVEpart.sets['BOUNDING-PLY']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
+    elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+        RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
+        RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['RIGHT-FIBERS'],RVEpart.sets['UPPER-FIBERS']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
+    elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+        RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
+        RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['LEFT-FIBERS'],RVEpart.sets['UPPER-FIBERS']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
     elif 'adjacentFibers' in parameters['BC']['leftSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
@@ -3784,6 +3804,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
         RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['BOUNDING-PLY']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
+    elif 'adjacentFibers' in parameters['BC']['northSide']['type']:
+        RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MAIN-PLY',True)
+        RVEpart.SetByBoolean(name='RVE', sets=[RVEpart.sets['MAIN-PLY'],RVEpart.sets['UPPER-FIBERS']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
     elif 'boundingPly' in parameters['BC']['rightSide']['type']:
         RVEpart.SetByBoolean(name='MAIN-PLY', sets=[RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']])

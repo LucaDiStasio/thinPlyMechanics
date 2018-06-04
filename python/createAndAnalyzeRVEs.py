@@ -3012,7 +3012,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         CornerAx = -L
         CornerBx = L
-    theta = 0.0
+    theta = parameters['geometry']['theta'] # in degrees !!!
     deltatheta = parameters['geometry']['deltatheta'] # in degrees !!!
     deltapsi = parameters['mesh']['size']['deltapsi'] # in degrees !!!
     deltaphi = parameters['mesh']['size']['deltaphi'] # in degrees !!!

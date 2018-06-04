@@ -3577,6 +3577,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                         [0.74*Rf*np.cos((beta-0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta-0.5*deltaphi)*np.pi/180),0.0,0.76*Rf*np.cos((beta-0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta-0.5*deltaphi)*np.pi/180),0.0,'SECONDCIRCLE-SECONDBOUNDED-CT2']]
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-CRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK-CT2'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED-CT2'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED-CT2'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
     else:
         RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-LOWERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE',True)

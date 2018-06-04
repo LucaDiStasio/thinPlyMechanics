@@ -4199,8 +4199,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['THIRDCIRCLE-LOWERCRACK',nTangential3],
                     ['FOURTHCIRCLE-LOWERCRACK',nTangential3],
                     ['FIFTHCIRCLE',90]]
+    
+    if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+        for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+            regionSets.append(['LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),10])
 
-    if 'boundingPly' in parameters['BC']['northSide']['type']:
+    if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+        for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
+            regionSets.append(['LOWERSIDE-LEFT-FIBER'+str(nFiber+1),10])
+    
+    if 'boundingPly' in parameters['BC']['northSide']['type'] or 'adjacentFibers' in parameters['BC']['northSide']['type']:
         regionSets.append(['LOWER-RIGHTSIDE',int(np.floor(30))])
         regionSets.append(['LOWER-LEFTSIDE',int(np.floor(30))])
         regionSets.append(['UPPER-RIGHTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])

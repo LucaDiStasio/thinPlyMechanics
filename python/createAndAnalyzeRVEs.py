@@ -4087,15 +4087,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                     ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        regionSets.append(['BOUNDING-PLY',TRI,FREE])
+        regionSets.append(['BOUNDING-PLY',QUAD_DOMINATED,FREE])
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
-        regionSets.append(['RIGHT-HOMOGENIZED-CROSSPLY',TRI,FREE])
+        regionSets.append(['RIGHT-HOMOGENIZED-CROSSPLY',QUAD_DOMINATED,FREE])
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
-        regionSets.append(['LEFT-HOMOGENIZED-CROSSPLY',TRI,FREE])
+        regionSets.append(['LEFT-HOMOGENIZED-CROSSPLY',QUAD_DOMINATED,FREE])
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
-        regionSets.append(['RIGHT-FIBERS',TRI,FREE])
+        regionSets.append(['RIGHT-FIBERS',QUAD_DOMINATED,FREE])
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
-        regionSets.append(['LEFT-FIBERS',TRI,FREE])
+        regionSets.append(['LEFT-FIBERS',QUAD_DOMINATED,FREE])
 
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)

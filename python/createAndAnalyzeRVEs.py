@@ -3530,7 +3530,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                        [0.74*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-UPPERCRACK'],
                        [0.74*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-FIRSTBOUNDED'],
                        [0.74*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,0.76*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'SECONDCIRCLE-SECONDBOUNDED'],
-                       [0.74*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.74*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,0.76*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.76*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'SECONDCIRCLE-RESTBOUNDED']]
+                       [0.74*Rf*np.cos(1.025*gamma*np.pi/180),0.74*Rf*np.sin(1.025*gamma*np.pi/180),0.0,0.76*Rf*np.cos(1.025*gamma)*np.pi/180),0.76*Rf*np.sin(1.025*gamma*np.pi/180),0.0,'SECONDCIRCLE-RESTBOUNDED']]
     if ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']) and not 'boundingPly' in parameters['BC']['northSide']['type']:
         setsOfEdgesData.append([0.0,0.99*CornerBy,0.0,0.0,1.01*CornerBy,0.0,'CENTER-RUC-UPPERSIDE'])
         if 'boundingPly' in parameters['BC']['rightSide']['type']:
@@ -3619,10 +3619,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         beta = theta - deltatheta - deltapsi
         gamma = theta - deltatheta - deltapsi - deltaphi
         setsOfEdgesData = [[0.74*Rf*np.cos(0.975*alpha*np.pi/180),0.74*Rf*np.sin(0.975*alpha*np.pi/180),0.0,0.76*Rf*np.cos(0.975*alpha*np.pi/180),0.76*Rf*np.sin(0.975*alpha*np.pi/180),0.0,'SECONDCIRCLE-CRACK'],
-                        [0.74*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-UPPERCRACK'],
-                        [0.74*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-FIRSTBOUNDED'],
-                        [0.74*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,0.76*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'SECONDCIRCLE-SECONDBOUNDED'],
-                        [0.74*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.74*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,0.76*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.76*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'SECONDCIRCLE-RESTBOUNDED']]
+                        [0.74*Rf*np.cos((alpha-0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((alpha-0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((alpha-0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((alpha-0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-UPPERCRACK-CT2'],
+                        [0.74*Rf*np.cos((theta-deltatheta-0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((theta-deltatheta-0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((theta-deltatheta-0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((theta-deltatheta-0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-FIRSTBOUNDED-CT2'],
+                        [0.74*Rf*np.cos((beta-0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta-0.5*deltaphi)*np.pi/180),0.0,0.76*Rf*np.cos((beta-0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta-0.5*deltaphi)*np.pi/180),0.0,'SECONDCIRCLE-SECONDBOUNDED-CT2']]
     
     # sets of faces
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of faces',True)

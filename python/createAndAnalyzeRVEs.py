@@ -3069,7 +3069,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     model = mdb.models[modelname]
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 #===============================================================================#
-#                             Parts creation fiberSketch.CircleByCenterPerimeter(center=(fiber['center'][0], fiber['center'][1]), point1=(fiber['center'][0]+fiber['Rf']*np.cos(45.0*np.pi/180.0), fiber['center'][1]+fiber['Rf']*np.sin(45.0*np.pi/180.0)))
+#                             Parts creation 
 #===============================================================================#
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating part ...',True)
@@ -3369,7 +3369,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers above ...',True)
-        
+        for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, -0.5*L+(nFiber+1)*2*L), point1=(Rf, -0.5*L+(nFiber+1)*2*L))
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'The sketch has ' + str(len(fiberGeometry)) + ' geometric elements',True)
         for key in fiberGeometry.keys():
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'fiberGeometry[' + str(key) + '] = ' + str(fiberGeometry[key]),True)

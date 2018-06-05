@@ -6735,6 +6735,15 @@ def main(argv):
             except Exception, error:
                 writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
                 sys.exc_clear()
+        elif RVEparams['simulation-pipeline']['remove-ODB']:
+            skipLineToLogFile(logfilefullpath,'a',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Remove .odb file from working directory... ',True)
+            try:
+                os.remove(join(RVEparams['input']['wd'],inputfilename.split('.')[0]+'.odb'))
+                writeLineToLogFile(logfilefullpath,'a',logindent + '... done.',True)
+            except Exception, error:
+                writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+                sys.exc_clear()
 
         if  RVEparams['simulation-pipeline']['remove-DAT']:
             skipLineToLogFile(logfilefullpath,'a',True)

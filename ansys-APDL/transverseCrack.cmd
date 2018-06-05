@@ -80,14 +80,30 @@ AL, 2, 3, 10, 11, 12 ! 3, lower ply, coarse area
 AL, 9, 10, 4, 5, 6   ! 4, upper ply
 
 ! Define entities
+
 ! KSEL, Type, Item, Comp, VMIN, VMAX, VINC, KABS
-! KSEL, Type, Item, Comp, VMIN, VMAX, VINC, KABS
+! LSEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP
 ! CM, Cname, Entity
-CM,CRACKTIP,NODE
-CM,
-CM,
-CM,
-CM,
+
+KSEL, S, KP, , 7
+CM,CRACKTIP,KP
+
+LSEL, S, LINE, , 8
+CM,CRACK,LINE
+
+LSEL, S, LINE, , 7
+CM,SYMMBCCROSS,LINE
+
+LSEL, S, LINE, , 6
+CM,SYMMBCUD,LINE
+
+LSEL, S, LINE, , 3
+CM,LOADBCCROSS,LINE
+
+LSEL, S, LINE, , 4
+CM,LOADBCUD,LINE
+
+ALLSEL
 
 ! Define Material Properties
 

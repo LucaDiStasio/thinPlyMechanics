@@ -141,13 +141,13 @@ MP,NUXY,2,nuLT    ! mp,Poisson's ratio,material number,value
 ! Assign properties to areas
 ! ASEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP
 ! AATT, MAT, REAL, TYPE, ESYS, SECN
-ASEL, S, AREA, 1
+ASEL, S, AREA, , 1
 AATT, 1
-ASEL, S, AREA, 2
+ASEL, S, AREA, , 2
 AATT, 1
-ASEL, S, AREA, 3
+ASEL, S, AREA, , 3
 AATT, 1
-ASEL, S, AREA, 4
+ASEL, S, AREA, , 4
 AATT, 2
 
 ALLSEL

@@ -189,7 +189,7 @@ DL, 2, ,SYMM
 DL, 6, ,SYMM
 DL, 7, ,SYMM
 DL, 3, ,UX,appliedDisp
-DL, 4, ,UY,appliedDisp
+DL, 4, ,UX,appliedDisp
 
 ! Apply pressure, if present
 ! SFL, Line, Lab, VALI, VALJ, VAL2I, VAL2J

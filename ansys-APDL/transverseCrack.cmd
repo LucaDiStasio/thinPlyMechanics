@@ -227,3 +227,12 @@ FINISH               ! Finish the solution processor
 SAVE                 ! Save your work to the database
 
 /POST1               ! Post processing
+
+ALLSEL
+
+LSEL,S,,,8                                ! Crack
+NSLL,S,1                                  !Select nodes associated to this line
+*GET,NNodesCrack,NODE,0,COUNT             !Get the number of nodes in the selected set
+*DIM, CrackDisps , ARRAY, NNodesCrack, 2     
+*VGET, CrackDisps(1,1), NODE, 1, U, X
+*VGET, CrackDisps(1,2), NODE, 1, U, Y

@@ -5468,7 +5468,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     if '.odb' not in odbname:
         odbname += '.odb'
     odbfullpath = join(wd,odbname)
-    odb = openOdb(path=odbfullpath)
+    odb = openOdb(path=odbfullpath, readOnly=True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - open ODB

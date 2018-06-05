@@ -79,6 +79,16 @@ AL, 13, 12, 9, 7     ! 2, lower ply, upper refined area
 AL, 2, 3, 10, 11, 12 ! 3, lower ply, coarse area
 AL, 9, 10, 4, 5, 6   ! 4, upper ply
 
+! Define entities
+! KSEL, Type, Item, Comp, VMIN, VMAX, VINC, KABS
+! KSEL, Type, Item, Comp, VMIN, VMAX, VINC, KABS
+! CM, Cname, Entity
+CM,CRACKTIP,NODE
+CM,
+CM,
+CM,
+CM,
+
 ! Define Material Properties
 
 MP,EX,1,ET        ! 1 is cross-ply, 2 is ud-ply 
@@ -158,9 +168,6 @@ DL, 4, ,UY,appliedDisp
 *IF, uniP, GT, 0.0, THEN
    SFL, 8, PRES, uniP
 *ENDIF
-
-! Define the crack tip
-CM,CRACKTIP,NODE
 
 ! VCCT
 CINT,NEW,1

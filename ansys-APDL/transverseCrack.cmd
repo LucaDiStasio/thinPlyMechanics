@@ -15,7 +15,7 @@ ReactFileUp = 'C:/Ansys_WD/Debug/reactionUpper'
 Vf = ! [-] Fiber volume fraction
 
 t = 1             ! [mm] 2t = thickness of the element
-tRatio = 1        ! [-]  ratio of bounding ply thickness to main ply
+tRatio = 49.5     ! [-]  ratio of bounding ply thickness to main ply
 atRatio = 0.1     ! [-]  ratio of crack length to main ply thickness
 rhon = 0.01       ! [-]  normalized crack density
 daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) to crack length

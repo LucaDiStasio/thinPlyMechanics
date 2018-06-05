@@ -3590,7 +3590,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
     
-    if np.abs(theta)>0.0
+    if np.abs(theta)>0.0:
         setsOfEdgesData = [[0.99*Rf*np.cos(0.975*alpha*np.pi/180),0.99*Rf*np.sin(0.975*alpha*np.pi/180),0.0,1.01*Rf*np.cos(0.975*alpha*np.pi/180),1.01*Rf*np.sin(0.975*alpha*np.pi/180),0.0,'THIRDCIRCLE-CRACK'],
                         [0.99*Rf*np.cos((alpha-0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha-0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alpha-0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha-0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-UPPERCRACK-CT2'],
                         [0.99*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-FIRSTBOUNDED'],

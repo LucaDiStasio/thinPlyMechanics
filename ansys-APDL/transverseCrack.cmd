@@ -164,8 +164,8 @@ LESIZE, 7, elSize
 
 ! Define Element Type
 
-ET,1,PLANE83,0,,2      ! Quadratic plane strain quadrilaterals 
-ET,1,PLANE83,1,,2      ! Quadratic plane strain triangles
+ET,1,PLANE183,0,,2      ! Quadratic plane strain quadrilaterals 
+ET,2,PLANE183,1,,2      ! Quadratic plane strain triangles
 
 ! Generate mesh
 ! MSHKEY, KEY (0 == free, 1 == mapped)

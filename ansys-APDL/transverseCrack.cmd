@@ -204,3 +204,5 @@ SOLVE                ! Solve the problem
 FINISH               ! Finish the solution processor
 
 SAVE                 ! Save your work to the database
+
+/POST1               ! Post processing

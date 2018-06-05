@@ -260,3 +260,5 @@ NSLL,S,1                                  !Select nodes associated to this line
 *VGET, React(1,2), NODE, 1, U, Y
 *CFOPEN, ReactFileUp, csv
 *VWRITE, React(1,1), ',', React(1,2)
+
+/eof

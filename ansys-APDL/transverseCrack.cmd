@@ -18,6 +18,8 @@ daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) 
 epsx = 0.01       ! [-]  applied strain
 uniP = 0.0        ! [-]  uniform pressure applied to crack face
 
+nContours = 10 ! [-]  number of contours for J-integral evaluation
+
 EL = ! [MPa] UD longitudinal Young's modulus
 ET = ! [MPa] UD transverse Young's modulus
 nuLT = ! [-] UD in-plane Poisson ratio

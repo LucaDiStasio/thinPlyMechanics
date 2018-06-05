@@ -276,11 +276,6 @@ def main(argv):
 
     # units are already the ones used in simulation, not SI
 
-    ABQbuiltinDict = {'ISOTROPIC':ISOTROPIC,
-                      'ENGINEERING_CONSTANTS':ENGINEERING_CONSTANTS,
-                      'MIDDLE_SURFACE':MIDDLE_SURFACE,
-                      'FROM_SECTION':FROM_SECTION}
-
     if inputDirectory[-1]=='/' or inputDirectory[-1]=='\\':
         inputDirectory = inputDirectory[:-1]
 
@@ -321,13 +316,6 @@ def main(argv):
             for dataString in listAsString:
                 dataList.append(str(dataString))
             values.append(dataList)
-        elif  'list of ABAQUS keyword' in dataType:
-            values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0]])
-            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
-            dataList = []
-            for dataString in listAsString:
-                dataList.append(ABQbuiltinDict[dataString])
-            values.append(dataList)
         elif 'boolean' in dataType:
             values.append(ast.literal_eval(removeComment.split('@')[1].split('$')[0].replace(' ','')))
         elif  'int' in dataType:
@@ -336,8 +324,6 @@ def main(argv):
             values.append(float(removeComment.split('@')[1].split('$')[0].replace(' ','')))
         elif  'string' in dataType:
             values.append(str(removeComment.split('@')[1].split('$')[0].replace(' ','')))
-        elif  'ABAQUS keyword' in dataType:
-            values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0].replace(' ','')])
 
     RVEparams = {}
 
@@ -481,13 +467,6 @@ def main(argv):
             for dataString in listAsString:
                 dataList.append(str(dataString))
             values.append(dataList)
-        elif  'list of ABAQUS keyword' in dataType:
-            values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0]])
-            listAsString = removeComment.split('@')[1].split('$')[0].replace(' ','').replace('[','').replace(']','').split(',')
-            dataList = []
-            for dataString in listAsString:
-                dataList.append(ABQbuiltinDict[dataString])
-            values.append(dataList)
         elif 'boolean' in dataType:
             values.append(ast.literal_eval(removeComment.split('@')[1].split('$')[0].replace(' ','')))
         elif  'int' in dataType:
@@ -496,8 +475,6 @@ def main(argv):
             values.append(float(removeComment.split('@')[1].split('$')[0].replace(' ','')))
         elif  'string' in dataType:
             values.append(str(removeComment.split('@')[1].split('$')[0]))
-        elif  'ABAQUS keyword' in dataType:
-            values.append(ABQbuiltinDict[removeComment.split('@')[1].split('$')[0].replace(' ','')])
 
     for k,keywordSet in enumerate(keywords):
         fillDataDictionary(RVEparams,keywordSet,values[k])

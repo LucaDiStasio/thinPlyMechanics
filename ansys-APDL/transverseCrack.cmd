@@ -8,6 +8,8 @@
 
 ! ===> START INPUT DATA
 
+CrackDispsFile = 'C:/Ansys_WD/Debug/crackDisps'
+
 Vf = ! [-] Fiber volume fraction
 
 t = 1             ! [mm] 2t = thickness of the element
@@ -236,3 +238,5 @@ NSLL,S,1                                  !Select nodes associated to this line
 *DIM, CrackDisps , ARRAY, NNodesCrack, 2     
 *VGET, CrackDisps(1,1), NODE, 1, U, X
 *VGET, CrackDisps(1,2), NODE, 1, U, Y
+*CFOPEN, CrackDispsFile, csv
+*VWRITE, CrackDisps(1,1), ',', CrackDisps(1,2)

@@ -246,19 +246,19 @@ NSLL,S,1                                  !Select nodes associated to this line
 LSEL,S,,,7                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT             !Get the number of nodes in the selected set
-*DIM, React, ARRAY, NNodes, 2     
-*VGET, React(1,1), NODE, 1, U, X
-*VGET, React(1,2), NODE, 1, U, Y
+*DIM, ReactForce, ARRAY, NNodes, 2     
+*VGET, ReactForce(1,1), NODE, 1, U, X
+*VGET, ReactForce(1,2), NODE, 1, U, Y
 *CFOPEN, ReactFileLow, csv
-*VWRITE, React(1,1), ',', React(1,2)
+*VWRITE, ReactForce(1,1), ',', ReactForce(1,2)
 
 LSEL,S,,,6                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT             !Get the number of nodes in the selected set
-*DIM, React, ARRAY, NNodes, 2     
-*VGET, React(1,1), NODE, 1, U, X
-*VGET, React(1,2), NODE, 1, U, Y
+*DIM, ReactForce, ARRAY, NNodes, 2     
+*VGET, ReactForce(1,1), NODE, 1, U, X
+*VGET, ReactForce(1,2), NODE, 1, U, Y
 *CFOPEN, ReactFileUp, csv
-*VWRITE, React(1,1), ',', React(1,2)
+*VWRITE, ReactForce(1,1), ',', ReactForce(1,2)
 
 /eof

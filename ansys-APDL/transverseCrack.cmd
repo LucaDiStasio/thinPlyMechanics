@@ -9,6 +9,8 @@
 ! ===> START INPUT DATA
 
 CrackDispsFile = 'C:/Ansys_WD/Debug/crackDisps'
+ReactFileLow = 'C:/Ansys_WD/Debug/reactionLower'
+ReactFileUp = 'C:/Ansys_WD/Debug/reactionUpper'
 
 Vf = ! [-] Fiber volume fraction
 
@@ -22,12 +24,12 @@ uniP = 0.0        ! [-]  uniform pressure applied to crack face
 
 nContours = 10 ! [-]  number of contours for J-integral evaluation
 
-EL = ! [MPa] UD longitudinal Young's modulus
-ET = ! [MPa] UD transverse Young's modulus
-nuLT = ! [-] UD in-plane Poisson ratio
-nuTT = ! [-] UD transverse Poisson ratio
-GL = ! [MPa] UD in-plane shear modulus
-GT = ! [MPa] UD transverse shear modulus
+EL = 3500.0! [MPa] UD longitudinal Young's modulus
+ET = 3500.0! [MPa] UD transverse Young's modulus
+nuLT = 0.4! [-] UD in-plane Poisson ratio
+nuTT = 0.4! [-] UD transverse Poisson ratio
+!GL = ! [MPa] UD in-plane shear modulus
+!GT = ! [MPa] UD transverse shear modulus
 
 ! ===> END INPUT DATA
 
@@ -118,23 +120,23 @@ ALLSEL
 ! Define Material Properties
 
 MP,EX,1,ET        ! 1 is cross-ply, 2 is ud-ply 
-MP,EY,1,ET        ! 1 is cross-ply, 2 is ud-ply
-MP,EZ,1,EL        ! 1 is cross-ply, 2 is ud-ply
+!MP,EY,1,ET        ! 1 is cross-ply, 2 is ud-ply
+!MP,EZ,1,EL        ! 1 is cross-ply, 2 is ud-ply
 MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
-MP,NUYZ,1,nuLT    ! mp,Poisson's ratio,material number,value
-MP,NUXZ,1,nuLT    ! mp,Poisson's ratio,material number,value
-MP,GXY,1,GTT      ! mp,Poisson's ratio,material number,value
-MP,GYZ,1,GLT      ! mp,Poisson's ratio,material number,value
-MP,GXZ,1,GLT      ! mp,Poisson's ratio,material number,value
+!MP,NUYZ,1,nuLT    ! mp,Poisson's ratio,material number,value
+!MP,NUXZ,1,nuLT    ! mp,Poisson's ratio,material number,value
+!MP,GXY,1,GTT      ! mp,Poisson's ratio,material number,value
+!MP,GYZ,1,GLT      ! mp,Poisson's ratio,material number,value
+!MP,GXZ,1,GLT      ! mp,Poisson's ratio,material number,value
 MP,EX,2,EL        ! 1 is cross-ply, 2 is ud-ply 
-MP,EY,2,ET        ! 1 is cross-ply, 2 is ud-ply
-MP,EZ,2,ET        ! 1 is cross-ply, 2 is ud-ply
+!MP,EY,2,ET        ! 1 is cross-ply, 2 is ud-ply
+!MP,EZ,2,ET        ! 1 is cross-ply, 2 is ud-ply
 MP,NUXY,2,nuLT    ! mp,Poisson's ratio,material number,value
-MP,NUYZ,2,nuTT    ! mp,Poisson's ratio,material number,value
-MP,NUXZ,2,nuLT    ! mp,Poisson's ratio,material number,value
-MP,GXY,2,GLT      ! mp,Poisson's ratio,material number,value
-MP,GYZ,2,GTT      ! mp,Poisson's ratio,material number,value
-MP,GXZ,2,GLT      ! mp,Poisson's ratio,material number,value
+!MP,NUYZ,2,nuTT    ! mp,Poisson's ratio,material number,value
+!MP,NUXZ,2,nuLT    ! mp,Poisson's ratio,material number,value
+!MP,GXY,2,GLT      ! mp,Poisson's ratio,material number,value
+!MP,GYZ,2,GTT      ! mp,Poisson's ratio,material number,value
+!MP,GXZ,2,GLT      ! mp,Poisson's ratio,material number,value
 
 ! Assign properties to areas
 ! ASEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP
@@ -234,9 +236,27 @@ ALLSEL
 
 LSEL,S,,,8                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
-*GET,NNodesCrack,NODE,0,COUNT             !Get the number of nodes in the selected set
-*DIM, CrackDisps , ARRAY, NNodesCrack, 2     
+*GET,NNodes,NODE,0,COUNT             !Get the number of nodes in the selected set
+*DIM, CrackDisps, ARRAY, NNodes, 2     
 *VGET, CrackDisps(1,1), NODE, 1, U, X
 *VGET, CrackDisps(1,2), NODE, 1, U, Y
 *CFOPEN, CrackDispsFile, csv
 *VWRITE, CrackDisps(1,1), ',', CrackDisps(1,2)
+
+LSEL,S,,,7                                ! Crack
+NSLL,S,1                                  !Select nodes associated to this line
+*GET,NNodes,NODE,0,COUNT             !Get the number of nodes in the selected set
+*DIM, React, ARRAY, NNodes, 2     
+*VGET, React(1,1), NODE, 1, U, X
+*VGET, React(1,2), NODE, 1, U, Y
+*CFOPEN, ReactFileLow, csv
+*VWRITE, React(1,1), ',', React(1,2)
+
+LSEL,S,,,6                                ! Crack
+NSLL,S,1                                  !Select nodes associated to this line
+*GET,NNodes,NODE,0,COUNT             !Get the number of nodes in the selected set
+*DIM, React, ARRAY, NNodes, 2     
+*VGET, React(1,1), NODE, 1, U, X
+*VGET, React(1,2), NODE, 1, U, Y
+*CFOPEN, ReactFileUp, csv
+*VWRITE, React(1,1), ',', React(1,2)

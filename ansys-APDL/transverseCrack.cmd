@@ -37,7 +37,7 @@ L = t/rhon        ! [mm] length of the RVE
 a = atRatio*t     ! [mm] 2a = crack length
 
 tBPly = tRatio*(2*t) ! [mm] thickness of the bounding ply
-tTotal = t + tBPly   ! [mm] thickness of the bounding ply
+tTOT = t + tBPly   ! [mm] thickness of the bounding ply
 
 elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 
@@ -141,13 +141,13 @@ MP,NUXY,2,nuLT    ! mp,Poisson's ratio,material number,value
 ! Assign properties to areas
 ! ASEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP
 ! AATT, MAT, REAL, TYPE, ESYS, SECN
-ASEL, S, 1
+ASEL, S, AREA, 1
 AATT, 1
-ASEL, S, 2
+ASEL, S, AREA, 2
 AATT, 1
-ASEL, S, 3
+ASEL, S, AREA, 3
 AATT, 1
-ASEL, S, 4
+ASEL, S, AREA, 4
 AATT, 2
 
 ALLSEL

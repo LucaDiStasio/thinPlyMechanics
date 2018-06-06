@@ -8,13 +8,8 @@
 
 ! ===> START INPUT DATA
 
-CrackFaceFile = 'C:/Ansys_WD/Debug/crackfaceData'
-YsymmLow = 'C:/Ansys_WD/Debug/ysymmLowerData'
-YsymmUp = 'C:/Ansys_WD/Debug/ysymmUpperData'
-XsymmLeft = 'C:/Ansys_WD/Debug/xsymmLeftData'
-XsymmRight = 'C:/Ansys_WD/Debug/xsymmRightData'
-loadUp = 'C:/Ansys_WD/Debug/loadUpperData'
-loadLow = 'C:/Ansys_WD/Debug/loadLowerData'
+wd = 'C:/Ansys_WD/Debug'
+basename = 'debug_'
 
 Vf = ! [-] Fiber volume fraction
 
@@ -46,6 +41,15 @@ tTOT = t + tBPly   ! [mm] thickness of the bounding ply
 elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 
 appliedDisp = epsx*L ! [mm] applied displacement
+
+CFFileCoordDisp = %wd%'/'%basename%'CFCoordDisp'
+CFFileStressStrain = %wd%'/'%basename%'CFStressStrain'
+YsymmLow = 'C:/Ansys_WD/Debug/ysymmLowerData'
+YsymmUp = 'C:/Ansys_WD/Debug/ysymmUpperData'
+XsymmLeft = 'C:/Ansys_WD/Debug/xsymmLeftData'
+XsymmRight = 'C:/Ansys_WD/Debug/xsymmRightData'
+loadUp = 'C:/Ansys_WD/Debug/loadUpperData'
+loadLow = 'C:/Ansys_WD/Debug/loadLowerData'
 
 ! Create Geometry
 
@@ -240,7 +244,7 @@ ALLSEL
 
 LSEL,S,,,8                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
-*GET,NNodes,NODE,0,COUNT             !Get the number of nodes in the selected set
+*GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
 *DIM, CrackDisps, ARRAY, NNodes, 4
 *VGET, CrackDisps(1,1), NODE, 1, NUM
 *VGET, CrackDisps(1,2), NODE, 1, LOC, X
@@ -253,9 +257,19 @@ NSLL,S,1                                  !Select nodes associated to this line
 *VGET, CrackDisps(1,9), NODE, 1, EPEL, X
 *VGET, CrackDisps(1,10), NODE, 1, EPEL, Y
 *VGET, CrackDisps(1,11), NODE, 1, EPEL, XY
-*CFOPEN, CrackFaceFile, csv
-*VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,2), ', ', CrackDisps(1,3), ', ', CrackDisps(1,4)
-(F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
+
+*CFOPEN, CFFileCoordDisp, csv
+*VWRITE, 'NODE LABEL, X [mm], Z [mm], UX [mm], UZ [mm]'
+(A)
+*VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,2), ', ', CrackDisps(1,3), ', ', CrackDisps(1,4), ', ', CrackDisps(1,5)
+(F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
+*CFCLOS
+
+*CFOPEN, CFFileStressStrain, csv
+*VWRITE, 'NODE LABEL, SX [MPa], SZ [MPa], SXZ [MPa], EX [-], EZ [-], EXZ [-]'
+(A)
+*VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,6), ', ', CrackDisps(1,7), ', ', CrackDisps(1,8), ', ', CrackDisps(1,9), ', ', CrackDisps(1,10), ', ', CrackDisps(1,11)
+(F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
 *CFCLOS
 
 /eof

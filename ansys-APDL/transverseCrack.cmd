@@ -67,8 +67,7 @@ K, 6, L, t         ! E corner of ply interface
 K, 7, 0.0, a       ! crack tip
 K, 8, a, 0.0       ! S corner of refined area interface
 K, 9, a, t         ! N corner of refined area interface
-K, 10, 0.0, a       ! W corner in refined area interface
-K, 11, a, a         ! E corner in refined area interface
+K, 10, a, a         ! E corner in refined area interface
 
 ! Lines
 
@@ -78,14 +77,14 @@ L, 2, 6            !3
 L, 6, 3            !4
 L, 3, 4            !5
 L, 4, 5            !6
-L, 5, 10           !7
-L, 10, 1           !8
+L, 5, 7            !7
+L, 7, 1            !8
 
 L, 5, 9            !9, ply interface
 L, 9, 6            !10, ply interface
-L, 8, 11           !11, refined area interface
-L, 11, 9           !12, refined area interface
-L, 10, 11          !13, refined area mid-interface
+L, 8, 10           !11, refined area interface
+L, 10, 9           !12, refined area interface
+L, 7, 10           !13, refined area mid-interface
 
 ! Areas
 
@@ -274,7 +273,7 @@ NSLL,S,1                                  !Select nodes associated to this line
 
 *CFOPEN, CFFileStressStrain, csv
 *VWRITE, 'NODE LABEL, SX [MPa], SZ [MPa], SXZ [MPa], EX [-], EZ [-], EXZ [-]'
-(A)
+(A80)
 *VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,7), ', ', CrackDisps(1,8), ', ', CrackDisps(1,9), ', ', CrackDisps(1,10), ', ', CrackDisps(1,11), ', ', CrackDisps(1,12)
 (F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
 *CFCLOS

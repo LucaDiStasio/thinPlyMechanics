@@ -8,9 +8,13 @@
 
 ! ===> START INPUT DATA
 
-CrackDispsFile = 'C:/Ansys_WD/Debug/crackDisps'
-ReactFileLow = 'C:/Ansys_WD/Debug/reactionLower'
-ReactFileUp = 'C:/Ansys_WD/Debug/reactionUpper'
+CrackFaceFile = 'C:/Ansys_WD/Debug/crackfaceData'
+YsymmLow = 'C:/Ansys_WD/Debug/ysymmLowerData'
+YsymmUp = 'C:/Ansys_WD/Debug/ysymmUpperData'
+XsymmLeft = 'C:/Ansys_WD/Debug/xsymmLeftData'
+XsymmRight = 'C:/Ansys_WD/Debug/xsymmRightData'
+loadUp = 'C:/Ansys_WD/Debug/loadUpperData'
+loadLow = 'C:/Ansys_WD/Debug/loadLowerData'
 
 Vf = ! [-] Fiber volume fraction
 
@@ -237,18 +241,20 @@ ALLSEL
 LSEL,S,,,8                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT             !Get the number of nodes in the selected set
-*DIM, CrackDisps, ARRAY, NNodes, 2     
-*VGET, CrackDisps(1,1), NODE, 1, U, X
-*VGET, CrackDisps(1,2), NODE, 1, U, Y
+*DIM, CrackDisps, ARRAY, NNodes, 4
+*VGET, CrackDisps(1,1), NODE, 1, LOC, X
+*VGET, CrackDisps(1,2), NODE, 1, LOC, Y
+*VGET, CrackDisps(1,3), NODE, 1, U, X
+*VGET, CrackDisps(1,4), NODE, 1, U, Y
 *CFOPEN, CrackDispsFile, csv
-*VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,2)
-(F12.8,A2,F12.8)
+*VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,2), ', ', CrackDisps(1,3), ', ', CrackDisps(1,4)
+(F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
 *CFCLOS
 
 LSEL,S,,,7                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT             !Get the number of nodes in the selected set
-*DIM, ReactForceLow, ARRAY, NNodes, 2     
+*DIM, ReactForceLow, ARRAY, NNodes, 4     
 *VGET, ReactForceLow(1,1), NODE, 1, U, X
 *VGET, ReactForceLow(1,2), NODE, 1, U, Y
 *CFOPEN, ReactFileLow, csv
@@ -259,7 +265,7 @@ NSLL,S,1                                  !Select nodes associated to this line
 LSEL,S,,,6                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT             !Get the number of nodes in the selected set
-*DIM, ReactForceUp, ARRAY, NNodes, 2     
+*DIM, ReactForceUp, ARRAY, NNodes, 4     
 *VGET, ReactForceUp(1,1), NODE, 1, U, X
 *VGET, ReactForceUp(1,2), NODE, 1, U, Y
 *CFOPEN, ReactFileUp, csv

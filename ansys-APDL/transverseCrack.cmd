@@ -241,27 +241,30 @@ NSLL,S,1                                  !Select nodes associated to this line
 *VGET, CrackDisps(1,1), NODE, 1, U, X
 *VGET, CrackDisps(1,2), NODE, 1, U, Y
 *CFOPEN, CrackDispsFile, csv
-*VWRITE, CrackDisps(1,1), ',', CrackDisps(1,2)
+*VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,2)
+(F5.8,A2,F5.8)
 *CFCLOS
 
 LSEL,S,,,7                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT             !Get the number of nodes in the selected set
-*DIM, ReactForce, ARRAY, NNodes, 2     
-*VGET, ReactForce(1,1), NODE, 1, U, X
-*VGET, ReactForce(1,2), NODE, 1, U, Y
+*DIM, ReactForceLow, ARRAY, NNodes, 2     
+*VGET, ReactForceLow(1,1), NODE, 1, U, X
+*VGET, ReactForceLow(1,2), NODE, 1, U, Y
 *CFOPEN, ReactFileLow, csv
-*VWRITE, ReactForce(1,1), ',', ReactForce(1,2)
+*VWRITE, ReactForceLow(1,1), ',', ReactForceLow(1,2)
+(F5.8,A2,F5.8)
 *CFCLOS
 
 LSEL,S,,,6                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT             !Get the number of nodes in the selected set
-*DIM, ReactForce, ARRAY, NNodes, 2     
-*VGET, ReactForce(1,1), NODE, 1, U, X
-*VGET, ReactForce(1,2), NODE, 1, U, Y
+*DIM, ReactForceUp, ARRAY, NNodes, 2     
+*VGET, ReactForceUp(1,1), NODE, 1, U, X
+*VGET, ReactForceUp(1,2), NODE, 1, U, Y
 *CFOPEN, ReactFileUp, csv
-*VWRITE, ReactForce(1,1), ',', ReactForce(1,2)
+*VWRITE, ReactForceUp(1,1), ',', ReactForceUp(1,2)
+(F5.8,A2,F5.8)
 *CFCLOS
 
 /eof

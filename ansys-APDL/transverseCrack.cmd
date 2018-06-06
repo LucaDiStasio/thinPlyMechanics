@@ -246,10 +246,6 @@ LSEL,S,LINE,,8                            ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
 *DIM, CrackDisps, ARRAY, NNodes, 11
-!*GET,nodeLabel,NODE,0,NUM,MIN !Get label of the first node
-!*DO,i,1,NNodes,1
-!  ! Define some parameters
-!  *GET,CrackDisps(i,1),NODE,nodeLabel,NUM
 *VGET, CrackDisps(1,1), NODE, , NLIST
 *VGET, CrackDisps(1,2), NODE, 1, LOC, Y
 *VGET, CrackDisps(1,3), NODE, 1, LOC, X

@@ -11,7 +11,7 @@
 wd = 'C:/Ansys_WD/Debug'
 basename = 'debug_'
 
-Vf = ! [-] Fiber volume fraction
+Vf = 0.0! [-] Fiber volume fraction
 
 t = 1             ! [mm] 2t = thickness of the element
 tRatio = 49.5     ! [-]  ratio of bounding ply thickness to main ply
@@ -42,8 +42,12 @@ elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 
 appliedDisp = epsx*L ! [mm] applied displacement
 
-CFFileCoordDisp = %wd%'/'%basename%'CFCoordDisp'
-CFFileStressStrain = %wd%'/'%basename%'CFStressStrain'
+fileSep = '/'
+
+subname = 'CFCoordDisp'
+CFFileCoordDisp = %wd%%fileSep%%basename%%subname%
+subname = 'CFStressStrain'
+CFFileStressStrain = %wd%%filesep%%basename%%subname%
 YsymmLow = 'C:/Ansys_WD/Debug/ysymmLowerData'
 YsymmUp = 'C:/Ansys_WD/Debug/ysymmUpperData'
 XsymmLeft = 'C:/Ansys_WD/Debug/xsymmLeftData'

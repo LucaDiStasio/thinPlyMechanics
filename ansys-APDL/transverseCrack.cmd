@@ -247,8 +247,8 @@ NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
 *DIM, CrackDisps, ARRAY, NNodes, 11
 *VGET, CrackDisps(1,1), NODE, , NLIST
-*VGET, CrackDisps(1,2), NODE, 1, LOC, X
-*VGET, CrackDisps(1,3), NODE, 1, LOC, Y
+*VGET, CrackDisps(1,2), NODE, 1, LOC, Y
+*VGET, CrackDisps(1,3), NODE, 1, LOC, X
 *VGET, CrackDisps(1,4), NODE, 1, U, X
 *VGET, CrackDisps(1,5), NODE, 1, U, Y
 *VGET, CrackDisps(1,6), NODE, 1, S, X
@@ -264,9 +264,9 @@ NSLL,S,1                                  !Select nodes associated to this line
 
 *CFOPEN, CFFileCoordDisp, csv
 *VWRITE, 'NODE','LABEL,','X','[mm],','Z','[mm],','UX','[mm],','UZ','[mm]'
-(A,A,A,A,A,A,A,A,A)
+(A5,A6,A2,A6,A2,A6,A3,A6,A4)
 *VWRITE, CrackDisps(1,1), ',', CrackDisps(1,2), ',', CrackDisps(1,3), ',', CrackDisps(1,4), ',', CrackDisps(1,5)
-(I5,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
+(F5.0,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
 *CFCLOS
 
 *CFOPEN, CFFileStressStrain, csv

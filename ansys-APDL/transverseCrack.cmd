@@ -246,6 +246,7 @@ LSEL,S,,,8                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
 *DIM, CrackDisps, ARRAY, NNodes, 12
+*VGET, CrackDisps(1,1), NODE, 0, NUM
 *VGET, CrackDisps(1,2), NODE, 1, LOC, X
 *VGET, CrackDisps(1,3), NODE, 1, LOC, Y
 *VGET, CrackDisps(1,4), NODE, 1, LOC, Z
@@ -257,7 +258,7 @@ NSLL,S,1                                  !Select nodes associated to this line
 *VGET, CrackDisps(1,10), NODE, 1, EPEL, X
 *VGET, CrackDisps(1,11), NODE, 1, EPEL, Y
 *VGET, CrackDisps(1,12), NODE, 1, EPEL, XY
-*VGET, CrackDisps(1,1), NODE, 1, NODE(CrackDisps(1,2),CrackDisps(1,3),CrackDisps(1,4))
+!*VGET, CrackDisps(1,1), NODE, 1, NODE(CrackDisps(1,2),CrackDisps(1,3),CrackDisps(1,4))
 
 *CFOPEN, CFFileCoordDisp, csv
 *VWRITE, 'NODE LABEL, X [mm], Z [mm], UX [mm], UZ [mm]'

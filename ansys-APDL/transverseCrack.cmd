@@ -277,4 +277,4 @@ NSLL,S,1                                  !Select nodes associated to this line
 (F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
 *CFCLOS
 
-/eof
+/EOF

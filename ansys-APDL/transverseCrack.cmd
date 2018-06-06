@@ -245,7 +245,7 @@ ALLSEL
 LSEL,S,,,8                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
-*DIM, CrackDisps, ARRAY, NNodes, 12
+*DIM, CrackDisps, ARRAY, NNodes, 11
 !*GET,nodeLabel,NODE,0,NUM,MIN !Get label of the first node
 !*DO,i,1,NNodes,1
 !  ! Define some parameters
@@ -253,28 +253,27 @@ NSLL,S,1                                  !Select nodes associated to this line
 *VGET, CrackDisps(1,1), NODE, , NLIST
 *VGET, CrackDisps(1,2), NODE, 1, LOC, X
 *VGET, CrackDisps(1,3), NODE, 1, LOC, Y
-*VGET, CrackDisps(1,4), NODE, 1, LOC, Z
-*VGET, CrackDisps(1,5), NODE, 1, U, X
-*VGET, CrackDisps(1,6), NODE, 1, U, Y
-*VGET, CrackDisps(1,7), NODE, 1, S, X
-*VGET, CrackDisps(1,8), NODE, 1, S, Y
-*VGET, CrackDisps(1,9), NODE, 1, S, XY
-*VGET, CrackDisps(1,10), NODE, 1, EPEL, X
-*VGET, CrackDisps(1,11), NODE, 1, EPEL, Y
-*VGET, CrackDisps(1,12), NODE, 1, EPEL, XY
+*VGET, CrackDisps(1,4), NODE, 1, U, X
+*VGET, CrackDisps(1,5), NODE, 1, U, Y
+*VGET, CrackDisps(1,6), NODE, 1, S, X
+*VGET, CrackDisps(1,7), NODE, 1, S, Y
+*VGET, CrackDisps(1,8), NODE, 1, S, XY
+*VGET, CrackDisps(1,9), NODE, 1, EPEL, X
+*VGET, CrackDisps(1,10), NODE, 1, EPEL, Y
+*VGET, CrackDisps(1,11), NODE, 1, EPEL, XY
 !*VGET, CrackDisps(1,1), NODE, 1, NODE(CrackDisps(1,2),CrackDisps(1,3),CrackDisps(1,4))
 
 *CFOPEN, CFFileCoordDisp, csv
 *VWRITE, 'NODE ','LABEL,',' X [mm],',' Z [mm],',' UX [mm],',' UZ [mm]'
 (A,A,A,A,A,A)
-*VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,2), ', ', CrackDisps(1,3), ', ', CrackDisps(1,5), ', ', CrackDisps(1,6)
+*VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,2), ', ', CrackDisps(1,3), ', ', CrackDisps(1,4), ', ', CrackDisps(1,5)
 (F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
 *CFCLOS
 
 *CFOPEN, CFFileStressStrain, csv
 *VWRITE, 'NODE LABEL, SX [MPa], SZ [MPa], SXZ [MPa], EX [-], EZ [-], EXZ [-]'
 (A80)
-*VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,7), ', ', CrackDisps(1,8), ', ', CrackDisps(1,9), ', ', CrackDisps(1,10), ', ', CrackDisps(1,11), ', ', CrackDisps(1,12)
+*VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,6), ', ', CrackDisps(1,7), ', ', CrackDisps(1,8), ', ', CrackDisps(1,9), ', ', CrackDisps(1,10), ', ', CrackDisps(1,11)
 (F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
 *CFCLOS
 

@@ -257,7 +257,7 @@ NSLL,S,1                                  !Select nodes associated to this line
 *VGET, CrackDisps(1,10), NODE, 1, EPEL, X
 *VGET, CrackDisps(1,11), NODE, 1, EPEL, Y
 *VGET, CrackDisps(1,12), NODE, 1, EPEL, XY
-*VGET, CrackDisps(1,1), NODE(CrackDisps(1,2),CrackDisps(1,3))
+*VGET, CrackDisps(1,1), NODE, 1, NODE(CrackDisps(1,2),CrackDisps(1,3),CrackDisps(1,4))
 
 *CFOPEN, CFFileCoordDisp, csv
 *VWRITE, 'NODE LABEL, X [mm], Z [mm], UX [mm], UZ [mm]'

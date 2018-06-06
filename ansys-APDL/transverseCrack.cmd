@@ -242,6 +242,7 @@ NSLL,S,1                                  !Select nodes associated to this line
 *VGET, CrackDisps(1,2), NODE, 1, U, Y
 *CFOPEN, CrackDispsFile, csv
 *VWRITE, CrackDisps(1,1), ',', CrackDisps(1,2)
+*CFCLOS
 
 LSEL,S,,,7                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
@@ -251,6 +252,7 @@ NSLL,S,1                                  !Select nodes associated to this line
 *VGET, ReactForce(1,2), NODE, 1, U, Y
 *CFOPEN, ReactFileLow, csv
 *VWRITE, ReactForce(1,1), ',', ReactForce(1,2)
+*CFCLOS
 
 LSEL,S,,,6                                ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
@@ -260,5 +262,6 @@ NSLL,S,1                                  !Select nodes associated to this line
 *VGET, ReactForce(1,2), NODE, 1, U, Y
 *CFOPEN, ReactFileUp, csv
 *VWRITE, ReactForce(1,1), ',', ReactForce(1,2)
+*CFCLOS
 
 /eof

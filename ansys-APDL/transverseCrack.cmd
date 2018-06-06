@@ -267,7 +267,7 @@ NSLL,S,1                                  !Select nodes associated to this line
 
 *CFOPEN, CFFileCoordDisp, csv
 *VWRITE, 'NODE LABEL, X [mm], Z [mm], UX [mm], UZ [mm]'
-(A)
+(A80)
 *VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,2), ', ', CrackDisps(1,3), ', ', CrackDisps(1,5), ', ', CrackDisps(1,6)
 (F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
 *CFCLOS

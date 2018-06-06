@@ -242,7 +242,7 @@ SAVE                 ! Save your work to the database
 
 ALLSEL
 
-LSEL,S,,,8                                ! Crack
+LSEL,S,LINE,,8                            ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
 *DIM, CrackDisps, ARRAY, NNodes, 11

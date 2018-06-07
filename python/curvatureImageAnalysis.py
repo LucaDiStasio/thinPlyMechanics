@@ -48,6 +48,6 @@ img = cv2.imread(join(inpDir,fileName+ext),0)
 
 plt.figure()
 plt.imshow(upperArm,cmap = 'gray')
-plt.title('Upper arm')
+plt.title('Pic')
 plt.xticks([])
 plt.yticks([])

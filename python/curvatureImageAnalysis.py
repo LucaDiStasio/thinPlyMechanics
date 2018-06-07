@@ -46,7 +46,7 @@ ext = '.jpg'
 
 img = cv2.imread(join(inpDir,fileName+ext),0)
 
-ret1,imgBin1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
+ret1,imgBin1 = cv2.threshold(img,150,255,cv2.THRESH_BINARY)
 ret2,imgBin2 = cv2.threshold(img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 th2 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,11,2)
 th3 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)

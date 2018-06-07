@@ -36,7 +36,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-plt.close('all')
+#plt.close('all')
 
 inpDir = 'C:\Users\lucad\OneDrive\01_Luca\07_DocMASE\02_Studies\09_Aerospace-materials\WD\ThermalCurvature'
 
@@ -46,4 +46,4 @@ ext = '.jpg'
 
 img = cv2.imread(join(inpDir,fileName+ext),1)
 
-cv2.imshow(img)
+cv2.imshow('pic',img)

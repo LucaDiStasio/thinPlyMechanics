@@ -8,9 +8,9 @@
 
 ! ===> START INPUT DATA
 
-*DIM,workdir,STRING,18
+!*DIM,workdir,STRING,18
 workdir = 'C:/Ansys_WD/Debug/'
-*DIM,basename,STRING,5
+!*DIM,basename,STRING,5
 basename = 'debug'
 
 Vf = 0.0! [-] Fiber volume fraction
@@ -44,17 +44,17 @@ elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 
 appliedDisp = epsx*L ! [mm] applied displacement
 
-*DIM,wdBasename,STRING,24
+!*DIM,wdBasename,STRING,24
 wdBasename = strcat(workdir,basename)
 
-*DIM,CFcdpart,STRING,11
+!*DIM,CFcdpart,STRING,11
 CFcdpart = 'CFCoordDisp'
 
-*DIM,CFcdpart,STRING,14
+!*DIM,CFcdpart,STRING,14
 CFsspart = 'CFStressStrain'
 
-*DIM,CFFileCoordDisp,STRING,35
-*DIM,CFFileStressStrain,STRING,38
+!*DIM,CFFileCoordDisp,STRING,35
+!*DIM,CFFileStressStrain,STRING,38
 CFFileCoordDisp = strcat(wdBasename,CFcdpart)
 CFFileStressStrain = strcat(wdBasename,CFsspart)
 

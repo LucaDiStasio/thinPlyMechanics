@@ -247,31 +247,63 @@ ALLSEL
 LSEL,S,LINE,,8                            ! Crack
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
-*DIM, CrackDisps, ARRAY, NNodes, 11
-*VGET, CrackDisps(1,1), NODE, , NLIST
-*VGET, CrackDisps(1,2), NODE, 1, LOC, Y
-*VGET, CrackDisps(1,3), NODE, 1, LOC, X
-*VGET, CrackDisps(1,4), NODE, 1, U, X
-*VGET, CrackDisps(1,5), NODE, 1, U, Y
-*VGET, CrackDisps(1,6), NODE, 1, S, X
-*VGET, CrackDisps(1,7), NODE, 1, S, Y
-*VGET, CrackDisps(1,8), NODE, 1, S, XY
-*VGET, CrackDisps(1,9), NODE, 1, EPEL, X
-*VGET, CrackDisps(1,10), NODE, 1, EPEL, Y
-*VGET, CrackDisps(1,11), NODE, 1, EPEL, XY
+*DIM, resArray, ARRAY, NNodes, 11
+*VGET, resArray(1,1), NODE, , NLIST
+*VGET, resArray(1,2), NODE, 1, LOC, Y
+*VGET, resArray(1,3), NODE, 1, LOC, X
+*VGET, resArray(1,4), NODE, 1, U, X
+*VGET, resArray(1,5), NODE, 1, U, Y
+*VGET, resArray(1,6), NODE, 1, S, X
+*VGET, resArray(1,7), NODE, 1, S, Y
+*VGET, resArray(1,8), NODE, 1, S, XY
+*VGET, resArray(1,9), NODE, 1, EPEL, X
+*VGET, resArray(1,10), NODE, 1, EPEL, Y
+*VGET, resArray(1,11), NODE, 1, EPEL, XY
 
 *CFOPEN, CFFileCoordDisp, csv
 *VWRITE, 'NODE','LABEL,','X[mm],','Z[mm],','UX','[mm],','UZ','[mm]'
 (A5,A6,A6,A6,A2,A5,A2,A4)
-*VWRITE, CrackDisps(1,1), ',', CrackDisps(1,2), ',', CrackDisps(1,3), ',', CrackDisps(1,4), ',', CrackDisps(1,5)
-(F5.0,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
+*VWRITE, resArray(1,1), ',', resArray(1,2), ',', resArray(1,3), ',', resArray(1,4), ',', resArray(1,5)
+(F5.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
 *CFCLOS
 
 *CFOPEN, CFFileStressStrain, csv
 *VWRITE, 'NODE LABEL, SX [MPa], SZ [MPa], SXZ [MPa], EX [-], EZ [-], EXZ [-]'
 (A80)
-*VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,6), ', ', CrackDisps(1,7), ', ', CrackDisps(1,8), ', ', CrackDisps(1,9), ', ', CrackDisps(1,10), ', ', CrackDisps(1,11)
-(F5.0,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
+*VWRITE, resArray(1,1), ', ', resArray(1,6), ', ', resArray(1,7), ', ', resArray(1,8), ', ', resArray(1,9), ', ', resArray(1,10), ', ', resArray(1,11)
+(F5.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
+*CFCLOS
+
+LSEL,S,LINE,,7                            
+NSLL,S,1                                  !Select nodes associated to this line
+*GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
+*DIM, resArray, ARRAY, NNodes, 13
+*VGET, resArray(1,1), NODE, , NLIST
+*VGET, resArray(1,2), NODE, 1, LOC, Y
+*VGET, resArray(1,3), NODE, 1, LOC, X
+*VGET, resArray(1,4), NODE, 1, U, X
+*VGET, resArray(1,5), NODE, 1, U, Y
+*VGET, resArray(1,6), NODE, 1, S, X
+*VGET, resArray(1,7), NODE, 1, S, Y
+*VGET, resArray(1,8), NODE, 1, S, XY
+*VGET, resArray(1,9), NODE, 1, EPEL, X
+*VGET, resArray(1,10), NODE, 1, EPEL, Y
+*VGET, resArray(1,11), NODE, 1, EPEL, XY
+*VGET, resArray(1,12), NODE, 1, RF, FX
+*VGET, resArray(1,13), NODE, 1, RF, FY
+
+*CFOPEN, YsymmLowCDRF, csv
+*VWRITE, 'NODE','LABEL,','X[mm],','Z[mm],','UX','[mm],','UZ','[mm],',','RX','[kN],','RZ','[kN]'
+(A5,A6,A6,A6,A2,A5,A2,A5,A2,A5,A2,A4)
+*VWRITE, resArray(1,1), ',', resArray(1,2), ',', resArray(1,3), ',', resArray(1,4), ',', resArray(1,5), ',', resArray(1,12), ',', resArray(1,13)
+(F5.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
+*CFCLOS
+
+*CFOPEN, YsymmLowCDSS, csv
+*VWRITE, 'NODE LABEL, SX [MPa], SZ [MPa], SXZ [MPa], EX [-], EZ [-], EXZ [-]'
+(A80)
+*VWRITE, resArray(1,1), ', ', resArray(1,6), ', ', resArray(1,7), ', ', resArray(1,8), ', ', resArray(1,9), ', ', resArray(1,10), ', ', resArray(1,11)
+(F5.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
 *CFCLOS
 
 /EOF

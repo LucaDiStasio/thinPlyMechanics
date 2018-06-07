@@ -17,6 +17,7 @@ rhon = 0.01       ! [-]  normalized crack density
 daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) to crack length
 epsx = 0.01       ! [-]  applied strain
 uniP = 0.0        ! [-]  uniform pressure applied to crack face
+reftRatio = 0.1   ! [-]  ratio of refined area height to cross-ply thickness
 
 nContours = 10 ! [-]  number of contours for J-integral evaluation
 
@@ -31,6 +32,9 @@ nuTT = 0.4! [-] UD transverse Poisson ratio
 
 L = t/rhon        ! [mm] length of the RVE
 a = aLRatio*L     ! [mm] 2a = crack length
+
+refHlow = (1-reftRatio)*t 
+refHup = (1+reftRatio)*t
 
 tBPly = tRatio*(2*t) ! [mm] thickness of the bounding ply
 tTOT = t + tBPly   ! [mm] thickness of the bounding ply
@@ -57,3 +61,13 @@ loadLowSS = 'loadLDSS'
 ! Create Geometry
 
 ! Points
+
+K, 1, 0.0, 0.0
+K, 2, L, 0.0
+K, 3, L, tTOT
+K, 4, 0.0, tTOT
+
+K, 5, 0.0, refHlow
+K, 6, L, refHlow
+K, 7, L, refHup
+K, 8, 0.0, refHup

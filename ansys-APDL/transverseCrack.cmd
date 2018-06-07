@@ -10,7 +10,7 @@
 
 *DIM,workdir,STRING,18
 workdir = 'C:/Ansys_WD/Debug/'
-*DIM,basename,STRING,6
+*DIM,basename,STRING,5
 basename = 'debug'
 
 Vf = 0.0! [-] Fiber volume fraction

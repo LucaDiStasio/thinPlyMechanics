@@ -269,8 +269,8 @@ NSEL,S,NODE,CRACKTIP
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
 *DIM, resArray, ARRAY, NNodes, 11
 *VGET, resArray(1,1), NODE, , NLIST
-*VGET, resArray(1,2), NODE, 1, LOC, Y
-*VGET, resArray(1,3), NODE, 1, LOC, X
+*VGET, resArray(1,2), NODE, 1, LOC, X
+*VGET, resArray(1,3), NODE, 1, LOC, Y
 *VGET, resArray(1,4), NODE, 1, U, X
 *VGET, resArray(1,5), NODE, 1, U, Y
 *VGET, resArray(1,6), NODE, 1, S, X

@@ -13,9 +13,6 @@ wd = 'C:/Ansys_WD/Debug/'
 *DIM,wd,STRING,6
 basename = 'debug_'
 
-wd = 'C:/Ansys_WD/Debug'
-basename = 'debug_'
-
 Vf = 0.0! [-] Fiber volume fraction
 
 t = 1             ! [mm] 2t = thickness of the element

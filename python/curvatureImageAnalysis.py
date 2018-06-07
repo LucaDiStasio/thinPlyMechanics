@@ -38,7 +38,7 @@ from matplotlib import pyplot as plt
 
 plt.close('all')
 
-inpDir = 
+inpDir = 'C:\Users\lucad\OneDrive\01_Luca\07_DocMASE\02_Studies\09_Aerospace-materials\WD\ThermalCurvature'
 
 img = cv2.imread('LAM365-1-s-0329_0.tif',0)
 

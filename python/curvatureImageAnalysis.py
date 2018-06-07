@@ -40,7 +40,11 @@ plt.close('all')
 
 inpDir = 'C:\Users\lucad\OneDrive\01_Luca\07_DocMASE\02_Studies\09_Aerospace-materials\WD\ThermalCurvature'
 
-img = cv2.imread('LAM365-1-s-0329_0.tif',0)
+fileName = 'P1010035'
+
+ext = '.jpg'
+
+img = cv2.imread(join(inpDir,fileName+ext),0)
 
 plt.figure()
 plt.imshow(upperArm,cmap = 'gray')

@@ -31,11 +31,14 @@ Tested with Python 2.7 Anaconda 2.4.1 (64-bit) distribution
 
 '''
 
+from os.path import join
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
 plt.close('all')
+
+inpDir = 
 
 img = cv2.imread('LAM365-1-s-0329_0.tif',0)
 

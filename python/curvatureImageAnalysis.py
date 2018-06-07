@@ -36,7 +36,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-#plt.close('all')
+plt.close('all')
 
 inpDir = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/02_Studies/09_Aerospace-materials/WD/ThermalCurvature'
 
@@ -44,9 +44,12 @@ fileName = 'P1010035'
 
 ext = '.jpg'
 
-img = cv2.imread(join(inpDir,fileName+ext),1)
+img = cv2.imread(join(inpDir,fileName+ext),0)
 
 ret,imgBin = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
 
-cv2.imshow('pic',imgBin)
-cv2.waitKey(0)
+#plt.figure()
+plt.imshow(imgBin,cmap = 'gray')
+plt.title('pic')
+plt.xticks([])
+plt.yticks([])

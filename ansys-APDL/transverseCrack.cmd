@@ -8,11 +8,6 @@
 
 ! ===> START INPUT DATA
 
-!*DIM,workdir,STRING,18
-workdir = 'C:/Ansys_WD/Debug/'
-!*DIM,basename,STRING,5
-basename = 'debug'
-
 Vf = 0.0! [-] Fiber volume fraction
 
 t = 1             ! [mm] 2t = thickness of the element
@@ -44,26 +39,14 @@ elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 
 appliedDisp = epsx*L ! [mm] applied displacement
 
-!*DIM,wdBasename,STRING,24
-wdBasename = strcat(workdir,basename)
-
-!*DIM,CFcdpart,STRING,11
-CFcdpart = 'CFCoordDisp'
-
-!*DIM,CFcdpart,STRING,14
-CFsspart = 'CFStressStrain'
-
-!*DIM,CFFileCoordDisp,STRING,35
-!*DIM,CFFileStressStrain,STRING,38
-CFFileCoordDisp = strcat(wdBasename,CFcdpart)
-CFFileStressStrain = strcat(wdBasename,CFsspart)
-
-YsymmLow = 'C:/Ansys_WD/Debug/ysymmLowerData'
-YsymmUp = 'C:/Ansys_WD/Debug/ysymmUpperData'
-XsymmLeft = 'C:/Ansys_WD/Debug/xsymmLeftData'
-XsymmRight = 'C:/Ansys_WD/Debug/xsymmRightData'
-loadUp = 'C:/Ansys_WD/Debug/loadUpperData'
-loadLow = 'C:/Ansys_WD/Debug/loadLowerData'
+CFFileCoordDisp = 'CFCoordDisp'
+CFFileStressStrain = 'CFStressStrain'
+YsymmLow = 'ysymmLowerData'
+YsymmUp = 'ysymmUpperData'
+XsymmLeft = 'xsymmLeftData'
+XsymmRight = 'xsymmRightData'
+loadUp = 'loadUpperData'
+loadLow = 'loadLowerData'
 
 ! Create Geometry
 

@@ -280,6 +280,8 @@ NSLL,S,1                                  !Select nodes associated to this line
 (F5.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
 *CFCLOS
 
+ALLSEL
+
 LSEL,S,LINE,,7                            
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set

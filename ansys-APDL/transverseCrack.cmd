@@ -47,8 +47,19 @@ elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 
 appliedDisp = epsx*L ! [mm] applied displacement
 
-CFFileCoordDisp = 'C:/Ansys_WD/Debug/debug_CFCoordDisp'
-CFFileStressStrain = 'C:/Ansys_WD/Debug/debug_CFStressStrain'
+*DIM,wdBasename,STRING,24
+wdBasename = %wd%%basename%
+
+*DIM,CFcdpart,STRING,11
+CFcdpart = 'CFCoordDisp'
+
+*DIM,CFcdpart,STRING,14
+CFsspart = 'CFStressStrain'
+
+*DIM,CFFileCoordDisp,STRING,35
+*DIM,CFFileStressStrain,STRING,38
+CFFileCoordDisp = %wdBasename%%CFcdpart%
+CFFileStressStrain = %wdBasename%%CFsspart%
 
 YsymmLow = 'C:/Ansys_WD/Debug/ysymmLowerData'
 YsymmUp = 'C:/Ansys_WD/Debug/ysymmUpperData'

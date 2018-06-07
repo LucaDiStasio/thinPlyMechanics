@@ -38,3 +38,9 @@ from matplotlib import pyplot as plt
 plt.close('all')
 
 img = cv2.imread('LAM365-1-s-0329_0.tif',0)
+
+plt.figure()
+plt.imshow(upperArm,cmap = 'gray')
+plt.title('Upper arm')
+plt.xticks([])
+plt.yticks([])

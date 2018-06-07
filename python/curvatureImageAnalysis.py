@@ -44,7 +44,7 @@ fileName = 'P1010035'
 
 ext = '.jpg'
 
-img = cv2.imread(join(inpDir,fileName+ext),0)
+img = cv2.imread(join(inpDir,fileName+ext),1)
 
 plt.figure()
 plt.imshow(img)

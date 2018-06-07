@@ -252,6 +252,7 @@ SAVE                 ! Save your work to the database
 ALLSEL
 
 CMSEL,S,CRACKTIP
+NSEL,S,NODE
 
 *DIM, jintegral, ARRAY, nContours, 2
 *DIM, vcct, ARRAY, 2

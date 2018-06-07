@@ -55,8 +55,8 @@ CFsspart = 'CFStressStrain'
 
 *DIM,CFFileCoordDisp,STRING,35
 *DIM,CFFileStressStrain,STRING,38
-CFFileCoordDisp = %wdBasename%%CFcdpart%
-CFFileStressStrain = %wdBasename%%CFsspart%
+CFFileCoordDisp = strcat(wdBasename,CFcdpart)
+CFFileStressStrain = strcat(wdBasename,CFsspart)
 
 YsymmLow = 'C:/Ansys_WD/Debug/ysymmLowerData'
 YsymmUp = 'C:/Ansys_WD/Debug/ysymmUpperData'

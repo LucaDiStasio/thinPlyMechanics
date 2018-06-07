@@ -8,15 +8,10 @@
 
 ! ===> START INPUT DATA
 
-CFFileCoordDisp = 'C:/Ansys_WD/Debug/debug_CFCoordDisp'
-CFFileStressStrain = 'C:/Ansys_WD/Debug/debug_CFStressStrain'
-
-YsymmLow = 'C:/Ansys_WD/Debug/ysymmLowerData'
-YsymmUp = 'C:/Ansys_WD/Debug/ysymmUpperData'
-XsymmLeft = 'C:/Ansys_WD/Debug/xsymmLeftData'
-XsymmRight = 'C:/Ansys_WD/Debug/xsymmRightData'
-loadUp = 'C:/Ansys_WD/Debug/loadUpperData'
-loadLow = 'C:/Ansys_WD/Debug/loadLowerData'
+*DIM,wd,STRING,18
+wd = 'C:/Ansys_WD/Debug/'
+*DIM,wd,STRING,6
+basename = 'debug_'
 
 wd = 'C:/Ansys_WD/Debug'
 basename = 'debug_'
@@ -51,6 +46,16 @@ tTOT = t + tBPly   ! [mm] thickness of the bounding ply
 elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 
 appliedDisp = epsx*L ! [mm] applied displacement
+
+CFFileCoordDisp = 'C:/Ansys_WD/Debug/debug_CFCoordDisp'
+CFFileStressStrain = 'C:/Ansys_WD/Debug/debug_CFStressStrain'
+
+YsymmLow = 'C:/Ansys_WD/Debug/ysymmLowerData'
+YsymmUp = 'C:/Ansys_WD/Debug/ysymmUpperData'
+XsymmLeft = 'C:/Ansys_WD/Debug/xsymmLeftData'
+XsymmRight = 'C:/Ansys_WD/Debug/xsymmRightData'
+loadUp = 'C:/Ansys_WD/Debug/loadUpperData'
+loadLow = 'C:/Ansys_WD/Debug/loadLowerData'
 
 ! Create Geometry
 

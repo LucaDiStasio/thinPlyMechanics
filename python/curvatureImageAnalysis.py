@@ -46,6 +46,7 @@ ext = '.jpg'
 
 img = cv2.imread(join(inpDir,fileName+ext),1)
 
+ret,imgBin = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
 
-cv2.imshow('pic',img)
+cv2.imshow('pic',imgBin)
 cv2.waitKey(0)

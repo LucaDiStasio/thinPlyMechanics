@@ -46,8 +46,4 @@ ext = '.jpg'
 
 img = cv2.imread(join(inpDir,fileName+ext),1)
 
-plt.figure()
-plt.imshow(img)
-plt.title('Pic')
-plt.xticks([])
-plt.yticks([])
+cv2.imshow(img)

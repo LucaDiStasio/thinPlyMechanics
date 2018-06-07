@@ -8,9 +8,9 @@
 
 ! ===> START INPUT DATA
 
-*DIM,wd,STRING,18
-wd = 'C:/Ansys_WD/Debug/'
-*DIM,wd,STRING,6
+*DIM,workdir,STRING,18
+workdir = 'C:/Ansys_WD/Debug/'
+*DIM,basename,STRING,6
 basename = 'debug_'
 
 Vf = 0.0! [-] Fiber volume fraction

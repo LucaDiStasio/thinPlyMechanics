@@ -47,3 +47,4 @@ ext = '.jpg'
 img = cv2.imread(join(inpDir,fileName+ext),1)
 
 cv2.imshow('pic',img)
+cv2.waitKey(0)

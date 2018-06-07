@@ -251,20 +251,21 @@ SAVE                 ! Save your work to the database
 
 ALLSEL
 
-CMSEL,S,CRACKTIP
-NSEL,S,NODE
+!CMSEL,S,CRACKTIP
+NSEL,S,NODE,CRACKTIP
 
-*DIM, jintegral, ARRAY, nContours, 2
-*DIM, vcct, ARRAY, 2
-*DIM, sifs, ARRAY, nContours, 2
-*DO, n, 1, nContours, 1
-jintegral(n,1)=n
-*GET,jintegral(n,2), CINT, 2, Item1, IT1NUM, Item2, IT2NUM
+!*DIM, jintegral, ARRAY, nContours, 2
+!*DIM, vcct, ARRAY, 2
+!*DIM, sifs, ARRAY, nContours, 2
+!*DO, n, 1, nContours, 1
+!jintegral(n,1)=n
+!*GET,jintegral(n,2), CINT, 2, Item1, IT1NUM, Item2, IT2NUM
 
-ALLSEL
+!ALLSEL
 
-LSEL,S,LINE,,8                            ! Crack
-NSLL,S,1                                  !Select nodes associated to this line
+!LSEL,S,LINE,,8                            ! Crack
+!NSLL,S,1                                  !Select nodes associated to this line
+NSEL,S,NODE,CRACKTIP
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
 *DIM, resArray, ARRAY, NNodes, 11
 *VGET, resArray(1,1), NODE, , NLIST

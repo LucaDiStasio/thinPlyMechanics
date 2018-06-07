@@ -38,13 +38,14 @@ from matplotlib import pyplot as plt
 
 #plt.close('all')
 
-inpDir = 'C:\Users\lucad\OneDrive\01_Luca\07_DocMASE\02_Studies\09_Aerospace-materials\WD\ThermalCurvature'
+inpDir = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/02_Studies/09_Aerospace-materials/WD/ThermalCurvature'
 
 fileName = 'P1010035'
 
 ext = '.jpg'
 
 img = cv2.imread(join(inpDir,fileName+ext),1)
+
 
 cv2.imshow('pic',img)
 cv2.waitKey(0)

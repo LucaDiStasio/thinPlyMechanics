@@ -45,7 +45,7 @@ elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 appliedDisp = epsx*L ! [mm] applied displacement
 
 *DIM,wdBasename,STRING,24
-wdBasename = %wd%%basename%
+wdBasename = %workdir%%basename%
 
 *DIM,CFcdpart,STRING,11
 CFcdpart = 'CFCoordDisp'

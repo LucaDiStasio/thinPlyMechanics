@@ -285,7 +285,7 @@ NSLL,S,1                                  !Select nodes associated to this line
 *VWRITE, 'NODE LABEL, SX [MPa], SZ [MPa], SXZ [MPa], EX [-], EZ [-], EXZ [-]'
 (A80)
 *VWRITE, CrackDisps(1,1), ', ', CrackDisps(1,6), ', ', CrackDisps(1,7), ', ', CrackDisps(1,8), ', ', CrackDisps(1,9), ', ', CrackDisps(1,10), ', ', CrackDisps(1,11)
-(I5,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
+(F5.0,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8,A2,F12.8)
 *CFCLOS
 
 /EOF

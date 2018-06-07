@@ -249,10 +249,10 @@ SAVE                 ! Save your work to the database
 
 /POST1               ! Post processing
 
-ALLSEL
+!ALLSEL
 
 !CMSEL,S,CRACKTIP
-NSEL,S,NODE,CRACKTIP
+!NSEL,S,NODE,CRACKTIP
 
 !*DIM, jintegral, ARRAY, nContours, 2
 !*DIM, vcct, ARRAY, 2

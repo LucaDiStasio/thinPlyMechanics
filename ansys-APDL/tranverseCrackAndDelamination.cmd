@@ -17,7 +17,7 @@ rhon = 0.01       ! [-]  normalized crack density
 daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) to crack length
 epsx = 0.01       ! [-]  applied strain
 uniP = 0.0        ! [-]  uniform pressure applied to crack face
-reftRatio = 0.1   ! [-]  ratio of refined area height to cross-ply thickness
+reftRatio = 0.2   ! [-]  ratio of refined area height to cross-ply thickness
 
 nContours = 10 ! [-]  number of contours for J-integral evaluation
 

@@ -18,7 +18,7 @@ daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) 
 epsx = 0.01       ! [-]  applied strain
 uniP = 0.0        ! [-]  uniform pressure applied to crack face
 
-refLRatio = 0.1   ! [-]  ratio of refined area width to model's length
+refLRatio = 0.2   ! [-]  ratio of refined area width to model's length
 
 nContours = 10    ! [-]  number of contours for J-integral evaluation
 
@@ -306,7 +306,8 @@ ALLSEL
 !ALLSEL
 
 LSEL,S,LINE,,8                            ! Crack
-!CMSEL,S,N_CRACK,LINE
+CMSEL,S,N_CRACK,LINE
+LSEL,S,LINE
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
 *DIM, resArray, ARRAY, NNodes, 11

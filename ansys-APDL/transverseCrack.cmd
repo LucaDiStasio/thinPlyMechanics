@@ -306,8 +306,8 @@ ALLSEL
 !ALLSEL
 
 !LSEL,S,LINE,,2                            ! Crack
-KSEL,S,KP,7
-NSLK,S
+!KSEL,S,KP,7
+!NSLK,S
 !CMSEL,S,CRACK,LINE
 !LSEL,S,LINE
 !NSLL,S,1                                  !Select nodes associated to this line
@@ -329,14 +329,14 @@ NSLK,S
 *VWRITE, 'NODE','LABEL,','X[mm],','Z[mm],','UX','[mm],','UZ','[mm]'
 (A5,A6,A6,A6,A2,A5,A2,A4)
 *VWRITE, resArray(1,1), ',', resArray(1,2), ',', resArray(1,3), ',', resArray(1,4), ',', resArray(1,5)
-(F6.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
+(F7.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
 *CFCLOS
 
 *CFOPEN, CFFileStressStrain, csv
 *VWRITE, 'NODE LABEL, SX [MPa], SZ [MPa], SXZ [MPa], EX [-], EZ [-], EXZ [-]'
 (A80)
 *VWRITE, resArray(1,1), ', ', resArray(1,6), ', ', resArray(1,7), ', ', resArray(1,8), ', ', resArray(1,9), ', ', resArray(1,10), ', ', resArray(1,11)
-(F6.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
+(F7.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
 *CFCLOS
 
 ALLSEL

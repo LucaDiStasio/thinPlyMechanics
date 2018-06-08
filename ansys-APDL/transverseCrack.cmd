@@ -291,7 +291,7 @@ SAVE                 ! Save your work to the database
 
 /POST1               ! Post processing
 
-!ALLSEL
+ALLSEL
 
 !CMSEL,S,CRACKTIP
 !NSEL,S,NODE,CRACKTIP
@@ -307,7 +307,7 @@ SAVE                 ! Save your work to the database
 
 !LSEL,S,LINE,,8                            ! Crack
 !NSLL,S,1                                  !Select nodes associated to this line
-NSEL,S,NODE,CRACKTIP
+CMSEL,S,N_CRACK,NODE
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
 *DIM, resArray, ARRAY, NNodes, 11
 *VGET, resArray(1,1), NODE, , NLIST

@@ -305,7 +305,7 @@ ALLSEL
 
 !ALLSEL
 
-!LSEL,S,LINE,,2                            ! Crack
+!LSEL,S,LINE,,8                            ! Crack
 !KSEL,S,KP,7
 !NSLK,S
 !CMSEL,S,CRACK,LINE

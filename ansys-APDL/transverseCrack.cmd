@@ -305,7 +305,8 @@ ALLSEL
 
 !ALLSEL
 
-LSEL,S,LINE,,8                            ! Crack
+!LSEL,S,LINE,,8                            ! Crack
+KSEL,S,KP,7
 !CMSEL,S,CRACK,LINE
 !LSEL,S,LINE
 NSLL,S,1                                  !Select nodes associated to this line

@@ -302,7 +302,7 @@ ALLSEL
 
 *CFOPEN, stressstrainfile, csv
 *VWRITE, 'NODE','LABEL,','SX','[MPa],','SZ','[MPa],','SXZ','[MPa],','EX','[-],','EZ','[-],','EXZ','[-]'
-(A4,A6,A2,A6,A2,A6,A3,A6,A2,A4,A2,A4,A3,A3)
+(A5,A6,A2,A6,A2,A6,A3,A6,A2,A4,A2,A4,A3,A3)
 *VWRITE, resArray(1,1), ', ', resArray(1,6), ', ', resArray(1,7), ', ', resArray(1,8), ', ', resArray(1,9), ', ', resArray(1,10), ', ', resArray(1,11)
 (F7.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
 *CFCLOS

@@ -46,20 +46,8 @@ elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 
 appliedDisp = epsx*L ! [mm] applied displacement
 
-CFFileCD = 'CFCoordDisp'
-CFFileSS = 'CFStressStrain'
-YsymmLowCDRF = 'ysymmLDCDRF'
-YsymmUpCDRF = 'ysymmUDCDRF'
-XsymmLeftCDRF = 'xsymmLDCDRF'
-XsymmRightCDRF = 'xsymmRDCDRF'
-loadUpCD = 'loadUDCD'
-loadLowCD = 'loadLDCD'
-YsymmLowSS = 'ysymmLDSS'
-YsymmUpSS = 'ysymmUDSS'
-XsymmLeftSS = 'xsymmLDSS'
-XsymmRightSS = 'xsymmRDSS'
-loadUpSS = 'loadUDSS'
-loadLowSS = 'loadLDSS'
+dispreactfile = 'allDispsRFs'
+stressstrainfile = 'allStressStrain'
 
 ! Create Geometry
 
@@ -293,26 +281,8 @@ SAVE                 ! Save your work to the database
 
 ALLSEL
 
-!CMSEL,S,CRACKTIP
-!NSEL,S,NODE,CRACKTIP
-
-!*DIM, jintegral, ARRAY, nContours, 2
-!*DIM, vcct, ARRAY, 2
-!*DIM, sifs, ARRAY, nContours, 2
-!*DO, n, 1, nContours, 1
-!jintegral(n,1)=n
-!*GET,jintegral(n,2), CINT, 2, Item1, IT1NUM, Item2, IT2NUM
-
-!ALLSEL
-
-!LSEL,S,LINE,,8                            ! Crack
-!KSEL,S,KP,7
-!NSLK,S
-!CMSEL,S,CRACK,LINE
-!LSEL,S,LINE
-!NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
-*DIM, resArray, ARRAY, NNodes, 11
+*DIM, resArray, ARRAY, NNodes, 13
 *VGET, resArray(1,1), NODE, , NLIST
 *VGET, resArray(1,2), NODE, 1, LOC, X
 *VGET, resArray(1,3), NODE, 1, LOC, Y
@@ -324,53 +294,21 @@ ALLSEL
 *VGET, resArray(1,9), NODE, 1, EPEL, X
 *VGET, resArray(1,10), NODE, 1, EPEL, Y
 *VGET, resArray(1,11), NODE, 1, EPEL, XY
+*VGET, resArray(1,12), NODE, 1, RF, FX
+*VGET, resArray(1,13), NODE, 1, RF, FY
 
-*CFOPEN, CFFileCoordDisp, csv
-*VWRITE, 'NODE','LABEL,','X[mm],','Z[mm],','UX','[mm],','UZ','[mm]'
-(A5,A6,A6,A6,A2,A5,A2,A4)
-*VWRITE, resArray(1,1), ',', resArray(1,2), ',', resArray(1,3), ',', resArray(1,4), ',', resArray(1,5)
-(F7.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
+*CFOPEN, dispreactfile, csv
+*VWRITE, 'NODE','LABEL,','X[mm],','Z[mm],','UX','[mm],','UZ','[mm],',','RX','[kN],','RZ','[kN]'
+(A5,A6,A6,A6,A2,A5,A2,A5,A2,A5,A2,A4)
+*VWRITE, resArray(1,1), ',', resArray(1,2), ',', resArray(1,3), ',', resArray(1,4), ',', resArray(1,5), ',', resArray(1,12), ',', resArray(1,13)
+(F7.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
 *CFCLOS
 
-*CFOPEN, CFFileStressStrain, csv
+*CFOPEN, stressstrainfile, csv
 *VWRITE, 'NODE LABEL, SX [MPa], SZ [MPa], SXZ [MPa], EX [-], EZ [-], EXZ [-]'
 (A80)
 *VWRITE, resArray(1,1), ', ', resArray(1,6), ', ', resArray(1,7), ', ', resArray(1,8), ', ', resArray(1,9), ', ', resArray(1,10), ', ', resArray(1,11)
 (F7.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
-*CFCLOS
-
-ALLSEL
-
-LSEL,S,LINE,,7                            
-NSLL,S,1                                  !Select nodes associated to this line
-*GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
-*DIM, resArray, ARRAY, NNodes, 13
-*VGET, resArray(1,1), NODE, , NLIST
-*VGET, resArray(1,2), NODE, 1, LOC, Y
-*VGET, resArray(1,3), NODE, 1, LOC, X
-*VGET, resArray(1,4), NODE, 1, U, X
-*VGET, resArray(1,5), NODE, 1, U, Y
-*VGET, resArray(1,6), NODE, 1, S, X
-*VGET, resArray(1,7), NODE, 1, S, Y
-*VGET, resArray(1,8), NODE, 1, S, XY
-*VGET, resArray(1,9), NODE, 1, EPEL, X
-*VGET, resArray(1,10), NODE, 1, EPEL, Y
-*VGET, resArray(1,11), NODE, 1, EPEL, XY
-*VGET, resArray(1,12), NODE, 1, RF, FX
-*VGET, resArray(1,13), NODE, 1, RF, FY
-
-*CFOPEN, YsymmLowCDRF, csv
-*VWRITE, 'NODE','LABEL,','X[mm],','Z[mm],','UX','[mm],','UZ','[mm],',','RX','[kN],','RZ','[kN]'
-(A5,A6,A6,A6,A2,A5,A2,A5,A2,A5,A2,A4)
-*VWRITE, resArray(1,1), ',', resArray(1,2), ',', resArray(1,3), ',', resArray(1,4), ',', resArray(1,5), ',', resArray(1,12), ',', resArray(1,13)
-(F5.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
-*CFCLOS
-
-*CFOPEN, YsymmLowCDSS, csv
-*VWRITE, 'NODE LABEL, SX [MPa], SZ [MPa], SXZ [MPa], EX [-], EZ [-], EXZ [-]'
-(A80)
-*VWRITE, resArray(1,1), ', ', resArray(1,6), ', ', resArray(1,7), ', ', resArray(1,8), ', ', resArray(1,9), ', ', resArray(1,10), ', ', resArray(1,11)
-(F5.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
 *CFCLOS
 
 /EOF

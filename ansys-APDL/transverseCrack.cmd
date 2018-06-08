@@ -305,9 +305,9 @@ ALLSEL
 
 !ALLSEL
 
-LSEL,S,LINE,,8                            ! Crack
-CMSEL,S,N_CRACK,LINE
-LSEL,S,LINE
+!LSEL,S,LINE,,8                            ! Crack
+CMSEL,S,CRACK,LINE
+!LSEL,S,LINE
 NSLL,S,1                                  !Select nodes associated to this line
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
 *DIM, resArray, ARRAY, NNodes, 11

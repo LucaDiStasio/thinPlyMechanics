@@ -20,7 +20,10 @@ uniP = 0.0        ! [-]  uniform pressure applied to crack face
 
 refLRatio = 0.1   ! [-]  ratio of refined area width to model's length
 
-nContours = 10 ! [-]  number of contours for J-integral evaluation
+nContours = 10    ! [-]  number of contours for J-integral evaluation
+
+crossPly = 0      ! flag for type of elasticity: 0 -> isotropic, 1 -> engineering constants
+udPly = 0      ! flag for type of elasticity: 0 -> isotropic, 1 -> engineering constants
 
 EL = 3500.0! [MPa] UD longitudinal Young's modulus
 ET = 3500.0! [MPa] UD transverse Young's modulus
@@ -71,9 +74,9 @@ K, 5, 0.0, t       ! W corner of ply interface
 K, 6, L, t         ! E corner of ply interface
 
 K, 7, 0.0, a       ! crack tip
-K, 8, a, 0.0       ! S corner of refined area interface
-K, 9, a, t         ! N corner of refined area interface
-K, 10, a, a         ! E corner in refined area interface
+K, 8, refW, 0.0    ! S corner of refined area interface
+K, 9, refW, t      ! N corner of refined area interface
+K, 10, refW, a     ! E corner in refined area interface
 
 ! Lines
 
@@ -157,24 +160,35 @@ ALLSEL
 
 ! Define Material Properties
 
-MP,EX,1,ET        ! 1 is cross-ply, 2 is ud-ply 
-!MP,EY,1,ET        ! 1 is cross-ply, 2 is ud-ply
-!MP,EZ,1,EL        ! 1 is cross-ply, 2 is ud-ply
-MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
-!MP,NUYZ,1,nuLT    ! mp,Poisson's ratio,material number,value
-!MP,NUXZ,1,nuLT    ! mp,Poisson's ratio,material number,value
-!MP,GXY,1,GTT      ! mp,Poisson's ratio,material number,value
-!MP,GYZ,1,GLT      ! mp,Poisson's ratio,material number,value
-!MP,GXZ,1,GLT      ! mp,Poisson's ratio,material number,value
-MP,EX,2,EL        ! 1 is cross-ply, 2 is ud-ply 
-!MP,EY,2,ET        ! 1 is cross-ply, 2 is ud-ply
-!MP,EZ,2,ET        ! 1 is cross-ply, 2 is ud-ply
-MP,NUXY,2,nuLT    ! mp,Poisson's ratio,material number,value
-!MP,NUYZ,2,nuTT    ! mp,Poisson's ratio,material number,value
-!MP,NUXZ,2,nuLT    ! mp,Poisson's ratio,material number,value
-!MP,GXY,2,GLT      ! mp,Poisson's ratio,material number,value
-!MP,GYZ,2,GTT      ! mp,Poisson's ratio,material number,value
-!MP,GXZ,2,GLT      ! mp,Poisson's ratio,material number,value
+*IF, crossPly, EQ, 0, THEN
+   MP,EX,1,ET        ! 1 is cross-ply, 2 is ud-ply 
+   MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
+*ELSE
+   MP,EX,1,ET        ! 1 is cross-ply, 2 is ud-ply 
+   MP,EY,1,ET        ! 1 is cross-ply, 2 is ud-ply
+   MP,EZ,1,EL        ! 1 is cross-ply, 2 is ud-ply
+   MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
+   MP,NUYZ,1,nuLT    ! mp,Poisson's ratio,material number,value
+   MP,NUXZ,1,nuLT    ! mp,Poisson's ratio,material number,value
+   MP,GXY,1,GTT      ! mp,Poisson's ratio,material number,value
+   MP,GYZ,1,GLT      ! mp,Poisson's ratio,material number,value
+   MP,GXZ,1,GLT      ! mp,Poisson's ratio,material number,value
+*ENDIF
+
+*IF, udPly, EQ, 0, THEN
+   MP,EX,2,EL        ! 1 is cross-ply, 2 is ud-ply
+   MP,NUXY,2,nuLT    ! mp,Poisson's ratio,material number,value
+*ELSE
+   MP,EX,2,EL        ! 1 is cross-ply, 2 is ud-ply 
+   MP,EY,2,ET        ! 1 is cross-ply, 2 is ud-ply
+   MP,EZ,2,ET        ! 1 is cross-ply, 2 is ud-ply
+   MP,NUXY,2,nuLT    ! mp,Poisson's ratio,material number,value
+   MP,NUYZ,2,nuTT    ! mp,Poisson's ratio,material number,value
+   MP,NUXZ,2,nuLT    ! mp,Poisson's ratio,material number,value
+   MP,GXY,2,GLT      ! mp,Poisson's ratio,material number,value
+   MP,GYZ,2,GTT      ! mp,Poisson's ratio,material number,value
+   MP,GXZ,2,GLT      ! mp,Poisson's ratio,material number,value
+*ENDIF
 
 ! Assign properties to areas
 ! ASEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP

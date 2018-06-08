@@ -18,6 +18,8 @@ daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) 
 epsx = 0.01       ! [-]  applied strain
 uniP = 0.0        ! [-]  uniform pressure applied to crack face
 
+refLRatio = 0.1   ! [-]  ratio of refined area width to model's length
+
 nContours = 10 ! [-]  number of contours for J-integral evaluation
 
 EL = 3500.0! [MPa] UD longitudinal Young's modulus
@@ -34,6 +36,8 @@ a = atRatio*t     ! [mm] 2a = crack length
 
 tBPly = tRatio*(2*t) ! [mm] thickness of the bounding ply
 tTOT = t + tBPly   ! [mm] thickness of the bounding ply
+
+refW = refLRatio*t 
 
 elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 

@@ -294,15 +294,15 @@ ALLSEL
 *VGET, resArray(1,13), NODE, 1, RF, FY
 
 *CFOPEN, dispreactfile, csv
-*VWRITE, 'NODE','LABEL,','X[mm],','Z[mm],','UX','[mm],','UZ','[mm],',','RX','[kN],','RZ','[kN]'
+*VWRITE, 'NODE','LABEL,','X[mm],','Z[mm],','UX','[mm],','UZ','[mm],','RX','[kN],','RZ','[kN]'
 (A5,A6,A6,A6,A2,A5,A2,A5,A2,A5,A2,A4)
 *VWRITE, resArray(1,1), ',', resArray(1,2), ',', resArray(1,3), ',', resArray(1,4), ',', resArray(1,5), ',', resArray(1,12), ',', resArray(1,13)
 (F7.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
 *CFCLOS
 
 *CFOPEN, stressstrainfile, csv
-*VWRITE, 'NODE LABEL, SX [MPa], SZ [MPa], SXZ [MPa], EX [-], EZ [-], EXZ [-]'
-(A80)
+*VWRITE, 'NODE','LABEL,','SX','[MPa],','SZ','[MPa],','SXZ','[MPa],','EX','[-],','EZ','[-],','EXZ','[-]'
+(A4,A5,A2,A6,A2,A6,A3,A6,A2,A4,A2,A4,A3,A3)
 *VWRITE, resArray(1,1), ', ', resArray(1,6), ', ', resArray(1,7), ', ', resArray(1,8), ', ', resArray(1,9), ', ', resArray(1,10), ', ', resArray(1,11)
 (F7.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
 *CFCLOS

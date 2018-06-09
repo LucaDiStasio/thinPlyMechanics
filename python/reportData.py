@@ -440,7 +440,7 @@ def main(argv):
             if toPlot:
                 settingsString = ','.join(line.replace('\n','').split(',')[3:])
                 plotSettings = ast.literal_eval(settingsString[1:])
-            worksheet = workbook.add_worksheet(sheetName)
+            worksheet = workbook.add_worksheet(sheetName.decode('utf-8'))
             for e,element in enumerate(csvlines[0].replace('\n','').split(',')):
                 worksheet.write(0,e,element,stringFormat)
             for c,csvline in enumerate(csvlines[1:]):
@@ -468,7 +468,7 @@ def main(argv):
                     elif 'GTOT' in csvlines[0][curve[1]]:
                         isGTOTinplot = True
                     chart.add_series({
-                                        'name':       curve[2],
+                                        'name':       curve[2].decode('utf-8'),
                                         'categories': [sheetName,1,curve[0],len(csvlines),curve[0]],
                                         'values':     [sheetName,1,curve[1],len(csvlines),curve[1]],
                                     })
@@ -490,9 +490,9 @@ def main(argv):
                                         'categories': [bemdataSheetname,1,0,15,0],
                                         'values':     [bemdataSheetname,1,3,15,3],
                                     })
-                chart.set_title ({'name': plot[-1]})
-                chart.set_x_axis({'name': plot[-3]})
-                chart.set_y_axis({'name': plot[-2]})
+                chart.set_title ({'name': plot[-1].decode('utf-8')})
+                chart.set_x_axis({'name': plot[-3].decode('utf-8')})
+                chart.set_y_axis({'name': plot[-2].decode('utf-8')})
                 worksheet.insert_chart(len(csvlines)+10,10*p, chart)
         print('...done.')
         workbook.close()

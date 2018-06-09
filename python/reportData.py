@@ -405,7 +405,7 @@ def main(argv):
     if toExcel:
         
         print('Open workbook ' + join(outdir,outputfileBasename + '.xlsx'))
-        workbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '.xlsx'))
+        workbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '.xlsx'),{'nan_inf_to_errors': True})
 
         print('Set string and number format')
         stringFormat = workbook.add_format({'bold': 1})
@@ -451,7 +451,6 @@ def main(argv):
                         else:
                             worksheet.write(c+1,e,float(element),numberFormat)
                     except Exception,error:
-                        print('        '+str(error))
                         worksheet.write(c+1,e,str(element).decode('utf-8'),numberFormat)
                         sys.exc_clear()
             for p,plot in enumerate(plotSettings):

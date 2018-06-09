@@ -5676,7 +5676,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
     thirdcircleStressdata = np.array(thirdcircleStressdata)
     thirdcircleStressdata = thirdcircleStressdata[np.argsort(thirdcircleStressdata[:,0])]
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],'x0 [um], y0 [um], R0 [um], theta0 [°], (theta0-deltatheta)/(180-deltatheta) [-], x [um], y [um], R [um], theta [°], (theta-deltatheta)/(180-deltatheta) [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], sigma_rr [MPa], sigma_tt [MPa], tau_rt [MPa]')
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],'x0 [um], y0 [um], R0 [um], theta0 [deg], (theta0-deltatheta)/(180-deltatheta) [-], x [um], y [um], R [um], theta [deg], (theta-deltatheta)/(180-deltatheta) [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], sigma_rr [MPa], sigma_tt [MPa], tau_rt [MPa]')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],thirdcircleStressdata)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     

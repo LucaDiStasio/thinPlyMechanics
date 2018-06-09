@@ -451,7 +451,8 @@ def main(argv):
                         else:
                             worksheet.write(c+1,e,float(element),numberFormat)
                     except Exception,error:
-                        worksheet.write(c+1,e,str(element),numberFormat)
+                        print('        '+str(error))
+                        worksheet.write(c+1,e,str(element).decode('utf-8'),numberFormat)
                         sys.exc_clear()
             for p,plot in enumerate(plotSettings):
                 print('        Create plot ' + plot[-1] + ' in sheet ' + sheetName)

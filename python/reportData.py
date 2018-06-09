@@ -403,13 +403,18 @@ def main(argv):
         lines = csv.readlines()
 
     if toExcel:
+        
+        print('Open workbook ' + join(outdir,outputfileBasename + '.xlsx'))
         workbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '.xlsx'))
 
+        print('Set string and number format')
         stringFormat = workbook.add_format({'bold': 1})
         numberFormat = workbook.add_format({'num_format': '0.000000'})
 
         bemdataSheetname = 'BEM-Data'
+        print('Create sheet for BEM data: ' + bemdataSheetname )
         worksheet = workbook.add_worksheet(bemdataSheetname)
+        print('Fill in values of BEM data...')
         worksheet.write(0,0,'deltatheta [deg]',stringFormat)
         worksheet.write(0,1,'GI/G0 [-]',stringFormat)
         worksheet.write(0,2,'GII/G0 [-]',stringFormat)
@@ -417,7 +422,9 @@ def main(argv):
         for r,row in enumerate(bemData['normGs']):
             for c,value in enumerate(row):
                 worksheet.write(r+1,c,value,numberFormat)
-
+        print('...done.')
+        
+        print('Creating sheets for results ...')
         for line in lines[1:]:
             csvPath = line.replace('\n','').split(',')[0]
             try:
@@ -427,6 +434,7 @@ def main(argv):
                 continue
                 sys.exc_clear()
             sheetName = line.replace('\n','').split(',')[1].replace('deltatheta','')
+            print('    Create sheet ' + sheetName)
             toPlot = bool(line.replace('\n','').split(',')[2])
             plotSettings = []
             if toPlot:
@@ -446,6 +454,7 @@ def main(argv):
                         worksheet.write(c+1,e,str(element),numberFormat)
                         sys.exc_clear()
             for p,plot in enumerate(plotSettings):
+                print('        Create plot ' + plot[-1] + ' in sheet ' + sheetName)
                 chart = workbook.add_chart({'type': 'scatter',
                                             'subtype': 'smooth_with_markers'})
                 isGIinplot = False
@@ -485,8 +494,9 @@ def main(argv):
                 chart.set_x_axis({'name': plot[-3]})
                 chart.set_y_axis({'name': plot[-2]})
                 worksheet.insert_chart(len(csvlines)+10,10*p, chart)
-
+        print('...done.')
         workbook.close()
+        print('Workbook closed.')
 
     if toLatex: # only for errts file
 

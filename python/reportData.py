@@ -453,11 +453,7 @@ def main(argv):
                     except Exception,error:
                         print('        '+str(error))
                         worksheet.write(c+1,e,str(element).decode('utf-8'),numberFormat)
-                        #sys.exc_clear()
-                        if  'NAN' in str(error) or 'INF' in str(error):
-                            sys.exit(2)
-                        else:
-                            sys.exc_clear()
+                        sys.exc_clear()
             for p,plot in enumerate(plotSettings):
                 print('        Create plot ' + plot[-1] + ' in sheet ' + sheetName)
                 chart = workbook.add_chart({'type': 'scatter',

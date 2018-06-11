@@ -106,3 +106,53 @@ AL, 19, 21, 13, 8        ! 4, upper ply, free area
 
 AL, 12, 3, 17, 15, 20    ! 5, lower ply, bonded area
 AL, 4, 14, 21, 16, 17    ! 6, upper ply, bonded area
+
+! Define Material Properties
+
+*IF, crossPly, EQ, 0, THEN
+   MP,EX,1,ET        ! 1 is cross-ply, 2 is ud-ply 
+   MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
+*ELSE
+   MP,EX,1,ET        ! 1 is cross-ply, 2 is ud-ply 
+   MP,EY,1,ET        ! 1 is cross-ply, 2 is ud-ply
+   MP,EZ,1,EL        ! 1 is cross-ply, 2 is ud-ply
+   MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
+   MP,NUYZ,1,nuLT    ! mp,Poisson's ratio,material number,value
+   MP,NUXZ,1,nuLT    ! mp,Poisson's ratio,material number,value
+   MP,GXY,1,GTT      ! mp,Poisson's ratio,material number,value
+   MP,GYZ,1,GLT      ! mp,Poisson's ratio,material number,value
+   MP,GXZ,1,GLT      ! mp,Poisson's ratio,material number,value
+*ENDIF
+
+*IF, udPly, EQ, 0, THEN
+   MP,EX,2,EL        ! 1 is cross-ply, 2 is ud-ply
+   MP,NUXY,2,nuLT    ! mp,Poisson's ratio,material number,value
+*ELSE
+   MP,EX,2,EL        ! 1 is cross-ply, 2 is ud-ply 
+   MP,EY,2,ET        ! 1 is cross-ply, 2 is ud-ply
+   MP,EZ,2,ET        ! 1 is cross-ply, 2 is ud-ply
+   MP,NUXY,2,nuLT    ! mp,Poisson's ratio,material number,value
+   MP,NUYZ,2,nuTT    ! mp,Poisson's ratio,material number,value
+   MP,NUXZ,2,nuLT    ! mp,Poisson's ratio,material number,value
+   MP,GXY,2,GLT      ! mp,Poisson's ratio,material number,value
+   MP,GYZ,2,GTT      ! mp,Poisson's ratio,material number,value
+   MP,GXZ,2,GLT      ! mp,Poisson's ratio,material number,value
+*ENDIF
+
+! Assign properties to areas
+! ASEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP
+! AATT, MAT, REAL, TYPE, ESYS, SECN
+ASEL, S, AREA, , 1
+AATT, 1
+ASEL, S, AREA, , 3
+AATT, 1
+ASEL, S, AREA, , 5
+AATT, 1
+ASEL, S, AREA, , 2
+AATT, 2
+ASEL, S, AREA, , 4
+AATT, 2
+ASEL, S, AREA, , 6
+AATT, 2
+
+ALLSEL

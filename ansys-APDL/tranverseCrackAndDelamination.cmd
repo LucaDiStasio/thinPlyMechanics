@@ -93,3 +93,16 @@ L, 11, 15          !16
 L, 15, 16          !17
 L, 13, 10          !18
 L, 14, 11          !19
+L, 9, 10           !20
+L, 11, 12          !21
+
+! Areas
+
+AL, 1, 2, 12, 11, 10     ! 1, lower ply, coarse area
+AL, 13, 14, 5, 6, 7      ! 2, upper ply, coarse area
+
+AL, 11, 20, 18, 9        ! 3, lower ply, free area
+AL, 19, 21, 13, 8        ! 4, upper ply, free area
+
+AL, 12, 3, 17, 15, 20    ! 5, lower ply, bonded area
+AL, 4, 14, 21, 16, 17    ! 6, upper ply, bonded area

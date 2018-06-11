@@ -45,6 +45,11 @@ fileName = 'P1010035'
 ext = '.jpg'
 
 img = cv2.imread(join(inpDir,fileName+ext),0)
+height,width = img.shape
+
+redImg = img[int(np.floor(0.05*height)):int(np.floor(0.95*height)),int(np.floor(0.05*width)):int(np.floor(0.95*width))]
+
+img=redImg
 
 ret1,imgBin1 = cv2.threshold(img,150,255,cv2.THRESH_BINARY)
 ret2,imgBin2 = cv2.threshold(img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)

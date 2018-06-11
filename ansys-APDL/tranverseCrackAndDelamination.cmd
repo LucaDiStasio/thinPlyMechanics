@@ -213,6 +213,8 @@ TYPE,3
 MAT,3
 ESURF
 
+ALLSEL
+
 FINISH              ! Finish pre-processing
 
 /SOLU               ! Enter the solution processor
@@ -246,3 +248,60 @@ ALLSEL
    SFL, 18, PRES, uniP
    SFL, 19, PRES, uniP
 *ENDIF
+
+! For output setting: OUTRES, Item, Freq, Cname, -- , NSVAR, DSUBres
+
+OUTRES, NSOL
+OUTRES, NLOAD
+OUTRES, STRS
+OUTRES, EPEL
+OUTRES, LOCI
+OUTRES, RSOL
+
+SOLVE                ! Solve the problem
+
+FINISH               ! Finish the solution processor
+
+SAVE                 ! Save your work to the database
+
+/POST1               ! Post processing
+
+PRCINT, 2, , JINT
+
+ALLSEL
+
+*GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
+*DIM, resArray, ARRAY, NNodes, 13
+*VGET, resArray(1,1), NODE, , NLIST
+*VGET, resArray(1,2), NODE, 1, LOC, X
+*VGET, resArray(1,3), NODE, 1, LOC, Y
+*VGET, resArray(1,4), NODE, 1, U, X
+*VGET, resArray(1,5), NODE, 1, U, Y
+*VGET, resArray(1,6), NODE, 1, S, X
+*VGET, resArray(1,7), NODE, 1, S, Y
+*VGET, resArray(1,8), NODE, 1, S, XY
+*VGET, resArray(1,9), NODE, 1, EPEL, X
+*VGET, resArray(1,10), NODE, 1, EPEL, Y
+*VGET, resArray(1,11), NODE, 1, EPEL, XY
+*VGET, resArray(1,12), NODE, 1, RF, FX
+*VGET, resArray(1,13), NODE, 1, RF, FY
+
+*CFOPEN, dispreactfile, csv
+*VWRITE, 'NODE','LABEL,','X[mm],','Z[mm],','UX','[mm],','UZ','[mm],','RX','[kN],','RZ','[kN]'
+(A5,A6,A6,A6,A2,A5,A2,A5,A2,A5,A2,A4)
+*VWRITE, resArray(1,1), ',', resArray(1,2), ',', resArray(1,3), ',', resArray(1,4), ',', resArray(1,5), ',', resArray(1,12), ',', resArray(1,13)
+(F7.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
+*CFCLOS
+
+*CFOPEN, stressstrainfile, csv
+*VWRITE, 'NODE','LABEL,','SX','[MPa],','SZ','[MPa],','SXZ','[MPa],','EX','[-],','EZ','[-],','EXZ','[-]'
+(A5,A6,A2,A6,A2,A6,A3,A6,A2,A4,A2,A4,A3,A3)
+*VWRITE, resArray(1,1), ', ', resArray(1,6), ', ', resArray(1,7), ', ', resArray(1,8), ', ', resArray(1,9), ', ', resArray(1,10), ', ', resArray(1,11)
+(F7.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
+*CFCLOS
+
+PRCINT, 2, , JINT
+PRCINT, 1, , G1
+PRCINT, 1, , G2
+
+/EOF

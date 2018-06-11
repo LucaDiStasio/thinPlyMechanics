@@ -218,8 +218,13 @@ LESIZE, 19, elSize
 
 ! Define Element Type
 
-ET,1,PLANE183,0,,2      ! Quadratic plane strain quadrilaterals 
-ET,2,PLANE183,1,,2      ! Quadratic plane strain triangles
+*IF, elOrder, EQ, 2, THEN
+ ET,1,PLANE183,0,,2      ! Quadratic plane strain quadrilaterals 
+ ET,2,PLANE183,1,,2      ! Quadratic plane strain triangles
+*ELSE
+ ET,1,PLANE182,0,,2      ! Linear plane strain quadrilaterals 
+ ET,2,PLANE182,1,,2      ! Linear plane strain triangles
+*ENDIF
 ET,3,CONTA172
 KEYOPT, 3, 1, 0
 KEYOPT, 3, 2, 0

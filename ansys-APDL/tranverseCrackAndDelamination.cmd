@@ -155,4 +155,26 @@ AATT, 2
 ASEL, S, AREA, , 6
 AATT, 2
 
+! Seed the edges
+! LESIZE, NL1, SIZE, ANGSIZ, NDIV, SPACE, KFORC, LAYER1, LAYER2, KYNDIV
+LESIZE, 11, elSize
+LESIZE, 12, elSize
+LESIZE, 13, elSize
+LESIZE, 14, elSize
+LESIZE, 3, elSize
+LESIZE, 4, elSize
+LESIZE, 8, elSize
+LESIZE, 9, elSize
+LESIZE, 20, elSize
+LESIZE, 21, elSize
+LESIZE, 15, elSize
+LESIZE, 16, elSize
+LESIZE, 18, elSize
+LESIZE, 19, elSize
+
+! Define Element Type
+
+ET,1,PLANE183,0,,2      ! Quadratic plane strain quadrilaterals 
+ET,2,PLANE183,1,,2      ! Quadratic plane strain triangles
+
 ALLSEL

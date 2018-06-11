@@ -139,6 +139,8 @@ AL, 4, 14, 21, 16, 17    ! 6, upper ply, bonded area
    MP,GXZ,2,GLT      ! mp,Poisson's ratio,material number,value
 *ENDIF
 
+MP,MU,3,0
+
 ! Assign properties to areas
 ! ASEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP
 ! AATT, MAT, REAL, TYPE, ESYS, SECN
@@ -184,6 +186,8 @@ LESIZE, 19, elSize
 ET,1,PLANE183,0,,2      ! Quadratic plane strain quadrilaterals 
 ET,2,PLANE183,1,,2      ! Quadratic plane strain triangles
 ET,3,CONTA172
+KEYOPT, 3, 1, 0
+KEYOPT, 3, 2, 0
 
 ALLSEL
 
@@ -199,12 +203,14 @@ ALLSEL
 
 LSEL,S,LINE,,18
 NSLL,S,1
-TYPE,2
+TYPE,3
+MAT,3
 ESURF
 
 LSEL,S,LINE,,19
 NSLL,S,1
-TYPE,2
+TYPE,3
+MAT,3
 ESURF
 
 FINISH              ! Finish pre-processing

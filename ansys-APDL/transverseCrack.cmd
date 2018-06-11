@@ -34,11 +34,11 @@ nuTT = 0.4! [-] UD transverse Poisson ratio
 
 ! ===> END INPUT DATA
 
-L = t/rhon        ! [mm] length of the RVE
-a = atRatio*t     ! [mm] 2a = crack length
+L = 2*t/rhon        ! [mm] length of the RVE
+a = atRatio*2*t     ! [mm] 2a = crack length
 
 tBPly = tRatio*(2*t) ! [mm] thickness of the bounding ply
-tTOT = t + tBPly   ! [mm] thickness of the bounding ply
+tTOT = t + tBPly     ! [mm] thickness of the bounding ply
 
 refW = refLRatio*t 
 

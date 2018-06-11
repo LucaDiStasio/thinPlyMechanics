@@ -30,14 +30,14 @@ nuTT = 0.4! [-] UD transverse Poisson ratio
 
 ! ===> END INPUT DATA
 
-L = t/rhon        ! [mm] length of the RVE
+L = 2*t/rhon        ! [mm] length of the RVE
 a = aLRatio*L     ! [mm] 2a = crack length
 
 refHlow = (1-reftRatio)*t 
 refHup = (1+reftRatio)*t
 
 tBPly = tRatio*(2*t) ! [mm] thickness of the bounding ply
-tTOT = t + tBPly   ! [mm] thickness of the bounding ply
+tTOT = t + tBPly     ! [mm] thickness of the bounding ply
 
 elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 
@@ -59,3 +59,9 @@ K, 5, 0.0, refHlow
 K, 6, L, refHlow
 K, 7, L, refHup
 K, 8, 0.0, refHup
+
+K, 9, a, refHlow
+K,10, a, tTOT
+K,11,
+K,12,
+K,13,

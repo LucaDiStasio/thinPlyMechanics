@@ -206,7 +206,11 @@ DL, 5, ,UX,appliedDisp
 ALLSEL
 
 ! Coincident constraints
-LSEL, S, LINE, , 8
+LSEL,S,LINE,,15,16,1
+NSLL,S,1
+CPINTF,ALL
+
+ALLSEL
 
 ! Apply pressure, if present
 ! SFL, Line, Lab, VALI, VALJ, VAL2I, VAL2J

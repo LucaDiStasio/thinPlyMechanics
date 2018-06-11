@@ -11,7 +11,7 @@
 Vf = 0.0! [-] Fiber volume fraction
 
 t = 1             ! [mm] 2t = thickness of the element
-tRatio = 49.5     ! [-]  ratio of bounding ply thickness to main ply
+tRatio = 1        ! [-]  ratio of bounding ply thickness to main ply
 aLRatio = 0.1     ! [-]  ratio of crack length to main ply thickness
 rhon = 0.01       ! [-]  normalized crack density
 daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) to crack length
@@ -69,24 +69,27 @@ K,12, a, refHup
 K,13, 0.0, t
 K,14, 0.0, t
 K,15, vcctRegion,t
-K,16, vcctRegion,t
 
-K,17, L, t
+K,16, L, t
 
 ! Lines
 
 L, 1, 2            !1
 L, 2, 6            !2
-L, 1, 8            !3
-L, 1, 8            !4
-L, 1, 8            !5
-L, 1, 8            !6
-L, 1, 8            !7
-L, 1, 8            !8
-L, 1, 8            !9
-L, 1, 8            !10
-L, 1, 8            !11
-L, 1, 8            !12
-L, 1, 8            !13
-L, 1, 8            !14
-L, 1, 8            !15
+L, 6, 16           !3
+L, 16, 7           !4
+L, 7, 3            !5
+L, 3, 4            !6
+L, 4, 8            !7
+L, 8, 14           !8
+L, 13, 5           !9
+L, 5, 1            !10
+L, 5, 9            !11
+L, 9, 6            !12
+L, 8, 12           !13
+L, 12, 7           !14
+L, 10, 15          !15
+L, 11, 15          !16
+L, 15, 16          !17
+L, 13, 10          !18
+L, 14, 11          !19

@@ -23,12 +23,12 @@ refLRatio = 0.2   ! [-]  ratio of refined area width to model's length
 nContours = 10    ! [-]  number of contours for J-integral evaluation
 
 crossPly = 0      ! flag for type of elasticity: 0 -> isotropic, 1 -> engineering constants
-udPly = 0      ! flag for type of elasticity: 0 -> isotropic, 1 -> engineering constants
+udPly = 0         ! flag for type of elasticity: 0 -> isotropic, 1 -> engineering constants
 
-EL = 3500.0! [MPa] UD longitudinal Young's modulus
-ET = 3500.0! [MPa] UD transverse Young's modulus
-nuLT = 0.4! [-] UD in-plane Poisson ratio
-nuTT = 0.4! [-] UD transverse Poisson ratio
+EL = 3500.0       ! [MPa] UD longitudinal Young's modulus
+ET = 3500.0       ! [MPa] UD transverse Young's modulus
+nuLT = 0.4        ! [-] UD in-plane Poisson ratio
+nuTT = 0.4        ! [-] UD transverse Poisson ratio
 !GL = ! [MPa] UD in-plane shear modulus
 !GT = ! [MPa] UD transverse shear modulus
 

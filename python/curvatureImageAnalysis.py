@@ -50,7 +50,7 @@ height,width = img.shape
 f = 0.4
 redImg = img[int(np.floor(f*height)):int(np.floor((1-f)*height)),int(np.floor(f*width)):int(np.floor((1-f)*width))]
 
-img=redImg
+img = redImg
 
 ret1,imgBin1 = cv2.threshold(img,150,255,cv2.THRESH_BINARY)
 ret2,imgBin2 = cv2.threshold(img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
@@ -65,10 +65,10 @@ plt.subplot(2,2,2)
 plt.imshow(imgBin2,cmap = 'gray')
 plt.title('Otsu')
 plt.subplot(2,2,3)
-plt.imshow(imgBin,cmap = 'gray')
+plt.imshow(th2,cmap = 'gray')
 plt.title('Mean')
 plt.subplot(2,2,4)
-plt.imshow(imgBin,cmap = 'gray')
+plt.imshow(th3,cmap = 'gray')
 plt.title('Gaussian')
 
 plt.show()

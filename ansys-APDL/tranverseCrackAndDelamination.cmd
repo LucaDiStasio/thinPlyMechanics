@@ -155,6 +155,13 @@ AATT, 2
 ASEL, S, AREA, , 6
 AATT, 2
 
+ALLSEL
+
+KSEL, S, KP, , 7
+CM,CRACKTIP,KP
+
+ALLSEL
+
 ! Seed the edges
 ! LESIZE, NL1, SIZE, ANGSIZ, NDIV, SPACE, KFORC, LAYER1, LAYER2, KYNDIV
 LESIZE, 11, elSize
@@ -176,6 +183,7 @@ LESIZE, 19, elSize
 
 ET,1,PLANE183,0,,2      ! Quadratic plane strain quadrilaterals 
 ET,2,PLANE183,1,,2      ! Quadratic plane strain triangles
+ET,3,CONTA172
 
 ALLSEL
 
@@ -186,6 +194,18 @@ MSHKEY, 1
 AMESH, 1, 2, 1
 MSHKEY, 0
 AMESH, 3, 4, 1
+
+ALLSEL
+
+LSEL,S,LINE,,18
+NSLL,S,1
+TYPE,2
+ESURF
+
+LSEL,S,LINE,,19
+NSLL,S,1
+TYPE,2
+ESURF
 
 FINISH              ! Finish pre-processing
 

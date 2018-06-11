@@ -1,4 +1,4 @@
-! Command File mode of 2D Model of Transverse Cracking and Interply Delamination in Thin-ply FRPC
+! 2D Model of Transverse Cracking and Interply Delamination in Thin-ply FRPC
 ! Calculation of reaction forces and displacements for external VCCT subroutine in Python
 
 !
@@ -53,6 +53,7 @@ epsx = 0.01       ! [-]  applied strain
 uniP = 0.0        ! [-]  uniform pressure applied to crack face
 reftRatio = 0.2   ! [-]  ratio of refined area height to cross-ply thickness
 
+elOrder = 2    ! [-]  element order
 nContours = 10 ! [-]  number of contours for J-integral evaluation
 
 EL = 3500.0! [MPa] UD longitudinal Young's modulus

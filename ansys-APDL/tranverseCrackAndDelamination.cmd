@@ -43,20 +43,8 @@ elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 
 appliedDisp = epsx*L ! [mm] applied displacement
 
-CFFileCD = 'CFCoordDisp'
-CFFileSS = 'CFStressStrain'
-YsymmLowCDRF = 'ysymmLDCDRF'
-YsymmUpCDRF = 'ysymmUDCDRF'
-XsymmLeftCDRF = 'xsymmLDCDRF'
-XsymmRightCDRF = 'xsymmRDCDRF'
-loadUpCD = 'loadUDCD'
-loadLowCD = 'loadLDCD'
-YsymmLowSS = 'ysymmLDSS'
-YsymmUpSS = 'ysymmUDSS'
-XsymmLeftSS = 'xsymmLDSS'
-XsymmRightSS = 'xsymmRDSS'
-loadUpSS = 'loadUDSS'
-loadLowSS = 'loadLDSS'
+dispreactfile = 'allDispsRFs'
+stressstrainfile = 'allStressStrain'
 
 ! Create Geometry
 

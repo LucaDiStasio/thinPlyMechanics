@@ -41,6 +41,8 @@ tTOT = t + tBPly     ! [mm] thickness of the bounding ply
 
 elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 
+vcctRegion = a+elSize
+
 appliedDisp = epsx*L ! [mm] applied displacement
 
 dispreactfile = 'allDispsRFs'
@@ -61,7 +63,10 @@ K, 7, L, refHup
 K, 8, 0.0, refHup
 
 K, 9, a, refHlow
-K,10, a, tTOT
-K,11,
-K,12,
-K,13,
+K,10, a, t
+K,11, a, t
+K,12, a, refHup
+K,13, 0.0, t
+K,14, 0.0, t
+K,15, vcctRegion,t
+K,16, vcctRegion,t

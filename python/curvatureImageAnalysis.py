@@ -47,7 +47,7 @@ ext = '.jpg'
 img = cv2.imread(join(inpDir,fileName+ext),0)
 height,width = img.shape
 
-f = 0.4
+f = 0.1
 redImg = img[int(np.floor(f*height)):int(np.floor((1-f)*height)),int(np.floor(f*width)):int(np.floor((1-f)*width))]
 
 img = redImg

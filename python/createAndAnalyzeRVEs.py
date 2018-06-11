@@ -3549,7 +3549,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         setsOfEdgesData.append([0.99*CornerBx,0.5*L,0.0,1.01*CornerBx,0.5*L,0.0,'RIGHTSIDE'])
         setsOfEdgesData.append([0.99*CornerAx,0.5*L,0.0,1.01*CornerAx,0.5*L,0.0,'LEFTSIDE'])
-
+    if 'adjacentFibers' in parameters['BC']['northSide']['type']:
+        for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
+            setsOfEdgesData.append([0.99*Rf,(nFiber+1)*2*L,0.0,1.01*Rf,(nFiber+1)*2*L,0.0,'INTERFACE-UPPER-FIBER-C'+str(nFiber+1)])
+        
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
     
@@ -3567,7 +3570,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RIGHTSIDE',True)
         RVEpart.SetByBoolean(name='LEFTSIDE', sets=[RVEpart.sets['LOWER-LEFTSIDE'],RVEpart.sets['UPPER-LEFTSIDE']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LEFTSIDE',True)
-    
+
     if np.abs(theta)>0.0:
         alpha = theta - deltatheta + deltapsi
         beta = theta - deltatheta - deltapsi
@@ -4189,7 +4192,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         regionSets.append(['RIGHT-FIBERS',QUAD_DOMINATED,FREE])
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         regionSets.append(['LEFT-FIBERS',QUAD_DOMINATED,FREE])
-
+    
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
 
@@ -4243,6 +4246,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         regionSets.append(['RIGHTSIDE',30])
         regionSets.append(['LEFTSIDE',30])
+    
+    if 'adjacentFibers' in parameters['BC']['northSide']['type']:
+        for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
+            regionSets.append(['INTERFACE-UPPER-FIBER-C'+str(nFiber+1),72])
+            
     #regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
     #                ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
     #                ['THIRDCIRCLE-UPPERCRACK',nTangential],

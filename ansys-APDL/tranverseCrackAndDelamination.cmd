@@ -178,3 +178,33 @@ ET,1,PLANE183,0,,2      ! Quadratic plane strain quadrilaterals
 ET,2,PLANE183,1,,2      ! Quadratic plane strain triangles
 
 ALLSEL
+
+! Generate mesh
+! MSHKEY, KEY (0 == free, 1 == mapped)
+! AMESH, NA1, NA2, NINC
+MSHKEY, 1
+AMESH, 1, 2, 1
+MSHKEY, 0
+AMESH, 3, 4, 1
+
+FINISH              ! Finish pre-processing
+
+/SOLU               ! Enter the solution processor
+
+ANTYPE,0            ! Analysis type,static
+
+! Define Displacement Constraints on Lines   (dl command)
+! DL, LINE, AREA, Lab, Value1, Value2
+DL, 1, ,SYMM
+DL, 7, ,SYMM
+DL, 8, ,SYMM
+DL, 2, ,UX,appliedDisp
+DL, 3, ,UX,appliedDisp
+DL, 4, ,UX,appliedDisp
+DL, 5, ,UX,appliedDisp
+
+! Apply pressure, if present
+! SFL, Line, Lab, VALI, VALJ, VAL2I, VAL2J
+*IF, uniP, GT, 0.0, THEN
+   SFL, 8, PRES, uniP
+*ENDIF

@@ -206,5 +206,8 @@ DL, 5, ,UX,appliedDisp
 ! Apply pressure, if present
 ! SFL, Line, Lab, VALI, VALJ, VAL2I, VAL2J
 *IF, uniP, GT, 0.0, THEN
-   SFL, 8, PRES, uniP
+   SFL, 9, PRES, uniP
+   SFL, 10, PRES, uniP
+   SFL, 18, PRES, uniP
+   SFL, 19, PRES, uniP
 *ENDIF

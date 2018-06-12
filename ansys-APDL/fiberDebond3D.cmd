@@ -82,17 +82,30 @@ stressstrainfile = 'allStressStrain'
 
 ! Points
 
-K, 1, -L, W, 0.0   ! SW corner, external face with debond
-K, 2, L, W, 0.0    ! SE corner, external face with debond
-K, 3, L, W, L      ! NE corner, external face with debond
-K, 4, -L, W, L     ! NW corner, external face with debond
+K, 1, -L, W, 0.0     ! SW corner, external face with debond
+K, 2, L, W, 0.0      ! SE corner, external face with debond
+K, 3, L, W, L        ! NE corner, external face with debond
+K, 4, -L, W, L       ! NW corner, external face with debond
 
 K, 5, -L, 0.0, 0.0   ! SW corner, external face without debond
 K, 6, L, 0.0, 0.0    ! SE corner, external face without debond
 K, 7, L, 0.0, L      ! NE corner, external face without debond
 K, 8, -L, 0.0, L     ! NW corner, external face without debond
 
-K, 1, -L, W, 0.0   ! SW corner, external face with debond
+K, 9, 0.0, W, 0.0    ! Fiber's center, external face with debond
+K, 10, 0.0, 0.0, 0.0 ! Fiber's center, external face without debond
+
+K, 11, -Rf, W, 0.0    ! Fiber's west corner, external face with debond
+K, 12, Rf, W, 0.0     ! Fiber's east corner, external face with debond
+K, 13, Rf, W, 0.0     ! Fiber's coincident east corner (for debond), external face with debond
+K, 14, -Rf, 0.0, 0.0  ! Fiber's west corner, external face without debond
+K, 15, Rf, 0.0, 0.0   ! Fiber's east corner, external face without debond
+
+K, 16, Rf, W, 0.0     ! Fiber's interface, start of refined area, external face with debond
+K, 17, Rf, W, 0.0     ! Fiber's interface, coincident start of refined area (for debond), external face with debond
+
+K, 18, Rf, W, 0.0     ! Fiber's interface, crack tip, external face with debond
+K, 19, Rf, W, 0.0     ! Fiber's interface, end of refined area, external face with debond
 
 
 ! Lines

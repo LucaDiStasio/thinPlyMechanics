@@ -50,6 +50,8 @@ deltatheta = 10.0 ! [deg] 2*deltatheta = debond size
 deltaphi = 5.0    ! [deg] refined area size
 delta = 0.05      ! [deg] angular size of element at crack
 aOverW = 0.1      ! [-] ratio of debond length to RVE's width
+refWoverA = 0.1   ! [-] ratio of refined region width to debond's length
+refRoverR = 0.1   ! [-] ratio of refined radial region to fiber's radius 
 
 epsx = 0.01       ! [-]  applied strain
 uniP = 0.0        ! [-]  uniform pressure applied to crack face
@@ -74,6 +76,8 @@ Pi = ACOS(-1)
 
 a = aOverW*W
 crackFront = W-a
+refVolStart = crackFront + refWoverA*a
+refVolStop = crackFront - refWoverA*a
 
 deltathetarad = deltatheta*Pi/180.0
 deltaphirad = deltaphi*Pi/180.0    
@@ -114,8 +118,29 @@ K, 16, Rf*COS(refArAngStart), W, Rf*SIN(refArAngStart)     ! Fiber's interface, 
 K, 17, Rf*COS(refArAngStart), W, Rf*SIN(refArAngStart)     ! Fiber's interface, coincident start of refined area (for debond), external face with debond
 
 K, 18, Rf*COS(deltathetarad), W, Rf*SIN(deltathetarad)     ! Fiber's interface, crack tip, external face with debond
-K, 19, Rf*COS(refArAngStop), W, Rf*SIN(refArAngStop)     ! Fiber's interface, end of refined area, external face with debond
+K, 19, Rf*COS(refArAngStop), W, Rf*SIN(refArAngStop)       ! Fiber's interface, end of refined area, external face with debond
 
+K, 20, (1-refRoverR)*Rf*COS(refArAngStart), W, (1-refRoverR)*Rf*SIN(refArAngStart)     ! Fiber's inside neighborhood, start of refined area, external face with debond
+K, 21, (1-refRoverR)*Rf*COS(deltathetarad), W, (1-refRoverR)*Rf*SIN(deltathetarad)     ! Fiber's inside neighborhood, crack tip, external face with debond
+K, 22, (1-refRoverR)*Rf*COS(refArAngStop), W, (1-refRoverR)*Rf*SIN(refArAngStop)       ! Fiber's inside neighborhood, end of refined area, external face with debond
+
+K, 23, (1+refRoverR)*Rf*COS(refArAngStart), W, (1+refRoverR)*Rf*SIN(refArAngStart)     ! Fiber's inside neighborhood, start of refined area, external face with debond
+K, 24, (1+refRoverR)*Rf*COS(deltathetarad), W, (1+refRoverR)*Rf*SIN(deltathetarad)     ! Fiber's inside neighborhood, crack tip, external face with debond
+K, 25, (1+refRoverR)*Rf*COS(refArAngStop), W, (1+refRoverR)*Rf*SIN(refArAngStop)       ! Fiber's inside neighborhood, end of refined area, external face with debond
+
+K, 16, Rf*COS(refArAngStart), W, Rf*SIN(refArAngStart)     ! Fiber's interface, start of refined area, start of refined volume, face with debond
+K, 17, Rf*COS(refArAngStart), W, Rf*SIN(refArAngStart)     ! Fiber's interface, coincident start of refined area (for debond), start of refined volume, face with debond
+
+K, 18, Rf*COS(deltathetarad), W, Rf*SIN(deltathetarad)     ! Fiber's interface, crack tip, start of refined volume, face with debond
+K, 19, Rf*COS(refArAngStop), W, Rf*SIN(refArAngStop)       ! Fiber's interface, end of refined area, start of refined volume, face with debond
+
+K, 20, (1-refRoverR)*Rf*COS(refArAngStart), W, (1-refRoverR)*Rf*SIN(refArAngStart)     ! Fiber's inside neighborhood, start of refined area, start of refined volume, face with debond
+K, 21, (1-refRoverR)*Rf*COS(deltathetarad), W, (1-refRoverR)*Rf*SIN(deltathetarad)     ! Fiber's inside neighborhood, crack tip, start of refined volume, face with debond
+K, 22, (1-refRoverR)*Rf*COS(refArAngStop), W, (1-refRoverR)*Rf*SIN(refArAngStop)       ! Fiber's inside neighborhood, end of refined area, start of refined volume, face with debond
+
+K, 23, (1+refRoverR)*Rf*COS(refArAngStart), W, (1+refRoverR)*Rf*SIN(refArAngStart)     ! Fiber's inside neighborhood, start of refined area, start of refined volume, face with debond
+K, 24, (1+refRoverR)*Rf*COS(deltathetarad), W, (1+refRoverR)*Rf*SIN(deltathetarad)     ! Fiber's inside neighborhood, crack tip, start of refined volume, face with debond
+K, 25, (1+refRoverR)*Rf*COS(refArAngStop), W, (1+refRoverR)*Rf*SIN(refArAngStop)       ! Fiber's inside neighborhood, end of refined area, start of refined volume, face with debond
 
 ! Lines
 

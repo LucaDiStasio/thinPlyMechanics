@@ -4262,11 +4262,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for mFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    regionSets.append(['INTERFACE-UPPER-FIBER-R'+str(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']),72])
+                    regionSets.append(['INTERFACE-UPPER-FIBER-R'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers'])),72])
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    regionSets.append(['INTERFACE-UPPER-FIBER-L'+str(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']),72])            
+                    regionSets.append(['INTERFACE-UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers'])),72])            
             
     #regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
     #                ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],

@@ -50,7 +50,7 @@ aLRatio = 0.1     ! [-]  ratio of crack length to main ply thickness
 rhon = 0.5       ! [-]  normalized crack density
 daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) to crack length
 epsx = 0.01       ! [-]  applied strain
-uniP = 15.0       ! [MPa]  uniform pressure applied to crack face
+uniP = 0.0       ! [MPa]  uniform pressure applied to crack face
 reftRatio = 0.2   ! [-]  ratio of refined area height to cross-ply thickness
 
 elOrder = 2    ! [-]  element order

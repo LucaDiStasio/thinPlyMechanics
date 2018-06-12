@@ -3555,8 +3555,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for mFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '--> Suggested name:',True)
-                    writeLineToLogFile(logfilepath,'a',baselogindent + 5*logindent + 'INTERFACE-UPPER-FIBER-R'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers'])),True)
                     setsOfEdgesData.append([(mFiber+1)*2*L+0.99*Rf,(nFiber+1)*2*L,0.0,(mFiber+1)*2*L+1.01*Rf,(nFiber+1)*2*L,0.0,'INTERFACE-UPPER-FIBER-R'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             Nfibers = parameters['BC']['northSide']['nFibers']

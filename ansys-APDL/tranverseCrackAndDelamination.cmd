@@ -104,6 +104,8 @@ K,12, a, refHup
 K,13, 0.0, t
 K,14, 0.0, t
 K,15, vcctRegion,t
+K,16, vcctRegion,refHlow
+K,17, vcctRegion,refHup
 
 K,16, L, t
 
@@ -120,9 +122,9 @@ L, 8, 14           !8
 L, 13, 5           !9
 L, 5, 1            !10
 L, 5, 9            !11
-L, 9, 6            !12
+L, 9, 16           !12
 L, 8, 12           !13
-L, 12, 7           !14
+L, 12, 17          !14
 L, 10, 15          !15
 L, 11, 15          !16
 L, 15, 16          !17
@@ -130,6 +132,10 @@ L, 13, 10          !18
 L, 14, 11          !19
 L, 9, 10           !20
 L, 11, 12          !21
+L, 16, 15          !22
+L, 15, 17          !23
+L, 16, 6           !24
+L, 17, 7           !25
 
 ! Areas
 
@@ -139,8 +145,11 @@ AL, 13, 14, 5, 6, 7      ! 2, upper ply, coarse area
 AL, 11, 20, 18, 9        ! 3, lower ply, free area
 AL, 19, 21, 13, 8        ! 4, upper ply, free area
 
-AL, 12, 3, 17, 15, 20    ! 5, lower ply, bonded area
-AL, 4, 14, 21, 16, 17    ! 6, upper ply, bonded area
+AL, 24, 3, 17, 15, 20    ! 5, lower ply, bonded area
+AL, 4, 25, 21, 16, 17    ! 6, upper ply, bonded area
+
+AL, 12, 22, 15, 20       ! 7, lower ply, one element bonded area
+AL, 16, 23, 14, 21       ! 8, upper ply, one element bonded area
 
 ! Define Material Properties
 

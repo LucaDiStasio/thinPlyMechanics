@@ -306,8 +306,6 @@ SAVE                 ! Save your work to the database
 
 /POST1               ! Post processing
 
-PRCINT, 2, , JINT
-
 ALLSEL
 
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set
@@ -339,9 +337,5 @@ ALLSEL
 *VWRITE, resArray(1,1), ', ', resArray(1,6), ', ', resArray(1,7), ', ', resArray(1,8), ', ', resArray(1,9), ', ', resArray(1,10), ', ', resArray(1,11)
 (F7.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)
 *CFCLOS
-
-PRCINT, 2, , JINT
-PRCINT, 1, , G1
-PRCINT, 1, , G2
 
 /EOF

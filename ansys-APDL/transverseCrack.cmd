@@ -307,8 +307,6 @@ SAVE                 ! Save your work to the database
 
 /POST1               ! Post processing
 
-PRCINT, 2, , JINT
-
 ALLSEL
 
 *GET,NNodes,NODE,0,COUNT                  !Get the number of nodes in the selected set

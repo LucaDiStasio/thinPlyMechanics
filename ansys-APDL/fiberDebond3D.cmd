@@ -130,6 +130,17 @@ L, 8, 5                !14
 
 LARC, 14, 15, 10, Rf   !15
 
+L, 2, 6                !16
+L, 3, 7                !17
+L, 4, 8                !18
+L, 1, 5                !19
+
+AL, 5, 17, 12, 16             ! 1
+AL, 6, 17, 13, 18             ! 2
+AL, 19, 7, 18, 14             ! 3
+AL, 8, 15, 11, 12, 13, 14     ! 5
+AL, 9, 10, 15                 ! 6
+
 K, 16, Rf*COS(refArAngStart), W, Rf*SIN(refArAngStart)     ! Fiber's interface, start of refined area, external face with debond
 K, 17, Rf*COS(refArAngStart), W, Rf*SIN(refArAngStart)     ! Fiber's interface, coincident start of refined area (for debond), external face with debond
 
@@ -144,15 +155,22 @@ K, 23, (1+refRoverR)*Rf*COS(refArAngStart), W, (1+refRoverR)*Rf*SIN(refArAngStar
 K, 24, (1+refRoverR)*Rf*COS(deltathetarad), W, (1+refRoverR)*Rf*SIN(deltathetarad)     ! Fiber's outside neighborhood, crack tip, external face with debond
 K, 25, (1+refRoverR)*Rf*COS(refArAngStop), W, (1+refRoverR)*Rf*SIN(refArAngStop)       ! Fiber's outside neighborhood, end of refined area, external face with debond
 
-LARC, 12, 16, 9, Rf   !15
-LARC, 13, 17, 9, Rf   !16
-LARC, 16, 18, 9, Rf   !17
-LARC, 17, 18, 9, Rf   !18
-LARC, 18, 19, 9, Rf   !19
-LARC, 20, 21, 9, Rf   !20
-LARC, 21, 22, 9, Rf   !21
-LARC, 23, 24, 9, Rf   !22
-LARC, 24, 25, 9, Rf   !23
+LARC, 12, 16, 9, Rf   !20
+LARC, 13, 17, 9, Rf   !21
+LARC, 16, 18, 9, Rf   !22
+LARC, 17, 18, 9, Rf   !23
+LARC, 18, 19, 9, Rf   !24
+LARC, 20, 21, 9, Rf   !25
+LARC, 21, 22, 9, Rf   !26
+LARC, 23, 24, 9, Rf   !27
+LARC, 24, 25, 9, Rf   !28
+
+L, 20, 16             !29
+L, 21, 18             !30
+L, 22, 19             !31
+L, 17, 23             !32
+L, 18, 24             !33
+L, 19, 25             !34
 
 K, 26, Rf*COS(refArAngStart), refVolStart, Rf*SIN(refArAngStart)     ! Fiber's interface, start of refined area, start of refined volume, face with debond
 K, 27, Rf*COS(refArAngStart), refVolStart, Rf*SIN(refArAngStart)     ! Fiber's interface, coincident start of refined area (for debond), start of refined volume, face with debond

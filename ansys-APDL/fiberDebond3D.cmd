@@ -48,6 +48,7 @@ Rf = 1.0          ! [um]  fiber's radius
 theta0 = 0.0      ! [deg] angular position of debond
 deltatheta = 10.0 ! [deg] 2*deltatheta = debond size
 deltaphi = 5.0    ! [deg] refined area size
+delta = 0.05      ! [deg] angular size of element at crack
 
 epsx = 0.01       ! [-]  applied strain
 uniP = 0.0        ! [-]  uniform pressure applied to crack face
@@ -69,17 +70,6 @@ nufLT = 0.4! [-] fiber in-plane Poisson ratio
 ! ===> END INPUT DATA
 
 L = 2*t/rhon        ! [mm] length of the RVE
-a = aLRatio*L     ! [mm] 2a = crack length
-
-refHlow = (1-reftRatio)*t 
-refHup = (1+reftRatio)*t
-
-tBPly = tRatio*(2*t) ! [mm] thickness of the bounding ply
-tTOT = t + tBPly     ! [mm] thickness of the bounding ply
-
-elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
-
-vcctRegion = a+elSize
 
 appliedDisp = epsx*L ! [mm] applied displacement
 

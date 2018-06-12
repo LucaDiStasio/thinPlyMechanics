@@ -139,8 +139,8 @@ L, 17, 7           !25
 
 ! Areas
 
-AL, 1, 2, 12, 11, 10     ! 1, lower ply, coarse area
-AL, 13, 14, 5, 6, 7      ! 2, upper ply, coarse area
+AL, 1, 2, 12, 11, 10, 24 ! 1, lower ply, coarse area
+AL, 13, 14, 5, 6, 7, 25  ! 2, upper ply, coarse area
 
 AL, 11, 20, 18, 9        ! 3, lower ply, free area
 AL, 19, 21, 13, 8        ! 4, upper ply, free area

@@ -42,25 +42,29 @@
 
 ! ===> START INPUT DATA
 
-Vf = 0.0! [-] Fiber volume fraction
+Vf = 0.000079! [-] Fiber volume fraction
 
-t = 1             ! [mm] 2t = thickness of the element
-tRatio = 1        ! [-]  ratio of bounding ply thickness to main ply
-aLRatio = 0.1     ! [-]  ratio of crack length to main ply thickness
-rhon = 0.01       ! [-]  normalized crack density
-daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) to crack length
+Rf = 1.0          ! [um]  fiber's radius
+theta0 = 0.0      ! [deg] angular position of debond
+deltatheta = 10.0 ! [deg] 2*deltatheta = debond size
+deltaphi = 5.0    ! [deg] refined area size
+
 epsx = 0.01       ! [-]  applied strain
 uniP = 0.0        ! [-]  uniform pressure applied to crack face
-reftRatio = 0.2   ! [-]  ratio of refined area height to cross-ply thickness
 
 nContours = 10 ! [-]  number of contours for J-integral evaluation
 
-EL = 3500.0! [MPa] UD longitudinal Young's modulus
-ET = 3500.0! [MPa] UD transverse Young's modulus
-nuLT = 0.4! [-] UD in-plane Poisson ratio
-nuTT = 0.4! [-] UD transverse Poisson ratio
-!GL = ! [MPa] UD in-plane shear modulus
-!GT = ! [MPa] UD transverse shear modulus
+Em = 3500.0   ! [MPa] matrix Young's modulus
+num = 0.4     ! [-] matrix Poisson ratio
+
+fiberMat = 0      ! flag for type of elasticity: 0 -> isotropic, 1 -> engineering constants
+
+EfL = 3500.0! [MPa] fiber Young's modulus
+!EfT = 3500.0! [MPa] fiber Young's modulus
+nufLT = 0.4! [-] fiber in-plane Poisson ratio
+!nufTT = 0.4! [-] fiber transverse Poisson ratio
+!GfL = ! [MPa] fiber in-plane shear modulus
+!GfT = ! [MPa] fiber transverse shear modulus
 
 ! ===> END INPUT DATA
 

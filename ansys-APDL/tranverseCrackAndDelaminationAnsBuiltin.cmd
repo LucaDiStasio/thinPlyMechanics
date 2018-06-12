@@ -230,10 +230,10 @@ ALLSEL
 ! Generate mesh
 ! MSHKEY, KEY (0 == free, 1 == mapped)
 ! AMESH, NA1, NA2, NINC
-MSHKEY, 1
-AMESH, 1, 2, 1
 MSHKEY, 0
-AMESH, 3, 4, 1
+AMESH, 1, 2, 1
+MSHKEY, 1
+AMESH, 3, 6, 1
 
 ALLSEL
 

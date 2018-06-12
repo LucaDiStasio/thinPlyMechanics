@@ -114,16 +114,16 @@ L, 14, 7           !4
 L, 7, 3            !5
 L, 3, 4            !6
 L, 4, 8            !7
-L, 8, 14           !8
-L, 13, 5           !9
+L, 8, 13           !8
+L, 12, 5           !9
 L, 5, 1            !10
 L, 5, 9            !11
 L, 9, 6            !12
 L, 8, 12           !13
 L, 12, 7           !14
 L, 10, 14          !15
-L, 13, 10          !16
-L, 14, 11          !17
+L, 12, 10          !16
+L, 13, 10          !17
 L, 9, 10           !18
 L, 10, 12          !19
 
@@ -132,11 +132,11 @@ L, 10, 12          !19
 AL, 1, 2, 12, 11, 10     ! 1, lower ply, coarse area
 AL, 13, 14, 5, 6, 7      ! 2, upper ply, coarse area
 
-AL, 11, 20, 18, 9        ! 3, lower ply, free area
-AL, 19, 21, 13, 8        ! 4, upper ply, free area
+AL, 11, 18, 16, 9        ! 3, lower ply, free area
+AL, 17, 19, 13, 8        ! 4, upper ply, free area
 
-AL, 12, 3, 17, 15, 20    ! 5, lower ply, bonded area
-AL, 4, 14, 21, 16, 17    ! 6, upper ply, bonded area
+AL, 12, 3, 15, 18        ! 5, lower ply, bonded area
+AL, 4, 14, 19, 15        ! 6, upper ply, bonded area
 
 ! Define Material Properties
 

@@ -205,12 +205,11 @@ LESIZE, 3, elSize
 LESIZE, 4, elSize
 LESIZE, 8, elSize
 LESIZE, 9, elSize
-LESIZE, 20, elSize
-LESIZE, 21, elSize
-LESIZE, 15, elSize
-LESIZE, 16, elSize
 LESIZE, 18, elSize
 LESIZE, 19, elSize
+LESIZE, 15, elSize
+LESIZE, 16, elSize
+LESIZE, 17, elSize
 
 ! Define Element Type
 
@@ -237,13 +236,13 @@ AMESH, 3, 6, 1
 
 ALLSEL
 
-LSEL,S,LINE,,18
+LSEL,S,LINE,,16
 NSLL,S,1
 TYPE,3
 MAT,3
 ESURF
 
-LSEL,S,LINE,,19
+LSEL,S,LINE,,17
 NSLL,S,1
 TYPE,3
 MAT,3
@@ -266,13 +265,6 @@ DL, 2, ,UX,appliedDisp
 DL, 3, ,UX,appliedDisp
 DL, 4, ,UX,appliedDisp
 DL, 5, ,UX,appliedDisp
-
-ALLSEL
-
-! Coincident constraints
-LSEL,S,LINE,,15,16,1
-NSLL,S,1
-CPINTF,ALL
 
 ALLSEL
 

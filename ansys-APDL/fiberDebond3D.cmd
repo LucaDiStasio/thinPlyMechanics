@@ -110,11 +110,11 @@ K, 13, Rf, W, 0.0     ! Fiber's coincident east corner (for debond), external fa
 K, 14, -Rf, 0.0, 0.0  ! Fiber's west corner, external face without debond
 K, 15, Rf, 0.0, 0.0   ! Fiber's east corner, external face without debond
 
-K, 16, Rf*COS(), W, 0.0     ! Fiber's interface, start of refined area, external face with debond
-K, 17, Rf, W, 0.0           ! Fiber's interface, coincident start of refined area (for debond), external face with debond
+K, 16, Rf*COS(refArAngStart), W, Rf*SIN(refArAngStart)     ! Fiber's interface, start of refined area, external face with debond
+K, 17, Rf*COS(refArAngStart), W, Rf*SIN(refArAngStart)     ! Fiber's interface, coincident start of refined area (for debond), external face with debond
 
-K, 18, Rf, W, 0.0     ! Fiber's interface, crack tip, external face with debond
-K, 19, Rf, W, 0.0     ! Fiber's interface, end of refined area, external face with debond
+K, 18, Rf*COS(deltathetarad), W, Rf*SIN(deltathetarad)     ! Fiber's interface, crack tip, external face with debond
+K, 19, Rf*COS(refArAngStop), W, Rf*SIN(refArAngStop)     ! Fiber's interface, end of refined area, external face with debond
 
 
 ! Lines

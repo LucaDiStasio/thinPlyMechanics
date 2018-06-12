@@ -71,6 +71,7 @@ nufLT = 0.4! [-] fiber in-plane Poisson ratio
 ! ===> END INPUT DATA
 
 a = aOverW*W
+crackFront = W-a
 
 appliedDisp = epsx*L ! [mm] applied displacement
 
@@ -91,6 +92,7 @@ K, 6, L, 0.0, 0.0    ! SE corner, external face without debond
 K, 7, L, 0.0, L      ! NE corner, external face without debond
 K, 8, -L, 0.0, L     ! NW corner, external face without debond
 
+K, 1, -L, W, 0.0   ! SW corner, external face with debond
 
 
 ! Lines

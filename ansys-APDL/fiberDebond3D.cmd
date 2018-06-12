@@ -70,8 +70,17 @@ nufLT = 0.4! [-] fiber in-plane Poisson ratio
 
 ! ===> END INPUT DATA
 
+Pi = ACOS(-1)
+
 a = aOverW*W
 crackFront = W-a
+
+deltathetarad = deltatheta*Pi/180.0
+deltaphirad = deltaphi*Pi/180.0    
+deltarad = delta*Pi/180.0
+
+refArAngStart = deltathetarad-deltaphirad
+refArAngStop = deltathetarad+deltaphirad
 
 appliedDisp = epsx*L ! [mm] applied displacement
 
@@ -101,8 +110,8 @@ K, 13, Rf, W, 0.0     ! Fiber's coincident east corner (for debond), external fa
 K, 14, -Rf, 0.0, 0.0  ! Fiber's west corner, external face without debond
 K, 15, Rf, 0.0, 0.0   ! Fiber's east corner, external face without debond
 
-K, 16, Rf, W, 0.0     ! Fiber's interface, start of refined area, external face with debond
-K, 17, Rf, W, 0.0     ! Fiber's interface, coincident start of refined area (for debond), external face with debond
+K, 16, Rf*COS(), W, 0.0     ! Fiber's interface, start of refined area, external face with debond
+K, 17, Rf, W, 0.0           ! Fiber's interface, coincident start of refined area (for debond), external face with debond
 
 K, 18, Rf, W, 0.0     ! Fiber's interface, crack tip, external face with debond
 K, 19, Rf, W, 0.0     ! Fiber's interface, end of refined area, external face with debond

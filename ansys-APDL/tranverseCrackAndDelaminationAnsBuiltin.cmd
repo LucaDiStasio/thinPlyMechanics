@@ -190,7 +190,7 @@ AATT, 2
 
 ALLSEL
 
-KSEL, S, KP, , 7
+KSEL, S, KP, , 10
 CM,CRACKTIP,KP
 
 ALLSEL
@@ -273,8 +273,8 @@ ALLSEL
 *IF, uniP, GT, 0.0, THEN
    SFL, 9, PRES, uniP
    SFL, 10, PRES, uniP
-   SFL, 18, PRES, uniP
-   SFL, 19, PRES, uniP
+   SFL, 16, PRES, uniP
+   SFL, 17, PRES, uniP
 *ENDIF
 
 ! VCCT

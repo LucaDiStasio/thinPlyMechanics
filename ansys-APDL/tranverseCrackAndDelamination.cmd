@@ -34,7 +34,7 @@
 !==============================================================================
 !
 
-/title, 2D Model of Transverse Cracking in Thin-ply FRPC
+/title, 2D Model of Transverse Cracking and Interply Delamination in Thin-ply FRPC
 
 /prep7               ! Enter the pre-processor
 

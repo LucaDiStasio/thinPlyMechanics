@@ -194,11 +194,15 @@ ASEL, S, AREA, , 3
 AATT, 1
 ASEL, S, AREA, , 5
 AATT, 1
+ASEL, S, AREA, , 7
+AATT, 2
 ASEL, S, AREA, , 2
 AATT, 2
 ASEL, S, AREA, , 4
 AATT, 2
 ASEL, S, AREA, , 6
+AATT, 2
+ASEL, S, AREA, , 8
 AATT, 2
 
 ALLSEL
@@ -244,7 +248,7 @@ ALLSEL
 ! MSHKEY, KEY (0 == free, 1 == mapped)
 ! AMESH, NA1, NA2, NINC
 MSHKEY, 1
-AMESH, 3, 6, 1
+AMESH, 3, 8, 1
 MSHKEY, 0
 AMESH, 1, 2, 1
 

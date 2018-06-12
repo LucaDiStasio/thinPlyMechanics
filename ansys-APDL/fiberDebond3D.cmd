@@ -93,8 +93,6 @@ stressstrainfile = 'allStressStrain'
 
 ! Create Geometry
 
-! Points
-
 K, 1, -L, W, 0.0     ! SW corner, external face with debond
 K, 2, L, W, 0.0      ! SE corner, external face with debond
 K, 3, L, W, L        ! NE corner, external face with debond
@@ -113,6 +111,24 @@ K, 12, Rf, W, 0.0     ! Fiber's east corner, external face with debond
 K, 13, Rf, W, 0.0     ! Fiber's coincident east corner (for debond), external face with debond
 K, 14, -Rf, 0.0, 0.0  ! Fiber's west corner, external face without debond
 K, 15, Rf, 0.0, 0.0   ! Fiber's east corner, external face without debond
+
+L, 1, 11            !1
+L, 11, 9            !2
+L, 9, 12            !3
+L, 13, 2            !4
+L, 2, 3             !5
+L, 3, 4             !6
+L, 4, 1             !7
+
+L, 5, 14               !8
+L, 14, 10              !9
+L, 10, 15              !10
+L, 15, 6               !11
+L, 6, 7                !12
+L, 7, 8                !13
+L, 8, 5                !14
+
+LARC, 14, 15, 10, Rf   !15
 
 K, 16, Rf*COS(refArAngStart), W, Rf*SIN(refArAngStart)     ! Fiber's interface, start of refined area, external face with debond
 K, 17, Rf*COS(refArAngStart), W, Rf*SIN(refArAngStart)     ! Fiber's interface, coincident start of refined area (for debond), external face with debond
@@ -174,11 +190,6 @@ K, 56, (1-refRoverR)*Rf*COS(refArAngStop), refVolStop, (1-refRoverR)*Rf*SIN(refA
 K, 57, (1+refRoverR)*Rf*COS(refArAngStart), refVolStop, (1+refRoverR)*Rf*SIN(refArAngStart)     ! Fiber's outside neighborhood, start of refined area, stop of refined volumet
 K, 58, (1+refRoverR)*Rf*COS(deltathetarad), refVolStop, (1+refRoverR)*Rf*SIN(deltathetarad)     ! Fiber's outside neighborhood, crack tip, stop of refined volume
 K, 59, (1+refRoverR)*Rf*COS(refArAngStop), refVolStop, (1+refRoverR)*Rf*SIN(refArAngStop)       ! Fiber's outside neighborhood, end of refined area, stop of refined volume
-
-! Lines
-
-L, 1, 2            !1
-
 
 ! Areas
 

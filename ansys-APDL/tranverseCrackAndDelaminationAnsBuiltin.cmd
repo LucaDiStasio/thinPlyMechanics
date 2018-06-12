@@ -47,7 +47,7 @@ Vf = 0.0! [-] Fiber volume fraction
 t = 1             ! [mm] 2t = thickness of the element
 tRatio = 1        ! [-]  ratio of bounding ply thickness to main ply
 aLRatio = 0.1     ! [-]  ratio of crack length to main ply thickness
-rhon = 0.01       ! [-]  normalized crack density
+rhon = 0.5       ! [-]  normalized crack density
 daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) to crack length
 epsx = 0.01       ! [-]  applied strain
 uniP = 0.0        ! [-]  uniform pressure applied to crack face
@@ -119,13 +119,13 @@ L, 12, 5           !9
 L, 5, 1            !10
 L, 5, 9            !11
 L, 9, 6            !12
-L, 8, 12           !13
-L, 12, 7           !14
+L, 8, 11           !13
+L, 11, 7           !14
 L, 10, 14          !15
 L, 12, 10          !16
 L, 13, 10          !17
 L, 9, 10           !18
-L, 10, 12          !19
+L, 10, 11          !19
 
 ! Areas
 

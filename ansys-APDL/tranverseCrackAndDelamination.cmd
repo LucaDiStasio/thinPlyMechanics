@@ -146,8 +146,8 @@ AL, 13, 14, 5, 6, 7, 25  ! 2, upper ply, coarse area
 AL, 11, 20, 18, 9        ! 3, lower ply, free area
 AL, 19, 21, 13, 8        ! 4, upper ply, free area
 
-AL, 24, 3, 17, 15, 20    ! 5, lower ply, bonded area
-AL, 4, 25, 21, 16, 17    ! 6, upper ply, bonded area
+AL, 24, 3, 17, 22        ! 5, lower ply, bonded area
+AL, 4, 25, 23, 17        ! 6, upper ply, bonded area
 
 AL, 12, 22, 15, 20       ! 7, lower ply, one element bonded area
 AL, 16, 23, 14, 21       ! 8, upper ply, one element bonded area

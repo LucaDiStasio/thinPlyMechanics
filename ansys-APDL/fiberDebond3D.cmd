@@ -160,20 +160,20 @@ K, 46, (1+refRoverR)*Rf*COS(refArAngStart), crackFront, (1+refRoverR)*Rf*SIN(ref
 K, 47, (1+refRoverR)*Rf*COS(deltathetarad), crackFront, (1+refRoverR)*Rf*SIN(deltathetarad)     ! Fiber's outside neighborhood, crack tip, crack front
 K, 48, (1+refRoverR)*Rf*COS(refArAngStop), crackFront, (1+refRoverR)*Rf*SIN(refArAngStop)       ! Fiber's outside neighborhood, end of refined area, crack front
 
-K, 26, Rf*COS(refArAngStart), crackFront, Rf*SIN(refArAngStart)     ! Fiber's interface, start of refined area, crack front
-K, 28, (1-refRoverR)*COS(refArAngStart), crackFront, (1-refRoverR)*SIN(refArAngStart)     ! Fiber's inside neighborhood, start of refined area, crack front
-K, 29, (1+refRoverR)*COS(refArAngStart), crackFront, (1+refRoverR)*SIN(refArAngStart)     ! Fiber's outside neighborhood, start of refined area, crack front
+K, 26, Rf*COS(refArAngStart), crackFront, Rf*SIN(refArAngStart)     ! Fiber's interface, start of refined area, stop of refined volume
+K, 28, (1-refRoverR)*COS(refArAngStart), crackFront, (1-refRoverR)*SIN(refArAngStart)     ! Fiber's inside neighborhood, start of refined area, stop of refined volume
+K, 29, (1+refRoverR)*COS(refArAngStart), crackFront, (1+refRoverR)*SIN(refArAngStart)     ! Fiber's outside neighborhood, start of refined area, stop of refined volume
 
-K, 30, Rf*COS(deltathetarad), crackFront, Rf*SIN(deltathetarad)     ! Fiber's interface, crack tip, crack front
-K, 31, Rf*COS(refArAngStop), crackFront, Rf*SIN(refArAngStop)       ! Fiber's interface, end of refined area, crack front
+K, 30, Rf*COS(deltathetarad), crackFront, Rf*SIN(deltathetarad)     ! Fiber's interface, crack tip, stop of refined volume
+K, 31, Rf*COS(refArAngStop), crackFront, Rf*SIN(refArAngStop)       ! Fiber's interface, end of refined area, stop of refined volume
 
-K, 32, (1-refRoverR)*Rf*COS(refArAngStart), crackFront, (1-refRoverR)*Rf*SIN(refArAngStart)     ! Fiber's inside neighborhood, start of refined area, crack front
-K, 33, (1-refRoverR)*Rf*COS(deltathetarad), crackFront, (1-refRoverR)*Rf*SIN(deltathetarad)     ! Fiber's inside neighborhood, crack tip, crack front
-K, 34, (1-refRoverR)*Rf*COS(refArAngStop), crackFront, (1-refRoverR)*Rf*SIN(refArAngStop)       ! Fiber's inside neighborhood, end of refined area, crack front
+K, 32, (1-refRoverR)*Rf*COS(refArAngStart), crackFront, (1-refRoverR)*Rf*SIN(refArAngStart)     ! Fiber's inside neighborhood, start of refined area, stop of refined volume
+K, 33, (1-refRoverR)*Rf*COS(deltathetarad), crackFront, (1-refRoverR)*Rf*SIN(deltathetarad)     ! Fiber's inside neighborhood, crack tip, stop of refined volume
+K, 34, (1-refRoverR)*Rf*COS(refArAngStop), crackFront, (1-refRoverR)*Rf*SIN(refArAngStop)       ! Fiber's inside neighborhood, end of refined area, stop of refined volume
 
-K, 35, (1+refRoverR)*Rf*COS(refArAngStart), crackFront, (1+refRoverR)*Rf*SIN(refArAngStart)     ! Fiber's outside neighborhood, start of refined area, crack front
-K, 36, (1+refRoverR)*Rf*COS(deltathetarad), crackFront, (1+refRoverR)*Rf*SIN(deltathetarad)     ! Fiber's outside neighborhood, crack tip, crack front
-K, 37, (1+refRoverR)*Rf*COS(refArAngStop), crackFront, (1+refRoverR)*Rf*SIN(refArAngStop)       ! Fiber's outside neighborhood, end of refined area, crack front
+K, 35, (1+refRoverR)*Rf*COS(refArAngStart), crackFront, (1+refRoverR)*Rf*SIN(refArAngStart)     ! Fiber's outside neighborhood, start of refined area, stop of refined volumet
+K, 36, (1+refRoverR)*Rf*COS(deltathetarad), crackFront, (1+refRoverR)*Rf*SIN(deltathetarad)     ! Fiber's outside neighborhood, crack tip, stop of refined volume
+K, 37, (1+refRoverR)*Rf*COS(refArAngStop), crackFront, (1+refRoverR)*Rf*SIN(refArAngStop)       ! Fiber's outside neighborhood, end of refined area, stop of refined volume
 
 ! Lines
 

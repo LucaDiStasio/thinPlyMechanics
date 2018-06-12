@@ -104,10 +104,11 @@ K,12, a, refHup
 K,13, 0.0, t
 K,14, 0.0, t
 K,15, vcctRegion,t
-K,16, vcctRegion,refHlow
-K,17, vcctRegion,refHup
 
 K,16, L, t
+
+K,17, vcctRegion,refHlow
+K,18, vcctRegion,refHup
 
 ! Lines
 
@@ -122,9 +123,9 @@ L, 8, 14           !8
 L, 13, 5           !9
 L, 5, 1            !10
 L, 5, 9            !11
-L, 9, 16           !12
+L, 9, 17           !12
 L, 8, 12           !13
-L, 12, 17          !14
+L, 12, 18          !14
 L, 10, 15          !15
 L, 11, 15          !16
 L, 15, 16          !17
@@ -134,8 +135,8 @@ L, 9, 10           !20
 L, 11, 12          !21
 L, 16, 15          !22
 L, 15, 17          !23
-L, 16, 6           !24
-L, 17, 7           !25
+L, 17, 6           !24
+L, 18, 7           !25
 
 ! Areas
 

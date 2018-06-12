@@ -42,13 +42,14 @@
 
 ! ===> START INPUT DATA
 
-Vf = 0.000079! [-] Fiber volume fraction
-
+L = 10.0          ! [um]  length of the RVE
+W = 10.0          ! [um]  width of the RVE
 Rf = 1.0          ! [um]  fiber's radius
 theta0 = 0.0      ! [deg] angular position of debond
 deltatheta = 10.0 ! [deg] 2*deltatheta = debond size
 deltaphi = 5.0    ! [deg] refined area size
 delta = 0.05      ! [deg] angular size of element at crack
+aOverW = 0.1      ! [-] ratio of debond length to RVE's width
 
 epsx = 0.01       ! [-]  applied strain
 uniP = 0.0        ! [-]  uniform pressure applied to crack face
@@ -69,7 +70,7 @@ nufLT = 0.4! [-] fiber in-plane Poisson ratio
 
 ! ===> END INPUT DATA
 
-L = 2*t/rhon        ! [mm] length of the RVE
+a = aOverW*W
 
 appliedDisp = epsx*L ! [mm] applied displacement
 
@@ -80,49 +81,22 @@ stressstrainfile = 'allStressStrain'
 
 ! Points
 
-K, 1, 0.0, 0.0
-K, 2, L, 0.0
-K, 3, L, tTOT
-K, 4, 0.0, tTOT
+K, 1, -L, W, 0.0   ! SW corner, external face with debond
+K, 2, L, W, 0.0    ! SE corner, external face with debond
+K, 3, L, W, L      ! NE corner, external face with debond
+K, 4, -L, W, L     ! NW corner, external face with debond
 
-K, 5, 0.0, refHlow
-K, 6, L, refHlow
-K, 7, L, refHup
-K, 8, 0.0, refHup
+K, 5, -L, 0.0, 0.0   ! SW corner, external face without debond
+K, 6, L, 0.0, 0.0    ! SE corner, external face without debond
+K, 7, L, 0.0, L      ! NE corner, external face without debond
+K, 8, -L, 0.0, L     ! NW corner, external face without debond
 
-K, 9, a, refHlow
-K,10, a, t
-K,11, a, t
-K,12, a, refHup
-K,13, 0.0, t
-K,14, 0.0, t
-K,15, vcctRegion,t
 
-K,16, L, t
 
 ! Lines
 
 L, 1, 2            !1
-L, 2, 6            !2
-L, 6, 16           !3
-L, 16, 7           !4
-L, 7, 3            !5
-L, 3, 4            !6
-L, 4, 8            !7
-L, 8, 14           !8
-L, 13, 5           !9
-L, 5, 1            !10
-L, 5, 9            !11
-L, 9, 6            !12
-L, 8, 12           !13
-L, 12, 7           !14
-L, 10, 15          !15
-L, 11, 15          !16
-L, 15, 16          !17
-L, 13, 10          !18
-L, 14, 11          !19
-L, 9, 10           !20
-L, 11, 12          !21
+
 
 ! Areas
 

@@ -5443,45 +5443,48 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # BEGIN - extract J-integral results
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting J-integral results ...',True)
-
-    if len(parameters['steps'])>1:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
-        try:
-            Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'],1)
-        except Exception,e:
-            writeErrorToLogFile(logfilepath,'a',Exception,e,True)
-            sys.exc_clear()
-        JintegralsWithDistance = []
-        for v,value in enumerate(Jintegrals):
-            JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
-        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalJintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
-        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalJintegral'],JintegralsWithDistance)
-        del JintegralsWithDistance
-        thermalJintegrals = Jintegrals
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> MECHANICAL STEP <--',True)
-        try:
-            Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'],2)
-        except Exception,e:
-            writeErrorToLogFile(logfilepath,'a',Exception,e,True)
-            sys.exc_clear()
-        JintegralsWithDistance = []
-        for v,value in enumerate(Jintegrals):
-            JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
-        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
-        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
-        del JintegralsWithDistance
+    
+    if parameters['simulation-pipeline']['analysis']['report-energyreleaserates']:
+        if len(parameters['steps'])>1:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
+            try:
+                Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'],1)
+            except Exception,e:
+                writeErrorToLogFile(logfilepath,'a',Exception,e,True)
+                sys.exc_clear()
+            JintegralsWithDistance = []
+            for v,value in enumerate(Jintegrals):
+                JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
+            createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalJintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalJintegral'],JintegralsWithDistance)
+            del JintegralsWithDistance
+            thermalJintegrals = Jintegrals
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> MECHANICAL STEP <--',True)
+            try:
+                Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'],2)
+            except Exception,e:
+                writeErrorToLogFile(logfilepath,'a',Exception,e,True)
+                sys.exc_clear()
+            JintegralsWithDistance = []
+            for v,value in enumerate(Jintegrals):
+                JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
+            createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
+            del JintegralsWithDistance
+        else:
+            try:
+                Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'],1)
+            except Exception,e:
+                writeErrorToLogFile(logfilepath,'a',Exception,e,True)
+                sys.exc_clear()
+            JintegralsWithDistance = []
+            for v,value in enumerate(Jintegrals):
+                JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
+            createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
+            del JintegralsWithDistance
     else:
-        try:
-            Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'],1)
-        except Exception,e:
-            writeErrorToLogFile(logfilepath,'a',Exception,e,True)
-            sys.exc_clear()
-        JintegralsWithDistance = []
-        for v,value in enumerate(Jintegrals):
-            JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
-        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
-        del JintegralsWithDistance
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract J-integral results
@@ -5568,62 +5571,68 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract deformed coordinates along the right side ...',True)
     # rightsideDefcoords = getFieldOutput(odb,-1,-1,'COORD',rightSide)
     # writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+    if parameters['simulation-pipeline']['analysis']['report-energyreleaserates'] or parameters['simulation-pipeline']['analysis']['report-stressesatboundary']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along the right side ...',True)
+        rightsideUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',rightSide)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along the right side ...',True)
-    rightsideUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',rightSide)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, x, y, sigma_xx, sigma_zz, sigma_yy, tau_xz ...',True)
-    rightsideStressdata = []
-    for value in rightsideUndefcoords.values:
-        node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
-        stress = getFieldOutput(odb,-1,-1,'S',node,3)
-        defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
-        rightsideStressdata.append([value.data[0],value.data[1],defcoords.values[0].data[0],defcoords.values[0].data[1],stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3]])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute minimum, maximum and mean stress ...',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Initialize variables...',True)
-    maxSigmaxx = rightsideStressdata[0][4]
-    minSigmaxx = rightsideStressdata[0][4]
-    meanSigmaxx = 0.0
-    weightmeanSigmaxx = 0.0
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '...done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Start for loop...',True)
-    for s,stress in enumerate(rightsideStressdata):
-        if s>0:
-            weightmeanSigmaxx += (stress[1]-rightsideStressdata[s-1][1])*(stress[4]+rightsideStressdata[s-1][4])
-        meanSigmaxx += stress[4]
-        if stress[4]>maxSigmaxx:
-            maxSigmaxx = stress[4]
-        elif stress[4]<minSigmaxx:
-            minSigmaxx = stress[4]
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '...done.',True)
-    meanSigmaxx /= len(rightsideStressdata)
-    weightmeanSigmaxx /= 2*parameters['geometry']['L']
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute normalized coordinates and axial stress ...',True)
-    for s,stress in enumerate(rightsideStressdata):
-        stress.append(stress[1]/parameters['geometry']['L'])
-        stress.append(stress[4]/maxSigmaxx)
-        stress.append(stress[4]/minSigmaxx)
-        stress.append(stress[4]/meanSigmaxx)
-        stress.append(stress[4]/weightmeanSigmaxx)
-        rightsideStressdata[s] = stress
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
-    rightsideStressdata = np.array(rightsideStressdata)
-    rightsideStressdata = rightsideStressdata[np.argsort(rightsideStressdata[:,1])]
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0 [um], y0 [um], x [um], y [um], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], y0/L [-],  sigma_xx/max(sigma_xx) [-],  sigma_xx/min(sigma_xx) [-],  sigma_xx/avg(sigma_xx) [-],  sigma_xx/weightavg(sigma_xx) [-]')
-    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],rightsideStressdata)
-    del rightsideStressdata
-    # del rightsideStress
-    # del rightsideDefcoords
-    del rightsideUndefcoords
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, x, y, sigma_xx, sigma_zz, sigma_yy, tau_xz ...',True)
+        rightsideStressdata = []
+        for value in rightsideUndefcoords.values:
+            node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
+            stress = getFieldOutput(odb,-1,-1,'S',node,3)
+            defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
+            rightsideStressdata.append([value.data[0],value.data[1],defcoords.values[0].data[0],defcoords.values[0].data[1],stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3]])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute minimum, maximum and mean stress ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Initialize variables...',True)
+        maxSigmaxx = rightsideStressdata[0][4]
+        minSigmaxx = rightsideStressdata[0][4]
+        meanSigmaxx = 0.0
+        weightmeanSigmaxx = 0.0
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '...done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Start for loop...',True)
+        for s,stress in enumerate(rightsideStressdata):
+            if s>0:
+                weightmeanSigmaxx += (stress[1]-rightsideStressdata[s-1][1])*(stress[4]+rightsideStressdata[s-1][4])
+            meanSigmaxx += stress[4]
+            if stress[4]>maxSigmaxx:
+                maxSigmaxx = stress[4]
+            elif stress[4]<minSigmaxx:
+                minSigmaxx = stress[4]
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '...done.',True)
+        meanSigmaxx /= len(rightsideStressdata)
+        weightmeanSigmaxx /= 2*parameters['geometry']['L']
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    
+        if parameters['simulation-pipeline']['analysis']['report-stressesatboundary']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute normalized coordinates and axial stress ...',True)
+            for s,stress in enumerate(rightsideStressdata):
+                stress.append(stress[1]/parameters['geometry']['L'])
+                stress.append(stress[4]/maxSigmaxx)
+                stress.append(stress[4]/minSigmaxx)
+                stress.append(stress[4]/meanSigmaxx)
+                stress.append(stress[4]/weightmeanSigmaxx)
+                rightsideStressdata[s] = stress
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
+            rightsideStressdata = np.array(rightsideStressdata)
+            rightsideStressdata = rightsideStressdata[np.argsort(rightsideStressdata[:,1])]
+            createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0 [um], y0 [um], x [um], y [um], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], y0/L [-],  sigma_xx/max(sigma_xx) [-],  sigma_xx/min(sigma_xx) [-],  sigma_xx/avg(sigma_xx) [-],  sigma_xx/weightavg(sigma_xx) [-]')
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],rightsideStressdata)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        else:
+            createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0 [um], y0 [um], x [um], y [um], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], y0/L [-],  sigma_xx/max(sigma_xx) [-],  sigma_xx/min(sigma_xx) [-],  sigma_xx/avg(sigma_xx) [-],  sigma_xx/weightavg(sigma_xx) [-]')
+        del rightsideStressdata
+        # del rightsideStress
+        # del rightsideDefcoords
+        del rightsideUndefcoords
+    else:
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0 [um], y0 [um], x [um], y [um], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], y0/L [-],  sigma_xx/max(sigma_xx) [-],  sigma_xx/min(sigma_xx) [-],  sigma_xx/avg(sigma_xx) [-],  sigma_xx/weightavg(sigma_xx) [-]')
+    
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract stresses at the boundary

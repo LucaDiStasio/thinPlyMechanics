@@ -5643,27 +5643,30 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along symmetry line ...',True)
     
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along symmetry line ...',True)
-    lowersideUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',lowerSide)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, x0/Rf, x, y, x/Rf, sigma_xx, sigma_zz, sigma_yy, tau_xz ...',True)
-    lowersideStressdata = []
-    for value in lowersideUndefcoords.values:
-        node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
-        stress = getFieldOutput(odb,-1,-1,'S',node,3)
-        defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
-        lowersideStressdata.append([value.data[0],value.data[1],value.data[0]/parameters['geometry']['Rf'],defcoords.values[0].data[0],defcoords.values[0].data[1],defcoords.values[0].data[0]/parameters['geometry']['Rf'],stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3]])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if parameters['simulation-pipeline']['analysis']['report-stressesatsymmetryline']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along symmetry line ...',True)
+        lowersideUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',lowerSide)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
-    lowersideStressdata = np.array(lowersideStressdata)
-    lowersideStressdata = lowersideStressdata[np.argsort(lowersideStressdata[:,0])]
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatsymmetryline'],'x0 [um], y0 [um], x0/Rf [-], x [um], y [um], x/Rf [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa]')
-    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatsymmetryline'],lowersideStressdata)
-    del lowersideStressdata
-    del lowersideUndefcoords
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, x0/Rf, x, y, x/Rf, sigma_xx, sigma_zz, sigma_yy, tau_xz ...',True)
+        lowersideStressdata = []
+        for value in lowersideUndefcoords.values:
+            node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
+            stress = getFieldOutput(odb,-1,-1,'S',node,3)
+            defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
+            lowersideStressdata.append([value.data[0],value.data[1],value.data[0]/parameters['geometry']['Rf'],defcoords.values[0].data[0],defcoords.values[0].data[1],defcoords.values[0].data[0]/parameters['geometry']['Rf'],stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3]])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
+        lowersideStressdata = np.array(lowersideStressdata)
+        lowersideStressdata = lowersideStressdata[np.argsort(lowersideStressdata[:,0])]
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatsymmetryline'],'x0 [um], y0 [um], x0/Rf [-], x [um], y [um], x/Rf [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa]')
+        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatsymmetryline'],lowersideStressdata)
+        del lowersideStressdata
+        del lowersideUndefcoords
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    else:
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatsymmetryline'],'x0 [um], y0 [um], x0/Rf [-], x [um], y [um], x/Rf [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa]')
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
@@ -5675,49 +5678,52 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along the bonded interface ...',True)
     
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract node labels of crack faces ...',True)
-    crackfaceNodes = []
-    crackfaceUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',fiberCrackfaceNodes)
-    for value in crackfaceUndefcoords.values:
-        if value.nodeLabel not in crackfaceNodes:
-            crackfaceNodes.append(value.nodeLabel)
-    crackfaceUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',matrixCrackfaceNodes)
-    for value in crackfaceUndefcoords.values:
-        if value.nodeLabel not in crackfaceNodes:
-            crackfaceNodes.append(value.nodeLabel)
-    del crackfaceUndefcoords
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along the bonded interface ...',True)
-    thirdcircleUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',thirdCircle)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, R0, theta0, x, y, R, theta, sigma_xx, sigma_zz, sigma_yy, tau_xz, sigma_rr, sigma_tt, tau_rt ...',True)
-    thirdcircleStressdata = []
-    for value in thirdcircleUndefcoords.values:
-        if value.nodeLabel not in crackfaceNodes:
-            node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
-            stress = getFieldOutput(odb,-1,-1,'S',node,3)
-            defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
-            radP0 = np.sqrt(value.data[0]*value.data[0]+value.data[1]*value.data[1])
-            angP0 = np.arctan2(value.data[1],value.data[0])
-            radP = np.sqrt(defcoords.values[0].data[0]*defcoords.values[0].data[0]+defcoords.values[0].data[1]*defcoords.values[0].data[1])
-            angP = np.arctan2(defcoords.values[0].data[1],defcoords.values[0].data[0])
-            sigRR,sigTT,tauRT = rotateStress2D(stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[3],angP0)
-            thirdcircleStressdata.append([value.data[0],value.data[1],radP0,angP0*180.0/np.pi,(angP0*180.0/np.pi-parameters['geometry']['deltatheta'])/(180.0-parameters['geometry']['deltatheta']),defcoords.values[0].data[0],defcoords.values[0].data[1],radP,angP*180.0/np.pi,(angP*180.0/np.pi-parameters['geometry']['deltatheta'])/(180.0-parameters['geometry']['deltatheta']),stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3],sigRR,sigTT,tauRT])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
-    thirdcircleStressdata = np.array(thirdcircleStressdata)
-    thirdcircleStressdata = thirdcircleStressdata[np.argsort(thirdcircleStressdata[:,0])]
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],'x0 [um], y0 [um], R0 [um], theta0 [deg], (theta0-deltatheta)/(180-deltatheta) [-], x [um], y [um], R [um], theta [deg], (theta-deltatheta)/(180-deltatheta) [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], sigma_rr [MPa], sigma_tt [MPa], tau_rt [MPa]')
-    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],thirdcircleStressdata)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
-    del thirdcircleStressdata
-    del thirdcircleUndefcoords
-    del crackfaceNodes
-    del thirdCircle
+    if parameters['simulation-pipeline']['analysis']['report-stressesatsymmetryline']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract node labels of crack faces ...',True)
+        crackfaceNodes = []
+        crackfaceUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',fiberCrackfaceNodes)
+        for value in crackfaceUndefcoords.values:
+            if value.nodeLabel not in crackfaceNodes:
+                crackfaceNodes.append(value.nodeLabel)
+        crackfaceUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',matrixCrackfaceNodes)
+        for value in crackfaceUndefcoords.values:
+            if value.nodeLabel not in crackfaceNodes:
+                crackfaceNodes.append(value.nodeLabel)
+        del crackfaceUndefcoords
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along the bonded interface ...',True)
+        thirdcircleUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',thirdCircle)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, R0, theta0, x, y, R, theta, sigma_xx, sigma_zz, sigma_yy, tau_xz, sigma_rr, sigma_tt, tau_rt ...',True)
+        thirdcircleStressdata = []
+        for value in thirdcircleUndefcoords.values:
+            if value.nodeLabel not in crackfaceNodes:
+                node = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(value.nodeLabel)
+                stress = getFieldOutput(odb,-1,-1,'S',node,3)
+                defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
+                radP0 = np.sqrt(value.data[0]*value.data[0]+value.data[1]*value.data[1])
+                angP0 = np.arctan2(value.data[1],value.data[0])
+                radP = np.sqrt(defcoords.values[0].data[0]*defcoords.values[0].data[0]+defcoords.values[0].data[1]*defcoords.values[0].data[1])
+                angP = np.arctan2(defcoords.values[0].data[1],defcoords.values[0].data[0])
+                sigRR,sigTT,tauRT = rotateStress2D(stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[3],angP0)
+                thirdcircleStressdata.append([value.data[0],value.data[1],radP0,angP0*180.0/np.pi,(angP0*180.0/np.pi-parameters['geometry']['deltatheta'])/(180.0-parameters['geometry']['deltatheta']),defcoords.values[0].data[0],defcoords.values[0].data[1],radP,angP*180.0/np.pi,(angP*180.0/np.pi-parameters['geometry']['deltatheta'])/(180.0-parameters['geometry']['deltatheta']),stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3],sigRR,sigTT,tauRT])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
+        thirdcircleStressdata = np.array(thirdcircleStressdata)
+        thirdcircleStressdata = thirdcircleStressdata[np.argsort(thirdcircleStressdata[:,0])]
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],'x0 [um], y0 [um], R0 [um], theta0 [deg], (theta0-deltatheta)/(180-deltatheta) [-], x [um], y [um], R [um], theta [deg], (theta-deltatheta)/(180-deltatheta) [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], sigma_rr [MPa], sigma_tt [MPa], tau_rt [MPa]')
+        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],thirdcircleStressdata)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        
+        del thirdcircleStressdata
+        del thirdcircleUndefcoords
+        del crackfaceNodes
+        del thirdCircle
+    else:
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],'x0 [um], y0 [um], R0 [um], theta0 [deg], (theta0-deltatheta)/(180-deltatheta) [-], x [um], y [um], R [um], theta [deg], (theta-deltatheta)/(180-deltatheta) [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], sigma_rr [MPa], sigma_tt [MPa], tau_rt [MPa]')
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

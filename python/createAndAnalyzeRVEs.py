@@ -615,7 +615,7 @@ def writeLatexMultiplePlots(folder,filename,data,axoptions,dataoptions,logfilepa
                 writeLineToLogFile(logfilename,'a',baselogindent + 3*logindent + 'Change permissions to ' + bashfile ,True)
                 os.chmod(bashfile, 0o755)
                 writeLineToLogFile(logfilename,'a','Run bash file',True)
-                rc = call('.' + bashfile)
+                call('.' + bashfile)
                 writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
             except Exception:
                 writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ERROR',True)

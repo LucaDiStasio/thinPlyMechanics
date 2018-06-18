@@ -4949,7 +4949,6 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         for l,line in enumerate(inpfilelines):
             if ('*CONTOUR INTEGRAL' in line or '*Contour Integral' in line) and l>startTempStep and l<startLoadStep:
                 startTempCI = l
-                endTempCI = l+1
                 break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of mechanical contour integral section  ...',True)

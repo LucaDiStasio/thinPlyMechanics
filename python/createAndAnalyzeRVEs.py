@@ -5547,9 +5547,6 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         fiberFirstbounded = getSingleNodeSet(odb,None,'FIBER-NODE-FIRSTBOUNDED')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-NODE-FIRSTBOUNDED',True)
 
-        matrixFirstbounded = getSingleNodeSet(odb,None,'MATRIX-NODE-FIRSTBOUNDED')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-NODE-FIRSTBOUNDED',True)
-
         firstboundedDummyNode = getSingleNodeSet(odb,None,'FIRSTBOUNDED-DUMMY-NODE')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIRSTBOUNDED-DUMMY-NODE',True)
 

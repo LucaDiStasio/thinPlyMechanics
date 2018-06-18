@@ -725,7 +725,8 @@ def getPerfs(wd,sims,logfilepath,baselogindent,logindent):
                         words.remove('')
                     progN = int(words[-1])
                     words = lines[l+9].split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     totVar = int(words[-1])
         if exists(join(wd,sim+'.msg')):
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'In MSG file',True)

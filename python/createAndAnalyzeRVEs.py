@@ -1175,11 +1175,11 @@ def add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath
     reportSketchGeomElements(fiberGeometry,fiberVertices,logfilepath,baselogindent + 2*logindent,logindent)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Identify indeces of fiber and its center point ...',True)
-    lastGeometryKey = 0
-    for key in fiberGeometry.keys():
-        lastGeometryKey = key
-        if 'ARC' in fiberGeometry[key]['curveType']:
-            fiberIndex = key
+    #lastGeometryKey = 0
+    #for key in fiberGeometry.keys():
+        #lastGeometryKey = key
+        #if 'ARC' in fiberGeometry[key]['curveType']:
+            #fiberIndex = key
     #lastVerticesKey = 0
     for key in fiberVertices.keys():
         #lastVerticesKey = key

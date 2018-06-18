@@ -695,7 +695,8 @@ def getPerfs(wd,sims,logfilepath,baselogindent,logindent):
                 elif 'M E M O R Y   E S T I M A T E' in line:
                     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  - MEMORY ESTIMATE',True)
                     values = lines[l+6].replace('\n','').split(' ')
-                    while '' in values: values.remove('')
+                    while '' in values:
+                        values.remove('')
                     floatops = float(values[1])
                     minMemory = float(values[2])
                     minIOmemory = float(values[3])

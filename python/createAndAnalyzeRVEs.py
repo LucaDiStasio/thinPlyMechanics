@@ -1283,9 +1283,9 @@ def add2DFullFiber(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,ba
         lastGeometryKey = key
         if 'ARC' in fiberGeometry[key]['curveType']:
             fiberIndex = key
-    lastVerticesKey = 0
+    #lastVerticesKey = 0
     for key in fiberVertices.keys():
-        lastVerticesKey = key
+        #lastVerticesKey = key
         if fiberVertices[key]['coords'][0]==0.0 and fiberVertices[key]['coords'][1]==0.0:
             fiberOriginIndex = key
     if fiber['isCracked']:

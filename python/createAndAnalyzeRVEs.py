@@ -347,7 +347,7 @@ def writeQuadsToQuadsInpFile(inpfullpath,allquads,logfilepath,baselogindent,logi
         inp.write('*ELEMENT, TYPE=CPE' + str(int(len(allquads[allquads.keys()[0]]))) + '\n')
         for key in allquads.keys():
             line = ' ' + str(key)
-            for n,node in enumerate(allquads[key]):
+            for node in allquads[key]:
                 line += ', ' + str(node)
             inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)

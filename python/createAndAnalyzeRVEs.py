@@ -1367,7 +1367,7 @@ def addMaterial(currentmodel,material,logfilepath,baselogindent,logindent):
                 line += ', '
             line += str(value)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + line,True)
-    except Exception, error:
+    except Exception:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  NO ELASTIC PROPERTY',True)
         sys.exc_clear()
     try:

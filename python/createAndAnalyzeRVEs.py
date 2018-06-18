@@ -6988,7 +6988,6 @@ def main(argv):
             writeLineToLogFile(logfilefullpath,'a',2*logindent + 'Opening file ' + csvPath,True)
             with open(csvPath,'r') as csv:
                 csvlines = csv.readlines()
-            plotName = line.replace('\n','').split(',')[1]
             toPlot = bool(line.replace('\n','').split(',')[2])
             plotSettings = []
             if toPlot:

@@ -682,7 +682,6 @@ def getPerfs(wd,sims,logfilepath,baselogindent,logindent):
         progN = 0
         totVar = 0
         cpus = 0
-        debond = 0
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'In DAT file',True)
         if exists(join(wd,sim+'.dat')):
             with open(join(wd,sim+'.dat'),'r') as dat:

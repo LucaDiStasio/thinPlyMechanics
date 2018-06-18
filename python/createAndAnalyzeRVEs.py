@@ -6458,7 +6458,6 @@ def main(argv):
         elif 'basename' in line:
             basename = str(line.replace('\n','').split('#')[0].split('$')[0].split('@')[1].replace(' ',''))
         elif 'free parameters' in line:
-            freeParams = int(line.replace('\n','').split('#')[0].split('$')[0].split('@')[1].replace(' ',''))
             freeParamsStart = l+1
 
     keywords = []

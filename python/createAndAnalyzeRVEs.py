@@ -5411,7 +5411,7 @@ def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
                     writeLineToLogFile(logfilepath,'a',3*logindent + 'Change permissions to ' + bashfile ,True)
                     os.chmod(bashfile, 0o755)
                     writeLineToLogFile(logfilepath,'a','Run bash file',True)
-                    rc = call('.' + bashfile)
+                    call('.' + bashfile)
                     writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
                 except Exception:
                     writeLineToLogFile(logfilepath,'a',2*logindent + 'ERROR',True)

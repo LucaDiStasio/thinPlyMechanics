@@ -4956,7 +4956,6 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         for l,line in enumerate(inpfilelines):
             if ('*CONTOUR INTEGRAL' in line or '*Contour Integral' in line) and l>startLoadStep:
                 startLoadCI = l
-                endLoadCI = l+1
                 break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     else:

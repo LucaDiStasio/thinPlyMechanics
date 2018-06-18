@@ -5534,9 +5534,6 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     fiberCracktip = getSingleNodeSet(odb,None,'FIBER-CRACKTIP')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKTIP',True)
 
-    matrixCracktip = getSingleNodeSet(odb,None,'MATRIX-CRACKTIP')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKTIP',True)
-
     cracktipDummyNode = getSingleNodeSet(odb,None,'CRACKTIP-DUMMY-NODE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CRACKTIP-DUMMY-NODE',True)
 

@@ -702,7 +702,8 @@ def getPerfs(wd,sims,logfilepath,baselogindent,logindent):
                 elif 'P R O B L E M   S I Z E' in line:
                     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '  - PROBLEM SIZE',True)
                     words = lines[l+3].replace('\n','').split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     totEl = int(words[-1])
                     words = lines[l+4].split(' ')
                     while '' in words:

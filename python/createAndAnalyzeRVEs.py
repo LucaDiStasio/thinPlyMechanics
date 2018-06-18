@@ -1180,9 +1180,9 @@ def add2DFiberSection(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath
         lastGeometryKey = key
         if 'ARC' in fiberGeometry[key]['curveType']:
             fiberIndex = key
-    lastVerticesKey = 0
+    #lastVerticesKey = 0
     for key in fiberVertices.keys():
-        lastVerticesKey = key
+        #lastVerticesKey = key
         if fiberVertices[key]['coords'][0]==0.0 and fiberVertices[key]['coords'][1]==0.0:
             fiberOriginIndex = key
     if fiber['isCracked']:
@@ -1278,11 +1278,11 @@ def add2DFullFiber(currentpart,currentmodel,planeToSketch,fiber,L,logfilepath,ba
     reportSketchGeomElements(sketchGeometry,sketchVertices,logfilepath,baselogindent + 2*logindent,logindent)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Identify indeces of fiber and its center point ...',True)
-    lastGeometryKey = 0
-    for key in fiberGeometry.keys():
-        lastGeometryKey = key
-        if 'ARC' in fiberGeometry[key]['curveType']:
-            fiberIndex = key
+    #lastGeometryKey = 0
+    #for key in fiberGeometry.keys():
+        #lastGeometryKey = key
+        #if 'ARC' in fiberGeometry[key]['curveType']:
+            #fiberIndex = key
     #lastVerticesKey = 0
     for key in fiberVertices.keys():
         #lastVerticesKey = key

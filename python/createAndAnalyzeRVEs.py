@@ -6936,7 +6936,7 @@ def main(argv):
                     writeLineToLogFile(logfilefullpath,'a',3*logindent + 'Change permissions to ' + bashfile ,True)
                     os.chmod(bashfile, 0o755)
                     writeLineToLogFile(logfilefullpath,'a','Run bash file',True)
-                    rc = call('.' + bashfile)
+                    call('.' + bashfile)
                     writeLineToLogFile(logfilefullpath,'a',2*logindent + '... done.',True)
                 except Exception:
                     writeLineToLogFile(logfilefullpath,'a',2*logindent + 'ERROR',True)

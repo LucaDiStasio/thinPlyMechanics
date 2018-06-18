@@ -705,7 +705,8 @@ def getPerfs(wd,sims,logfilepath,baselogindent,logindent):
                     while '' in words: words.remove('')
                     totEl = int(words[-1])
                     words = lines[l+4].split(' ')
-                    while '' in words: words.remove('')
+                    while '' in words:
+                        words.remove('')
                     userEl = int(words[-1])
                     words = lines[l+5].split(' ')
                     while '' in words: words.remove('')

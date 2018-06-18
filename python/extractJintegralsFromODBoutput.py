@@ -84,7 +84,7 @@ def convertDatToCsv(wd,project,datfile,titleline):
                     line += ','
                 line += str(subvalue)
             csv.write(line + '\n')
-    
+
 def extractJintegralsFromODBoutputSet01(wd,project,nContour):
     print('Starting path extraction on project ' + project + '\n')
     # define database name
@@ -123,31 +123,31 @@ def extractJintegralsFromODBoutputSet01(wd,project,nContour):
             else:
                 contour = str(contourValue)
             try:
-                J = xyPlot.XYDataFromHistory(odb=sessionOdb, 
+                J = xyPlot.XYDataFromHistory(odb=sessionOdb,
             outputVariableName='J-integral: J at INTERFACEATNODE-' + str(tip) + '_NODE-' + str(tip) + '_Contour_' + contour +' in ELSET  ALL ELEMENTS',steps=(odb.steps.keys()[-1], ), )
                 session.writeXYReport(fileName=join(wd,project,'dat','CrackTip' + str(t+1) + '_J_Contour' + contour + '.dat'),xyData=J,appendMode=OFF)
                 convertDatToCsv(wd,project,'CrackTip' + str(t+1) + '_J_Contour' + contour + '.dat','step time T,J')
             except Exception,e:
                 sys.exc_clear()
-            try:    
+            try:
                 JKs = xyPlot.XYDataFromHistory(odb=sessionOdb,outputVariableName='J-integral estimated from Ks: JKs at INTERFACEATNODE-' + str(tip) + '_NODE-' + str(tip) + '_Contour_' + contour +' in ELSET  ALL ELEMENTS',steps=(odb.steps.keys()[-1], ), )
                 session.writeXYReport(fileName=join(wd,project,'dat','CrackTip' + str(t+1) + '_JKs_Contour' + contour + '.dat'),xyData=JKs,appendMode=OFF)
                 convertDatToCsv(wd,project,'CrackTip' + str(t+1) + '_JKs_Contour' + contour + '.dat','step time T,JKs')
             except Exception,e:
                 sys.exc_clear()
-            try:    
+            try:
                 K1 = xyPlot.XYDataFromHistory(odb=sessionOdb,outputVariableName='Stress intensity factor K1: K1 at INTERFACEATNODE-' + str(tip) + '_NODE-' + str(tip) + '_Contour_' + contour +' in ELSET  ALL ELEMENTS',steps=(odb.steps.keys()[-1], ), )
                 session.writeXYReport(fileName=join(wd,project,'dat','CrackTip' + str(t+1) + '_K1_Contour' + contour + '.dat'),xyData=K1,appendMode=OFF)
                 convertDatToCsv(wd,project,'CrackTip' + str(t+1) + '_K1_Contour' + contour + '.dat','step time T,K1')
             except Exception,e:
                 sys.exc_clear()
-            try:    
+            try:
                 K2 = xyPlot.XYDataFromHistory(odb=sessionOdb,outputVariableName='Stress intensity factor K2: K2 at INTERFACEATNODE-' + str(tip) + '_NODE-' + str(tip) + '_Contour_' + contour +' in ELSET  ALL ELEMENTS',steps=(odb.steps.keys()[-1], ), )
                 session.writeXYReport(fileName=join(wd,project,'dat','CrackTip' + str(t+1) + '_K2_Contour' + contour + '.dat'),xyData=K2,appendMode=OFF)
                 convertDatToCsv(wd,project,'CrackTip' + str(t+1) + '_K2_Contour' + contour + '.dat','step time T,K2')
             except Exception,e:
                 sys.exc_clear()
-            try:    
+            try:
                 T = xyPlot.XYDataFromHistory(odb=sessionOdb,outputVariableName='T-stress: T at INTERFACEATNODE-' + str(tip) + '_NODE-' + str(tip) + '_Contour_' + contour +' in ELSET  ALL ELEMENTS',steps=(odb.steps.keys()[-1], ), )
                 session.writeXYReport(fileName=join(wd,project,'dat','CrackTip' + str(t+1) + '_T_Contour' + contour + '.dat'),xyData=T,appendMode=OFF)
                 convertDatToCsv(wd,project,'CrackTip' + str(t+1) + '_T_Contour' + contour + '.dat','step time T,T-stress')
@@ -166,7 +166,7 @@ def main(argv):
 
     wd = 'D:/01_Luca/07_Data/03_FEM'
     matdatafolder = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/02_Material-Properties'
-    
+
     statusfile = '2017-03-01_AbaqusParametricRun_2017-03-03_12-56-32.sta'
 
     with open(join(wd,statusfile),'r') as sta:
@@ -177,7 +177,7 @@ def main(argv):
         if not exists(join(wd,project,'dat')):
             makedirs(join(wd,project,'dat'))
         extractJintegralsFromODBoutputSet01(wd,project,10)
-            
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])

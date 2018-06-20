@@ -4440,27 +4440,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
                     regionSets.append(['INTERFACE-UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers'])),72])            
-            
-    #regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
-    #                ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
-    #                ['THIRDCIRCLE-UPPERCRACK',nTangential],
-    #                ['THIRDCIRCLE-FIRSTBOUNDED',nTangential],
-    #                ['FOURTHCIRCLE-UPPERCRACK',nTangential],
-    #                ['FOURTHCIRCLE-FIRSTBOUNDED',nTangential],
-    #                ['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber],
-    #                ['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix],
-    #                ['TRANSVERSALCUT-SECONDFIBER',nRadialFiber],
-    #                ['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix],
-    #                ['TRANSVERSALCUT-THIRDFIBER',nRadialFiber],
-    #                ['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix],
-    #                ['FIRSTCIRCLE',18],
-    #                ['THIRDCIRCLE-SECONDBOUNDED',nTangential1],
-    #                ['THIRDCIRCLE-RESTBOUNDED',nTangential2],
-    #                ['THIRDCIRCLE-LOWERCRACK',nTangential3],
-    #                ['FIFTHCIRCLE',90],
-    #                ['RIGHTSIDE',30],
-    #                ['LEFTSIDE',30]]
-
+    
     for regionSet in regionSets:
         seedEdgeByNumber(model,'RVE-assembly',regionSet[0],regionSet[1],FINER,logfilepath,baselogindent + 3*logindent,True)
 

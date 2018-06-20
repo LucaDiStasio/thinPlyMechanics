@@ -4499,13 +4499,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Field output ...',True)
 
     for step in parameters['steps'].values():
-        # if 'boundingPly' in parameters['BC']['northSide']['type'] or 'boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']:
-        #     model.FieldOutputRequest(name='F-Output-1',createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['MAIN-PLY'],variables=('U','RF','S','E','EE','COORD',))
-        #     model.FieldOutputRequest(name='F-Output-1',createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'],variables=('U','RF','S','E','EE','COORD',))
-        #     model.FieldOutputRequest(name='F-Output-1',createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'],variables=('U','RF','S','E','EE','COORD',))
-        # else:
         model.FieldOutputRequest(name='F-Output-1',createStepName=step['name'],variables=('U','RF','S','E','EE','COORD',))
-    #model.FieldOutputRequest(name='F-Output-1',createStepName='Load-Step',variables=('U','RF','S','E','EE','COORD',))
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # history output
@@ -4513,7 +4507,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     for step in parameters['steps'].values():
         model.HistoryOutputRequest(name='H-Output-1',createStepName=step['name'])
-        model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+        if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+	    model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='DebondUp',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+	    model.historyOutputRequests['H-Output-2'].setValues(contourIntegral='DebondLow',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+	else:
+            model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

@@ -5085,12 +5085,26 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Total number of quadrilateral elements = ' + str(numQuads),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Total number of triangular elements = ' + str(numTris),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Index of current crack tip node: ' + str(cracktipIndex),True)
-    matrixCracktipIndex = numNodes + 1000
-    cracktipDummyIndex = numNodes + 1000 + 1
-    nodes[matrixCracktipIndex] = [nodes[cracktipIndex][0],nodes[cracktipIndex][1]]
-    nodes[cracktipDummyIndex] = [-5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix crack tip node with index ' + str(matrixCracktipIndex) + ' and coordinates (' + str(nodes[cracktipIndex][0]) + ', '+ str(nodes[cracktipIndex][1]) + ')',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(cracktipDummyIndex)+ ' and coordinates (' + str(-5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+      matrixCracktipUPIndex = numNodes + 1000
+      cracktipUPDummyIndex = numNodes + 1000 + 1
+      matrixCracktipLOWIndex = numNodes + 1000 + 50
+      cracktipLOWDummyIndex = numNodes + 1000 + 50 + 1
+      nodes[matrixCracktipUPIndex] = [nodes[cracktipUPIndex][0],nodes[cracktipUPIndex][1]]
+      nodes[cracktipUPDummyIndex] = [-5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
+      nodes[matrixCracktipLOWIndex] = [nodes[cracktipLOWIndex][0],nodes[cracktipLOWIndex][1]]
+      nodes[cracktipLOWDummyIndex] = [-5*parameters['geometry']['Rf'],-20*parameters['geometry']['Rf']]
+      writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix upper crack tip node with index ' + str(matrixCracktipUPIndex) + ' and coordinates (' + str(nodes[cracktipUPIndex][0]) + ', '+ str(nodes[cracktipUPIndex][1]) + ')',True)
+      writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix upper crack tip dummy node with index ' + str(cracktipUPDummyIndex)+ ' and coordinates (' + str(-5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
+      writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix lower crack tip node with index ' + str(matrixCracktipLOWIndex) + ' and coordinates (' + str(nodes[cracktipLOWIndex][0]) + ', '+ str(nodes[cracktipLOWIndex][1]) + ')',True)
+      writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix lower crack tip dummy node with index ' + str(cracktipLOWDummyIndex)+ ' and coordinates (' + str(-5*parameters['geometry']['Rf']) + ', '+ str(-20*parameters['geometry']['Rf']) + ')',True)
+    else:
+      matrixCracktipIndex = numNodes + 1000
+      cracktipDummyIndex = numNodes + 1000 + 1
+      nodes[matrixCracktipIndex] = [nodes[cracktipIndex][0],nodes[cracktipIndex][1]]
+      nodes[cracktipDummyIndex] = [-5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
+      writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix crack tip node with index ' + str(matrixCracktipIndex) + ' and coordinates (' + str(nodes[cracktipIndex][0]) + ', '+ str(nodes[cracktipIndex][1]) + ')',True)
+      writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(cracktipDummyIndex)+ ' and coordinates (' + str(-5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the crack tip',True)
     fiberElswithCracktip = []
     matrixElswithCracktip = []

@@ -4161,31 +4161,31 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assigning boundary conditions ...',True)
 
     # SOUTH side: symmetry line
-
-    for step in parameters['steps'].values():
-        model.YsymmBC(name='SymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
-
-    # NORTH side
-
-    # if 'periodic' in parameters['boundaryConditions']['north']['type']:
-    #
-    # elif 'rigidbar' in parameters['boundaryConditions']['north']['type']:
-    #
-    # elif 'homogeneousdisplacement' in parameters['boundaryConditions']['north']['type']:
-    #
-    # else free
-
-    # EAST side
-
-    # if 'periodic' in parameters['boundaryConditions']['north']['type']:
-    #
-    # else free
-
-    # WEST side
-
-    # if 'periodic' in parameters['boundaryConditions']['north']['type']:
-    #
-    # else free
+    
+    if 'full' in parameters['geometry']['fiber']['type']:
+        for step in parameters['steps'].values():
+	    if 'symmetric' in parameters['BC']['northSide']['type']:
+		model.YsymmBC(name='NorthSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['UPPERSIDE'], localCsys=None)
+	    if 'symmetric' in parameters['BC']['southSide']['type']:
+		model.YsymmBC(name='SouthSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
+	    if 'symmetric' in parameters['BC']['rightSide']['type']:
+		model.XsymmBC(name='RightSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'], localCsys=None)
+	    if 'symmetric' in parameters['BC']['leftSide']['type']:
+		model.XsymmBC(name='LeftSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'], localCsys=None)
+    elif 'half' in parameters['geometry']['fiber']['type']:
+        for step in parameters['steps'].values():
+            model.YsymmBC(name='SymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
+            if 'symmetric' in parameters['BC']['rightSide']['type']:
+		model.XsymmBC(name='RightSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'], localCsys=None)
+	    if 'symmetric' in parameters['BC']['leftSide']['type']:
+		model.XsymmBC(name='LeftSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'], localCsys=None)
+    elif 'quarter' in parameters['geometry']['fiber']['type']:
+        for step in parameters['steps'].values():
+            model.YsymmBC(name='LowerSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
+            model.XsymmBC(name='LeftSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'], localCsys=None)
+    else:
+        for step in parameters['steps'].values():
+            model.YsymmBC(name='SymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
 
     mdb.save()
 

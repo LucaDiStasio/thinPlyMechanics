@@ -959,26 +959,18 @@ def extractAndSaveFieldOutput(odbObj,step,frameN,folder,filename,ext,fieldOutput
                 csv.write(line + '\n')
 
 def getDispVsReactionOnBoundarySubset(odbObj,step,frame,part,subset,component):
-
     set = getSingleNodeSet(odbObj,part,subset)
-
     disp = getFieldOutput(odbObj,-1,-1,'U',set)
-
     countdisp = 0
     meandisp = 0
-
     for value in disp.values:
         countdisp += 1
         meandisp += value.data[component]
     meandisp /= countdisp
-
     force = getFieldOutput(odbObj,-1,-1,'RF',set)
-
     totalforce = 0
-
     for value in force.values:
         totalforce += value.data[component]
-
     return meandisp,totalforce
 
 def getJintegrals(wd,sim,ncontours,stepN):
@@ -2917,7 +2909,7 @@ def addVCCTnodes(parameters,nodesfullfile,quadsfullfile,lastNodeIndex,logfilepat
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
-def addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
+def addVCCTtoInputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: addVCCTToInputfile(parameters,mdbData,logfilepath,baselogindent,logindent)',True)
     skipLineToLogFile(logfilepath,'a',True)

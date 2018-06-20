@@ -3565,38 +3565,37 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 	    RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING',True)
 
-    setsOfEdgesData = [[R2,0.001,0.0,R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-RIGHT'],
-                       [-R2,0.001,0.0,-R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-LEFT']]
-    for setOfEdgesData in setsOfEdgesData:
-        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-
-    RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT'],RVEpart.sets['LOWERSIDE-FOURTHRING-LEFT']])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING',True)
+        setsOfEdgesData = [[R2,0.001,0.0,R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-RIGHT']]
+	if 'half' in parameters['geometry']['fiber']['type']:
+	    setsOfEdgesData.append([-R2,0.001,0.0,-R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-LEFT'])
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        if 'half' in parameters['geometry']['fiber']['type']:
+            RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT'],RVEpart.sets['LOWERSIDE-FOURTHRING-LEFT']])
+        else:
+	    RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING',True)
     
-    lowerSideSets = [RVEpart.sets['LOWERSIDE-CENTER'],RVEpart.sets['LOWERSIDE-FIRSTRING'],RVEpart.sets['LOWERSIDE-SECONDRING'],RVEpart.sets['LOWERSIDE-THIRDRING'],RVEpart.sets['LOWERSIDE-FOURTHRING'],RVEpart.sets['LOWERSIDE-MATRIXBULK-RIGHT'],RVEpart.sets['LOWERSIDE-MATRIXBULK-LEFT']]
-    
-    setsOfEdgesData = []
-    
-    if 'boundingPly' in parameters['BC']['rightSide']['type']:
-        setsOfEdgesData.append([0.99*CornerBx,0.001,0.0,0.99*CornerBx,-0.001,0.0,'LOWERSIDE-RIGHT-HOMOGENIZED-PLY'])
-    if 'boundingPly' in parameters['BC']['leftSide']['type']:
-        setsOfEdgesData.append([0.99*CornerAx,0.001,0.0,0.99*CornerAx,-0.001,0.0,'LOWERSIDE-LEFT-HOMOGENIZED-PLY'])
-    if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
-        for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-            setsOfEdgesData.append([(nFiber+1)*2*L,0.001,0.0,(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)])
-            #setsOfEdgesData.append([(nFiber+1)*L-1.01*Rf,0.001,0.0,(nFiber+1)*L-1.01*Rf,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)+'-LEFTMAT'])
-            setsOfEdgesData.append([(nFiber+1)*2*L+1.01*Rf,0.001,0.0,(nFiber+1)*2*L+1.01*Rf,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)+'-RIGHTMAT'])
-    if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
-        for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-            setsOfEdgesData.append([-(nFiber+1)*2*L,0.001,0.0,-(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)])
-            setsOfEdgesData.append([-(nFiber+1)*2*L-1.01*Rf,0.001,0.0,-(nFiber+1)*2*L-1.01*Rf,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)+'-LEFTMAT'])
-            #setsOfEdgesData.append([-(nFiber+1)*L+1.01*Rf,0.001,0.0,-(nFiber+1)*L+1.01*Rf,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)+'-RIGHTMAT'])
-                                   
-    for setOfEdgesData in setsOfEdgesData:
-        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-        lowerSideSets.append(RVEpart.sets[setOfEdgesData[-1]])
+        lowerSideSets = [RVEpart.sets['LOWERSIDE-CENTER'],RVEpart.sets['LOWERSIDE-FIRSTRING'],RVEpart.sets['LOWERSIDE-SECONDRING'],RVEpart.sets['LOWERSIDE-THIRDRING'],RVEpart.sets['LOWERSIDE-FOURTHRING'],RVEpart.sets['LOWERSIDE-MATRIXBULK-RIGHT'],RVEpart.sets['LOWERSIDE-MATRIXBULK-LEFT']]
+        setsOfEdgesData = []
+        if 'boundingPly' in parameters['BC']['rightSide']['type']:
+            setsOfEdgesData.append([0.99*CornerBx,0.001,0.0,0.99*CornerBx,-0.001,0.0,'LOWERSIDE-RIGHT-HOMOGENIZED-PLY'])
+        if 'boundingPly' in parameters['BC']['leftSide']['type']:
+            setsOfEdgesData.append([0.99*CornerAx,0.001,0.0,0.99*CornerAx,-0.001,0.0,'LOWERSIDE-LEFT-HOMOGENIZED-PLY'])
+        if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+            for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+                setsOfEdgesData.append([(nFiber+1)*2*L,0.001,0.0,(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)])
+                setsOfEdgesData.append([(nFiber+1)*2*L+1.01*Rf,0.001,0.0,(nFiber+1)*2*L+1.01*Rf,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)+'-RIGHTMAT'])
+        if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+            for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
+                setsOfEdgesData.append([-(nFiber+1)*2*L,0.001,0.0,-(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)])
+                setsOfEdgesData.append([-(nFiber+1)*2*L-1.01*Rf,0.001,0.0,-(nFiber+1)*2*L-1.01*Rf,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)+'-LEFTMAT'])                           
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+            lowerSideSets.append(RVEpart.sets[setOfEdgesData[-1]])
         
-    RVEpart.SetByBoolean(name='LOWERSIDE', sets=lowerSideSets)
+        RVEpart.SetByBoolean(name='LOWERSIDE', sets=lowerSideSets)
+    
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE',True)
 
     setsOfEdgesData = [[0.49*Rf*np.cos((theta+deltatheta)*np.pi/180),0.49*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.51*Rf*np.cos((theta+deltatheta)*np.pi/180),0.51*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,'FIRSTCIRCLE'],

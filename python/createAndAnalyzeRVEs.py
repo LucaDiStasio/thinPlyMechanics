@@ -3619,6 +3619,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfEdgesData.append([0.74*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-FIRSTBOUNDED'])
         setsOfEdgesData.append([0.74*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,0.76*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'SECONDCIRCLE-SECONDBOUNDED'])
         setsOfEdgesData.append([0.74*Rf*np.cos(1.025*gamma*np.pi/180),0.74*Rf*np.sin(1.025*gamma*np.pi/180),0.0,0.76*Rf*np.cos(1.025*gamma*np.pi/180),0.76*Rf*np.sin(1.025*gamma*np.pi/180),0.0,'SECONDCIRCLE-RESTBOUNDED'])
+        setsOfEdgesData.append([0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0,1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'THIRDCIRCLE-LOWERCRACK'])
+        setsOfEdgesData.append([0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-UPPERCRACK'])
+        setsOfEdgesData.append([0.99*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-FIRSTBOUNDED'])
+        setsOfEdgesData.append([0.99*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,1.01*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'THIRDCIRCLE-SECONDBOUNDED'])
+        setsOfEdgesData.append([0.99*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.99*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,1.01*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),1.01*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'THIRDCIRCLE-RESTBOUNDED'])
+    
     
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
@@ -3628,6 +3634,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-LOWERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE',True)
+        RVEpart.SetByBoolean(name='THIRDCIRCLE', sets=[RVEpart.sets['THIRDCIRCLE-LOWERCRACK'],RVEpart.sets['THIRDCIRCLE-UPPERCRACK'],RVEpart.sets['THIRDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['THIRDCIRCLE-SECONDBOUNDED'],RVEpart.sets['THIRDCIRCLE-RESTBOUNDED']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE',True)
     
     if ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']) and not 'boundingPly' in parameters['BC']['northSide']['type']:
         setsOfEdgesData.append([0.0,0.99*CornerBy,0.0,0.0,1.01*CornerBy,0.0,'CENTER-RUC-UPPERSIDE'])
@@ -3638,11 +3646,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         setsOfEdgesData.append([0.0,0.99*CornerBy,0.0,0.0,1.01*CornerBy,0.0,'UPPERSIDE'])
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        setsOfEdgesData.append([0.001,L,0.0,-0.001,L,0.0,'PLYINTERFACE'])
-        setsOfEdgesData.append([0.99*CornerBx,0.5*L,0.0,1.01*CornerBx,0.5*L,0.0,'LOWER-RIGHTSIDE'])
-        setsOfEdgesData.append([0.99*CornerAx,0.5*L,0.0,1.01*CornerAx,0.5*L,0.0,'LOWER-LEFTSIDE'])
-        setsOfEdgesData.append([0.99*CornerBx,L+0.5*Lply,0.0,1.01*CornerBx,L+0.5*Lply,0.0,'UPPER-RIGHTSIDE'])
-        setsOfEdgesData.append([0.99*CornerAx,L+0.5*Lply,0.0,1.01*CornerAx,L+0.5*Lply,0.0,'UPPER-LEFTSIDE'])
+        if 'adjacentFibers' in parameters['BC']['northSide']['type']:
+	
+	else:
+            setsOfEdgesData.append([0.001,L,0.0,-0.001,L,0.0,'PLYINTERFACE'])
+            setsOfEdgesData.append([0.99*CornerBx,0.5*L,0.0,1.01*CornerBx,0.5*L,0.0,'LOWER-RIGHTSIDE'])
+            setsOfEdgesData.append([0.99*CornerAx,0.5*L,0.0,1.01*CornerAx,0.5*L,0.0,'LOWER-LEFTSIDE'])
+            setsOfEdgesData.append([0.99*CornerBx,L+0.5*Lply,0.0,1.01*CornerBx,L+0.5*Lply,0.0,'UPPER-RIGHTSIDE'])
+            setsOfEdgesData.append([0.99*CornerAx,L+0.5*Lply,0.0,1.01*CornerAx,L+0.5*Lply,0.0,'UPPER-LEFTSIDE'])
     else:
         setsOfEdgesData.append([0.99*CornerBx,0.5*L,0.0,1.01*CornerBx,0.5*L,0.0,'RIGHTSIDE'])
         setsOfEdgesData.append([0.99*CornerAx,0.5*L,0.0,1.01*CornerAx,0.5*L,0.0,'LEFTSIDE'])
@@ -3676,27 +3687,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RIGHTSIDE',True)
         RVEpart.SetByBoolean(name='LEFTSIDE', sets=[RVEpart.sets['LOWER-LEFTSIDE'],RVEpart.sets['UPPER-LEFTSIDE']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LEFTSIDE',True)
-
-    setsOfEdgesData = [[0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0,1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'THIRDCIRCLE-LOWERCRACK'],
-                       [0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-UPPERCRACK'],
-                       [0.99*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-FIRSTBOUNDED'],
-                       [0.99*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,1.01*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'THIRDCIRCLE-SECONDBOUNDED'],
-                       [0.99*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.99*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,1.01*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),1.01*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'THIRDCIRCLE-RESTBOUNDED']]
-    for setOfEdgesData in setsOfEdgesData:
-        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-    
-    if np.abs(theta)>0.0:
-        setsOfEdgesData = [[0.99*Rf*np.cos(0.975*alpha*np.pi/180),0.99*Rf*np.sin(0.975*alpha*np.pi/180),0.0,1.01*Rf*np.cos(0.975*alpha*np.pi/180),1.01*Rf*np.sin(0.975*alpha*np.pi/180),0.0,'THIRDCIRCLE-CRACK'],
-                        [0.99*Rf*np.cos((alpha-0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha-0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alpha-0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha-0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-UPPERCRACK-CT2'],
-                        [0.99*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-FIRSTBOUNDED'],
-                        [0.99*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,1.01*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'THIRDCIRCLE-SECONDBOUNDED'],
-                        [0.99*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.99*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,1.01*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),1.01*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'THIRDCIRCLE-RESTBOUNDED']]
-        for setOfEdgesData in setsOfEdgesData:
-            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-        RVEpart.SetByBoolean(name='THIRDCIRCLE', sets=[RVEpart.sets['THIRDCIRCLE-LOWERCRACK'],RVEpart.sets['THIRDCIRCLE-UPPERCRACK'],RVEpart.sets['THIRDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['THIRDCIRCLE-SECONDBOUNDED'],RVEpart.sets['THIRDCIRCLE-RESTBOUNDED']])
-    else:
-        RVEpart.SetByBoolean(name='THIRDCIRCLE', sets=[RVEpart.sets['THIRDCIRCLE-LOWERCRACK'],RVEpart.sets['THIRDCIRCLE-UPPERCRACK'],RVEpart.sets['THIRDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['THIRDCIRCLE-SECONDBOUNDED'],RVEpart.sets['THIRDCIRCLE-RESTBOUNDED']])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE',True)
 
     if L>2*Rf:
         R4 = 1.25*Rf

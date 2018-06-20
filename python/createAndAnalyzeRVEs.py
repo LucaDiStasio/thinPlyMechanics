@@ -3385,8 +3385,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # if bounding ply is present, draw interface line
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw ply upper interface line ...',True)
-        
-        fiberSketch.Line(point1=(CornerAx,L),point2=(CornerBx,L))
+        if 'adjacentFibers' in parameters['BC']['northSide']['type']:
+	    fiberSketch.Line(point1=(CornerAx,L+Lply),point2=(CornerBx,L+Lply))
+	else:
+            fiberSketch.Line(point1=(CornerAx,L),point2=(CornerBx,L))
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
@@ -3464,8 +3466,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,CornerBy,0.0,0.01*L/30,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
     defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,CornerBy,0.0,0.01*L/30,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L,0.0,0.01*L/30,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-        defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L,0.0,0.01*L/30,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        if 'adjacentFibers' in parameters['BC']['northSide']['type']:
+	    defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L+Lply,0.0,0.01*L/30,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+            defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L+Lply,0.0,0.01*L/30,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+	else:
+            defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L,0.0,0.01*L/30,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+            defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L,0.0,0.01*L/30,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
         defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.01*L/30,'RIGHTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['leftSide']['type']:

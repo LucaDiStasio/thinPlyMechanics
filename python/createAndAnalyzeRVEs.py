@@ -3166,7 +3166,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # draw fiber and circular sections for mesh generation
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fiber and circular sections for mesh generation ...',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Fiber',True)
-    fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-Rf, -0.5*L), point2=(Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[6]
+    if 'full' in parameters['geometry']['fiber']['type']:
+        fiberSketch.CircleByCenterPerimeter(center=(0.0, -0.5*L), point1=(-Rf, -0.5*L)) 
+    elif 'half' in parameters['geometry']['fiber']['type']:
+        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-Rf, -0.5*L), point2=(Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[6]
+    elif 'quarter' in parameters['geometry']['fiber']['type']:
+        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(0.0, -0.5*L+Rf), point2=(Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[6]
+    else:
+        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-Rf, -0.5*L), point2=(Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[6]
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     #raw_input()
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.75*Rf',True)

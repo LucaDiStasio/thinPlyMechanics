@@ -4390,7 +4390,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         regionSets.append(['THIRDCIRCLE-UPPERCRACK',nTangential])
         regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED',nTangential])
         regionSets.append(['FOURTHCIRCLE-UPPERCRACK',nTangential])
-        regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED',nTangential],
+        regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED',nTangential])
         regionSets.append(['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber])
         regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix])
         regionSets.append(['TRANSVERSALCUT-SECONDFIBER',nRadialFiber])
@@ -4421,8 +4421,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             regionSets.append(['LOWERSIDE-LEFT-FIBER'+str(nFiber+1),10])
     
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        regionSets.append(['LOWER-RIGHTSIDE',int(np.floor(30))])
-        regionSets.append(['LOWER-LEFTSIDE',int(np.floor(30))])
+        regionSets.append(['LOWER-RIGHTSIDE',30])
+        regionSets.append(['LOWER-LEFTSIDE',30])
         regionSets.append(['UPPER-RIGHTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
         regionSets.append(['UPPER-LEFTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
     else:

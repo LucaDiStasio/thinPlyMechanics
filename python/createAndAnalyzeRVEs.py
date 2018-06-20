@@ -3462,7 +3462,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     # sets of vertices
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of vertices',True)
-    defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIP',logfilepath,baselogindent + 4*logindent,True)
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIPUP',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta-deltatheta)*np.pi/180),Rf*np.sin((theta-deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIPLOW',logfilepath,baselogindent + 4*logindent,True)
+    else:
+        defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIP',logfilepath,baselogindent + 4*logindent,True)
     defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,CornerBy,0.0,0.01*L/30,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
     defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,CornerBy,0.0,0.01*L/30,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['northSide']['type']:
@@ -3483,14 +3487,18 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of edges',True)
     
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-        alpha = theta + deltatheta - deltapsi
-        beta = theta + deltatheta + deltapsi
-        gamma = theta + deltatheta + deltapsi + deltaphi
-        setsOfEdgesData = [[0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0,1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'CRACK-LOWER'],
- [0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'CRACK-UPPER']]
+        alphaup = theta + deltatheta - deltapsi
+        betaup = theta + deltatheta + deltapsi
+        gammaup = theta + deltatheta + deltapsi + deltaphi
+        alphalow = theta - deltatheta + deltapsi
+        betalow = theta - deltatheta - deltapsi
+        gammalow = theta - deltatheta - deltapsi + deltaphi
+        setsOfEdgesData = [[0.99*Rf*np.cos(theta*np.pi/180),0.99*Rf*np.sin(theta*np.pi/180),0.0,1.01*Rf*np.cos(theta*np.pi/180),1.01*Rf*np.sin(theta*np.pi/180),0.0,'CRACK-CENTER'],
+			   [0.99*Rf*np.cos((alphalow-0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alphalow-0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alphalow-0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alphalow-0.5*deltapsi)*np.pi/180),0.0,'CRACK-LOWER'],
+			   [0.99*Rf*np.cos((alphaup+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alphaup+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alphaup+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alphaup+0.5*deltapsi)*np.pi/180),0.0,'CRACK-UPPER']]
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-        RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
+        RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-CENTER'],RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
     else:
         alpha = theta + deltatheta - deltapsi
         beta = theta + deltatheta + deltapsi

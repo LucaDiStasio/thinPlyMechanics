@@ -3876,7 +3876,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MATRIX',True)
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        setsOfFacesData = [[0.975*L, 0.975*(L+Lply), 0,'BOUNDING-PLY']]
+        if 'adjacentFibers' in parameters['BC']['northSide']['type']:
+	    setsOfFacesData = [[0.975*L, 0.975*(L+Lply+Ludply), 0,'BOUNDING-PLY']]
+	else:
+            setsOfFacesData = [[0.975*L, 0.975*(L+Lply), 0,'BOUNDING-PLY']]
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
     

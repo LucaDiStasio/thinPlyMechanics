@@ -4838,81 +4838,188 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-UPPERCRACK','fiber-extannulus-uppercrack']:
 		store = True
 	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set FIBER-EXTANNULUS-FIRSTBOUNDED and saving to list ...',True)
-    fiberExtannFirstbounElementset = []
-    store = False
-    for l,line in enumerate(inpfilelines):
-        if store == True and '*' in inpfilelines[l+1]:
-            for index in line.replace('\n','').split(','):
-                if index!='' and index!=' ':
-                    fiberExtannFirstbounElementset.append(int(index))
-            store = False
-            break
-        elif store == True:
-            for index in line.replace('\n','').split(','):
-                if index!='' and index!=' ':
-                    fiberExtannFirstbounElementset.append(int(index))
-        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-FIRSTBOUNDED','fiber-extannulus-firstbounded'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
-            store = False
-            startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
-            endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
-            deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
-            for index in range(startEl,endEl+deltaEl,deltaEl):
-                fiberExtannFirstbounElementset.append(index)
-            break
-        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-FIRSTBOUNDED','fiber-extannulus-firstbounded']:
-            store = True
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set MATRIX-INTANNULUS-UPPERCRACK and saving to list ...',True)
-    matrixIntannUppcrackElementset = []
-    store = False
-    for l,line in enumerate(inpfilelines):
-        if store == True and '*' in inpfilelines[l+1]:
-            for index in line.replace('\n','').split(','):
-                if index!='' and index!=' ':
-                    matrixIntannUppcrackElementset.append(int(index))
-            store = False
-            break
-        elif store == True:
-            for index in line.replace('\n','').split(','):
-                if index!='' and index!=' ':
-                    matrixIntannUppcrackElementset.append(int(index))
-        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-UPPERCRACK','matrix-intannulus-uppercrack'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
-            store = False
-            startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
-            endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
-            deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
-            for index in range(startEl,endEl+deltaEl,deltaEl):
-                matrixIntannUppcrackElementset.append(index)
-            break
-        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-UPPERCRACK','matrix-intannulus-uppercrack']:
-            store = True
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set MATRIX-INTANNULUS-FIRSTBOUNDED and saving to list ...',True)
-    matrixIntannFirstbounElementset = []
-    store = False
-    for l,line in enumerate(inpfilelines):
-        if store == True and '*' in inpfilelines[l+1]:
-            for index in line.replace('\n','').split(','):
-                if index!='' and index!=' ':
-                    matrixIntannFirstbounElementset.append(int(index))
-            store = False
-            break
-        elif store == True:
-            for index in line.replace('\n','').split(','):
-                if index!='' and index!=' ':
-                    matrixIntannFirstbounElementset.append(int(index))
-        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-FIRSTBOUNDED','matrix-intannulus-firstbounded'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
-            store = False
-            startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
-            endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
-            deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
-            for index in range(startEl,endEl+deltaEl,deltaEl):
-                matrixIntannFirstbounElementset.append(index)
-            break
-        elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-FIRSTBOUNDED','matrix-intannulus-firstbounded']:
-            store = True
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set FIBER-EXTANNULUS-FIRSTBOUNDED-CTUP and saving to list ...',True)
+	fiberExtannFirstbounCtUpElementset = []
+	store = False
+	for l,line in enumerate(inpfilelines):
+	    if store == True and '*' in inpfilelines[l+1]:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			fiberExtannFirstbounCtUpElementset.append(int(index))
+		store = False
+		break
+	    elif store == True:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			fiberExtannFirstbounCtUpElementset.append(int(index))
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-FIRSTBOUNDED-CTUP','fiber-extannulus-firstbounded-ctup'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
+		store = False
+		startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+		endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
+		deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
+		for index in range(startEl,endEl+deltaEl,deltaEl):
+		    fiberExtannFirstbounCtUpElementset.append(index)
+		break
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-FIRSTBOUNDED-CTUP','fiber-extannulus-firstbounded-ctup']:
+		store = True
+	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set FIBER-EXTANNULUS-FIRSTBOUNDED-CTLOW and saving to list ...',True)
+	fiberExtannFirstbounCtLowElementset = []
+	store = False
+	for l,line in enumerate(inpfilelines):
+	    if store == True and '*' in inpfilelines[l+1]:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			fiberExtannFirstbounCtLowElementset.append(int(index))
+		store = False
+		break
+	    elif store == True:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			fiberExtannFirstbounCtLowElementset.append(int(index))
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-FIRSTBOUNDED-CTLOW','fiber-extannulus-firstbounded-ctlow'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
+		store = False
+		startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+		endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
+		deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
+		for index in range(startEl,endEl+deltaEl,deltaEl):
+		    fiberExtannFirstbounCtLowElementset.append(index)
+		break
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-FIRSTBOUNDED-CTLOW','fiber-extannulus-firstbounded-ctlow']:
+		store = True
+	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    else:
+	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set FIBER-EXTANNULUS-FIRSTBOUNDED and saving to list ...',True)
+	fiberExtannFirstbounElementset = []
+	store = False
+	for l,line in enumerate(inpfilelines):
+	    if store == True and '*' in inpfilelines[l+1]:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			fiberExtannFirstbounElementset.append(int(index))
+		store = False
+		break
+	    elif store == True:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			fiberExtannFirstbounElementset.append(int(index))
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-FIRSTBOUNDED','fiber-extannulus-firstbounded'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
+		store = False
+		startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+		endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
+		deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
+		for index in range(startEl,endEl+deltaEl,deltaEl):
+		    fiberExtannFirstbounElementset.append(index)
+		break
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-FIRSTBOUNDED','fiber-extannulus-firstbounded']:
+		store = True
+	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set MATRIX-INTANNULUS-UPPERCRACK-CTUP and saving to list ...',True)
+	matrixIntannUppcrackCtUpElementset = []
+	store = False
+	for l,line in enumerate(inpfilelines):
+	    if store == True and '*' in inpfilelines[l+1]:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			matrixIntannUppcrackCtUpElementset.append(int(index))
+		store = False
+		break
+	    elif store == True:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			matrixIntannUppcrackCtUpElementset.append(int(index))
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-UPPERCRACK-CTUP','matrix-intannulus-uppercrack-ctup'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
+		store = False
+		startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+		endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
+		deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
+		for index in range(startEl,endEl+deltaEl,deltaEl):
+		    matrixIntannUppcrackCtUpElementset.append(index)
+		break
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-UPPERCRACK-CTUP','matrix-intannulus-uppercrack-ctup']:
+		store = True
+	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set MATRIX-INTANNULUS-UPPERCRACK-CTLOW and saving to list ...',True)
+	matrixIntannUppcrackCtLowElementset = []
+	store = False
+	for l,line in enumerate(inpfilelines):
+	    if store == True and '*' in inpfilelines[l+1]:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			matrixIntannUppcrackCtLowElementset.append(int(index))
+		store = False
+		break
+	    elif store == True:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			matrixIntannUppcrackCtLowElementset.append(int(index))
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-UPPERCRACK-CTLOW','matrix-intannulus-uppercrack-ctlow'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
+		store = False
+		startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+		endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
+		deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
+		for index in range(startEl,endEl+deltaEl,deltaEl):
+		    matrixIntannUppcrackCtLowElementset.append(index)
+		break
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-UPPERCRACK-CTLOW','matrix-intannulus-uppercrack-ctlow']:
+		store = True
+	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    else:
+	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set MATRIX-INTANNULUS-UPPERCRACK and saving to list ...',True)
+	matrixIntannUppcrackElementset = []
+	store = False
+	for l,line in enumerate(inpfilelines):
+	    if store == True and '*' in inpfilelines[l+1]:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			matrixIntannUppcrackElementset.append(int(index))
+		store = False
+		break
+	    elif store == True:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			matrixIntannUppcrackElementset.append(int(index))
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-UPPERCRACK','matrix-intannulus-uppercrack'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
+		store = False
+		startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+		endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
+		deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
+		for index in range(startEl,endEl+deltaEl,deltaEl):
+		    matrixIntannUppcrackElementset.append(index)
+		break
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-UPPERCRACK','matrix-intannulus-uppercrack']:
+		store = True
+	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+      
+    else:
+	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set MATRIX-INTANNULUS-FIRSTBOUNDED and saving to list ...',True)
+	matrixIntannFirstbounElementset = []
+	store = False
+	for l,line in enumerate(inpfilelines):
+	    if store == True and '*' in inpfilelines[l+1]:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			matrixIntannFirstbounElementset.append(int(index))
+		store = False
+		break
+	    elif store == True:
+		for index in line.replace('\n','').split(','):
+		    if index!='' and index!=' ':
+			matrixIntannFirstbounElementset.append(int(index))
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-FIRSTBOUNDED','matrix-intannulus-firstbounded'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
+		store = False
+		startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+		endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
+		deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
+		for index in range(startEl,endEl+deltaEl,deltaEl):
+		    matrixIntannFirstbounElementset.append(index)
+		break
+	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-FIRSTBOUNDED','matrix-intannulus-firstbounded']:
+		store = True
+	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-WITHOUT-CORNERS ...',True)
     northSideWithoutCornersNodeset = []
     for node in northSideNodeset:

@@ -3748,14 +3748,23 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # sets of faces
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of faces',True)
 
-    setsOfFacesData = [[0.0, 0.25*Rf, 0,'FIBER-CENTER'],
-                       [0.0, 0.65*Rf, 0,'FIBER-INTERMEDIATEANNULUS'],
-                       [0.85*Rf*np.cos(0.5*alpha*np.pi/180), 0.85*Rf*np.sin(0.5*alpha*np.pi/180), 0,'FIBER-EXTANNULUS-LOWERCRACK'],
-                       [0.85*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-UPPERCRACK'],
-                       [0.85*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-FIRSTBOUNDED'],
-                       [0.85*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180), 0.85*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180), 0,'FIBER-EXTANNULUS-SECONDBOUNDED'],
-                       [0.85*Rf*np.cos((gamma+0.5*(180-gamma))*np.pi/180), 0.85*Rf*np.sin((gamma+0.5*(180-gamma))*np.pi/180), 0,'FIBER-EXTANNULUS-RESTBOUNDED']]
-
+    setsOfFacesData = [[0.01*Rf, 0.25*Rf, 0,'FIBER-CENTER'],
+                       [0.0, 0.65*Rf, 0,'FIBER-INTERMEDIATEANNULUS']]
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        setsOfFacesData.append([0.85*Rf*np.cos(theta*np.pi/180), 0.85*Rf*np.sin(theta*np.pi/180), 0,'FIBER-EXTANNULUS-CENTERCRACK'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta+deltatheta-0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta-0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-UPPERCRACK-CTUP'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-FIRSTBOUNDED-CTUP'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta+deltatheta+deltapsi+0.5*deltaphi)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta+deltapsi+0.5*deltaphi)*np.pi/180), 0,'FIBER-EXTANNULUS-SECONDBOUNDED-CTUP'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta-deltatheta+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta-deltatheta+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-UPPERCRACK-CTLOW'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta-deltatheta-0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta-deltatheta-0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-FIRSTBOUNDED-CTLOW'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta-deltatheta-deltapsi-0.5*deltaphi)*np.pi/180), 0.85*Rf*np.sin((theta-deltatheta-deltapsi-0.5*deltaphi)*np.pi/180), 0,'FIBER-EXTANNULUS-SECONDBOUNDED-CTLOW'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta+deltatheta+deltapsi+deltaphi+1.0)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta+deltapsi+deltaphi+1.0)*np.pi/180), 0,'FIBER-EXTANNULUS-RESTBOUNDED'])
+    else:
+        setsOfFacesData.append([0.85*Rf*np.cos(0.5*alpha*np.pi/180), 0.85*Rf*np.sin(0.5*alpha*np.pi/180), 0,'FIBER-EXTANNULUS-LOWERCRACK'])
+        setsOfFacesData.append([0.85*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-UPPERCRACK'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-FIRSTBOUNDED'])
+        setsOfFacesData.append([0.85*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180), 0.85*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180), 0,'FIBER-EXTANNULUS-SECONDBOUNDED'])
+        setsOfFacesData.append([0.85*Rf*np.cos((gamma+0.5*(180-gamma))*np.pi/180), 0.85*Rf*np.sin((gamma+0.5*(180-gamma))*np.pi/180), 0,'FIBER-EXTANNULUS-RESTBOUNDED'])
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 

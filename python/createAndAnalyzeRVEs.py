@@ -3629,8 +3629,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 	        setsOfEdgesData.append([0.99*rValue*np.cos((alphas[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((alphas[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((alphas[aIndex]+incs[aIndex]),1.01*rValue*np.sin((alphas[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-UPPERCRACK-'+ctNames[aIndex]])
                 setsOfEdgesData.append([0.99*rValue*np.cos((ctAngles[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((ctAngles[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((ctAngles[aIndex]+incs[aIndex])*np.pi/180),1.01*rValue*np.sin((ctAngles[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-FIRSTBOUNDED-'+ctNames[aIndex]])
                 setsOfEdgesData.append([0.99*rValue*np.cos((betas[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((betas[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((betas[aIndex]+incs[aIndex])*np.pi/180),1.01*rValue*np.sin((betas[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-SECONDBOUNDED-'+ctNames[aIndex]])
-            setsOfEdgesData.append([0.99*rValue*np.cos((aValue+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((aValue+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos(0.5*alpha*np.pi/180),1.01*rValue*np.sin(0.5*alpha*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-LOWERCRACK-'+ctNames[aIndex]])
-            setsOfEdgesData.append([0.99*rValue*np.cos(1.025*gamma*np.pi/180),0.99*rValue*np.sin(1.025*gamma*np.pi/180),0.0,1.01*rValue*np.cos(1.025*gamma*np.pi/180),1.01*rValue*np.sin(1.025*gamma*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-RESTBOUNDED'])
+            setsOfEdgesData.append([0.99*rValue*np.cos(theta*np.pi/180),0.99*rValue*np.sin(theta*np.pi/180),0.0,1.01*rValue*np.cos(theta*np.pi/180),1.01*rValue*np.sin(theta*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-CENTERCRACK'])
+            setsOfEdgesData.append([0.99*rValue*np.cos(1.025*gammas[0]*np.pi/180),0.99*rValue*np.sin(1.025*gammas[0]*np.pi/180),0.0,1.01*rValue*np.cos(1.025*gammas[0]*np.pi/180),1.01*rValue*np.sin(1.025*gammas[0]*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-RESTBOUNDED'])
     else:
         alpha = theta + deltatheta - deltapsi
         beta = theta + deltatheta + deltapsi
@@ -3663,13 +3663,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfEdgesData.append([0.85*Rf*np.cos(0.99*gamma*np.pi/180),0.85*Rf*np.sin(0.99*gamma*np.pi/180),0.0,0.85*Rf*np.cos(1.01*gamma*np.pi/180),0.85*Rf*np.sin(1.01*gamma*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHFIBER'])
         setsOfEdgesData.append([1.05*Rf*np.cos(0.99*gamma*np.pi/180),1.05*Rf*np.sin(0.99*gamma*np.pi/180),0.0,1.05*Rf*np.cos(1.01*gamma*np.pi/180),1.05*Rf*np.sin(1.01*gamma*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHMATRIX'])
     
-    
-    
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
     
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-    
+        RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-CENTERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK-CTUP'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED-CTUP'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED-CTUP'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK-CTLOW'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED-CTLOW'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED-CTLOW'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE',True)
+        RVEpart.SetByBoolean(name='THIRDCIRCLE', sets=[RVEpart.sets['THIRDCIRCLE-CENTERCRACK'],RVEpart.sets['THIRDCIRCLE-UPPERCRACK-CTUP'],RVEpart.sets['THIRDCIRCLE-FIRSTBOUNDED-CTUP'],RVEpart.sets['THIRDCIRCLE-SECONDBOUNDED-CTUP'],RVEpart.sets['THIRDCIRCLE-UPPERCRACK-CTLOW'],RVEpart.sets['THIRDCIRCLE-FIRSTBOUNDED-CTLOW'],RVEpart.sets['THIRDCIRCLE-SECONDBOUNDED-CTLOW'],RVEpart.sets['THIRDCIRCLE-RESTBOUNDED']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE',True)
+        RVEpart.SetByBoolean(name='FOURTHCIRCLE', sets=[RVEpart.sets['FOURTHCIRCLE-CENTERCRACK'],RVEpart.sets['FOURTHCIRCLE-UPPERCRACK-CTUP'],RVEpart.sets['FOURTHCIRCLE-FIRSTBOUNDED-CTUP'],RVEpart.sets['FOURTHCIRCLE-SECONDBOUNDED-CTUP'],RVEpart.sets['FOURTHCIRCLE-UPPERCRACK-CTLOW'],RVEpart.sets['FOURTHCIRCLE-FIRSTBOUNDED-CTLOW'],RVEpart.sets['FOURTHCIRCLE-SECONDBOUNDED-CTLOW'],RVEpart.sets['FOURTHCIRCLE-RESTBOUNDED']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FOURTHCIRCLE',True)
     else:
         RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-LOWERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE',True)

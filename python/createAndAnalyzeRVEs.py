@@ -3291,7 +3291,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # if theta != 0, construct second crack tip
-    if np.abs(theta)>0.0:
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Construct second crack tip ...',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calculate angles for construction lines ...',True)
         alpha = theta - deltatheta + deltapsi
@@ -3385,6 +3385,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # if bounding ply is present, draw interface line
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw ply upper interface line ...',True)
+        
         fiberSketch.Line(point1=(CornerAx,L),point2=(CornerBx,L))
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

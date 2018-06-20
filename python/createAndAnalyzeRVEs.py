@@ -3614,10 +3614,13 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         ctNames = ['CTUP','CTLOW']
         circleNames = ['SECOND','THIRD','FOURTH']
+        alphas = [theta + deltatheta - deltapsi,theta - deltatheta + deltapsi]
+        betas = [theta + deltatheta + deltapsi,theta - deltatheta - deltapsi]
+        gammas = [theta + deltatheta + deltapsi + deltaphi,theta - deltatheta - deltapsi - deltaphi]
     else:
-        alpha = theta - deltatheta + deltapsi
-        beta = theta - deltatheta - deltapsi
-        gamma = theta - deltatheta - deltapsi - deltaphi
+        alpha = theta + deltatheta - deltapsi
+        beta = theta + deltatheta + deltapsi
+        gamma = theta + deltatheta + deltapsi + deltaphi
         setsOfEdgesData.append([0.74*Rf*np.cos(0.5*alpha*np.pi/180),0.74*Rf*np.sin(0.5*alpha*np.pi/180),0.0,0.76*Rf*np.cos(0.5*alpha*np.pi/180),0.76*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'SECONDCIRCLE-LOWERCRACK'])
         setsOfEdgesData.append([0.74*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-UPPERCRACK'])
         setsOfEdgesData.append([0.74*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-FIRSTBOUNDED'])

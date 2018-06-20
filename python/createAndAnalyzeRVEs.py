@@ -4229,13 +4229,30 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     # assign seam
     model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
-
+    
+    if 'inverseSquareRoot' in parameters['singularity']['type']:
+        midNodePos = 0.25
+    else:
+        midNodePos = 0.5
+    
     # contour integral
-    xC = Rf*np.cos((theta+deltatheta)*np.pi/180)
-    yC = Rf*np.sin((theta+deltatheta)*np.pi/180)
-    xA = Rf*np.cos((theta+1.025*deltatheta)*np.pi/180)
-    yA = -xC*(xA-xC)/yC + yC
-    model.rootAssembly.engineeringFeatures.ContourIntegral(name='Debond',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIP'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=0.5, collapsedElementAtTip=NONE)
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+      xC = Rf*np.cos((theta+deltatheta)*np.pi/180)
+      yC = Rf*np.sin((theta+deltatheta)*np.pi/180)
+      xA = Rf*np.cos((theta+1.025*deltatheta)*np.pi/180)
+      yA = -xC*(xA-xC)/yC + yC
+      model.rootAssembly.engineeringFeatures.ContourIntegral(name='DebondUp',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIPUP'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=midNodePos, collapsedElementAtTip=NONE)
+      xC = Rf*np.cos((theta-deltatheta)*np.pi/180)
+      yC = Rf*np.sin((theta-deltatheta)*np.pi/180)
+      xA = Rf*np.cos((theta-1.025*deltatheta)*np.pi/180)
+      yA = -xC*(xA-xC)/yC + yC
+      model.rootAssembly.engineeringFeatures.ContourIntegral(name='DebondLow',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIPLOW'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=midNodePos, collapsedElementAtTip=NONE)
+    else:
+      xC = Rf*np.cos((theta+deltatheta)*np.pi/180)
+      yC = Rf*np.sin((theta+deltatheta)*np.pi/180)
+      xA = Rf*np.cos((theta+1.025*deltatheta)*np.pi/180)
+      yA = -xC*(xA-xC)/yC + yC
+      model.rootAssembly.engineeringFeatures.ContourIntegral(name='Debond',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIP'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=midNodePos, collapsedElementAtTip=NONE)
 
     mdb.save()
 

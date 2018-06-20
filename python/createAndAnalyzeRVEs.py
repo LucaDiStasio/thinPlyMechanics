@@ -4587,16 +4587,11 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for l,line in enumerate(inpfilelines):
         if store == True and '*' in inpfilelines[l+1]:
             nodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[2])]
-            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Stored node ' + str(int(line.replace('\n','').split(',')[0])) + ' with coordinates (' + str(float(line.replace('\n','').split(',')[1])) + ', ' + str(float(line.replace('\n','').split(',')[2])) + ')',True)
-            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node section ends at line ' + str(l),True)
-            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'No more to go',True)
             store = False
             break
         elif store == True:
             nodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[2])]
-            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Stored node ' + str(int(line.replace('\n','').split(',')[0])) + ' with coordinates (' + str(float(line.replace('\n','').split(',')[1])) + ', ' + str(float(line.replace('\n','').split(',')[2])) + ')',True)
         elif ('*Node' in line or '*NODE' in line) and len(inpfilelines[l+1].replace('\n','').split(','))==3:
-            #writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node section starts at line ' + str(l),True)
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading quadrilateral elements and saving to dictionary ...',True)
@@ -4618,11 +4613,22 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         elif ('*Element, type=CPE8' in line or '*ELEMENT, type=CPE8' in line or '*Element, type=CPE4' in line or '*ELEMENT, type=CPE4' in line) and (len(inpfilelines[l+1].replace('\n','').split(','))==5 or len(inpfilelines[l+1].replace('\n','').split(','))==9):
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack tip set and saving to variable ...',True)
-    for l,line in enumerate(inpfilelines):
-        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIP','cracktip']:
-            cracktipIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
-            break
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+      writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack tip sets and saving to variable ...',True)
+      for l,line in enumerate(inpfilelines):
+	  if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIPUP','cracktipup']:
+	      cracktipupIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+	      break
+      for l,line in enumerate(inpfilelines):
+	  if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIPLOW','cracktiplow']:
+	      cracktiplowIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+	      break
+    else:
+      writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack tip set and saving to variable ...',True)
+      for l,line in enumerate(inpfilelines):
+	  if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIP','cracktip']:
+	      cracktipIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+	      break
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack faces node set and saving to list ...',True)
     crackfacesNodeset = []

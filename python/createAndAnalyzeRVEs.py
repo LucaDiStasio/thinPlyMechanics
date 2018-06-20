@@ -3554,12 +3554,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             R1 = Rf+0.5*0.25*(L-Rf)
             R2 = Rf+1.5*0.25*(L-Rf)
 
-        setsOfEdgesData = [[R1,0.001,0.0,R1,-0.001,0.0,'LOWERSIDE-THIRDRING-RIGHT'],
-                           [-R1,0.001,0.0,-R1,-0.001,0.0,'LOWERSIDE-THIRDRING-LEFT']]
+        setsOfEdgesData = [[R1,0.001,0.0,R1,-0.001,0.0,'LOWERSIDE-THIRDRING-RIGHT']]
+	if 'half' in parameters['geometry']['fiber']['type']:
+	    setsOfEdgesData.append([-R1,0.001,0.0,-R1,-0.001,0.0,'LOWERSIDE-THIRDRING-LEFT'])
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-
-        RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT'],RVEpart.sets['LOWERSIDE-THIRDRING-LEFT']])
+        if 'half' in parameters['geometry']['fiber']['type']:
+            RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT'],RVEpart.sets['LOWERSIDE-THIRDRING-LEFT']])
+        else:
+	    RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING',True)
 
     setsOfEdgesData = [[R2,0.001,0.0,R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-RIGHT'],

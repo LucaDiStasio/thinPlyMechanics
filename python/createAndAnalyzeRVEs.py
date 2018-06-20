@@ -4337,35 +4337,81 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # assign seeds
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
 
-    regionSets = [['SECONDCIRCLE-UPPERCRACK',nTangential],
-                    ['SECONDCIRCLE-FIRSTBOUNDED',nTangential],
-                    ['THIRDCIRCLE-UPPERCRACK',nTangential],
-                    ['THIRDCIRCLE-FIRSTBOUNDED',nTangential],
-                    ['FOURTHCIRCLE-UPPERCRACK',nTangential],
-                    ['FOURTHCIRCLE-FIRSTBOUNDED',nTangential],
-                    ['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber],
-                    ['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix],
-                    ['TRANSVERSALCUT-SECONDFIBER',nRadialFiber],
-                    ['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix],
-                    ['TRANSVERSALCUT-THIRDFIBER',nRadialFiber],
-                    ['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix],
-                    ['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber],
-                    ['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix],
-                    ['LOWERSIDE-CENTER',6],
-                    ['FIRSTCIRCLE',18],
-                    ['SECONDCIRCLE-SECONDBOUNDED',nTangential1],
-                    ['SECONDCIRCLE-RESTBOUNDED',nTangential2],
-                    ['THIRDCIRCLE-SECONDBOUNDED',nTangential1],
-                    ['THIRDCIRCLE-RESTBOUNDED',nTangential2],
-                    ['FOURTHCIRCLE-SECONDBOUNDED',nTangential1],
-                    ['FOURTHCIRCLE-RESTBOUNDED',nTangential2],
-                    ['TRANSVERSALCUT-FOURTHFIBER',nRadialFiber],
-                    ['TRANSVERSALCUT-FOURTHMATRIX',nRadialMatrix],
-                    ['SECONDCIRCLE-LOWERCRACK',nTangential3],
-                    ['THIRDCIRCLE-LOWERCRACK',nTangential3],
-                    ['FOURTHCIRCLE-LOWERCRACK',nTangential3],
-                    ['FIFTHCIRCLE',90]]
-    
+    regionSets = [['FIRSTCIRCLE',18],
+                  ['FIFTHCIRCLE',90]]
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        regionSets.append(['SECONDCIRCLE-UPPERCRACK-CTUP',nTangential])
+        regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
+        regionSets.append(['THIRDCIRCLE-UPPERCRACK-CTUP',nTangential])
+        regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
+        regionSets.append(['FOURTHCIRCLE-UPPERCRACK-CTUP',nTangential])
+        regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
+	regionSets.append(['SECONDCIRCLE-UPPERCRACK-CTLOW',nTangential])
+        regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
+        regionSets.append(['THIRDCIRCLE-UPPERCRACK-CTLOW',nTangential])
+        regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
+        regionSets.append(['FOURTHCIRCLE-UPPERCRACK-CTLOW',nTangential])
+        regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
+        regionSets.append(['TRANSVERSALCUT-FIRSTFIBER-CTUP',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX-CTUP',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-SECONDFIBER-CTUP',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-SECONDMATRIX-CTUP',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-THIRDFIBER-CTUP',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-THIRDMATRIX-CTUP',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-FIRSTFIBER-CTLOW',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX-CTLOW',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-SECONDFIBER-CTLOW',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-SECONDMATRIX-CTLOW',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-THIRDFIBER-CTLOW',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-THIRDMATRIX-CTLOW',nRadialMatrix])
+        regionSets.append(['SECONDCIRCLE-SECONDBOUNDED-CTUP',nTangential1])
+        regionSets.append(['SECONDCIRCLE-SECONDBOUNDED-CTLOW',nTangential1])
+        regionSets.append(['SECONDCIRCLE-RESTBOUNDED',nTangential2])
+        regionSets.append(['THIRDCIRCLE-SECONDBOUNDED-CTUP',nTangential1])
+        regionSets.append(['THIRDCIRCLE-SECONDBOUNDED-CTLOW',nTangential1])
+        regionSets.append(['THIRDCIRCLE-RESTBOUNDED',nTangential2])
+        regionSets.append(['FOURTHCIRCLE-SECONDBOUNDED-CTUP',nTangential1])
+        regionSets.append(['FOURTHCIRCLE-SECONDBOUNDED-CTLOW',nTangential1])
+        regionSets.append(['FOURTHCIRCLE-RESTBOUNDED',nTangential2])
+        regionSets.append(['TRANSVERSALCUT-FOURTHFIBER-CTUP',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-FOURTHMATRIX-CTUP',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-FOURTHFIBER-CTLOW',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-FOURTHMATRIX-CTLOW',nRadialMatrix])
+        regionSets.append(['SECONDCIRCLE-CRACK',nTangential3])
+        regionSets.append(['THIRDCIRCLE-CRACK',nTangential3])
+        regionSets.append(['FOURTHCIRCLE-CRACK',nTangential3])
+        if 'full' not in parameters['geometry']['fiber']['type']:
+            regionSets.append(['LOWERSIDE-CENTER',6])
+            regionSets.append(['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber])
+            regionSets.append(['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix])
+    else:
+        regionSets.append(['SECONDCIRCLE-UPPERCRACK',nTangential])
+        regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED',nTangential])
+        regionSets.append(['THIRDCIRCLE-UPPERCRACK',nTangential])
+        regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED',nTangential])
+        regionSets.append(['FOURTHCIRCLE-UPPERCRACK',nTangential])
+        regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED',nTangential],
+        regionSets.append(['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-SECONDFIBER',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-THIRDFIBER',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix])
+        regionSets.append(['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber])
+        regionSets.append(['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix])
+        regionSets.append(['SECONDCIRCLE-SECONDBOUNDED',nTangential1])
+        regionSets.append(['SECONDCIRCLE-RESTBOUNDED',nTangential2])
+        regionSets.append(['THIRDCIRCLE-SECONDBOUNDED',nTangential1])
+        regionSets.append(['THIRDCIRCLE-RESTBOUNDED',nTangential2])
+        regionSets.append(['FOURTHCIRCLE-SECONDBOUNDED',nTangential1])
+        regionSets.append(['FOURTHCIRCLE-RESTBOUNDED',nTangential2])
+        regionSets.append(['TRANSVERSALCUT-FOURTHFIBER',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-FOURTHMATRIX',nRadialMatrix])
+        regionSets.append(['SECONDCIRCLE-LOWERCRACK',nTangential3])
+        regionSets.append(['THIRDCIRCLE-LOWERCRACK',nTangential3])
+        regionSets.append(['FOURTHCIRCLE-LOWERCRACK',nTangential3])
+                                
+      
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
             regionSets.append(['LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),10])

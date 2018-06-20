@@ -3617,6 +3617,18 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         alphas = [theta + deltatheta - deltapsi,theta - deltatheta + deltapsi]
         betas = [theta + deltatheta + deltapsi,theta - deltatheta - deltapsi]
         gammas = [theta + deltatheta + deltapsi + deltaphi,theta - deltatheta - deltapsi - deltaphi]
+        if L>2*Rf:
+            R4 = 1.25*Rf
+        else:
+            R4 = Rf+0.25*(L-Rf)
+        radiuses = [0.75*Rf,Rf,R4]
+        for aIndex,aValue in enumerate(alphas):
+	    for rIndex,rValue in enumerate(radiuses):
+	        setsOfEdgesData.append([0.99*rValue*np.cos(0.5*alpha*np.pi/180),0.99*rValue*np.sin(0.5*alpha*np.pi/180),0.0,1.01*rValue*np.cos(0.5*alpha*np.pi/180),1.01*rValue*np.sin(0.5*alpha*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-LOWERCRACK'])
+                setsOfEdgesData.append([0.99*rValue*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*rValue*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*rValue*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*rValue*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-UPPERCRACK'])
+                setsOfEdgesData.append([0.99*rValue*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*rValue*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*rValue*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*rValue*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-FIRSTBOUNDED'])
+                setsOfEdgesData.append([0.99*rValue*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*rValue*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,1.01*rValue*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*rValue*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-SECONDBOUNDED'])
+                setsOfEdgesData.append([0.99*rValue*np.cos(1.025*gamma*np.pi/180),0.99*rValue*np.sin(1.025*gamma*np.pi/180),0.0,1.01*rValue*np.cos(1.025*gamma*np.pi/180),1.01*rValue*np.sin(1.025*gamma*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-RESTBOUNDED'])
     else:
         alpha = theta + deltatheta - deltapsi
         beta = theta + deltatheta + deltapsi

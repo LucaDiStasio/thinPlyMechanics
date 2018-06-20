@@ -2976,7 +2976,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     modelname = parameters['input']['modelname']
     L = parameters['geometry']['L']
     Rf = parameters['geometry']['Rf']
-    CornerAy = 0.0
+    if 'full' in parameters['geometry']['fiber']['type']:
+        CornerAy = -L 
+    elif 'half' in parameters['geometry']['fiber']['type']:
+        CornerAy = 0.0
+    elif 'quarter' in parameters['geometry']['fiber']['type']:
+        CornerAy = 0.0
+        CornerAx = 0.0
+    else:
+        CornerAy = 0.0
     if 'boundingPly' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['northSide']['type']:
         nFibers = parameters['BC']['northSide']['nFibers']
         tRatio = parameters['BC']['northSide']['tRatio']

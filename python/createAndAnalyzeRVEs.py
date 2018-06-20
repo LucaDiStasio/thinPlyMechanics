@@ -3615,6 +3615,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         ctNames = ['CTUP','CTLOW']
         circleNames = ['SECOND','THIRD','FOURTH']
         alphas = [theta + deltatheta - deltapsi,theta - deltatheta + deltapsi]
+        ctAngles = [theta + deltatheta,theta - deltatheta]
         betas = [theta + deltatheta + deltapsi,theta - deltatheta - deltapsi]
         gammas = [theta + deltatheta + deltapsi + deltaphi,theta - deltatheta - deltapsi - deltaphi]
         incs = [1.0,-1.0]
@@ -3625,10 +3626,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         radiuses = [0.75*Rf,Rf,R4]
         for rIndex,rValue in enumerate(radiuses):
             for aIndex,aValue in enumerate(alphas):
-	        setsOfEdgesData.append([0.99*rValue*np.cos(0.5*alpha*np.pi/180),0.99*rValue*np.sin(0.5*alpha*np.pi/180),0.0,1.01*rValue*np.cos(0.5*alpha*np.pi/180),1.01*rValue*np.sin(0.5*alpha*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-LOWERCRACK-'+ctNames[aIndex]])
-                setsOfEdgesData.append([0.99*rValue*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*rValue*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*rValue*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*rValue*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-UPPERCRACK-'+ctNames[aIndex]])
-                setsOfEdgesData.append([0.99*rValue*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*rValue*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*rValue*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*rValue*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-FIRSTBOUNDED-'+ctNames[aIndex]])
-                setsOfEdgesData.append([0.99*rValue*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*rValue*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,1.01*rValue*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*rValue*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-SECONDBOUNDED-'+ctNames[aIndex]])
+	        setsOfEdgesData.append([0.99*rValue*np.cos((alphas[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((alphas[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((alphas[aIndex]+incs[aIndex]),1.01*rValue*np.sin((alphas[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-UPPERCRACK-'+ctNames[aIndex]])
+                setsOfEdgesData.append([0.99*rValue*np.cos((ctAngles[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((ctAngles[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((ctAngles[aIndex]+incs[aIndex])*np.pi/180),1.01*rValue*np.sin((ctAngles[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-FIRSTBOUNDED-'+ctNames[aIndex]])
+                setsOfEdgesData.append([0.99*rValue*np.cos((betas[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((betas[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((betas[aIndex]+incs[aIndex])*np.pi/180),1.01*rValue*np.sin((betas[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-SECONDBOUNDED-'+ctNames[aIndex]])
+            setsOfEdgesData.append([0.99*rValue*np.cos((aValue+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((aValue+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos(0.5*alpha*np.pi/180),1.01*rValue*np.sin(0.5*alpha*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-LOWERCRACK-'+ctNames[aIndex]])
             setsOfEdgesData.append([0.99*rValue*np.cos(1.025*gamma*np.pi/180),0.99*rValue*np.sin(1.025*gamma*np.pi/180),0.0,1.01*rValue*np.cos(1.025*gamma*np.pi/180),1.01*rValue*np.sin(1.025*gamma*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-RESTBOUNDED'])
     else:
         alpha = theta + deltatheta - deltapsi

@@ -4285,21 +4285,37 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # assign mesh controls
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
 
-    regionSets = [['FIBER-EXTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE],
-                    ['FIBER-EXTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
-                    ['FIBER-EXTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
-                    ['MATRIX-INTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE],
-                    ['MATRIX-INTANNULUS-UPPERCRACK',QUAD,STRUCTURED],
-                    ['MATRIX-INTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED],
-                    ['FIBER-CENTER',QUAD_DOMINATED,FREE],
-                    ['FIBER-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
-                    ['FIBER-EXTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE],
-                    ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD_DOMINATED,FREE],
-                    ['MATRIX-INTANNULUS-SECONDBOUNDED',TRI,FREE],
-                    ['MATRIX-INTANNULUS-RESTBOUNDED',TRI,FREE],
-                    ['MATRIX-INTERMEDIATEANNULUS',TRI,FREE],
-                    ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
-
+    regionSets = [['FIBER-CENTER',QUAD_DOMINATED,FREE],
+                  ['FIBER-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
+                  ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD_DOMINATED,FREE],
+                  ['MATRIX-INTANNULUS-RESTBOUNDED',TRI,FREE],
+                  ['MATRIX-INTERMEDIATEANNULUS',TRI,FREE],
+                  ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        regionSets.append(['FIBER-EXTANNULUS-CRACK',QUAD_DOMINATED,FREE])
+        regionSets.append(['FIBER-EXTANNULUS-UPPERCRACK-CTUP',QUAD,STRUCTURED])
+        regionSets.append(['FIBER-EXTANNULUS-FIRSTBOUNDED-CTUP',QUAD,STRUCTURED])
+        regionSets.append(['FIBER-EXTANNULUS-SECONDBOUNDED-CTUP',QUAD_DOMINATED,FREE])
+        regionSets.append(['FIBER-EXTANNULUS-UPPERCRACK-CTLOW',QUAD,STRUCTURED])
+        regionSets.append(['FIBER-EXTANNULUS-FIRSTBOUNDED-CTLOW',QUAD,STRUCTURED])
+        regionSets.append(['FIBER-EXTANNULUS-SECONDBOUNDED-CTLOW',QUAD_DOMINATED,FREE])
+        regionSets.append(['MATRIX-INTANNULUS-CRACK',QUAD_DOMINATED,FREE])
+        regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK-CTUP',QUAD,STRUCTURED])
+        regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED-CTUP',QUAD,STRUCTURED])
+        regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED-CTUP',TRI,FREE])
+        regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK-CTLOW',QUAD,STRUCTURED])
+        regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED-CTLOW',QUAD,STRUCTURED])
+        regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED-CTLOW',TRI,FREE])
+    else:
+        regionSets.append(['FIBER-EXTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE])
+        regionSets.append(['FIBER-EXTANNULUS-UPPERCRACK',QUAD,STRUCTURED])
+        regionSets.append(['FIBER-EXTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED])
+        regionSets.append(['FIBER-EXTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE])
+        regionSets.append(['MATRIX-INTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE])
+        regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK',QUAD,STRUCTURED])
+        regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED])
+        regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED',TRI,FREE])
+    
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         regionSets.append(['BOUNDING-PLY',QUAD_DOMINATED,FREE])
     if 'boundingPly' in parameters['BC']['rightSide']['type']:

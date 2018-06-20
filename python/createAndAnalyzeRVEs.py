@@ -3518,42 +3518,49 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
     
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACK',True)
-
-    setsOfEdgesData = [[0.001*Rf,0.001,0.0,0.001*Rf,-0.001,0.0,'LOWERSIDE-CENTER'],
-                       [0.65*Rf,0.001,0.0,0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-RIGHT'],
-                       [-0.65*Rf,0.001,0.0,-0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-LEFT'],
-                       [0.99*L,0.001,0.0,0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-RIGHT'],
-                       [-0.99*L,0.001,0.0,-0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-LEFT']]
-
-    for setOfEdgesData in setsOfEdgesData:
-        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-
-    RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT'],RVEpart.sets['LOWERSIDE-FIRSTRING-LEFT']])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FIRSTRING',True)
-    #RVEedges.getClosest(coordinates=(,,))[0][0]
-
-    setsOfEdgesData = [[0.85*Rf,0.001,0.0,0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-RIGHT'],
-                       [-0.85*Rf,0.001,0.0,-0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-LEFT']]
-    for setOfEdgesData in setsOfEdgesData:
-        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-
-    RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT'],RVEpart.sets['LOWERSIDE-SECONDRING-LEFT']])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-SECONDRING',True)
-
-    if L>2*Rf:
-        R1 = (1+0.5*0.25)*Rf
-        R2 = (1.25+0.5*0.25)*Rf
+    
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+      
     else:
-        R1 = Rf+0.5*0.25*(L-Rf)
-        R2 = Rf+1.5*0.25*(L-Rf)
+        setsOfEdgesData = [[0.001*Rf,0.001,0.0,0.001*Rf,-0.001,0.0,'LOWERSIDE-CENTER'],
+                           [0.65*Rf,0.001,0.0,0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-RIGHT'],
+                           [0.99*L,0.001,0.0,0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-RIGHT']]
+        if 'half' in parameters['geometry']['fiber']['type']:
+	    setsOfEdgesData.append([-0.65*Rf,0.001,0.0,-0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-LEFT'])
+	    setsOfEdgesData.append([-0.99*L,0.001,0.0,-0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-LEFT'])
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        if 'half' in parameters['geometry']['fiber']['type']:
+	    RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT'],RVEpart.sets['LOWERSIDE-FIRSTRING-LEFT']])  
+	else:
+            RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FIRSTRING',True)
 
-    setsOfEdgesData = [[R1,0.001,0.0,R1,-0.001,0.0,'LOWERSIDE-THIRDRING-RIGHT'],
-                       [-R1,0.001,0.0,-R1,-0.001,0.0,'LOWERSIDE-THIRDRING-LEFT']]
-    for setOfEdgesData in setsOfEdgesData:
-        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        setsOfEdgesData = [[0.85*Rf,0.001,0.0,0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-RIGHT']]
+	if 'half' in parameters['geometry']['fiber']['type']:
+	    setsOfEdgesData.append([-0.85*Rf,0.001,0.0,-0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-LEFT'])
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        if 'half' in parameters['geometry']['fiber']['type']:
+            RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT'],RVEpart.sets['LOWERSIDE-SECONDRING-LEFT']])
+        else:
+	    RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-SECONDRING',True)
 
-    RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT'],RVEpart.sets['LOWERSIDE-THIRDRING-LEFT']])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING',True)
+        if L>2*Rf:
+            R1 = (1+0.5*0.25)*Rf
+            R2 = (1.25+0.5*0.25)*Rf
+        else:
+            R1 = Rf+0.5*0.25*(L-Rf)
+            R2 = Rf+1.5*0.25*(L-Rf)
+
+        setsOfEdgesData = [[R1,0.001,0.0,R1,-0.001,0.0,'LOWERSIDE-THIRDRING-RIGHT'],
+                           [-R1,0.001,0.0,-R1,-0.001,0.0,'LOWERSIDE-THIRDRING-LEFT']]
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+
+        RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT'],RVEpart.sets['LOWERSIDE-THIRDRING-LEFT']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING',True)
 
     setsOfEdgesData = [[R2,0.001,0.0,R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-RIGHT'],
                        [-R2,0.001,0.0,-R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-LEFT']]

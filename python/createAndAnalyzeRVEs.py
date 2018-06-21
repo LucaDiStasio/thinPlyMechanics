@@ -5468,6 +5468,10 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 	    for n,node in enumerate(quads[firstboundedMatrixElUP]):
 		if node == fiberFirstBehindCracktipUPIndex:
 		    quads[firstboundedMatrixElUP][n] = matrixFirstBehindCracktipUPIndex
+	    if 'inverseSquareRoot' in parameters['singularity']['type']:
+		for n,node in enumerate(quads[firstboundedMatrixElUP]):
+		if node == fiberSecondBehindCracktipUPIndex:
+		    quads[firstboundedMatrixElUP][n] = matrixSecondBehindCracktipUPIndex
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new upper crack tip index to the debonded element on the matrix',True)
 	for n,node in enumerate(quads[firstdebondedMatrixElUP]):
 	    if node == cracktipUPIndex:
@@ -5483,6 +5487,10 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 	    for n,node in enumerate(quads[firstboundedMatrixElLOW]):
 		if node == fiberFirstBehindCracktipLOWIndex:
 		    quads[firstboundedMatrixElLOW][n] = matrixFirstBehindCracktipLOWIndex
+	    if 'inverseSquareRoot' in parameters['singularity']['type']:
+		for n,node in enumerate(quads[firstboundedMatrixElLOW]):
+		    if node == fiberSecondBehindCracktipLOWIndex:
+			quads[firstboundedMatrixElLOW][n] = matrixSecondBehindCracktipLOWIndex
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new lower crack tip index to the debonded element on the matrix',True)
 	for n,node in enumerate(quads[firstdebondedMatrixElLOW]):
 	    if node == cracktipLOWIndex:

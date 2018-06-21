@@ -5780,15 +5780,33 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write equation definitions ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*EQUATION' + '\n')
-        inp.write(' 3' + '\n')
-        inp.write(' FIBER-CRACKTIP,1,1,MATRIX-CRACKTIP,1,-1,CRACKTIP-DUMMY-NODE,1,-1' + '\n')
-        inp.write(' 3' + '\n')
-        inp.write(' FIBER-CRACKTIP,2,1,MATRIX-CRACKTIP,2,-1,CRACKTIP-DUMMY-NODE,2,-1' + '\n')
-        if 'second' in parameters['mesh']['elements']['order']:
-            inp.write(' 3' + '\n')
-            inp.write(' FIBER-NODE-FIRSTBOUNDED,1,1,MATRIX-NODE-FIRSTBOUNDED,1,-1,FIRSTBOUNDED-DUMMY-NODE,1,-1' + '\n')
-            inp.write(' 3' + '\n')
-            inp.write(' FIBER-NODE-FIRSTBOUNDED,2,1,MATRIX-NODE-FIRSTBOUNDED,2,-1,FIRSTBOUNDED-DUMMY-NODE,2,-1' + '\n')
+        if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+	    inp.write(' 3' + '\n')
+	    inp.write(' FIBER-CRACKTIPUP,1,1,MATRIX-CRACKTIPUP,1,-1,CRACKTIPUP-DUMMY-NODE,1,-1' + '\n')
+	    inp.write(' 3' + '\n')
+	    inp.write(' FIBER-CRACKTIPLOW,1,1,MATRIX-CRACKTIPLOW,1,-1,CRACKTIPLOW-DUMMY-NODE,1,-1' + '\n')
+	    inp.write(' 3' + '\n')
+	    inp.write(' FIBER-CRACKTIPUP,2,1,MATRIX-CRACKTIPUP,2,-1,CRACKTIPUP-DUMMY-NODE,2,-1' + '\n')
+	    inp.write(' 3' + '\n')
+	    inp.write(' FIBER-CRACKTIPLOW,2,1,MATRIX-CRACKTIPLOW,2,-1,CRACKTIPLOW-DUMMY-NODE,2,-1' + '\n')
+	    if 'second' in parameters['mesh']['elements']['order']:
+		inp.write(' 3' + '\n')
+		inp.write(' FIBER-NODE-FIRSTBOUNDEDUP,1,1,MATRIX-NODE-FIRSTBOUNDEDUP,1,-1,FIRSTBOUNDEDUP-DUMMY-NODE,1,-1' + '\n')
+		inp.write(' 3' + '\n')
+		inp.write(' FIBER-NODE-FIRSTBOUNDEDLOW,1,1,MATRIX-NODE-FIRSTBOUNDEDLOW,1,-1,FIRSTBOUNDEDLOW-DUMMY-NODE,1,-1' + '\n')
+		inp.write(' 3' + '\n')
+		inp.write(' FIBER-NODE-FIRSTBOUNDEDUP,2,1,MATRIX-NODE-FIRSTBOUNDEDUP,2,-1,FIRSTBOUNDEDUP-DUMMY-NODE,2,-1' + '\n')
+		inp.write(' 3' + '\n')
+		inp.write(' FIBER-NODE-FIRSTBOUNDEDLOW,2,1,MATRIX-NODE-FIRSTBOUNDEDLOW,2,-1,FIRSTBOUNDEDLOW-DUMMY-NODE,2,-1' + '\n')
+	else:
+	    inp.write(' FIBER-CRACKTIP,1,1,MATRIX-CRACKTIP,1,-1,CRACKTIP-DUMMY-NODE,1,-1' + '\n')
+	    inp.write(' 3' + '\n')
+	    inp.write(' FIBER-CRACKTIP,2,1,MATRIX-CRACKTIP,2,-1,CRACKTIP-DUMMY-NODE,2,-1' + '\n')
+	    if 'second' in parameters['mesh']['elements']['order']:
+		inp.write(' 3' + '\n')
+		inp.write(' FIBER-NODE-FIRSTBOUNDED,1,1,MATRIX-NODE-FIRSTBOUNDED,1,-1,FIRSTBOUNDED-DUMMY-NODE,1,-1' + '\n')
+		inp.write(' 3' + '\n')
+		inp.write(' FIBER-NODE-FIRSTBOUNDED,2,1,MATRIX-NODE-FIRSTBOUNDED,2,-1,FIRSTBOUNDED-DUMMY-NODE,2,-1' + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if 'vgeomCoupling' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)

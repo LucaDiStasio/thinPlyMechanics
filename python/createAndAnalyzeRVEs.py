@@ -5108,73 +5108,73 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
       writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(cracktipDummyIndex)+ ' and coordinates (' + str(-5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the upper crack tip',True)
-	fiberElswithCracktip = []
-	matrixElswithCracktip = []
+	fiberElswithCracktipUP = []
+	matrixElswithCracktipUP = []
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
-	for element in fiberExtannUppcrackElementset:
+	for element in fiberExtannUppcrackCtUpElementset:
 	    if element in quads.keys():
 		if cracktipIndex in quads[element]:
-		    fiberElswithCracktip.append(element)
-		    firstdebondedFiberEl = element
+		    fiberElswithCracktipUP.append(element)
+		    firstdebondedFiberElUP = element
 		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
 		    break
-	for e in range(len(fiberExtannFirstbounElementset)-1,-1,-1):
+	for e in range(len(fiberExtannFirstbounCtUpElementset)-1,-1,-1):
 	    element = fiberExtannFirstbounElementset[e]
 	    if element in quads.keys():
 		if cracktipIndex in quads[element]:
-		    fiberElswithCracktip.append(element)
-		    firstboundedFiberEl = element
+		    fiberElswithCracktipUP.append(element)
+		    firstboundedFiberElUP = element
 		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
 		    break
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
-	for element in matrixIntannUppcrackElementset:
+	for element in matrixIntannUppcrackCtUpElementset:
 	    if element in quads.keys():
 		if cracktipIndex in quads[element]:
-		    matrixElswithCracktip.append(element)
-		    firstdebondedMatrixEl = element
+		    matrixElswithCracktipUP.append(element)
+		    firstdebondedMatrixElUP = element
 		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
 		    break
-	for element in matrixIntannFirstbounElementset:
+	for element in matrixIntannFirstbounCtUpElementset:
 	    if element in quads.keys():
 		if cracktipIndex in quads[element]:
-		    matrixElswithCracktip.append(element)
-		    firstboundedMatrixEl = element
+		    matrixElswithCracktipUP.append(element)
+		    firstboundedMatrixElUP = element
 		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
 		    break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the lower crack tip',True)
-	fiberElswithCracktip = []
-	matrixElswithCracktip = []
+	fiberElswithCracktipLOW = []
+	matrixElswithCracktipLOW = []
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
-	for element in fiberExtannUppcrackElementset:
+	for element in fiberExtannUppcrackCtLowElementset:
 	    if element in quads.keys():
 		if cracktipIndex in quads[element]:
-		    fiberElswithCracktip.append(element)
-		    firstdebondedFiberEl = element
+		    fiberElswithCracktipLOW.append(element)
+		    firstdebondedFiberElLOW = element
 		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
 		    break
-	for e in range(len(fiberExtannFirstbounElementset)-1,-1,-1):
+	for e in range(len(fiberExtannFirstbounCtLowElementset)-1,-1,-1):
 	    element = fiberExtannFirstbounElementset[e]
 	    if element in quads.keys():
 		if cracktipIndex in quads[element]:
-		    fiberElswithCracktip.append(element)
-		    firstboundedFiberEl = element
+		    fiberElswithCracktipLOW.append(element)
+		    firstboundedFiberElLOW = element
 		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
 		    break
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
-	for element in matrixIntannUppcrackElementset:
+	for element in matrixIntannUppcrackCtLowElementset:
 	    if element in quads.keys():
 		if cracktipIndex in quads[element]:
-		    matrixElswithCracktip.append(element)
-		    firstdebondedMatrixEl = element
+		    matrixElswithCracktipLOW.append(element)
+		    firstdebondedMatrixElLOW = element
 		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
 		    break
-	for element in matrixIntannFirstbounElementset:
+	for element in matrixIntannFirstbounCtLowElementset:
 	    if element in quads.keys():
 		if cracktipIndex in quads[element]:
-		    matrixElswithCracktip.append(element)
-		    firstboundedMatrixEl = element
+		    matrixElswithCracktipLOW.append(element)
+		    firstboundedMatrixElLOW = element
 		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
 		    break
     else:

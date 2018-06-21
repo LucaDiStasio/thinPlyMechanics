@@ -5241,6 +5241,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		    distancesUP.append(np.sqrt((nodes[node][0]-nodes[cracktipUPIndex][0])*(nodes[node][0]-nodes[cracktipUPIndex][0])+(nodes[node][1]-nodes[cracktipUPIndex][1])*(nodes[node][1]-nodes[cracktipUPIndex][1])))
 		else:
 		    distancesUP.append(0.0)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
+	    fiberFirstBehindCracktipUPIndex = commonNodesUP[np.argmax(distancesUP)]
+	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix upper crack tip node with index ' + str(matrixFirstBehindCracktipUPIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipUPIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipUPIndex][1]) + ')',True)
+	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating upper crack tip dummy node with index ' + str(firstBehindCracktipUPDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
+	    nodes[matrixFirstBehindCracktipUPIndex] = [nodes[fiberFirstBehindCracktipUPIndex][0],nodes[fiberFirstBehindCracktipUPIndex][1]]
+	    nodes[firstBehindCracktipUPDummyIndex] = [5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded lower crack tip elements on fiber and matrix',True)
 	    commonNodesLOW = []
 	    fiberElnodesLOW = quads[firstboundedFiberElLOW]
@@ -5258,6 +5264,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		    distancesLOW.append(np.sqrt((nodes[node][0]-nodes[cracktipLOWIndex][0])*(nodes[node][0]-nodes[cracktipLOWIndex][0])+(nodes[node][1]-nodes[cracktipLOWIndex][1])*(nodes[node][1]-nodes[cracktipLOWIndex][1])))
 		else:
 		    distancesLOW.append(0.0)
+	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
+	    fiberFirstBehindCracktipLOWIndex = commonNodesLOW[np.argmax(distancesLOW)]
+	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix lower crack tip node with index ' + str(matrixFirstBehindCracktipLOWIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipLOWIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipLOWIndex][1]) + ')',True)
+	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating lower crack tip dummy node with index ' + str(firstBehindCracktipLOWDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-20*parameters['geometry']['Rf']) + ')',True)
+	    nodes[matrixFirstBehindCracktipLOWIndex] = [nodes[fiberFirstBehindCracktipLOWIndex][0],nodes[fiberFirstBehindCracktipLOWIndex][1]]
+	    nodes[firstBehindCracktipLOWDummyIndex] = [5*parameters['geometry']['Rf'],-20*parameters['geometry']['Rf']]
 	else:
 	    matrixFirstBehindCracktipIndex = numNodes + 1000 + 2
 	    firstBehindCracktipDummyIndex = numNodes + 1000 + 3

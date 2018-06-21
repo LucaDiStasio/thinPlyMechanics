@@ -5224,7 +5224,26 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating upper crack tip dummy node with index ' + str(firstBehindCracktipUPDummyIndex),True)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix first behind lower crack tip node with index ' + str(matrixFirstBehindCracktipLOWIndex),True)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating lower crack tip dummy node with index ' + str(firstBehindCracktipLOWDummyIndex),True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded crack tip elements on fiber and matrix',True)
+	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded upper crack tip elements on fiber and matrix',True)
+	    commonNodesUP = []
+	    fiberElnodesUP = quads[firstboundedFiberElUP]
+	    matrixElnodesUP = quads[firstboundedMatrixElUP]
+	    for node in fiberElnodesUP:
+		if node in matrixElnodesUP:
+		    commonNodesUP.append(node)
+		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
+		if len(commonNodesUP)==3:
+		    break
+	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded lower crack tip elements on fiber and matrix',True)
+	    commonNodesLOW = []
+	    fiberElnodesLOW = quads[firstboundedFiberElLOW]
+	    matrixElnodesLOW = quads[firstboundedMatrixElLOW]
+	    for node in fiberElnodesLOW:
+		if node in matrixElnodesLOW:
+		    commonNodesLOW.append(node)
+		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
+		if len(commonNodesLOW)==3:
+		    break
 	else:
 	    matrixFirstBehindCracktipIndex = numNodes + 1000 + 2
 	    firstBehindCracktipDummyIndex = numNodes + 1000 + 3

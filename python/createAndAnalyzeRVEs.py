@@ -5311,6 +5311,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		nodesFiberDisplacementMeasUP.append(node)
 	    if len(nodesFiberDisplacementMeasUP)==2:
 		break
+	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesFiberDisplacementMeasUP)) + ' nodes',True)
+	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
+	distancesFiberDisplacementMeasUP = []
+	for node in nodesFiberDisplacementMeasUP:
+	    distancesFiberDisplacementMeasUP.append(np.sqrt((nodes[node][0]-nodes[cracktipUPIndex][0])*(nodes[node][0]-nodes[cracktipUPIndex][0])+(nodes[node][1]-nodes[cracktipUPIndex][1])*(nodes[node][1]-nodes[cracktipUPIndex][1])))
+	
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the fiber elements around the lower crack tip',True)
         nodesAroundCracktipLOW = quads[firstdebondedFiberElLOW]
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
@@ -5320,6 +5326,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		nodesFiberDisplacementMeasLOW.append(node)
 	    if len(nodesFiberDisplacementMeasLOW)==2:
 		break
+	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesFiberDisplacementMeasLOW)) + ' nodes',True)
+	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
+	distancesFiberDisplacementMeasLOW = []
+	for node in nodesFiberDisplacementMeasLOW:
+	    distancesFiberDisplacementMeasLOW.append(np.sqrt((nodes[node][0]-nodes[cracktipLOWIndex][0])*(nodes[node][0]-nodes[cracktipLOWIndex][0])+(nodes[node][1]-nodes[cracktipLOWIndex][1])*(nodes[node][1]-nodes[cracktipLOWIndex][1])))
+	
     else:
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the fiber elements around the crack tip',True)
 	nodesAroundCracktip = quads[firstdebondedFiberEl]

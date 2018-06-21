@@ -5235,6 +5235,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		if len(commonNodesUP)==3:
 		    break
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from upper cracktip',True)
+	    distancesUP = []
+	    for node in commonNodesUP:
+		if node != cracktipUPIndex:
+		    distancesUP.append(np.sqrt((nodes[node][0]-nodes[cracktipUPIndex][0])*(nodes[node][0]-nodes[cracktipUPIndex][0])+(nodes[node][1]-nodes[cracktipUPIndex][1])*(nodes[node][1]-nodes[cracktipUPIndex][1])))
+		else:
+		    distancesUP.append(0.0)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded lower crack tip elements on fiber and matrix',True)
 	    commonNodesLOW = []
 	    fiberElnodesLOW = quads[firstboundedFiberElLOW]
@@ -5246,6 +5252,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		if len(commonNodesLOW)==3:
 		    break
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from lower cracktip',True)
+	    distancesLOW = []
+	    for node in commonNodesLOW:
+		if node != cracktipLOWIndex:
+		    distancesLOW.append(np.sqrt((nodes[node][0]-nodes[cracktipLOWIndex][0])*(nodes[node][0]-nodes[cracktipLOWIndex][0])+(nodes[node][1]-nodes[cracktipLOWIndex][1])*(nodes[node][1]-nodes[cracktipLOWIndex][1])))
+		else:
+		    distancesLOW.append(0.0)
 	else:
 	    matrixFirstBehindCracktipIndex = numNodes + 1000 + 2
 	    firstBehindCracktipDummyIndex = numNodes + 1000 + 3

@@ -6164,11 +6164,19 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     ycracktipDisplacement = ymatrixCracktipDisplacement - yfiberCracktipDisplacement
     rcracktipDisplacement = rmatrixCracktipDisplacement - rfiberCracktipDisplacement
     thetacracktipDisplacement = thetamatrixCracktipDisplacement - thetafiberCracktipDisplacement
+    results['xcracktipDisplacement'] = xcracktipDisplacement
+    results['ycracktipDisplacement'] = ycracktipDisplacement
+    results['rcracktipDisplacement'] = rcracktipDisplacement
+    results['thetacracktipDisplacement'] = thetacracktipDisplacement
     if 'second' in order:
 	xfirstboundedDisplacement = xmatrixFirstboundedDisplacement - xfiberFirstboundedDisplacement
 	yfirstboundedDisplacement = ymatrixFirstboundedDisplacement - yfiberFirstboundedDisplacement
 	rfirstboundedDisplacement = rmatrixFirstboundedDisplacement - rfiberFirstboundedDisplacement
 	thetafirstboundedDisplacement = thetamatrixFirstboundedDisplacement - thetafiberFirstboundedDisplacement
+	results['xfirstboundedDisplacement'] = xfirstboundedDisplacement
+	results['yfirstboundedDisplacement'] = yfirstboundedDisplacement
+	results['rfirstboundedDisplacement'] = rfirstboundedDisplacement
+	results['thetafirstboundedDisplacement'] = thetafirstboundedDisplacement
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
@@ -6197,7 +6205,15 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     GTOTv2 = Jintegral
 
     GIv2 = GTOTv2 - GIIv2
-
+    
+    results['GI'] = GI 
+    results['GII'] = GII
+    results['GTOT'] = GTOT
+    
+    results['GIv2'] = GIv2 
+    results['GIIv2'] = GIIv2
+    results['GTOTv2'] = GTOTv2
+    
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
     
     return results

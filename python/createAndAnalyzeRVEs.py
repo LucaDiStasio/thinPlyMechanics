@@ -5244,6 +5244,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		    distancesUP.append(0.0)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
 	    fiberFirstBehindCracktipUPIndex = commonNodesUP[np.argsort(distancesUP)[-2]] # argsort goes from smaller to higher
+	    fiberSecondBehindCracktipUPIndex = commonNodesUP[np.argsort(distancesUP)[-1]]
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix upper crack tip node with index ' + str(matrixFirstBehindCracktipUPIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipUPIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipUPIndex][1]) + ')',True)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating upper crack tip dummy node with index ' + str(firstBehindCracktipUPDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
 	    nodes[matrixFirstBehindCracktipUPIndex] = [nodes[fiberFirstBehindCracktipUPIndex][0],nodes[fiberFirstBehindCracktipUPIndex][1]]
@@ -5267,6 +5268,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		    distancesLOW.append(0.0)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
 	    fiberFirstBehindCracktipLOWIndex = commonNodesLOW[np.argsort(distancesLOW)[-2]] # argsort goes from smaller to higher
+	    fiberSecondBehindCracktipLOWIndex = commonNodesLOW[np.argsort(distancesLOW)[-1]]
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix lower crack tip node with index ' + str(matrixFirstBehindCracktipLOWIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipLOWIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipLOWIndex][1]) + ')',True)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating lower crack tip dummy node with index ' + str(firstBehindCracktipLOWDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-20*parameters['geometry']['Rf']) + ')',True)
 	    nodes[matrixFirstBehindCracktipLOWIndex] = [nodes[fiberFirstBehindCracktipLOWIndex][0],nodes[fiberFirstBehindCracktipLOWIndex][1]]

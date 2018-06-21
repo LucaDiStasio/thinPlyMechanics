@@ -6183,8 +6183,11 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Compute VCCT with GTOT=GI+GII ...',True)
 
     if 'second' in order:
-	GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
-	GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
+        if 'inverseSquareRoot' in singularity:
+	  
+	else:
+	    GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
+	    GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
 	GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement+xRFfirstbounded*xfirstboundedDisplacement+yRFfirstbounded*yfirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
     else:
 	GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement)/(Rf*delta*np.pi/180.0))
@@ -6209,7 +6212,7 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     results['GI'] = GI 
     results['GII'] = GII
     results['GTOT'] = GTOT
-    
+    results['GTOTequiv'] = GTOTequiv
     results['GIv2'] = GIv2 
     results['GIIv2'] = GIIv2
     results['GTOTv2'] = GTOTv2

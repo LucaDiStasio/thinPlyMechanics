@@ -6084,21 +6084,22 @@ def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,ncpus,baselogindent,logindent)',True)
 
-def computeVCCT():
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract forces and displacements ...',True)
+def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singularity,isPressureLoaded,pressure,nodesVCCT):
+    results = {}
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Extract forces and displacements ...',True)
 
-    RFcracktip = getFieldOutput(odb,-1,-1,'RF',cracktipDummyNode)
+    RFcracktip = getFieldOutput(odb,step,frame,'RF',nodesVCCT['cracktipDummyNode'])
     if 'second' in parameters['mesh']['elements']['order']:
-	RFfirstbounded = getFieldOutput(odb,-1,-1,'RF',firstboundedDummyNode)
-    fiberCracktipDisplacement = getFieldOutput(odb,-1,-1,'U',fiberCracktipDispMeas)
-    matrixCracktipDisplacement = getFieldOutput(odb,-1,-1,'U',matrixCracktipDispMeas)
+	RFfirstbounded = getFieldOutput(odb,step,frame,'RF',nodesVCCT['firstboundedDummyNode'])
+    fiberCracktipDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['fiberCracktipDispMeas'])
+    matrixCracktipDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['matrixCracktipDispMeas'])
     if 'second' in parameters['mesh']['elements']['order']:
-	fiberFirstboundedDisplacement = getFieldOutput(odb,-1,-1,'U',fiberFirstboundedDispMeas)
-	matrixFirstboundedDisplacement = getFieldOutput(odb,-1,-1,'U',matrixFirstboundedDispMeas)
+	fiberFirstboundedDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['fiberFirstboundedDispMeas'])
+	matrixFirstboundedDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['matrixFirstboundedDispMeas'])
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate forces and displacements ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Rotate forces and displacements ...',True)
 
     xRFcracktip = RFcracktip.values[0].data[0]
     yRFcracktip = RFcracktip.values[0].data[1]
@@ -6145,9 +6146,9 @@ def computeVCCT():
 	rfirstboundedDisplacement = rmatrixFirstboundedDisplacement - rfiberFirstboundedDisplacement
 	thetafirstboundedDisplacement = thetamatrixFirstboundedDisplacement - thetafiberFirstboundedDisplacement
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GTOT=GI+GII ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Compute VCCT with GTOT=GI+GII ...',True)
 
     if 'second' in parameters['mesh']['elements']['order']:
 	GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
@@ -6160,9 +6161,9 @@ def computeVCCT():
 
     GTOT = GI + GII
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GI=GTOT-GII ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Compute VCCT with GI=GTOT-GII ...',True)
 
     if 'second' in parameters['mesh']['elements']['order']:
 	GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
@@ -6173,7 +6174,7 @@ def computeVCCT():
 
     GIv2 = GTOTv2 - GIIv2
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
 def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 

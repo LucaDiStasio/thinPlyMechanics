@@ -5850,6 +5850,15 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		inp.write(' FIBER-NODE-FIRSTBOUNDEDUP,2,1,MATRIX-NODE-FIRSTBOUNDEDUP,2,-1,FIRSTBOUNDEDUP-DUMMY-NODE,2,-1' + '\n')
 		inp.write(' 3' + '\n')
 		inp.write(' FIBER-NODE-FIRSTBOUNDEDLOW,2,1,MATRIX-NODE-FIRSTBOUNDEDLOW,2,-1,FIRSTBOUNDEDLOW-DUMMY-NODE,2,-1' + '\n')
+		if 'inverseSquareRoot' in parameters['singularity']['type']:
+		    inp.write(' 3' + '\n')
+		    inp.write(' FIBER-NODE-SECONDBOUNDEDUP,1,1,MATRIX-NODE-SECONDBOUNDEDUP,1,-1,SECONDBOUNDEDUP-DUMMY-NODE,1,-1' + '\n')
+		    inp.write(' 3' + '\n')
+		    inp.write(' FIBER-NODE-SECONDBOUNDEDLOW,1,1,MATRIX-NODE-SECONDBOUNDEDLOW,1,-1,SECONDBOUNDEDLOW-DUMMY-NODE,1,-1' + '\n')
+		    inp.write(' 3' + '\n')
+		    inp.write(' FIBER-NODE-SECONDBOUNDEDUP,2,1,MATRIX-NODE-SECONDBOUNDEDUP,2,-1,SECONDBOUNDEDUP-DUMMY-NODE,2,-1' + '\n')
+		    inp.write(' 3' + '\n')
+		    inp.write(' FIBER-NODE-SECONDBOUNDEDLOW,2,1,MATRIX-NODE-SECONDBOUNDEDLOW,2,-1,SECONDBOUNDEDLOW-DUMMY-NODE,2,-1' + '\n')
 	else:
 	    inp.write(' FIBER-CRACKTIP,1,1,MATRIX-CRACKTIP,1,-1,CRACKTIP-DUMMY-NODE,1,-1' + '\n')
 	    inp.write(' 3' + '\n')
@@ -5859,6 +5868,11 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		inp.write(' FIBER-NODE-FIRSTBOUNDED,1,1,MATRIX-NODE-FIRSTBOUNDED,1,-1,FIRSTBOUNDED-DUMMY-NODE,1,-1' + '\n')
 		inp.write(' 3' + '\n')
 		inp.write(' FIBER-NODE-FIRSTBOUNDED,2,1,MATRIX-NODE-FIRSTBOUNDED,2,-1,FIRSTBOUNDED-DUMMY-NODE,2,-1' + '\n')
+		if 'inverseSquareRoot' in parameters['singularity']['type']:
+		    inp.write(' 3' + '\n')
+		    inp.write(' FIBER-NODE-SECONDBOUNDED,1,1,MATRIX-NODE-SECONDBOUNDED,1,-1,SECONDBOUNDED-DUMMY-NODE,1,-1' + '\n')
+		    inp.write(' 3' + '\n')
+		    inp.write(' FIBER-NODE-SECONDBOUNDED,2,1,MATRIX-NODE-SECONDBOUNDED,2,-1,SECONDBOUNDED-DUMMY-NODE,2,-1' + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if 'vgeomCoupling' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)

@@ -6201,6 +6201,8 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
 	    t22 = 17.0-21.0*np.pi/4.0
 	    t31 = 8.0-21.0*np.pi/8.0
 	    t32 = -32.0+21.0*np.pi/2.0
+	    GI = np.abs(0.5*(rRFcracktip*(t11*rcracktipDisplacement+t12*rfirstboundedDisplacement)+rRFfirstbounded*(t21*rcracktipDisplacement+t22*rfirstboundedDisplacement)+rRFsecondbounded*(t31*rcracktipDisplacement+t32*rfirstboundedDisplacement))/(Rf*delta*np.pi/180.0))
+	    GII = np.abs(0.5*(rRFcracktip*(t11*thetacracktipDisplacement+t12*thetafirstboundedDisplacement)+thetaRFfirstbounded*(t21*thetacracktipDisplacement+t22*thetafirstboundedDisplacement)+thetaRFsecondbounded*(t31*thetacracktipDisplacement+t32*thetafirstboundedDisplacement))/(Rf*delta*np.pi/180.0))
 	else:
 	    GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
 	    GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(Rf*delta*np.pi/180.0))

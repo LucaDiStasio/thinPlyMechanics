@@ -5242,7 +5242,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		else:
 		    distancesUP.append(0.0)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
-	    fiberFirstBehindCracktipUPIndex = commonNodesUP[np.argmax(distancesUP)]
+	    fiberFirstBehindCracktipUPIndex = commonNodesUP[np.argsort(distancesUP)[-2]] # argsort goes from smaller to higher
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix upper crack tip node with index ' + str(matrixFirstBehindCracktipUPIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipUPIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipUPIndex][1]) + ')',True)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating upper crack tip dummy node with index ' + str(firstBehindCracktipUPDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
 	    nodes[matrixFirstBehindCracktipUPIndex] = [nodes[fiberFirstBehindCracktipUPIndex][0],nodes[fiberFirstBehindCracktipUPIndex][1]]
@@ -5265,7 +5265,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		else:
 		    distancesLOW.append(0.0)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
-	    fiberFirstBehindCracktipLOWIndex = commonNodesLOW[np.argmax(distancesLOW)]
+	    fiberFirstBehindCracktipLOWIndex = commonNodesLOW[np.argsort(distancesLOW)[-2]] # argsort goes from smaller to higher
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix lower crack tip node with index ' + str(matrixFirstBehindCracktipLOWIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipLOWIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipLOWIndex][1]) + ')',True)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating lower crack tip dummy node with index ' + str(firstBehindCracktipLOWDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-20*parameters['geometry']['Rf']) + ')',True)
 	    nodes[matrixFirstBehindCracktipLOWIndex] = [nodes[fiberFirstBehindCracktipLOWIndex][0],nodes[fiberFirstBehindCracktipLOWIndex][1]]
@@ -5292,8 +5292,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		    distances.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
 		else:
 		    distances.append(0.0)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
-	    fiberFirstBehindCracktipIndex = commonNodes[np.argmax(distances)]
+	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True) 
+	    fiberFirstBehindCracktipIndex = commonNodes[np.argsort(distances)[-2]] # argsort goes from smaller to higher
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix crack tip node with index ' + str(matrixFirstBehindCracktipIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipIndex][1]) + ')',True)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(firstBehindCracktipDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
 	    nodes[matrixFirstBehindCracktipIndex] = [nodes[fiberFirstBehindCracktipIndex][0],nodes[fiberFirstBehindCracktipIndex][1]]

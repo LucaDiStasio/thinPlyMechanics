@@ -6113,9 +6113,17 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
 	if isPressureLoaded:
 	    rRFcracktip -= uniformP*(Rf*delta*np.pi/180.0)/6
 	    rRFfirstbounded -= 2*uniformP*(Rf*delta*np.pi/180.0)/3
+	results['xRFfirstbounded'] = xRFfirstbounded
+	results['yRFfirstbounded'] = yRFfirstbounded
+	results['rRFfirstbounded'] = rRFfirstbounded
+	results['thetaRFfirstbounded'] = thetaRFfirstbounded
     else:
 	if isPressureLoaded:
 	    rRFcracktip -= uniformP*(Rf*delta*np.pi/180.0)/2
+    results['xRFcracktip'] = xRFcracktip
+    results['yRFcracktip'] = yRFcracktip
+    results['rRFcracktip'] = rRFcracktip
+    results['thetaRFcracktip'] = thetaRFcracktip
 	
 
     xfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[0]

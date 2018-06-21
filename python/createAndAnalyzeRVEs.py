@@ -6029,18 +6029,14 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent)',True)
-
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
-
     try:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job ' + inpfile.split('.')[0] + ' from input file ' + inpfile,True)
         mdb.JobFromInputFile(name=inpfile.split('.')[0],inputFileName=inpfile,type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=ncpus, numDomains=12,numGPUs=0)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Submit job ...',True)
         mdb.jobs[inpfile.split('.')[0]].submit(consistencyChecking=OFF)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Wait for completion ...',True)
         mdb.jobs[inpfile.split('.')[0]].waitForCompletion()
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
@@ -6085,7 +6081,6 @@ def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
                     writeLineToLogFile(logfilepath,'a',2*logindent + str(Exception),True)
                     writeLineToLogFile(logfilepath,'a',2*logindent + str(error),True)
                     sys.exc_clear()
-
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,ncpus,baselogindent,logindent)',True)
 

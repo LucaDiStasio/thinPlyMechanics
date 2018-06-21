@@ -5316,6 +5316,15 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 	distancesFiberDisplacementMeasUP = []
 	for node in nodesFiberDisplacementMeasUP:
 	    distancesFiberDisplacementMeasUP.append(np.sqrt((nodes[node][0]-nodes[cracktipUPIndex][0])*(nodes[node][0]-nodes[cracktipUPIndex][0])+(nodes[node][1]-nodes[cracktipUPIndex][1])*(nodes[node][1]-nodes[cracktipUPIndex][1])))
+	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the matrix elements around the upper crack tip',True)
+	nodesAroundCracktipUP = quads[firstdebondedMatrixElUP]
+	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
+	nodesMatrixDisplacementMeasUP = []
+	for node in nodesAroundCracktipUP:
+	    if node in crackfacesNodeset and node!=cracktipUPIndex:
+		nodesMatrixDisplacementMeasUP.append(node)
+	    if len(nodesMatrixDisplacementMeasUP)==2:
+		break
 	
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the fiber elements around the lower crack tip',True)
         nodesAroundCracktipLOW = quads[firstdebondedFiberElLOW]
@@ -5331,6 +5340,15 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 	distancesFiberDisplacementMeasLOW = []
 	for node in nodesFiberDisplacementMeasLOW:
 	    distancesFiberDisplacementMeasLOW.append(np.sqrt((nodes[node][0]-nodes[cracktipLOWIndex][0])*(nodes[node][0]-nodes[cracktipLOWIndex][0])+(nodes[node][1]-nodes[cracktipLOWIndex][1])*(nodes[node][1]-nodes[cracktipLOWIndex][1])))
+	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the matrix elements around the lower crack tip',True)
+	nodesAroundCracktipLOW = quads[firstdebondedMatrixElLOW]
+	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
+	nodesMatrixDisplacementMeasLOW = []
+	for node in nodesAroundCracktipLOW:
+	    if node in crackfacesNodeset and node!=cracktipLOWIndex:
+		nodesMatrixDisplacementMeasLOW.append(node)
+	    if len(nodesMatrixDisplacementMeasLOW)==2:
+		break
 	
     else:
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the fiber elements around the crack tip',True)

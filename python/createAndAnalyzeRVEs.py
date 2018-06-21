@@ -4559,6 +4559,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: modifyRVE(parameters,mdbData)',True)
     skipLineToLogFile(logfilepath,'a',True)
+    theta = parameters['geometry']['theta']
     # odb name and path
     #odbname = mdbData['jobname'] + '.odb'
     #odbfullpath = join(parameters['wd'],odbname)

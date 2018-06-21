@@ -5450,7 +5450,10 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 	    for n,node in enumerate(quads[firstboundedMatrixElUP]):
 		if node == fiberFirstBehindCracktipUPIndex:
 		    quads[firstboundedMatrixElUP][n] = matrixFirstBehindCracktipUPIndex
-		    
+	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new upper crack tip index to the debonded element on the matrix',True)
+	for n,node in enumerate(quads[firstdebondedMatrixElUP]):
+	    if node == cracktipUPIndex:
+		quads[firstdebondedMatrixElUP][n] = matrixCracktipUPIndex	    
 	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at lower crack tip ...',True)
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the bonded element on the matrix',True)
@@ -5462,7 +5465,10 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 	    for n,node in enumerate(quads[firstboundedMatrixElLOW]):
 		if node == fiberFirstBehindCracktipLOWIndex:
 		    quads[firstboundedMatrixElLOW][n] = matrixFirstBehindCracktipLOWIndex
-		    
+	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new lower crack tip index to the debonded element on the matrix',True)
+	for n,node in enumerate(quads[firstdebondedMatrixElLOW]):
+	    if node == cracktipLOWIndex:
+		quads[firstdebondedMatrixElLOW][n] = matrixCracktipLOWIndex    
 	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     else:
 	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at crack tip ...',True)
@@ -5480,15 +5486,15 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 	    if node == cracktipIndex:
 		quads[firstdebondedMatrixEl][n] = matrixCracktipIndex
 	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Find set of debonded elements on fiber and on matrix  ...',True)
-	crackfaceFiberElementset = []
-	crackfaceMatrixElementset = []
-	for element in crackfacesElementset:
-	    if element in fiberElementset:
-		crackfaceFiberElementset.append(element)
-	    else:
-		crackfaceMatrixElementset.append(element)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Find set of debonded elements on fiber and on matrix  ...',True)
+    crackfaceFiberElementset = []
+    crackfaceMatrixElementset = []
+    for element in crackfacesElementset:
+	if element in fiberElementset:
+	    crackfaceFiberElementset.append(element)
+	else:
+	    crackfaceMatrixElementset.append(element)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Find set of debonded nodes on fiber and on matrix  ...',True)
     crackfaceFiberNodeset = []
     crackfaceMatrixNodeset = []

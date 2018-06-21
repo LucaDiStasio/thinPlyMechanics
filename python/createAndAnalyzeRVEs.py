@@ -6134,6 +6134,14 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     ymatrixCracktipDisplacement = matrixCracktipDisplacement.values[0].data[1]
     rmatrixCracktipDisplacement = np.cos(phi)*xmatrixCracktipDisplacement + np.sin(phi)*ymatrixCracktipDisplacement
     thetamatrixCracktipDisplacement = -np.sin(phi)*xmatrixCracktipDisplacement + np.cos(phi)*ymatrixCracktipDisplacement
+    results['xfiberCracktipDisplacement'] = xfiberCracktipDisplacement
+    results['yfiberCracktipDisplacement'] = yfiberCracktipDisplacement
+    results['rfiberCracktipDisplacement'] = rfiberCracktipDisplacement
+    results['thetafiberCracktipDisplacement'] = thetafiberCracktipDisplacement
+    results['xmatrixCracktipDisplacement'] = xmatrixCracktipDisplacement
+    results['ymatrixCracktipDisplacement'] = ymatrixCracktipDisplacement
+    results['rmatrixCracktipDisplacement'] = rmatrixCracktipDisplacement
+    results['thetamatrixCracktipDisplacement'] = thetamatrixCracktipDisplacement
     if 'second' in order:
 	xfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[0]
 	yfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[1]
@@ -6143,6 +6151,14 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
 	ymatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[1]
 	rmatrixFirstboundedDisplacement = np.cos(phi)*xmatrixFirstboundedDisplacement + np.sin(phi)*ymatrixFirstboundedDisplacement
 	thetamatrixFirstboundedDisplacement = -np.sin(phi)*xmatrixFirstboundedDisplacement + np.cos(phi)*ymatrixFirstboundedDisplacement
+	results['xfiberFirstboundedDisplacement'] = xfiberFirstboundedDisplacement
+	results['yfiberFirstboundedDisplacement'] = yfiberFirstboundedDisplacement
+	results['rfiberFirstboundedDisplacement'] = rfiberFirstboundedDisplacement
+	results['thetafiberFirstboundedDisplacement'] = thetafiberFirstboundedDisplacement
+	results['xmatrixFirstboundedDisplacement'] = xmatrixFirstboundedDisplacement
+	results['ymatrixFirstboundedDisplacement'] = ymatrixFirstboundedDisplacement
+	results['rmatrixFirstboundedDisplacement'] = rmatrixFirstboundedDisplacement
+	results['thetamatrixFirstboundedDisplacement'] = thetamatrixFirstboundedDisplacement
 
     xcracktipDisplacement = xmatrixCracktipDisplacement - xfiberCracktipDisplacement
     ycracktipDisplacement = ymatrixCracktipDisplacement - yfiberCracktipDisplacement

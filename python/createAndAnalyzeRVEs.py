@@ -6084,7 +6084,7 @@ def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,ncpus,baselogindent,logindent)',True)
 
-def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singularity,isPressureLoaded,pressure,nodesVCCT):
+def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singularity,isPressureLoaded,uniformP,nodesVCCT,phi,Rf,delta,Jintegral):
     results = {}
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Extract forces and displacements ...',True)
 
@@ -6105,17 +6105,17 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     yRFcracktip = RFcracktip.values[0].data[1]
     rRFcracktip = np.cos(phi)*xRFcracktip + np.sin(phi)*yRFcracktip
     thetaRFcracktip = -np.sin(phi)*xRFcracktip + np.cos(phi)*yRFcracktip
-    if 'second' in parameters['mesh']['elements']['order']:
+    if 'second' in order:
 	xRFfirstbounded = RFfirstbounded.values[0].data[0]
 	yRFfirstbounded = RFfirstbounded.values[0].data[1]
 	rRFfirstbounded = np.cos(phi)*xRFfirstbounded + np.sin(phi)*yRFfirstbounded
 	thetaRFfirstbounded = -np.sin(phi)*xRFfirstbounded + np.cos(phi)*yRFfirstbounded
-	if isPressureLoadedCrack:
-	    rRFcracktip -= uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/6
-	    rRFfirstbounded -= 2*uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/3
+	if isPressureLoaded:
+	    rRFcracktip -= uniformP*(Rf*delta*np.pi/180.0)/6
+	    rRFfirstbounded -= 2*uniformP*(Rf*delta*np.pi/180.0)/3
     else:
-	if isPressureLoadedCrack:
-	    rRFcracktip -= uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/2
+	if isPressureLoaded:
+	    rRFcracktip -= uniformP*(Rf*delta*np.pi/180.0)/2
 	
 
     xfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[0]
@@ -6126,7 +6126,7 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     ymatrixCracktipDisplacement = matrixCracktipDisplacement.values[0].data[1]
     rmatrixCracktipDisplacement = np.cos(phi)*xmatrixCracktipDisplacement + np.sin(phi)*ymatrixCracktipDisplacement
     thetamatrixCracktipDisplacement = -np.sin(phi)*xmatrixCracktipDisplacement + np.cos(phi)*ymatrixCracktipDisplacement
-    if 'second' in parameters['mesh']['elements']['order']:
+    if 'second' in order:
 	xfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[0]
 	yfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[1]
 	rfiberFirstboundedDisplacement = np.cos(phi)*xfiberFirstboundedDisplacement + np.sin(phi)*yfiberFirstboundedDisplacement
@@ -6140,7 +6140,7 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     ycracktipDisplacement = ymatrixCracktipDisplacement - yfiberCracktipDisplacement
     rcracktipDisplacement = rmatrixCracktipDisplacement - rfiberCracktipDisplacement
     thetacracktipDisplacement = thetamatrixCracktipDisplacement - thetafiberCracktipDisplacement
-    if 'second' in parameters['mesh']['elements']['order']:
+    if 'second' in order:
 	xfirstboundedDisplacement = xmatrixFirstboundedDisplacement - xfiberFirstboundedDisplacement
 	yfirstboundedDisplacement = ymatrixFirstboundedDisplacement - yfiberFirstboundedDisplacement
 	rfirstboundedDisplacement = rmatrixFirstboundedDisplacement - rfiberFirstboundedDisplacement
@@ -6150,14 +6150,14 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Compute VCCT with GTOT=GI+GII ...',True)
 
-    if 'second' in parameters['mesh']['elements']['order']:
-	GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
-	GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
-	GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement+xRFfirstbounded*xfirstboundedDisplacement+yRFfirstbounded*yfirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+    if 'second' in order:
+	GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
+	GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
+	GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement+xRFfirstbounded*xfirstboundedDisplacement+yRFfirstbounded*yfirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
     else:
-	GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
-	GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
-	GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+	GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement)/(Rf*delta*np.pi/180.0))
+	GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(Rf*delta*np.pi/180.0))
+	GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement)/(Rf*delta*np.pi/180.0))
 
     GTOT = GI + GII
 
@@ -6166,15 +6166,17 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Compute VCCT with GI=GTOT-GII ...',True)
 
     if 'second' in parameters['mesh']['elements']['order']:
-	GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+	GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
     else:
-	GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+	GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(Rf*delta*np.pi/180.0))
 
-    GTOTv2 = Jintegrals[-1]
+    GTOTv2 = Jintegral
 
     GIv2 = GTOTv2 - GIIv2
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
+    
+    return results
 
 def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 

@@ -6184,7 +6184,12 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
 
     if 'second' in order:
         if 'inverseSquareRoot' in singularity:
-	  
+	    t11 = 14.0-33.0*np.pi/8.0
+	    t12 = -52.0+33.0*np.pi/2.0
+	    t21 = -7.0/2.0+21.0*np.pi/16.0
+	    t22 = 17.0-21.0*np.pi/4.0
+	    t31 = 8.0-21.0*np.pi/8.0
+	    t32 = -32.0+21.0*np.pi/2.0
 	else:
 	    GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
 	    GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(Rf*delta*np.pi/180.0))

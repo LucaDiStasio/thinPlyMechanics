@@ -5722,6 +5722,15 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		inp.write(' ' + str(firstBehindCracktipFiberDispMeasIndexLOW) + '\n')
 		inp.write('*NSET, NSET=MATRIX-FIRSTBOUNDED-DISPMEASLOW, INSTANCE=RVE-assembly' + '\n')
 		inp.write(' ' + str(firstBehindCracktipMatrixDispMeasIndexLOW) + '\n')
+		if 'inverseSquareRoot' in parameters['singularity']['type']:
+		    inp.write('*NSET, NSET=FIBER-NODE-SECONDBOUNDEDUP, INSTANCE=RVE-assembly' + '\n')
+		    inp.write(' ' + str(fiberSecondBehindCracktipUPIndex) + '\n')
+		    inp.write('*NSET, NSET=MATRIX-NODE-SECONDBOUNDEDUP, INSTANCE=RVE-assembly' + '\n')
+		    inp.write(' ' + str(matrixSecondBehindCracktipUPIndex) + '\n')
+		    inp.write('*NSET, NSET=FIBER-NODE-SECONDBOUNDEDLOW, INSTANCE=RVE-assembly' + '\n')
+		    inp.write(' ' + str(fiberSecondBehindCracktipLOWIndex) + '\n')
+		    inp.write('*NSET, NSET=MATRIX-NODE-SECONDBOUNDEDLOW, INSTANCE=RVE-assembly' + '\n')
+		    inp.write(' ' + str(matrixSecondBehindCracktipLOWIndex) + '\n')
 	    inp.write('*NSET, NSET=CRACKTIPUP-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
 	    inp.write(' ' + str(cracktipUPDummyIndex) + '\n')
 	    inp.write('*NSET, NSET=CRACKTIPLOW-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
@@ -5731,6 +5740,11 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		inp.write(' ' + str(firstBehindCracktipUPDummyIndex) + '\n')
 		inp.write('*NSET, NSET=FIRSTBOUNDEDLOW-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
 		inp.write(' ' + str(firstBehindCracktipLOWDummyIndex) + '\n')
+		if 'inverseSquareRoot' in parameters['singularity']['type']:
+		    inp.write('*NSET, NSET=SECONDBOUNDEDUP-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
+		    inp.write(' ' + str(secondBehindCracktipUPDummyIndex) + '\n')
+		    inp.write('*NSET, NSET=SECONDBOUNDEDLOW-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
+		    inp.write(' ' + str(secondBehindCracktipLOWDummyIndex) + '\n')
     else:
 	with open(modinpfullpath,'a') as inp:
 	    inp.write('*NSET, NSET=FIBER-CRACKTIP, INSTANCE=RVE-assembly' + '\n')
@@ -5752,11 +5766,19 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		inp.write(' ' + str(firstBehindCracktipFiberDispMeasIndex) + '\n')
 		inp.write('*NSET, NSET=MATRIX-FIRSTBOUNDED-DISPMEAS, INSTANCE=RVE-assembly' + '\n')
 		inp.write(' ' + str(firstBehindCracktipMatrixDispMeasIndex) + '\n')
+		if 'inverseSquareRoot' in parameters['singularity']['type']:
+		    inp.write('*NSET, NSET=FIBER-NODE-SECONDBOUNDED, INSTANCE=RVE-assembly' + '\n')
+		    inp.write(' ' + str(fiberSecondBehindCracktipIndex) + '\n')
+		    inp.write('*NSET, NSET=MATRIX-NODE-SECONDBOUNDED, INSTANCE=RVE-assembly' + '\n')
+		    inp.write(' ' + str(matrixSecondBehindCracktipIndex) + '\n')
 	    inp.write('*NSET, NSET=CRACKTIP-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
 	    inp.write(' ' + str(cracktipDummyIndex) + '\n')
 	    if 'second' in parameters['mesh']['elements']['order']:
 		inp.write('*NSET, NSET=FIRSTBOUNDED-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
 		inp.write(' ' + str(firstBehindCracktipDummyIndex) + '\n')
+		if 'inverseSquareRoot' in parameters['singularity']['type']:
+		    inp.write('*NSET, NSET=SECONDBOUNDED-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
+		    inp.write(' ' + str(secondBehindCracktipDummyIndex) + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write north side node sets ...',True)
     with open(modinpfullpath,'a') as inp:

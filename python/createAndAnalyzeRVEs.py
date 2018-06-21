@@ -6091,6 +6091,8 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     RFcracktip = getFieldOutput(odb,step,frame,'RF',nodesVCCT['cracktipDummyNode'])
     if 'second' in order:
 	RFfirstbounded = getFieldOutput(odb,step,frame,'RF',nodesVCCT['firstboundedDummyNode'])
+	if 'inverseSquareRoot' in singularity:
+	    RFsecondbounded = getFieldOutput(odb,step,frame,'RF',nodesVCCT['secondboundedDummyNode'])
     fiberCracktipDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['fiberCracktipDispMeas'])
     matrixCracktipDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['matrixCracktipDispMeas'])
     if 'second' in order:
@@ -6117,6 +6119,15 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
 	results['yRFfirstbounded'] = yRFfirstbounded
 	results['rRFfirstbounded'] = rRFfirstbounded
 	results['thetaRFfirstbounded'] = thetaRFfirstbounded
+	if 'inverseSquareRoot' in singularity:
+	    xRFsecondbounded = RFsecondbounded.values[0].data[0]
+	    yRFsecondbounded = RFsecondbounded.values[0].data[1]
+	    rRFsecondbounded = np.cos(phi)*xRFsecondbounded + np.sin(phi)*yRFsecondbounded
+	    thetaRFsecondbounded = -np.sin(phi)*xRFsecondbounded + np.cos(phi)*yRFsecondbounded
+	    results['xRFsecondbounded'] = xRFsecondbounded
+	    results['yRFsecondbounded'] = yRFsecondbounded
+	    results['rRFsecondbounded'] = rRFsecondbounded
+	    results['thetaRFsecondbounded'] = thetaRFsecondbounded
     else:
 	if isPressureLoaded:
 	    rRFcracktip -= uniformP*(Rf*delta*np.pi/180.0)/2

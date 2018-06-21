@@ -5244,11 +5244,16 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		    distancesUP.append(0.0)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
 	    fiberFirstBehindCracktipUPIndex = commonNodesUP[np.argsort(distancesUP)[-2]] # argsort goes from smaller to higher
-	    fiberSecondBehindCracktipUPIndex = commonNodesUP[np.argsort(distancesUP)[-1]]
+	    if 'inverseSquareRoot' in parameters['singularity']['type']:
+		fiberSecondBehindCracktipUPIndex = commonNodesUP[np.argsort(distancesUP)[-1]]
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix upper crack tip node with index ' + str(matrixFirstBehindCracktipUPIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipUPIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipUPIndex][1]) + ')',True)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating upper crack tip dummy node with index ' + str(firstBehindCracktipUPDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
 	    nodes[matrixFirstBehindCracktipUPIndex] = [nodes[fiberFirstBehindCracktipUPIndex][0],nodes[fiberFirstBehindCracktipUPIndex][1]]
+	    if 'inverseSquareRoot' in parameters['singularity']['type']:
+		nodes[matrixSecondBehindCracktipUPIndex] = [nodes[fiberSecondBehindCracktipUPIndex][0],nodes[fiberSecondBehindCracktipUPIndex][1]]
 	    nodes[firstBehindCracktipUPDummyIndex] = [5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
+	    if 'inverseSquareRoot' in parameters['singularity']['type']:
+		nodes[secondBehindCracktipUPDummyIndex] = [5*parameters['geometry']['Rf'],-20*parameters['geometry']['Rf']]
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded lower crack tip elements on fiber and matrix',True)
 	    commonNodesLOW = []
 	    fiberElnodesLOW = quads[firstboundedFiberElLOW]
@@ -5268,11 +5273,16 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		    distancesLOW.append(0.0)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
 	    fiberFirstBehindCracktipLOWIndex = commonNodesLOW[np.argsort(distancesLOW)[-2]] # argsort goes from smaller to higher
-	    fiberSecondBehindCracktipLOWIndex = commonNodesLOW[np.argsort(distancesLOW)[-1]]
+	    if 'inverseSquareRoot' in parameters['singularity']['type']:
+		fiberSecondBehindCracktipLOWIndex = commonNodesLOW[np.argsort(distancesLOW)[-1]]
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix lower crack tip node with index ' + str(matrixFirstBehindCracktipLOWIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipLOWIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipLOWIndex][1]) + ')',True)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating lower crack tip dummy node with index ' + str(firstBehindCracktipLOWDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-20*parameters['geometry']['Rf']) + ')',True)
 	    nodes[matrixFirstBehindCracktipLOWIndex] = [nodes[fiberFirstBehindCracktipLOWIndex][0],nodes[fiberFirstBehindCracktipLOWIndex][1]]
+	    if 'inverseSquareRoot' in parameters['singularity']['type']:
+		nodes[matrixSecondBehindCracktipLOWIndex] = [nodes[fiberSecondBehindCracktipLOWIndex][0],nodes[fiberSecondBehindCracktipLOWIndex][1]]
 	    nodes[firstBehindCracktipLOWDummyIndex] = [5*parameters['geometry']['Rf'],-20*parameters['geometry']['Rf']]
+	    if 'inverseSquareRoot' in parameters['singularity']['type']:
+		nodes[secondBehindCracktipLOWDummyIndex] = [5*parameters['geometry']['Rf'],-40*parameters['geometry']['Rf']]
 	else:
 	    matrixFirstBehindCracktipIndex = numNodes + 1000 + 2
 	    firstBehindCracktipDummyIndex = numNodes + 1000 + 3
@@ -5297,10 +5307,16 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		    distances.append(0.0)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True) 
 	    fiberFirstBehindCracktipIndex = commonNodes[np.argsort(distances)[-2]] # argsort goes from smaller to higher
+	    if 'inverseSquareRoot' in parameters['singularity']['type']:
+		fiberSecondBehindCracktipIndex = commonNodes[np.argsort(distances)[-1]]
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix crack tip node with index ' + str(matrixFirstBehindCracktipIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipIndex][1]) + ')',True)
 	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(firstBehindCracktipDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
 	    nodes[matrixFirstBehindCracktipIndex] = [nodes[fiberFirstBehindCracktipIndex][0],nodes[fiberFirstBehindCracktipIndex][1]]
+	    if 'inverseSquareRoot' in parameters['singularity']['type']:
+		nodes[matrixSecondBehindCracktipIndex] = [nodes[fiberSecondBehindCracktipIndex][0],nodes[fiberSecondBehindCracktipIndex][1]]
 	    nodes[firstBehindCracktipDummyIndex] = [5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
+	    if 'inverseSquareRoot' in parameters['singularity']['type']:
+		nodes[secondBehindCracktipDummyIndex] = [5*parameters['geometry']['Rf'],-40*parameters['geometry']['Rf']]
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Identify nodes on crack faces for displacement measurements ...',True)
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:

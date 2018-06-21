@@ -6089,11 +6089,11 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Extract forces and displacements ...',True)
 
     RFcracktip = getFieldOutput(odb,step,frame,'RF',nodesVCCT['cracktipDummyNode'])
-    if 'second' in parameters['mesh']['elements']['order']:
+    if 'second' in order:
 	RFfirstbounded = getFieldOutput(odb,step,frame,'RF',nodesVCCT['firstboundedDummyNode'])
     fiberCracktipDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['fiberCracktipDispMeas'])
     matrixCracktipDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['matrixCracktipDispMeas'])
-    if 'second' in parameters['mesh']['elements']['order']:
+    if 'second' in order:
 	fiberFirstboundedDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['fiberFirstboundedDispMeas'])
 	matrixFirstboundedDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['matrixFirstboundedDispMeas'])
 

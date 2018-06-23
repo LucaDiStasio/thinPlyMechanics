@@ -5478,44 +5478,44 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 quads[firstdebondedMatrixElUP][n] = matrixCracktipUPIndex	    
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at lower crack tip ...',True)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the bonded element on the matrix',True)
-	for n,node in enumerate(quads[firstboundedMatrixElLOW]):
-	    if node == cracktipLOWIndex:
-		quads[firstboundedMatrixElLOW][n] = matrixCracktipLOWIndex
-	if 'second' in parameters['mesh']['elements']['order']:
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new first behind lower crack tip index to the bonded element on the matrix',True)
-	    for n,node in enumerate(quads[firstboundedMatrixElLOW]):
-		if node == fiberFirstBehindCracktipLOWIndex:
-		    quads[firstboundedMatrixElLOW][n] = matrixFirstBehindCracktipLOWIndex
-	    if 'inverseSquareRoot' in parameters['singularity']['type']:
-		for n,node in enumerate(quads[firstboundedMatrixElLOW]):
-		    if node == fiberSecondBehindCracktipLOWIndex:
-			quads[firstboundedMatrixElLOW][n] = matrixSecondBehindCracktipLOWIndex
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new lower crack tip index to the debonded element on the matrix',True)
-	for n,node in enumerate(quads[firstdebondedMatrixElLOW]):
-	    if node == cracktipLOWIndex:
-		quads[firstdebondedMatrixElLOW][n] = matrixCracktipLOWIndex    
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the bonded element on the matrix',True)
+        for n,node in enumerate(quads[firstboundedMatrixElLOW]):
+            if node == cracktipLOWIndex:
+                quads[firstboundedMatrixElLOW][n] = matrixCracktipLOWIndex
+        if 'second' in parameters['mesh']['elements']['order']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new first behind lower crack tip index to the bonded element on the matrix',True)
+            for n,node in enumerate(quads[firstboundedMatrixElLOW]):
+                if node == fiberFirstBehindCracktipLOWIndex:
+                    quads[firstboundedMatrixElLOW][n] = matrixFirstBehindCracktipLOWIndex
+                if 'inverseSquareRoot' in parameters['singularity']['type']:
+                    for n,node in enumerate(quads[firstboundedMatrixElLOW]):
+                        if node == fiberSecondBehindCracktipLOWIndex:
+                            quads[firstboundedMatrixElLOW][n] = matrixSecondBehindCracktipLOWIndex
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new lower crack tip index to the debonded element on the matrix',True)
+        for n,node in enumerate(quads[firstdebondedMatrixElLOW]):
+            if node == cracktipLOWIndex:
+                quads[firstdebondedMatrixElLOW][n] = matrixCracktipLOWIndex    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     else:
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at crack tip ...',True)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the bonded element on the matrix',True)
-	for n,node in enumerate(quads[firstboundedMatrixEl]):
-	    if node == cracktipIndex:
-		quads[firstboundedMatrixEl][n] = matrixCracktipIndex
-	if 'second' in parameters['mesh']['elements']['order']:
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new first behind crack tip index to the bonded element on the matrix',True)
-	    for n,node in enumerate(quads[firstboundedMatrixEl]):
-		if node == fiberFirstBehindCracktipIndex:
-		    quads[firstboundedMatrixEl][n] = matrixFirstBehindCracktipIndex
-	    if 'inverseSquareRoot' in parameters['singularity']['type']:
-		for n,node in enumerate(quads[firstboundedMatrixEl]):
-		    if node == fiberSecondBehindCracktipIndex:
-			quads[firstboundedMatrixEl][n] = matrixSecondBehindCracktipIndex
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the debonded element on the matrix',True)
-	for n,node in enumerate(quads[firstdebondedMatrixEl]):
-	    if node == cracktipIndex:
-		quads[firstdebondedMatrixEl][n] = matrixCracktipIndex
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at crack tip ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the bonded element on the matrix',True)
+        for n,node in enumerate(quads[firstboundedMatrixEl]):
+            if node == cracktipIndex:
+                quads[firstboundedMatrixEl][n] = matrixCracktipIndex
+        if 'second' in parameters['mesh']['elements']['order']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new first behind crack tip index to the bonded element on the matrix',True)
+            for n,node in enumerate(quads[firstboundedMatrixEl]):
+                if node == fiberFirstBehindCracktipIndex:
+                    quads[firstboundedMatrixEl][n] = matrixFirstBehindCracktipIndex
+            if 'inverseSquareRoot' in parameters['singularity']['type']:
+                for n,node in enumerate(quads[firstboundedMatrixEl]):
+                    if node == fiberSecondBehindCracktipIndex:
+                        quads[firstboundedMatrixEl][n] = matrixSecondBehindCracktipIndex
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the debonded element on the matrix',True)
+        for n,node in enumerate(quads[firstdebondedMatrixEl]):
+            if node == cracktipIndex:
+                quads[firstdebondedMatrixEl][n] = matrixCracktipIndex
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Find set of debonded elements on fiber and on matrix  ...',True)
     crackfaceFiberElementset = []
     crackfaceMatrixElementset = []

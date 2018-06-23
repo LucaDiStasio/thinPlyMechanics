@@ -5233,8 +5233,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 if node in matrixElnodesUP:
                     commonNodesUP.append(node)
                     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
-                if len(commonNodesUP)==3:
-                    break
+                    if len(commonNodesUP)==3:
+                        break
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from upper cracktip',True)
             distancesUP = []
             for node in commonNodesUP:
@@ -5262,8 +5262,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 if node in matrixElnodesLOW:
                     commonNodesLOW.append(node)
                     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
-                if len(commonNodesLOW)==3:
-                    break
+                    if len(commonNodesLOW)==3:
+                        break
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from lower cracktip',True)
             distancesLOW = []
             for node in commonNodesLOW:
@@ -5293,11 +5293,11 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             fiberElnodes = quads[firstboundedFiberEl]
             matrixElnodes = quads[firstboundedMatrixEl]
             for node in fiberElnodes:
-            if node in matrixElnodes:
-                commonNodes.append(node)
-                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
-                if len(commonNodes)==3:
-                    break
+                if node in matrixElnodes:
+                    commonNodes.append(node)
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
+                    if len(commonNodes)==3:
+                        break
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from cracktip',True)
             distances = []
             for node in commonNodes:

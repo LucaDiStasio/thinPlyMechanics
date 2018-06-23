@@ -5045,37 +5045,37 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 store = True
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     else:
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set MATRIX-INTANNULUS-FIRSTBOUNDED and saving to list ...',True)
-	matrixIntannFirstbounElementset = []
-	store = False
-	for l,line in enumerate(inpfilelines):
-	    if store == True and '*' in inpfilelines[l+1]:
-		for index in line.replace('\n','').split(','):
-		    if index!='' and index!=' ':
-			matrixIntannFirstbounElementset.append(int(index))
-		store = False
-		break
-	    elif store == True:
-		for index in line.replace('\n','').split(','):
-		    if index!='' and index!=' ':
-			matrixIntannFirstbounElementset.append(int(index))
-	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-FIRSTBOUNDED','matrix-intannulus-firstbounded'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
-		store = False
-		startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
-		endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
-		deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
-		for index in range(startEl,endEl+deltaEl,deltaEl):
-		    matrixIntannFirstbounElementset.append(index)
-		break
-	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-FIRSTBOUNDED','matrix-intannulus-firstbounded']:
-		store = True
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-WITHOUT-CORNERS ...',True)
-    northSideWithoutCornersNodeset = []
-    for node in northSideNodeset:
-        if not node in [northeastIndex,northwestIndex]:
-            northSideWithoutCornersNodeset.append(node)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set MATRIX-INTANNULUS-FIRSTBOUNDED and saving to list ...',True)
+        matrixIntannFirstbounElementset = []
+        store = False
+        for l,line in enumerate(inpfilelines):
+            if store == True and '*' in inpfilelines[l+1]:
+                for index in line.replace('\n','').split(','):
+                    if index!='' and index!=' ':
+                    matrixIntannFirstbounElementset.append(int(index))
+                    store = False
+                    break
+            elif store == True:
+                for index in line.replace('\n','').split(','):
+                    if index!='' and index!=' ':
+                        matrixIntannFirstbounElementset.append(int(index))
+            elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-FIRSTBOUNDED','matrix-intannulus-firstbounded'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
+                store = False
+                startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+                endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
+                deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
+                for index in range(startEl,endEl+deltaEl,deltaEl):
+                    matrixIntannFirstbounElementset.append(index)
+                break
+            elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-FIRSTBOUNDED','matrix-intannulus-firstbounded']:
+                store = True
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-WITHOUT-CORNERS ...',True)
+        northSideWithoutCornersNodeset = []
+        for node in northSideNodeset:
+            if not node in [northeastIndex,northwestIndex]:
+                northSideWithoutCornersNodeset.append(node)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)
     numNodes = mdbData['numNodes']
     numEls = mdbData['numEls']

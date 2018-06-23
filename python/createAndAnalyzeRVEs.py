@@ -5317,64 +5317,64 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             nodes[firstBehindCracktipDummyIndex] = [5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
             if 'inverseSquareRoot' in parameters['singularity']['type']:
                 nodes[secondBehindCracktipDummyIndex] = [5*parameters['geometry']['Rf'],-40*parameters['geometry']['Rf']]
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Identify nodes on crack faces for displacement measurements ...',True)
-        if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the fiber elements around the upper crack tip',True)
-            nodesAroundCracktipUP = quads[firstdebondedFiberElUP]
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
-            nodesFiberDisplacementMeasUP = []
-            for node in nodesAroundCracktipUP:
-                if node in crackfacesNodeset and node!=cracktipUPIndex:
-                    nodesFiberDisplacementMeasUP.append(node)
-                    if len(nodesFiberDisplacementMeasUP)==2:
-                        break
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesFiberDisplacementMeasUP)) + ' nodes',True)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
-            distancesFiberDisplacementMeasUP = []
-            for node in nodesFiberDisplacementMeasUP:
-                distancesFiberDisplacementMeasUP.append(np.sqrt((nodes[node][0]-nodes[cracktipUPIndex][0])*(nodes[node][0]-nodes[cracktipUPIndex][0])+(nodes[node][1]-nodes[cracktipUPIndex][1])*(nodes[node][1]-nodes[cracktipUPIndex][1])))
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the matrix elements around the upper crack tip',True)
-            nodesAroundCracktipUP = quads[firstdebondedMatrixElUP]
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
-	nodesMatrixDisplacementMeasUP = []
-	for node in nodesAroundCracktipUP:
-	    if node in crackfacesNodeset and node!=cracktipUPIndex:
-		nodesMatrixDisplacementMeasUP.append(node)
-	    if len(nodesMatrixDisplacementMeasUP)==2:
-		break
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesMatrixDisplacementMeasUP)) + ' nodes',True)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from upper cracktip',True)
-	distancesMatrixDisplacementMeasUP = []
-	for node in nodesMatrixDisplacementMeasUP:
-	    distancesMatrixDisplacementMeasUP.append(np.sqrt((nodes[node][0]-nodes[cracktipUPIndex][0])*(nodes[node][0]-nodes[cracktipUPIndex][0])+(nodes[node][1]-nodes[cracktipUPIndex][1])*(nodes[node][1]-nodes[cracktipUPIndex][1])))
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort lists with computed distances',True)
-	sortedFiberDistanceIndecesUP = np.argsort(distancesFiberDisplacementMeasUP)
-	sortedMatrixDistanceIndecesUP = np.argsort(distancesMatrixDisplacementMeasUP)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Indeces to sort fiber nodes ' + str(sortedFiberDistanceIndecesUP),True)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Indeces to sort matrix nodes ' + str(sortedMatrixDistanceIndecesUP),True)
-	if 'second' in parameters['mesh']['elements']['order']:
-	    cracktipFiberDispMeasIndexUP = nodesFiberDisplacementMeasUP[sortedFiberDistanceIndecesUP[-1]]
-	    firstBehindCracktipFiberDispMeasIndexUP = nodesFiberDisplacementMeasUP[sortedFiberDistanceIndecesUP[-2]]
-	    cracktipMatrixDispMeasIndexUP = nodesMatrixDisplacementMeasUP[sortedMatrixDistanceIndecesUP[-1]]
-	    firstBehindCracktipMatrixDispMeasIndexUP = nodesMatrixDisplacementMeasUP[sortedMatrixDistanceIndecesUP[-2]]
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Displacement for the matrix crack tip is measured on node ' + str(cracktipMatrixDispMeasIndexUP),True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Displacement for the first bonded node behind the matrix crack tip is measured on node ' + str(firstBehindCracktipMatrixDispMeasIndexUP),True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Displacement for the fiber crack tip is measured on node ' + str(cracktipFiberDispMeasIndexUP),True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Displacement for the first bonded node behind the fiber crack tip is measured on node ' + str(firstBehindCracktipFiberDispMeasIndexUP),True)
-	else:
-	    cracktipFiberDispMeasIndexUP = nodesFiberDisplacementMeasUP[sortedFiberDistanceIndecesUP[-1]]
-	    cracktipMatrixDispMeasIndexUP = nodesMatrixDisplacementMeasUP[sortedMatrixDistanceIndecesUP[-1]]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Identify nodes on crack faces for displacement measurements ...',True)
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the fiber elements around the upper crack tip',True)
+        nodesAroundCracktipUP = quads[firstdebondedFiberElUP]
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
+        nodesFiberDisplacementMeasUP = []
+        for node in nodesAroundCracktipUP:
+            if node in crackfacesNodeset and node!=cracktipUPIndex:
+                nodesFiberDisplacementMeasUP.append(node)
+                if len(nodesFiberDisplacementMeasUP)==2:
+                    break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesFiberDisplacementMeasUP)) + ' nodes',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
+        distancesFiberDisplacementMeasUP = []
+        for node in nodesFiberDisplacementMeasUP:
+            distancesFiberDisplacementMeasUP.append(np.sqrt((nodes[node][0]-nodes[cracktipUPIndex][0])*(nodes[node][0]-nodes[cracktipUPIndex][0])+(nodes[node][1]-nodes[cracktipUPIndex][1])*(nodes[node][1]-nodes[cracktipUPIndex][1])))
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the matrix elements around the upper crack tip',True)
+        nodesAroundCracktipUP = quads[firstdebondedMatrixElUP]
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
+        nodesMatrixDisplacementMeasUP = []
+        for node in nodesAroundCracktipUP:
+            if node in crackfacesNodeset and node!=cracktipUPIndex:
+                nodesMatrixDisplacementMeasUP.append(node)
+            if len(nodesMatrixDisplacementMeasUP)==2:
+                break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesMatrixDisplacementMeasUP)) + ' nodes',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from upper cracktip',True)
+        distancesMatrixDisplacementMeasUP = []
+        for node in nodesMatrixDisplacementMeasUP:
+            distancesMatrixDisplacementMeasUP.append(np.sqrt((nodes[node][0]-nodes[cracktipUPIndex][0])*(nodes[node][0]-nodes[cracktipUPIndex][0])+(nodes[node][1]-nodes[cracktipUPIndex][1])*(nodes[node][1]-nodes[cracktipUPIndex][1])))
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort lists with computed distances',True)
+        sortedFiberDistanceIndecesUP = np.argsort(distancesFiberDisplacementMeasUP)
+        sortedMatrixDistanceIndecesUP = np.argsort(distancesMatrixDisplacementMeasUP)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Indeces to sort fiber nodes ' + str(sortedFiberDistanceIndecesUP),True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Indeces to sort matrix nodes ' + str(sortedMatrixDistanceIndecesUP),True)
+        if 'second' in parameters['mesh']['elements']['order']:
+            cracktipFiberDispMeasIndexUP = nodesFiberDisplacementMeasUP[sortedFiberDistanceIndecesUP[-1]]
+            firstBehindCracktipFiberDispMeasIndexUP = nodesFiberDisplacementMeasUP[sortedFiberDistanceIndecesUP[-2]]
+            cracktipMatrixDispMeasIndexUP = nodesMatrixDisplacementMeasUP[sortedMatrixDistanceIndecesUP[-1]]
+            firstBehindCracktipMatrixDispMeasIndexUP = nodesMatrixDisplacementMeasUP[sortedMatrixDistanceIndecesUP[-2]]
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Displacement for the matrix crack tip is measured on node ' + str(cracktipMatrixDispMeasIndexUP),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Displacement for the first bonded node behind the matrix crack tip is measured on node ' + str(firstBehindCracktipMatrixDispMeasIndexUP),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Displacement for the fiber crack tip is measured on node ' + str(cracktipFiberDispMeasIndexUP),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Displacement for the first bonded node behind the fiber crack tip is measured on node ' + str(firstBehindCracktipFiberDispMeasIndexUP),True)
+        else:
+            cracktipFiberDispMeasIndexUP = nodesFiberDisplacementMeasUP[sortedFiberDistanceIndecesUP[-1]]
+            cracktipMatrixDispMeasIndexUP = nodesMatrixDisplacementMeasUP[sortedMatrixDistanceIndecesUP[-1]]
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the fiber elements around the lower crack tip',True)
         nodesAroundCracktipLOW = quads[firstdebondedFiberElLOW]
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
-	nodesFiberDisplacementMeasLOW = []
-	for node in nodesAroundCracktipLOW:
-	    if node in crackfacesNodeset and node!=cracktipLOWIndex:
-		nodesFiberDisplacementMeasLOW.append(node)
-	    if len(nodesFiberDisplacementMeasLOW)==2:
-		break
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesFiberDisplacementMeasLOW)) + ' nodes',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
+        nodesFiberDisplacementMeasLOW = []
+        for node in nodesAroundCracktipLOW:
+            if node in crackfacesNodeset and node!=cracktipLOWIndex:
+                nodesFiberDisplacementMeasLOW.append(node)
+            if len(nodesFiberDisplacementMeasLOW)==2:
+                break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesFiberDisplacementMeasLOW)) + ' nodes',True)
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
 	distancesFiberDisplacementMeasLOW = []
 	for node in nodesFiberDisplacementMeasLOW:

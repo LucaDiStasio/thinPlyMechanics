@@ -5972,15 +5972,15 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write('**' + '\n')
             inp.write('*BOUNDARY, OP=MOD' + '\n')
             if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-		inp.write(' CRACKTIPUP-DUMMY-NODE, ENCASTRE' + '\n')
-		inp.write(' CRACKTIPLOW-DUMMY-NODE, ENCASTRE' + '\n')
-		if 'second' in parameters['mesh']['elements']['order']:
-		    inp.write(' FIRSTBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
-		    inp.write(' FIRSTBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
-	    else:
-		inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
-		if 'second' in parameters['mesh']['elements']['order']:
-		    inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+                inp.write(' CRACKTIPUP-DUMMY-NODE, ENCASTRE' + '\n')
+                inp.write(' CRACKTIPLOW-DUMMY-NODE, ENCASTRE' + '\n')
+                if 'second' in parameters['mesh']['elements']['order']:
+                    inp.write(' FIRSTBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
+                    inp.write(' FIRSTBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
+            else:
+                inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
+                if 'second' in parameters['mesh']['elements']['order']:
+                    inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
             inp.write('**' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)

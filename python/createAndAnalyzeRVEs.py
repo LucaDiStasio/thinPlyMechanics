@@ -4615,21 +4615,21 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-      writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack tip sets and saving to variable ...',True)
-      for l,line in enumerate(inpfilelines):
-	  if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIPUP','cracktipup']:
-	      cracktipupIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
-	      break
-      for l,line in enumerate(inpfilelines):
-	  if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIPLOW','cracktiplow']:
-	      cracktiplowIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
-	      break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack tip sets and saving to variable ...',True)
+        for l,line in enumerate(inpfilelines):
+            if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIPUP','cracktipup']:
+                cracktipupIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+                break
+        for l,line in enumerate(inpfilelines):
+            if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIPLOW','cracktiplow']:
+                cracktiplowIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+                break
     else:
-      writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack tip set and saving to variable ...',True)
-      for l,line in enumerate(inpfilelines):
-	  if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIP','cracktip']:
-	      cracktipIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
-	      break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack tip set and saving to variable ...',True)
+        for l,line in enumerate(inpfilelines):
+            if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['CRACKTIP','cracktip']:
+                cracktipIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+                break
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack faces node set and saving to list ...',True)
     crackfacesNodeset = []
@@ -4764,57 +4764,57 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set FIBER-EXTANNULUS-UPPERCRACK-CTUP and saving to list ...',True)
-	fiberExtannUppcrackCtUpElementset = []
-	store = False
-	for l,line in enumerate(inpfilelines):
-	    if store == True and '*' in inpfilelines[l+1]:
-		for index in line.replace('\n','').split(','):
-		    if index!='' and index!=' ':
-			fiberExtannUppcrackCtUpElementset.append(int(index))
-		store = False
-		break
-	    elif store == True:
-		for index in line.replace('\n','').split(','):
-		    if index!='' and index!=' ':
-			fiberExtannUppcrackCtUpElementset.append(int(index))
-	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-UPPERCRACK-CTUP','fiber-extannulus-uppercrack-ctup'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
-		store = False
-		startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
-		endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
-		deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
-		for index in range(startEl,endEl+deltaEl,deltaEl):
-		    fiberExtannUppcrackCtUpElementset.append(index)
-		break
-	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-UPPERCRACK-CTUP','fiber-extannulus-uppercrack-ctup']:
-		store = True
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set FIBER-EXTANNULUS-UPPERCRACK-CTLOW and saving to list ...',True)
-	fiberExtannUppcrackCtLowElementset = []
-	store = False
-	for l,line in enumerate(inpfilelines):
-	    if store == True and '*' in inpfilelines[l+1]:
-		for index in line.replace('\n','').split(','):
-		    if index!='' and index!=' ':
-			fiberExtannUppcrackCtLowElementset.append(int(index))
-		store = False
-		break
-	    elif store == True:
-		for index in line.replace('\n','').split(','):
-		    if index!='' and index!=' ':
-			fiberExtannUppcrackCtLowElementset.append(int(index))
-	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-UPPERCRACK-CTLOW','fiber-extannulus-uppercrack-ctlow'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
-		store = False
-		startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
-		endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
-		deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
-		for index in range(startEl,endEl+deltaEl,deltaEl):
-		    fiberExtannUppcrackCtLowElementset.append(index)
-		break
-	    elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-UPPERCRACK-CTLOW','fiber-extannulus-uppercrack-ctlow']:
-		store = True
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        fiberExtannUppcrackCtUpElementset = []
+        store = False
+        for l,line in enumerate(inpfilelines):
+            if store == True and '*' in inpfilelines[l+1]:
+                for index in line.replace('\n','').split(','):
+                    if index!='' and index!=' ':
+                        fiberExtannUppcrackCtUpElementset.append(int(index))
+                        store = False
+                        break
+            elif store == True:
+                for index in line.replace('\n','').split(','):
+                    if index!='' and index!=' ':
+                        fiberExtannUppcrackCtUpElementset.append(int(index))
+            elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-UPPERCRACK-CTUP','fiber-extannulus-uppercrack-ctup'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
+                store = False
+                startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+                endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
+                deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
+                for index in range(startEl,endEl+deltaEl,deltaEl):
+                    fiberExtannUppcrackCtUpElementset.append(index)
+                break
+            elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-UPPERCRACK-CTUP','fiber-extannulus-uppercrack-ctup']:
+                store = True
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set FIBER-EXTANNULUS-UPPERCRACK-CTLOW and saving to list ...',True)
+        fiberExtannUppcrackCtLowElementset = []
+        store = False
+        for l,line in enumerate(inpfilelines):
+            if store == True and '*' in inpfilelines[l+1]:
+                for index in line.replace('\n','').split(','):
+                    if index!='' and index!=' ':
+                        fiberExtannUppcrackCtLowElementset.append(int(index))
+                        store = False
+                        break
+            elif store == True:
+                for index in line.replace('\n','').split(','):
+                    if index!='' and index!=' ':
+                        fiberExtannUppcrackCtLowElementset.append(int(index))
+            elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-UPPERCRACK-CTLOW','fiber-extannulus-uppercrack-ctlow'] and line.replace('\n','').split(',')[2].replace(' ','') in ['GENERATE','generate']:
+                store = False
+                startEl = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+                endEl = int(inpfilelines[l+1].replace('\n','').split(',')[1])
+                deltaEl = int(inpfilelines[l+1].replace('\n','').split(',')[2])
+                for index in range(startEl,endEl+deltaEl,deltaEl):
+                    fiberExtannUppcrackCtLowElementset.append(index)
+                break
+            elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['FIBER-EXTANNULUS-UPPERCRACK-CTLOW','fiber-extannulus-uppercrack-ctlow']:
+                store = True
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     else:
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set FIBER-EXTANNULUS-UPPERCRACK and saving to list ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading element set FIBER-EXTANNULUS-UPPERCRACK and saving to list ...',True)
 	fiberExtannUppcrackElementset = []
 	store = False
 	for l,line in enumerate(inpfilelines):
@@ -5109,233 +5109,233 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
       writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(cracktipDummyIndex)+ ' and coordinates (' + str(-5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the upper crack tip',True)
-	fiberElswithCracktipUP = []
-	matrixElswithCracktipUP = []
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
-	for element in fiberExtannUppcrackCtUpElementset:
-	    if element in quads.keys():
-		if cracktipIndex in quads[element]:
-		    fiberElswithCracktipUP.append(element)
-		    firstdebondedFiberElUP = element
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
-		    break
-	for e in range(len(fiberExtannFirstbounCtUpElementset)-1,-1,-1):
-	    element = fiberExtannFirstbounElementset[e]
-	    if element in quads.keys():
-		if cracktipIndex in quads[element]:
-		    fiberElswithCracktipUP.append(element)
-		    firstboundedFiberElUP = element
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
-		    break
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
-	for element in matrixIntannUppcrackCtUpElementset:
-	    if element in quads.keys():
-		if cracktipIndex in quads[element]:
-		    matrixElswithCracktipUP.append(element)
-		    firstdebondedMatrixElUP = element
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
-		    break
-	for element in matrixIntannFirstbounCtUpElementset:
-	    if element in quads.keys():
-		if cracktipIndex in quads[element]:
-		    matrixElswithCracktipUP.append(element)
-		    firstboundedMatrixElUP = element
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
-		    break
+        fiberElswithCracktipUP = []
+        matrixElswithCracktipUP = []
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
+        for element in fiberExtannUppcrackCtUpElementset:
+            if element in quads.keys():
+                if cracktipIndex in quads[element]:
+                    fiberElswithCracktipUP.append(element)
+                    firstdebondedFiberElUP = element
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
+                    break
+        for e in range(len(fiberExtannFirstbounCtUpElementset)-1,-1,-1):
+            element = fiberExtannFirstbounElementset[e]
+            if element in quads.keys():
+                if cracktipIndex in quads[element]:
+                    fiberElswithCracktipUP.append(element)
+                    firstboundedFiberElUP = element
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
+                    break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
+        for element in matrixIntannUppcrackCtUpElementset:
+            if element in quads.keys():
+                if cracktipIndex in quads[element]:
+                    matrixElswithCracktipUP.append(element)
+                    firstdebondedMatrixElUP = element
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
+                    break
+        for element in matrixIntannFirstbounCtUpElementset:
+            if element in quads.keys():
+                if cracktipIndex in quads[element]:
+                    matrixElswithCracktipUP.append(element)
+                    firstboundedMatrixElUP = element
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
+                    break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the lower crack tip',True)
-	fiberElswithCracktipLOW = []
-	matrixElswithCracktipLOW = []
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
-	for element in fiberExtannUppcrackCtLowElementset:
-	    if element in quads.keys():
-		if cracktipIndex in quads[element]:
-		    fiberElswithCracktipLOW.append(element)
-		    firstdebondedFiberElLOW = element
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
-		    break
-	for e in range(len(fiberExtannFirstbounCtLowElementset)-1,-1,-1):
-	    element = fiberExtannFirstbounElementset[e]
-	    if element in quads.keys():
-		if cracktipIndex in quads[element]:
-		    fiberElswithCracktipLOW.append(element)
-		    firstboundedFiberElLOW = element
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
-		    break
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
-	for element in matrixIntannUppcrackCtLowElementset:
-	    if element in quads.keys():
-		if cracktipIndex in quads[element]:
-		    matrixElswithCracktipLOW.append(element)
-		    firstdebondedMatrixElLOW = element
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
-		    break
-	for element in matrixIntannFirstbounCtLowElementset:
-	    if element in quads.keys():
-		if cracktipIndex in quads[element]:
-		    matrixElswithCracktipLOW.append(element)
-		    firstboundedMatrixElLOW = element
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
-		    break
+        fiberElswithCracktipLOW = []
+        matrixElswithCracktipLOW = []
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
+        for element in fiberExtannUppcrackCtLowElementset:
+            if element in quads.keys():
+                if cracktipIndex in quads[element]:
+                    fiberElswithCracktipLOW.append(element)
+                    firstdebondedFiberElLOW = element
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
+                    break
+        for e in range(len(fiberExtannFirstbounCtLowElementset)-1,-1,-1):
+            element = fiberExtannFirstbounElementset[e]
+            if element in quads.keys():
+                if cracktipIndex in quads[element]:
+                    fiberElswithCracktipLOW.append(element)
+                    firstboundedFiberElLOW = element
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
+                    break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
+        for element in matrixIntannUppcrackCtLowElementset:
+            if element in quads.keys():
+                if cracktipIndex in quads[element]:
+                    matrixElswithCracktipLOW.append(element)
+                    firstdebondedMatrixElLOW = element
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
+                    break
+        for element in matrixIntannFirstbounCtLowElementset:
+            if element in quads.keys():
+                if cracktipIndex in quads[element]:
+                    matrixElswithCracktipLOW.append(element)
+                    firstboundedMatrixElLOW = element
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
+                    break
     else:
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the crack tip',True)
-	fiberElswithCracktip = []
-	matrixElswithCracktip = []
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
-	for element in fiberExtannUppcrackElementset:
-	    if element in quads.keys():
-		if cracktipIndex in quads[element]:
-		    fiberElswithCracktip.append(element)
-		    firstdebondedFiberEl = element
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
-		    break
-	for e in range(len(fiberExtannFirstbounElementset)-1,-1,-1):
-	    element = fiberExtannFirstbounElementset[e]
-	    if element in quads.keys():
-		if cracktipIndex in quads[element]:
-		    fiberElswithCracktip.append(element)
-		    firstboundedFiberEl = element
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
-		    break
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
-	for element in matrixIntannUppcrackElementset:
-	    if element in quads.keys():
-		if cracktipIndex in quads[element]:
-		    matrixElswithCracktip.append(element)
-		    firstdebondedMatrixEl = element
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
-		    break
-	for element in matrixIntannFirstbounElementset:
-	    if element in quads.keys():
-		if cracktipIndex in quads[element]:
-		    matrixElswithCracktip.append(element)
-		    firstboundedMatrixEl = element
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
-		    break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Searching for elements connected to the crack tip',True)
+        fiberElswithCracktip = []
+        matrixElswithCracktip = []
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On fiber',True)
+        for element in fiberExtannUppcrackElementset:
+            if element in quads.keys():
+                if cracktipIndex in quads[element]:
+                    fiberElswithCracktip.append(element)
+                    firstdebondedFiberEl = element
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
+                    break
+        for e in range(len(fiberExtannFirstbounElementset)-1,-1,-1):
+            element = fiberExtannFirstbounElementset[e]
+            if element in quads.keys():
+                if cracktipIndex in quads[element]:
+                    fiberElswithCracktip.append(element)
+                    firstboundedFiberEl = element
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
+                    break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '  On matrix',True)
+        for element in matrixIntannUppcrackElementset:
+            if element in quads.keys():
+                if cracktipIndex in quads[element]:
+                    matrixElswithCracktip.append(element)
+                    firstdebondedMatrixEl = element
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Debonded element: ' + str(element),True)
+                    break
+        for element in matrixIntannFirstbounElementset:
+            if element in quads.keys():
+                if cracktipIndex in quads[element]:
+                    matrixElswithCracktip.append(element)
+                    firstboundedMatrixEl = element
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - Bonded element: ' + str(element),True)
+                    break
     if 'second' in parameters['mesh']['elements']['order']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Second order elements are used',True)
         if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-	    matrixFirstBehindCracktipUPIndex = numNodes + 1000 + 2
-	    firstBehindCracktipUPDummyIndex = numNodes + 1000 + 3
-	    matrixFirstBehindCracktipLOWUPIndex = numNodes + 1000 + 50 + 2
-	    firstBehindCracktipLOWDummyIndex = numNodes + 1000 + 50 + 3
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix first behind upper crack tip node with index ' + str(matrixFirstBehindCracktipUPIndex),True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating upper crack tip dummy node with index ' + str(firstBehindCracktipUPDummyIndex),True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix first behind lower crack tip node with index ' + str(matrixFirstBehindCracktipLOWIndex),True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating lower crack tip dummy node with index ' + str(firstBehindCracktipLOWDummyIndex),True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded upper crack tip elements on fiber and matrix',True)
-	    commonNodesUP = []
-	    fiberElnodesUP = quads[firstboundedFiberElUP]
-	    matrixElnodesUP = quads[firstboundedMatrixElUP]
-	    for node in fiberElnodesUP:
-		if node in matrixElnodesUP:
-		    commonNodesUP.append(node)
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
-		if len(commonNodesUP)==3:
-		    break
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from upper cracktip',True)
-	    distancesUP = []
-	    for node in commonNodesUP:
-		if node != cracktipUPIndex:
-		    distancesUP.append(np.sqrt((nodes[node][0]-nodes[cracktipUPIndex][0])*(nodes[node][0]-nodes[cracktipUPIndex][0])+(nodes[node][1]-nodes[cracktipUPIndex][1])*(nodes[node][1]-nodes[cracktipUPIndex][1])))
-		else:
-		    distancesUP.append(0.0)
+            matrixFirstBehindCracktipUPIndex = numNodes + 1000 + 2
+            firstBehindCracktipUPDummyIndex = numNodes + 1000 + 3
+            matrixFirstBehindCracktipLOWUPIndex = numNodes + 1000 + 50 + 2
+            firstBehindCracktipLOWDummyIndex = numNodes + 1000 + 50 + 3
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix first behind upper crack tip node with index ' + str(matrixFirstBehindCracktipUPIndex),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating upper crack tip dummy node with index ' + str(firstBehindCracktipUPDummyIndex),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix first behind lower crack tip node with index ' + str(matrixFirstBehindCracktipLOWIndex),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating lower crack tip dummy node with index ' + str(firstBehindCracktipLOWDummyIndex),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded upper crack tip elements on fiber and matrix',True)
+            commonNodesUP = []
+            fiberElnodesUP = quads[firstboundedFiberElUP]
+            matrixElnodesUP = quads[firstboundedMatrixElUP]
+            for node in fiberElnodesUP:
+                if node in matrixElnodesUP:
+                    commonNodesUP.append(node)
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
+                if len(commonNodesUP)==3:
+                    break
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from upper cracktip',True)
+            distancesUP = []
+            for node in commonNodesUP:
+                if node != cracktipUPIndex:
+                    distancesUP.append(np.sqrt((nodes[node][0]-nodes[cracktipUPIndex][0])*(nodes[node][0]-nodes[cracktipUPIndex][0])+(nodes[node][1]-nodes[cracktipUPIndex][1])*(nodes[node][1]-nodes[cracktipUPIndex][1])))
+                else:
+                    distancesUP.append(0.0)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
-	    fiberFirstBehindCracktipUPIndex = commonNodesUP[np.argsort(distancesUP)[-2]] # argsort goes from smaller to higher
-	    if 'inverseSquareRoot' in parameters['singularity']['type']:
-		fiberSecondBehindCracktipUPIndex = commonNodesUP[np.argsort(distancesUP)[-1]]
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix upper crack tip node with index ' + str(matrixFirstBehindCracktipUPIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipUPIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipUPIndex][1]) + ')',True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating upper crack tip dummy node with index ' + str(firstBehindCracktipUPDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
-	    nodes[matrixFirstBehindCracktipUPIndex] = [nodes[fiberFirstBehindCracktipUPIndex][0],nodes[fiberFirstBehindCracktipUPIndex][1]]
-	    if 'inverseSquareRoot' in parameters['singularity']['type']:
-		nodes[matrixSecondBehindCracktipUPIndex] = [nodes[fiberSecondBehindCracktipUPIndex][0],nodes[fiberSecondBehindCracktipUPIndex][1]]
-	    nodes[firstBehindCracktipUPDummyIndex] = [5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
-	    if 'inverseSquareRoot' in parameters['singularity']['type']:
-		nodes[secondBehindCracktipUPDummyIndex] = [5*parameters['geometry']['Rf'],-20*parameters['geometry']['Rf']]
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded lower crack tip elements on fiber and matrix',True)
-	    commonNodesLOW = []
-	    fiberElnodesLOW = quads[firstboundedFiberElLOW]
-	    matrixElnodesLOW = quads[firstboundedMatrixElLOW]
-	    for node in fiberElnodesLOW:
-		if node in matrixElnodesLOW:
-		    commonNodesLOW.append(node)
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
-		if len(commonNodesLOW)==3:
-		    break
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from lower cracktip',True)
-	    distancesLOW = []
-	    for node in commonNodesLOW:
-		if node != cracktipLOWIndex:
-		    distancesLOW.append(np.sqrt((nodes[node][0]-nodes[cracktipLOWIndex][0])*(nodes[node][0]-nodes[cracktipLOWIndex][0])+(nodes[node][1]-nodes[cracktipLOWIndex][1])*(nodes[node][1]-nodes[cracktipLOWIndex][1])))
-		else:
-		    distancesLOW.append(0.0)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
-	    fiberFirstBehindCracktipLOWIndex = commonNodesLOW[np.argsort(distancesLOW)[-2]] # argsort goes from smaller to higher
-	    if 'inverseSquareRoot' in parameters['singularity']['type']:
-		fiberSecondBehindCracktipLOWIndex = commonNodesLOW[np.argsort(distancesLOW)[-1]]
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix lower crack tip node with index ' + str(matrixFirstBehindCracktipLOWIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipLOWIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipLOWIndex][1]) + ')',True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating lower crack tip dummy node with index ' + str(firstBehindCracktipLOWDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-20*parameters['geometry']['Rf']) + ')',True)
-	    nodes[matrixFirstBehindCracktipLOWIndex] = [nodes[fiberFirstBehindCracktipLOWIndex][0],nodes[fiberFirstBehindCracktipLOWIndex][1]]
-	    if 'inverseSquareRoot' in parameters['singularity']['type']:
-		nodes[matrixSecondBehindCracktipLOWIndex] = [nodes[fiberSecondBehindCracktipLOWIndex][0],nodes[fiberSecondBehindCracktipLOWIndex][1]]
-	    nodes[firstBehindCracktipLOWDummyIndex] = [5*parameters['geometry']['Rf'],-20*parameters['geometry']['Rf']]
-	    if 'inverseSquareRoot' in parameters['singularity']['type']:
-		nodes[secondBehindCracktipLOWDummyIndex] = [5*parameters['geometry']['Rf'],-40*parameters['geometry']['Rf']]
-	else:
-	    matrixFirstBehindCracktipIndex = numNodes + 1000 + 2
-	    firstBehindCracktipDummyIndex = numNodes + 1000 + 3
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix first behind crack tip node with index ' + str(matrixFirstBehindCracktipIndex),True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(firstBehindCracktipDummyIndex),True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded crack tip elements on fiber and matrix',True)
-	    commonNodes = []
-	    fiberElnodes = quads[firstboundedFiberEl]
-	    matrixElnodes = quads[firstboundedMatrixEl]
-	    for node in fiberElnodes:
-		if node in matrixElnodes:
-		    commonNodes.append(node)
-		    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
-		if len(commonNodes)==3:
-		    break
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from cracktip',True)
-	    distances = []
-	    for node in commonNodes:
-		if node != cracktipIndex:
-		    distances.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
-		else:
-		    distances.append(0.0)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True) 
-	    fiberFirstBehindCracktipIndex = commonNodes[np.argsort(distances)[-2]] # argsort goes from smaller to higher
-	    if 'inverseSquareRoot' in parameters['singularity']['type']:
-		fiberSecondBehindCracktipIndex = commonNodes[np.argsort(distances)[-1]]
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix crack tip node with index ' + str(matrixFirstBehindCracktipIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipIndex][1]) + ')',True)
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(firstBehindCracktipDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
-	    nodes[matrixFirstBehindCracktipIndex] = [nodes[fiberFirstBehindCracktipIndex][0],nodes[fiberFirstBehindCracktipIndex][1]]
-	    if 'inverseSquareRoot' in parameters['singularity']['type']:
-		nodes[matrixSecondBehindCracktipIndex] = [nodes[fiberSecondBehindCracktipIndex][0],nodes[fiberSecondBehindCracktipIndex][1]]
-	    nodes[firstBehindCracktipDummyIndex] = [5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
-	    if 'inverseSquareRoot' in parameters['singularity']['type']:
-		nodes[secondBehindCracktipDummyIndex] = [5*parameters['geometry']['Rf'],-40*parameters['geometry']['Rf']]
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Identify nodes on crack faces for displacement measurements ...',True)
-    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the fiber elements around the upper crack tip',True)
-        nodesAroundCracktipUP = quads[firstdebondedFiberElUP]
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
-	nodesFiberDisplacementMeasUP = []
-	for node in nodesAroundCracktipUP:
-	    if node in crackfacesNodeset and node!=cracktipUPIndex:
-		nodesFiberDisplacementMeasUP.append(node)
-	    if len(nodesFiberDisplacementMeasUP)==2:
-		break
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesFiberDisplacementMeasUP)) + ' nodes',True)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
-	distancesFiberDisplacementMeasUP = []
-	for node in nodesFiberDisplacementMeasUP:
-	    distancesFiberDisplacementMeasUP.append(np.sqrt((nodes[node][0]-nodes[cracktipUPIndex][0])*(nodes[node][0]-nodes[cracktipUPIndex][0])+(nodes[node][1]-nodes[cracktipUPIndex][1])*(nodes[node][1]-nodes[cracktipUPIndex][1])))
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the matrix elements around the upper crack tip',True)
-	nodesAroundCracktipUP = quads[firstdebondedMatrixElUP]
+            fiberFirstBehindCracktipUPIndex = commonNodesUP[np.argsort(distancesUP)[-2]] # argsort goes from smaller to higher
+            if 'inverseSquareRoot' in parameters['singularity']['type']:
+                fiberSecondBehindCracktipUPIndex = commonNodesUP[np.argsort(distancesUP)[-1]]
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix upper crack tip node with index ' + str(matrixFirstBehindCracktipUPIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipUPIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipUPIndex][1]) + ')',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating upper crack tip dummy node with index ' + str(firstBehindCracktipUPDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
+            nodes[matrixFirstBehindCracktipUPIndex] = [nodes[fiberFirstBehindCracktipUPIndex][0],nodes[fiberFirstBehindCracktipUPIndex][1]]
+            if 'inverseSquareRoot' in parameters['singularity']['type']:
+                nodes[matrixSecondBehindCracktipUPIndex] = [nodes[fiberSecondBehindCracktipUPIndex][0],nodes[fiberSecondBehindCracktipUPIndex][1]]
+            nodes[firstBehindCracktipUPDummyIndex] = [5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
+            if 'inverseSquareRoot' in parameters['singularity']['type']:
+                nodes[secondBehindCracktipUPDummyIndex] = [5*parameters['geometry']['Rf'],-20*parameters['geometry']['Rf']]
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded lower crack tip elements on fiber and matrix',True)
+            commonNodesLOW = []
+            fiberElnodesLOW = quads[firstboundedFiberElLOW]
+            matrixElnodesLOW = quads[firstboundedMatrixElLOW]
+            for node in fiberElnodesLOW:
+                if node in matrixElnodesLOW:
+                    commonNodesLOW.append(node)
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
+                if len(commonNodesLOW)==3:
+                    break
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from lower cracktip',True)
+            distancesLOW = []
+            for node in commonNodesLOW:
+                if node != cracktipLOWIndex:
+                    distancesLOW.append(np.sqrt((nodes[node][0]-nodes[cracktipLOWIndex][0])*(nodes[node][0]-nodes[cracktipLOWIndex][0])+(nodes[node][1]-nodes[cracktipLOWIndex][1])*(nodes[node][1]-nodes[cracktipLOWIndex][1])))
+                else:
+                    distancesLOW.append(0.0)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
+            fiberFirstBehindCracktipLOWIndex = commonNodesLOW[np.argsort(distancesLOW)[-2]] # argsort goes from smaller to higher
+            if 'inverseSquareRoot' in parameters['singularity']['type']:
+                fiberSecondBehindCracktipLOWIndex = commonNodesLOW[np.argsort(distancesLOW)[-1]]
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix lower crack tip node with index ' + str(matrixFirstBehindCracktipLOWIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipLOWIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipLOWIndex][1]) + ')',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating lower crack tip dummy node with index ' + str(firstBehindCracktipLOWDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-20*parameters['geometry']['Rf']) + ')',True)
+            nodes[matrixFirstBehindCracktipLOWIndex] = [nodes[fiberFirstBehindCracktipLOWIndex][0],nodes[fiberFirstBehindCracktipLOWIndex][1]]
+            if 'inverseSquareRoot' in parameters['singularity']['type']:
+                nodes[matrixSecondBehindCracktipLOWIndex] = [nodes[fiberSecondBehindCracktipLOWIndex][0],nodes[fiberSecondBehindCracktipLOWIndex][1]]
+            nodes[firstBehindCracktipLOWDummyIndex] = [5*parameters['geometry']['Rf'],-20*parameters['geometry']['Rf']]
+            if 'inverseSquareRoot' in parameters['singularity']['type']:
+                nodes[secondBehindCracktipLOWDummyIndex] = [5*parameters['geometry']['Rf'],-40*parameters['geometry']['Rf']]
+        else:
+            matrixFirstBehindCracktipIndex = numNodes + 1000 + 2
+            firstBehindCracktipDummyIndex = numNodes + 1000 + 3
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix first behind crack tip node with index ' + str(matrixFirstBehindCracktipIndex),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(firstBehindCracktipDummyIndex),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find common nodes of bounded crack tip elements on fiber and matrix',True)
+            commonNodes = []
+            fiberElnodes = quads[firstboundedFiberEl]
+            matrixElnodes = quads[firstboundedMatrixEl]
+            for node in fiberElnodes:
+            if node in matrixElnodes:
+                commonNodes.append(node)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '   - node ' + str(node),True)
+                if len(commonNodes)==3:
+                    break
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of bounded nodes from cracktip',True)
+            distances = []
+            for node in commonNodes:
+                if node != cracktipIndex:
+                    distances.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
+                else:
+                    distances.append(0.0)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True) 
+            fiberFirstBehindCracktipIndex = commonNodes[np.argsort(distances)[-2]] # argsort goes from smaller to higher
+            if 'inverseSquareRoot' in parameters['singularity']['type']:
+                fiberSecondBehindCracktipIndex = commonNodes[np.argsort(distances)[-1]]
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix crack tip node with index ' + str(matrixFirstBehindCracktipIndex) + ' and coordinates (' + str(nodes[fiberFirstBehindCracktipIndex][0]) + ', '+ str(nodes[fiberFirstBehindCracktipIndex][1]) + ')',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Creating matrix dummy node with index ' + str(firstBehindCracktipDummyIndex)+ ' and coordinates (' + str(5*parameters['geometry']['Rf']) + ', '+ str(-10*parameters['geometry']['Rf']) + ')',True)
+            nodes[matrixFirstBehindCracktipIndex] = [nodes[fiberFirstBehindCracktipIndex][0],nodes[fiberFirstBehindCracktipIndex][1]]
+            if 'inverseSquareRoot' in parameters['singularity']['type']:
+                nodes[matrixSecondBehindCracktipIndex] = [nodes[fiberSecondBehindCracktipIndex][0],nodes[fiberSecondBehindCracktipIndex][1]]
+            nodes[firstBehindCracktipDummyIndex] = [5*parameters['geometry']['Rf'],-10*parameters['geometry']['Rf']]
+            if 'inverseSquareRoot' in parameters['singularity']['type']:
+                nodes[secondBehindCracktipDummyIndex] = [5*parameters['geometry']['Rf'],-40*parameters['geometry']['Rf']]
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Identify nodes on crack faces for displacement measurements ...',True)
+        if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the fiber elements around the upper crack tip',True)
+            nodesAroundCracktipUP = quads[firstdebondedFiberElUP]
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
+            nodesFiberDisplacementMeasUP = []
+            for node in nodesAroundCracktipUP:
+                if node in crackfacesNodeset and node!=cracktipUPIndex:
+                    nodesFiberDisplacementMeasUP.append(node)
+                    if len(nodesFiberDisplacementMeasUP)==2:
+                        break
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Found ' + str(len(nodesFiberDisplacementMeasUP)) + ' nodes',True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute distances of debonded nodes from cracktip',True)
+            distancesFiberDisplacementMeasUP = []
+            for node in nodesFiberDisplacementMeasUP:
+                distancesFiberDisplacementMeasUP.append(np.sqrt((nodes[node][0]-nodes[cracktipUPIndex][0])*(nodes[node][0]-nodes[cracktipUPIndex][0])+(nodes[node][1]-nodes[cracktipUPIndex][1])*(nodes[node][1]-nodes[cracktipUPIndex][1])))
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Find nodes belonging to the matrix elements around the upper crack tip',True)
+            nodesAroundCracktipUP = quads[firstdebondedMatrixElUP]
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Of these, identify the ones beloging to the crack surface',True)
 	nodesMatrixDisplacementMeasUP = []
 	for node in nodesAroundCracktipUP:
@@ -5458,26 +5458,26 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 	    cracktipMatrixDispMeasIndex = nodesMatrixDisplacementMeas[sortedMatrixDistanceIndeces[-1]]
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at upper crack tip ...',True)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the bonded element on the matrix',True)
-	for n,node in enumerate(quads[firstboundedMatrixElUP]):
-	    if node == cracktipUPIndex:
-		quads[firstboundedMatrixElUP][n] = matrixCracktipUPIndex
-	if 'second' in parameters['mesh']['elements']['order']:
-	    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new first behind upper crack tip index to the bonded element on the matrix',True)
-	    for n,node in enumerate(quads[firstboundedMatrixElUP]):
-		if node == fiberFirstBehindCracktipUPIndex:
-		    quads[firstboundedMatrixElUP][n] = matrixFirstBehindCracktipUPIndex
-	    if 'inverseSquareRoot' in parameters['singularity']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at upper crack tip ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the bonded element on the matrix',True)
+        for n,node in enumerate(quads[firstboundedMatrixElUP]):
+            if node == cracktipUPIndex:
+                quads[firstboundedMatrixElUP][n] = matrixCracktipUPIndex
+        if 'second' in parameters['mesh']['elements']['order']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new first behind upper crack tip index to the bonded element on the matrix',True)
             for n,node in enumerate(quads[firstboundedMatrixElUP]):
-                if node == fiberSecondBehindCracktipUPIndex:
-                    quads[firstboundedMatrixElUP][n] = matrixSecondBehindCracktipUPIndex
-	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new upper crack tip index to the debonded element on the matrix',True)
-	for n,node in enumerate(quads[firstdebondedMatrixElUP]):
-	    if node == cracktipUPIndex:
-		quads[firstdebondedMatrixElUP][n] = matrixCracktipUPIndex	    
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-	writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at lower crack tip ...',True)
+                if node == fiberFirstBehindCracktipUPIndex:
+                    quads[firstboundedMatrixElUP][n] = matrixFirstBehindCracktipUPIndex
+            if 'inverseSquareRoot' in parameters['singularity']['type']:
+                for n,node in enumerate(quads[firstboundedMatrixElUP]):
+                    if node == fiberSecondBehindCracktipUPIndex:
+                        quads[firstboundedMatrixElUP][n] = matrixSecondBehindCracktipUPIndex
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new upper crack tip index to the debonded element on the matrix',True)
+        for n,node in enumerate(quads[firstdebondedMatrixElUP]):
+            if node == cracktipUPIndex:
+                quads[firstdebondedMatrixElUP][n] = matrixCracktipUPIndex	    
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at lower crack tip ...',True)
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the bonded element on the matrix',True)
 	for n,node in enumerate(quads[firstboundedMatrixElLOW]):
 	    if node == cracktipLOWIndex:

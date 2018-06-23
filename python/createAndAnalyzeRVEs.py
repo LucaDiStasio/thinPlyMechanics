@@ -5469,9 +5469,9 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
 		if node == fiberFirstBehindCracktipUPIndex:
 		    quads[firstboundedMatrixElUP][n] = matrixFirstBehindCracktipUPIndex
 	    if 'inverseSquareRoot' in parameters['singularity']['type']:
-		for n,node in enumerate(quads[firstboundedMatrixElUP]):
-            if node == fiberSecondBehindCracktipUPIndex:
-                quads[firstboundedMatrixElUP][n] = matrixSecondBehindCracktipUPIndex
+            for n,node in enumerate(quads[firstboundedMatrixElUP]):
+                if node == fiberSecondBehindCracktipUPIndex:
+                    quads[firstboundedMatrixElUP][n] = matrixSecondBehindCracktipUPIndex
 	writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new upper crack tip index to the debonded element on the matrix',True)
 	for n,node in enumerate(quads[firstdebondedMatrixElUP]):
 	    if node == cracktipUPIndex:

@@ -5052,9 +5052,9 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             if store == True and '*' in inpfilelines[l+1]:
                 for index in line.replace('\n','').split(','):
                     if index!='' and index!=' ':
-                    matrixIntannFirstbounElementset.append(int(index))
-                    store = False
-                    break
+                        matrixIntannFirstbounElementset.append(int(index))
+                        store = False
+                        break
             elif store == True:
                 for index in line.replace('\n','').split(','):
                     if index!='' and index!=' ':

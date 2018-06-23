@@ -5860,6 +5860,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                     inp.write(' 3' + '\n')
                     inp.write(' FIBER-NODE-SECONDBOUNDEDLOW,2,1,MATRIX-NODE-SECONDBOUNDEDLOW,2,-1,SECONDBOUNDEDLOW-DUMMY-NODE,2,-1' + '\n')
         else:
+            inp.write(' 3' + '\n')
             inp.write(' FIBER-CRACKTIP,1,1,MATRIX-CRACKTIP,1,-1,CRACKTIP-DUMMY-NODE,1,-1' + '\n')
             inp.write(' 3' + '\n')
             inp.write(' FIBER-CRACKTIP,2,1,MATRIX-CRACKTIP,2,-1,CRACKTIP-DUMMY-NODE,2,-1' + '\n')

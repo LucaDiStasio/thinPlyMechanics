@@ -6069,12 +6069,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                     if 'inverseSquareRoot' in parameters['singularity']['type']:
                         inp.write(' SECONDBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
                         inp.write(' SECONDBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
-                else:
-                    inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
-                    if 'second' in parameters['mesh']['elements']['order']:
-                        inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
-                        if 'inverseSquareRoot' in parameters['singularity']['type']:
-                            inp.write(' SECONDBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+            else:
+                inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
+                if 'second' in parameters['mesh']['elements']['order']:
+                    inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+                    if 'inverseSquareRoot' in parameters['singularity']['type']:
+                        inp.write(' SECONDBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
             inp.write('**' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)

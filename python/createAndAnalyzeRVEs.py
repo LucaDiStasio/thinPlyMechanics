@@ -2977,12 +2977,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     L = parameters['geometry']['L']
     Rf = parameters['geometry']['Rf']
     if 'full' in parameters['geometry']['fiber']['type']:
-        CornerAy = -L 
+        CornerAy = -L
     elif 'half' in parameters['geometry']['fiber']['type']:
         CornerAy = 0.0
     elif 'quarter' in parameters['geometry']['fiber']['type']:
         CornerAy = 0.0
-        CornerAx = 0.0
     else:
         CornerAy = 0.0
     if 'boundingPly' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['northSide']['type']:
@@ -3002,7 +3001,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         CornerBy = L
     if ('boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']) or ('adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type']):
         if 'quarter' in parameters['geometry']['fiber']['type']:
-	    skipLineToLogFile(logfilepath,'a',True)
+	        skipLineToLogFile(logfilepath,'a',True)
             writeErrorToLogFile(logfilepath,'a','GEOMETRY','Clashing geometric requirements: asked for quarter fiber and for material on the left side. Review and select the appropriate.',True)
             sys.exit(2)
         if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
@@ -3026,7 +3025,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         CornerBx = L+wRightPly
     elif 'boundingPly' in parameters['BC']['leftSide']['type'] or 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         if 'quarter' in parameters['geometry']['fiber']['type']:
-	    skipLineToLogFile(logfilepath,'a',True)
+	        skipLineToLogFile(logfilepath,'a',True)
             writeErrorToLogFile(logfilepath,'a','GEOMETRY','Clashing geometric requirements: asked for quarter fiber and for material on the left side. Review and select the appropriate.',True)
             sys.exit(2)
         if 'boundingPly' in parameters['BC']['leftSide']['type']:
@@ -3038,8 +3037,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         CornerAx = -(L+wLeftPly)
         CornerBx = L
     else:
-        CornerAx = -L
         CornerBx = L
+        if 'quarter' in parameters['geometry']['fiber']['type']:
+            CornerAx = 0.0
+        else:
+            CornerAx = -L
     theta = parameters['geometry']['theta'] # in degrees !!!
     deltatheta = parameters['geometry']['deltatheta'] # in degrees !!!
     if np.abs(theta)>0.0:
@@ -3106,7 +3108,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     model = mdb.models[modelname]
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 #===============================================================================#
-#                             Parts creation 
+#                             Parts creation
 #===============================================================================#
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating part ...',True)
@@ -3526,25 +3528,27 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta-deltatheta)*np.pi/180),Rf*np.sin((theta-deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIPLOW',logfilepath,baselogindent + 4*logindent,True)
     else:
         defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIP',logfilepath,baselogindent + 4*logindent,True)
-    defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,CornerBy,0.0,0.01*L/30,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-    defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,CornerBy,0.0,0.01*L/30,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+
+    defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,CornerBy,0.0,0.001*Rf,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,CornerBy,0.0,0.001*Rf,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type']:
-	    defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L+Lply,0.0,0.01*L/30,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-            defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L+Lply,0.0,0.01*L/30,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+	        defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L+Lply,0.0,0.001*Rf,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+            defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L+Lply,0.0,0.001*Rf,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
 	else:
-            defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L,0.0,0.01*L/30,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-            defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L,0.0,0.01*L/30,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L,0.0,0.001*Rf,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L,0.0,0.001*Rf,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
-        defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.01*L/30,'RIGHTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.001*Rf,'RIGHTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
-        defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.01*L/30,'LEFTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.001*Rf,'LEFTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # sets of edges
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of edges',True)
-    
+
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         alphaup = theta + deltatheta - deltapsi
         betaup = theta + deltatheta + deltapsi
@@ -3567,9 +3571,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
         RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACK',True)
-    
+
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         lowerSideSets = []
         setsOfEdgesData = [[0.001*Rf,-L+0.001,0.0,0.001*Rf,-L-0.001,0.0,'LOWERSIDE-CENTER']]
@@ -3592,7 +3596,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
         if 'half' in parameters['geometry']['fiber']['type']:
-	    RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT'],RVEpart.sets['LOWERSIDE-FIRSTRING-LEFT']])  
+	    RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT'],RVEpart.sets['LOWERSIDE-FIRSTRING-LEFT']])
 	else:
             RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FIRSTRING',True)
@@ -3636,7 +3640,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         else:
 	    RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING',True)
-    
+
         lowerSideSets = [RVEpart.sets['LOWERSIDE-CENTER'],RVEpart.sets['LOWERSIDE-FIRSTRING'],RVEpart.sets['LOWERSIDE-SECONDRING'],RVEpart.sets['LOWERSIDE-THIRDRING'],RVEpart.sets['LOWERSIDE-FOURTHRING'],RVEpart.sets['LOWERSIDE-MATRIXBULK-RIGHT'],RVEpart.sets['LOWERSIDE-MATRIXBULK-LEFT']]
         setsOfEdgesData = []
         if 'boundingPly' in parameters['BC']['rightSide']['type']:
@@ -3650,7 +3654,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 setsOfEdgesData.append([-(nFiber+1)*2*L,0.001,0.0,-(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)])
-                setsOfEdgesData.append([-(nFiber+1)*2*L-1.01*Rf,0.001,0.0,-(nFiber+1)*2*L-1.01*Rf,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)+'-LEFTMAT'])                           
+                setsOfEdgesData.append([-(nFiber+1)*2*L-1.01*Rf,0.001,0.0,-(nFiber+1)*2*L-1.01*Rf,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)+'-LEFTMAT'])
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
             lowerSideSets.append(RVEpart.sets[setOfEdgesData[-1]])
@@ -3682,7 +3686,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                 setsOfEdgesData.append([0.99*rValue*np.cos((betas[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((betas[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((betas[aIndex]+incs[aIndex])*np.pi/180),1.01*rValue*np.sin((betas[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-SECONDBOUNDED-'+ctNames[aIndex]])
             setsOfEdgesData.append([0.99*rValue*np.cos(theta*np.pi/180),0.99*rValue*np.sin(theta*np.pi/180),0.0,1.01*rValue*np.cos(theta*np.pi/180),1.01*rValue*np.sin(theta*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-CENTERCRACK'])
             setsOfEdgesData.append([0.99*rValue*np.cos(1.025*gammas[0]*np.pi/180),0.99*rValue*np.sin(1.025*gammas[0]*np.pi/180),0.0,1.01*rValue*np.cos(1.025*gammas[0]*np.pi/180),1.01*rValue*np.sin(1.025*gammas[0]*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-RESTBOUNDED'])
-        for aIndex,aValue in enumerate(alphas): 
+        for aIndex,aValue in enumerate(alphas):
 	    setsOfEdgesData.append([0.85*Rf*np.cos(0.99*alphas[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*alphas[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*alphas[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*alphas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FIRSTFIBER-'+ctNames[aIndex]])
 	    setsOfEdgesData.append([1.05*Rf*np.cos(0.99*alphas[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*alphas[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*alphas[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*alphas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FIRSTMATRIX-'+ctNames[aIndex]])
 	    setsOfEdgesData.append([0.85*Rf*np.cos(0.99*ctAngles[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*ctAngles[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*ctAngles[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*ctAngles[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-SECONDFIBER-'+ctNames[aIndex]])
@@ -3722,10 +3726,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfEdgesData.append([1.05*Rf*np.cos(0.99*beta*np.pi/180),1.05*Rf*np.sin(0.99*beta*np.pi/180),0.0,1.05*Rf*np.cos(1.01*beta*np.pi/180),1.05*Rf*np.sin(1.01*beta*np.pi/180),0.0,'TRANSVERSALCUT-THIRDMATRIX'])
         setsOfEdgesData.append([0.85*Rf*np.cos(0.99*gamma*np.pi/180),0.85*Rf*np.sin(0.99*gamma*np.pi/180),0.0,0.85*Rf*np.cos(1.01*gamma*np.pi/180),0.85*Rf*np.sin(1.01*gamma*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHFIBER'])
         setsOfEdgesData.append([1.05*Rf*np.cos(0.99*gamma*np.pi/180),1.05*Rf*np.sin(0.99*gamma*np.pi/180),0.0,1.05*Rf*np.cos(1.01*gamma*np.pi/180),1.05*Rf*np.sin(1.01*gamma*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHMATRIX'])
-    
+
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-    
+
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-CENTERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK-CTUP'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED-CTUP'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED-CTUP'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK-CTLOW'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED-CTLOW'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED-CTLOW'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE',True)
@@ -3740,7 +3744,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE',True)
         RVEpart.SetByBoolean(name='FOURTHCIRCLE', sets=[RVEpart.sets['FOURTHCIRCLE-LOWERCRACK'],RVEpart.sets['FOURTHCIRCLE-UPPERCRACK'],RVEpart.sets['FOURTHCIRCLE-FIRSTBOUNDED'],RVEpart.sets['FOURTHCIRCLE-SECONDBOUNDED'],RVEpart.sets['FOURTHCIRCLE-RESTBOUNDED']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FOURTHCIRCLE',True)
-    
+
     if ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']) and not 'boundingPly' in parameters['BC']['northSide']['type']:
         setsOfEdgesData.append([0.0,0.99*CornerBy,0.0,0.0,1.01*CornerBy,0.0,'CENTER-RUC-UPPERSIDE'])
         if 'boundingPly' in parameters['BC']['rightSide']['type']:
@@ -3777,10 +3781,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
                     setsOfEdgesData.append([-(mFiber+1)*2*L+0.99*Rf,(nFiber+1)*2*L,0.0,-(mFiber+1)*2*L+1.01*Rf,(nFiber+1)*2*L,0.0,'INTERFACE-UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
-                    
+
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-    
+
     if ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']) and not 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']:
             RVEpart.SetByBoolean(name='UPPERSIDE', sets=[RVEpart.sets['CENTER-RUC-UPPERSIDE'],RVEpart.sets['RIGHT-HOMOPLY-UPPERSIDE'],RVEpart.sets['LEFT-HOMOPLY-UPPERSIDE']])
@@ -3789,7 +3793,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         elif 'boundingPly' in parameters['BC']['leftSide']['type']:
             RVEpart.SetByBoolean(name='UPPERSIDE', sets=[RVEpart.sets['CENTER-RUC-UPPERSIDE'],RVEpart.sets['LEFT-HOMOPLY-UPPERSIDE']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- UPPERSIDE',True)
-        
+
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         RVEpart.SetByBoolean(name='RIGHTSIDE', sets=[RVEpart.sets['LOWER-RIGHTSIDE'],RVEpart.sets['UPPER-RIGHTSIDE']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RIGHTSIDE',True)
@@ -3821,7 +3825,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfFacesData.append([0.85*Rf*np.cos((gamma+0.5*(180-gamma))*np.pi/180), 0.85*Rf*np.sin((gamma+0.5*(180-gamma))*np.pi/180), 0,'FIBER-EXTANNULUS-RESTBOUNDED'])
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
-    
+
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         RVEpart.SetByBoolean(name='FIBER-EXTANNULUS', sets=[RVEpart.sets['FIBER-EXTANNULUS-CENTERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-UPPERCRACK-CTUP'],RVEpart.sets['FIBER-EXTANNULUS-FIRSTBOUNDED-CTUP'],RVEpart.sets['FIBER-EXTANNULUS-SECONDBOUNDED-CTUP'],RVEpart.sets['FIBER-EXTANNULUS-UPPERCRACK-CTLOW'],RVEpart.sets['FIBER-EXTANNULUS-FIRSTBOUNDED-CTLOW'],RVEpart.sets['FIBER-EXTANNULUS-SECONDBOUNDED-CTLOW'],RVEpart.sets['FIBER-EXTANNULUS-RESTBOUNDED']])
     else:
@@ -3882,7 +3886,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             setsOfFacesData = [[0.975*L, 0.975*(L+Lply), 0,'BOUNDING-PLY']]
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
-    
+
     if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
         setsOfFacesData = [[0.975*CornerBx, 0.5*L, 0,'RIGHT-HOMOGENIZED-CROSSPLY'],
                            [0.975*CornerAx, 0.5*L, 0,'LEFT-HOMOGENIZED-CROSSPLY']]
@@ -3898,7 +3902,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfFacesData = [[0.975*CornerAx, 0.5*L, 0,'LEFT-HOMOGENIZED-CROSSPLY']]
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
-    
+
     setsOfFacesData = []
     booleanSets = []
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
@@ -3916,7 +3920,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
             booleanSets.append(RVEpart.sets[setOfFacesData[-1]])
         RVEpart.SetByBoolean(name='UPPER-FIBERS', sets=booleanSets)
-        
+
     setsOfFacesData = []
     booleanSets = []
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
@@ -3926,7 +3930,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
             booleanSets.append(RVEpart.sets[setOfFacesData[-1]])
         RVEpart.SetByBoolean(name='RIGHT-FIBERS', sets=booleanSets)
-    
+
     setsOfFacesData = []
     booleanSets = []
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
@@ -3935,8 +3939,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
             booleanSets.append(RVEpart.sets[setOfFacesData[-1]])
-        RVEpart.SetByBoolean(name='LEFT-FIBERS', sets=booleanSets)    
-    
+        RVEpart.SetByBoolean(name='LEFT-FIBERS', sets=booleanSets)
+
     booleanSets = [RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']]
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         booleanSets.append(RVEpart.sets['BOUNDING-PLY'])
@@ -3950,7 +3954,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         booleanSets.append(RVEpart.sets['RIGHT-FIBERS'])
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         booleanSets.append(RVEpart.sets['LEFT-FIBERS'])
-      
+
     RVEpart.SetByBoolean(name='RVE', sets=booleanSets)
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RVE',True)
 
@@ -3965,36 +3969,36 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 #===============================================================================#
 #                             Material Orientation
 #===============================================================================#
-    
+
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating reference system for material orientation ...',True)
     RVEpart.DatumCsysByThreePoints(name='refOrientation',coordSysType=CARTESIAN,origin=(0.0,0.0,0.0),point1=(1.0,0.0,0.0),point2=(1.0,1.0,0.0))
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to FIBER ...',True)
     RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['FIBER'],localCsys=RVEpart.datums[RVEpart.features['refOrientation'].id])
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to MATRIX ...',True)
     RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['MATRIX'],localCsys=RVEpart.datums[RVEpart.features['refOrientation'].id])
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
-        
+
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to BOUNDING-PLY ...',True)
         RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['BOUNDING-PLY'],localCsys=RVEpart.datums[RVEpart.features['refOrientation'].id])
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
-        
+
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to RIGHT-HOMOGENIZED-CROSSPLY ...',True)
         RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['RIGHT-HOMOGENIZED-CROSSPLY'],localCsys=RVEpart.datums[RVEpart.features['refOrientation'].id])
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
-        
+
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Assigning material orientation to LEFT-HOMOGENIZED-CROSSPLY ...',True)
         RVEpart.MaterialOrientation(orientationType=SYSTEM,region=RVEpart.sets['LEFT-HOMOGENIZED-CROSSPLY'],localCsys=RVEpart.datums[RVEpart.features['refOrientation'].id])
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
-        
-        
+
+
 #===============================================================================#
 #                             Materials creation
 #===============================================================================#
@@ -4161,7 +4165,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assigning boundary conditions ...',True)
 
     # SOUTH side: symmetry line
-    
+
     if 'full' in parameters['geometry']['fiber']['type']:
         for step in parameters['steps'].values():
 	    if 'symmetric' in parameters['BC']['northSide']['type']:
@@ -4229,12 +4233,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     # assign seam
     model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
-    
+
     if 'inverseSquareRoot' in parameters['singularity']['type']:
         midNodePos = 0.25
     else:
         midNodePos = 0.5
-    
+
     # contour integral
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
       xC = Rf*np.cos((theta+deltatheta)*np.pi/180)
@@ -4315,7 +4319,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK',QUAD,STRUCTURED])
         regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED])
         regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED',TRI,FREE])
-    
+
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         regionSets.append(['BOUNDING-PLY',QUAD_DOMINATED,FREE])
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
@@ -4328,7 +4332,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         regionSets.append(['RIGHT-FIBERS',QUAD_DOMINATED,FREE])
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         regionSets.append(['LEFT-FIBERS',QUAD_DOMINATED,FREE])
-    
+
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
 
@@ -4410,8 +4414,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         regionSets.append(['SECONDCIRCLE-LOWERCRACK',nTangential3])
         regionSets.append(['THIRDCIRCLE-LOWERCRACK',nTangential3])
         regionSets.append(['FOURTHCIRCLE-LOWERCRACK',nTangential3])
-                                
-      
+
+
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
             regionSets.append(['LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),10])
@@ -4419,7 +4423,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
             regionSets.append(['LOWERSIDE-LEFT-FIBER'+str(nFiber+1),10])
-    
+
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         regionSets.append(['LOWER-RIGHTSIDE',30])
         regionSets.append(['LOWER-LEFTSIDE',30])
@@ -4428,7 +4432,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         regionSets.append(['RIGHTSIDE',30])
         regionSets.append(['LEFTSIDE',30])
-    
+
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
             regionSets.append(['INTERFACE-UPPER-FIBER-C'+str(nFiber+1),72])
@@ -4439,8 +4443,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    regionSets.append(['INTERFACE-UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers'])),72])            
-    
+                    regionSets.append(['INTERFACE-UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers'])),72])
+
     for regionSet in regionSets:
         seedEdgeByNumber(model,'RVE-assembly',regionSet[0],regionSet[1],FINER,logfilepath,baselogindent + 3*logindent,True)
 
@@ -5070,12 +5074,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             elif ('*Elset' in line or '*ELSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['MATRIX-INTANNULUS-FIRSTBOUNDED','matrix-intannulus-firstbounded']:
                 store = True
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-WITHOUT-CORNERS ...',True)
-        northSideWithoutCornersNodeset = []
-        for node in northSideNodeset:
-            if not node in [northeastIndex,northwestIndex]:
-                northSideWithoutCornersNodeset.append(node)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-WITHOUT-CORNERS ...',True)
+    northSideWithoutCornersNodeset = []
+    for node in northSideNodeset:
+        if not node in [northeastIndex,northwestIndex]:
+            northSideWithoutCornersNodeset.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)
     numNodes = mdbData['numNodes']
     numEls = mdbData['numEls']
@@ -5305,7 +5309,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                     distances.append(np.sqrt((nodes[node][0]-nodes[cracktipIndex][0])*(nodes[node][0]-nodes[cracktipIndex][0])+(nodes[node][1]-nodes[cracktipIndex][1])*(nodes[node][1]-nodes[cracktipIndex][1])))
                 else:
                     distances.append(0.0)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True) 
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Reordering labels based on distances',True)
             fiberFirstBehindCracktipIndex = commonNodes[np.argsort(distances)[-2]] # argsort goes from smaller to higher
             if 'inverseSquareRoot' in parameters['singularity']['type']:
                 fiberSecondBehindCracktipIndex = commonNodes[np.argsort(distances)[-1]]
@@ -5475,7 +5479,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new upper crack tip index to the debonded element on the matrix',True)
         for n,node in enumerate(quads[firstdebondedMatrixElUP]):
             if node == cracktipUPIndex:
-                quads[firstdebondedMatrixElUP][n] = matrixCracktipUPIndex	    
+                quads[firstdebondedMatrixElUP][n] = matrixCracktipUPIndex
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at lower crack tip ...',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new crack tip index to the bonded element on the matrix',True)
@@ -5494,7 +5498,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign new lower crack tip index to the debonded element on the matrix',True)
         for n,node in enumerate(quads[firstdebondedMatrixElLOW]):
             if node == cracktipLOWIndex:
-                quads[firstdebondedMatrixElLOW][n] = matrixCracktipLOWIndex    
+                quads[firstdebondedMatrixElLOW][n] = matrixCracktipLOWIndex
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     else:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign new crack tip nodes to matrix elements at crack tip ...',True)
@@ -5965,7 +5969,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
         with open(modinpfullpath,'a') as inp:
             for line in inpfilelines[endAssembly+1:startTempStep+2]:
-                inp.write(line)   
+                inp.write(line)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
         with open(modinpfullpath,'a') as inp:
@@ -6217,7 +6221,7 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     results['yRFcracktip'] = yRFcracktip
     results['rRFcracktip'] = rRFcracktip
     results['thetaRFcracktip'] = thetaRFcracktip
-	
+
 
     xfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[0]
     yfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[1]
@@ -6308,17 +6312,17 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     GTOTv2 = Jintegral
 
     GIv2 = GTOTv2 - GIIv2
-    
-    results['GI'] = GI 
+
+    results['GI'] = GI
     results['GII'] = GII
     results['GTOT'] = GTOT
     results['GTOTequiv'] = GTOTequiv
-    results['GIv2'] = GIv2 
+    results['GIv2'] = GIv2
     results['GIIv2'] = GIIv2
     results['GTOTv2'] = GTOTv2
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
-    
+
     return results
 
 def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
@@ -6350,7 +6354,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # BEGIN - extract J-integral results
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting J-integral results ...',True)
-    
+
     if parameters['simulation-pipeline']['analysis']['report-energyreleaserates']:
         if len(parameters['steps'])>1:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
@@ -6417,13 +6421,13 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     lowerSide = getSingleNodeSet(odb,'RVE-ASSEMBLY','LOWERSIDE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- LOWERSIDE',True)
-    
+
     rightSide = getSingleNodeSet(odb,'RVE-ASSEMBLY','RIGHTSIDE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- RIGHTSIDE',True)
-    
+
     thirdCircle = getSingleNodeSet(odb,'RVE-ASSEMBLY','THIRDCIRCLE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- THIRDCIRCLE',True)
-    
+
     fiberCrackfaceNodes = getSingleNodeSet(odb,None,'FIBER-CRACKFACE-NODES')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKFACE-NODES',True)
 
@@ -6469,7 +6473,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract deformed coordinates along the right side ...',True)
     # rightsideDefcoords = getFieldOutput(odb,-1,-1,'COORD',rightSide)
     # writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
     if parameters['simulation-pipeline']['analysis']['report-energyreleaserates'] or parameters['simulation-pipeline']['analysis']['report-stressesatboundary']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along the right side ...',True)
         rightsideUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',rightSide)
@@ -6483,7 +6487,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
             rightsideStressdata.append([value.data[0],value.data[1],defcoords.values[0].data[0],defcoords.values[0].data[1],stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3]])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute minimum, maximum and mean stress ...',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Initialize variables...',True)
         maxSigmaxx = rightsideStressdata[0][4]
@@ -6504,7 +6508,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         meanSigmaxx /= len(rightsideStressdata)
         weightmeanSigmaxx /= 2*parameters['geometry']['L']
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         if parameters['simulation-pipeline']['analysis']['report-stressesatboundary']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute normalized coordinates and axial stress ...',True)
             for s,stress in enumerate(rightsideStressdata):
@@ -6515,7 +6519,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 stress.append(stress[4]/weightmeanSigmaxx)
                 rightsideStressdata[s] = stress
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
             rightsideStressdata = np.array(rightsideStressdata)
             rightsideStressdata = rightsideStressdata[np.argsort(rightsideStressdata[:,1])]
@@ -6530,22 +6534,22 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         del rightsideUndefcoords
     else:
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatboundary'],'x0 [um], y0 [um], x [um], y [um], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], y0/L [-],  sigma_xx/max(sigma_xx) [-],  sigma_xx/min(sigma_xx) [-],  sigma_xx/avg(sigma_xx) [-],  sigma_xx/weightavg(sigma_xx) [-]')
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract stresses at the boundary
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - extract stresses along symmetry line
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along symmetry line ...',True)
-    
+
     if parameters['simulation-pipeline']['analysis']['report-stressesatsymmetryline']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along symmetry line ...',True)
         lowersideUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',lowerSide)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, x0/Rf, x, y, x/Rf, sigma_xx, sigma_zz, sigma_yy, tau_xz ...',True)
         lowersideStressdata = []
         for value in lowersideUndefcoords.values:
@@ -6554,7 +6558,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             defcoords = getFieldOutput(odb,-1,-1,'COORD',node)
             lowersideStressdata.append([value.data[0],value.data[1],value.data[0]/parameters['geometry']['Rf'],defcoords.values[0].data[0],defcoords.values[0].data[1],defcoords.values[0].data[0]/parameters['geometry']['Rf'],stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3]])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
         lowersideStressdata = np.array(lowersideStressdata)
         lowersideStressdata = lowersideStressdata[np.argsort(lowersideStressdata[:,0])]
@@ -6565,17 +6569,17 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     else:
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatsymmetryline'],'x0 [um], y0 [um], x0/Rf [-], x [um], y [um], x/Rf [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa]')
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract stresses along symmetry line
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - extract stresses along the bonded interface
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along the bonded interface ...',True)
-    
+
     if parameters['simulation-pipeline']['analysis']['report-stressesatsymmetryline']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract node labels of crack faces ...',True)
         crackfaceNodes = []
@@ -6589,11 +6593,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 crackfaceNodes.append(value.nodeLabel)
         del crackfaceUndefcoords
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along the bonded interface ...',True)
         thirdcircleUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',thirdCircle)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pair data: x0, y0, R0, theta0, x, y, R, theta, sigma_xx, sigma_zz, sigma_yy, tau_xz, sigma_rr, sigma_tt, tau_rt ...',True)
         thirdcircleStressdata = []
         for value in thirdcircleUndefcoords.values:
@@ -6608,26 +6612,26 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 sigRR,sigTT,tauRT = rotateStress2D(stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[3],angP0)
                 thirdcircleStressdata.append([value.data[0],value.data[1],radP0,angP0*180.0/np.pi,(angP0*180.0/np.pi-parameters['geometry']['deltatheta'])/(180.0-parameters['geometry']['deltatheta']),defcoords.values[0].data[0],defcoords.values[0].data[1],radP,angP*180.0/np.pi,(angP*180.0/np.pi-parameters['geometry']['deltatheta'])/(180.0-parameters['geometry']['deltatheta']),stress.values[0].data[0],stress.values[0].data[1],stress.values[0].data[2],stress.values[0].data[3],sigRR,sigTT,tauRT])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save data to csv file ...',True)
         thirdcircleStressdata = np.array(thirdcircleStressdata)
         thirdcircleStressdata = thirdcircleStressdata[np.argsort(thirdcircleStressdata[:,0])]
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],'x0 [um], y0 [um], R0 [um], theta0 [deg], (theta0-deltatheta)/(180-deltatheta) [-], x [um], y [um], R [um], theta [deg], (theta-deltatheta)/(180-deltatheta) [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], sigma_rr [MPa], sigma_tt [MPa], tau_rt [MPa]')
         appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],thirdcircleStressdata)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        
+
         del thirdcircleStressdata
         del thirdcircleUndefcoords
         del crackfaceNodes
         del thirdCircle
     else:
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesatbondedinterface'],'x0 [um], y0 [um], R0 [um], theta0 [deg], (theta0-deltatheta)/(180-deltatheta) [-], x [um], y [um], R [um], theta [deg], (theta-deltatheta)/(180-deltatheta) [-], sigma_xx [MPa], sigma_zz [MPa], sigma_yy [MPa], tau_xz [MPa], sigma_rr [MPa], sigma_tt [MPa], tau_rt [MPa]')
-    
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract stresses along the bonded interface
     #=======================================================================
-    
+
     #=======================================================================
     # BEGIN - compute G0
     #=======================================================================
@@ -6655,21 +6659,21 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # BEGIN - compute contact zone
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute contact zone ...',True)
-    
+
     if parameters['simulation-pipeline']['analysis']['report-contactzone']:
         if len(parameters['steps'])>1:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements on fiber ...',True)
             fiberCrackfaceDisps = getFieldOutput(odb,-2,-1,'U',fiberCrackfaceNodes)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements on matrix ...',True)
             matrixCrackfaceDisps = getFieldOutput(odb,-2,-1,'U',matrixCrackfaceNodes)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             fiberAngles = []
             fiberDisps = []
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate fiber displacements ...',True)
             for value in fiberCrackfaceDisps.values:
                 if value.nodeLabel!=undefCracktipCoords.values[0].nodeLabel:
@@ -6679,12 +6683,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                     fiberAngles.append(beta)
                     fiberDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             del fiberCrackfaceDisps
-    
+
             matrixAngles = []
             matrixDisps = []
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate matrix displacements ...',True)
             for v,value in enumerate(matrixCrackfaceDisps.values):
                 #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'At node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
@@ -6699,30 +6703,30 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])',True)
                 matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             del matrixCrackfaceDisps
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort fiber displacements and angles...',True)
             fiberDisps = np.array(fiberDisps)[np.argsort(fiberAngles)].tolist()
             fiberAngles = np.array(fiberAngles)[np.argsort(fiberAngles)].tolist()
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort matrix displacements and angles...',True)
             matrixDisps = np.array(matrixDisps)[np.argsort(matrixAngles)].tolist()
             matrixAngles = np.array(fiberAngles)[np.argsort(matrixAngles)].tolist()
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             crackDisps = []
             uR = []
             uTheta = []
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute crack displacements ...',True)
             for s,dispset in enumerate(fiberDisps):
                 crackDisps.append([matrixDisps[s][0]-dispset[0],matrixDisps[s][1]-dispset[1]])
                 uR.append(matrixDisps[s][0]-dispset[0])
                 uTheta.append(matrixDisps[s][1]-dispset[1])
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute normalized crack displacements ...',True)
             normedcrackDisps = []
             normedbeta = []
@@ -6741,7 +6745,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 normedbeta.append(fiberAngles[s]/phi)
                 normedcrackDisps.append([dispset[0]/uRmax,dispset[0]/uRavg,dispset[0]/uRweightavg,dispset[1]/uThetamax,dispset[1]/uThetaavg,dispset[1]/uThetaweightavg])
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute contact zone size ...',True)
             phiCZ = 0.0
             phiSZ = phi
@@ -6752,7 +6756,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                     phiCZ = phi - fiberAngles[d]
                     break
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Analyze tolerance of contact zone size estimation...',True)
             phiCZtol = []
             phiSZtol = []
@@ -6770,7 +6774,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 phiSZtol.append(phiSZcurrent)
                 phiCZtol.append(phiCZcurrent)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
             createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalcrackdisplacements'],'beta [deg], uR_fiber, uTheta_fiber, uR_matrix, uTheta_matrix, uR, uTheta, beta/deltatheta [-],  uR/max(uR), uR/mean(uR), uR/weightmean(uR), uTheta/max(uTheta), uTheta/mean(uTheta), uR/weightmean(uTheta)')
             for s,dispset in enumerate(crackDisps):
@@ -6779,12 +6783,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             for s,tol in enumerate(tolCZ):
                 appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalcontactzonetolerance'],[[tol,phiSZtol[s]*180.0/np.pi,phiCZtol[s]*180.0/np.pi]])
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             uRthermal = uR
             uThetathermal = uTheta
             phiCZthermal = phiCZ
             phiSZthermal = phiSZ
-    
+
             del fiberAngles
             del matrixAngles
             del fiberDisps
@@ -6796,18 +6800,18 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             del phiCZtol
             del tolCZ
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> MECHANICAL STEP <--',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements on fiber ...',True)
         fiberCrackfaceDisps = getFieldOutput(odb,-1,-1,'U',fiberCrackfaceNodes)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract displacements on matrix ...',True)
         matrixCrackfaceDisps = getFieldOutput(odb,-1,-1,'U',matrixCrackfaceNodes)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         fiberAngles = []
         fiberDisps = []
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate fiber displacements ...',True)
         for value in fiberCrackfaceDisps.values:
             if value.nodeLabel!=undefCracktipCoords.values[0].nodeLabel:
@@ -6817,12 +6821,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 fiberAngles.append(beta)
                 fiberDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         del fiberCrackfaceDisps
-    
+
         matrixAngles = []
         matrixDisps = []
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate matrix displacements ...',True)
         for v,value in enumerate(matrixCrackfaceDisps.values):
             #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'At node ' + str(v) + ' with label ' + str(value.nodeLabel),True)
@@ -6837,30 +6841,30 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Execute matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])',True)
             matrixDisps.append([np.cos(beta)*value.data[0]+np.sin(beta)*value.data[1],-np.sin(beta)*value.data[0]+np.cos(beta)*value.data[1]])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         del matrixCrackfaceDisps
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort fiber displacements and angles...',True)
         fiberDisps = np.array(fiberDisps)[np.argsort(fiberAngles)].tolist()
         fiberAngles = np.array(fiberAngles)[np.argsort(fiberAngles)].tolist()
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sort matrix displacements and angles...',True)
         matrixDisps = np.array(matrixDisps)[np.argsort(matrixAngles)].tolist()
         matrixAngles = np.array(fiberAngles)[np.argsort(matrixAngles)].tolist()
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         crackDisps = []
         uR = []
         uTheta = []
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute crack displacements ...',True)
         for s,dispset in enumerate(fiberDisps):
             crackDisps.append([matrixDisps[s][0]-dispset[0],matrixDisps[s][1]-dispset[1]])
             uR.append(matrixDisps[s][0]-dispset[0])
             uTheta.append(matrixDisps[s][1]-dispset[1])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute normalized crack displacements ...',True)
         normedcrackDisps = []
         normedbeta = []
@@ -6879,7 +6883,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             normedbeta.append(fiberAngles[s]/phi)
             normedcrackDisps.append([dispset[0]/uRmax,dispset[0]/uRavg,dispset[0]/uRweightavg,dispset[1]/uThetamax,dispset[1]/uThetaavg,dispset[1]/uThetaweightavg])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute contact zone size ...',True)
         phiCZ = 0.0
         phiSZ = phi
@@ -6890,7 +6894,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 phiCZ = phi - fiberAngles[d]
                 break
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Analyze tolerance of contact zone size estimation...',True)
         phiCZtol = []
         phiSZtol = []
@@ -6908,7 +6912,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             phiSZtol.append(phiSZcurrent)
             phiCZtol.append(phiCZcurrent)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['crackdisplacements'],'beta [deg], uR_fiber, uTheta_fiber, uR_matrix, uTheta_matrix, uR, uTheta, beta/deltatheta [-],  uR/max(uR), uR/mean(uR), uR/weightmean(uR), uTheta/max(uTheta), uTheta/mean(uTheta), uR/weightmean(uTheta)')
         for s,dispset in enumerate(crackDisps):
@@ -6917,7 +6921,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         for s,tol in enumerate(tolCZ):
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['contactzonetolerance'],[[tol,phiSZtol[s]*180.0/np.pi,phiCZtol[s]*180.0/np.pi]])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         del fiberAngles
         del matrixAngles
         del fiberDisps
@@ -6952,7 +6956,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     if parameters['simulation-pipeline']['analysis']['report-energyreleaserates']:
         if len(parameters['steps'])>1:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
-            
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Check if crack faces are pressure-loaded in this step ...',True)
             isPressureLoadedCrack = False
             for load in parameters['loads'].values():
@@ -6963,9 +6967,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                     break
             if not isPressureLoadedCrack:
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pressure loaded crack faces are not present.',True)
-            
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract forces and displacements ...',True)
-    
+
             RFcracktip = getFieldOutput(odb,-2,-1,'RF',cracktipDummyNode)
             if 'second' in parameters['mesh']['elements']['order']:
                 RFfirstbounded = getFieldOutput(odb,-2,-1,'RF',firstboundedDummyNode)
@@ -6974,11 +6978,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             if 'second' in parameters['mesh']['elements']['order']:
                 fiberFirstboundedDisplacement = getFieldOutput(odb,-2,-1,'U',fiberFirstboundedDispMeas)
                 matrixFirstboundedDisplacement = getFieldOutput(odb,-2,-1,'U',matrixFirstboundedDispMeas)
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate forces and displacements ...',True)
-    
+
             xRFcracktip = RFcracktip.values[0].data[0]
             yRFcracktip = RFcracktip.values[0].data[1]
             rRFcracktip = np.cos(phi)*xRFcracktip + np.sin(phi)*yRFcracktip
@@ -6994,7 +6998,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             else:
                 if isPressureLoadedCrack:
                     rRFcracktip -= uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/2
-    
+
             xfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[0]
             yfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[1]
             rfiberCracktipDisplacement = np.cos(phi)*xfiberCracktipDisplacement + np.sin(phi)*yfiberCracktipDisplacement
@@ -7012,7 +7016,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 ymatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[1]
                 rmatrixFirstboundedDisplacement = np.cos(phi)*xmatrixFirstboundedDisplacement + np.sin(phi)*ymatrixFirstboundedDisplacement
                 thetamatrixFirstboundedDisplacement = -np.sin(phi)*xmatrixFirstboundedDisplacement + np.cos(phi)*ymatrixFirstboundedDisplacement
-    
+
             xcracktipDisplacement = xmatrixCracktipDisplacement - xfiberCracktipDisplacement
             ycracktipDisplacement = ymatrixCracktipDisplacement - yfiberCracktipDisplacement
             rcracktipDisplacement = rmatrixCracktipDisplacement - rfiberCracktipDisplacement
@@ -7022,11 +7026,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 yfirstboundedDisplacement = ymatrixFirstboundedDisplacement - yfiberFirstboundedDisplacement
                 rfirstboundedDisplacement = rmatrixFirstboundedDisplacement - rfiberFirstboundedDisplacement
                 thetafirstboundedDisplacement = thetamatrixFirstboundedDisplacement - thetafiberFirstboundedDisplacement
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GTOT=GI+GII ...',True)
-    
+
             if 'second' in parameters['mesh']['elements']['order']:
                 GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
                 GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
@@ -7035,33 +7039,33 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
                 GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
                 GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
-    
+
             GTOT = GI + GII
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GI=GTOT-GII ...',True)
-    
+
             if 'second' in parameters['mesh']['elements']['order']:
                 GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
             else:
                 GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
-    
+
             GTOTv2 = thermalJintegrals[-1]
-    
+
             GIv2 = GTOTv2 - GIIv2
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
             if 'second' in parameters['mesh']['elements']['order']:
                 appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['thermalenergyreleaserate'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZthermal*180.0/np.pi,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uRthermal),np.max(uRthermal),np.mean(uRthermal),np.min(uThetathermal),np.max(uThetathermal),np.mean(uThetathermal),phiSZthermal*180.0/np.pi,xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement]])
             else:
                 appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['thermalenergyreleaserate'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZthermal*180.0/np.pi,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uRthermal),np.max(uRthermal),np.mean(uRthermal),np.min(uThetathermal),np.max(uThetathermal),np.mean(uThetathermal),phiSZthermal*180.0/np.pi,xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement]])
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> MECHANICAL STEP <--',True)
-        
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Check if crack faces are pressure-loaded in this step ...',True)
         isPressureLoadedCrack = False
         for load in parameters['loads'].values():
@@ -7072,9 +7076,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 break
         if not isPressureLoadedCrack:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pressure loaded crack faces are not present.',True)
-        
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract forces and displacements ...',True)
-    
+
         RFcracktip = getFieldOutput(odb,-1,-1,'RF',cracktipDummyNode)
         if 'second' in parameters['mesh']['elements']['order']:
             RFfirstbounded = getFieldOutput(odb,-1,-1,'RF',firstboundedDummyNode)
@@ -7083,11 +7087,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         if 'second' in parameters['mesh']['elements']['order']:
             fiberFirstboundedDisplacement = getFieldOutput(odb,-1,-1,'U',fiberFirstboundedDispMeas)
             matrixFirstboundedDisplacement = getFieldOutput(odb,-1,-1,'U',matrixFirstboundedDispMeas)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate forces and displacements ...',True)
-    
+
         xRFcracktip = RFcracktip.values[0].data[0]
         yRFcracktip = RFcracktip.values[0].data[1]
         rRFcracktip = np.cos(phi)*xRFcracktip + np.sin(phi)*yRFcracktip
@@ -7103,8 +7107,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         else:
             if isPressureLoadedCrack:
                 rRFcracktip -= uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/2
-            
-    
+
+
         xfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[0]
         yfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[1]
         rfiberCracktipDisplacement = np.cos(phi)*xfiberCracktipDisplacement + np.sin(phi)*yfiberCracktipDisplacement
@@ -7122,7 +7126,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             ymatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[1]
             rmatrixFirstboundedDisplacement = np.cos(phi)*xmatrixFirstboundedDisplacement + np.sin(phi)*ymatrixFirstboundedDisplacement
             thetamatrixFirstboundedDisplacement = -np.sin(phi)*xmatrixFirstboundedDisplacement + np.cos(phi)*ymatrixFirstboundedDisplacement
-    
+
         xcracktipDisplacement = xmatrixCracktipDisplacement - xfiberCracktipDisplacement
         ycracktipDisplacement = ymatrixCracktipDisplacement - yfiberCracktipDisplacement
         rcracktipDisplacement = rmatrixCracktipDisplacement - rfiberCracktipDisplacement
@@ -7132,11 +7136,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             yfirstboundedDisplacement = ymatrixFirstboundedDisplacement - yfiberFirstboundedDisplacement
             rfirstboundedDisplacement = rmatrixFirstboundedDisplacement - rfiberFirstboundedDisplacement
             thetafirstboundedDisplacement = thetamatrixFirstboundedDisplacement - thetafiberFirstboundedDisplacement
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GTOT=GI+GII ...',True)
-    
+
         if 'second' in parameters['mesh']['elements']['order']:
             GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
             GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
@@ -7145,31 +7149,31 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
             GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
             GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
-    
+
         GTOT = GI + GII
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GI=GTOT-GII ...',True)
-    
+
         if 'second' in parameters['mesh']['elements']['order']:
             GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
         else:
             GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
-    
+
         GTOTv2 = Jintegrals[-1]
-    
+
         GIv2 = GTOTv2 - GIIv2
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
         if 'second' in parameters['mesh']['elements']['order']:
             appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZ*180.0/np.pi,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ*180.0/np.pi,xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement]])
         else:
             appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZ*180.0/np.pi,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ*180.0/np.pi,xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement]])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - compute VCCT

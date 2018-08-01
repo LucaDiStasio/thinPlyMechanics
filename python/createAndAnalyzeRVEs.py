@@ -3534,7 +3534,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type']:
-	        defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L+Lply,0.0,0.001*Rf,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+            defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L+Lply,0.0,0.001*Rf,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
             defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L+Lply,0.0,0.001*Rf,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
 	else:
         defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L,0.0,0.001*Rf,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)

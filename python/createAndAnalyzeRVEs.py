@@ -3025,7 +3025,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         CornerBx = L+wRightPly
     elif 'boundingPly' in parameters['BC']['leftSide']['type'] or 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         if 'quarter' in parameters['geometry']['fiber']['type']:
-	        skipLineToLogFile(logfilepath,'a',True)
+            skipLineToLogFile(logfilepath,'a',True)
             writeErrorToLogFile(logfilepath,'a','GEOMETRY','Clashing geometric requirements: asked for quarter fiber and for material on the left side. Review and select the appropriate.',True)
             sys.exit(2)
         if 'boundingPly' in parameters['BC']['leftSide']['type']:

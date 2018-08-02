@@ -179,35 +179,37 @@ E_{1}=\frac{E\left(1-\nu\right)}{\left(1+\nu\right)\left(1-2\nu\right)}\quad E_{
 \begin{split}
 \delta\Pi\left(\delta\underline{u}\right)=&\Pi\left(\underline{u}+\delta\underline{u}\right)-\Pi\left(\underline{u}\right)=\\=&\frac{1}{2}\int_{V}\left(\underline{u}+\underline{\delta u}\right)^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\left(\underline{u}+\underline{\delta u}\right)dV-\int_{V}\underline{F}^{T}\left(\underline{u}+\underline{\delta u}\right)dV-\int_{S}\underline{f}^{T}\left(\underline{u}+\underline{\delta u}\right)dS+\\
 -&\frac{1}{2}\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV+\int_{V}\underline{F}^{T}\underline{u}dV+\int_{S}\underline{f}^{T}\underline{u}dS=\\
-=&\frac{1}{2}\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV+\frac{1}{2}\int_{V}\underline{\delta u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{\delta u}dV+\\
--&\int_{V}\underline{F}^{T}\underline{u}dV-\int_{V}\underline{F}^{T}\underline{\delta u}dV+\\
--&\int_{S}\underline{f}^{T}\underline{u}dS+\int_{S}\underline{f}^{T}\underline{\delta u}dS+\\
--&\frac{1}{2}\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV+\int_{V}\underline{F}^{T}\underline{u}dV+\int_{S}\underline{f}^{T}\underline{u}dS=\\
+=&\cancel{\frac{1}{2}\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV}+\cancelto{\approx 0}{\frac{1}{2}\int_{V}\underline{\delta u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{\delta u}dV}+\\
++&\frac{1}{2}\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{\delta u}dV+\frac{1}{2}\int_{V}\underline{\delta u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV+\\
+-&\cancel{\int_{V}\underline{F}^{T}\underline{u}dV}-\int_{V}\underline{F}^{T}\underline{\delta u}dV+\\
+-&\cancel{\int_{S}\underline{f}^{T}\underline{u}dS}-\int_{S}\underline{f}^{T}\underline{\delta u}dS+\\
+-&\cancel{\frac{1}{2}\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV}+\cancel{\int_{V}\underline{F}^{T}\underline{u}dV}+\cancel{\int_{S}\underline{f}^{T}\underline{u}dS}=\\
+=&\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{\delta u}dV-\int_{V}\underline{F}^{T}\underline{\delta u}dV-\int_{S}\underline{f}^{T}\underline{\delta u}dS
 \end{split}
 \end{equation}
 
 \begin{equation}
-\underline{\underline{k}}\cdot\underline{u}_{N}=\underline{f}_{N}
+\int_{V}\underline{\delta u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV-\int_{V}\underline{\delta u}^{T}\underline{F}dV-\int_{S}\underline{\delta u}^{T}\underline{f}dS=0
 \end{equation}
 
-\begin{equation}
-\underline{u}_{N}=\begin{bmatrix}
-u_{1,x}\\u_{1,y}\\u_{2,x}\\u_{2,y}\\u_{3,x}\\u_{3,y}\\u_{4,x}\\u_{4,y}\\
-\end{bmatrix}\qquad\underline{f}_{N}=\begin{bmatrix}
-f_{1,x}\\f_{1,y}\\f_{2,x}\\f_{2,y}\\f_{3,x}\\f_{3,y}\\f_{4,x}\\f_{4,y}\\
-\end{bmatrix}
-\end{equation}
-
-
-\begin{equation}
-\underline{u}=\underline{\underline{N}}\cdot\underline{u}_{N}
-\end{equation}
-
+%\begin{equation}
+%\underline{\underline{k}}\cdot\underline{u}_{N}=\underline{f}_{N}
+%\end{equation}
 
 \begin{equation}
 \underline{u}=\begin{bmatrix}
 u_{x}\left(x,y\right)\\u_{y}\left(x,y\right)
+\end{bmatrix}\qquad\underline{u}_{N}=\begin{bmatrix}
+u_{1,x}\\u_{1,y}\\u_{2,x}\\u_{2,y}\\u_{3,x}\\u_{3,y}\\u_{4,x}\\u_{4,y}\\
 \end{bmatrix}
+\end{equation}
+
+%\qquad\underline{f}_{N}=\begin{bmatrix}
+%f_{1,x}\\f_{1,y}\\f_{2,x}\\f_{2,y}\\f_{3,x}\\f_{3,y}\\f_{4,x}\\f_{4,y}\\
+%\end{bmatrix}
+
+\begin{equation}
+\underline{u}=\underline{\underline{N}}\cdot\underline{u}_{N}
 \end{equation}
 
 \begin{equation}
@@ -231,23 +233,11 @@ N_{4}=N_{4}\left(\xi,\eta\right)\\
 \end{equation}
 
 \begin{equation}
-\underline{B}=\begin{bmatrix}
+\underline{\underline{B}}=\underline{\underline{\widetilde{B}}}\cdot\underline{\underline{N}}=\begin{bmatrix}
 \frac{\partial N_{1}}{\partial x}&0&\frac{\partial N_{2}}{\partial x}&0&\frac{\partial N_{3}}{\partial x}&0&\frac{\partial N_{4}}{\partial x}&0\\[7.5pt]
 0&\frac{\partial N_{1}}{\partial y}&0&\frac{\partial N_{2}}{\partial y}&0&\frac{\partial N_{3}}{\partial y}&0&\frac{\partial N_{4}}{\partial y}\\[7.5pt]
 \frac{\partial N_{1}}{\partial y}&\frac{\partial N_{1}}{\partial x}&\frac{\partial N_{2}}{\partial y}&\frac{\partial N_{2}}{\partial x}&\frac{\partial N_{3}}{\partial y}&\frac{\partial N_{3}}{\partial x}&\frac{\partial N_{4}}{\partial y}&\frac{\partial N_{4}}{\partial x}\\
 \end{bmatrix}
-\end{equation}
-
-\begin{equation}
-\frac{1}{2}\int_{V}\underline{\sigma}^{T}\underline{\varepsilon}dV +
-\end{equation}
-
-\begin{equation}
-\frac{1}{2}\int_{V}\underline{\sigma}^{T}\underline{\varepsilon}dV=\frac{1}{2}\int_{V}\underline{\varepsilon}^{T}\underline{\underline{D}}\cdot\underline{\varepsilon}dV=\frac{1}{2}\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV
-\end{equation}
-
-\begin{equation}
-\frac{1}{2}\delta\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV=\frac{1}{2}\int_{V}\left(\delta\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}+\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\delta\underline{u}\right)dV
 \end{equation}
 
 \begin{equation}

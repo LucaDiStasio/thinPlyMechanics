@@ -3471,7 +3471,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers to the right ...',True)
         if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-	        for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+            for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 fiberSketch.CircleByCenterPerimeter(center=((nFiber+1)*2*L, -0.5*L), point1=((nFiber+1)*2*L-Rf, -0.5*L))
         else:
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):

@@ -1,0 +1,195 @@
+\documentclass[review]{elsarticle}
+
+\usepackage{amsmath}
+\usepackage{lineno,hyperref}
+\modulolinenumbers[5]
+
+\journal{Report}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Elsevier bibliography styles
+%%%%%%%%%%%%%%%%%%%%%%%
+%% To change the style, put a % in front of the second line of the current style and
+%% remove the % from the second line of the style you would like to use.
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Numbered
+%\bibliographystyle{model1-num-names}
+
+%% Numbered without titles
+%\bibliographystyle{model1a-num-names}
+
+%% Harvard
+%\bibliographystyle{model2-names.bst}\biboptions{authoryear}
+
+%% Vancouver numbered
+%\usepackage{numcompress}\bibliographystyle{model3-num-names}
+
+%% Vancouver name/year
+%\usepackage{numcompress}\bibliographystyle{model4-names}\biboptions{authoryear}
+
+%% APA style
+%\bibliographystyle{model5-names}\biboptions{authoryear}
+
+%% AMA style
+%\usepackage{numcompress}\bibliographystyle{model6-num-names}
+
+%% `Elsevier LaTeX' style
+\bibliographystyle{elsarticle-num}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Update 2018-06}
+%\tnotetext[mytitlenote]{Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.}
+
+%% Group authors per affiliation:
+%\author{Luca Di Stasio\fnref{myfootnote}}
+%\address{Radarweg 29, Amsterdam}
+%\fntext[myfootnote]{Since 1880.}
+
+%% or include affiliations in footnotes:
+\author[nancy,lulea]{Luca Di Stasio}
+%\ead[url]{www.elsevier.com}
+
+%\author[mysecondaryaddress]{Global Customer Service\corref{mycorrespondingauthor}}
+%\cortext[mycorrespondingauthor]{Corresponding author}
+%\ead{support@elsevier.com}
+
+\address[nancy]{Universit\'e de Lorraine, EEIGM, IJL, 6 Rue Bastien Lepage, F-54010 Nancy, France}
+\address[lulea]{Lule\aa\ University of Technology, University Campus, SE-97187 Lule\aa, Sweden}
+
+\begin{abstract}
+Updates for June 2018. Main topics covered:
+\begin{itemize}
+\item comment on recent FEM results with multiple fibers with focus on effect of debond interaction, see Excel workbooks;
+\item some thougths (with derivations) on relationship between contact zone onset angle and local ratio of matrix strains;
+\item a modified proposal about paper writing
+\end{itemize}
+\end{abstract}
+
+%\begin{keyword}
+%\texttt{elsarticle.cls}\sep \LaTeX\sep Elsevier \sep template
+%\MSC[2010] 00-01\sep  99-00
+%\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
+
+\section{FEM results with multiple fibers}
+
+\paragraph{Geometries studied} 
+\begin{itemize}
+\item $n$ fibers on each side: $n$ fibers are placed to the right and to left of the debonded fiber.
+\item $n$ fibers on top: $n$ fibers are placed on top of the debonded one, aligned with it.
+\item $n$ fibers on each side and $m$ fibers on top: $n$ fibers are placed to the right and to the left, then the layer of $2n+1$ fibers is repeated $m$ times on top; only the central fiber is debonded.
+\item The model has symmetry applied to the bottom boundary, i.e. the first layer from the bottom is always of half fibers.
+\item The top boundary is always free.
+\end{itemize}
+
+\paragraph{Mode I ERRT}
+\begin{itemize}
+\item Effect of debonds on the side: reducing drastically the value of mode I ERR, but shape, debond size of maximum and debond size when $G_{I}=0$ remain the same.
+\item Effect of debonds on top: retards the occurrence of $G_{I}=0$.
+\end{itemize}
+
+\paragraph{Mode II ERRT}
+\begin{itemize}
+\item Effect of debonds on the side: reducing drastically the value of mode II ERR, but shape and debond size of maximum remain the same.
+\item Effect of bonded fiber on top: maximum is shifted towards the right by $\approx 20^{\circ}$ and there's a plateau 
+\end{itemize}
+
+\paragraph{Contact zone}
+\begin{itemize}
+\item Effect of debonds on the side: onset unchanged, size decreased by $\approx 4-5^{\circ}$
+\item Effect of bonded fiber on top: onset retarded by $\approx 20^{\circ}$, size reduced by  $\approx 15^{\circ}$
+\end{itemize}
+
+\paragraph{Some thoughts on the mechanics}
+\begin{itemize}
+\item Effect of debonds on the side: it reduces the strain concentration between fibers (strain magnification) and thus the displacement of crack faces. There seems to be a constant (given uncertainty) ratio between values with fibers on the side vs free single fiber for $G_{I}$ and crack displacements, but it's more elusive for $G_{II}$ because the standard deviation is quite high.
+\item Effect of debonds on top: it provides the matrix with a free surface on top, which makes it shrink due to Poisson effect toward the center line between the two free surface, i.e. debonds. Thus it shrinks aways from the fiber interface, favoring mode I and retarding contact zone onset. But the effect is small compared with the effect of the bounding material which acts in the opposite way.
+\end{itemize}
+
+\section{On a relationship between contact zone onset angle and local ratio of matrix strains}
+
+\paragraph{Reference case: square element of matrix in plane strain under applied axial strain}
+At any given circle in the element, we can compute the strains ina circumferential reference system as:
+
+\begin{equation}
+\begin{split}
+\varepsilon_{rr}&=\varepsilon_{xx}\cos^{2}{\theta}+\varepsilon_{zz}\sin^{2}{\theta}+2\gamma_{xz}\cos{\theta}\sin{\theta}\\
+\varepsilon_{zz}&=\varepsilon_{xx}\sin^{2}{\theta}+\varepsilon_{zz}\cos^{2}{\theta}-2\gamma_{xz}\cos{\theta}\sin{\theta}\\
+\gamma_{rz}&=\left(\varepsilon_{zz}-\varepsilon_{xx}\right)\cos{\theta}\sin{\theta}+\gamma_{xz}\left(\cos^{2}{\theta}-\sin^{2}{\theta}\right)
+\end{split}
+\end{equation}
+
+We can express the radial strain as a function of the axial one through Poisson's ratio and assuming $\gamma_{xz}=0$
+
+\begin{equation}
+\varepsilon_{rr}=\varepsilon_{xx}\cos^{2}{\theta}-\nu\varepsilon_{xx}\sin^{2}{\theta}=\left(\cos^{2}{\theta}-\nu\sin^{2}{\theta}\right)\varepsilon_{xx}
+\end{equation}
+
+From which we can derive the condition for $\varepsilon_{rr}=0$
+
+\begin{equation}
+cos^{2}{\theta}-\nu\sin^{2}{\theta}=1-(1+\nu)sin^{2}{\theta}=0
+\end{equation}
+
+the solution of which is
+
+\begin{equation}
+\theta_{0}=\sin^{-1}{\left(\pm\sqrt{\frac{1}{1+\nu}}\right)}
+\end{equation}
+
+Given an applied traction, i.e. $\varepsilon_{xx}>0$, the radial strain is positive for
+
+\begin{equation}
+\sin^{-1}{\left(-\sqrt{\frac{1}{1+\nu}}\right)}<\theta<\sin^{-1}{\left(\sqrt{\frac{1}{1+\nu}}\right)}
+\end{equation}
+
+or, remembering $\sin{x}$ is antisymmetic,
+
+\begin{equation}
+-\theta_{0}<\theta<\theta_{0}
+\end{equation}
+
+For an epoxy with $\nu=0.4$, the angle for which the radial strain is zero and then becomes compressive is 
+
+\begin{equation}
+\theta_{0}=57.69^{\circ}
+\end{equation}
+
+which is strikingly close to the $60^{\circ}$ value for the contact zone onset calculated for the single fiber in infinite matrix (matrix dominated case).
+
+\paragraph{Contact zone onset as a proxy for local strain ratio}
+
+The presence of fiber, debond, boundaries and neighbouring material has a perturbative effect on the elastic solution in the matrix. We have seen from the ERR's results that the ratio of axial to transverse strain is one of the key factor, we can use the angle of contact zone onset to gauge the change in their ratio with respect to the undisturbed matrix case using one of the two forms:
+
+\begin{equation}
+\begin{split}
+\theta_{0}&=\sin^{-1}{\left(\pm\sqrt{\frac{1}{1+SR}}\right)}\\
+SR&=\frac{1}{\sin^{2}{\theta}}-1
+\end{split}
+\end{equation}
+
+where $SR=-\frac{\varepsilon_{zz}}{\varepsilon_{xx}}$ stands for strain ratio.
+
+\paragraph{Example: single fiber with debond in infinite matrix}
+For the single fiber with debond in infinite matrix, $\theta_{0}\approx60^{\circ}$, slightly greater than the $57.69^{\circ}$, which means SR is a bit lower than the pure matrix case. The presence of the fiber and of the debond will locally constrain more the vertical than the horizontal strain, but the effect is small due to the size of the matrix.
+
+\section{Proposal about paper writing}
+
+I think the new results show that there actually is an interaction effect between debonds. Thus, gathering the old and new results and studying some new cases, I think it might be better to write 2 papers instead of 1.
+
+\begin{itemize}
+\item \emph{Paper 1: effect of debond interaction in thin and thick plies and its modeling.} We compare the results of: the free single fiber, the single fiber with vertical displacement coupling, the debonded fiber with fibers on the side and free upper surface, the debonded fiber with fibers on top, the debonded fiber with fibers on the side and on top. We might add another case: fibers on the side with vertical displacement coupling on top. We focus on the effect of debond interaction in the different directions (longitudinal, x, and transverse, z) and how good is the single fiber model with equivalent boundary conditions. We find (especially in the longitudinal case) the minimum number of fibers required for the debonds' interaction effect to die off.
+\item \emph{Paper 2: effect of bounding $0^{\circ}$ ply in thick- and thin-ply cross-ply laminates.} We compare results for: free single fiber (as reference), single fiber with vertical displacement coupling and linear horizontal displacement on top, single fiber with $0^{\circ}$ ply on top, debonded fiber with fibers on the side and vertical displacement coupling and linear horizontal displacement on top, debonded fiber with fibers on the side with $0^{\circ}$ ply on top. At least 2 ratios of $0^{\circ}$ vs $90^{\circ}$ ply thickness are studied: 1 for thick-ply laminate and 10 for thin-ply laminate. Here again we find the minimum number (this time only in the longitudinal direction) of fiber for the debonds' interaction to vanish. Does it change with respect to the free thin and thick ply? And between thin- and thick- ply laminates?
+\item All models are studied at least for $V_{f}=\left[30\%,50\%,60\%,65\%\right]$. The $65\%$ case is used because it's the fastest to solve and thus it is useful both for debugging and model checking as well as for feedback on the results. However, it could be of interest also as an extreme case of a very thin, very dense ply.
+\end{itemize}
+
+
+\end{document}

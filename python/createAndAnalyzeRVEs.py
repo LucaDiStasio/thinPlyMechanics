@@ -3439,8 +3439,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw ply upper interface line ...',True)
         if 'adjacentFibers' in parameters['BC']['northSide']['type']:
-	        fiberSketch.Line(point1=(CornerAx,L+Lply),point2=(CornerBx,L+Lply))
-	    else:
+            fiberSketch.Line(point1=(CornerAx,L+Lply),point2=(CornerBx,L+Lply))
+        else:
             fiberSketch.Line(point1=(CornerAx,L),point2=(CornerBx,L))
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

@@ -3144,7 +3144,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # create geometrical transform to draw partition sketch
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create geometrical transform to draw partition sketch ...',True)
-    transformToSketch = RVEpart.MakeSketchTransform(sketchPlane=RVEfaces[0], sketchPlaneSide=SIDE1, origin=(0.0,0.5*L, 0.0))
+    transformToSketch = RVEpart.MakeSketchTransform(sketchPlane=RVEfaces[0], sketchPlaneSide=SIDE1, origin=(0.0,0.0,0.0))
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # create sketch
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create sketch ...',True)
@@ -3169,88 +3169,88 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fiber and circular sections for mesh generation ...',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Fiber',True)
     if 'full' in parameters['geometry']['fiber']['type']:
-        fiberSketch.CircleByCenterPerimeter(center=(0.0, -0.5*L), point1=(-Rf, -0.5*L))
+        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-Rf, 0.0))
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.75*Rf',True)
-        fiberSketch.CircleByCenterPerimeter(center=(0.0, -0.5*L), point1=(-0.75*Rf, -0.5*L)) # fiberGeometry[7]
+        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-0.75*Rf, 0.0)) # fiberGeometry[7]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.5*Rf',True)
-        fiberSketch.CircleByCenterPerimeter(center=(0.0, -0.5*L), point1=(-0.5*Rf, -0.5*L)) # fiberGeometry[8]
+        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-0.5*Rf, 0.0)) # fiberGeometry[8]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
         if L>2*Rf:
-            fiberSketch.CircleByCenterPerimeter(center=(0.0, -0.5*L), point1=(-1.25*Rf, -0.5*L)) # fiberGeometry[9]
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-1.25*Rf, 0.0)) # fiberGeometry[9]
             listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.CircleByCenterPerimeter(center=(0.0, -0.5*L), point1=(-1.5*Rf, -0.5*L)) # fiberGeometry[10]
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-1.5*Rf, 0.0)) # fiberGeometry[10]
         else:
-            fiberSketch.CircleByCenterPerimeter(center=(0.0, -0.5*L), point1=(-(Rf+0.25*(L-Rf)), -0.5*L)) # fiberGeometry[9]
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-(Rf+0.25*(L-Rf)), 0.0)) # fiberGeometry[9]
             listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.CircleByCenterPerimeter(center=(0.0, -0.5*L), point1=(-(Rf+0.5*(L-Rf)), -0.5*L)) # fiberGeometry[10]
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-(Rf+0.5*(L-Rf)), 0.0)) # fiberGeometry[10]
             listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     elif 'half' in parameters['geometry']['fiber']['type']:
-        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-Rf, -0.5*L), point2=(Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[6]
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(Rf,0.0), direction=CLOCKWISE) # fiberGeometry[6]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.75*Rf',True)
-        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-0.75*Rf, -0.5*L), point2=(0.75*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[7]
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-0.75*Rf, 0.0), point2=(0.75*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[7]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.5*Rf',True)
-        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-0.5*Rf, -0.5*L), point2=(0.5*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[8]
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-0.5*Rf, 0.0), point2=(0.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[8]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
         if L>2*Rf:
-            fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-1.25*Rf, -0.5*L), point2=(1.25*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[9]
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.25*Rf, 0.0), point2=(1.25*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[9]
             listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-1.5*Rf, -0.5*L), point2=(1.5*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[10]
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.5*Rf, 0.0), point2=(1.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[10]
         else:
-            fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-(Rf+0.25*(L-Rf)), -0.5*L), point2=((Rf+0.25*(L-Rf)),-0.5*L), direction=CLOCKWISE) # fiberGeometry[9]
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.25*(L-Rf)), 0.0), point2=((Rf+0.25*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
             listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-(Rf+0.5*(L-Rf)), -0.5*L), point2=((Rf+0.5*(L-Rf)),-0.5*L), direction=CLOCKWISE) # fiberGeometry[10]
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.5*(L-Rf)), 0.0), point2=((Rf+0.5*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
             listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     elif 'quarter' in parameters['geometry']['fiber']['type']:
-        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(0.0, -0.5*L+Rf), point2=(Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[6]
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+Rf), point2=(Rf,0.0), direction=CLOCKWISE) # fiberGeometry[6]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.75*Rf',True)
-        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(0.0, -0.5*L+0.75*Rf), point2=(0.75*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[7]
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+0.75*Rf), point2=(0.75*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[7]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.5*Rf',True)
-        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(0.0, -0.5*L+0.5*Rf), point2=(0.5*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[8]
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+0.5*Rf), point2=(0.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[8]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
         if L>2*Rf:
-            fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(0.0, -0.5*L+1.25*Rf), point2=(1.25*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[9]
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+1.25*Rf), point2=(1.25*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[9]
             listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(0.0, -0.5*L+1.5*Rf), point2=(1.5*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[10]
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+1.5*Rf), point2=(1.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[10]
         else:
-            fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(0.0, -0.5*L+(Rf+0.25*(L-Rf))), point2=((Rf+0.25*(L-Rf)),-0.5*L), direction=CLOCKWISE) # fiberGeometry[9]
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+(Rf+0.25*(L-Rf))), point2=((Rf+0.25*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
             listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(0.0, -0.5*L+(Rf+0.5*(L-Rf))), point2=((Rf+0.5*(L-Rf)),-0.5*L), direction=CLOCKWISE) # fiberGeometry[10]
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+(Rf+0.5*(L-Rf))), point2=((Rf+0.5*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
             listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     else:
-        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-Rf, -0.5*L), point2=(Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[6]
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(Rf,0.0), direction=CLOCKWISE) # fiberGeometry[6]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.75*Rf',True)
-        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-0.75*Rf, -0.5*L), point2=(0.75*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[7]
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-0.75*Rf, 0.0), point2=(0.75*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[7]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.5*Rf',True)
-        fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-0.5*Rf, -0.5*L), point2=(0.5*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[8]
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-0.5*Rf, 0.0), point2=(0.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[8]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
         if L>2*Rf:
-            fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-1.25*Rf, -0.5*L), point2=(1.25*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[9]
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.25*Rf, 0.0), point2=(1.25*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[9]
             listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-1.5*Rf, -0.5*L), point2=(1.5*Rf,-0.5*L), direction=CLOCKWISE) # fiberGeometry[10]
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.5*Rf, 0.0), point2=(1.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[10]
         else:
-            fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-(Rf+0.25*(L-Rf)), -0.5*L), point2=((Rf+0.25*(L-Rf)),-0.5*L), direction=CLOCKWISE) # fiberGeometry[9]
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.25*(L-Rf)), 0.0), point2=((Rf+0.25*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
             listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.ArcByCenterEnds(center=(0.0, -0.5*L), point1=(-(Rf+0.5*(L-Rf)), -0.5*L), point2=((Rf+0.5*(L-Rf)),-0.5*L), direction=CLOCKWISE) # fiberGeometry[10]
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.5*(L-Rf)), 0.0), point2=((Rf+0.5*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
             listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # calculate angles for construction lines
@@ -3264,22 +3264,22 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # draw construction lines
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction lines ...',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(theta+deltatheta) + ' deg',True)
-    fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=(theta+deltatheta)) # fiberGeometry[11]
+    fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=(theta+deltatheta)) # fiberGeometry[11]
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[11],addUndoState=False)
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     #raw_input()
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(alpha) + ' deg',True)
-    fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=alpha) # fiberGeometry[12]
+    fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=alpha) # fiberGeometry[12]
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[12],addUndoState=False)
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     #raw_input()
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(beta) + ' deg',True)
-    fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=beta) # fiberGeometry[13]
+    fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=beta) # fiberGeometry[13]
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[13],addUndoState=False)
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     #raw_input()
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(gamma) + ' deg',True)
-    fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=gamma) # fiberGeometry[14]
+    fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=gamma) # fiberGeometry[14]
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[14],addUndoState=False)
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     #raw_input()
@@ -3297,9 +3297,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create first circular section ...',True)
     Ax = Rint*np.cos(alpha*np.pi/180.0)
-    Ay = -0.5*L+Rint*np.sin(alpha*np.pi/180.0)
+    Ay = 0.0+Rint*np.sin(alpha*np.pi/180.0)
     Bx = Rext*np.cos(alpha*np.pi/180.0)
-    By = -0.5*L+Rext*np.sin(alpha*np.pi/180.0)
+    By = 0.0+Rext*np.sin(alpha*np.pi/180.0)
     fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[15]
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[15],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[15], entity2=fiberGeometry[7],addUndoState=False)
@@ -3309,9 +3309,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create second circular section ...',True)
     Ax = Rint*np.cos((theta+deltatheta)*np.pi/180.0)
-    Ay = -0.5*L+Rint*np.sin((theta+deltatheta)*np.pi/180.0)
+    Ay = 0.0+Rint*np.sin((theta+deltatheta)*np.pi/180.0)
     Bx = Rext*np.cos((theta+deltatheta)*np.pi/180.0)
-    By = -0.5*L+Rext*np.sin((theta+deltatheta)*np.pi/180.0)
+    By = 0.0+Rext*np.sin((theta+deltatheta)*np.pi/180.0)
     fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[16]
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[16],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[17], entity2=fiberGeometry[7],addUndoState=False)
@@ -3321,9 +3321,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create third circular section ...',True)
     Ax = Rint*np.cos(beta*np.pi/180.0)
-    Ay = -0.5*L+Rint*np.sin(beta*np.pi/180.0)
+    Ay = 0.0+Rint*np.sin(beta*np.pi/180.0)
     Bx = Rext*np.cos(beta*np.pi/180.0)
-    By = -0.5*L+Rext*np.sin(beta*np.pi/180.0)
+    By = 0.0+Rext*np.sin(beta*np.pi/180.0)
     fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[17]
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[17],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[19], entity2=fiberGeometry[7],addUndoState=False)
@@ -3333,9 +3333,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create fourth circular section ...',True)
     Ax = Rint*np.cos(gamma*np.pi/180.0)
-    Ay = -0.5*L+Rint*np.sin(gamma*np.pi/180.0)
+    Ay = 0.0+Rint*np.sin(gamma*np.pi/180.0)
     Bx = Rext*np.cos(gamma*np.pi/180.0)
-    By = -0.5*L+Rext*np.sin(gamma*np.pi/180.0)
+    By = 0.0+Rext*np.sin(gamma*np.pi/180.0)
     fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[18]
     fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[18],addUndoState=False)
     fiberSketch.CoincidentConstraint(entity1=fiberVertices[21], entity2=fiberGeometry[7],addUndoState=False)
@@ -3356,22 +3356,22 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         # draw construction lines
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction lines ...',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(theta+deltatheta) + ' deg',True)
-        fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=(theta-deltatheta)) # fiberGeometry[19]
+        fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=(theta-deltatheta)) # fiberGeometry[19]
         fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[19],addUndoState=False)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         #raw_input()
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(alpha) + ' deg',True)
-        fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=alpha) # fiberGeometry[20]
+        fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=alpha) # fiberGeometry[20]
         fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[20],addUndoState=False)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         #raw_input()
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(beta) + ' deg',True)
-        fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=beta) # fiberGeometry[21]
+        fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=beta) # fiberGeometry[21]
         fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[21],addUndoState=False)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         #raw_input()
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(gamma) + ' deg',True)
-        fiberSketch.ConstructionLine(point1=(0.0, -0.5*L), angle=gamma) # fiberGeometry[22]
+        fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=gamma) # fiberGeometry[22]
         fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[22],addUndoState=False)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         #raw_input()
@@ -3389,9 +3389,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create first circular section ...',True)
         Ax = Rint*np.cos(alpha*np.pi/180.0)
-        Ay = -0.5*L+Rint*np.sin(alpha*np.pi/180.0)
+        Ay = 0.0+Rint*np.sin(alpha*np.pi/180.0)
         Bx = Rext*np.cos(alpha*np.pi/180.0)
-        By = -0.5*L+Rext*np.sin(alpha*np.pi/180.0)
+        By = 0.0+Rext*np.sin(alpha*np.pi/180.0)
         fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[23]
         fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[23],addUndoState=False)
         fiberSketch.CoincidentConstraint(entity1=fiberVertices[-2], entity2=fiberGeometry[7],addUndoState=False)
@@ -3401,9 +3401,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create second circular section ...',True)
         Ax = Rint*np.cos((theta+deltatheta)*np.pi/180.0)
-        Ay = -0.5*L+Rint*np.sin((theta+deltatheta)*np.pi/180.0)
+        Ay = 0.0+Rint*np.sin((theta+deltatheta)*np.pi/180.0)
         Bx = Rext*np.cos((theta+deltatheta)*np.pi/180.0)
-        By = -0.5*L+Rext*np.sin((theta+deltatheta)*np.pi/180.0)
+        By = 0.0+Rext*np.sin((theta+deltatheta)*np.pi/180.0)
         fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[24]
         fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[24],addUndoState=False)
         fiberSketch.CoincidentConstraint(entity1=fiberVertices[-2], entity2=fiberGeometry[7],addUndoState=False)
@@ -3413,9 +3413,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create third circular section ...',True)
         Ax = Rint*np.cos(beta*np.pi/180.0)
-        Ay = -0.5*L+Rint*np.sin(beta*np.pi/180.0)
+        Ay = 0.0+Rint*np.sin(beta*np.pi/180.0)
         Bx = Rext*np.cos(beta*np.pi/180.0)
-        By = -0.5*L+Rext*np.sin(beta*np.pi/180.0)
+        By = 0.0+Rext*np.sin(beta*np.pi/180.0)
         fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[25]
         fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[25],addUndoState=False)
         fiberSketch.CoincidentConstraint(entity1=fiberVertices[-2], entity2=fiberGeometry[7],addUndoState=False)
@@ -3425,9 +3425,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create fourth circular section ...',True)
         Ax = Rint*np.cos(gamma*np.pi/180.0)
-        Ay = -0.5*L+Rint*np.sin(gamma*np.pi/180.0)
+        Ay = 0.0+Rint*np.sin(gamma*np.pi/180.0)
         Bx = Rext*np.cos(gamma*np.pi/180.0)
-        By = -0.5*L+Rext*np.sin(gamma*np.pi/180.0)
+        By = 0.0+Rext*np.sin(gamma*np.pi/180.0)
         fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[26]
         fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[26],addUndoState=False)
         fiberSketch.CoincidentConstraint(entity1=fiberVertices[-2], entity2=fiberGeometry[7],addUndoState=False)
@@ -3437,7 +3437,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # if bounding ply is present, draw interface line
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw ply upper interface line ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw upper ply interface line ...',True)
         if 'adjacentFibers' in parameters['BC']['northSide']['type']:
             fiberSketch.Line(point1=(CornerAx,L+Lply),point2=(CornerBx,L+Lply))
         else:
@@ -3457,35 +3457,35 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers above ...',True)
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-            fiberSketch.CircleByCenterPerimeter(center=(0.0, -0.5*L+(nFiber+1)*2*L), point1=(Rf, -0.5*L+(nFiber+1)*2*L))
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0+(nFiber+1)*2*L), point1=(Rf, 0.0+(nFiber+1)*2*L))
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for mFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    fiberSketch.CircleByCenterPerimeter(center=((mFiber+1)*2*L, -0.5*L+(nFiber+1)*2*L), point1=((mFiber+1)*2*L+Rf, -0.5*L+(nFiber+1)*2*L))
+                    fiberSketch.CircleByCenterPerimeter(center=((mFiber+1)*2*L, 0.0+(nFiber+1)*2*L), point1=((mFiber+1)*2*L+Rf, 0.0+(nFiber+1)*2*L))
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    fiberSketch.CircleByCenterPerimeter(center=(-(mFiber+1)*2*L, -0.5*L+(nFiber+1)*2*L), point1=(-(mFiber+1)*2*L+Rf, -0.5*L+(nFiber+1)*2*L))
+                    fiberSketch.CircleByCenterPerimeter(center=(-(mFiber+1)*2*L, 0.0+(nFiber+1)*2*L), point1=(-(mFiber+1)*2*L+Rf, 0.0+(nFiber+1)*2*L))
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers to the right ...',True)
         if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-                fiberSketch.CircleByCenterPerimeter(center=((nFiber+1)*2*L, -0.5*L), point1=((nFiber+1)*2*L-Rf, -0.5*L))
+                fiberSketch.CircleByCenterPerimeter(center=((nFiber+1)*2*L, 0.0), point1=((nFiber+1)*2*L-Rf, 0.0))
         else:
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-                fiberSketch.ArcByCenterEnds(center=((nFiber+1)*2*L, -0.5*L), point1=((nFiber+1)*2*L-Rf, -0.5*L), point2=((nFiber+1)*2*L+Rf,-0.5*L), direction=CLOCKWISE)
+                fiberSketch.ArcByCenterEnds(center=((nFiber+1)*2*L, 0.0), point1=((nFiber+1)*2*L-Rf, 0.0), point2=((nFiber+1)*2*L+Rf,0.0), direction=CLOCKWISE)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers to the left ...',True)
         if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-                fiberSketch.CircleByCenterPerimeter(center=(-(nFiber+1)*2*L, -0.5*L), point1=(-(nFiber+1)*2*L-Rf, -0.5*L))
+                fiberSketch.CircleByCenterPerimeter(center=(-(nFiber+1)*2*L, 0.0), point1=(-(nFiber+1)*2*L-Rf, 0.0))
         else:
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-                fiberSketch.ArcByCenterEnds(center=(-(nFiber+1)*2*L, -0.5*L), point1=(-(nFiber+1)*2*L-Rf, -0.5*L), point2=(-(nFiber+1)*2*L+Rf,-0.5*L), direction=CLOCKWISE)
+                fiberSketch.ArcByCenterEnds(center=(-(nFiber+1)*2*L, 0.0), point1=(-(nFiber+1)*2*L-Rf, 0.0), point2=(-(nFiber+1)*2*L+Rf,0.0), direction=CLOCKWISE)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)

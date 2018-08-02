@@ -3471,9 +3471,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers to the right ...',True)
         if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-	    for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-	        fiberSketch.CircleByCenterPerimeter(center=((nFiber+1)*2*L, -0.5*L), point1=((nFiber+1)*2*L-Rf, -0.5*L))
-	else:
+	        for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+	            fiberSketch.CircleByCenterPerimeter(center=((nFiber+1)*2*L, -0.5*L), point1=((nFiber+1)*2*L-Rf, -0.5*L))
+	    else:
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 fiberSketch.ArcByCenterEnds(center=((nFiber+1)*2*L, -0.5*L), point1=((nFiber+1)*2*L-Rf, -0.5*L), point2=((nFiber+1)*2*L+Rf,-0.5*L), direction=CLOCKWISE)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
@@ -3481,9 +3481,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers to the left ...',True)
         if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-	    for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-	        fiberSketch.CircleByCenterPerimeter(center=(-(nFiber+1)*2*L, -0.5*L), point1=(-(nFiber+1)*2*L-Rf, -0.5*L))
-	else:
+	        for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
+	            fiberSketch.CircleByCenterPerimeter(center=(-(nFiber+1)*2*L, -0.5*L), point1=(-(nFiber+1)*2*L-Rf, -0.5*L))
+	    else:
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 fiberSketch.ArcByCenterEnds(center=(-(nFiber+1)*2*L, -0.5*L), point1=(-(nFiber+1)*2*L-Rf, -0.5*L), point2=(-(nFiber+1)*2*L+Rf,-0.5*L), direction=CLOCKWISE)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)

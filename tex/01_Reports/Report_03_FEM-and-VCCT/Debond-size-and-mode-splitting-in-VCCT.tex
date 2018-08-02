@@ -177,7 +177,12 @@ E_{1}=\frac{E\left(1-\nu\right)}{\left(1+\nu\right)\left(1-2\nu\right)}\quad E_{
 
 \begin{equation}
 \begin{split}
-\delta\Pi\left(\delta\underline{u}\right)=&\Pi\left(\underline{u}+\delta\underline{u}\right)-\Pi\left(\underline{u}\right)=\\=&\frac{1}{2}\int_{V}\underline{\underline{\sigma}}^{T}\underline{\underline{\varepsilon}}dV-\int_{V}\underline{F}^{T}\underline{u}dV-\int_{S}\underline{f}^{T}\underline{u}dS
+\delta\Pi\left(\delta\underline{u}\right)=&\Pi\left(\underline{u}+\delta\underline{u}\right)-\Pi\left(\underline{u}\right)=\\=&\frac{1}{2}\int_{V}\left(\underline{u}+\underline{\delta u}\right)^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\left(\underline{u}+\underline{\delta u}\right)dV-\int_{V}\underline{F}^{T}\left(\underline{u}+\underline{\delta u}\right)dV-\int_{S}\underline{f}^{T}\left(\underline{u}+\underline{\delta u}\right)dS+\\
+-&\frac{1}{2}\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV+\int_{V}\underline{F}^{T}\underline{u}dV+\int_{S}\underline{f}^{T}\underline{u}dS=\\
+=&\frac{1}{2}\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV+\frac{1}{2}\int_{V}\underline{\delta u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{\delta u}dV+\\
+-&\int_{V}\underline{F}^{T}\underline{u}dV-\int_{V}\underline{F}^{T}\underline{\delta u}dV+\\
+-&\int_{S}\underline{f}^{T}\underline{u}dS+\int_{S}\underline{f}^{T}\underline{\delta u}dS+\\
+-&\frac{1}{2}\int_{V}\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}dV+\int_{V}\underline{F}^{T}\underline{u}dV+\int_{S}\underline{f}^{T}\underline{u}dS=\\
 \end{split}
 \end{equation}
 

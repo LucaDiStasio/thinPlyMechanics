@@ -419,7 +419,9 @@ y = y\left(\xi,\eta\right) =& N_{1}\left(\xi,\eta\right)y_{1}+N_{2}\left(\xi,\et
 \begin{equation}
 \underline{\underline{J}}^{-1}=\begin{bmatrix}
 \frac{\partial x}{\partial\xi}&\frac{\partial x}{\partial\eta}\\\frac{\partial y}{\partial\xi}&\frac{\partial y}{\partial\eta}
-\end{bmatrix}^{-1}=
+\end{bmatrix}^{-1}=\frac{1}{\frac{\partial x}{\partial\xi}\frac{\partial y}{\partial\eta}-\frac{\partial y}{\partial\xi}\frac{\partial x}{\partial\eta}}\begin{bmatrix}
+\frac{\partial y}{\partial\eta}&-\frac{\partial x}{\partial\eta}\\-\frac{\partial y}{\partial\xi}&\frac{\partial x}{\partial\xi}
+\end{bmatrix}
 \end{equation}
 
 \begin{equation}

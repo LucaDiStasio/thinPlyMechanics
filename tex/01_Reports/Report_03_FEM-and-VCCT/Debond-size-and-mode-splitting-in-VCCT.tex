@@ -245,23 +245,32 @@ N_{4}=N_{4}\left(\xi,\eta\right)\\
 \end{equation}
 
 \begin{equation}
-\begin{split}
-\frac{1}{2}\int_{V}&\left(\delta\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{u}+\underline{u}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\delta\underline{u}\right)dV=\\&
-=\frac{1}{2}\int_{V}\left(\delta\underline{u}^{T}_{N}\underline{\underline{N}}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{\underline{N}}\cdot\underline{u}_{N}+\underline{u}^{T}_{N}\underline{\underline{N}}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{\underline{N}}\delta\underline{u}_{N}\right)dV=\\&
-=\delta\underline{u}^{T}_{N}\int_{V}\left(\underline{\underline{N}}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{\underline{N}}\right)dV\underline{u}_{N}=\delta\underline{u}^{T}_{N}\int_{V}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV\underline{u}_{N}
-\end{split}
+\int_{V}\underline{\delta u_{N}}^{T}\underline{\underline{N}}^{T}\underline{\underline{\widetilde{B}}}^{T}\underline{\underline{D}}\cdot\underline{\underline{\widetilde{B}}}\cdot\underline{\underline{N}}\cdot\underline{u_{N}}dV-\int_{V}\underline{\delta u_{N}}^{T}\underline{\underline{N}}^{T}\underline{F}dV-\int_{S}\underline{\delta u_{N}}^{T}\underline{\underline{N}}^{T}\underline{f}dS=0
 \end{equation}
 
 \begin{equation}
-\underline{\underline{k}}=\int_{V}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV
+\underline{\delta u_{N}}^{T}\left(\int_{V}\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}dV\cdot\underline{u_{N}}-\int_{V}\underline{\underline{N}}^{T}\underline{F}dV-\int_{S}\underline{\underline{N}}^{T}\underline{f}dS\right)=0
+\end{equation}
+
+\begin{equation}
+\underline{\underline{k}}\cdot\underline{u}_{N}=\underline{F}_{N}\quad\underline{\underline{k}}=\int_{V}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV\quad\underline{F}_{N}=\int_{V}\underline{\underline{N}}^{T}\underline{F}dV+\int_{S}\underline{\underline{N}}^{T}\underline{f}dS
 \end{equation}
 
 \begin{equation}
 \begin{cases}
 N_{1}\left(\xi,\eta\right)=\frac{1}{4}\left(1-\xi\right)\left(1-\eta\right)\\
-N_{2}\left(\xi,\eta\right)=\frac{1}{4}\left(1-\xi\right)\left(1+\eta\right)\\
-N_{3}\left(\xi,\eta\right)=\frac{1}{4}\left(1+\xi\right)\left(1-\eta\right)\\
-N_{4}\left(\xi,\eta\right)=\frac{1}{4}\left(1+\xi\right)\left(1+\eta\right)\\
+N_{2}\left(\xi,\eta\right)=\frac{1}{4}\left(1+\xi\right)\left(1-\eta\right)\\
+N_{3}\left(\xi,\eta\right)=\frac{1}{4}\left(1+\xi\right)\left(1+\eta\right)\\
+N_{4}\left(\xi,\eta\right)=\frac{1}{4}\left(1-\xi\right)\left(1+\eta\right)\\
+\end{cases}\qquad\begin{cases}
+N_{1}\left(\xi,\eta\right)=\frac{1}{4}\left(1-\xi\right)\left(1-\eta\right)\left(-\xi-\eta-1\right)\\
+N_{2}\left(\xi,\eta\right)=\frac{1}{4}\left(1+\xi\right)\left(1-\eta\right)\left(\xi-\eta-1\right)\\
+N_{3}\left(\xi,\eta\right)=\frac{1}{4}\left(1+\xi\right)\left(1+\eta\right)\left(\xi+\eta-1\right)\\
+N_{4}\left(\xi,\eta\right)=\frac{1}{4}\left(1-\xi\right)\left(1+\eta\right)\left(-\xi+\eta-1\right)\\
+N_{5}\left(\xi,\eta\right)=\frac{1}{2}\left(1-\xi^{2}\right)\left(1-\eta\right)\\
+N_{6}\left(\xi,\eta\right)=\frac{1}{2}\left(1+\xi\right)\left(1-\eta^{2}\right)\\
+N_{7}\left(\xi,\eta\right)=\frac{1}{2}\left(1-\xi^{2}\right)\left(1+\eta\right)\\
+N_{8}\left(\xi,\eta\right)=\frac{1}{2}\left(1-\xi\right)\left(1-\eta^{2}\right)\\
 \end{cases}
 \end{equation}
 
@@ -272,8 +281,10 @@ N_{4}\left(\xi,\eta\right)=\frac{1}{4}\left(1+\xi\right)\left(1+\eta\right)\\
 \begin{equation}
 \underline{p}=\begin{bmatrix}
 x\\y
-\end{bmatrix}\quad\underline{p}_{N}=\begin{bmatrix}
+\end{bmatrix}\qquad\underline{p}_{N}=\begin{bmatrix}
 x_{1}\\y_{1}\\x_{2}\\y_{2}\\x_{3}\\y_{3}\\x_{4}\\y_{4}\\
+\end{bmatrix}\text{ or }\underline{p}_{N}=\begin{bmatrix}
+x_{1}\\y_{1}\\x_{2}\\y_{2}\\x_{3}\\y_{3}\\x_{4}\\y_{4}\\x_{5}\\y_{5}\\x_{6}\\y_{6}\\x_{7}\\y_{7}\\x_{8}\\y_{8}\\
 \end{bmatrix}
 \end{equation}
 
@@ -281,6 +292,15 @@ x_{1}\\y_{1}\\x_{2}\\y_{2}\\x_{3}\\y_{3}\\x_{4}\\y_{4}\\
 \begin{split}
 x = x\left(\xi,\eta\right) = N_{1}\left(\xi,\eta\right)x_{1}+N_{2}\left(\xi,\eta\right)x_{2}+N_{3}\left(\xi,\eta\right)x_{3}+N_{4}\left(\xi,\eta\right)x_{4}\\
 y = y\left(\xi,\eta\right) = N_{1}\left(\xi,\eta\right)y_{1}+N_{2}\left(\xi,\eta\right)y_{2}+N_{3}\left(\xi,\eta\right)y_{3}+N_{4}\left(\xi,\eta\right)y_{4}\\
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+x = x\left(\xi,\eta\right) =& N_{1}\left(\xi,\eta\right)x_{1}+N_{2}\left(\xi,\eta\right)x_{2}+N_{3}\left(\xi,\eta\right)x_{3}+N_{4}\left(\xi,\eta\right)x_{4}+\\
+& +N_{5}\left(\xi,\eta\right)x_{5}+N_{6}\left(\xi,\eta\right)x_{6}+N_{7}\left(\xi,\eta\right)x_{7}+N_{8}\left(\xi,\eta\right)x_{8}\\
+y = y\left(\xi,\eta\right) =& N_{1}\left(\xi,\eta\right)y_{1}+N_{2}\left(\xi,\eta\right)y_{2}+N_{3}\left(\xi,\eta\right)y_{3}+N_{4}\left(\xi,\eta\right)y_{4}+\\
+& +N_{5}\left(\xi,\eta\right)y_{5}+N_{6}\left(\xi,\eta\right)y_{6}+N_{7}\left(\xi,\eta\right)y_{7}+N_{8}\left(\xi,\eta\right)y_{8}\\
 \end{split}
 \end{equation}
 

@@ -297,14 +297,35 @@ N_{8}\left(\xi,\eta\right)=\frac{1}{2}\left(1-\xi\right)\left(1-\eta^{2}\right)\
 
 \begin{equation}
 \begin{cases}
-\frac{\partial N_{1}\left(\xi,\eta\right)}{\partial \xi}=-\frac{1}{4}\left(1-\eta\right)\\
-\frac{\partial N_{2}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1-\eta\right)\\
-\frac{\partial N_{3}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\\left(1+\eta\right)\\
-\frac{\partial N_{4}\left(\xi,\eta\right)}{\partial \xi}=-\frac{1}{4}\left(1+\eta\right)\\
+\frac{\partial N_{1}\left(\xi,\eta\right)}{\partial \xi} =-\frac{1}{4}\left(1-\eta\right)\\
+\frac{\partial N_{2}\left(\xi,\eta\right)}{\partial \xi} = \frac{1}{4}\left(1-\eta\right)\\
+\frac{\partial N_{3}\left(\xi,\eta\right)}{\partial \xi} = \frac{1}{4}\left(1+\eta\right)\\
+\frac{\partial N_{4}\left(\xi,\eta\right)}{\partial \xi} =-\frac{1}{4}\left(1+\eta\right)\\
 \frac{\partial N_{1}\left(\xi,\eta\right)}{\partial \eta}=-\frac{1}{4}\left(1-\xi\right)\\
 \frac{\partial N_{2}\left(\xi,\eta\right)}{\partial \eta}=-\frac{1}{4}\left(1+\xi\right)\\
-\frac{\partial N_{3}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1+\xi\right)\\
-\frac{\partial N_{4}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1-\xi\right)\\
+\frac{\partial N_{3}\left(\xi,\eta\right)}{\partial \eta}= \frac{1}{4}\left(1+\xi\right)\\
+\frac{\partial N_{4}\left(\xi,\eta\right)}{\partial \eta}= \frac{1}{4}\left(1-\xi\right)\\
+\end{cases}
+\end{equation}
+
+\begin{equation}
+\begin{cases}
+\frac{\partial N_{1}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1-\xi\right)\left(1-\eta\right)\left(-\xi-\eta-1\right)\\
+\frac{\partial N_{2}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1+\xi\right)\left(1-\eta\right)\left(\xi-\eta-1\right)\\
+\frac{\partial N_{3}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1+\xi\right)\left(1+\eta\right)\left(\xi+\eta-1\right)\\
+\frac{\partial N_{4}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1-\xi\right)\left(1+\eta\right)\left(-\xi+\eta-1\right)\\
+\frac{\partial N_{5}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{2}\left(1-\xi^{2}\right)\left(1-\eta\right)\\
+\frac{\partial N_{6}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{2}\left(1+\xi\right)\left(1-\eta^{2}\right)\\
+\frac{\partial N_{7}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{2}\left(1-\xi^{2}\right)\left(1+\eta\right)\\
+\frac{\partial N_{8}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{2}\left(1-\xi\right)\left(1-\eta^{2}\right)\\
+\frac{\partial N_{1}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1-\xi\right)\left(1-\eta\right)\left(-\xi-\eta-1\right)\\
+\frac{\partial N_{2}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1+\xi\right)\left(1-\eta\right)\left(\xi-\eta-1\right)\\
+\frac{\partial N_{3}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1+\xi\right)\left(1+\eta\right)\left(\xi+\eta-1\right)\\
+\frac{\partial N_{4}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1-\xi\right)\left(1+\eta\right)\left(-\xi+\eta-1\right)\\
+\frac{\partial N_{5}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{2}\left(1-\xi^{2}\right)\left(1-\eta\right)\\
+\frac{\partial N_{6}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{2}\left(1+\xi\right)\left(1-\eta^{2}\right)\\
+\frac{\partial N_{7}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{2}\left(1-\xi^{2}\right)\left(1+\eta\right)\\
+\frac{\partial N_{8}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{2}\left(1-\xi\right)\left(1-\eta^{2}\right)\\
 \end{cases}
 \end{equation}
 
@@ -388,7 +409,7 @@ dV\left(x,y\right)=\sqrt{g}dV\left(\xi,\eta\right)
 \end{equation}
 
 \begin{equation}
-\underline{\underline{k}}=\int_{V\left(x,y\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV\left(x,y\right)=\int_{V\left(\xi,\eta\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)\sqrt{g}dV\left(\xi,\eta\right)
+\underline{\underline{k_{e}}}=\int_{V_{e}\left(x,y\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV_{e}\left(x,y\right)=\int_{V_{e}\left(\xi,\eta\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)\sqrt{g}dV_{e}\left(\xi,\eta\right)
 \end{equation}
 
 \clearpage

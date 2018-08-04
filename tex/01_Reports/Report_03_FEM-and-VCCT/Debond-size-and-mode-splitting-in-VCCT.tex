@@ -326,6 +326,19 @@ y = y\left(\xi,\eta\right) =& N_{1}\left(\xi,\eta\right)y_{1}+N_{2}\left(\xi,\et
 \end{equation}
 
 \begin{equation}
+\begin{cases}
+\frac{\partial N_{1}\left(\xi,\eta\right)}{\partial x}=\frac{\partial N_{1}\left(\xi,\eta\right)}{\partial \xi}\frac{\partial \xi}{\partial x}+\frac{\partial N_{1}\left(\xi,\eta\right)}{\partial \eta}\frac{\partial \eta}{\partial x}\\
+\frac{\partial N_{2}\left(\xi,\eta\right)}{\partial x}=\frac{1}{4}\left(1+\xi\right)\left(1-\eta\right)\\
+\frac{\partial N_{3}\left(\xi,\eta\right)}{\partial x}=\frac{1}{4}\left(1+\xi\right)\left(1+\eta\right)\\
+\frac{\partial N_{4}\left(\xi,\eta\right)}{\partial x}=\frac{1}{4}\left(1-\xi\right)\left(1+\eta\right)\\
+\frac{\partial N_{1}\left(\xi,\eta\right)}{\partial y}=\frac{1}{4}\left(1-\xi\right)\left(1-\eta\right)\\
+\frac{\partial N_{2}\left(\xi,\eta\right)}{\partial y}=\frac{1}{4}\left(1+\xi\right)\left(1-\eta\right)\\
+\frac{\partial N_{3}\left(\xi,\eta\right)}{\partial y}=\frac{1}{4}\left(1+\xi\right)\left(1+\eta\right)\\
+\frac{\partial N_{4}\left(\xi,\eta\right)}{\partial y}=\frac{1}{4}\left(1-\xi\right)\left(1+\eta\right)\\
+\end{cases}
+\end{equation}
+
+\begin{equation}
 \underline{e}_{\xi}=\begin{bmatrix}
 \frac{\partial x}{\partial\xi}\\\frac{\partial y}{\partial\xi}
 \end{bmatrix}\quad\underline{e}_{\eta}=\begin{bmatrix}

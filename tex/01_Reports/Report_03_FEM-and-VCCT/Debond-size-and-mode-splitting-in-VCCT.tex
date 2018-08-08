@@ -474,12 +474,16 @@ dV\left(x,y\right)=\sqrt{g}dV\left(\xi,\eta\right)
 \end{equation}
 
 \begin{equation}
-\begin{cases}
-k_{e|11}=\\
-k_{e|12}=\\
-k_{e|22}=\\
-k_{e|21}=k_{e|12}\\
-\end{cases}
+k_{e}=\begin{bmatrix}
+k_{e|11}&k_{e|12}&k_{e|13}&k_{e|14}&k_{e|15}&k_{e|16}&k_{e|17}&k_{e|18}\\
+k_{e|12}&k_{e|22}&k_{e|23}&k_{e|24}&k_{e|25}&k_{e|26}&k_{e|27}&k_{e|28}\\
+k_{e|13}&k_{e|23}&k_{e|33}&k_{e|34}&k_{e|35}&k_{e|36}&k_{e|37}&k_{e|38}\\
+k_{e|14}&k_{e|24}&k_{e|34}&k_{e|44}&k_{e|45}&k_{e|46}&k_{e|47}&k_{e|48}\\
+k_{e|15}&k_{e|25}&k_{e|35}&k_{e|45}&k_{e|55}&k_{e|56}&k_{e|57}&k_{e|58}\\
+k_{e|16}&k_{e|26}&k_{e|36}&k_{e|46}&k_{e|56}&k_{e|66}&k_{e|67}&k_{e|68}\\
+k_{e|17}&k_{e|27}&k_{e|37}&k_{e|47}&k_{e|57}&k_{e|67}&k_{e|77}&k_{e|78}\\
+k_{e|18}&k_{e|28}&k_{e|38}&k_{e|48}&k_{e|58}&k_{e|68}&k_{e|78}&k_{e|88}\\
+\end{bmatrix}
 \end{equation}
 
 \clearpage
@@ -653,6 +657,12 @@ F_{r}=\cos\left(\Delta\theta\right) F_{x,CT}+\sin\left(\Delta\theta\right) F_{y,
 &+\frac{1}{2R_{f}\delta}\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\sin\left(\delta\right)=\\
 = &G_{I,r\theta}\cos\left(\delta\right)+\\
 &+\frac{1}{2R_{f}\delta}\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\sin\left(\delta\right)
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\lim_{\delta\rightarrow 0}\widetilde{G}_{I,r\theta} = 
 \end{split}
 \end{equation}
 

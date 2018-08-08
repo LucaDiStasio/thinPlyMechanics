@@ -310,22 +310,22 @@ N_{8}\left(\xi,\eta\right)=\frac{1}{2}\left(1-\xi\right)\left(1-\eta^{2}\right)\
 
 \begin{equation}
 \begin{cases}
-\frac{\partial N_{1}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1-\xi\right)\left(1-\eta\right)\left(-\xi-\eta-1\right)\\
-\frac{\partial N_{2}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1+\xi\right)\left(1-\eta\right)\left(\xi-\eta-1\right)\\
-\frac{\partial N_{3}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1+\xi\right)\left(1+\eta\right)\left(\xi+\eta-1\right)\\
-\frac{\partial N_{4}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1-\xi\right)\left(1+\eta\right)\left(-\xi+\eta-1\right)\\
-\frac{\partial N_{5}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{2}\left(1-\xi^{2}\right)\left(1-\eta\right)\\
-\frac{\partial N_{6}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{2}\left(1+\xi\right)\left(1-\eta^{2}\right)\\
-\frac{\partial N_{7}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{2}\left(1-\xi^{2}\right)\left(1+\eta\right)\\
-\frac{\partial N_{8}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{2}\left(1-\xi\right)\left(1-\eta^{2}\right)\\
-\frac{\partial N_{1}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1-\xi\right)\left(1-\eta\right)\left(-\xi-\eta-1\right)\\
-\frac{\partial N_{2}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1+\xi\right)\left(1-\eta\right)\left(\xi-\eta-1\right)\\
-\frac{\partial N_{3}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1+\xi\right)\left(1+\eta\right)\left(\xi+\eta-1\right)\\
-\frac{\partial N_{4}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1-\xi\right)\left(1+\eta\right)\left(-\xi+\eta-1\right)\\
-\frac{\partial N_{5}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{2}\left(1-\xi^{2}\right)\left(1-\eta\right)\\
-\frac{\partial N_{6}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{2}\left(1+\xi\right)\left(1-\eta^{2}\right)\\
-\frac{\partial N_{7}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{2}\left(1-\xi^{2}\right)\left(1+\eta\right)\\
-\frac{\partial N_{8}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{2}\left(1-\xi\right)\left(1-\eta^{2}\right)\\
+\frac{\partial N_{1}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1-\eta\right)\left(2\xi+\eta\right)\\
+\frac{\partial N_{2}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1-\eta\right)\left(2\xi-\eta\right)\\
+\frac{\partial N_{3}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1+\eta\right)\left(2\xi+\eta\right)\\
+\frac{\partial N_{4}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{4}\left(1+\eta\right)\left(2\xi-\eta\right)\\
+\frac{\partial N_{5}\left(\xi,\eta\right)}{\partial \xi}=-\xi\left(1-\eta\right)\\
+\frac{\partial N_{6}\left(\xi,\eta\right)}{\partial \xi}=\frac{1}{2}\left(1-\eta^{2}\right)\\
+\frac{\partial N_{7}\left(\xi,\eta\right)}{\partial \xi}=-\xi\left(1+\eta\right)\\
+\frac{\partial N_{8}\left(\xi,\eta\right)}{\partial \xi}=-\frac{1}{2}\left(1-\eta^{2}\right)\\
+\frac{\partial N_{1}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1-\xi\right)\left(2\eta+\xi\right)\\
+\frac{\partial N_{2}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1+\xi\right)\left(2\eta-\xi\right)\\
+\frac{\partial N_{3}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1+\xi\right)\left(2\eta+\xi\right)\\
+\frac{\partial N_{4}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{4}\left(1-\xi\right)\left(2\eta-\xi\right)\\
+\frac{\partial N_{5}\left(\xi,\eta\right)}{\partial \eta}=-\frac{1}{2}\left(1-\xi^{2}\right)\\
+\frac{\partial N_{6}\left(\xi,\eta\right)}{\partial \eta}=-\eta\left(1+\xi\right)\\
+\frac{\partial N_{7}\left(\xi,\eta\right)}{\partial \eta}=\frac{1}{2}\left(1-\xi^{2}\right)\\
+\frac{\partial N_{8}\left(\xi,\eta\right)}{\partial \eta}=-\eta\left(1-\xi\right)\\
 \end{cases}
 \end{equation}
 
@@ -357,6 +357,13 @@ x = x\left(\xi,\eta\right) =& N_{1}\left(\xi,\eta\right)x_{1}+N_{2}\left(\xi,\et
 y = y\left(\xi,\eta\right) =& N_{1}\left(\xi,\eta\right)y_{1}+N_{2}\left(\xi,\eta\right)y_{2}+N_{3}\left(\xi,\eta\right)y_{3}+N_{4}\left(\xi,\eta\right)y_{4}+\\
 & +N_{5}\left(\xi,\eta\right)y_{5}+N_{6}\left(\xi,\eta\right)y_{6}+N_{7}\left(\xi,\eta\right)y_{7}+N_{8}\left(\xi,\eta\right)y_{8}\\
 \end{split}
+\end{equation}
+
+\begin{equation}
+\begin{cases}
+x = x\left(\xi,\eta\right) = N_{1}\left(\xi,\eta\right)x_{1}+N_{2}\left(\xi,\eta\right)x_{2}+N_{3}\left(\xi,\eta\right)x_{3}+N_{4}\left(\xi,\eta\right)x_{4}\\
+y = y\left(\xi,\eta\right) = N_{1}\left(\xi,\eta\right)y_{1}+N_{2}\left(\xi,\eta\right)y_{2}+N_{3}\left(\xi,\eta\right)y_{3}+N_{4}\left(\xi,\eta\right)y_{4}\\
+\end{cases}
 \end{equation}
 
 \begin{equation}

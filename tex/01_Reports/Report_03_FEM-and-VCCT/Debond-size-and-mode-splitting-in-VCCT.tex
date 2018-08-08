@@ -529,6 +529,13 @@ r \\
 \subsection{Calculation of displacements and reaction forces}
 
 \begin{equation}
+\begin{cases}
+&\left(k_{e,MC|11}+k_{e,MB|33}\right)u_{x,MCT}+\left(k_{e,MC|12}+k_{e,MB|34}\right)u_{y,MCT}+\\&+k_{e,MC|13}u_{x,MCDM}+k_{e,MC|14}u_{y,MCDM}+\\&+k_{e,MC|15}u_{x,MCNE}+k_{e,MC|16}u_{y,MCNE}+k_{e,MC|17}u_{x,MCNW}+k_{e,MC|18}u_{y,MCNW}+\\
+&+k_{e,MB|13}u_{x,MBCO}+k_{e,MB|23}u_{y,MBCO}+\\&+k_{e,MB|35}u_{x,MBNE}+k_{e,MB|36}u_{y,MBNE}+k_{e,MB|37}u_{x,MBNW}+k_{e,MB|38}u_{y,MBNW}=0
+\end{cases}
+\end{equation}
+
+\begin{equation}
 u_{x}=u_{x,M}-u_{x,F}\qquad u_{y}=u_{y,M}-u_{y,F}
 \end{equation}
 
@@ -662,7 +669,11 @@ F_{r}=\cos\left(\Delta\theta\right) F_{x,CT}+\sin\left(\Delta\theta\right) F_{y,
 
 \begin{equation}
 \begin{split}
-\lim_{\delta\rightarrow 0}\widetilde{G}_{I,r\theta} = 
+\lim_{\delta\rightarrow 0}\widetilde{G}_{I,r\theta} = &\lim_{\delta\rightarrow 0}G_{I,r\theta}\cos\left(\delta\right)+\\
++\lim_{\delta\rightarrow 0}\frac{1}{2R_{f}\delta}&\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\sin\left(\delta\right)=\\
+= &G_{I,r\theta}+\\
++\frac{1}{2R_{f}}&\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\lim_{\delta\rightarrow 0}\frac{\sin\left(\delta\right)}{\delta}\\
+= &G_{I,r\theta}\cos\left(\delta\right)+\frac{1}{2R_{f}}\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)
 \end{split}
 \end{equation}
 

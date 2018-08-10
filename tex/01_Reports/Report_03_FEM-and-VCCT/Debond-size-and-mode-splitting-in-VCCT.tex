@@ -717,12 +717,15 @@ G_{II,r\theta} =&\frac{1}{2R_{f}\delta}\left(\sin^{2}\left(\Delta\theta\right) F
 \subsection{Sensitivity analysis of the FEM solution}
 
 \begin{equation}
-F_{x}\sim k_{x}u_{x}\qquad F_{y}\sim k_{y}u_{y}
+\begin{cases}
+F_{x,CT}&= K_{xx}u_{x}+K_{xy}u_{y}+\widetilde{F}_{x}\\
+F_{y,CT}&= K_{yx}u_{x}+K_{yy}u_{y}+\widetilde{F}_{y}\\
+\end{cases}
 \end{equation}
 
 \begin{equation}
 \begin{split}
-G_{I,r\theta} \sim&\frac{1}{2R_{f}\delta}\cos^{2}\left(\Delta\theta\right) k_{x}u^{2}_{x}\left(\Delta\theta\right)+\\
+G_{I,r\theta} \sim&\frac{1}{2R_{f}\delta}\cos^{2}\left(\Delta\theta\right) \left(K_{xx}u^{2}_{x}\left(\Delta\theta\right)+K_{xy}u_{y}u_{x}+\widetilde{F}_{x}u_{x}\left(\Delta\theta\right)\right)+\\
 &+\frac{1}{2R_{f}\delta}\left(k_{x}+k_{y}\right)u_{x}\left(\Delta\theta\right)u_{y}\left(\Delta\theta\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\\
 &+\frac{1}{2R_{f}\delta}\sin^{2}\left(\Delta\theta\right)k_{y}u^{2}_{y}\left(\Delta\theta\right)
 \end{split}

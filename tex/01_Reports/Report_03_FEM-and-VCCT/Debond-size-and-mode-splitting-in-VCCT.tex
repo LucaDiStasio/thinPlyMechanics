@@ -787,7 +787,8 @@ F_{r}=\cos\left(\Delta\theta\right) F_{x,CT}+\sin\left(\Delta\theta\right) F_{y,
 = &\frac{1}{2R_{f}\delta}\left(\cos^{2}\left(\Delta\theta\right) F_{x}u_{x}+\left(F_{x}u_{y}+F_{y}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{y}\right)\cos\left(\delta\right)+\\
 &+\frac{1}{2R_{f}\delta}\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\sin\left(\delta\right)=\\
 = &G_{I,r\theta}\cos\left(\delta\right)+\\
-&+\frac{1}{2R_{f}\delta}\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\sin\left(\delta\right)
+&+\frac{1}{2R_{f}\delta}\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\sin\left(\delta\right)=\\
+= &G_{I,r\theta}\cos\left(\delta\right)-\frac{1}{2R_{f}\delta}F_{r}u_{\theta}\sin{\delta}\\
 \end{split}
 \end{equation}
 
@@ -796,8 +797,9 @@ F_{r}=\cos\left(\Delta\theta\right) F_{x,CT}+\sin\left(\Delta\theta\right) F_{y,
 \lim_{\delta\rightarrow 0}\widetilde{G}_{I,r\theta} = &\lim_{\delta\rightarrow 0}G_{I,r\theta}\cos\left(\delta\right)+\\
 +\lim_{\delta\rightarrow 0}\frac{1}{2R_{f}\delta}&\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\sin\left(\delta\right)=\\
 = &G_{I,r\theta}+\\
-+\frac{1}{2R_{f}}&\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\lim_{\delta\rightarrow 0}\frac{\sin\left(\delta\right)}{\delta}\\
-= &G_{I,r\theta}+\frac{1}{2R_{f}}\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)
++\frac{1}{2R_{f}}&\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\lim_{\delta\rightarrow 0}\frac{\sin\left(\delta\right)}{\delta}=\\
+= &G_{I,r\theta}+\frac{1}{2R_{f}}\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\\
+= &G_{I,r\theta}-\frac{1}{2R_{f}}F_{r}u_{\theta}\\
 \end{split}
 \end{equation}
 
@@ -810,7 +812,8 @@ F_{r}=\cos\left(\Delta\theta\right) F_{x,CT}+\sin\left(\Delta\theta\right) F_{y,
 =&\frac{1}{2R_{f}\delta}\left(\sin^{2}\left(\Delta\theta\right) F_{x}u_{x}-\left(F_{x}u_{y}+F_{y}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{y}\right)\cos\left(\delta\right)+\\
 + &\frac{1}{2R_{f}\delta}\left(\left(F_{y}u_{y}-F_{x}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{x}-\sin^{2}\left(\Delta\theta\right)F_{x}u_{y}\right)\sin\left(\delta\right)=\\
 =&G_{II,r\theta}\cos\left(\delta\right)+\\
-+ &\frac{1}{2R_{f}\delta}\left(\left(F_{y}u_{y}-F_{x}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{x}-\sin^{2}\left(\Delta\theta\right)F_{x}u_{y}\right)\sin\left(\delta\right)\\
++ &\frac{1}{2R_{f}\delta}\left(\left(F_{y}u_{y}-F_{x}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{x}-\sin^{2}\left(\Delta\theta\right)F_{x}u_{y}\right)\sin\left(\delta\right)=\\
+= &G_{II,r\theta}\cos\left(\delta\right)+\frac{1}{2R_{f}\delta}F_{\theta}u_{r}\sin{\delta}\\
 \end{split}
 \end{equation}
 
@@ -820,7 +823,8 @@ F_{r}=\cos\left(\Delta\theta\right) F_{x,CT}+\sin\left(\Delta\theta\right) F_{y,
 +\lim_{\delta\rightarrow 0}\frac{1}{2R_{f}\delta}&\left(\left(F_{y}u_{y}-F_{x}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{x}-\sin^{2}\left(\Delta\theta\right)F_{x}u_{y}\right)\sin\left(\delta\right)=\\
 = &G_{II,r\theta}+\\
 +\frac{1}{2R_{f}\delta}&\left(\left(F_{y}u_{y}-F_{x}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{x}-\sin^{2}\left(\Delta\theta\right)F_{x}u_{y}\right)\lim_{\delta\rightarrow 0}\frac{\sin\left(\delta\right)}{\delta}\\
-= &G_{II,r\theta}+\frac{1}{2R_{f}\delta}\left(\left(F_{y}u_{y}-F_{x}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{x}-\sin^{2}\left(\Delta\theta\right)F_{x}u_{y}\right)
+= &G_{II,r\theta}+\frac{1}{2R_{f}\delta}\left(\left(F_{y}u_{y}-F_{x}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{x}-\sin^{2}\left(\Delta\theta\right)F_{x}u_{y}\right)=\\
+= &G_{II,r\theta}+\frac{1}{2R_{f}}F_{\theta}u_{r}\\
 \end{split}
 \end{equation}
 
@@ -831,7 +835,8 @@ F_{r}=\cos\left(\Delta\theta\right) F_{x,CT}+\sin\left(\Delta\theta\right) F_{y,
 + &\frac{1}{2R_{f}\delta}\left(-\cos^{2}\left(\Delta\theta\right) F_{x}u_{y}+\left(F_{x}u_{x}-F_{y}u_{y}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\sin^{2}\left(\Delta\theta\right)F_{y}u_{x}\right)\sin\left(\delta\right)+\\
 + &\frac{1}{2R_{f}\delta}\left(\left(F_{y}u_{y}-F_{x}u_{x}\right)\cos\left(\Delta\theta\right)\sin\left(\Delta\theta\right)+\cos^{2}\left(\Delta\theta\right)F_{y}u_{x}-\sin^{2}\left(\Delta\theta\right)F_{x}u_{y}\right)\sin\left(\delta\right)=\\
 =&\left(G_{I,r\theta}+G_{II,r\theta}\right)\cos\left(\delta\right)+\frac{1}{2R_{f}\delta}\left(F_{y}u_{x}-F_{x}u_{y}\right)\sin\left(\delta\right)=\\
-=&G_{TOT,r\theta}\cos\left(\delta\right)+\frac{1}{2R_{f}\delta}\left(F_{y}u_{x}-F_{x}u_{y}\right)\sin\left(\delta\right)
+=&G_{TOT,r\theta}\cos\left(\delta\right)+\frac{1}{2R_{f}\delta}\left(F_{y}u_{x}-F_{x}u_{y}\right)\sin\left(\delta\right)=\\
+=&G_{TOT,r\theta}\cos\left(\delta\right)+
 \end{split}
 \end{equation}
 
@@ -842,6 +847,17 @@ F_{r}=\cos\left(\Delta\theta\right) F_{x,CT}+\sin\left(\Delta\theta\right) F_{y,
 = &G_{TOT,r\theta}+\frac{1}{2R_{f}}\left(F_{y}u_{x}-F_{x}u_{y}\right)
 \end{split}
 \end{equation}
+
+Following Raju
+
+\begin{equation}
+\begin{split}
+F_{r}u_{\theta}=&\int_{0}^{\delta}\sigma_{r}u_{\theta}\left(\right)\\
+F_{r}u_{\theta}=&\int_{0}^{\delta}\sigma_{r}u_{\theta}\left(\right)\\
+\end{split}
+\end{equation}
+
+
 
 \subsection{Contact region}
 

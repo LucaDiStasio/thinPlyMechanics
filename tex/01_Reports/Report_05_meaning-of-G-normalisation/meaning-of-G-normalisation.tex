@@ -90,12 +90,12 @@ VCCT &  Virtual Crack Closure Technique\\
 
 The numerical analysis of the fiber/matrix interface has focused on the determination of mode mixity through the calculation of mode I and mode II energy release rates. In early papers, where the problem was solved in the complex domain by means of the Airy function and conformal transformations, it was shown that the stress field was due to oscillate in a very small region close to the crack tip. Thus, the evalution of stresses and stress intensity factors represents an ardous obstacle when to the discrete counterpart of the problem. \\
 Due to their definition as rates of energy change, the calculation of ERRs fits better into the frameworks of discrete procedures, whether the Finite Element Method (FEM) or the Boundary Element Method (BEM). Different variations of the same principle has been derived over the years, namely the Crack Closure Technique, the Crack Closure Integral, the Virtual Crack Closure Technique and the Virtual Crack Closure Integral. The idea at the core of these methods is that, given that the crack is propagating in a linear elastic medium, the energy released by the creation of a unit area of crack's surfaces is equal to the work needed to close the new created surfaces back together.\\
-Energy Release Rates have been so far reported in a normalized form, where a reference energy release rate $G_{0}$ is used as normalization parameter. In \cite{sevilla one fiber}, the authors claim that the use of 
+Energy Release Rates have been so far reported in a normalized form, where a reference energy release rate $G_{0}$ is used as normalization parameter. In \cite{sevilla one fiber}, the authors claim that the use of
 
 \begin{equation}
 \label{eq:G0}
 G_{0} = \frac{1+k_{m}}{8\mu_{m}}\sigma_{0}^{2}R_{f}\pi
-\end{equation} 
+\end{equation}
 
 would make the results comparable between different material systems. In equation \ref{eq:G0}, $k_{m}$ is the Kolosov constant for the matrix, which is equal to $3-4\nu$ for plane strain and $\frac{3-\nu}{1+\nu}$ for plane stress conditions, $\mu_{m}$ is the shear modulus of the matrix, $\sigma_{0}$ is the applied stress at the boundary and $R_{f}$ is the radius of the inclusion. \\
 In \cite{sevilla two fiber}, the same normalization parameter is used to analyze the effect of a neighbouring fiber on the Energy Release Rates. A similar use can be found in \cite{Linqi} It seems that the first apperance of $G_{0}$ can be retrieved in \cite{Toya}, soon followed by \cite{handbook of SIF} where a parametric study of Toya's analytical results is performed and tabulated. However, in Toya the normalization is performed for the maximum? stress at the crack tip, and its actual formulation is \textit{formula from toya}.
@@ -113,9 +113,9 @@ Consider an infinite plate made of an isotropic homogeneous material with a cent
 \begin{equation}
 \label{eq:cc-plate-k1}
 K_{I}^{CC} = \sigma_{0}\sqrt{\pi a}.
-\end{equation} 
+\end{equation}
 
-Across the literature on Linear Elastic Fracture Mechanics, in textbooks and handbooks, the expression in eq. \ref{eq:cc-plate-k1} has assumed the role of reference for the expression of Stress Intensity Factors for all possible modes of fracture and geometries. Thus, the SIF for any other arbitrary geometrical configuration of crack and sorrounding structure can be expressed as 
+Across the literature on Linear Elastic Fracture Mechanics, in textbooks and handbooks, the expression in eq. \ref{eq:cc-plate-k1} has assumed the role of reference for the expression of Stress Intensity Factors for all possible modes of fracture and geometries. Thus, the SIF for any other arbitrary geometrical configuration of crack and sorrounding structure can be expressed as
 
 \begin{equation}
 K_{mode} = \beta K_{ref}\quad\text{where}\quad K_{ref}=K_{I}^{CC}=\sigma_{0}\sqrt{\pi a}
@@ -153,7 +153,7 @@ G_{mode}=\beta G_{ref},
 \end{equation}
 
 which particularizes to $G_{mode}=\beta\frac{1-\nu^{2}}{E_{m}}\sigma_{0}^{2}\pi a $ for plane strain, and $ G_{mode}=\beta\frac{\sigma_{0}^{2}\pi a}{E_{m}} $ for plane stress.\\
-A homogeneous isotropic materia has only $2$ independent parameters that determine its elastic behavior; thus it holds
+A homogeneous isotropic material has only $2$ independent parameters that determine its elastic behavior; thus it holds
 
 \begin{equation}
 G_{m}=\frac{E_{m}}{2\left(1+\nu_{m}\right)}.
@@ -190,7 +190,7 @@ G_{ref}=&\frac{\sigma_{0}^{2}\pi a}{E_{m}}=\\
 \end{equation}
 
 where $k_{m}=\frac{3-\nu_{m}}{1+\nu_{m}}$ is the Kolosov's constant for plane stress.\\
-Recalling now eq. \ref{eq:G0} and comparing with eqs. \ref{eq:gref-planestrain} and \ref{eq:gref-planestress}, we can now identify a clear physical meaning: $G_{0}$ is the mode I energy release rate for a central crack of total length equal to the inclusion diameter $2R_{f}$ in an infinite plate made of the same material as the matrix. Furthermore, a historical purpose can be identified, as this formulation of $G_{0}$ allow for the expression of the energy release rates for the fiber/matrix interface problem as 
+Recalling now eq. \ref{eq:G0} and comparing with eqs. \ref{eq:gref-planestrain} and \ref{eq:gref-planestress}, we can now identify a clear physical meaning: $G_{0}$ is the mode I energy release rate for a central crack of total length equal to the inclusion diameter $2R_{f}$ in an infinite plate made of the same material as the matrix. Furthermore, a historical purpose can be identified, as this formulation of $G_{0}$ allow for the expression of the energy release rates for the fiber/matrix interface problem as
 
 \begin{equation}
 G_{I}=\beta_{I} G_{ref}\qquad G_{II}=\beta_{II} G_{ref},
@@ -202,7 +202,7 @@ where $\beta_{I}$ and $\beta_{II}$ are respectively the mode I and mode II shape
 %                             	Critique and alternative formulations
 %------------------------------------------------------------------------------------------%
 
-\section{Critique and alternative formulations of $G_{0}$}
+\section{A new formulation of $G_{0}$ for a multi-scale analysis of transverse cracking}
 
 %\clearpage
 %------------------------------------------------------------------------------------------%
@@ -228,7 +228,7 @@ where $\beta_{I}$ and $\beta_{II}$ are respectively the mode I and mode II shape
 \bibitem{Griffiths:1994}Griffiths  R. 1994 Stiffness matrix of the four-node quadrilateral element in closed form {\it Int. J. Numer. Meth. Eng.} {\bf 57} (2) 109--143
 % LEFM
 \bibitem{Krueger:2004}Krueger R. 2004 Virtual crack closure technique: History, approach, and applications {\it Appl. Mech. Rev.} {\bf 57} (2) 109--143
-\bibitem{abaqus:2016} ABAQUS 2016 ABAQUS 2016 Analysis User's Manual {\it Online Documentation Help: Dassault Syst\'emes} 
+\bibitem{abaqus:2016} ABAQUS 2016 ABAQUS 2016 Analysis User's Manual {\it Online Documentation Help: Dassault Syst\'emes}
 \bibitem{Rice:1968}Rice J. R. 1968 A Path Independent Integral and the Approximate Analysis of Strain Concentration by Notches and Cracks {\it J. Appl. Mech.} {\bf 35} 379--386
 
 %\bibitem{author:year}

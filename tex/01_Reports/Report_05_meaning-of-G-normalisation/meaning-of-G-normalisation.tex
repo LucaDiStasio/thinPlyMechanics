@@ -130,13 +130,13 @@ K_{mode} = \beta\sigma_{0}\sqrt{\pi a}
 where $\beta$ is the shape factor. Thus, evaluation of the SIF for a new configuration reduces to the determination of its shape factor.\\
 The corresponding energy release rate can be computed to be
 
-\begin{equation}
+\begin{equation}\label{eq:gcentralcrackedplate}
 G_{ref}=G_{I}^{CC}=\frac{\left(K_{I}^{CC}\right)^{2}}{E_{m}^{*}}.
 \end{equation}
 
 For plane strain,
 
-\begin{equation}
+\begin{equation}\label{eq:gcentralcrackedplateplanestrain}
 E_{m}^{*}=\frac{E_{m}}{1-\nu^{2}}\quad\text{and thus}\quad G_{ref}=\frac{1-\nu^{2}}{E_{m}}\sigma_{0}^{2}\pi a,
 \end{equation}
 
@@ -221,6 +221,16 @@ by equating the corresponding expression in Eq.~\ref{eq:equiplanestraintransiso}
 \begin{equation}
 E=\frac{E_{2}\left(1+2\nu_{23}+\nu_{21}\nu_{12}\right)}{\left(1+\nu_{23}\right)^{2}}\qquad\nu=\frac{\nu_{23}+\nu_{21}\nu_{12}}{1+\nu_{23}}
 \end{equation}
+
+In reference to the expressions in~\ref{eq:gcentralcrackedplate} and~\ref{eq:gcentralcrackedplate}, we can thus introduce a reference $G_{0}$ as
+
+\begin{equation}
+\begin{split}
+G_{0}&=\frac{\sigma_{0}^{2}}{E^{*}}\pi R_{f}\text{for a stress or force controlled test}\\
+G_{0}&=E^{*}\varepsilon_{0}^{2}\pi R_{f}\text{for a strain or displacement controlled test}
+\end{split}
+\end{equation}
+
 
 %\clearpage
 %------------------------------------------------------------------------------------------%

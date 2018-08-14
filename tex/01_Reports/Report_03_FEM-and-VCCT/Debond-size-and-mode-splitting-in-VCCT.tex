@@ -51,7 +51,7 @@
 %------------------------------------------------------------------------------------------%
 
 \begin{abstract}
-The effect of debond size and crack tip orientation of mode splitting in the Virtual Crack Closure Technique is analyzed by means of analytical derivations.
+The effect of crack tip orientation and elements' size in its vicinity on mode splitting in the Virtual Crack Closure Technique is analyzed by means of analytical derivations.
 \begin{enumerate}
 \item The total energy release rate is shown to have no direct dependence on the debond angular size, but only an indirect one through the FEM solution of the crack displacement field in the crack tip neighborhood. It thus can be computed using unrotated forces and displacements, i.e. aligned with the global and not with the local refere
 \item Mode I and mode II energy release rate are expressed as a function of the crack displacement and it is shown as in \cite{Valvo:2012} that crack tip forces depend linearly on both components of the crack displacements. However, what in \cite{Valvo:2012} is an assumption used to reverse-engineer the relationship, here the dependency is fully derived in terms of the underlying FEM discretization. It is furthermore shown that crack tip forces do not only depend on crack displacements, but also on the resultant of forces of the 4 elements connected to the crack tip, which represent the influence of the rest of the domain.
@@ -1247,28 +1247,7 @@ u\left(\delta\right)\sim \sqrt{\delta}\left(\sin,\cos\right)\left(\epsilon\log{\
 
 \clearpage
 
-%------------------------------------------------------------------------------------------%
-%                             Interpolation
-%------------------------------------------------------------------------------------------%
-
-\section{Trigonometric interpolation}
-
-By inspecting the results of the previous sections, an interpolation of the BEM results is performed manually by trial and error. The following procedure is followed:
-
-\begin{enumerate}
-\item a basis function is selected;
-\item the frequency of the trigonometric basis function is calculated based on the position of the maximum value;
-\item the amplitude is calculated based on the maximum value.
-\end{enumerate}
-
-\begin{figure}[!h]
-\includegraphics[width=\textwidth]{Gsplot.pdf}
-\caption{Interpolation of BEM results by manual trial and error.}
-\end{figure}
-
-The good agreement suggests that trigonometric functions are very good candidates for energy release rate data interpolation. The effect of different parameters can thus modeled as the functional variation of frequency (period) and amplitude of the trigonometric basis functions.
-
-%\clearpage
+%
 %------------------------------------------------------------------------------------------%
 %                             CONCLUSIONS AND PERSPECTIVES
 %------------------------------------------------------------------------------------------%

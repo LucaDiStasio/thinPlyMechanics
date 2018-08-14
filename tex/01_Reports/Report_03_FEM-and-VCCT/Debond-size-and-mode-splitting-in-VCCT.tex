@@ -51,9 +51,12 @@
 %------------------------------------------------------------------------------------------%
 
 \begin{abstract}
-The effect of debond size and crack tip orientation of mode splitting in the Virtual Crack Closure Technique is analyzed by means of analytical derivations. It is shonw that:
+The effect of debond size and crack tip orientation of mode splitting in the Virtual Crack Closure Technique is analyzed by means of analytical derivations.
 \begin{enumerate}
-\item The total energy release rate is shown to have no direct dependence on the debond angular size, but only an indirect one through the FEM solution of the crack displacement field in the crack tip neighbourhood.
+\item The total energy release rate is shown to have no direct dependence on the debond angular size, but only an indirect one through the FEM solution of the crack displacement field in the crack tip neighborhood. It thus can be computed using unrotated forces and displacements, i.e. aligned with the global and not with the local refere
+\item Mode I and mode II energy release rate are expressed as a function of the crack displacement and it is shown as in \cite{Valvo:2012} that crack tip forces depend linearly on both components of the crack displacements. However, what in \cite{Valvo:2012} is an assumption used to reverse-engineer the relationship, here the dependency is fully derived in terms of the underlying FEM discretization. It is furthermore shown that crack tip forces do not only depend on crack displacements, but also on the resultant of forces of the 4 elements connected to the crack tip, which represent the influence of the rest of the domain.
+\item A new vectorial formulation of the VCCT is proposed, which can be applied to elements of different order and in the presence of quarter-tip singularity (based on the work in \cite{raju:}). It provides a general framework for the analysis of curved cracks analyzed with FEM. It furthermore expresses directly the dependence on FEM discretization and solution. By implementing the equations provided alongside the classic FEM, it can provide a native formulation which does not to the extraction of internal or reaction forces in the post-processing phase.
+\item It is shown that mode I and mode II for a curved crack behaves as $A\log\left(\delta\right)+B$, where $\delta$ is the angular discretization at the crack tip. The result is confirmed by the numerical results.
 \end{enumerate}
 \end{abstract}
 
@@ -1286,14 +1289,14 @@ The good agreement suggests that trigonometric functions are very good candidate
 \begin{thebibliography}{9}
 %\bibitem{author:year}author surname author initials (up to 10) year title {\it Journal} {\bf vol} (issue) pages
 % FEM
-\bibitem{Griffiths:1994}Griffiths  R. 1994 Stiffness matrix of the four-node quadrilateral element in closed form {\it Int. J. Numer. Meth. Eng.} {\bf 57} (2) 109--143
+\bibitem{Griffiths:1994}Griffiths  R. 1994 Stiffness matrix of the four-node quadrilateral element in closed form {\it Int. J. Numer. Meth. Eng.} {\bf 57}(2) 109--143
 % LEFM
-\bibitem{Krueger:2004}Krueger R. 2004 Virtual crack closure technique: History, approach, and applications{\it Appl. Mech. Rev.}{\bf 57} (2) 109--143
+\bibitem{Krueger:2004}Krueger R. 2004 Virtual crack closure technique: History, approach, and applications {\it Appl. Mech. Rev.} {\bf 57}(2) 109--143
 \bibitem{abaqus:2016} ABAQUS 2016 ABAQUS 2016 Analysis User's Manual {\it Online Documentation Help: Dassault Syst\'emes}
-\bibitem{Rice:1968}Rice J. R. 1968 A Path Independent Integral and the Approximate Analysis of Strain Concentration by Notches and Cracks{\it J. Appl. Mech.} {\bf 35} 379--386
-\bibitem{Valvo:2012}Valvo, P. S. 2012 A Revised Virtual Crack Closure Technique for Physically Consistent Fracture Mode Partitioning{\it Int. J. Fract.}{\bf 173}(1) 1--20
-\bibitem{Williams:1959}CWilliams, M. L. 1959 he Stresses Around a Fault or Crack in Dissimilar Media {\it B. Seismol. Soc. Am.}{\bf 49}(2)
-\bibitem{Comninou:1990}Comninou, M., 1990 An overview of interface cracks{\it Eng. Fract. Mech.}{\bf 37} 197--208
+\bibitem{Rice:1968}Rice J. R. 1968 A Path Independent Integral and the Approximate Analysis of Strain Concentration by Notches and Cracks {\it J. Appl. Mech.} {\bf 35} 379--386
+\bibitem{Valvo:2012}Valvo, P. S. 2012 A Revised Virtual Crack Closure Technique for Physically Consistent Fracture Mode Partitioning {\it Int. J. Fract.}{\bf 173}(1) 1--20
+\bibitem{Williams:1959}Williams, M. L. 1959 he Stresses Around a Fault or Crack in Dissimilar Media {\it B. Seismol. Soc. Am.} {\bf 49}(2)
+\bibitem{Comninou:1990}Comninou, M. 1990 An overview of interface cracks {\it Eng. Fract. Mech.} {\bf 37} 197--208
 %\bibitem{author:year}
 \end{thebibliography}
 

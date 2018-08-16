@@ -1178,7 +1178,19 @@ where $m$ is the order of the element's shape functions, and $p,q=1$ represents 
 &=\begin{cases}
 \underline{\underline{I}}\ for\ p=q<3\\
 \underline{\underline{0}}\ otherwise
-\end{cases}\quad \text{for $2^{st}$ order quadrilateral elements}
+\end{cases}\quad \text{for $2^{nd}$ order quadrilateral elements}
+&=\begin{cases}
+\underline{\underline{I}}\ for\ p=q<4\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $3^{rd}$ order quadrilateral elements}
+&=\begin{cases}
+\underline{\underline{I}}\ for\ p=q<3\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $2^{nd}$ order quarter-point quadrilateral elements}
+&=\begin{cases}
+\underline{\underline{I}}\ for\ p=q<4\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $3^{rd}$ order quarter-point quadrilateral elements}
 \end{split}
 \end{equation}
 

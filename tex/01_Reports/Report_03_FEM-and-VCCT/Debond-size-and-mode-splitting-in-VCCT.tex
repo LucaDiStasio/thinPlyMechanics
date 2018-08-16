@@ -1159,11 +1159,11 @@ G_{II}
 \begin{equation}
 \begin{split}
 G_{TOT} &= \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{r\theta,q}=\\
-&=\frac{1}{2R_{f}\delta}Tr\left(\underline{F}_{r\theta}\underline{u}_{r\theta}^{T}\right)=\frac{1}{2R_{f}\delta}Tr\left(\begin{bmatrix}
-F_{r}u_{r}&F_{r}u_{\theta}\\
-F_{\theta}u_{r}&F_{\theta}u_{\theta}\\
+&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{F}_{r\theta}\underline{u}_{r\theta}^{T}\right)=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\begin{bmatrix}
+F_{r,q}u_{r,p}&F_{r,q}u_{\theta,p}\\
+F_{\theta,q}u_{r,p}&F_{\theta,q}u_{\theta,p}\\
 \end{bmatrix}\right)=\\
-&=\frac{1}{2R_{f}\delta}Tr\left(\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{R}}_{\delta}^{T}\right)
+&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{R}}_{\delta}^{T}\right)
 \end{split}
 \end{equation}
 

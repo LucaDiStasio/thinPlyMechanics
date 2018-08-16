@@ -1167,6 +1167,22 @@ t_{pq|21}F_{\theta,q}u_{r,p}&t_{pq|22}F_{\theta,q}u_{\theta,p}\\
 \end{split}
 \end{equation}
 
+where $m$ is the order of the element's shape functions, and $p,q=1$ represents the crack tip.
+
+\begin{equation}
+\begin{split}
+\underline{\underline{T}}_{pq}&=\begin{cases}
+\underline{\underline{I}}\ for\ p=q<2\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $1^{st}$ order quadrilateral elements}\\
+&=\begin{cases}
+\underline{\underline{I}}\ for\ p=q<3\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $2^{st}$ order quadrilateral elements}
+\end{split}
+\end{equation}
+
+
 \begin{equation}
 \begin{split}
 G_{TOT} &= \frac{1}{2R_{f}\delta}\underline{u}_{r\theta}^{T}\underline{F}_{r\theta}=\\

@@ -3755,7 +3755,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfEdgesData.append([0.0,0.99999*CornerBy,0.0,0.0,1.00001*CornerBy,0.0,'UPPERSIDE'])
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type']:
-	        setsOfEdgesData.append([0.001,0.99999*(L+Lply),0.0,0.001,1.00001*(L+Lply),0.0,'PLYINTERFACE'])
+            setsOfEdgesData.append([0.001,0.99999*(L+Lply),0.0,0.001,1.00001*(L+Lply),0.0,'PLYINTERFACE'])
             setsOfEdgesData.append([0.99999*CornerBx,0.5*L,0.0,1.00001*CornerBx,0.5*L,0.0,'LOWER-RIGHTSIDE'])
             setsOfEdgesData.append([0.99999*CornerAx,0.5*L,0.0,1.00001*CornerAx,0.5*L,0.0,'LOWER-LEFTSIDE'])
             setsOfEdgesData.append([0.99999*CornerBx,(L+Lply)+0.5*Ludply,0.0,1.00001*CornerBx,(L+Lply)+0.5*Ludply,0.0,'UPPER-RIGHTSIDE'])

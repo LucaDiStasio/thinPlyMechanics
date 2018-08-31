@@ -3524,25 +3524,25 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # sets of vertices
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of vertices',True)
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-        defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIPUP',logfilepath,baselogindent + 4*logindent,True)
-        defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta-deltatheta)*np.pi/180),Rf*np.sin((theta-deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIPLOW',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.0001*Rf,'CRACKTIPUP',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta-deltatheta)*np.pi/180),Rf*np.sin((theta-deltatheta)*np.pi/180),0.0,0.0001*Rf,'CRACKTIPLOW',logfilepath,baselogindent + 4*logindent,True)
     else:
-        defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.001*Rf,'CRACKTIP',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.0001*Rf,'CRACKTIP',logfilepath,baselogindent + 4*logindent,True)
 
-    defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,CornerBy,0.0,0.001*Rf,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-    defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,CornerBy,0.0,0.001*Rf,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,CornerBy,0.0,0.00001*Rf,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,CornerBy,0.0,0.00001*Rf,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type']:
-            defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L+Lply,0.0,0.001*Rf,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-            defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L+Lply,0.0,0.001*Rf,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+            defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L+Lply,0.0,0.00001*Rf,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+            defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L+Lply,0.0,0.00001*Rf,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
         else:
-            defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L,0.0,0.001*Rf,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
-            defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L,0.0,0.001*Rf,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+            defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,L,0.0,0.00001*Rf,'PLYINTERFACE-NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+            defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,L,0.0,0.00001*Rf,'PLYINTERFACE-NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
-        defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.001*Rf,'RIGHTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.00001*Rf,'RIGHTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
-        defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.001*Rf,'LEFTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.00001*Rf,'LEFTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
@@ -3746,29 +3746,29 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FOURTHCIRCLE',True)
 
     if ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']) and not 'boundingPly' in parameters['BC']['northSide']['type']:
-        setsOfEdgesData.append([0.0,0.99*CornerBy,0.0,0.0,1.01*CornerBy,0.0,'CENTER-RUC-UPPERSIDE'])
+        setsOfEdgesData.append([0.0,0.99999*CornerBy,0.0,0.0,1.00001*CornerBy,0.0,'CENTER-RUC-UPPERSIDE'])
         if 'boundingPly' in parameters['BC']['rightSide']['type']:
-            setsOfEdgesData.append([0.99*CornerBx,0.99*CornerBy,0.0,0.99*CornerBx,1.01*CornerBy,0.0,'RIGHT-HOMOPLY-UPPERSIDE'])
+            setsOfEdgesData.append([0.99999*CornerBx,0.99999*CornerBy,0.0,0.99999*CornerBx,1.00001*CornerBy,0.0,'RIGHT-HOMOPLY-UPPERSIDE'])
         if 'boundingPly' in parameters['BC']['leftSide']['type']:
-            setsOfEdgesData.append([0.99*CornerAx,0.99*CornerBy,0.0,0.99*CornerAx,1.01*CornerBy,0.0,'LEFT-HOMOPLY-UPPERSIDE'])
+            setsOfEdgesData.append([0.99999*CornerAx,0.99999*CornerBy,0.0,0.99999*CornerAx,1.00001*CornerBy,0.0,'LEFT-HOMOPLY-UPPERSIDE'])
     else:
-        setsOfEdgesData.append([0.0,0.99*CornerBy,0.0,0.0,1.01*CornerBy,0.0,'UPPERSIDE'])
+        setsOfEdgesData.append([0.0,0.99999*CornerBy,0.0,0.0,1.00001*CornerBy,0.0,'UPPERSIDE'])
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type']:
-	    setsOfEdgesData.append([0.001,0.99*(L+Lply),0.0,0.001,1.01*(L+Lply),0.0,'PLYINTERFACE'])
-            setsOfEdgesData.append([0.99*CornerBx,0.5*L,0.0,1.01*CornerBx,0.5*L,0.0,'LOWER-RIGHTSIDE'])
-            setsOfEdgesData.append([0.99*CornerAx,0.5*L,0.0,1.01*CornerAx,0.5*L,0.0,'LOWER-LEFTSIDE'])
-            setsOfEdgesData.append([0.99*CornerBx,(L+Lply)+0.5*Ludply,0.0,1.01*CornerBx,(L+Lply)+0.5*Ludply,0.0,'UPPER-RIGHTSIDE'])
-            setsOfEdgesData.append([0.99*CornerAx,(L+Lply)+0.5*Ludply,0.0,1.01*CornerAx,(L+Lply)+0.5*Ludply,0.0,'UPPER-LEFTSIDE'])
+	        setsOfEdgesData.append([0.001,0.99999*(L+Lply),0.0,0.001,1.00001*(L+Lply),0.0,'PLYINTERFACE'])
+            setsOfEdgesData.append([0.99999*CornerBx,0.5*L,0.0,1.00001*CornerBx,0.5*L,0.0,'LOWER-RIGHTSIDE'])
+            setsOfEdgesData.append([0.99999*CornerAx,0.5*L,0.0,1.00001*CornerAx,0.5*L,0.0,'LOWER-LEFTSIDE'])
+            setsOfEdgesData.append([0.99999*CornerBx,(L+Lply)+0.5*Ludply,0.0,1.00001*CornerBx,(L+Lply)+0.5*Ludply,0.0,'UPPER-RIGHTSIDE'])
+            setsOfEdgesData.append([0.99999*CornerAx,(L+Lply)+0.5*Ludply,0.0,1.00001*CornerAx,(L+Lply)+0.5*Ludply,0.0,'UPPER-LEFTSIDE'])
 	else:
-            setsOfEdgesData.append([0.001,0.99*L,0.0,0.001,1.01*L,0.0,'PLYINTERFACE'])
-            setsOfEdgesData.append([0.99*CornerBx,0.5*L,0.0,1.01*CornerBx,0.5*L,0.0,'LOWER-RIGHTSIDE'])
-            setsOfEdgesData.append([0.99*CornerAx,0.5*L,0.0,1.01*CornerAx,0.5*L,0.0,'LOWER-LEFTSIDE'])
-            setsOfEdgesData.append([0.99*CornerBx,L+0.5*Lply,0.0,1.01*CornerBx,L+0.5*Lply,0.0,'UPPER-RIGHTSIDE'])
-            setsOfEdgesData.append([0.99*CornerAx,L+0.5*Lply,0.0,1.01*CornerAx,L+0.5*Lply,0.0,'UPPER-LEFTSIDE'])
+            setsOfEdgesData.append([0.001,0.99999*L,0.0,0.001,1.00001*L,0.0,'PLYINTERFACE'])
+            setsOfEdgesData.append([0.99999*CornerBx,0.5*L,0.0,1.00001*CornerBx,0.5*L,0.0,'LOWER-RIGHTSIDE'])
+            setsOfEdgesData.append([0.99999*CornerAx,0.5*L,0.0,1.00001*CornerAx,0.5*L,0.0,'LOWER-LEFTSIDE'])
+            setsOfEdgesData.append([0.99999*CornerBx,L+0.5*Lply,0.0,1.00001*CornerBx,L+0.5*Lply,0.0,'UPPER-RIGHTSIDE'])
+            setsOfEdgesData.append([0.99999*CornerAx,L+0.5*Lply,0.0,1.00001*CornerAx,L+0.5*Lply,0.0,'UPPER-LEFTSIDE'])
     else:
-        setsOfEdgesData.append([0.99*CornerBx,0.5*L,0.0,1.01*CornerBx,0.5*L,0.0,'RIGHTSIDE'])
-        setsOfEdgesData.append([0.99*CornerAx,0.5*L,0.0,1.01*CornerAx,0.5*L,0.0,'LEFTSIDE'])
+        setsOfEdgesData.append([0.99999*CornerBx,0.5*L,0.0,1.00001*CornerBx,0.5*L,0.0,'RIGHTSIDE'])
+        setsOfEdgesData.append([0.99999*CornerAx,0.5*L,0.0,1.00001*CornerAx,0.5*L,0.0,'LEFTSIDE'])
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
             setsOfEdgesData.append([0.99*Rf,(nFiber+1)*2*L,0.0,1.01*Rf,(nFiber+1)*2*L,0.0,'INTERFACE-UPPER-FIBER-C'+str(nFiber+1)])

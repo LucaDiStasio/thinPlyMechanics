@@ -3004,6 +3004,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         wRatioLeft = parameters['BC']['leftSide']['wRatio']
         nFibersRight = parameters['BC']['rightSide']['nFibers']
         nFibersLeft = parameters['BC']['leftSide']['nFibers']
+        wRightPly = nFibersRight*(2*L)
+        wLeftPly = nFibersLeft*(2*L)
+        wRightHPly = wRatioRight*(wRightPly+wLeftPly+2*L)
+        wLeftHPly = wRatioLeft*(wRightPly+wLeftPly+2*L)
+        CornerAx = -(L+wLeftPly+wLeftHPly)
+        CornerBx = L+wRightPly+wRightHPly
     elif ('boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']) or ('adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type']):
         if 'quarter' in parameters['geometry']['fiber']['type']:
             skipLineToLogFile(logfilepath,'a',True)

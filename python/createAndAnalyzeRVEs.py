@@ -3031,14 +3031,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         CornerBx = L+wRightPly
     elif 'boundingPly' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         wRatioRight = parameters['BC']['rightSide']['wRatio']
-        wRatioLeft = parameters['BC']['leftSide']['wRatio']
         nFibersRight = parameters['BC']['rightSide']['nFibers']
-        nFibersLeft = parameters['BC']['leftSide']['nFibers']
         wRightPly = nFibersRight*(2*L)
-        wLeftPly = nFibersLeft*(2*L)
         wRightHPly = wRatioRight*(wRightPly+wLeftPly+2*L)
-        wLeftHPly = wRatioLeft*(wRightPly+wLeftPly+2*L)
-        CornerAx = -(L+wLeftPly+wLeftHPly)
+        CornerAx = -L
         CornerBx = L+wRightPly+wRightHPly
     elif 'boundingPly' in parameters['BC']['leftSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         if 'quarter' in parameters['geometry']['fiber']['type']:

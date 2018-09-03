@@ -2999,7 +2999,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         CornerBy = L + Lply
     else:
         CornerBy = L
-    if ('boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']) or ('adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type']):
+    if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+        wRatioRight = parameters['BC']['rightSide']['wRatio']
+        wRatioLeft = parameters['BC']['leftSide']['wRatio']
+        nFibersRight = parameters['BC']['rightSide']['nFibers']
+        nFibersLeft = parameters['BC']['leftSide']['nFibers']
+    elif ('boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']) or ('adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type']):
         if 'quarter' in parameters['geometry']['fiber']['type']:
             skipLineToLogFile(logfilepath,'a',True)
             writeErrorToLogFile(logfilepath,'a','GEOMETRY','Clashing geometric requirements: asked for quarter fiber and for material on the left side. Review and select the appropriate.',True)

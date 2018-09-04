@@ -3022,6 +3022,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type']:
             wRatioRight = parameters['BC']['rightSide']['wRatio']
             wRatioLeft = parameters['BC']['leftSide']['wRatio']
+            wRightHPly = wRatioRight*(2*L)
+            wLeftHPly = wRatioLeft*(2*L)
         else:
             wRatioRight = parameters['BC']['rightSide']['nFibers']
             wRatioLeft = parameters['BC']['leftSide']['nFibers']

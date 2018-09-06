@@ -142,6 +142,45 @@ def appendCSVfile(dir,filename,data):
 #                            ANSYS command files
 #===============================================================================#
 
+def writeTitle(logFileFullPath,logBaseIndent,logIndent,ansFullPath,title):
+    with open(ansFullPath,'a') as ans:
+        ans.write('!' + title + '\n')
+
+def writeLicense(logFileFullPath,logBaseIndent,logIndent,ansFullPath,title):
+    with open(ansFullPath,'a') as ans:
+        ans.write('!' + '\n')
+        ans.write('!==============================================================================' + '\n')
+        ans.write('! Copyright (c) 2016-' + datetime.now().strftime('%Y') + ' Universite de Lorraine & Lulea tekniska universitet' + '\n')
+        ans.write('! Author: Luca Di Stasio <luca.distasio@gmail.com>' + '\n')
+        ans.write('!                        <luca.distasio@ingpec.eu>' + '\n')
+        ans.write('!' + '\n')
+        ans.write('! Redistribution and use in source and binary forms, with or without' + '\n')
+        ans.write('! modification, are permitted provided that the following conditions are met:' + '\n')
+        ans.write('!
+        ans.write('!' + '\n')
+        ans.write('! Redistributions of source code must retain the above copyright' + '\n')
+        ans.write('! notice, this list of conditions and the following disclaimer.' + '\n')
+        ans.write('! Redistributions in binary form must reproduce the above copyright' + '\n')
+        ans.write('! notice, this list of conditions and the following disclaimer in' + '\n')
+        ans.write('! the documentation and/or other materials provided with the distribution' + '\n')
+        ans.write('! Neither the name of the Universite de Lorraine & Lulea tekniska universitet' + '\n')
+        ans.write('! nor the names of its contributors may be used to endorse or promote products' + '\n')
+        ans.write('! derived from this software without specific prior written permission.' + '\n')
+        ans.write('!' + '\n')
+        ans.write('! THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"' + '\n')
+        ans.write('! AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE' + '\n')
+        ans.write('! IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE' + '\n')
+        ans.write('! ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE' + '\n')
+        ans.write('! LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR' + '\n')
+        ans.write('! CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF' + '\n')
+        ans.write('! SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS' + '\n')
+        ans.write('! INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN' + '\n')
+        ans.write('! CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)' + '\n')
+        ans.write('! ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE' + '\n')
+        ans.write('! POSSIBILITY OF SUCH DAMAGE.' + '\n')
+        ans.write('!==============================================================================' + '\n')
+        ans.write('!' + '\n')
+        
 #===============================================================================#
 #                                 Log files
 #===============================================================================#

@@ -581,6 +581,16 @@ def main(argv):
     globalStart = timeit.default_timer()
 
     for iterationSet in iterationsSets:
+        timedataList = []
+        totalIterationTime = 0.0
+        variationString = ''
+        for v,value in enumerate(iterationSet):
+            if v>0:
+                variationString += '-'
+            variationString += str(sortedKeywords[v][-1]) + str(value).replace('.','_')
+            fillDataDictionary(RVEparams,sortedKeywords[v],value)
+
+        RVEparams['input']['modelname'] = basename + '_' + variationString
 
 if __name__ == "__main__":
     main(sys.argv[1:])

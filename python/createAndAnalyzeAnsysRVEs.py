@@ -572,6 +572,15 @@ def main(argv):
 
     with open(logfilefullpath,'w') as log:
         log.write('Automatic generation and FEM analysis of RVEs with Python and Ansys' + '\n')
+    
+    skipLineToLogFile(logfilefullpath,'a',True)
+    writeLineToLogFile(logfilefullpath,'a','In function: main(argv)',True)
+
+    skipLineToLogFile(logfilefullpath,'a',True)
+    writeLineToLogFile(logfilefullpath,'a',logindent + 'Global timer starts',True)
+    globalStart = timeit.default_timer()
+
+    for iterationSet in iterationsSets:
 
 if __name__ == "__main__":
     main(sys.argv[1:])

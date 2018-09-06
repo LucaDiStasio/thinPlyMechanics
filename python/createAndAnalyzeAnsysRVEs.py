@@ -148,7 +148,7 @@ def createCSVfile(ansFullPath,titleline=None):
             csv.write('!' + titleline.replace('\n','') + '\n')
         csv.write('! Automatically created on ' + datetime.now().strftime('%d/%m/%Y') + ' at' + datetime.now().strftime('%H:%M:%S') + '\n')
 
-def writeLicense(ansFullPath,title):
+def writeLicense(ansFullPath):
     with open(ansFullPath,'a') as ans:
         ans.write('!' + '\n')
         ans.write('!==============================================================================' + '\n')
@@ -184,6 +184,18 @@ def writeLicense(ansFullPath,title):
         ans.write('!' + '\n')
 
 def writeAnsTitle(logFileFullPath,logBaseIndent,logIndent,ansFullPath,title):
+    with open(ansFullPath,'a') as ans:
+        ans.write('!' + title + '\n')
+        ans.write('/' + 'title, ' + title + '\n')
+        ans.write('!' + title + '\n')
+
+def writeAnsInpData(logFileFullPath,logBaseIndent,logIndent,ansFullPath,title):
+    with open(ansFullPath,'a') as ans:
+        ans.write('!' + title + '\n')
+        ans.write('/' + 'title, ' + title + '\n')
+        ans.write('!' + title + '\n')
+        
+def writeAnsBody(logFileFullPath,logBaseIndent,logIndent,ansFullPath,title):
     with open(ansFullPath,'a') as ans:
         ans.write('!' + title + '\n')
         ans.write('/' + 'title, ' + title + '\n')

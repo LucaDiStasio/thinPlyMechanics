@@ -142,11 +142,13 @@ def appendCSVfile(dir,filename,data):
 #                            ANSYS command files
 #===============================================================================#
 
-def writeTitle(logFileFullPath,logBaseIndent,logIndent,ansFullPath,title):
-    with open(ansFullPath,'a') as ans:
-        ans.write('!' + title + '\n')
+def createCSVfile(ansFullPath,titleline=None):
+    with open(ansFullPath,'w') as ans:
+        if titleline != None:
+            csv.write('!' + titleline.replace('\n','') + '\n')
+        csv.write('! Automatically created on ' + datetime.now().strftime('%d/%m/%Y') + ' at' + datetime.now().strftime('%H:%M:%S') + '\n')
 
-def writeLicense(logFileFullPath,logBaseIndent,logIndent,ansFullPath,title):
+def writeLicense(ansFullPath,title):
     with open(ansFullPath,'a') as ans:
         ans.write('!' + '\n')
         ans.write('!==============================================================================' + '\n')
@@ -180,6 +182,12 @@ def writeLicense(logFileFullPath,logBaseIndent,logIndent,ansFullPath,title):
         ans.write('! POSSIBILITY OF SUCH DAMAGE.' + '\n')
         ans.write('!==============================================================================' + '\n')
         ans.write('!' + '\n')
+
+def writeAnsTitle(logFileFullPath,logBaseIndent,logIndent,ansFullPath,title):
+    with open(ansFullPath,'a') as ans:
+        ans.write('!' + title + '\n')
+        ans.write('/' + 'title, ' + title + '\n')
+        ans.write('!' + title + '\n')
         
 #===============================================================================#
 #                                 Log files

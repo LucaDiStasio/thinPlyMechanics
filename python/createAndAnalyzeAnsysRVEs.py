@@ -489,12 +489,12 @@ def main(argv):
 
     workDir = RVEparams['input']['wd']
     RVEparams['output']['global']['filenames']['inputdata'] = basename + '_InputData'
-    RVEparams['output']['global']['filenames']['performances'] = basename + '_ABQ-Performances'
+    RVEparams['output']['global']['filenames']['performances'] = basename + '_ANS-Performances'
     RVEparams['output']['global']['filenames']['energyreleaserate'] = basename + '_ERRTS'
     if len(RVEparams['steps'])>1:
         RVEparams['output']['global']['filenames']['thermalenergyreleaserate'] = basename + '_thermalERRTS'
 
-    logfilename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_ABQ-RVE-generation-and-analysis' + '.log'
+    logfilename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_ANS-RVE-generation-and-analysis' + '.log'
     logfilefullpath = join(workDir,logfilename)
     logindent = '    '
 
@@ -502,7 +502,7 @@ def main(argv):
             os.mkdir(RVEparams['output']['global']['directory'])
 
     with open(logfilefullpath,'w') as log:
-        log.write('Automatic generation and FEM analysis of RVEs with Abaqus Python' + '\n')
+        log.write('Automatic generation and FEM analysis of RVEs with Python and Ansys' + '\n')
 
 if __name__ == "__main__":
     main(sys.argv[1:])

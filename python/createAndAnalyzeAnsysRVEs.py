@@ -185,17 +185,24 @@ def writeLicense(ansFullPath):
 
 def writeAnsTitle(logFileFullPath,logBaseIndent,logIndent,ansFullPath,title):
     with open(ansFullPath,'a') as ans:
-        ans.write('!' + title + '\n')
+        ans.write('!' + '\n')
         ans.write('/' + 'title, ' + title + '\n')
-        ans.write('!' + title + '\n')
+        ans.write('!' + '\n')
 
-def writeAnsInpData(logFileFullPath,logBaseIndent,logIndent,ansFullPath,title):
+def writeAnsInpData(logFileFullPath,logBaseIndent,logIndent,ansFullPath,params):
     with open(ansFullPath,'a') as ans:
-        ans.write('!' + title + '\n')
-        ans.write('/' + 'title, ' + title + '\n')
-        ans.write('!' + title + '\n')
+        ans.write('!' + '\n')
+        ans.write('/' + 'prep7               ! Enter the pre-processor' + '\n')
+        ans.write('!' + '\n')
+        ans.write('! Parameters' + '\n')
+        ans.write('!' + '\n')
+        ans.write('! ===> START INPUT DATA' + '\n')
+        ans.write('!' + '\n')
+        ans.write('!' + '\n')
+        ans.write('! ===> END INPUT DATA' + '\n')
+        ans.write('!' + '\n')
         
-def writeAnsBody(logFileFullPath,logBaseIndent,logIndent,ansFullPath,title):
+def writeAnsBody(logFileFullPath,logBaseIndent,logIndent,ansFullPath,ansTemplateFullPath):
     with open(ansFullPath,'a') as ans:
         ans.write('!' + title + '\n')
         ans.write('/' + 'title, ' + title + '\n')

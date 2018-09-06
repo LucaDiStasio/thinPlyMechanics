@@ -6515,7 +6515,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # rightsideDefcoords = getFieldOutput(odb,-1,-1,'COORD',rightSide)
     # writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    if parameters['simulation-pipeline']['analysis']['report-energyreleaserates'] or parameters['simulation-pipeline']['analysis']['report-stressesatboundary']:
+    if parameters['simulation-pipeline']['analysis']['report-stressesatboundary']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates along the right side ...',True)
         rightsideUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',rightSide)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
@@ -6677,7 +6677,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # BEGIN - compute G0
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute G0...',True)
-    G0 = np.pi*parameters['geometry']['Rf']*meanSigmaxx*meanSigmaxx*(1+(3.0-4.0*parameters['postproc']['nu-G0']))/(8.0*parameters['postproc']['G-G0'])
+    if parameters['simulation-pipeline']['analysis']['report-stressesatboundary']:
+        G0 = np.pi*parameters['geometry']['Rf']*meanSigmaxx*meanSigmaxx*(1+(3.0-4.0*parameters['postproc']['nu-G0']))/(8.0*parameters['postproc']['G-G0'])
+    else:
+        G0 = 1.0
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - compute G0

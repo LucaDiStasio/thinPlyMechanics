@@ -3597,9 +3597,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         alphalow = theta - deltatheta + deltapsi
         betalow = theta - deltatheta - deltapsi
         gammalow = theta - deltatheta - deltapsi + deltaphi
-        setsOfEdgesData = [[0.99*Rf*np.cos(theta*np.pi/180),0.99*Rf*np.sin(theta*np.pi/180),0.0,1.01*Rf*np.cos(theta*np.pi/180),1.01*Rf*np.sin(theta*np.pi/180),0.0,'CRACK-CENTER'],
-			   [0.99*Rf*np.cos((alphalow-0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alphalow-0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alphalow-0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alphalow-0.5*deltapsi)*np.pi/180),0.0,'CRACK-LOWER'],
-			   [0.99*Rf*np.cos((alphaup+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alphaup+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alphaup+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alphaup+0.5*deltapsi)*np.pi/180),0.0,'CRACK-UPPER']]
+        setsOfEdgesData = [[0.99*Rf*np.cos(theta*np.pi/180),0.99*Rf*np.sin(theta*np.pi/180),0.0,1.01*Rf*np.cos(theta*np.pi/180),1.01*Rf*np.sin(theta*np.pi/180),0.0,'CRACK-CENTER'],   [0.99*Rf*np.cos((alphalow-0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alphalow-0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alphalow-0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alphalow-0.5*deltapsi)*np.pi/180),0.0,'CRACK-LOWER'], [0.99*Rf*np.cos((alphaup+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alphaup+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alphaup+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alphaup+0.5*deltapsi)*np.pi/180),0.0,'CRACK-UPPER']]
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
         RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-CENTER'],RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
@@ -3607,8 +3605,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         alpha = theta + deltatheta - deltapsi
         beta = theta + deltatheta + deltapsi
         gamma = theta + deltatheta + deltapsi + deltaphi
-        setsOfEdgesData = [[0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0,1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'CRACK-LOWER'],
-			   [0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'CRACK-UPPER']]
+        setsOfEdgesData = [[0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0,1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'CRACK-LOWER'], [0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'CRACK-UPPER']]
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
         RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
@@ -3632,25 +3629,25 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                            [0.65*Rf,0.001,0.0,0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-RIGHT'],
                            [0.99*L,0.001,0.0,0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-RIGHT']]
         if 'half' in parameters['geometry']['fiber']['type']:
-	    setsOfEdgesData.append([-0.65*Rf,0.001,0.0,-0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-LEFT'])
-	    setsOfEdgesData.append([-0.99*L,0.001,0.0,-0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-LEFT'])
+            setsOfEdgesData.append([-0.65*Rf,0.001,0.0,-0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-LEFT'])
+            setsOfEdgesData.append([-0.99*L,0.001,0.0,-0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-LEFT'])
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
         if 'half' in parameters['geometry']['fiber']['type']:
-	    RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT'],RVEpart.sets['LOWERSIDE-FIRSTRING-LEFT']])
-	else:
+            RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT'],RVEpart.sets['LOWERSIDE-FIRSTRING-LEFT']])
+        else:
             RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FIRSTRING',True)
 
         setsOfEdgesData = [[0.85*Rf,0.001,0.0,0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-RIGHT']]
-	if 'half' in parameters['geometry']['fiber']['type']:
-	    setsOfEdgesData.append([-0.85*Rf,0.001,0.0,-0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-LEFT'])
+        if 'half' in parameters['geometry']['fiber']['type']:
+            setsOfEdgesData.append([-0.85*Rf,0.001,0.0,-0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-LEFT'])
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
         if 'half' in parameters['geometry']['fiber']['type']:
             RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT'],RVEpart.sets['LOWERSIDE-SECONDRING-LEFT']])
         else:
-	    RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT']])
+            RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-SECONDRING',True)
 
         if L>2*Rf:
@@ -3661,25 +3658,25 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             R2 = Rf+1.5*0.25*(L-Rf)
 
         setsOfEdgesData = [[R1,0.001,0.0,R1,-0.001,0.0,'LOWERSIDE-THIRDRING-RIGHT']]
-	if 'half' in parameters['geometry']['fiber']['type']:
-	    setsOfEdgesData.append([-R1,0.001,0.0,-R1,-0.001,0.0,'LOWERSIDE-THIRDRING-LEFT'])
+        if 'half' in parameters['geometry']['fiber']['type']:
+            setsOfEdgesData.append([-R1,0.001,0.0,-R1,-0.001,0.0,'LOWERSIDE-THIRDRING-LEFT'])
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
         if 'half' in parameters['geometry']['fiber']['type']:
             RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT'],RVEpart.sets['LOWERSIDE-THIRDRING-LEFT']])
         else:
-	    RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT']])
+            RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING',True)
 
         setsOfEdgesData = [[R2,0.001,0.0,R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-RIGHT']]
-	if 'half' in parameters['geometry']['fiber']['type']:
-	    setsOfEdgesData.append([-R2,0.001,0.0,-R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-LEFT'])
+        if 'half' in parameters['geometry']['fiber']['type']:
+            setsOfEdgesData.append([-R2,0.001,0.0,-R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-LEFT'])
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
         if 'half' in parameters['geometry']['fiber']['type']:
             RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT'],RVEpart.sets['LOWERSIDE-FOURTHRING-LEFT']])
         else:
-	    RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT']])
+            RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING',True)
 
         lowerSideSets = [RVEpart.sets['LOWERSIDE-CENTER'],RVEpart.sets['LOWERSIDE-FIRSTRING'],RVEpart.sets['LOWERSIDE-SECONDRING'],RVEpart.sets['LOWERSIDE-THIRDRING'],RVEpart.sets['LOWERSIDE-FOURTHRING'],RVEpart.sets['LOWERSIDE-MATRIXBULK-RIGHT'],RVEpart.sets['LOWERSIDE-MATRIXBULK-LEFT']]
@@ -3722,20 +3719,20 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         radiuses = [0.75*Rf,Rf,R4]
         for rIndex,rValue in enumerate(radiuses):
             for aIndex,aValue in enumerate(alphas):
-	        setsOfEdgesData.append([0.99*rValue*np.cos((alphas[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((alphas[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((alphas[aIndex]+incs[aIndex])*np.pi/180),1.01*rValue*np.sin((alphas[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-UPPERCRACK-'+ctNames[aIndex]])
+                setsOfEdgesData.append([0.99*rValue*np.cos((alphas[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((alphas[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((alphas[aIndex]+incs[aIndex])*np.pi/180),1.01*rValue*np.sin((alphas[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-UPPERCRACK-'+ctNames[aIndex]])
                 setsOfEdgesData.append([0.99*rValue*np.cos((ctAngles[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((ctAngles[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((ctAngles[aIndex]+incs[aIndex])*np.pi/180),1.01*rValue*np.sin((ctAngles[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-FIRSTBOUNDED-'+ctNames[aIndex]])
                 setsOfEdgesData.append([0.99*rValue*np.cos((betas[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((betas[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((betas[aIndex]+incs[aIndex])*np.pi/180),1.01*rValue*np.sin((betas[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-SECONDBOUNDED-'+ctNames[aIndex]])
             setsOfEdgesData.append([0.99*rValue*np.cos(theta*np.pi/180),0.99*rValue*np.sin(theta*np.pi/180),0.0,1.01*rValue*np.cos(theta*np.pi/180),1.01*rValue*np.sin(theta*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-CENTERCRACK'])
             setsOfEdgesData.append([0.99*rValue*np.cos(1.025*gammas[0]*np.pi/180),0.99*rValue*np.sin(1.025*gammas[0]*np.pi/180),0.0,1.01*rValue*np.cos(1.025*gammas[0]*np.pi/180),1.01*rValue*np.sin(1.025*gammas[0]*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-RESTBOUNDED'])
         for aIndex,aValue in enumerate(alphas):
-	    setsOfEdgesData.append([0.85*Rf*np.cos(0.99*alphas[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*alphas[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*alphas[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*alphas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FIRSTFIBER-'+ctNames[aIndex]])
-	    setsOfEdgesData.append([1.05*Rf*np.cos(0.99*alphas[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*alphas[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*alphas[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*alphas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FIRSTMATRIX-'+ctNames[aIndex]])
-	    setsOfEdgesData.append([0.85*Rf*np.cos(0.99*ctAngles[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*ctAngles[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*ctAngles[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*ctAngles[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-SECONDFIBER-'+ctNames[aIndex]])
-	    setsOfEdgesData.append([1.05*Rf*np.cos(0.99*ctAngles[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*ctAngles[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*ctAngles[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*ctAngles[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-SECONDMATRIX-'+ctNames[aIndex]])
-	    setsOfEdgesData.append([0.85*Rf*np.cos(0.99*betas[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*betas[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*betas[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*betas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-THIRDFIBER-'+ctNames[aIndex]])
-	    setsOfEdgesData.append([1.05*Rf*np.cos(0.99*betas[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*betas[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*betas[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*betas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-THIRDMATRIX-'+ctNames[aIndex]])
-	    setsOfEdgesData.append([0.85*Rf*np.cos(0.99*gammas[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*gammas[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*gammas[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*gammas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHFIBER-'+ctNames[aIndex]])
-	    setsOfEdgesData.append([1.05*Rf*np.cos(0.99*gammas[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*gammas[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*gammas[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*gammas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHMATRIX-'+ctNames[aIndex]])
+            setsOfEdgesData.append([0.85*Rf*np.cos(0.99*alphas[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*alphas[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*alphas[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*alphas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FIRSTFIBER-'+ctNames[aIndex]])
+            setsOfEdgesData.append([1.05*Rf*np.cos(0.99*alphas[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*alphas[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*alphas[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*alphas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FIRSTMATRIX-'+ctNames[aIndex]])
+            setsOfEdgesData.append([0.85*Rf*np.cos(0.99*ctAngles[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*ctAngles[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*ctAngles[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*ctAngles[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-SECONDFIBER-'+ctNames[aIndex]])
+            setsOfEdgesData.append([1.05*Rf*np.cos(0.99*ctAngles[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*ctAngles[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*ctAngles[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*ctAngles[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-SECONDMATRIX-'+ctNames[aIndex]])
+            setsOfEdgesData.append([0.85*Rf*np.cos(0.99*betas[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*betas[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*betas[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*betas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-THIRDFIBER-'+ctNames[aIndex]])
+            setsOfEdgesData.append([1.05*Rf*np.cos(0.99*betas[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*betas[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*betas[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*betas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-THIRDMATRIX-'+ctNames[aIndex]])
+            setsOfEdgesData.append([0.85*Rf*np.cos(0.99*gammas[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*gammas[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*gammas[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*gammas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHFIBER-'+ctNames[aIndex]])
+            setsOfEdgesData.append([1.05*Rf*np.cos(0.99*gammas[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*gammas[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*gammas[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*gammas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHMATRIX-'+ctNames[aIndex]])
     else:
         alpha = theta + deltatheta - deltapsi
         beta = theta + deltatheta + deltapsi
@@ -3801,7 +3798,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             setsOfEdgesData.append([0.99999*CornerAx,0.5*L,0.0,1.00001*CornerAx,0.5*L,0.0,'LOWER-LEFTSIDE'])
             setsOfEdgesData.append([0.99999*CornerBx,(L+Lply)+0.5*Ludply,0.0,1.00001*CornerBx,(L+Lply)+0.5*Ludply,0.0,'UPPER-RIGHTSIDE'])
             setsOfEdgesData.append([0.99999*CornerAx,(L+Lply)+0.5*Ludply,0.0,1.00001*CornerAx,(L+Lply)+0.5*Ludply,0.0,'UPPER-LEFTSIDE'])
-	else:
+        else:
             setsOfEdgesData.append([0.001,0.99999*L,0.0,0.001,1.00001*L,0.0,'PLYINTERFACE'])
             setsOfEdgesData.append([0.99999*CornerBx,0.5*L,0.0,1.00001*CornerBx,0.5*L,0.0,'LOWER-RIGHTSIDE'])
             setsOfEdgesData.append([0.99999*CornerAx,0.5*L,0.0,1.00001*CornerAx,0.5*L,0.0,'LOWER-LEFTSIDE'])
@@ -3870,7 +3867,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         RVEpart.SetByBoolean(name='FIBER-EXTANNULUS', sets=[RVEpart.sets['FIBER-EXTANNULUS-CENTERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-UPPERCRACK-CTUP'],RVEpart.sets['FIBER-EXTANNULUS-FIRSTBOUNDED-CTUP'],RVEpart.sets['FIBER-EXTANNULUS-SECONDBOUNDED-CTUP'],RVEpart.sets['FIBER-EXTANNULUS-UPPERCRACK-CTLOW'],RVEpart.sets['FIBER-EXTANNULUS-FIRSTBOUNDED-CTLOW'],RVEpart.sets['FIBER-EXTANNULUS-SECONDBOUNDED-CTLOW'],RVEpart.sets['FIBER-EXTANNULUS-RESTBOUNDED']])
     else:
-	RVEpart.SetByBoolean(name='FIBER-EXTANNULUS', sets=[RVEpart.sets['FIBER-EXTANNULUS-LOWERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-UPPERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-FIRSTBOUNDED'],RVEpart.sets['FIBER-EXTANNULUS-SECONDBOUNDED'],RVEpart.sets['FIBER-EXTANNULUS-RESTBOUNDED']])
+        RVEpart.SetByBoolean(name='FIBER-EXTANNULUS', sets=[RVEpart.sets['FIBER-EXTANNULUS-LOWERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-UPPERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-FIRSTBOUNDED'],RVEpart.sets['FIBER-EXTANNULUS-SECONDBOUNDED'],RVEpart.sets['FIBER-EXTANNULUS-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FIBER-EXTANNULUS',True)
     RVEpart.SetByBoolean(name='FIBER', sets=[RVEpart.sets['FIBER-CENTER'],RVEpart.sets['FIBER-INTERMEDIATEANNULUS'],RVEpart.sets['FIBER-EXTANNULUS']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FIBER',True)
@@ -3908,7 +3905,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         RVEpart.SetByBoolean(name='MATRIX-EXTANNULUS', sets=[RVEpart.sets['MATRIX-EXTANNULUS-CENTERCRACK'],RVEpart.sets['MATRIX-EXTANNULUS-UPPERCRACK-CTUP'],RVEpart.sets['MATRIX-EXTANNULUS-FIRSTBOUNDED-CTUP'],RVEpart.sets['MATRIX-EXTANNULUS-SECONDBOUNDED-CTUP'],RVEpart.sets['MATRIX-EXTANNULUS-UPPERCRACK-CTLOW'],RVEpart.sets['MATRIX-EXTANNULUS-FIRSTBOUNDED-CTLOW'],RVEpart.sets['MATRIX-EXTANNULUS-SECONDBOUNDED-CTLOW'],RVEpart.sets['MATRIX-EXTANNULUS-RESTBOUNDED']])
     else:
-	RVEpart.SetByBoolean(name='MATRIX-INTANNULUS', sets=[RVEpart.sets['MATRIX-INTANNULUS-LOWERCRACK'],RVEpart.sets['MATRIX-INTANNULUS-UPPERCRACK'],RVEpart.sets['MATRIX-INTANNULUS-FIRSTBOUNDED'],RVEpart.sets['MATRIX-INTANNULUS-SECONDBOUNDED'],RVEpart.sets['MATRIX-INTANNULUS-RESTBOUNDED']])
+        RVEpart.SetByBoolean(name='MATRIX-INTANNULUS', sets=[RVEpart.sets['MATRIX-INTANNULUS-LOWERCRACK'],RVEpart.sets['MATRIX-INTANNULUS-UPPERCRACK'],RVEpart.sets['MATRIX-INTANNULUS-FIRSTBOUNDED'],RVEpart.sets['MATRIX-INTANNULUS-SECONDBOUNDED'],RVEpart.sets['MATRIX-INTANNULUS-RESTBOUNDED']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MATRIX-INTANNULUS',True)
 
     setsOfFacesData = [[0.0, R2, 0,'MATRIX-INTERMEDIATEANNULUS'],
@@ -3922,8 +3919,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type']:
-	    setsOfFacesData = [[0.975*L, 0.975*(L+Lply+Ludply), 0,'BOUNDING-PLY']]
-	else:
+            setsOfFacesData = [[0.975*L, 0.975*(L+Lply+Ludply), 0,'BOUNDING-PLY']]
+        else:
             setsOfFacesData = [[0.975*L, 0.975*(L+Lply), 0,'BOUNDING-PLY']]
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)

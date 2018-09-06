@@ -198,6 +198,7 @@ def writeAnsInpData(logFileFullPath,logBaseIndent,logIndent,ansFullPath,params):
         ans.write('!' + '\n')
         ans.write('! ===> START INPUT DATA' + '\n')
         ans.write('!' + '\n')
+        for input in parameters['inputData'].values():
         ans.write('!' + '\n')
         ans.write('! ===> END INPUT DATA' + '\n')
         ans.write('!' + '\n')

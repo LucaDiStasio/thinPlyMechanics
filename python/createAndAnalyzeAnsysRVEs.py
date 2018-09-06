@@ -203,10 +203,11 @@ def writeAnsInpData(logFileFullPath,logBaseIndent,logIndent,ansFullPath,params):
         ans.write('!' + '\n')
         
 def writeAnsBody(logFileFullPath,logBaseIndent,logIndent,ansFullPath,ansTemplateFullPath):
+    with open(ansTemplateFullPath,'r') as tem:
+        lines = tem.readlines()
     with open(ansFullPath,'a') as ans:
-        ans.write('!' + title + '\n')
-        ans.write('/' + 'title, ' + title + '\n')
-        ans.write('!' + title + '\n')
+        for line in lines:
+            ans.write(line)
         
 #===============================================================================#
 #                                 Log files

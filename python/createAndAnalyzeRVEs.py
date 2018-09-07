@@ -4464,16 +4464,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
-            regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+4.5*math.log10(parameters['BC']['northSide']['nFibers']))))])
-            regionSets.append(['LEFTSIDE',int(np.floor(30*(1+4.5*math.log10(parameters['BC']['northSide']['nFibers']))))])
+            regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
+            regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
         else:
             regionSets.append(['LOWER-RIGHTSIDE',30])
             regionSets.append(['LOWER-LEFTSIDE',30])
         regionSets.append(['UPPER-RIGHTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
         regionSets.append(['UPPER-LEFTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
     elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
-        regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+4.5*math.log10(parameters['BC']['northSide']['nFibers']))))])
-        regionSets.append(['LEFTSIDE',int(np.floor(30*(1+4.5*math.log10(parameters['BC']['northSide']['nFibers']))))])
+        regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
+        regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
     else:
         regionSets.append(['RIGHTSIDE',30])
         regionSets.append(['LEFTSIDE',30])

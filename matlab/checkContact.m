@@ -1,7 +1,7 @@
-function[fullLogPath] = createLogFile(folder,message)
+﻿function[isInContact] = createLogFile(xref,yref,ux1,uy1,ux2,uy2,tol,xc,yc)
 %%
 %==============================================================================
-% Copyright (c) 2016 Universit� de Lorraine & Lule� tekniska universitet
+% Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet
 % Author: Luca Di Stasio <luca.distasio@gmail.com>
 %                        <luca.distasio@ingpec.eu>
 %
@@ -14,7 +14,7 @@ function[fullLogPath] = createLogFile(folder,message)
 % Redistributions in binary form must reproduce the above copyright
 % notice, this list of conditions and the following disclaimer in
 % the documentation and/or other materials provided with the distribution
-% Neither the name of the Universit� de Lorraine or Lule� tekniska universitet
+% Neither the name of the Universite de Lorraine or Lulea tekniska universitet
 % nor the names of its contributors may be used to endorse or promote products
 % derived from this software without specific prior written permission.
 %
@@ -33,16 +33,60 @@ function[fullLogPath] = createLogFile(folder,message)
 %
 %  DESCRIPTION
 %
-%  A function to create a log file
+%  A function to check the contact of two surfaces in 2D, given the displacements
+%  and coordinates of their nodes in the global reference frame
 %
+%  Input
+%  xref  - [Nx1] (column vector) of x-coordinates of one surface's nodes
+%  yref  - [Nx1] (column vector) of y-coordinates of one surface's nodes
+%  ux1 - [Nx1] (column vector) of x-component of displacement of the first surface's nodes
+%  uy1 - [Nx1] (column vector) of y-component of displacement of the first surface's nodes
+%  ux2 - [Nx1] (column vector) of x-component of displacement of the second surface's nodes
+%  uy2 - [Nx1] (column vector) of y-component of displacement of the second surface's nodes
+%
+%  OBS: nodes belonging to the two surfaces must be ordered in the same way, i.e.
+%       node 1 of surface 1 is in front of node 1 of surface, they are coincident 
+%       in the undeformed configuration
+%
+%  xc  - scalar or [Nx1] (column vector) of x-coordinates of vectors' start-points; if scalar the point is common to all vectors
+%  yc  - scalar or [Nx1] (column vector) of y-coordinates of vectors' start-points; if scalar the point is common to all vectors
+%  tol - scalar, tolerance on crack radial displacement, default = 0
+%
+%  Output
+%  isInContact - [Nx1] (column vector) of 0s and 1s: 0 = surfaces not in contact, 1 = surfaces in contact
 %%
 
-fullLogPath = fullfile(folder,strcat('matlabLog.log'));
+if ~exist('tol','var')
+    tol = 0.0;
 
-fileId = fopen(fullLogPath,'w');
-fprintf(fileId,'\n');
-fprintf(fileId,'%s',message);
-fprintf(fileId,'\n');
-fclose(fileId);
+[mx1,nx1] = size(ux1);
+[my1,ny1] = size(uy1);
+[mx2,nx2] = size(ux2);
+[my2,ny2] = size(uy2);
+[mxr,nxr] = size(uxref);
+[myr,nyr] = size(uyref);
+
+if ~exist('xc','var')
+    xc = 0.0;
+if ~exist('yc','var')
+    yc = 0.0;
+
+[mxc,nxc] = size(xc);
+[myc,nyc] = size(yc);
+
+if mx1==my1 && nx1==ny1 && mx2==my2 && nx2==ny2 && mx2==mx1 && nx1==nx2 && mxr==myr && nxr==nyr && mxr==mx1 && nxr==nx2 && nx1=1 && (mxc==mx || mxc==1) && (myc==mx || myc==1) && nxc==1 && nyc==1
+    [beta,betadeg] = getOrientation(xref,yref);
+    [ur1,utheta1] = rotate(ux1,uy1,beta);
+    [ur2,utheta2] = rotate(ux2,uy2,beta);
+    deltaur = abs(ur2 - ur1);
+    isInContact = zeros(mx1,1);
+    isInContact(deltaur<=tol) = 1;
+    
+else
+    isInContact = 0;
+    disp('!------------------------------!');
+    disp('!             ERROR            !');
+    disp('!       Wrong dimensions       !');
+    disp('!------------------------------!');
 
 return

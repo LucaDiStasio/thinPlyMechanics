@@ -36,11 +36,11 @@
 %  A function to rotate vectors, defined by the coordinates of their end-points
 %  
 %  Input
-%  x - [Nx1] (column vector) of x-coordinates of vectors' end-points
-%  y - [Nx1] (column vector) of y-coordinates of vectors' end-points
+%  x    - [Nx1] (column vector) of x-coordinates of vectors' end-points
+%  y    - [Nx1] (column vector) of y-coordinates of vectors' end-points
 %  beta - [Nx1] (column vector) of angles in rad
-%  xc - scalar or [Nx1] (column vector) of x-coordinates of vectors' start-points; if scalar the point is common to all vectors
-%  yc - scalar or [Nx1] (column vector) of y-coordinates of vectors' start-points; if scalar the point is common to all vectors
+%  xc   - scalar or [Nx1] (column vector) of x-coordinates of vectors' start-points; if scalar the point is common to all vectors
+%  yc   - scalar or [Nx1] (column vector) of y-coordinates of vectors' start-points; if scalar the point is common to all vectors
 %
 %  Output
 %  x1 - [Nx1] (column vector) of x'-coordinates (rotated frame) of vectors' end-points
@@ -67,8 +67,8 @@ if mx==my && nx==ny && mb==mx && nb==nx && nx=1 && (mxc==mx || mxc==1) && (myc==
     r = cosbeta.*(x.-xc)+sinbeta.*(y.-yc);
     theta = -sinbeta.*(x.-xc)+cosbeta.*(y.-yc);
 else
-    beta = 0;
-    betadeg = 0;
+    r = 0;
+    theta = 0;
     disp('!------------------------------!');
     disp('!             ERROR            !');
     disp('!       Wrong dimensions       !');

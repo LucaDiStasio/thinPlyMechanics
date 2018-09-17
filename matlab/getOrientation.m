@@ -1,7 +1,7 @@
-function[fullLogPath] = createLogFile(folder,message)
+﻿function[beta,betadeg] = getOrientation(x,y)
 %%
 %==============================================================================
-% Copyright (c) 2016 Universit� de Lorraine & Lule� tekniska universitet
+% Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet
 % Author: Luca Di Stasio <luca.distasio@gmail.com>
 %                        <luca.distasio@ingpec.eu>
 %
@@ -33,16 +33,31 @@ function[fullLogPath] = createLogFile(folder,message)
 %
 %  DESCRIPTION
 %
-%  A function to create a log file
+%  A function to compute the orientation of a series of point in 2D,
+%  defined by their x and y coordinates
+%
+%  Input
+%  x - [Nx1] (column vector) of x-coordinates
+%  y - [Nx1] (column vector) of y-coordinates
+%
+%  Input
+%  beta - [Nx1] (column vector) of angles in rad
+%  betadeg - [Nx1] (column vector) of angles in deg
 %
 %%
 
-fullLogPath = fullfile(folder,strcat('matlabLog.log'));
+[mx,nx] = size(x);
+[my,ny] = size(y);
 
-fileId = fopen(fullLogPath,'w');
-fprintf(fileId,'\n');
-fprintf(fileId,'%s',message);
-fprintf(fileId,'\n');
-fclose(fileId);
+if mx==my && nx==ny && nx=1
+    beta = atan2(y,x);
+    betadeg = beta.*(180.0/pi);
+else
+    beta = 0;
+    betadeg = 0;
+    disp('!------------------------------!');
+    disp('!             ERROR            !');
+    disp('!       Wrong dimensions       !');
+    disp('!------------------------------!');
 
 return

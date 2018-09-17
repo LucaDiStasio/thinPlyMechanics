@@ -592,5 +592,23 @@ def main(argv):
 
         RVEparams['input']['modelname'] = basename + '_' + variationString
 
+        #================= create ANSYS APDL file
+        skipLineToLogFile(logfilefullpath,'a',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: createAPDL(RVEparams,logfilefullpath,logindent,logindent)',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
+        localStart = timeit.default_timer()
+        try:
+            if RVEparams['simulation-pipeline']['create-APDL']:
+                modelData = createAPDL(RVEparams,logfilefullpath,logindent,logindent)
+            localElapsedTime = timeit.default_timer() - localStart
+            timedataList.append(localElapsedTime)
+            totalIterationTime += localElapsedTime
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function:  createAPDL(RVEparams,logfilefullpath,logindent,logindent)',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
+        except Exception, error:
+            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+            sys.exit(2)
+
 if __name__ == "__main__":
     main(sys.argv[1:])

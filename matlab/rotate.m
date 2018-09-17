@@ -63,7 +63,7 @@ end
 [myc,nyc] = size(yc);
 
 
-if mx==my && nx==ny && mb==mx && nb==nx && nx=1 && (mxc==mx || mxc==1) && (myc==mx || myc==1) && nxc==1 && nyc==1
+if mx==my && nx==ny && mb==mx && nb==nx && nx==1 && (mxc==mx || mxc==1) && (myc==mx || myc==1) && nxc==1 && nyc==1
     cosbeta = cos(beta);
     sinbeta = sin(beta);
     x1 = cosbeta.*(x-xc)+sinbeta.*(y-yc);

@@ -50,7 +50,7 @@
 
 [mx,nx] = size(x);
 [my,ny] = size(y);
-[mb,nb] = size(y);
+[mb,nb] = size(beta);
 
 if ~exist('xc','var')
     xc = 0.0;

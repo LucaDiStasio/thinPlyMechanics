@@ -142,7 +142,7 @@ def appendCSVfile(dir,filename,data):
 #                            ANSYS command files
 #===============================================================================#
 
-def createCSVfile(ansFullPath,titleline=None):
+def createANSfile(ansFullPath,titleline=None):
     with open(ansFullPath,'w') as ans:
         if titleline != None:
             csv.write('!' + titleline.replace('\n','') + '\n')
@@ -203,14 +203,14 @@ def writeAnsInpData(logFileFullPath,logBaseIndent,logIndent,ansFullPath,params):
         ans.write('!' + '\n')
         ans.write('! ===> END INPUT DATA' + '\n')
         ans.write('!' + '\n')
-        
+
 def writeAnsBody(logFileFullPath,logBaseIndent,logIndent,ansFullPath,ansTemplateFullPath):
     with open(ansTemplateFullPath,'r') as tem:
         lines = tem.readlines()
     with open(ansFullPath,'a') as ans:
         for line in lines:
             ans.write(line)
-        
+
 #===============================================================================#
 #                                 Log files
 #===============================================================================#
@@ -572,7 +572,7 @@ def main(argv):
 
     with open(logfilefullpath,'w') as log:
         log.write('Automatic generation and FEM analysis of RVEs with Python and Ansys' + '\n')
-    
+
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a','In function: main(argv)',True)
 
@@ -594,4 +594,3 @@ def main(argv):
 
 if __name__ == "__main__":
     main(sys.argv[1:])
-    

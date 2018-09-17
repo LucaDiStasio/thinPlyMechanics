@@ -64,8 +64,8 @@ end
 [my1,ny1] = size(uy1);
 [mx2,nx2] = size(ux2);
 [my2,ny2] = size(uy2);
-[mxr,nxr] = size(uxref);
-[myr,nyr] = size(uyref);
+[mxr,nxr] = size(xref);
+[myr,nyr] = size(yref);
 
 if ~exist('xc','var')
     xc = 0.0;

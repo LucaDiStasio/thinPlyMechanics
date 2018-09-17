@@ -1,4 +1,4 @@
-﻿function[beta,betadeg] = getOrientation(x,y,xc,yc)
+function[beta,betadeg] = getOrientation(x,y,xc,yc)
 %%
 %==============================================================================
 % Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet
@@ -51,14 +51,16 @@
 
 if ~exist('xc','var')
     xc = 0.0;
+end
 if ~exist('yc','var')
     yc = 0.0;
-
+end
+    
 [mxc,nxc] = size(xc);
 [myc,nyc] = size(yc);
 
 if mx==my && nx==ny && nx==1 && (mxc==mx || mxc==1) && (myc==mx || myc==1) && nxc==1 && nyc==1
-    beta = atan2((y.-yc),(x.-xc));
+    beta = atan2((y-yc),(x-xc));
     betadeg = beta.*(180.0/pi);
 else
     beta = 0;
@@ -67,5 +69,6 @@ else
     disp('!             ERROR            !');
     disp('!       Wrong dimensions       !');
     disp('!------------------------------!');
+end
 
 return

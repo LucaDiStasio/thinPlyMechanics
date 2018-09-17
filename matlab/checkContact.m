@@ -1,4 +1,4 @@
-﻿function[isInContact] = createLogFile(xref,yref,ux1,uy1,ux2,uy2,tol,xc,yc)
+function[isInContact] = checkContact(xref,yref,ux1,uy1,ux2,uy2,tol,xc,yc)
 %%
 %==============================================================================
 % Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet
@@ -58,6 +58,7 @@
 
 if ~exist('tol','var')
     tol = 0.0;
+end
 
 [mx1,nx1] = size(ux1);
 [my1,ny1] = size(uy1);
@@ -68,25 +69,27 @@ if ~exist('tol','var')
 
 if ~exist('xc','var')
     xc = 0.0;
+end
 if ~exist('yc','var')
     yc = 0.0;
+end
 
 [mxc,nxc] = size(xc);
 [myc,nyc] = size(yc);
 
-if mx1==my1 && nx1==ny1 && mx2==my2 && nx2==ny2 && mx2==mx1 && nx1==nx2 && mxr==myr && nxr==nyr && mxr==mx1 && nxr==nx2 && nx1=1 && (mxc==mx || mxc==1) && (myc==mx || myc==1) && nxc==1 && nyc==1
+if mx1==my1 && nx1==ny1 && mx2==my2 && nx2==ny2 && mx2==mx1 && nx1==nx2 && mxr==myr && nxr==nyr && mxr==mx1 && nxr==nx2 && nx1==1 && (mxc==mx || mxc==1) && (myc==mx || myc==1) && nxc==1 && nyc==1
     [beta,betadeg] = getOrientation(xref,yref);
     [ur1,utheta1] = rotate(ux1,uy1,beta);
     [ur2,utheta2] = rotate(ux2,uy2,beta);
     deltaur = abs(ur2 - ur1);
     isInContact = zeros(mx1,1);
-    isInContact(deltaur<=tol) = 1;
-    
+    isInContact(deltaur<=tol) = 1; 
 else
     isInContact = 0;
     disp('!------------------------------!');
     disp('!             ERROR            !');
     disp('!       Wrong dimensions       !');
     disp('!------------------------------!');
+end
 
 return

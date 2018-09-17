@@ -1,4 +1,4 @@
-﻿function[x1,y1] = rotate(x,y,beta,xc,yc)
+function[x1,y1] = rotate(x,y,beta,xc,yc)
 %%
 %==============================================================================
 % Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet
@@ -54,8 +54,10 @@
 
 if ~exist('xc','var')
     xc = 0.0;
+end
 if ~exist('yc','var')
     yc = 0.0;
+end
 
 [mxc,nxc] = size(xc);
 [myc,nyc] = size(yc);
@@ -64,14 +66,15 @@ if ~exist('yc','var')
 if mx==my && nx==ny && mb==mx && nb==nx && nx=1 && (mxc==mx || mxc==1) && (myc==mx || myc==1) && nxc==1 && nyc==1
     cosbeta = cos(beta);
     sinbeta = sin(beta);
-    r = cosbeta.*(x.-xc)+sinbeta.*(y.-yc);
-    theta = -sinbeta.*(x.-xc)+cosbeta.*(y.-yc);
+    x1 = cosbeta.*(x-xc)+sinbeta.*(y-yc);
+    y1 = -sinbeta.*(x-xc)+cosbeta.*(y-yc);
 else
-    r = 0;
-    theta = 0;
+    x1 = 0;
+    y1 = 0;
     disp('!------------------------------!');
     disp('!             ERROR            !');
     disp('!       Wrong dimensions       !');
     disp('!------------------------------!');
+end
 
 return

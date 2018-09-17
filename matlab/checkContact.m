@@ -77,7 +77,7 @@ end
 [mxc,nxc] = size(xc);
 [myc,nyc] = size(yc);
 
-if mx1==my1 && nx1==ny1 && mx2==my2 && nx2==ny2 && mx2==mx1 && nx1==nx2 && mxr==myr && nxr==nyr && mxr==mx1 && nxr==nx2 && nx1==1 && (mxc==mx || mxc==1) && (myc==mx || myc==1) && nxc==1 && nyc==1
+if mx1==my1 && nx1==ny1 && mx2==my2 && nx2==ny2 && mx2==mx1 && nx1==nx2 && mxr==myr && nxr==nyr && mxr==mx1 && nxr==nx2 && nx1==1 && (mxc==mx1 || mxc==1) && (myc==mx1 || myc==1) && nxc==1 && nyc==1
     [beta,betadeg] = getOrientation(xref,yref);
     [ur1,utheta1] = rotate(ux1,uy1,beta);
     [ur2,utheta2] = rotate(ux2,uy2,beta);

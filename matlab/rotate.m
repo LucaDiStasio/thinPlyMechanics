@@ -62,8 +62,10 @@ if ~exist('yc','var')
 
 
 if mx==my && nx==ny && mb==mx && nb==nx && nx=1 && (mxc==mx || mxc==1) && (myc==mx || myc==1) && nxc==1 && nyc==1
-    beta = atan2(y,x);
-    betadeg = beta.*(180.0/pi);
+    cosbeta = cos(beta);
+    sinbeta = sin(beta);
+    r = cosbeta.*(x.-xc)+sinbeta.*(y.-yc);
+    theta = -sinbeta.*(x.-xc)+cosbeta.*(y.-yc);
 else
     beta = 0;
     betadeg = 0;

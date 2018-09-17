@@ -634,7 +634,7 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            if RVEparams['simulation-pipeline']['analyze-ODB']:
+            if RVEparams['simulation-pipeline']['analyze-ANS']:
                 analyzeRVEresults(inputfilename.split('.')[0]+'.odb',RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)

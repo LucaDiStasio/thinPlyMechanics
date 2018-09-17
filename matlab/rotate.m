@@ -1,7 +1,7 @@
-function[fullLogPath] = createLogFile(folder,message)
+﻿function[x1,y1] = rotate(x,y,beta,xc,yc)
 %%
 %==============================================================================
-% Copyright (c) 2016 Universit� de Lorraine & Lule� tekniska universitet
+% Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet
 % Author: Luca Di Stasio <luca.distasio@gmail.com>
 %                        <luca.distasio@ingpec.eu>
 %
@@ -33,16 +33,43 @@ function[fullLogPath] = createLogFile(folder,message)
 %
 %  DESCRIPTION
 %
-%  A function to create a log file
+%  A function to rotate vectors, defined by the coordinates of their end-points
+%  
+%  Input
+%  x - [Nx1] (column vector) of x-coordinates of vectors' end-points
+%  y - [Nx1] (column vector) of y-coordinates of vectors' end-points
+%  beta - [Nx1] (column vector) of angles in rad
+%  xc - scalar or [Nx1] (column vector) of x-coordinates of vectors' start-points; if scalar the point is common to all vectors
+%  yc - scalar or [Nx1] (column vector) of y-coordinates of vectors' start-points; if scalar the point is common to all vectors
+%
+%  Output
+%  x1 - [Nx1] (column vector) of x'-coordinates (rotated frame) of vectors' end-points
+%  y1 - [Nx1] (column vector) of y'-coordinates (rotated frame) of vectors' end-points
 %
 %%
 
-fullLogPath = fullfile(folder,strcat('matlabLog.log'));
+[mx,nx] = size(x);
+[my,ny] = size(y);
+[mb,nb] = size(y);
 
-fileId = fopen(fullLogPath,'w');
-fprintf(fileId,'\n');
-fprintf(fileId,'%s',message);
-fprintf(fileId,'\n');
-fclose(fileId);
+if ~exist('xc','var')
+    xc = 0.0;
+if ~exist('yc','var')
+    yc = 0.0;
+
+[mxc,nxc] = size(xc);
+[myc,nyc] = size(yc);
+
+
+if mx==my && nx==ny && mb==mx && nb==nx && nx=1 && (mxc==mx || mxc==1) && (myc==mx || myc==1) && nxc==1 && nyc==1
+    beta = atan2(y,x);
+    betadeg = beta.*(180.0/pi);
+else
+    beta = 0;
+    betadeg = 0;
+    disp('!------------------------------!');
+    disp('!             ERROR            !');
+    disp('!       Wrong dimensions       !');
+    disp('!------------------------------!');
 
 return

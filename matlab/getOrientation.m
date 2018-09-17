@@ -40,7 +40,7 @@
 %  x - [Nx1] (column vector) of x-coordinates
 %  y - [Nx1] (column vector) of y-coordinates
 %
-%  Input
+%  Output
 %  beta - [Nx1] (column vector) of angles in rad
 %  betadeg - [Nx1] (column vector) of angles in deg
 %

@@ -616,12 +616,30 @@ def main(argv):
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
         localStart = timeit.default_timer()
         try:
-            if RVEparams['simulation-pipeline']['analyze-ODB']:
+            if RVEparams['simulation-pipeline']['run-APDL']:
                 runRVEsimulation(RVEparams['input']['wd'],inputfilename,RVEparams['solver']['cpus'],logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
+        except Exception, error:
+            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+            sys.exit(2)
+
+        #================= extract and analyze data
+        skipLineToLogFile(logfilefullpath,'a',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: analyzeRVEresults(wd,odbname,logfilepath,parameters)',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
+        localStart = timeit.default_timer()
+        try:
+            if RVEparams['simulation-pipeline']['analyze-ODB']:
+                analyzeRVEresults(inputfilename.split('.')[0]+'.odb',RVEparams,logfilefullpath,logindent,logindent)
+            localElapsedTime = timeit.default_timer() - localStart
+            timedataList.append(localElapsedTime)
+            totalIterationTime += localElapsedTime
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: analyzeRVEresults(wd,odbname,logfilepath,parameters)',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
             writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
         except Exception, error:

@@ -46,38 +46,21 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 #rc('font',**{'family':'serif','serif':['Palatino']})
 rc('text', usetex=True)
 
-def model(x,A,B,C,D):
+def modeIERR(x,A,B,C,D):
     return (A*np.sin(B*x+C)+D)
-    
-def dundursParams(Ef,nuf,Em,num):
+
+def modeIIERR(Ef,nuf,Em,num):
     muf = 0.5*Ef/(1+nuf)
     mum = 0.5*Em/(1+num)
-    
+
     kf = 3-4*nuf
     km = 3-4*num
-    
+
     dundA = (muf*(km+1)-mum*(kf+1))/(muf*(km+1)+mum*(kf+1))
     dundB = (muf*(km-1)-mum*(kf-1))/(muf*(km+1)+mum*(kf+1))
-    
+
     return dundA,dundB
 
-def c(theta,epsil,alpha):
-    return 2*np.exp(-2*epsil*(theta-np.pi))
-    
-def d(theta,epsil,alpha):
-    return -(4-(1-alpha)*(1+4*epsil*epsil)*np.sin(theta)*np.sin(theta))/(3+alpha-(1-alpha)*(np.cos(theta)-2*epsil*np.sin(theta))*np.exp(2*epsil*(theta-np.pi)))
-
-def numCoeffF(theta,epsil,alpha):
-    return (d(theta,epsil,alpha)*(d(theta,epsil,alpha)-2*c(theta,epsil,alpha)*np.cos(theta))+c(theta,epsil,alpha)*c(theta,epsil,alpha))
-
-def denCoeffF(theta,epsil,alpha):
-    return 1/(8*c(theta,epsil,alpha))
-    
-def coeffF(theta,epsil,alpha):
-    return numCoeffF(theta,epsil,alpha)*denCoeffF(theta,epsil,alpha)
-
-def G(theta,epsil,alpha):
-    return np.sin(theta)*coeffF(theta,epsil,alpha)
 
 plt.close("all")
 

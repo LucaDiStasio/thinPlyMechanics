@@ -57,7 +57,7 @@ if ~exist('yc','var')
 [mxc,nxc] = size(xc);
 [myc,nyc] = size(yc);
 
-if mx==my && nx==ny && nx=1 && (mxc==mx || mxc==1) && (myc==mx || myc==1) && nxc==1 && nyc==1
+if mx==my && nx==ny && nx==1 && (mxc==mx || mxc==1) && (myc==mx || myc==1) && nxc==1 && nyc==1
     beta = atan2((y.-yc),(x.-xc));
     betadeg = beta.*(180.0/pi);
 else

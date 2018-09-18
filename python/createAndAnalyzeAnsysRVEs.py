@@ -223,6 +223,7 @@ def createAPDL(params,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '- APDL template file name: ' + params['input']['apdltemplate'],True)
     ansFullPath = join(params['input']['wd'],params['input']['apdlfilename'])
     ansTemplateFullPath = join(params['input']['templatedir'],params['input']['apdltemplate'])
+    params['ansFullPath'] = ansFullPath
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '- APDL file full path: ' + ansFullPath,True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '- APDL template full path: ' + ansTemplateFullPath,True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating Ansys input file... ',True)
@@ -245,6 +246,8 @@ def createAPDL(params,logfilepath,baselogindent,logindent):
     writeAnsBody(ansFullPath,ansTemplateFullPath)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function createAPDL(params,logfilepath,baselogindent,logindent)',True)
+    
+def runRVEsimulation(RVEparams['input']['wd'],inputfilename,RVEparams['solver']['cpus'],logfilefullpath,logindent,logindent):
     
 
 #===============================================================================#

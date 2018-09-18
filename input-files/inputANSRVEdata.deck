@@ -29,9 +29,10 @@ simulation-pipeline, analysis, report-stressesatbondedinterface @False  $boolean
 simulation-pipeline, analysis, report-crackdisplacements        @False  $boolean
 #
 # Directory and names for CAE model generation
-input, wd          @D:/01_Luca/07_Data/03_FEM/CurvedInterface  $string
-input, caefilename @sweepOverDeltathetaL1_0992A3SFCOARED        $string
-input, modelname   @aname                                      $string
+input, wd           @D:/01_Luca/07_Data/03_FEM/CurvedInterface  $string
+input, apdlfilename @sweepOverDeltathetaL1_0992A3SFCOARED       $string
+input, templatedir  @D:/01_Luca/07_Data/03_FEM/CurvedInterface  $string
+input, apdltemplate @sweepOverDeltathetaL1_0992A3SFCOARED       $string
 #
 # Geometry
 geometry, fiber, type @half   $string
@@ -50,9 +51,6 @@ materials, 2, name            @epoxy                                            
 materials, 2, elastic,type    @ISOTROPIC                                            $ABAQUS keyword
 materials, 2, elastic, values @[3.5e3,0.4]                                          $list of float
 #
-# Values of nu and G needed for postprocessing
-postproc, nu-G0 @0.4 $float
-postproc, G-G0 @1250.0 $float
 #
 # Section properties (repeat for every section to be defined)
 sections, 1, name      @fiberSection             $string

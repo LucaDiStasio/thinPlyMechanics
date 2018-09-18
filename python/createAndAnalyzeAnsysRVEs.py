@@ -249,7 +249,16 @@ def createAPDL(params,logfilepath,baselogindent,logindent):
     
 def runRVEsimulation(params,logfilefullpath,logindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function runRVEsimulation(params,logfilefullpath,logindent,logindent)',True)
+    thisSystem = system()
+    if 'Windows' in thisSystem:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Currently running in Windows (' + thisSystem + ')',True)
+        
+    elif 'Linux' in thisSystem:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Currently running in Linux (' + thisSystem + ')',True)
     
+    else:
+        writeErrorToLogFile(logfilefullpath,'a','UNRECOGNIZED SYSTEM','The program does not recognize the system in which it is running.',True)
+        sys.exit(2)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function runRVEsimulation(params,logfilefullpath,logindent,logindent)',True)
     
 

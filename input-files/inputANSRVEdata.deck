@@ -36,6 +36,12 @@ input, apdltemplate @sweepOverDeltathetaL1_0992A3SFCOARED       $string
 input, titleline    @none                                       $string
 input, title        @none                                       $string
 #
+# Input data
+inputData, 1, name  @none $string
+inputData, 1, value @none $int/float
+inputData, 2, name  @none $string
+inputData, 2, value @none $int/float
+
 # Geometry
 geometry, fiber, type @half   $string
 geometry, L          @1.0992 $float

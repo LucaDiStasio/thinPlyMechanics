@@ -33,6 +33,8 @@ input, wd           @D:/01_Luca/07_Data/03_FEM/CurvedInterface  $string
 input, apdlfilename @sweepOverDeltathetaL1_0992A3SFCOARED       $string
 input, templatedir  @D:/01_Luca/07_Data/03_FEM/CurvedInterface  $string
 input, apdltemplate @sweepOverDeltathetaL1_0992A3SFCOARED       $string
+input, titleline    @none                                       $string
+input, title        @none                                       $string
 #
 # Geometry
 geometry, fiber, type @half   $string

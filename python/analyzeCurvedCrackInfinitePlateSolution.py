@@ -46,8 +46,9 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 #rc('font',**{'family':'serif','serif':['Palatino']})
 rc('text', usetex=True)
 
-def modeIERR(x,A,B,C,D):
-    return (A*np.sin(B*x+C)+D)
+
+def modeIERR(x):
+    return (np.sin(x)*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.cos(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.cos(1.5*x)))
 
 def modeIIERR(Ef,nuf,Em,num):
     muf = 0.5*Ef/(1+nuf)

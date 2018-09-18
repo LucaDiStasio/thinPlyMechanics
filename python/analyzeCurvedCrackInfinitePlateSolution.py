@@ -38,7 +38,6 @@ from os.path import isfile, join, exists
 from datetime import datetime
 from time import strftime
 import numpy as np
-from scipy import optimize
 import matplotlib.pyplot as plt
 from matplotlib import rc
 rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})

@@ -221,8 +221,8 @@ def createAPDL(params,logfilepath,baselogindent,logindent):
     if not params['input']['apdltemplate'].split('.')>0:
         params['input']['apdltemplate'] += '.cmd'
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '- APDL template file name: ' + params['input']['apdltemplate'],True)
-    ansFullPath = join(params['input']['wd'])
-    ansTemplateFullPath
+    ansFullPath = join(params['input']['wd'],params['input']['apdlfilename'])
+    ansTemplateFullPath = join(params['input']['templatedir'],params['input']['apdltemplate'])
     
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function createAPDL(params,logfilepath,baselogindent,logindent)',True)
     

@@ -28,7 +28,7 @@ simulation-pipeline, analysis, report-stressesatsymmetryline    @False  $boolean
 simulation-pipeline, analysis, report-stressesatbondedinterface @False  $boolean
 simulation-pipeline, analysis, report-crackdisplacements        @False  $boolean
 #
-# Directory and names for CAE model generation
+# Directory and names for APDL file generation
 input, wd           @D:/01_Luca/07_Data/03_FEM/CurvedInterface  $string
 input, apdlfilename @sweepOverDeltathetaL1_0992A3SFCOARED       $string
 input, templatedir  @D:/01_Luca/07_Data/03_FEM/CurvedInterface  $string

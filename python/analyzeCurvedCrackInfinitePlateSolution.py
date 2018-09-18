@@ -48,19 +48,17 @@ rc('text', usetex=True)
 
 
 def modeIERR(x):
-    return (np.sin(x)*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.cos(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.cos(1.5*x)))
+    return (np.sin(x)*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.cos(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.cos(1.5*x))*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.cos(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.cos(1.5*x)))
 
-def modeIIERR(Ef,nuf,Em,num):
-    muf = 0.5*Ef/(1+nuf)
-    mum = 0.5*Em/(1+num)
+def modeIERRcurvature(x):
+    return ((((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.cos(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.cos(1.5*x))*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.cos(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.cos(1.5*x)))
 
-    kf = 3-4*nuf
-    km = 3-4*num
 
-    dundA = (muf*(km+1)-mum*(kf+1))/(muf*(km+1)+mum*(kf+1))
-    dundB = (muf*(km-1)-mum*(kf-1))/(muf*(km+1)+mum*(kf+1))
+def modeIIERR(x):
+    return (np.sin(x)*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.sin(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.sin(1.5*x))*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.sin(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.sin(1.5*x)))
 
-    return dundA,dundB
+def modeIIERRcurvature(x):
+    return ((((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.sin(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.sin(1.5*x))*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.sin(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.sin(1.5*x)))
 
 
 plt.close("all")

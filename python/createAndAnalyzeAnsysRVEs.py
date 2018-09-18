@@ -214,10 +214,13 @@ def writeAnsBody(ansFullPath,ansTemplateFullPath):
 def createAPDL(params,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function createAPDL(params,logfilepath,baselogindent,logindent)',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '- Working directory: ' + params['input']['wd'],True)
+    if not params['input']['apdlfilename'].split('.')>0:
+        params['input']['apdlfilename'] += '.cmd'
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '- APDL file name: ' + params['input']['apdlfilename'],True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '- Template directory: ' + params['input']['templatedir'],True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '- APDL template file name: ' + params['input']['apdltemplate'],True)
-    ansFullPath,ansTemplateFullPath
+    ansFullPath = join(params['input']['wd'])
+    ansTemplateFullPath
     
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function createAPDL(params,logfilepath,baselogindent,logindent)',True)
     

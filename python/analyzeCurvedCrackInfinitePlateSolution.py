@@ -69,7 +69,7 @@ angles = np.linspace(0.0, 180, num=300)
 #     Gs.append(G(angles,epsilon,alpha))
 
 plt.figure()
-plt.plot(angles, modeIERR(angles*np.pi/180.0,*coeffs), 'b-')
+plt.plot(angles, modeIERR(angles*np.pi/180.0), 'b-')
 plt.xlabel(r'$\Delta\theta [^{\circ}]$')
 plt.ylabel(r'$G_{I} [\frac{J}{m^{2}}]$')
 plt.title(r'Mode I ERR')

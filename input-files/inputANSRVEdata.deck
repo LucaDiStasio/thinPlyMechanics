@@ -4,9 +4,9 @@
 # variable type is introduced by $
 #
 # Select execution steps in the pipeline
-simulation-pipeline, create-CAE   @True  $boolean
-simulation-pipeline, modify-INP   @True  $boolean
-simulation-pipeline, analyze-ODB  @True  $boolean
+simulation-pipeline, create-APDL  @True  $boolean
+simulation-pipeline, run-APDL     @True  $boolean
+simulation-pipeline, analyze-ANS  @True  $boolean
 simulation-pipeline, archive-ODB  @False $boolean
 simulation-pipeline, archive-CAE  @True $boolean
 simulation-pipeline, remove-ODB   @True $boolean

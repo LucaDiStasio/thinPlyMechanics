@@ -247,7 +247,7 @@ def createAPDL(params,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function createAPDL(params,logfilepath,baselogindent,logindent)',True)
     
-def runRVEsimulation(RVEparams['input']['wd'],inputfilename,RVEparams['solver']['cpus'],logfilefullpath,logindent,logindent):
+def runRVEsimulation(params,logfilefullpath,logindent,logindent):
     
 
 #===============================================================================#

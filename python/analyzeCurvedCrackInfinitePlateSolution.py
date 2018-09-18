@@ -145,7 +145,7 @@ plt.grid(True)
 
 plt.figure()
 plt.plot(angles, chordSize(angles*np.pi/180.0), 'b-')
-plt.plot(angles, modeIIcurvature(angles*np.pi/180.0), 'b-')
+plt.plot(angles, modeIIERRcurvature(angles*np.pi/180.0), 'b-')
 plt.xlabel(r'$\Delta\theta [^{\circ}]$')
 plt.ylabel(r'$\frac{G_{II}}{E^{*}\varepsilon_{0}^{2}Rf\left(\Delta\theta\right)} [-]$')
 plt.title(r'Mode II ERR Chord-Size and Shape Factor')

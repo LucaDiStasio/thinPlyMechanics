@@ -226,8 +226,11 @@ def createAPDL(params,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '- APDL file full path: ' + ansFullPath,True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '- APDL template full path: ' + ansTemplateFullPath,True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating Ansys input file... ',True)
-    
-    createANSfile(ansFullPath,titleline=None)
+    if params['input']['titleline']!='none':
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'with title: ' + params['input']['titleline'],True)
+        createANSfile(ansFullPath,params['input']['titleline'])
+    else:
+        createANSfile(ansFullPath)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function createAPDL(params,logfilepath,baselogindent,logindent)',True)
     

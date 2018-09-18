@@ -47,17 +47,17 @@ rc('text', usetex=True)
 
 
 def modeIERR(x):
-    return (np.sin(x)*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.cos(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.cos(1.5*x))*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.cos(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.cos(1.5*x)))
+    return (np.sin(x)*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.cos(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.cos(1.5*x))**2)
 
 def modeIERRcurvature(x):
-    return ((((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.cos(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.cos(1.5*x))*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.cos(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.cos(1.5*x)))
+    return ((((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.cos(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.cos(1.5*x))**2)
 
 
 def modeIIERR(x):
-    return (np.sin(x)*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.sin(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.sin(1.5*x))*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.sin(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.sin(1.5*x)))
+    return (np.sin(x)*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.sin(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.sin(1.5*x))**2)
 
 def modeIIERRcurvature(x):
-    return ((((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.sin(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.sin(1.5*x))*(((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.sin(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.sin(1.5*x)))
+    return ((((1-np.sin(0.5*x)*np.sin(0.5*x)*np.cos(0.5*x)*np.cos(0.5*x))*np.sin(0.5*x))/(1+np.sin(np.sin(0.5*x))*np.sin(0.5*x))+np.sin(1.5*x))**2)
 
 
 plt.close("all")

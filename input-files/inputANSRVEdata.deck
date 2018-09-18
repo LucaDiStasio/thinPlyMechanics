@@ -1,0 +1,160 @@
+# everything after is a comment
+# keywords are divided by commas: keyword1, keyword2, ...
+# the corresponding value is introduced by @
+# variable type is introduced by $
+#
+# Select execution steps in the pipeline
+simulation-pipeline, create-CAE   @True  $boolean
+simulation-pipeline, modify-INP   @True  $boolean
+simulation-pipeline, analyze-ODB  @True  $boolean
+simulation-pipeline, archive-ODB  @False $boolean
+simulation-pipeline, archive-CAE  @True $boolean
+simulation-pipeline, remove-ODB   @True $boolean
+simulation-pipeline, remove-DAT   @True $boolean
+simulation-pipeline, remove-PRT   @True $boolean
+simulation-pipeline, remove-STA   @True $boolean
+simulation-pipeline, remove-SIM   @True $boolean
+simulation-pipeline, remove-MSG   @True $boolean
+simulation-pipeline, remove-INP   @True $boolean
+simulation-pipeline, remove-COM   @True $boolean
+simulation-pipeline, report-LATEX @False  $boolean
+simulation-pipeline, report-EXCEL @False  $boolean
+#
+# Select outputs in the analysis phase
+simulation-pipeline, analysis, report-energyreleaserates        @True   $boolean
+simulation-pipeline, analysis, report-contactzone               @False   $boolean
+simulation-pipeline, analysis, report-stressesatboundary        @False  $boolean
+simulation-pipeline, analysis, report-stressesatsymmetryline    @False  $boolean
+simulation-pipeline, analysis, report-stressesatbondedinterface @False  $boolean
+simulation-pipeline, analysis, report-crackdisplacements        @False  $boolean
+#
+# Directory and names for CAE model generation
+input, wd          @D:/01_Luca/07_Data/03_FEM/CurvedInterface  $string
+input, caefilename @sweepOverDeltathetaL1_0992A3SFCOARED        $string
+input, modelname   @aname                                      $string
+#
+# Geometry
+geometry, fiber, type @half   $string
+geometry, L          @1.0992 $float
+geometry, Rf         @1.0   $float
+geometry, theta      @0.0   $float
+geometry, deltatheta @10.0  $float
+#
+# Materials (repeat keywords for every material to be defined)
+# properties are in MPa
+# for ply: ENGINEERING CONSTANTS - [EL,ET,ET,nuLT,nuLT,nuTT,GLT,GLT,GTT]
+materials, 1, name            @glassFiber                                           $string
+materials, 1, elastic, type   @ISOTROPIC                                            $ABAQUS keyword
+materials, 1, elastic, values @[70e3,0.2]                                           $list of float
+materials, 2, name            @epoxy                                                $string
+materials, 2, elastic,type    @ISOTROPIC                                            $ABAQUS keyword
+materials, 2, elastic, values @[3.5e3,0.4]                                          $list of float
+#
+# Values of nu and G needed for postprocessing
+postproc, nu-G0 @0.4 $float
+postproc, G-G0 @1250.0 $float
+#
+# Section properties (repeat for every section to be defined)
+sections, 1, name      @fiberSection             $string
+sections, 1, type      @HomogeneousSolidSection  $string
+sections, 1, material  @glassFiber               $string
+sections, 1, thickness @1.0                      $float
+sections, 2, name      @matrixSection            $string
+sections, 2, type      @HomogeneousSolidSection  $string
+sections, 2, material  @epoxy                    $string
+sections, 2, thickness @1.0                      $float
+#
+# Section assignments (repeat as needed)
+sectionRegions, 1, name                @fiberSection   $string
+sectionRegions, 1, set                 @FIBER          $string
+sectionRegions, 1, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
+sectionRegions, 1, offsetField         @               $string
+sectionRegions, 1, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
+sectionRegions, 1, offsetValue         @0.0            $float
+sectionRegions, 2, name                @matrixSection  $string
+sectionRegions, 2, set                 @MATRIX         $string
+sectionRegions, 2, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
+sectionRegions, 2, offsetField         @               $string
+sectionRegions, 2, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
+sectionRegions, 2, offsetValue         @0.0            $float
+sectionRegions, 3, name                @fiberSection   $string
+sectionRegions, 3, set                 @UPPER-FIBERS   $string
+sectionRegions, 3, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
+sectionRegions, 3, offsetField         @               $string
+sectionRegions, 3, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
+sectionRegions, 3, offsetValue         @0.0            $float
+sectionRegions, 4, name                @fiberSection   $string
+sectionRegions, 4, set                 @LEFT-FIBERS    $string
+sectionRegions, 4, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
+sectionRegions, 4, offsetField         @               $string
+sectionRegions, 4, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
+sectionRegions, 4, offsetValue         @0.0            $float
+sectionRegions, 5, name                @fiberSection   $string
+sectionRegions, 5, set                 @RIGHT-FIBERS    $string
+sectionRegions, 5, offsetType          @MIDDLE_SURFACE $ABAQUS keyword
+sectionRegions, 5, offsetField         @               $string
+sectionRegions, 5, thicknessAssignment @FROM_SECTION   $ABAQUS keyword
+sectionRegions, 5, offsetValue         @0.0            $float
+#
+# Step data
+steps, 1, name             @Load-Step $string
+steps, 1, previous         @Initial   $string
+steps, 1, minimumIncrement @1e-10     $float
+#
+# Loads
+loads, 1, name       @rightBC                            $string
+loads, 1, type       @appliedStrain                      $string
+loads, 1, set        @RIGHTSIDE                          $string
+loads, 1, value      @[0.01,0.0,0.0]                     $list of float
+loads, 1, stepName   @Load-Step                          $string
+loads, 2, name       @leftBC                             $string
+loads, 2, type       @appliedStrain                      $string
+loads, 2, set        @LEFTSIDE                           $string
+loads, 2, value      @[0.01,0.0,0.0]                     $list of float
+loads, 2, stepName   @Load-Step                          $string
+#
+# Boundary conditions
+BC, northSide, type    @adjacentFibers   $string
+BC, northSide, nFibers @3               $float
+BC, rightSide, type    @adjacentFibers   $string
+BC, rightSide, nFibers @50               $float
+BC, leftSide,  type    @adjacentFibers   $string
+BC, leftSide,  nFibers @50               $float
+#
+# Mesh
+mesh, size, deltapsi           @10.0    $float
+mesh, size, deltaphi           @10.0    $float
+mesh, size, delta              @0.05    $float
+mesh, size, delta1             @0.5     $float
+mesh, size, delta2             @1.0     $float
+mesh, size, delta3             @1.0     $float
+mesh, elements, minElNum       @5       $int
+mesh, elements, order          @second  $string
+#
+# J-Integral
+Jintegral, numberOfContours @50   $int
+singularity, type           @none $string
+#
+# Output directory and filenames
+output, archive, directory                           @H:/01_Luca/07_DocMASE/07_Data/03_FEM/14_sweepDeltathetaVff-GF-BC2sidefibers         $string
+output, global, directory                            @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/sweepOverDeltathetaL1_0992A3SFCOARED   $string
+output, global, filenames, performances              @sweepOverDeltathetaL1_0992A3SFCOARED-performances                                    $string
+output, global, filenames, energyreleaserate         @sweepOverDeltathetaL1_0992A3SFCOARED-energyreleaserates                              $string
+output, global, filenames, inputdata                 @sweepOverDeltathetaL1_0992A3SFCOARED-inputdata                                       $string
+output, local, directory                             @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/sweepOverDeltathetaL1_0992A3SFCOARED   $string
+output, local, filenames, Jintegral                  @D:/                                                                                 $string
+output, local, filenames, stressesatboundary         @D:/                                                                                 $string
+output, local, filenames, crackdisplacements         @D:/                                                                                 $string
+output, local, filenames, contactzonetolerance       @D:/                                                                                 $string
+output, report, global, directory                    @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/sweepOverDeltathetaL1_0992A3SFCOARED   $string
+output, report, global, filename                     @sweepOverDeltathetaL1_0992A3SFCOARED-report                                          $string
+output, report, local, directory                     @[]                                                                                  $list of string
+output, report, local, filenames, Jintegral          @[]                                                                                  $list of string
+output, report, local, filenames, stressesatboundary @[]                                                                                  $list of string
+output, report, local, filenames, crackdisplacements @[]                                                                                  $list of string
+output, report, local, filenames, contactzonetolerance @[]                                                                                $list of string
+output, sql, global, directory                       @D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/sweepOverDeltathetaL1_0992A3SFCOARED   $string
+output, sql, global, filename                        @sweepOverDeltathetaL1_0992A3SFCOAREDDB                                               $string
+#
+# Solver properties
+solver, cpus @12 $int

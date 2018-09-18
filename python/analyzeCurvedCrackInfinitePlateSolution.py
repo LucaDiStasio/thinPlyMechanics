@@ -75,7 +75,7 @@ plt.ylabel(r'$\frac{G_{I}}{E^{*}\varepsilon_{0}^{2}R} [-]$')
 plt.title(r'Mode I ERR Shape Factor')
 plt.legend((r'$Mode I$'),loc='best')
 plt.grid(True)
-plt.show()
+
 #plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
 
 plt.figure()
@@ -85,7 +85,7 @@ plt.ylabel(r'$\frac{G_{II}}{E^{*}\varepsilon_{0}^{2}R} [-]$')
 plt.title(r'Mode II ERR Shape Factor')
 plt.legend((r'$Mode II$'),loc='best')
 plt.grid(True)
-plt.show()
+
 #plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
 
 plt.figure()
@@ -96,7 +96,7 @@ plt.ylabel(r'$\frac{G_{I}}{E^{*}\varepsilon_{0}^{2}R} [-]$')
 plt.title(r'ERR Shape Factor')
 plt.legend((r'$Mode I$',r'$Mode II$'),loc='best')
 plt.grid(True)
-plt.show()
+
 #plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
 
 plt.figure()
@@ -106,7 +106,7 @@ plt.ylabel(r'$\frac{G_{I}}{E^{*}\varepsilon_{0}^{2}R\sin{\Delta\theta}} [-]$')
 plt.title(r'Mode I ERR Curvature Factor')
 plt.legend((r'$Mode I$'),loc='best')
 plt.grid(True)
-plt.show()
+
 #plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
 
 plt.figure()
@@ -116,7 +116,7 @@ plt.ylabel(r'$\frac{G_{II}}{E^{*}\varepsilon_{0}^{2}R\sin{\Delta\theta}} [-]$')
 plt.title(r'Mode II ERR Curvature Factor')
 plt.legend((r'$Mode II$'),loc='best')
 plt.grid(True)
-plt.show()
+
 #plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
 
 plt.figure()
@@ -127,5 +127,5 @@ plt.ylabel(r'$\frac{G_{I}}{E^{*}\varepsilon_{0}^{2}R\sin{\Delta\theta}} [-]$')
 plt.title(r'ERR Curvature Factor')
 plt.legend((r'$Mode I$',r'$Mode II$'),loc='best')
 plt.grid(True)
-plt.show()
+
 #plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')

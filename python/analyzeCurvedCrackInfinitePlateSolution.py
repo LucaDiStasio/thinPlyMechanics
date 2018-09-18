@@ -140,7 +140,7 @@ plt.ylabel(r'$\frac{G_{I}}{E^{*}\varepsilon_{0}^{2}Rf\left(\Delta\theta\right)} 
 plt.title(r'Mode I ERR Chord-Size and Curvature Factor')
 plt.legend((r'Chord Size',r'Curvature'),loc='best')
 plt.grid(True)
-plt.show()
+
 #plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
 
 plt.figure()
@@ -151,5 +151,7 @@ plt.ylabel(r'$\frac{G_{II}}{E^{*}\varepsilon_{0}^{2}Rf\left(\Delta\theta\right)}
 plt.title(r'Mode II ERR Chord-Size and Shape Factor')
 plt.legend((r'Chord Size',r'Curvature'),loc='best')
 plt.grid(True)
-plt.show()
+
 #plt.savefig(join(outdir,filename + '.png'), bbox_inches='tight')
+
+plt.show()

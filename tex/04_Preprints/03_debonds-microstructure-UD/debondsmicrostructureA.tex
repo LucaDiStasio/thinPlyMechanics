@@ -185,21 +185,412 @@
 \caption{Models of single-ply laminates with multiple layers of fibers with debonds repeating at different distances in the central line of fibers (left column), and corresponding Representative Volume Elements (right column) with symmetry applied on the lower boundary line.}\label{fig:fibersOnSideAndTopModels}
 \end{figure}
 
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Single layer of debonded fibers.}\label{subfig:singlelayerdebfibers}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Element with a single debonded fiber and free boundary on top.}\label{subfig:free}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Infinite number of layers of debonded fibers.}\label{subfig:inflayersdebfibers}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Element with a single debonded fiber and coupling of vertical displacements along the upper boundary.}\label{subfig:coupling}
+    \end{subfigure}
+
+\caption{Models of single-ply laminates with all the fibers debonded  (left column), and corresponding Representative Volume Elements (right column) with symmetry applied on the lower boundary line.}\label{fig:allFibersDebonded}
+\end{figure}
+
 \subsection{Finite Element (FE) discretization}
 
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Schematic of the model with its main parameters.}\label{subfig:modelschem}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Detail of the mesh in the crack tip's neighborhood.}\label{subfig:meshdetail}
+    \end{subfigure}
+
+\caption{Details and main parameters of the Finite Element model.}\label{fig:FEmodel}
+\end{figure}
+
 \subsection{Validation of the model}
+
+\begin{figure}[!h]
+\centering
+%\includegraphics[width=\textwidth]{}
+\caption{Validation of the single fiber model for the infinite matrix case with respect to the BEM solution in \cite{}.}\label{fig:validation}
+\end{figure}
 
 \section{Results \& Discussion}
 
 \subsection{Effect of Fiber Volume Fraction}
 
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Single fiber model with free boundary on top.}\label{subfig:volfracfreeMI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Single fiber model with coupling of vertical displacements along the upper boundary.}\label{subfig:volfraccouplingMI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{1 fiber each side.}\label{subfig:volfrac1eachsideMI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{1 fiber above.}\label{subfig:volfrac1aboveMI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{5 fibers each side.}\label{subfig:volfrac5eachsideMI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{5 fibers above.}\label{subfig:volfrac5aboveMI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{10 fibers each side.}\label{subfig:volfrac10eachsideMI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{10 fibers above.}\label{subfig:volfrac10aboveMI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{1 fiber each side, 1 above.}\label{subfig:volfrac1eachside1aboveMI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{3 fibers each side, 1 above.}\label{subfig:volfrac3eachside1aboveMI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{2 fibers each side, 2 above.}\label{subfig:volfrac2eachside2aboveMI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{5 fibers each side, 2 above.}\label{subfig:volfrac5eachside2aboveMI}
+    \end{subfigure}
+
+\caption{A view of the effect of fiber volume fraction on Mode I ERR across different models.}\label{fig:volumefractionMI}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Single fiber model with free boundary on top.}\label{subfig:volfracfreeMII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Single fiber model with coupling of vertical displacements along the upper boundary.}\label{subfig:volfraccouplingMII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{1 fiber each side.}\label{subfig:volfrac1eachsideMII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{1 fiber above.}\label{subfig:volfrac1aboveMII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{5 fibers each side.}\label{subfig:volfrac5eachsideMII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{5 fibers above.}\label{subfig:volfrac5aboveMII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{10 fibers each side.}\label{subfig:volfrac10eachsideMII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{10 fibers above.}\label{subfig:volfrac10aboveMII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{1 fiber each side, 1 above.}\label{subfig:volfrac1eachside1aboveMII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{3 fibers each side, 1 above.}\label{subfig:volfrac3eachside1aboveMII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{2 fibers each side, 2 above.}\label{subfig:volfrac2eachside2aboveMII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{5 fibers each side, 2 above.}\label{subfig:volfrac5eachside2aboveMII}
+    \end{subfigure}
+
+\caption{A view of the effect of fiber volume fraction on Mode II ERR across different models.}\label{fig:volumefractionMII}
+\end{figure}
+
 \subsection{Interaction between debonds in UD laminates with a single layer of fibers}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:sidefiber30MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:sidefiber50MI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:sidefiber60MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:sidefiber65MI}
+    \end{subfigure}
+
+\caption{Effect of the interaction between debonds appearing at regular intervals on Mode I ERR in a single-ply laminate with a single layer of fibers at different levels of fiber volume fraction $V_{f}$.}\label{fig:sidefibersMI}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:sidefiber30MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:sidefiber50MII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:sidefiber60MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:sidefiber65MII}
+    \end{subfigure}
+
+\caption{Effect of the interaction between debonds appearing at regular intervals on Mode II ERR in a single-ply laminate with a single layer of fibers at different levels of fiber volume fraction $V_{f}$.}\label{fig:sidefibersMII}
+\end{figure}
 
 \subsection{Influence of layers of fully bonded fibers on debond's growth in a centrally located line of debonded fibers}
 
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:sidefiber30MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:sidefiber50MI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:sidefiber60MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:sidefiber65MI}
+    \end{subfigure}
+
+\caption{Influence of layers of fully bonded fibers on debond's growth in Mode I ERR in a centrally located line of debonded fibers at different levels of fiber volume fraction $V_{f}$.}\label{fig:abovefibersMI}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:sidefiber30MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:sidefiber50MII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:sidefiber60MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:sidefiber65MII}
+    \end{subfigure}
+
+\caption{Influence of layers of fully bonded fibers on debond's growth in Mode II ERR in a centrally located line of debonded fibers at different levels of fiber volume fraction $V_{f}$.}\label{fig:abovefibersMII}
+\end{figure}
+
 \subsection{Interaction between debonds in UD laminates with multiple layers of fibers}
 
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:abovefiber30MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:abovefiber50MI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:abovefiber60MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:abovefiber65MI}
+    \end{subfigure}
+
+\caption{Effect of the interaction between debonds appearing at regular intervals on Mode I ERR in a single-ply laminate with multiple layers of fibers at different levels of fiber volume fraction $V_{f}$.}\label{fig:sideabovefibersMI}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:sideabovefiber30MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:sideabovefiber50MII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:sideabovefiber60MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:sideabovefiber65MII}
+    \end{subfigure}
+
+\caption{Effect of the interaction between debonds appearing at regular intervals on Mode II ERR in a single-ply laminate with multiple layers of fibers at different levels of fiber volume fraction $V_{f}$.}\label{fig:sideabovefibersMII}
+\end{figure}
+
 \subsection{Comparison with the single fiber model with equivalent boundary conditions}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:comparisonfree30MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:comparisonfree50MI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:comparisonfree60MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:comparisonfree65MI}
+    \end{subfigure}
+
+\caption{Comparison of Mode I ERR between the single fiber model with free upper boundary and the multiple fibers model with fibers only on the side at different levels of fiber volume fraction $V_{f}$.}\label{fig:comparisonfreeMI}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:comparisonfree30MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:comparisonfree50MII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:comparisonfree60MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:comparisonfree65MII}
+    \end{subfigure}
+
+\caption{Comparison of Mode II ERR between the single fiber model with free upper boundary and the multiple fibers model with fibers only on the side at different levels of fiber volume fraction $V_{f}$.}\label{fig:comparisonfreeMII}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:comparisoncoupling30MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:comparisoncoupling50MI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:comparisoncoupling60MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:comparisoncoupling65MI}
+    \end{subfigure}
+
+\caption{Comparison of Mode I ERR between the single fiber model with coupling conditions along the upper boundary and the multiple fibers model with fibers above and both above and on the side at different levels of fiber volume fraction $V_{f}$.}\label{fig:comparisoncouplingMI}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:comparisoncoupling30MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:comparisoncoupling50MII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:comparisoncoupling60MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:comparisoncoupling65MII}
+    \end{subfigure}
+
+\caption{Comparison of Mode II ERR between the single fiber model with coupling conditions along the upper boundary and the multiple fibers model with fibers above and both above and on the side at different levels of fiber volume fraction $V_{f}$.}\label{fig:comparisoncouplingMII}
+\end{figure}
 
 \section{Conclusions \& Outlook}
 

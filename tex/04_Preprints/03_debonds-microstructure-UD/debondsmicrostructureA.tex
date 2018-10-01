@@ -101,7 +101,7 @@
 
 \subsection{Models of Representative Volume Element(RVE)}
 
-\textcolor{blue}{We start by describing the different idealized micro-structures considered and the corresponding repeating element or RVE used to model them.}
+\textcolor{blue}{We start by describing the different idealized micro-structures considered and the corresponding repeating element or RVE used to model them. Fig.~\ref{fig:fibersOnSideModels}, Fig.~\ref{fig:fibersOnTopModels} and Fig.~\ref{fig:fibersOnSideAndTopModels}}
 
 \begin{figure}[!h]
 \centering
@@ -230,7 +230,7 @@
 
 \subsection{Finite Element (FE) discretization}
 
-\textcolor{blue}{We describe the model implemented: schematic + description of parameters, formulation (LEFM, frictionless contact, VCCT, J-Integral), implementation of BCs, mesh.}
+\textcolor{blue}{We describe the model implemented: schematic + description of parameters, formulation (LEFM, frictionless contact, VCCT, J-Integral), implementation of BCs, mesh. Fig.~\ref{fig:FEmodel}}
 
 \begin{figure}[!h]
 \centering
@@ -248,7 +248,7 @@
 
 \subsection{Validation of the model}
 
-\textcolor{blue}{We mention once in this paper the validation of the model with respect to BEM results.}
+\textcolor{blue}{We mention once in this paper the validation of the model with respect to BEM results. Fig.~\ref{fig:validation}}
 
 \begin{figure}[!h]
 \centering
@@ -260,7 +260,7 @@
 
 \subsection{Effect of Fiber Volume Fraction}
 
-\textcolor{blue}{Effect of fiber volume fraction: we show graphics of ERR vs $\Delta\theta$, one curve for each $V_{f}$, one graphic for each selected BC. Selected BC: free, coupling, some examples with fibers. The effect is similar for all the different BC cases, it's enough to show some of them to exemplify.}
+\textcolor{blue}{Effect of fiber volume fraction: we show graphics of ERR vs $\Delta\theta$, one curve for each $V_{f}$, one graphic for each selected BC. Selected BC: free, coupling, some examples with fibers. The effect is similar for all the different BC cases, it's enough to show some of them to exemplify. $G_{I}$ in Fig.~\ref{fig:volumefractionMI}, $G_{II}$ in Fig.~\ref{fig:volumefractionMII}.}
 
 \begin{figure}[!h]
 \centering
@@ -382,7 +382,7 @@
 
 \subsection{Interaction between debonds in UD laminates with a single layer of fibers}
 
-\textcolor{blue}{We start with a simpler (1 parameter: number of fibers in the horizontal directions) but more extreme model: one line of fibers. What's the effect on $G_{I}$ and $G_{II}$? It increases them: a compliant element in the middle of two stiffer ones. Reference to Kies strain magnification.}
+\textcolor{blue}{We start with a simpler (1 parameter: number of fibers in the horizontal directions) but more extreme model: one line of fibers. What's the effect on $G_{I}$ and $G_{II}$? It increases them: a compliant element in the middle of two stiffer ones. Reference to Kies strain magnification. $G_{I}$ in Fig.~\ref{fig:sidefibersMI}, $G_{II}$ in Fig.~\ref{fig:sidefibersMII}.}
 
 \begin{figure}[!h]
 \centering
@@ -432,7 +432,7 @@
 
 \subsection{Influence of layers of fully bonded fibers on debond's growth in a centrally located line of debonded fibers}
 
-\textcolor{blue}{We then move to a ply with multiple lines of fibers and only debonded fibers in the central one (still only 1 parameter: number of fibers in vertical direction, but bit closer to real plies). No significant effect.}
+\textcolor{blue}{We then move to a ply with multiple lines of fibers and only debonded fibers in the central one (still only 1 parameter: number of fibers in vertical direction, but bit closer to real plies). No significant effect.  $G_{I}$ in Fig.~\ref{fig:abovefibersMI}, $G_{II}$ in Fig.~\ref{fig:abovefibersMII}.}
 
 \begin{figure}[!h]
 \centering
@@ -482,7 +482,7 @@
 
 \subsection{Interaction between debonds in UD laminates with multiple layers of fibers}
 
-\textcolor{blue}{Finally models that are closer to real laminates and are more complex (2 parameters: number of fibers along the horizontal direction, number of layers in the vertical one).}
+\textcolor{blue}{Finally models that are closer to real laminates and are more complex (2 parameters: number of fibers along the horizontal direction, number of layers in the vertical one).  $G_{I}$ in Fig.~\ref{fig:sidesidefibersMI}, $G_{II}$ in Fig.~\ref{fig:sidesidefibersMII}.}
 
 \begin{figure}[!h]
 \centering
@@ -532,7 +532,7 @@
 
 \subsection{Comparison with the single fiber model with equivalent boundary conditions}
 
-\textcolor{blue}{We compare the previous results with the corresponding models of single fibers with equivalent BC. We draw conclusions on the possibility of using a single fiber with equivalent BCs. By remembering the actual ply configurations the repeating elements are modeling, and observing that in the vertical direction no significant effect related to the presence of debonded or bonded fiber can be found, we conclude that debonds appearing in fibers aligned in the vertical direction are energetically equivalent, and thus different configurations of debonded/bonded fibers along the vertical direction have the same probability. It is thus likely, from the energetic point of view, that debonds form at the same time along fibers aligned vertically.}
+\textcolor{blue}{We compare the previous results with the corresponding models of single fibers with equivalent BC. We draw conclusions on the possibility of using a single fiber with equivalent BCs. By remembering the actual ply configurations the repeating elements are modeling, and observing that in the vertical direction no significant effect related to the presence of debonded or bonded fiber can be found, we conclude that debonds appearing in fibers aligned in the vertical direction are energetically equivalent, and thus different configurations of debonded/bonded fibers along the vertical direction have the same probability. It is thus likely, from the energetic point of view, that debonds form at the same time along fibers aligned vertically.  $G_{I}$ in Fig.~\ref{fig:comparisonfreeMI} and Fig.~\ref{fig:comparisoncouplingMI}, $G_{II}$ in Fig.~\ref{fig:comparisonfreeMII} and Fig.~\ref{fig:comparisoncouplingMII}.}
 
 \begin{figure}[!h]
 \centering

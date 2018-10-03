@@ -212,14 +212,14 @@
 \centering
     \begin{subfigure}[b]{0.45\textwidth}
         %\includegraphics[width=\textwidth]{}
-        \caption{Single layer of debonded fibers.}\label{subfig:singlelayerdebfibers}
+        \caption{Single layer of debonded fibers inside a cross-ply laminates.}\label{subfig:singlelayerdebfibers}
     \end{subfigure} ~
     \begin{subfigure}[b]{0.45\textwidth}
         %\includegraphics[width=\textwidth]{}
-        \caption{Element with a single debonded fiber and free boundary on top.}\label{subfig:free}
+        \caption{Element with a single debonded fiber and, on the top surface, coupled vertical displacement and linearly distributed horizontal displacement.}\label{subfig:free}
     \end{subfigure}
 
-\caption{Models of$\left[0^{\circ}_{n}, 90^{\circ}\right]_{S}$ laminates in which fibers belonging to the central $90^{\circ}$ ply are all debonded  (left column), and corresponding Representative Volume Elements (right column) with symmetry applied on the lower boundary line.}\label{fig:allFibersDebonded}
+\caption{Models of $\left[0^{\circ}_{n}, 90^{\circ}\right]_{S}$ laminates in which fibers belonging to the central $90^{\circ}$ ply are all debonded  (left column), and corresponding Representative Volume Elements (right column) with symmetry applied on the lower boundary line.}\label{fig:allFibersDebonded}
 \end{figure}
 
 \subsection{Finite Element (FE) discretization}
@@ -244,7 +244,266 @@
 
 \section{Results \& Discussion}
 
+\subsection{Effect of Fiber Volume Fraction}
+
+\textcolor{blue}{The effect is similar for all the different BC cases, it's enough to show some of them to exemplify. $G_{I}$ in Fig.~\ref{fig:volumefractionMI}, $G_{II}$ in Fig.~\ref{fig:volumefractionMII}.}
+
+\textcolor{purple}{Graphics of ERR vs $\Delta\theta$, one curve for each $V_{f}$, one graphic for each selected BC. Selected BC: free, coupling, some examples with fibers (see captions).}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Single fiber model with free boundary on top.}\label{subfig:volfracfreeMI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Single fiber model with coupling of vertical displacements along the upper boundary.}\label{subfig:volfraccouplingMI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{1 fiber each side.}\label{subfig:volfrac1eachsideMI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{1 fiber above.}\label{subfig:volfrac1aboveMI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{5 fibers each side.}\label{subfig:volfrac5eachsideMI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{5 fibers above.}\label{subfig:volfrac5aboveMI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{10 fibers each side.}\label{subfig:volfrac10eachsideMI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{10 fibers above.}\label{subfig:volfrac10aboveMI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{1 fiber each side, 1 above.}\label{subfig:volfrac1eachside1aboveMI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{3 fibers each side, 1 above.}\label{subfig:volfrac3eachside1aboveMI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{2 fibers each side, 2 above.}\label{subfig:volfrac2eachside2aboveMI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{5 fibers each side, 2 above.}\label{subfig:volfrac5eachside2aboveMI}
+    \end{subfigure}
+
+\caption{A view of the effect of fiber volume fraction on Mode I ERR across different models.}\label{fig:volumefractionMI}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Single fiber model with free boundary on top.}\label{subfig:volfracfreeMII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{Single fiber model with coupling of vertical displacements along the upper boundary.}\label{subfig:volfraccouplingMII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{1 fiber each side.}\label{subfig:volfrac1eachsideMII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{1 fiber above.}\label{subfig:volfrac1aboveMII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{5 fibers each side.}\label{subfig:volfrac5eachsideMII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{5 fibers above.}\label{subfig:volfrac5aboveMII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{10 fibers each side.}\label{subfig:volfrac10eachsideMII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{10 fibers above.}\label{subfig:volfrac10aboveMII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{1 fiber each side, 1 above.}\label{subfig:volfrac1eachside1aboveMII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{3 fibers each side, 1 above.}\label{subfig:volfrac3eachside1aboveMII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{2 fibers each side, 2 above.}\label{subfig:volfrac2eachside2aboveMII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{5 fibers each side, 2 above.}\label{subfig:volfrac5eachside2aboveMII}
+    \end{subfigure}
+
+\caption{A view of the effect of fiber volume fraction on Mode II ERR across different models.}\label{fig:volumefractionMII}
+\end{figure}
+
 \subsection{Effect of $0^{\circ}$ ply thickness on the interaction between debonds in a $90^{\circ}$ ply with a single layer of fibers}
+
+\textcolor{blue}{We start with a simpler (1 parameter: number of fibers in the horizontal directions) but more extreme model: central $90^{\circ}$ ply with one line of fibers. What's the effect on $G_{I}$ and $G_{II}$? What's the effect of $0^{\circ}$ ply's thicknesses? Reference to Kies strain magnification. $G_{I}$ in Fig.~\ref{fig:sidefibersMI}, $G_{II}$ in Fig.~\ref{fig:sidefibersMII}.}
+
+\textcolor{purple}{One graphic for each $V_{f}$ (30\%,50\%,60\%,65\%) and thickness ratio (1, 10), one curve for each case of fibers on the side (1, 2, 3, 5, 10, 50, 100) + curve for equivalent BC ()(Fig.~\ref{fig:sidefibersMI}, $G_{II}$ in Fig.~\ref{fig:sidefibersMII}). Focus is effect of debond distribution in the horizontal direction.}\\
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:sidefiber30MIthick1}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+         \caption{$V_{f}=30\%$.}\label{subfig:sidefiber30MIthick10}
+    \end{subfigure}
+
+   \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:sidefiber50MIthick1}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+         \caption{$V_{f}=50\%$.}\label{subfig:sidefiber50MIthick10}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:sidefiber60MIthick1}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:sidefiber60MIthick10}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:sidefiber65MIthick1}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:sidefiber65MIthick10}
+    \end{subfigure}
+
+\caption{Effect of the interaction between debonds appearing at regular intervals on Mode I ERR in a $\left[0^{\circ}_{n}, 90^{\circ}\right]_{S}$ laminates in which the central $90^{\circ}$ ply possesses a single layer of fibers at different levels of fiber volume fraction $V_{f}$.}\label{fig:sidefibersMI}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+   \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:sidefiber30MIIthick1}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+         \caption{$V_{f}=30\%$.}\label{subfig:sidefiber30MIIthick10}
+    \end{subfigure}
+
+   \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:sidefiber50MIIthick1}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+         \caption{$V_{f}=50\%$.}\label{subfig:sidefiber50MIIthick10}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:sidefiber60MIIthick1}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:sidefiber60MIIthick10}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:sidefiber65MIIthick1}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:sidefiber65MIIthick10}
+    \end{subfigure}
+
+\caption{Effect of the interaction between debonds appearing at regular intervals on Mode II ERR in a single-ply laminate with a single layer of fibers at different levels of fiber volume fraction $V_{f}$.}\label{fig:sidefibersMII}
+\end{figure}
+
+\textcolor{purple}{One graphic for each $V_{f}$ (30\%,50\%,60\%,65\%) and selected cases of fibers on the side (1, 2, 3, 5, 10, 50, 100),  one curve for thickness ratio (1, 10) + curve for equivalent BC ()(Fig.~\ref{fig:sidefibersthicknessMI}, $G_{II}$ in Fig.~\ref{fig:sidefibersthicknessMII}). Focus is effect of thickness of bounding plies.}\\
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:sidefiberthickness30MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:sidefiberthickness50MI}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:sidefiberthickness60MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:sidefiberthickness65MI}
+    \end{subfigure}
+
+\caption{Effect of the interaction between debonds appearing at regular intervals on Mode I ERR in a $\left[0^{\circ}_{n}, 90^{\circ}\right]_{S}$ laminates in which the central $90^{\circ}$ ply possesses a single layer of fibers at different levels of fiber volume fraction $V_{f}$.}\label{fig:sidefibersthicknessMI}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=30\%$.}\label{subfig:sidefiberthickness30MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=50\%$.}\label{subfig:sidefiberthickness50MII}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=60\%$.}\label{subfig:sidefiberthickness60MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        %\includegraphics[width=\textwidth]{}
+        \caption{$V_{f}=65\%$.}\label{subfig:sidefiberthickness65MII}
+    \end{subfigure}
+
+\caption{Effect of the interaction between debonds appearing at regular intervals on Mode II ERR in a single-ply laminate with a single layer of fibers at different levels of fiber volume fraction $V_{f}$.}\label{fig:sidefibersthicknessMII}
+\end{figure}
+
 
 \subsection{Effect of $0^{\circ}$ ply thickness on the interaction between layers of fully bonded fibers and a centrally located line of debonded fibers in a $90^{\circ}$ ply}
 

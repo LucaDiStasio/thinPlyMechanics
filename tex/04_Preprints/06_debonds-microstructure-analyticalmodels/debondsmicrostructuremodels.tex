@@ -82,7 +82,46 @@
 
 \section{Introduction}
 
-\section{Introduction}
+\textcolor{blue}{
+\begin{enumerate}
+\item By recalling Buckingham's dimensional theorem, we recall that modeling size, shape, cruvature effects means finding analytical expression by which we can calculate ERR or, at least, given a base value we can calculate its change for a change in some reference quantity. Ex: ERR for debonds scales linearly with fiber radius. We recall the usefulness of such expressions: simple to use, quick and cheap calculations, provide insights on mechanics (ex: what happens to ERR if I use a fiber with a radius 2 times larger? ERR will 2 times as the base case).
+\item This approach has been applied in the Fracture Mechanics literature in the form of the shape function: SIF (and ERR) can be expressed as $f(\sigma_{\inf},a)\cdot S$, where $f(\sigma_{\inf},a)$ is the solution for the straight crack in an infinite isotropic plate under transverse tension. $S$ is the shape function and represents the effect of different BCs, loading modes, and crack or plate geometry.
+\item We then observe that for the fiber/interface crack a reference $G_{0}$ has been used, however we note that: there's no work that investigates the pros and cons of one formulation with respect to the other; there's no agreement on which formulation to use. We review briefly the different choices made since Toya.
+\item We thus address this gap in the literature in this paper. We focus on the following questions: does a reference ERR exist with which we can parameterize results? Is there an analytical formulation (based on regression) for ERR for the fiber/matrix interface crack?
+\item We conclude by summarizing the structure of the paper.
+\end{enumerate}
+}
 
+\section{Homogenized models}
+
+\subsection{Straight crack in an infinite homogenized ply under transverse loading}\label{subsec:straightcrack}
+
+\textcolor{blue}{Why do we recall this case?\\Because at first approximation, the debond under remote transverse tension can be modeled as a crack of size $R_{f}\sin{\left(\Delta\theta\right)}$ in a homogenized ply}
+
+\subsection{Semi-circular crack in an infinite homogenized ply under transverse loading}
+
+\textcolor{blue}{Why do we recall this case?\\Because as a second approximation, the debond under remote transverse tension can be modeled as a semi-circular crack in a homogenized ply\\Here we also plot the different components of the solution and reflect on their meachnical meaning}
+
+\section{The analytical solution of the fiber/matrix interface crack problem}
+
+\textcolor{blue}{We recall the solution and then we plot the different components and show that, at first approximation, the solution can be expressed as $A\sin{\left(B\Delta\theta+C\right)+D}$. We observe that $G_{dim}\sim G_{0}\sin{\left(\Delta\theta\right)}$ means that $G_{dim}\sim R_{f}\sin{\left(\Delta\theta\right)}$, which is a size effect and means that the debond in the infinite matrix behaves closely to the case in~\ref{subsec:straightcrack}.}
+
+\section{Modeling size effects}
+
+\textcolor{blue}{We compare mode I and mode II ERR from FEM simulations and compare to the value corresponding to a straight crack in an infinite homogenized ply.}
+
+\section{Modeling curvature effects}
+
+\textcolor{blue}{We compare mode I and mode II ERR from FEM simulations and compare to the value corresponding to a semi-circular crack in an infinite homogenized ply, the part correpsonding only to the curvature.}
+
+\section{Modeling shape effects}
+
+\textcolor{blue}{We compare mode I and mode II ERR from FEM simulations and compare to the value corresponding to the full solution for a semi-circular crack in an infinite homogenized ply.}
+
+\section{An analytical model of the fiber/matrix interface crack}
+
+\textcolor{blue}{Based on previous considerations, we suggest an analytical regression-based expression for the energy release rate of the fiber/matrix interface crack.}
+
+\section{Conclusions \& Outlook}
 
 \end{document}

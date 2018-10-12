@@ -56,8 +56,8 @@ reftRatio = 0.2   ! [-]  ratio of refined area height to cross-ply thickness
 elOrder = 2    ! [-]  element order
 nContours = 10 ! [-]  number of contours for J-integral evaluation
 
-crossPly = 0 [-] ! Flag for material symmetry: 0 -> isotropic, 1-> transverse isotropy (assign properties accordingly)
-udPly    = 0 [-] ! Flag for material symmetry: 0 -> isotropic, 1-> transverse isotropy (assign properties accordingly) 
+crossPly = 0 ! [-] Flag for material symmetry: 0 -> isotropic, 1-> transverse isotropy (assign properties accordingly)
+udPly    = 0 ! [-] Flag for material symmetry: 0 -> isotropic, 1-> transverse isotropy (assign properties accordingly) 
 
 EL = 3500.0! [MPa] UD longitudinal Young's modulus
 ET = 3500.0! [MPa] UD transverse Young's modulus

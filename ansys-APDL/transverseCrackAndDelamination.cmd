@@ -59,12 +59,12 @@ nContours = 10 ! [-]  number of contours for J-integral evaluation
 crossPly = 0 ! [-] Flag for material symmetry: 0 -> isotropic, 1-> transverse isotropy (assign properties accordingly)
 udPly    = 0 ! [-] Flag for material symmetry: 0 -> isotropic, 1-> transverse isotropy (assign properties accordingly) 
 
-EL = 3500.0! [MPa] UD longitudinal Young's modulus
-ET = 3500.0! [MPa] UD transverse Young's modulus
-nuLT = 0.4! [-] UD in-plane Poisson ratio
-nuTT = 0.4! [-] UD transverse Poisson ratio
-!GL = ! [MPa] UD in-plane shear modulus
-!GT = ! [MPa] UD transverse shear modulus
+EL   = 46765.0 ! [MPa] UD longitudinal Young's modulus
+ET   = 15764.0 ! [MPa] UD transverse Young's modulus
+nuLT = 0.263   ! [-]   UD in-plane Poisson ratio
+nuTT = 0.445   ! [-]   UD transverse Poisson ratio
+GL   = 4948.0  ! [MPa] UD in-plane shear modulus
+GT   = 5455.0  ! [MPa] UD transverse shear modulus
 
 ! ===> END INPUT DATA
 
@@ -82,6 +82,8 @@ elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
 vcctRegion = a+elSize
 
 appliedDisp = epsx*L ! [mm] applied displacement
+
+nuTL = nuLT*ET/EL ! [-]
 
 dispreactfile = 'allDispsRFs'
 stressstrainfile = 'allStressStrain'
@@ -165,8 +167,8 @@ AL, 16, 23, 14, 21       ! 8, upper ply, one element bonded area
    MP,EY,1,ET        ! 1 is cross-ply, 2 is ud-ply
    MP,EZ,1,EL        ! 1 is cross-ply, 2 is ud-ply
    MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
-   MP,NUYZ,1,nuLT    ! mp,Poisson's ratio,material number,value
-   MP,NUXZ,1,nuLT    ! mp,Poisson's ratio,material number,value
+   MP,NUYZ,1,nuTL    ! mp,Poisson's ratio,material number,value
+   MP,NUXZ,1,nuTL    ! mp,Poisson's ratio,material number,value
    MP,GXY,1,GTT      ! mp,Poisson's ratio,material number,value
    MP,GYZ,1,GLT      ! mp,Poisson's ratio,material number,value
    MP,GXZ,1,GLT      ! mp,Poisson's ratio,material number,value

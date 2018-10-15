@@ -42,6 +42,8 @@
 
 ! ===> START INPUT DATA
 
+isInternal = 0 ! [-] Flag to define system's geometry: 1 --> internal crack, 0 --> surface crack
+
 Vf = 0.0! [-] Fiber volume fraction
 
 t = 1             ! [mm] 2t = thickness of the element

@@ -284,7 +284,11 @@ ANTYPE,0            ! Analysis type,static
 
 ! Define Displacement Constraints on Lines   (dl command)
 ! DL, LINE, AREA, Lab, Value1, Value2
-DL, 1, ,SYMM
+*IF, isInternal, EQ, 1, THEN
+ DL, 1, ,SYMM
+*ELSE
+ DL, 6, ,SYMM
+*ENDIF
 DL, 7, ,SYMM
 DL, 8, ,SYMM
 DL, 2, ,UX,appliedDisp

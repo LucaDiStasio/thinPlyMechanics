@@ -83,7 +83,7 @@
 
 \pgfmathsetmacro\costhetahalfup{cos(\thetahalfup)}
 \pgfmathsetmacro\sinthetahalfup{sin(\thetahalfup)}
-  
+
 \pgfmathsetmacro\yloadarrowone{\l+(\loadlim-\l)*0.2}
 \pgfmathsetmacro\yloadarrowtwo{\l+2*(\loadlim-\l)*0.2}
 \pgfmathsetmacro\yloadarrowthree{\l+3*(\loadlim-\l)*0.2}
@@ -109,41 +109,20 @@
 
 \begin{document}
 
-%----------------------------------------------------------------------------------------------%
-%                Single RVE with applied constant strain, only debonded
-%----------------------------------------------------------------------------------------------%
- 
 \begin{tikzpicture}[scale=4,cap=round,x=1cm,y=1cm]
 
 \tikzstyle{axes}=[]
 
 \draw[draw=green!50!black,line width=0.75mm] (1.25*\costhetaupcz,1.25*\sinthetaupcz)arc (50:\thetaup:1.25*\Rf);
-\draw[draw=green!50!black,line width=0.75mm] (1.25*\costhetabot,1.25*\sinthetabot)arc (\thetabot:-50:1.25*\Rf);
 \draw[draw=green!50!black,dashed,line width=0.75mm] (\costhetaupcz,\sinthetaupcz) -- (1.25*\costhetaupcz,1.25*\sinthetaupcz);
-\draw[draw=green!50!black,dashed,line width=0.75mm] (\costhetabot,\sinthetabot) -- (1.25*\costhetabot,1.25*\sinthetabot);
 \draw[draw=green!50!black,dashed,line width=0.75mm] (\costhetaup,\sinthetaup) -- (1.25*\costhetaup,1.25*\sinthetaup);
-\draw[draw=green!50!black,dashed,line width=0.75mm] (\costhetabotcz,\sinthetabotcz) -- (1.25*\costhetabotcz,1.25*\sinthetabotcz);
 
 
-\filldraw[fill=red!20, draw=red]([shift=(\crackstartangle:\IM*\Rf)]0.9*\costheta*\Rf,0.9*\sintheta*\Rf) arc (\crackstartangle:\crackstopangle:\IM*\Rf) --  (\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
-\draw[draw=red, line width=1.25mm]([shift=(\crackstartangle:\IM*\Rf)]0.9*\costheta*\Rf,0.9*\sintheta*\Rf) arc (\crackstartangle:\crackstopangle:\IM*\Rf);
-\draw[line width=1.25mm] (\costhetaupcz,\sinthetaupcz)arc (50:360-50:\Rf);
-\draw[draw=red,line width=1.25mm](\costhetaupcz,\sinthetaupcz) arc(50:-50:\Rf);
+\filldraw[fill=red!20, draw=red]([shift=(0:\IM*\Rf)]0.9*\costheta*\Rf,0.9*\sintheta*\Rf) arc (0:\crackstopangle:\IM*\Rf) --  (\costhetaup,\sinthetaup) arc(\thetaup:0:\Rf);
+\draw[draw=red, line width=1.25mm]([shift=(0:\IM*\Rf)]0.9*\costheta*\Rf,0.9*\sintheta*\Rf) arc (0:\crackstopangle:\IM*\Rf);
+\draw[line width=1.25mm] (\costhetaupcz,\sinthetaupcz)arc (50:180:\Rf);
+\draw[draw=red,line width=1.25mm](\costhetaupcz,\sinthetaupcz) arc(50:0:\Rf);
 
-
-
-%\draw[line width=1.25mm] (2*\l-\costhetaup,-\sinthetaup,0)arc (180+\thetaup:360+90+\thetaup:\Rf);
-%\draw[draw=red,line width=1.25mm](2*\l-\costhetaup,-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
-%
-%\draw[line width=1.25mm] (-2*\l-\costhetaup,-\sinthetaup,0)arc (180+\thetaup:360+90+\thetaup:\Rf);
-%\draw[draw=red,line width=1.25mm](-2*\l-\costhetaup,-\sinthetaup) arc(180-\thetaup:180+\thetabot:\Rf);
-%
-%
-%\draw[line width=1.25mm] (4*\l+\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
-%\draw[draw=red,line width=1.25mm](4*\l+\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
-%
-%\draw[line width=1.25mm] (-4*\l+\costhetaup,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
-%\draw[draw=red,line width=1.25mm](-4*\l+\costhetaup,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
 
 \pgfmathsetmacro\ltot{\l+\tratio*\l}
 
@@ -153,86 +132,33 @@
 \draw[->,line width=0.75mm] (\l, \x*\l) -- (\loadlim,\x*\l);
 \draw[->,line width=0.75mm] (-\l, \x*\l) -- (-\loadlim,\x*\l);}
 
-%\draw (\loadlim,\l)--(\loadlim,-\l);
-%\draw (-\loadlim,\l)--(-\loadlim,-\l);
 
-\draw[line width=1.25mm] (-\l,-\l) -- (-\l,\l);
-%\draw[line width=2mm] (\l,\l) -- (\l,-\l);
-%\draw[line width=2mm] (-\l,\l) -- (\l,\l) ;
+
+\draw[line width=1.25mm] (-\l,0) -- (-\l,\l);
+
 \draw[line width=1.25mm] (-\l,\l) -- (\l,\l) ;
-%\draw[line width=1mm] (\l,\l) -- (5*\l,\l) ;
-\draw[line width=1.25mm] (\l,-\l) -- (\l,\l) ;
-\draw[line width=1.25mm] (-\l,-\l) -- (\l,-\l) ;
-%\draw[line width=1mm] (\l,-\l) -- (5*\l,-\l) ;
-%\draw[line width=1mm] (3*\l,\l) -- (3*\l,-\l);
-%\draw[line width=1mm] (-3*\l,\l) -- (-3*\l,-\l);
 
-%\draw (-\l,\l+\tratio*\l) -- (\l,\l+\tratio*\l);
-%\draw (-\l,-\l-\tratio*\l) -- (\l,-\l-\tratio*\l);
-%\draw (-\l,\l) -- (-\l,\l+\tratio*\l);
-%\draw (\l,\l) -- (\l,\l+\tratio*\l);
-%\draw (-\l,-\l) -- (-\l,-\l-\tratio*\l);
-%\draw (\l,-\l) -- (\l,-\l-\tratio*\l);
-
-%\draw[line width=0.05pt] (-\loadlim,-\l-\tratio*\l) -- (-\loadlim,\l+\tratio*\l);
-%\draw[line width=0.05pt] (\loadlim,-\l-\tratio*\l) -- (\loadlim,\l+\tratio*\l);
-%
-%\draw (-\l,\half{\l}) node[black,right] {$l$};
-%\draw (-\l,-\half{\l}) node[black,right] {$l$};
-%\draw (\half{\l},0.99*\l) node[black,below] {$l$};
-%\draw (-\half{\l},0.99*\l) node[black,below] {$l$};
-
-\draw (\domlim,\loadlabel) node[black,right] {\Huge$\bar{u}_{x}=\bar{\varepsilon}_{x}L$};
-\draw (-\domlim,-\loadlabel) node[black,left] {\Huge$\bar{u}_{x}=\bar{\varepsilon}_{x}L$};
-
-%\draw (\l,0.95*\l) node[black,left] {$C\equiv\left(+l,+l\right)$};
-%\draw (-\l,0.95*\l) node[black,right] {$D\equiv\left(-l,+l\right)$};
-%
-%\draw (\l,-0.95*\l) node[black,left] {$B\equiv\left(+l,-l\right)$};
-%\draw (-\l,-0.95*\l) node[black,right] {$A\equiv\left(-l,-l\right)$};
+\draw[line width=1.25mm] (\l,0) -- (\l,\l) ;
+\draw[line width=1.25mm] (-\l,0) -- (\l,0) ;
 
 
-%
-%\draw (\l,1.075*\l+\tratio*\l) node[black,right] {$G\equiv\left(+l,+t_{ratio}\cdot l\right)$};
-%\draw (-\l,1.075*\l+\tratio*\l) node[black,left] {$K\equiv\left(-l,+t_{ratio}\cdot l\right)$};
-%
-%\draw (\l,-1.075*\l-\tratio*\l) node[black,right] {$F\equiv\left(+l,-t_{ratio}\cdot l\right)$};
-%\draw (-\l,-1.075*\l-\tratio*\l) node[black,left] {$E\equiv\left(-l,-t_{ratio}\cdot l\right)$};
+\draw (\domlim,\loadlabel) node[black,right] {\Huge$\bar{u}_{x}=\bar{\varepsilon}_{x}l$};
+\draw (-\domlim,-\loadlabel) node[black,left] {\Huge$\bar{u}_{x}=-\bar{\varepsilon}_{x}l$};
 
-%\draw (0,\Rf) node[black,above] {$\left(0,R_{f}\right)$};
-%\draw (-\Rf,0) node[black,above] {$\left(-R_{f},0\right)$};
-%\draw (0,-\Rf) node[black,below] {$\left(0,-R_{f}\right)$};
-%\draw (\Rf,0) node[black,right] {$\left(R_{f},0\right)$};
 
-\draw (-0.5\Rf,-0.5\Rf) node[black,above] {\Huge$\Omega_{f}$};
-\draw (-\Rf,-\Rf) node[black,above] {\Huge$\Omega_{m}$};
-%\draw (+\Rf,+\Rf+\tratio*\l) node[black,above] {$\Omega_{\left[0^{\circ}\right]}^{u}$};
-%\draw (-\Rf,-\Rf-\tratio*\l) node[black,above] {$\Omega_{\left[0^{\circ}\right]}^{b}$};
-\draw (-0.49*\Rf*\cosfourtyfive,0.55*\Rf*\cosfourtyfive) node[black,above] {\Huge$R_{f}$};
+\draw (-0.45*\Rf,0.45*\Rf) node[black,above] {\Huge$\Omega_{f}$};
+\draw (-\Rf,\Rf) node[black,above] {\Huge$\Omega_{m}$};
+
+\draw (0.325*\Rf*\cosfourtyfive,0.55*\Rf*\cosfourtyfive) node[black,above] {\Huge$R_{f}$};
 \draw (-0.125,-0.05) node[black,left,below] {\Huge$O$};
-%\draw (-\costhetaup*\Rf,-\sinthetaup*\Rf) node[black,below] {$\Gamma_{1}$};
-%\draw (\costhetabot*\Rf,\sinthetabot*\Rf) node[black,below] {$I$};
-%\draw (\costhetaup*\Rf,\sinthetaup*\Rf) node[black,above] {$L$};
-%\draw (\costheta*\Rf,\sintheta*\Rf) node[black,below] {$H$};
 
-%\draw (\costhetahalfup*\Rf,\sinthetahalfup*\Rf) node[black,above] {$\Gamma_{3}$};
-%\draw (0.95*\costhetabot*\Rf,1.1*\sinthetabot*\Rf) node[black,left] {$\Gamma_{2}$};
 
-%\filldraw[fill=green!20,draw=green!50!black] (0,0) -- (0.3*\Rf,0) arc(0:\thetavalue:0.3*\Rf);
-%\draw (\thetadraw:0.2*\Rf) node[green!50!black] {$\theta$};
-
-\filldraw[fill=blue!20,draw=blue!50!black,line width=0.75mm](0.3*\costhetabotcz*\Rf,0.3*\sinthetabotcz*\Rf) -- (0.6*\costhetabotcz*\Rf,0.6*\sinthetabotcz*\Rf) arc(\thetabotcz:\thetavalue:0.6*\Rf) --  (0,0);
-\draw (0.35*\costhetahalfbot*\Rf,0.7*\sinthetahalfbot*\Rf ) node[blue!50!black] {\Huge$\Delta\theta$};
-
-\filldraw[fill=blue!20,draw=blue!50!black,line width=0.75mm](0.3*\costheta*\Rf,0.3*\sintheta*\Rf) -- (0.6*\costheta*\Rf,0.6*\sintheta*\Rf) arc(\thetavalue:\thetaupcz:0.6*\Rf) --  (0,0);
+\filldraw[fill=blue!20,draw=blue!50!black,line width=0.75mm](0,0) -- (0.6*\costheta*\Rf,0.6*\sintheta*\Rf) arc(\thetavalue:\thetaupcz:0.6*\Rf) --  (0,0);
 \draw (0.35*\costhetahalfup*\Rf,0.7*\sinthetahalfup*\Rf) node[blue!50!black] {\Huge$\Delta\theta$};
 
 \draw (1.15*\costhetaup*\Rf,1.8*\sinthetaup*\Rf) node[green!50!black,right] {\Huge$\Delta\Phi$};
-\draw (1.15*\costhetaup*\Rf,-1.8*\sinthetaup*\Rf) node[green!50!black,right] {\Huge$\Delta\Phi$};
 
-%\draw[line width=0.75mm] (0,0)--(\costheta,\sintheta);
-\draw[line width=0.75mm] (0,0)--(\costhetabotcz,\sinthetabotcz);
-\draw[line width=0.75mm] (0,0)--(-\Rf*\cosfourtyfive,\Rf*\cosfourtyfive);
+
 \draw[line width=0.75mm] (0,0)--(\costhetaupcz,\sinthetaupcz);
 
 \begin{scope}[style=axes]

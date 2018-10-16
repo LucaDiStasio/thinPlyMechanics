@@ -36,8 +36,9 @@ ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48
 tick align=outside,
 tick label style={font=\huge},
 legend style={draw=white!80.0!black,font=\fontsize{28}{24}\selectfont,row sep=15pt},
-legend image post style={xscale=2},
+legend image post style={xscale=1.5,yscale=1.5},
 legend cell align={left},
+clip mode=individual,
 % GRID STYLE
 xmajorgrids,
 x grid style={lightgray!92.026143790849673!black},
@@ -57,7 +58,67 @@ ylabel={$\nicefrac{G}{G_{0}}\left[-\right]$},
 legend entries={{$G_{I}$, FEM},{$G_{II}$, FEM},{$G_{TOT}$, FEM},{$G_{I}$, BEM},{$G_{II}$, BEM},{$G_{TOT}$, BEM}},
 ]
 
-% ==========>  GI
+% ==========> BEM
+
+%GI
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+table{
+10.0   0.139
+20.0   0.193
+30.0   0.164
+40.0   0.098
+50.0   0.0305
+60.0   0.00127
+70.0   -4.79e-05
+80.0   6.85e-05
+90.0   0.000112
+100.0 0.000112
+110.0 0.000895
+120.0 0.00607
+130.0 0.00229
+140.0 0.000552
+150.0 0.000306
+};
+
+%GII
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=triangle*]
+table{
+10.0	0.037600
+20.0	0.147000
+30.0	0.302000
+40.0	0.486000
+50.0	0.616000
+60.0	0.666000
+70.0	0.644000
+80.0	0.579000
+90.0	0.470000
+100.0	0.337000
+110.0	0.208000
+120.0	0.105000
+130.0	0.038900
+140.0	0.007920
+150.0	0.000165
+};
+
+%GTOT
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*]
+table{
+10.0	0.176000
+20.0	0.340000
+30.0	0.466000
+40.0	0.584000
+50.0	0.647000
+60.0	0.667000
+70.0	0.644000
+80.0	0.579000
+90.0	0.470000
+100.0	0.337000
+110.0	0.209000
+120.0	0.111000
+130.0	0.041200
+140.0	0.008470
+150.0	0.000471
+};
 
 % =====> FEM 0.05°
 
@@ -121,67 +182,6 @@ table{
 150.0	0.000473
 };
 
-% ==========> BEM
-
-%GI
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table{
-10.0   0.139
-20.0   0.193
-30.0   0.164
-40.0   0.098
-50.0   0.0305
-60.0   0.00127
-70.0   -4.79e-05
-80.0   6.85e-05
-90.0   0.000112
-100.0 0.000112
-110.0 0.000895
-120.0 0.00607
-130.0 0.00229
-140.0 0.000552
-150.0 0.000306
-};
-
-%GII
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=triangle*]
-table{
-10.0	0.037600
-20.0	0.147000
-30.0	0.302000
-40.0	0.486000
-50.0	0.616000
-60.0	0.666000
-70.0	0.644000
-80.0	0.579000
-90.0	0.470000
-100.0	0.337000
-110.0	0.208000
-120.0	0.105000
-130.0	0.038900
-140.0	0.007920
-150.0	0.000165
-};
-
-%GTOT
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*]
-table{
-10.0	0.176000
-20.0	0.340000
-30.0	0.466000
-40.0	0.584000
-50.0	0.647000
-60.0	0.667000
-70.0	0.644000
-80.0	0.579000
-90.0	0.470000
-100.0	0.337000
-110.0	0.209000
-120.0	0.111000
-130.0	0.041200
-140.0	0.008470
-150.0	0.000471
-};
 
 \end{axis}
 %Tikz axis ends%

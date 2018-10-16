@@ -16,8 +16,11 @@
 %----------------------------------------------------------------------------------------------%
 %----------------------------------------------------------------------------------------------%
 
+
 \begin{document}
 
+\def\markersize{3.5pt}
+\def\linewidth{2.5pt}
 
 %Tikz picture starts%
 
@@ -49,16 +52,17 @@ xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,
 % CONTENT
 %title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
-ylabel={$\nicefrac{G_{I}}{G_{0}}\left[-\right]$},
+ylabel={$\nicefrac{G}{G_{0}}\left[-\right]$},
 % LEGEND ENTRIES
-legend entries={{$\delta=0.05^{\circ}$, FEM},{BEM}},
+legend entries={{$G_{I}$, FEM},{$G_{II}$, FEM},{$G_{TOT}$, FEM},{$G_{I}$, BEM},{$G_{II}$, BEM},{$G_{TOT}$, BEM}},
 ]
 
 % ==========>  GI
 
 % =====> FEM 0.05°
 
-\addplot[red,smooth,mark=square*]
+%GI
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=square*]
 table{
 10.0	 0.143990
 20.0	 0.206722
@@ -77,11 +81,50 @@ table{
 150.0 0.000444
 };
 
+%GII
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=triangle*]
+table{
+10.0	0.036954
+20.0	0.141839
+30.0	0.302580
+40.0	0.480008
+50.0	0.622260
+60.0	0.685556
+70.0	0.670311
+80.0	0.608492
+90.0	0.496920
+100.0	0.356348
+110.0	0.217142
+120.0	0.105969
+130.0	0.036306
+140.0	0.005665
+150.0	0.000028
+};
+
+%GTOT
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
+table{
+10.0	0.180944
+20.0	0.348561
+30.0	0.490139
+40.0	0.596325
+50.0	0.661872
+60.0	0.685891
+70.0	0.670318
+80.0	0.608505
+90.0	0.496930
+100.0	0.356358
+110.0	0.217148
+120.0	0.105973
+130.0	0.036308
+140.0	0.005665
+150.0	0.000473
+};
 
 % ==========> BEM
 
 %GI
-\addplot[black,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
 table{
 10.0   0.139
 20.0   0.193
@@ -101,7 +144,7 @@ table{
 };
 
 %GII
-\addplot[black,smooth,mark=triangle*]
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=triangle*]
 table{
 10.0	0.037600
 20.0	0.147000
@@ -121,7 +164,7 @@ table{
 };
 
 %GTOT
-\addplot[black,smooth,mark=*]
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*]
 table{
 10.0	0.176000
 20.0	0.340000
@@ -138,7 +181,6 @@ table{
 130.0	0.041200
 140.0	0.008470
 150.0	0.000471
-
 };
 
 \end{axis}

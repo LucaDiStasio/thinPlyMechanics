@@ -1,0 +1,175 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{3.5pt}
+\def\linewidth{2.5pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={draw=white!80.0!black,font=\fontsize{28}{24}\selectfont,row sep=15pt},
+legend image post style={xscale=1.5,yscale=1.5},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+xmax=160.0,
+ymin=0.0,
+xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$\Delta\theta\left[^{\circ}\right]$},
+ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
+% LEGEND ENTRIES
+legend entries={{$coupling$},{$1\ above$},{$100\ above$},{$1\ each\ side,1\ above$},{$10\ each\ side,10\ above$}},
+]
+
+% COUPLING
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*]
+table{
+10.00	0.60921272
+20.00	0.66932492
+30.00	0.51829450
+40.00	0.32802204
+50.00	0.15449843
+60.00	0.03965171
+70.00	0.00022159
+80.00	0.00000612
+90.00	0.00000664
+100.00	0.00000623
+110.00	0.00000394
+120.00	0.00000226
+130.00	0.00000083
+140.00	0.00000013
+150.00	0.00005786
+};
+
+% AF1
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=square*]
+table{
+10.00	0.45813447
+20.00	0.50917676
+30.00	0.39570001
+40.00	0.25079249
+50.00	0.11707033
+60.00	0.02437308
+70.00	0.00001010
+80.00	0.00000255
+90.00	0.00000220
+100.00	0.00000260
+110.00	0.00000140
+120.00	0.00000063
+130.00	0.00000009
+140.00	0.00000006
+150.00	0.00057907
+};
+
+% AF100
+\addplot[line width=\linewidth,mark size=\markersize,cyan,smooth,mark=square*]
+table{
+10.00	0.61015207
+20.00	0.67012573
+30.00	0.51460059
+40.00	0.32075842
+50.00	0.14497182
+60.00	0.02735498
+70.00	0.00000090
+80.00	0.00001323
+90.00	0.00001100
+100.00	0.00000854
+110.00	0.00000414
+120.00	0.00000173
+130.00	0.00000045
+140.00	0.00000003
+150.00	0.00076201
+};
+
+% SF1, AF1
+\addplot[line width=\linewidth,mark size=\markersize,green!70!black,smooth,mark=triangle*]
+table{
+10.00	0.67558075
+20.00	0.86955472
+30.00	0.70583468
+40.00	0.41226135
+50.00	0.14758998
+60.00	0.00691423
+70.00	0.00001925
+80.00	0.00003340
+90.00	0.00002815
+100.00	0.00002453
+110.00	0.00001443
+120.00	0.00000789
+130.00	0.00000285
+140.00	0.00000041
+150.00	0.00056733
+};
+
+% SF10, AF10
+\addplot[line width=\linewidth,mark size=\markersize,blue!70!black,smooth,mark=triangle*]
+table{
+10.00	0.68353011
+20.00	0.90263404
+30.00	0.75689535
+40.00	0.45568201
+50.00	0.16643223
+60.00	0.00736294
+70.00	0.00002357
+80.00	0.00004159
+90.00	0.00003593
+100.00	0.00003227
+110.00	0.00001968
+120.00	0.00001119
+130.00	0.00000418
+140.00	0.00000061
+150.00	0.00060079
+};
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

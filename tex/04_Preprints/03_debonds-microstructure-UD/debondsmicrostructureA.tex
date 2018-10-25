@@ -181,13 +181,19 @@ The model is meshed using second order, 2D, plane strain triangular CPE6 and rec
 
 \subsection{Validation of the model}
 
-The model is validated against the results reported in~\ref{}
+The model is validated in Fig.~\ref{fig:validation} against the results reported in~\ref{}, obtained with the Boundary Element Method (BEM) for a single fiber with a symmetric debond placed an infinite matrix. This situation is modeled using the \textit{free} RVE with $V_{f}=0.0079\%$, which corresponds to a RUC's length and height of $\approx 100$.
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{validation-VCCT.pdf}
 \caption{Validation of the single fiber model for the infinite matrix case with respect to the BEM solution in \cite{}.}\label{fig:validation}
 \end{figure}
+
+ To allow for a comparison, the results are normalized following~\ref{} with respect to a reference Energy Release Rate $G_{0}$ defined as
+
+\begin{equation}
+G_{0}=\frac{1+k_{m}}{4\mu_{m}}\sigma_{0}\pi R_{f}
+\end{equation}
 
 \section{Results \& Discussion}
 

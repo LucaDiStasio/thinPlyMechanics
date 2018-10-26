@@ -147,6 +147,20 @@ The second set of models considers instead laminates with multiple layers of fib
 
 Finally, the last model considers a laminate with an infinite number of fibers across the thickness, all with a debond at their interface. The corresponding RUC is made by a single fiber with a debond and kinematic coupling conditions applied to upper boundary. This model is referred to as \textcolor{blue}{\textit{coupling}}. For all these three models, the corresponding RUC possesses symmetry on the lower boundary, and kinematic coupling is applied on the left and right sides.
 
+\begin{table}[!htbp]
+ \centering
+ \caption{Summary of the mechanical properties of fiber and matrix.}
+ \begin{tabular}{cccc}
+\textbf{Material} & \textbf{$E\left[GPa\right]$}\ & \textbf{$G\left[GPa\right]$} & \textbf{$\nu\left[-\right]$} \\
+\midrule
+Glass fiber    & 70.0  & 29.2   & 0.2  \\
+Epoxy    & 3.5    & 1.25   & 0.4  
+\end{tabular}
+\label{tab:modelcharacteristics}
+\end{table}
+
+A summary of models' names and characteristics is reported in Table~~\ref{tab:modelcharacteristics}
+
 \subsection{Finite Element (FE) discretization}
 
 Each RUC is discretized using the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM package. The length $l$ and height $h$ of the model (see Fig.~\ref{subfig:modelschem}) are determined by number of fibers $n$ present on the side and the number of layers $q$ above the central line of fibers (see~\ref{subsec:rve}) according to Eq.~\ref{eq:lengthheight}:
@@ -180,7 +194,7 @@ The relationships in Eqs.~\ref{eq:lengthheight} and~\ref{eq:LVf} ensure that the
 The debond is placed symmetrically with respect to the $x$ axis (in red in~\ref{subfig:modelschem}) and has an angular size of $\Delta\theta$ (the full debond's size is thus $2\Delta\theta$). For high debond's sizes ($\geq 60^{\circ}-80^{\circ}$), a region of variable size $\Delta\Phi$ appears at the crack tip in which the crack's faces are in contact and slide on each other. Due to its appearance, frictionless contact is considered between the two crack's faces to allow free slipping and avoid interpenetration. Symmetry with respect to the $x$ axis is applied on the lower boundary and kinematic coupling on the left and right sides. The upper boundary is in general free, except for the model \textit{coupling} (Fig.~\ref{fig:thickplyalldebonds}) which requires kinematic coupling also on the upper side. Constant transverse strain $\bar{\varepsilon}$ equal to $1\%$ is applied to the right and left sides by means of an imposed displacement of, respectively, $\pm\bar{\varepsilon}l$.\\
 The model is meshed using second order, 2D, plane strain triangular CPE6 and rectangular CPE8 elements. A regular mesh of quadrilateral elements with an almost unitary aspect ratio is required at the crack tip, as shown in Fig.~\ref{subfig:meshdetail}. The angular size $\delta$ of an element in the crack tip region is always equal to $0.05^{\circ}$. The mode I, mode II and total Energy Release Rates (ERRs) represent the main output of the FEM analysis; they are evaluated using the VCCT technique implemented in a custom Python routine and, for the total ERR, the J-integral by application of the Abaqus built-in functionality. A glass fiber-epoxy system is considered in every model, and the properties used are listed in Table~\ref{tab:phaseprop}.
 
-\begin{table}[htbp]
+\begin{table}[!htbp]
  \centering
  \caption{Summary of the mechanical properties of fiber and matrix.}
  \begin{tabular}{cccc}

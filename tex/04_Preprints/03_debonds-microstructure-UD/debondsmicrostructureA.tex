@@ -102,7 +102,7 @@
 
 \subsection{Introduction \& Nomenclature}\label{subsec:names}
 
-In order to investigate the interaction between debonds in UD composites, we developed different models of laminates in which the only damage present is represented by the fiber/matrix interface crack. All of these Representative Volume Elements feature regular microstructures with fibers placed according to a square-packing tiling. As the very high longitudinal modulus of UD composites and cross-ply laminates ensures that the y-strain due to loading in the x-direction is small, we consider only 2D models under the assumption of plane strain, defined in the $x-z$ section of the laminate. Consequently, debonds are considered to be significantly longer in the fiber direction than in the arc direction. The analysis presented thus applies to long debonds, of which we are interested in understanding the mechanisms of growth along its arc direction. The UD composites are further supposed to be subjected to transverse tension, applied along the $x$ direction in the pictures. As the models are differentiated by the number of layers of fibers and by the spacing between debonds along the vertical and horizontal directions, we introduce the common notation $D\left(m+1\right)H\left(k+1\right)V\left(2p+1\right)L$ which stands for: \textit{a \textbf{D}ebond every $\left(m+1\right)^{th}$ fiber in the \textbf{H}orizontal direction and every $\left(k+1\right)^{th}$ fiber in the \textbf{V}ertical direction, in a UD composites with $\left(2p+1\right)^{th}$ \textbf{L}ayers of fibers}. The exact meaning of the parameters $m$, $k$, and $p$ will become clearer in Section~\ref{subsec:rve}.
+In order to investigate the interaction between debonds in UD composites, we developed different models of laminates in which the only damage present is represented by the fiber/matrix interface crack. All of these Representative Volume Elements feature regular microstructures with fibers placed according to a square-packing tiling. As the very high longitudinal modulus of UD composites and cross-ply laminates ensures that the y-strain due to loading in the x-direction is small, we consider only 2D models under the assumption of plane strain, defined in the $x-z$ section of the laminate. Consequently, debonds are considered to be significantly longer in the fiber direction than in the arc direction. The analysis presented thus applies to long debonds, of which we are interested in understanding the mechanisms of growth along its arc direction. The UD composites are further supposed to be subjected to transverse tension, applied along the $x$ direction in the pictures. As the models are differentiated by the number of layers of fibers and by the spacing between debonds along the vertical and horizontal directions, the corresponding Repeating Unit Cells (RUCs) can be distinguished from each other based on the number $n$ of fibers in the horizontal direction and $k$ in the vertical direction. Furthermore, the upper surface can be either free or coupling can be applied. We thus introduce the common notation $n\times k-free$ and $n\times k-coupling$ to denote a RUC with $n\times k$ fibers and, respectively, a free upper surface or coupling applied to it. The correspondence between specific combinations of particular choices of $n$, $k$ and upper boundary conditions and representative models of laminate are detailed in Section~\ref{subsec:rve}.
 
 \subsection{Models of Representative Volume Element (RVE)}\label{subsec:rve}
 
@@ -123,7 +123,7 @@ The first two models feature, as shown in Fig.~\ref{fig:laminateModelsA}, a UD l
 \caption{Models of UD laminates with a single layer of fibers and debonds repeating at different distances. The corresponding repeating element (RVE) is highlighted in blue.}\label{fig:laminateModelsA}
 \end{figure}
 
-In the first version of the model laminate, Fig.~\ref{subfig:freethinply}, debonds appear in the laminate on every $\left(m+1\right)^{th}$ fiber on alternating sides of the partially debonded fiber. The symmetries of the model allow the use of a Repeating Unit Cell (RUC), which corresponds to the Representative Volume Element (RVE) of this microstructure, with a central debonded fiber and $n=\frac{m}{2}$ fiber(s) on each side. It is highlighted by blue lines in~\ref{subfig:freethinply}. Symmetry is applied on the lower boundary and kinematic coupling conditions on the left and right sides. As mentioned, the upper surface is left free. Following the notation introduced in Section~\ref{subsec:names}, we will refer to this model as $D\left(m+1\right)H0V1L$, where $k=-1, p=0$. In the second version of the single-layer-of-fibers model,~\ref{subfig:freethinplyalldebonds}, a debond appears on each fiber on alternating sides. The corresponding RUC has only one debonded fiber, with symmetry on the lower side and kinematic coupling on the left and right ones. The upper boundary is again free. We will refer to this model as $D1H0V1L$, where $k=-1, m=p=0$.
+In the first version of the model laminate, Fig.~\ref{subfig:freethinply}, debonds appear in the laminate on every $\left(m+1\right)^{th}$ fiber on alternating sides of the partially debonded fiber. The symmetries of the model allow the use of a Repeating Unit Cell (RUC), which corresponds to the Representative Volume Element (RVE) of this microstructure, with a central debonded fiber and $\frac{m}{2}$ fiber(s) on each side. It is highlighted by blue lines in~\ref{subfig:freethinply}. Following the notation introduced in Section~\ref{subsec:names}, we will refer to this model as $\left(m+1\right)\times 1-free$, where $n=\left(m+1\right), k=1$. In the second version of the single-layer-of-fibers model,~\ref{subfig:freethinplyalldebonds}, a debond appears on each fiber on alternating sides and the corresponding RUC has only one debonded fiber. We will refer to this model as $1\times 1-free$, where $n=k=1$.
 
 \begin{figure}[!h]
 \centering
@@ -141,7 +141,7 @@ In the first version of the model laminate, Fig.~\ref{subfig:freethinply}, debon
 \caption{Models of UD laminates with different layers of fibers and debonds repeating at different distances. The corresponding repeating element (RVE) is highlighted in blue.}\label{fig:laminateModelsB}
 \end{figure}
 
-The second set of models considers instead laminates with multiple layers of fibers across the thickness: a finite number of layers in the first two models (~\ref{subfig:thickplycentraldebonds} and~\ref{subfig:thickply}); an infinite number in the model of Fig.~\ref{fig:thickplyalldebonds}. In the first model (Fig.~\ref{subfig:thickplycentraldebonds}) all the fibers in the central layer are debonded. The UD is made by $2p+1$ layers of fibers across the thickness, corresponding to a RUC with $q=p$ fibers above. This model will be referred to in the following as $D1H0V\left(2p+1\right)L$, where $k=-1,m=0$. In the second model (Fig.~\ref{subfig:thickply}), a debond appear every $\left(m+1\right)^{th}$ fiber in the central line of fibers in a laminate with $2p+1$ layers. The corresponding RUC has thus $n=\frac{m}{2}$ fiber(s) on each side and $q=p$ above. We will refer to this model as $D\left(m+1\right)H0V\left(2p+1\right)L$, where $k=-1$.
+The second set of models considers instead laminates with multiple layers of fibers across the thickness: a finite number of layers in the first two models (~\ref{subfig:thickplycentraldebonds} and~\ref{subfig:thickply}); an infinite number in the model of Fig.~\ref{fig:thickplyalldebonds}. In the first representative laminate (Fig.~\ref{subfig:thickplycentraldebonds}), all the fibers in the central layer are debonded. The UD is made by $2p+1$ layers of fibers across the thickness, corresponding to a RUC with $p+1$ fibers in the z direction. This model will be referred to in the following as $1\times\left(p+1\right)-free$, where $n=1,k=\left(p+1\right)$. In the second model (Fig.~\ref{subfig:thickply}), a debond appear every $\left(m+1\right)^{th}$ fiber in the central line of fibers in a laminate with $2p+1$ layers. The corresponding RUC has thus $\frac{m}{2}$ fiber(s) on each side and $p$ above the partially debonded fiber. We will refer to this model as $\left(m+1\right)\times\left(p+1\right)-free$, where $n=\left(m+1\right), k=\left(p+1\right)$.
 
 \begin{figure}[!h]
 \centering
@@ -149,48 +149,48 @@ The second set of models considers instead laminates with multiple layers of fib
 \caption{Model of UD laminates with an infinite number of  layers of fibers and debonds appearing on each fiber. The corresponding repeating element (RVE) is highlighted in blue.}\label{fig:thickplyalldebonds}
 \end{figure}
 
-Finally, the last model considers an UD composite with an infinite number of partially debonded fibers. The corresponding RUC is made by a single fiber with a debond and kinematic coupling conditions applied to the upper boundary. This model is referred to as $D1H1V\infty L$, where $m=k=0,p\rightarrow\infty$. For all these last three models, the corresponding RUC possesses symmetry on the lower boundary, and kinematic coupling is applied on the left and right sides.
+Finally, the last model considers an UD composite with an infinite number of partially debonded fibers. The corresponding RUC is made by a single partially debonded fiber and kinematic coupling conditions applied to the upper boundary. This model is referred to as $1\times 1-coupling$, where $n=k=1$.
 
-\begin{table}[!h]
- \centering
- \caption{Summary of the models and their characteristics.}
- \begin{tabularx}{\textwidth}{p{0.05\textwidth}ccccc}
-\multicolumn{2}{c}{\textbf{Name}} & \multicolumn{4}{c}{\textbf{Boundary conditions}}\\
-                                                         &  & Up & Down & Right & Left \\
-\toprule
-\midrule
-\multicolumn{2}{c}{$\mathbf{D\left(m+1\right)H0V1L}$} &x-symmetry&free&coupling,&coupling,\\
-                                                         &  &  &  & $\bar{\varepsilon}_{x}=1\%$ & $\bar{\varepsilon}_{x}=1\%$ \\
-&\multicolumn{5}{X}{\small A debond every $\left(m+1\right)^{th}$ fiber in the horizontal direction, in a UD composites with 1 layer of fibers, Fig.~\ref{subfig:freethinply}.}\\
-\midrule
-\multicolumn{2}{c}{$\mathbf{D1H0V1L}$} &x-symmetry&free&coupling,&coupling,\\
-                                                         &  &  &  & $\bar{\varepsilon}_{x}=1\%$ & $\bar{\varepsilon}_{x}=1\%$ \\
-&\multicolumn{5}{X}{\small A debond every $1^{st}$ fiber in the horizontal direction, in a UD composites with 1 layer of fibers, Fig.~\ref{subfig:freethinplyalldebonds}.}\\
-\midrule
-\multicolumn{2}{c}{$\mathbf{D1H0V\left(2p+1\right)L}$} &x-symmetry&free&coupling,&coupling,\\
-                                                         &  &  &  & $\bar{\varepsilon}_{x}=1\%$ & $\bar{\varepsilon}_{x}=1\%$ \\
-&\multicolumn{5}{X}{\small A debond every $1^{st}$ fiber in the horizontal direction, in a UD composites with $\left(2p+1\right)$ layer of fibers, Fig.~\ref{subfig:thickplycentraldebonds}.}\\
-\midrule
-\multicolumn{2}{c}{$\mathbf{D\left(m+1\right)H0V\left(2p+1\right)L}$} &x-symmetry&free&coupling,&coupling,\\
-                                                         &  &  &  & $\bar{\varepsilon}_{x}=1\%$ & $\bar{\varepsilon}_{x}=1\%$ \\
-&\multicolumn{5}{X}{\small A debond every $\left(m+1\right)^{th}$ fiber in the horizontal direction, in a UD composites with $\left(2p+1\right)$ layers of fibers, Fig.~\ref{subfig:thickply}.}\\
-\midrule
-\multicolumn{2}{c}{$\mathbf{D1H1V\infty L}$} &x-symmetry&coupling&coupling,&coupling,\\
-                                                         &  &  &  & $\bar{\varepsilon}_{x}=1\%$ & $\bar{\varepsilon}_{x}=1\%$ \\
-&\multicolumn{5}{X}{\small A debond every $1^{st}$ fiber in the horizontal direction and every $1^{st}$ fiber in the vertical direction, in a UD composites with an infinite number of  layers of fibers, Fig.~\ref{fig:thickplyalldebonds}.}\\
-\bottomrule
-\end{tabularx}
-\label{tab:modelcharacteristics}
-\end{table}
-
-A summary of models' names and characteristics is reported in Table~\ref{tab:modelcharacteristics}
+%\begin{table}[!h]
+% \centering
+% \caption{Summary of the models and their characteristics.}
+% \begin{tabularx}{\textwidth}{p{0.05\textwidth}ccccc}
+%\multicolumn{2}{c}{\textbf{Name}} & \multicolumn{4}{c}{\textbf{Boundary conditions}}\\
+%                                                         &  & Up & Down & Right & Left \\
+%\toprule
+%\midrule
+%\multicolumn{2}{c}{$\mathbf{D\left(m+1\right)H0V1L}$} &x-symmetry&free&coupling,&coupling,\\
+%                                                         &  &  &  & $\bar{\varepsilon}_{x}=1\%$ & $\bar{\varepsilon}_{x}=1\%$ \\
+%&\multicolumn{5}{X}{\small A debond every $\left(m+1\right)^{th}$ fiber in the horizontal direction, in a UD composites with 1 layer of fibers, Fig.~\ref{subfig:freethinply}.}\\
+%\midrule
+%\multicolumn{2}{c}{$\mathbf{D1H0V1L}$} &x-symmetry&free&coupling,&coupling,\\
+%                                                         &  &  &  & $\bar{\varepsilon}_{x}=1\%$ & $\bar{\varepsilon}_{x}=1\%$ \\
+%&\multicolumn{5}{X}{\small A debond every $1^{st}$ fiber in the horizontal direction, in a UD composites with 1 layer of fibers, Fig.~\ref{subfig:freethinplyalldebonds}.}\\
+%\midrule
+%\multicolumn{2}{c}{$\mathbf{D1H0V\left(2p+1\right)L}$} &x-symmetry&free&coupling,&coupling,\\
+%                                                         &  &  &  & $\bar{\varepsilon}_{x}=1\%$ & $\bar{\varepsilon}_{x}=1\%$ \\
+%&\multicolumn{5}{X}{\small A debond every $1^{st}$ fiber in the horizontal direction, in a UD composites with $\left(2p+1\right)$ layer of fibers, Fig.~\ref{subfig:thickplycentraldebonds}.}\\
+%\midrule
+%\multicolumn{2}{c}{$\mathbf{D\left(m+1\right)H0V\left(2p+1\right)L}$} &x-symmetry&free&coupling,&coupling,\\
+%                                                         &  &  &  & $\bar{\varepsilon}_{x}=1\%$ & $\bar{\varepsilon}_{x}=1\%$ \\
+%&\multicolumn{5}{X}{\small A debond every $\left(m+1\right)^{th}$ fiber in the horizontal direction, in a UD composites with $\left(2p+1\right)$ layers of fibers, Fig.~\ref{subfig:thickply}.}\\
+%\midrule
+%\multicolumn{2}{c}{$\mathbf{D1H1V\infty L}$} &x-symmetry&coupling&coupling,&coupling,\\
+%                                                         &  &  &  & $\bar{\varepsilon}_{x}=1\%$ & $\bar{\varepsilon}_{x}=1\%$ \\
+%&\multicolumn{5}{X}{\small A debond every $1^{st}$ fiber in the horizontal direction and every $1^{st}$ fiber in the vertical direction, in a UD composites with an infinite number of  layers of fibers, Fig.~\ref{fig:thickplyalldebonds}.}\\
+%\bottomrule
+%\end{tabularx}
+%\label{tab:modelcharacteristics}
+%\end{table}
+%
+%A summary of models' names and characteristics is reported in Table~\ref{tab:modelcharacteristics}
 
 \subsection{Finite Element (FE) discretization}
 
-Each RUC is discretized using the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM package~\cite{abq12}. The length $l$ and height $h$ of the model (see Fig.~\ref{subfig:modelschem}) are determined by number of fibers $n$ present on the side and the number of layers $q$ above the central line of fibers (see~\ref{subsec:rve}) according to Eq.~\ref{eq:lengthheight}:
+Each RUC is discretized using the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM package~\cite{abq12}. The length $l$ and height $h$ of the model (see Fig.~\ref{subfig:modelschem}) are determined by number of fibers $n$ in the horizontal direction and $k$ across the thickness (see~\ref{subsec:rve}) according to Eq.~\ref{eq:lengthheight}:
 
 \begin{equation}\label{eq:lengthheight}
-l=\left(2n+1\right)L\qquad h=\left(2q+1\right)L;
+l=2nL\qquad h=\left(2k-1\right)L;
 \end{equation}
 
 where the reference length $L$ is defined as a function of the fiber volume fraction $V_{f}$ and the fibers' radius according to
@@ -215,7 +215,7 @@ The fibers' radius $R_{f}$ is assumed to be the same for each fiber present n th
 \caption{Details and main parameters of the Finite Element model.}\label{fig:FEmodel}
 \end{figure}
 
-The debond is placed symmetrically with respect to the $x$ axis (in red in~\ref{subfig:modelschem}) and has an angular size of $\Delta\theta$ (the full debond's size is thus $2\Delta\theta$). For high debond's sizes ($\geq 60^{\circ}-80^{\circ}$), a region of variable size $\Delta\Phi$ appears at the crack tip in which the crack's faces are in contact and slide on each other. Due to its appearance, frictionless contact is considered between the two crack's faces to allow free slipping and avoid interpenetration. Symmetry with respect to the $x$ axis is applied on the lower boundary and kinematic coupling on the left and right sides. The upper boundary is in general free, except for the model $D1H1V\infty L$ (Fig.~\ref{fig:thickplyalldebonds}) which requires kinematic coupling also on the upper side. Constant transverse strain $\bar{\varepsilon}$ equal to $1\%$ is applied to the right and left sides by means of an imposed displacement of, respectively, $\pm\bar{\varepsilon}l$.
+The debond is placed symmetrically with respect to the $x$ axis (in red in~\ref{subfig:modelschem}) and has an angular size of $\Delta\theta$ (the full debond's size is thus $2\Delta\theta$). For high debond's sizes ($\geq 60^{\circ}-80^{\circ}$), a region of variable size $\Delta\Phi$ appears at the crack tip in which the crack's faces are in contact and slide on each other. Due to its appearance, frictionless contact is considered between the two crack's faces to allow free slipping and avoid interpenetration. Symmetry with respect to the $x$ axis is applied on the lower boundary and kinematic coupling on the left and right sides. The upper boundary is in general free, except for the model $1\times 1-coupling$ (Fig.~\ref{fig:thickplyalldebonds}) which requires kinematic coupling also on the upper side. Constant transverse strain $\bar{\varepsilon}$ equal to $1\%$ is applied to the right and left sides by means of an imposed displacement of, respectively, $\pm\bar{\varepsilon}l$.
 
 \begin{table}[!htbp]
  \centering

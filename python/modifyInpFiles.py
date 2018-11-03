@@ -55,8 +55,11 @@ def main():
             for m in range(1,n+1):
                 fileList.append(baseName+L+'A'+str(m)+'S'+str(n)+'F-LPC'+ext)
 
+    if not exists(outDir):
+        os.mkdir(outDir)
+        
     for name in fileList:
-        print(name)
+        with open(join(inpDir,name),'r'):
 
 
 

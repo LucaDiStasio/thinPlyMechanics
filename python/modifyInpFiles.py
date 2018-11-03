@@ -40,8 +40,10 @@ from time import strftime
 
 
 def main():
-    inpDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
-    outDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
+    #inpDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
+    #outDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
+    inpDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
+    outDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
     baseName = 'inputRVEdata'
     ext = '.deck'
     Ls = ['1_25','1_144','1_0992']
@@ -65,6 +67,26 @@ def main():
             for line in lines:
                 if 'BC' in line and 'northSide' in line and 'type' in line:
                     newline = line.replace('vkinCouplingmeancorners','vkinCouplingmeancornersulinearCoupling')
+                    out.write(newline)
+                else:
+                    out.write(line)
+
+    baseName = 'inputRVEiterables'
+    fileList = []
+    for L in Ls:
+        for n in nFibs:
+            fileList.append(baseName+L+'S'+str(n)+'F-LPC'+ext)
+            fileList.append(baseName+L+'A'+str(n)+'F-LPC'+ext)
+            for m in range(1,n+1):
+                fileList.append(baseName+L+'A'+str(m)+'S'+str(n)+'F-LPC'+ext)
+
+    for name in fileList:
+        with open(join(inpDir,name),'r') as inp:
+            lines = inp.readlines()
+        with open(join(outDir,name),'w') as out:
+            for line in lines:
+                if 'basename' in line:
+                    newline = line.replace('vk','vkul')
                     out.write(newline)
                 else:
                     out.write(line)

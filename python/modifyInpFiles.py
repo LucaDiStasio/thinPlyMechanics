@@ -57,10 +57,17 @@ def main():
 
     if not exists(outDir):
         os.mkdir(outDir)
-        
-    for name in fileList:
-        with open(join(inpDir,name),'r'):
 
+    for name in fileList:
+        with open(join(inpDir,name),'r') as inp:
+            lines = inp.readlines()
+        with open(join(outDir,name),'w') as out:
+            for line in lines:
+                if 'BC' in line and 'northSide' in line and 'type' in line:
+                    newline = line.replace('vkinCouplingmeancorners','vkinCouplingmeancornersulinearCoupling')
+                    out.write(newline)
+                else:
+                    out.write(line)
 
 
 if __name__ == '__main__':

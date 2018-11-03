@@ -52,8 +52,8 @@ def main():
     fileList = []
     for L in Ls:
         for n in nFibs:
-            fileList.append(baseName+L+'S'+str(n)+'F-LPC'+ext)
-            fileList.append(baseName+L+'A'+str(n)+'F-LPC'+ext)
+            fileList.append(baseName+'L'+L+'S'+str(n)+'F-LPC'+ext)
+            fileList.append(baseName+'L'+L+'A'+str(n)+'F-LPC'+ext)
             for m in range(1,n+1):
                 fileList.append(baseName+L+'A'+str(m)+'S'+str(n)+'F-LPC'+ext)
 
@@ -75,8 +75,8 @@ def main():
     fileList = []
     for L in Ls:
         for n in nFibs:
-            fileList.append(baseName+L+'S'+str(n)+'F-LPC'+ext)
-            fileList.append(baseName+L+'A'+str(n)+'F-LPC'+ext)
+            fileList.append(baseName+'L'+L+'S'+str(n)+'F-LPC'+ext)
+            fileList.append(baseName+'L'+L+'A'+str(n)+'F-LPC'+ext)
             for m in range(1,n+1):
                 fileList.append(baseName+L+'A'+str(m)+'S'+str(n)+'F-LPC'+ext)
 

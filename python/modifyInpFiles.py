@@ -93,15 +93,28 @@ def main():
     for name in fileListSideAbove:
         with open(join(inpDir,name),'r') as inp:
             lines = inp.readlines()
+        for line in lines:
+            if 'BC' in line and 'rightSide' in line and 'nFibers' in line:
+                nFibS = int(line.split('$')[0].split('@')[1])
+            elif 'BC' in line and 'northSide' in line and 'nFibers' in line:
+                nFibA = int(line.split('$')[0].split('@')[1])
+        if nFibS == nFibA:
+            newnFibS = nFibs + 1
+            newnFibA = 1
+        else:
+            newnFibA = nFibA + 1
         with open(join(outDir,name),'w') as out:
             for line in lines:
                 if 'BC' in line and 'rightSide' in line and 'nFibers' in line:
-                    nFib = int(line.split('$')[0].split('@')[1])
-                    newline = 'BC, rightSide, nFibers @' + str(nFib+1) + '$int'
+                    newline = 'BC, rightSide, nFibers @' + str(newnFibS) + '$int'
                     out.write(newline)
                 elif 'BC' in line and 'leftSide' in line and 'nFibers' in line:
                     nFib = int(line.split('$')[0].split('@')[1])
-                    newline = 'BC, leftSide, nFibers @' + str(nFib+1) + '$int'
+                    newline = 'BC, leftSide, nFibers @' + str(newnFibS) + '$int'
+                    out.write(newline)
+                elif 'BC' in line and 'northSide' in line and 'nFibers' in line:
+                    nFib = int(line.split('$')[0].split('@')[1])
+                    newline = 'BC, northSide, nFibers @' + str(newnFibA) + '$int'
                     out.write(newline)
                 else:
                     out.write(line)

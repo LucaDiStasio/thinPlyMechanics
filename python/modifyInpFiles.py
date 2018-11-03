@@ -121,6 +121,7 @@ def main():
             newnFibS = nFibs + 1
             newnFibA = 1
         else:
+            newnFibS = nFibs
             newnFibA = nFibA + 1
         with open(join(outDir,name),'w') as out:
             for line in lines:

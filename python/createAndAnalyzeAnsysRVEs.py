@@ -261,11 +261,22 @@ def runRVEsimulation(params,logfilefullpath,logindent,logindent):
         sys.exit(2)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function runRVEsimulation(params,logfilefullpath,logindent,logindent)',True)
 
+def readStress():
+
+def readStrain():
+
+def readForce():
+
+def readDisplacement():
+
+def filterField():
+
+def xcrackVCCT():
+
+def ycrackVCCT():
+
 def analyzeRVEresults(wd,odbname,logfilepath,parameters):
 
-def readStressStrain():
-
-def readForceDisp(): 
 
 #===============================================================================#
 #                                 Log files

@@ -45,6 +45,7 @@ def main():
     inpDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
     outDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
     baseName = 'inputRVEdata'
+    itbaseName = 'inputRVEiterables'
     ext = '.deck'
     Ls = ['1_618','1_25','1_144','1_0992']
     homogSize = ['1','2','3','5']
@@ -77,6 +78,15 @@ def main():
                     out.write(newline)
                 else:
                     out.write(line)
+        with open(join(inpDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'r') as inp:
+            lines = inp.readlines()
+        with open(join(outDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'w') as out:
+            for line in lines:
+                        if 'basename' in line:
+                            newline = line.replace('sf'+str(nFib),'sf'+str(nFib+1))
+                            out.write(newline)
+                        else:
+                            out.write(line)
 
     for name in fileListAbove:
         with open(join(inpDir,name),'r') as inp:
@@ -89,6 +99,15 @@ def main():
                     out.write(newline)
                 else:
                     out.write(line)
+        with open(join(inpDir,itbaseName+'L'+L+'A'+'FHOMO'+s+ext),'r') as inp:
+            lines = inp.readlines()
+        with open(join(outDir,itbaseName+'L'+L+'A'+'FHOMO'+s+ext),'w') as out:
+            for line in lines:
+                        if 'basename' in line:
+                            newline = line.replace('sf'+str(nFib),'sf'+str(nFib+1))
+                            out.write(newline)
+                        else:
+                            out.write(line)
 
     for name in fileListSideAbove:
         with open(join(inpDir,name),'r') as inp:
@@ -109,36 +128,43 @@ def main():
                     newline = 'BC, rightSide, nFibers @' + str(newnFibS) + '$int'
                     out.write(newline)
                 elif 'BC' in line and 'leftSide' in line and 'nFibers' in line:
-                    nFib = int(line.split('$')[0].split('@')[1])
                     newline = 'BC, leftSide, nFibers @' + str(newnFibS) + '$int'
                     out.write(newline)
                 elif 'BC' in line and 'northSide' in line and 'nFibers' in line:
-                    nFib = int(line.split('$')[0].split('@')[1])
                     newline = 'BC, northSide, nFibers @' + str(newnFibA) + '$int'
                     out.write(newline)
                 else:
                     out.write(line)
-
-    baseName = 'inputRVEiterables'
-    fileListSide = []
-    fileListAbove = []
-    fileListSideAbove = []
-    for L in Ls:
-        for n in nFibs:
-            fileListSide.append(baseName+'L'+L+'S'+'FHOMO'+s+ext)
-            fileListAbove.append(baseName+'L'+L+'A'+'FHOMO'+s+ext)
-            fileListSideAbove.append(baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext)
-
-    for name in fileList:
-        with open(join(inpDir,name),'r') as inp:
+        with open(join(inpDir,itbaseName+'L'+L+'A'+'S'+'FHOMO'+s+ext),'r') as inp:
             lines = inp.readlines()
-        with open(join(outDir,name),'w') as out:
+        with open(join(outDir,itbaseName+'L'+L+'A'+'S'+'FHOMO'+s+ext),'w') as out:
             for line in lines:
-                if 'basename' in line:
-                    newline = line.replace('vk','vkul')
-                    out.write(newline)
-                else:
-                    out.write(line)
+                        if 'basename' in line:
+                            newline = line.replace('sf'+str(nFibS),'sf'+str(newnFibS)).replace('af'+str(nFibA),'af'+str(newnFibA))
+                            out.write(newline)
+                        else:
+                            out.write(line)
+
+    #baseName = 'inputRVEiterables'
+    #fileListSide = []
+    #fileListAbove = []
+    #fileListSideAbove = []
+    #for L in Ls:
+    #    for n in nFibs:
+    #        fileListSide.append(baseName+'L'+L+'S'+'FHOMO'+s+ext)
+    #        fileListAbove.append(baseName+'L'+L+'A'+'FHOMO'+s+ext)
+    #        fileListSideAbove.append(baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext)
+
+    #for name in fileListSide:
+    #    with open(join(inpDir,name),'r') as inp:
+    #        lines = inp.readlines()
+    #    with open(join(outDir,name),'w') as out:
+    #        for line in lines:
+    #            if 'basename' in line:
+    #                newline = line.replace('vk','vkul')
+    #                out.write(newline)
+    #            else:
+    #                out.write(line)
 
 
 if __name__ == '__main__':

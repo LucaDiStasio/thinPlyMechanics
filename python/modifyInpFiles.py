@@ -37,15 +37,12 @@ from os.path import isfile, join, exists
 #from os import listdir, stat, makedirs
 from datetime import datetime
 from time import strftime
-#from platform import platform
-from openpyxl import Workbook
-from openpyxl import load_workbook
-import xlsxwriter
-import numpy as np
-from scipy import optimize
-import matplotlib.pyplot as plt
-from matplotlib import rc
-rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
-# for Palatino and other serif fonts use:
-#rc('font',**{'family':'serif','serif':['Palatino']})
-rc('text', usetex=True)
+
+inpDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
+outDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
+
+def main():
+    
+
+if __name__ == '__main__':
+    main()

@@ -169,7 +169,7 @@ def main():
                             #elif 'BC' in line and 'northSide' in line and 'nFibers' in line:
                             #    newline = 'BC, northSide, nFibers @' + str(newnFibA) + '     $int' + '\n'
                             #    out.write(newline)
-                            f '1_618' in line:
+                            if '1_618' in line:
                                 newline = line.replace('1_618',L)
                                 out.write(newline)
                             elif '1.618' in line:

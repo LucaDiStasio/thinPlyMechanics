@@ -50,34 +50,71 @@ def main():
     homogSize = ['1','2','3','5']
     #nFibs = [1,2,3,5]
 
-    fileList = []
+    fileListSide = []
+    fileListAbove = []
+    fileListSideAbove = []
     for L in Ls:
         for s in homogSize:
-            fileList.append(baseName+'L'+L+'S'+'FHOMO'+s+ext)
-            fileList.append(baseName+'L'+L+'A'+'FHOMO'+s+ext)
-            fileList.append(baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext)
+            fileListSide.append(baseName+'L'+L+'S'+'FHOMO'+s+ext)
+            fileListAbove.append(baseName+'L'+L+'A'+'FHOMO'+s+ext)
+            fileListSideAbove.append(baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext)
 
     if not exists(outDir):
         os.mkdir(outDir)
 
-    for name in fileList:
+    for name in fileListSide:
         with open(join(inpDir,name),'r') as inp:
             lines = inp.readlines()
         with open(join(outDir,name),'w') as out:
             for line in lines:
-                if 'BC' in line and 'northSide' in line and 'type' in line:
-                    newline = line.replace('vkinCouplingmeancorners','vkinCouplingmeancornersulinearCoupling')
+                if 'BC' in line and 'rightSide' in line and 'nFibers' in line:
+                    nFib = int(line.split('$')[0].split('@')[1])
+                    newline = 'BC, rightSide, nFibers @' + str(nFib+1) + '$int'
+                    out.write(newline)
+                elif 'BC' in line and 'leftSide' in line and 'nFibers' in line:
+                    nFib = int(line.split('$')[0].split('@')[1])
+                    newline = 'BC, leftSide, nFibers @' + str(nFib+1) + '$int'
+                    out.write(newline)
+                else:
+                    out.write(line)
+
+    for name in fileListAbove:
+        with open(join(inpDir,name),'r') as inp:
+            lines = inp.readlines()
+        with open(join(outDir,name),'w') as out:
+            for line in lines:
+                if 'BC' in line and 'northSide' in line and 'nFibers' in line:
+                    nFib = int(line.split('$')[0].split('@')[1])
+                    newline = 'BC, northSide, nFibers @' + str(nFib+1) + '$int'
+                    out.write(newline)
+                else:
+                    out.write(line)
+
+    for name in fileListSideAbove:
+        with open(join(inpDir,name),'r') as inp:
+            lines = inp.readlines()
+        with open(join(outDir,name),'w') as out:
+            for line in lines:
+                if 'BC' in line and 'rightSide' in line and 'nFibers' in line:
+                    nFib = int(line.split('$')[0].split('@')[1])
+                    newline = 'BC, rightSide, nFibers @' + str(nFib+1) + '$int'
+                    out.write(newline)
+                elif 'BC' in line and 'leftSide' in line and 'nFibers' in line:
+                    nFib = int(line.split('$')[0].split('@')[1])
+                    newline = 'BC, leftSide, nFibers @' + str(nFib+1) + '$int'
                     out.write(newline)
                 else:
                     out.write(line)
 
     baseName = 'inputRVEiterables'
-    fileList = []
+    fileListSide = []
+    fileListAbove = []
+    fileListSideAbove = []
     for L in Ls:
         for n in nFibs:
-            fileList.append(baseName+'L'+L+'S'+'FHOMO'+s+ext)
-            fileList.append(baseName+'L'+L+'A'+'FHOMO'+s+ext)
-            fileList.append(baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext)
+            fileListSide.append(baseName+'L'+L+'S'+'FHOMO'+s+ext)
+            fileListAbove.append(baseName+'L'+L+'A'+'FHOMO'+s+ext)
+            fileListSideAbove.append(baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext)
 
     for name in fileList:
         with open(join(inpDir,name),'r') as inp:

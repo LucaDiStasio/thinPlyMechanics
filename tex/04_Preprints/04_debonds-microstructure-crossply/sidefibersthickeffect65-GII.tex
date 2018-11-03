@@ -55,13 +55,33 @@ xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
 ylabel={$G_{II}\left[\nicefrac{J}{m^{2}}\right]$},
 % LEGEND ENTRIES
-legend entries={{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=10$}},
+legend entries={{$UD$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=10$}},
 ]
 
 % 10 FIBERS ON EACH SIDE
 
+% t0
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=triangle*]
+table{
+10.00	0.77253168
+20.00	2.80163528
+30.00	6.66411632
+40.00	11.28420249
+50.00	15.76109693
+60.00	18.98624609
+70.00	20.98660786
+80.00	20.75759376
+90.00	17.80838317
+100.00	12.04798092
+110.00	6.79022349
+120.00	3.57276417
+130.00	1.70415648
+140.00	0.65590800
+150.00	0.13751517
+};
+
 % t1
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=triangle*]
 table{
 10.00	0.588250
 20.00	1.516469
@@ -81,7 +101,7 @@ table{
 };
 
 % t10
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
 table{
 10.00	0.583889
 20.00	1.491594

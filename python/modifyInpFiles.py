@@ -118,10 +118,10 @@ def main():
             elif 'BC' in line and 'northSide' in line and 'nFibers' in line:
                 nFibA = int(line.split('$')[0].split('@')[1])
         if nFibS == nFibA:
-            newnFibS = nFibs + 1
+            newnFibS = nFibS + 1
             newnFibA = 1
         else:
-            newnFibS = nFibs
+            newnFibS = nFibS
             newnFibA = nFibA + 1
         with open(join(outDir,name),'w') as out:
             for line in lines:

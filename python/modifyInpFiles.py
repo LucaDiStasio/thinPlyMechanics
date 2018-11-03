@@ -106,7 +106,7 @@ def main():
             with open(join(outDir,itbaseName+'L'+L+'A'+'FHOMO'+s+ext),'w') as out:
                 for line in lines:
                     if 'basename' in line:
-                        newline = line.replace('sf'+str(nFib),'sf'+str(nFib+1))
+                        newline = line.replace('af'+str(nFib),'af'+str(nFib+1))
                         out.write(newline)
                     else:
                         out.write(line)

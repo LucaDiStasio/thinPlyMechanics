@@ -46,17 +46,18 @@ def main():
     outDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
     baseName = 'inputRVEdata'
     ext = '.deck'
-    Ls = ['1_25','1_144','1_0992']
-    nFibs = [1,2,3,5]
+    Ls = ['1_618','1_25','1_144','1_0992']
+    homogSize = ['1','2','3','5']
+    #nFibs = [1,2,3,5]
 
     fileList = []
     for L in Ls:
-        for n in nFibs:
-            fileList.append(baseName+'L'+L+'S'+str(n)+'F-LPC'+ext)
-            fileList.append(baseName+'L'+L+'A'+str(n)+'F-LPC'+ext)
+        for s in homogSize:
+            fileList.append(baseName+'L'+L+'S'+'FHOMO'+s+ext)
+            fileList.append(baseName+'L'+L+'A'+'FHOMO'+s+ext)
             for m in nFibs:
                 if not m>n:
-                    fileList.append(baseName+'L'+L+'A'+str(m)+'S'+str(n)+'F-LPC'+ext)
+                    fileList.append(baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext)
 
     if not exists(outDir):
         os.mkdir(outDir)
@@ -76,11 +77,11 @@ def main():
     fileList = []
     for L in Ls:
         for n in nFibs:
-            fileList.append(baseName+'L'+L+'S'+str(n)+'F-LPC'+ext)
-            fileList.append(baseName+'L'+L+'A'+str(n)+'F-LPC'+ext)
+            fileList.append(baseName+'L'+L+'S'+'FHOMO'+s+ext)
+            fileList.append(baseName+'L'+L+'A'+'FHOMO'+s+ext)
             for m in nFibs:
                 if not m>n:
-                    fileList.append(baseName+'L'+L+'A'+str(m)+'S'+str(n)+'F-LPC'+ext)
+                    fileList.append(baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext)
 
     for name in fileList:
         with open(join(inpDir,name),'r') as inp:

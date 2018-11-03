@@ -55,11 +55,31 @@ xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
 ylabel={$G_{II}\left[\nicefrac{J}{m^{2}}\right]$},
 % LEGEND ENTRIES
-legend entries={{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=10$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=50$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=100$}},
+legend entries={{$UD$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=10$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=50$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=100$}},
 ]
 
+% t0
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=triangle*]
+table{
+10.00	0.10416689
+20.00	0.40365191
+30.00	0.76718599
+40.00	0.98010300
+50.00	0.98175065
+60.00	0.84305252
+70.00	0.56865340
+80.00	0.34293286
+90.00	0.20330805
+100.00	0.10957183
+110.00	0.05334840
+120.00	0.02392470
+130.00	0.00851429
+140.00	0.00252755
+150.00	0.00196795
+};
+
 % t1
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,magenta,smooth,mark=triangle*]
 table{
 10.00	0.09266645
 20.00	0.31348927
@@ -79,7 +99,7 @@ table{
 };
 
 % t10
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
 table{
 10.00	0.0922346761
 20.00	0.3044617521
@@ -99,7 +119,7 @@ table{
 };
 
 % t50
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=triangle*]
 table{
 10.00	0.0922278142
 20.00	0.3045928196
@@ -119,7 +139,7 @@ table{
 };
 
 % t100
-\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=triangle*]
 table{
 10.00	0.0922198935
 20.00	0.3045526323

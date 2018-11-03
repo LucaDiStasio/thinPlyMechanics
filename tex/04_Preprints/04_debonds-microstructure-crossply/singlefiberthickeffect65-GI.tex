@@ -55,11 +55,31 @@ xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
 ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
 % LEGEND ENTRIES
-legend entries={{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=10$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=50$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=100$}},
+legend entries={{$UD$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=10$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=50$},{$\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=100$}},
 ]
 
-% t1
+% t0
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+table{
+10.00	2.53178624
+20.00	2.12274515
+30.00	1.22067380
+40.00	0.50777434
+50.00	0.18402791
+60.00	0.02121486
+70.00	0.00000774
+80.00	0.00000684
+90.00	0.00000326
+100.00	0.00000211
+110.00	0.00000103
+120.00	0.00000051
+130.00	0.00000014
+140.00	0.00000000
+150.00	0.00043241
+};
+
+% t1
+\addplot[line width=\linewidth,mark size=\markersize,magenta,smooth,mark=square*]
 table{
 10.00	2.45429428
 20.00	2.11860862

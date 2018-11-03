@@ -55,9 +55,7 @@ def main():
         for s in homogSize:
             fileList.append(baseName+'L'+L+'S'+'FHOMO'+s+ext)
             fileList.append(baseName+'L'+L+'A'+'FHOMO'+s+ext)
-            for m in nFibs:
-                if not m>n:
-                    fileList.append(baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext)
+            fileList.append(baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext)
 
     if not exists(outDir):
         os.mkdir(outDir)
@@ -79,9 +77,7 @@ def main():
         for n in nFibs:
             fileList.append(baseName+'L'+L+'S'+'FHOMO'+s+ext)
             fileList.append(baseName+'L'+L+'A'+'FHOMO'+s+ext)
-            for m in nFibs:
-                if not m>n:
-                    fileList.append(baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext)
+            fileList.append(baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext)
 
     for name in fileList:
         with open(join(inpDir,name),'r') as inp:

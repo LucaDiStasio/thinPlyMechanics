@@ -54,8 +54,9 @@ def main():
         for n in nFibs:
             fileList.append(baseName+'L'+L+'S'+str(n)+'F-LPC'+ext)
             fileList.append(baseName+'L'+L+'A'+str(n)+'F-LPC'+ext)
-            for m in range(1,n+1):
-                fileList.append(baseName+'L'+L+'A'+str(m)+'S'+str(n)+'F-LPC'+ext)
+            for m in nFibs:
+                if not m>n:
+                    fileList.append(baseName+'L'+L+'A'+str(m)+'S'+str(n)+'F-LPC'+ext)
 
     if not exists(outDir):
         os.mkdir(outDir)
@@ -77,8 +78,9 @@ def main():
         for n in nFibs:
             fileList.append(baseName+'L'+L+'S'+str(n)+'F-LPC'+ext)
             fileList.append(baseName+'L'+L+'A'+str(n)+'F-LPC'+ext)
-            for m in range(1,n+1):
-                fileList.append(baseName+'L'+L+'A'+str(m)+'S'+str(n)+'F-LPC'+ext)
+            for m in nFibs:
+                if not m>n:
+                    fileList.append(baseName+'L'+L+'A'+str(m)+'S'+str(n)+'F-LPC'+ext)
 
     for name in fileList:
         with open(join(inpDir,name),'r') as inp:

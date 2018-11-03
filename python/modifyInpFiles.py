@@ -63,88 +63,91 @@ def main():
     if not exists(outDir):
         os.mkdir(outDir)
 
-    for name in fileListSide:
-        with open(join(inpDir,name),'r') as inp:
-            lines = inp.readlines()
-        with open(join(outDir,name),'w') as out:
+    for L in Ls:
+        for s in homogSize:
+            with open(join(inpDir,baseName+'L'+L+'S'+'FHOMO'+s+ext),'r') as inp:
+                lines = inp.readlines()
+            with open(join(outDir,baseName+'L'+L+'S'+'FHOMO'+s+ext),'w') as out:
+                for line in lines:
+                    if 'BC' in line and 'rightSide' in line and 'nFibers' in line:
+                        nFib = int(line.split('$')[0].split('@')[1])
+                        newline = 'BC, rightSide, nFibers @' + str(nFib+1) + '     $int' + '\n'
+                        out.write(newline)
+                    elif 'BC' in line and 'leftSide' in line and 'nFibers' in line:
+                        nFib = int(line.split('$')[0].split('@')[1])
+                        newline = 'BC, leftSide, nFibers @' + str(nFib+1) + '     $int' + '\n'
+                        out.write(newline)
+                    else:
+                        out.write(line)
+            with open(join(inpDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'r') as inp:
+                lines = inp.readlines()
+            with open(join(outDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'w') as out:
+                for line in lines:
+                    if 'basename' in line:
+                        newline = line.replace('sf'+str(nFib),'sf'+str(nFib+1))
+                        out.write(newline)
+                    else:
+                        out.write(line)
+
+    for L in Ls:
+        for s in homogSize:
+            with open(join(inpDir,baseName+'L'+L+'A'+'FHOMO'+s+ext),'r') as inp:
+                lines = inp.readlines()
+            with open(join(outDir,baseName+'L'+L+'A'+'FHOMO'+s+ext),'w') as out:
+                for line in lines:
+                    if 'BC' in line and 'northSide' in line and 'nFibers' in line:
+                        nFib = int(line.split('$')[0].split('@')[1])
+                        newline = 'BC, northSide, nFibers @' + str(nFib+1) + '     $int' + '\n'
+                        out.write(newline)
+                    else:
+                        out.write(line)
+            with open(join(inpDir,itbaseName+'L'+L+'A'+'FHOMO'+s+ext),'r') as inp:
+                lines = inp.readlines()
+            with open(join(outDir,itbaseName+'L'+L+'A'+'FHOMO'+s+ext),'w') as out:
+                for line in lines:
+                    if 'basename' in line:
+                        newline = line.replace('sf'+str(nFib),'sf'+str(nFib+1))
+                        out.write(newline)
+                    else:
+                        out.write(line)
+
+    for L in Ls:
+        for s in homogSize:
+            with open(join(inpDir,baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext),'r') as inp:
+                lines = inp.readlines()
             for line in lines:
                 if 'BC' in line and 'rightSide' in line and 'nFibers' in line:
-                    nFib = int(line.split('$')[0].split('@')[1])
-                    newline = 'BC, rightSide, nFibers @' + str(nFib+1) + '     $int' + '\n'
-                    out.write(newline)
-                elif 'BC' in line and 'leftSide' in line and 'nFibers' in line:
-                    nFib = int(line.split('$')[0].split('@')[1])
-                    newline = 'BC, leftSide, nFibers @' + str(nFib+1) + '     $int' + '\n'
-                    out.write(newline)
-                else:
-                    out.write(line)
-        with open(join(inpDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'r') as inp:
-            lines = inp.readlines()
-        with open(join(outDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'w') as out:
-            for line in lines:
-                        if 'basename' in line:
-                            newline = line.replace('sf'+str(nFib),'sf'+str(nFib+1))
-                            out.write(newline)
-                        else:
-                            out.write(line)
-
-    for name in fileListAbove:
-        with open(join(inpDir,name),'r') as inp:
-            lines = inp.readlines()
-        with open(join(outDir,name),'w') as out:
-            for line in lines:
-                if 'BC' in line and 'northSide' in line and 'nFibers' in line:
-                    nFib = int(line.split('$')[0].split('@')[1])
-                    newline = 'BC, northSide, nFibers @' + str(nFib+1) + '     $int' + '\n'
-                    out.write(newline)
-                else:
-                    out.write(line)
-        with open(join(inpDir,itbaseName+'L'+L+'A'+'FHOMO'+s+ext),'r') as inp:
-            lines = inp.readlines()
-        with open(join(outDir,itbaseName+'L'+L+'A'+'FHOMO'+s+ext),'w') as out:
-            for line in lines:
-                        if 'basename' in line:
-                            newline = line.replace('sf'+str(nFib),'sf'+str(nFib+1))
-                            out.write(newline)
-                        else:
-                            out.write(line)
-
-    for name in fileListSideAbove:
-        with open(join(inpDir,name),'r') as inp:
-            lines = inp.readlines()
-        for line in lines:
-            if 'BC' in line and 'rightSide' in line and 'nFibers' in line:
-                nFibS = int(line.split('$')[0].split('@')[1])
-            elif 'BC' in line and 'northSide' in line and 'nFibers' in line:
-                nFibA = int(line.split('$')[0].split('@')[1])
-        if nFibS == nFibA:
-            newnFibS = nFibS + 1
-            newnFibA = 1
-        else:
-            newnFibS = nFibS
-            newnFibA = nFibA + 1
-        with open(join(outDir,name),'w') as out:
-            for line in lines:
-                if 'BC' in line and 'rightSide' in line and 'nFibers' in line:
-                    newline = 'BC, rightSide, nFibers @' + str(newnFibS) + '     $int' + '\n'
-                    out.write(newline)
-                elif 'BC' in line and 'leftSide' in line and 'nFibers' in line:
-                    newline = 'BC, leftSide, nFibers @' + str(newnFibS) + '     $int' + '\n'
-                    out.write(newline)
+                    nFibS = int(line.split('$')[0].split('@')[1])
                 elif 'BC' in line and 'northSide' in line and 'nFibers' in line:
-                    newline = 'BC, northSide, nFibers @' + str(newnFibA) + '     $int' + '\n'
-                    out.write(newline)
-                else:
-                    out.write(line)
-        with open(join(inpDir,itbaseName+'L'+L+'A'+'S'+'FHOMO'+s+ext),'r') as inp:
-            lines = inp.readlines()
-        with open(join(outDir,itbaseName+'L'+L+'A'+'S'+'FHOMO'+s+ext),'w') as out:
-            for line in lines:
-                        if 'basename' in line:
-                            newline = line.replace('sf'+str(nFibS),'sf'+str(newnFibS)).replace('af'+str(nFibA),'af'+str(newnFibA))
-                            out.write(newline)
-                        else:
-                            out.write(line)
+                    nFibA = int(line.split('$')[0].split('@')[1])
+            if nFibS == nFibA:
+                newnFibS = nFibS + 1
+                newnFibA = 1
+            else:
+                newnFibS = nFibS
+                newnFibA = nFibA + 1
+            with open(join(outDir,baseName+'L'+L+'A'+'S'+'FHOMO'+s+ext),'w') as out:
+                for line in lines:
+                    if 'BC' in line and 'rightSide' in line and 'nFibers' in line:
+                        newline = 'BC, rightSide, nFibers @' + str(newnFibS) + '     $int' + '\n'
+                        out.write(newline)
+                    elif 'BC' in line and 'leftSide' in line and 'nFibers' in line:
+                        newline = 'BC, leftSide, nFibers @' + str(newnFibS) + '     $int' + '\n'
+                        out.write(newline)
+                    elif 'BC' in line and 'northSide' in line and 'nFibers' in line:
+                        newline = 'BC, northSide, nFibers @' + str(newnFibA) + '     $int' + '\n'
+                        out.write(newline)
+                    else:
+                        out.write(line)
+            with open(join(inpDir,itbaseName+'L'+L+'A'+'S'+'FHOMO'+s+ext),'r') as inp:
+                lines = inp.readlines()
+            with open(join(outDir,itbaseName+'L'+L+'A'+'S'+'FHOMO'+s+ext),'w') as out:
+                for line in lines:
+                    if 'basename' in line:
+                        newline = line.replace('sf'+str(nFibS),'sf'+str(newnFibS)).replace('af'+str(nFibA),'af'+str(newnFibA))
+                        out.write(newline)
+                    else:
+                        out.write(line)
 
     #baseName = 'inputRVEiterables'
     #fileListSide = []

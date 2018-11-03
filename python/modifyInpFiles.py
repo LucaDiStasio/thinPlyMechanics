@@ -38,11 +38,27 @@ from os.path import isfile, join, exists
 from datetime import datetime
 from time import strftime
 
-inpDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
-outDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
 
 def main():
-    
+    inpDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
+    outDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
+    baseName = 'inputRVEdata'
+    ext = '.deck'
+    Ls = ['1_25','1_144','1_0992']
+    nFibLim = 5
+
+    fileList = []
+    for L in Ls:
+        for n in range(1,nFibLim+1):
+            fileList.append(baseName+L+'S'+str(n)+'F-LPC'+ext)
+            fileList.append(baseName+L+'A'+str(n)+'F-LPC'+ext)
+            for m in range(1,n+1):
+                fileList.append(baseName+L+'A'+str(m)+'S'+str(n)+'F-LPC'+ext)
+
+    for name in fileList:
+        print(name)
+
+
 
 if __name__ == '__main__':
     main()

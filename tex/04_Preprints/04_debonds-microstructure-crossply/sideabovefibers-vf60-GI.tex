@@ -55,7 +55,7 @@ xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
 ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
 % LEGEND ENTRIES
-legend entries={{$3\times 2-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$5\times 2-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$5\times 3-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$11\times 2-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$11\times 6-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$21\times 2-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$21\times 11-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$}},
+legend entries={{$3\times 2-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$5\times 2-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$5\times 3-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$11\times 2-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$11\times 6-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$21\times 2-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$21\times 6-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$},{$21\times 11-\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$}},
 ]
 
 % SF1, AF1
@@ -178,8 +178,28 @@ table{
 150.00	0.001999
 };
 
+% SF10, AF5
+\addplot[line width=\linewidth,mark size=\markersize,blue!60!black,smooth,mark=triangle*]
+table{
+10.00	3.528276
+20.00	3.578281
+30.00	2.852388
+40.00	1.894440
+50.00	1.002785
+60.00	0.292748
+70.00	0.000382
+80.00	0.000069
+90.00	0.000076
+100.00	0.000073
+110.00	0.000040
+120.00	0.000019
+130.00	0.000007
+140.00	0.000001
+150.00	0.001985
+};
+
 % SF10, AF10
-\addplot[line width=\linewidth,mark size=\markersize,blue!70!black,smooth,mark=triangle*]
+\addplot[line width=\linewidth,mark size=\markersize,blue!80!black,smooth,mark=*]
 table{
 10.00	3.530360
 20.00	3.579459

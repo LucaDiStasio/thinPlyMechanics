@@ -145,7 +145,7 @@ In the first sub-model, Fig.~\ref{subfig:freethinply}, every $n^{th}$ fiber in t
 \caption{Models of UD composites with different ``rows'' of fibers and debonds repeating at different distances. The corresponding repeating element (RUC) is highlighted in blue, while debonds are represented in red.}\label{fig:laminateModelsB}
 \end{figure}
 
-The second set of models in Fig.~\ref{fig:laminateModelsB} and Fig.~\ref{fig:thickplyalldebonds} considers laminates with multiple \say{rows} of fibers across the thickness: a finite number of rows in the first two sub-models in Fig.~\ref{fig:laminateModelsB}; an infinite number in the model of Fig.~\ref{fig:thickplyalldebonds}. In Fig. ~\ref{subfig:thickplycentraldebonds}, the RUC contains $n=1$ fiber in the x-direction, $k$ fibers across the thickness and the central fiber is debonded. This model will be referred to in the following as $1\times k − free$. Thinking in terms of \say{rows}, in this model we have a central \say{row} where each fiber is debonded. This \say{rows} is surrounded from each side by $\nicefrac{\left(k-1\right)}{2}$ \say{rows} with perfectly bonded fibers. In the sub-model in Fig.~\ref{subfig:thickply}, each $n^{th}$ fiber in the central \say{row} is debonded and this \say{row} is surrounded by $\nicefrac{\left(k-1\right)}{2}$ \say{rows} of undamaged fibers from each side. We will refer to this model as $n\times k – free$ (because the horizontal boundary of the RUC is free of any constraint).
+The second set of models in Fig.~\ref{fig:laminateModelsB} and Fig.~\ref{fig:thickplyalldebonds} considers laminates with multiple \say{rows} of fibers across the thickness: a finite number of rows in the first two sub-models in Fig.~\ref{fig:laminateModelsB}; an infinite number in the model of Fig.~\ref{fig:thickplyalldebonds}. In Fig. ~\ref{subfig:thickplycentraldebonds}, the RUC contains $n=1$ fiber in the x-direction, $k$ fibers across the thickness and the central fiber is debonded. This model will be referred to in the following as $1\times k-free$. Thinking in terms of \say{rows}, in this model we have a central \say{row} where each fiber is debonded. This \say{rows} is surrounded from each side by $\nicefrac{\left(k-1\right)}{2}$ \say{rows} with perfectly bonded fibers. In the sub-model in Fig.~\ref{subfig:thickply}, each $n^{th}$ fiber in the central \say{row} is debonded and this \say{row} is surrounded by $\nicefrac{\left(k-1\right)}{2}$ \say{rows} of undamaged fibers from each side. We will refer to this model as $n\times k-free$ (because the horizontal boundary of the RUC is free of any constraint).
 
 \begin{figure}[!h]
 \centering
@@ -153,7 +153,7 @@ The second set of models in Fig.~\ref{fig:laminateModelsB} and Fig.~\ref{fig:thi
 \caption{Model of UD composites with an infinite number of  ``rows'' of fibers and debonds appearing on each fiber. The corresponding repeating element (RUC) is highlighted in blue, while debonds are represented in red.}\label{fig:thickplyalldebonds}
 \end{figure}
 
-Finally, the model in Fig.~\ref{fig:thickplyalldebonds} considers an UD composite with an infinite number of \say{rows}; all of them with partially debonded fibers. As all fibers have debonds, the corresponding RUC is made of a single partially debonded fiber with kinematic coupling conditions applied to the upper boundary to assure periodicity. This model is referred to as $1\times 1−coupling$.
+Finally, the model in Fig.~\ref{fig:thickplyalldebonds} considers an UD composite with an infinite number of \say{rows}; all of them with partially debonded fibers. As all fibers have debonds, the corresponding RUC is made of a single partially debonded fiber with kinematic coupling conditions applied to the upper boundary to assure periodicity. This model is referred to as $1\times 1-coupling$.
 
 %\begin{table}[!h]
 % \centering
@@ -253,11 +253,14 @@ G_{0}=\frac{1+k_{m}}{8\mu_{m}}\sigma_{0}^{2}\pi R_{f}
 
 where $\mu$ is the shear modulus, $k$ is the Kolosov's constant defined as $3-4\nu$ for plane strain conditions, $R_{f}$ is the fiber radius and the index $m$ refers to the properties of the matrix. $\sigma_{0}$ is the stress at the boundary, computed as the average of the stress extracted at each boundary node along the right side (arithmetic average as nodes are equispaced by design along both the left and right sides). The agreement is good: the difference between the BEM solution, which is considered more accurate, and the FEM solution does not exceed $5\%$. The ERRs' maxima are in the same positions and the size of the contact zone is the same.  Nevertheless, an analysis of phenomena leading to less than $5\%$ differences in ERR would not be reliable and, therefore, it is not recommended.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Results \& Discussion}
 
 \subsection{Effect of Fiber Volume Fraction}\label{subsec:volfrac}
 
-As shown in Figs.~\ref{fig:volumefractionMI} and~\ref{fig:volumefractionMII}, respectively for Mode I and Mode II, the fiber content has a drastic effect on the Energy Release Rate at the crack tip of the fibre/matrix interface crack. The effect of four levels of fiber volume fraction are compared, $30\%$, $50\%$, $60\%$ and $65\%$, on two microstructural models: a $11\times 6-free$ (a debond every $11^{th}$ fiber in the central layer of an UD with 11 layers of fibers), Figs.~\ref{subfig:volfracsmallerMI} and~\ref{subfig:volfracsmallerMII}, and a $21\times 11-free$ (a debond every $21^{th}$ fiber in the central layer of an UD with 21 layers of fibers), Figs.~\ref{subfig:volfracbiggerMI} and~\ref{subfig:volfracbiggerMII}.
+As shown in Figs.~\ref{fig:volumefractionMI} and~\ref{fig:volumefractionMII}, respectively for Mode I and Mode II, the fiber content has a drastic effect on the Energy Release Rate at the tip of the fibre/matrix interface crack. The effect of four levels of fiber volume fraction are compared, $30\%$, $50\%$, $60\%$ and $65\%$, on two microstructural models: a $11\times 11-free$ (every $11^{th}$ fiber in the central fiber \say{row} is partially debonded and, on the top of this \say{row}, we have 5 undamaged fiber \say{rows}), Figs.~\ref{subfig:volfracsmallerMI} and~\ref{subfig:volfracsmallerMII}, and a $21\times 21-free$ (every $21^{th}$ fiber in the central fiber \say{row} is partially debonded and, on the top of this \say{row}, we have 10 undamaged fiber \say{rows}), Figs.~\ref{subfig:volfracbiggerMI} and~\ref{subfig:volfracbiggerMII}.
 
 \begin{figure}[!h]
 \centering

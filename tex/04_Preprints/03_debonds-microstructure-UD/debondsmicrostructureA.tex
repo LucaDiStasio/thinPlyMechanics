@@ -5,6 +5,7 @@
 \usepackage{dirtytalk}
 \usepackage{subcaption}
 \usepackage{tabularx}
+\usepackage{nicefrac}
 \usepackage[usenames]{xcolor}
 \usepackage{lineno,hyperref}
 \modulolinenumbers[5]
@@ -115,43 +116,41 @@ The first two models feature, as shown in Fig.~\ref{fig:laminateModelsA}, an ult
 \centering
     \begin{subfigure}[b]{\textwidth}
         \includegraphics[width=\textwidth]{freeThinPly.pdf}
-        \caption{Single layer of fibers with a debond appearing every $m$ fibers.}\label{subfig:freethinply}
+        \caption{Single \say{row} of fibers with a debond appearing every $m$ fibers.}\label{subfig:freethinply}
     \end{subfigure}
 
     \begin{subfigure}[b]{\textwidth}
         \includegraphics[width=\textwidth]{freeThinPlyAllDebonds.pdf}
-        \caption{Single layer of fibers with debonds appearing on each fiber.}\label{subfig:freethinplyalldebonds}
+        \caption{Single \say{row} of fibers with debonds appearing on each fiber.}\label{subfig:freethinplyalldebonds}
     \end{subfigure} 
 
-\caption{Models of ultra-thin UD composites with a single \say{row} of fibers and debonds repeating at different distances. The corresponding repeating element (RUC) is highlighted in blue, while debonds are represented in red.}\label{fig:laminateModelsA}
+\caption{Models of ultra-thin UD composites with a single ``row'' of fibers and debonds repeating at different distances. The corresponding repeating element (RUC) is highlighted in blue, while debonds are represented in red.}\label{fig:laminateModelsA}
 \end{figure}
 
-In the firstsub-model, Fig.~\ref{subfig:freethinply}, every $n^{th}$ fiber in the composite is partially debonded on alternating sides of the fiber. The symmetries of the model allow the use of the upper part of the RUC. It is highlighted by blue lines in Fig.~\ref{fig:laminateModelsA} to~\ref{fig:thickplyalldebonds}. Following the notation introduced in Section~\ref{subsec:names}, we will refer to this model as $n\times 1-free$. In the second sub-model $n=1$, Fig.~\ref{subfig:freethinplyalldebonds}, and a debond appears on each fiber on alternating sides and the corresponding RUC contains only one fiber. We will refer to this model as $1\times 1-free$.
+In the first sub-model, Fig.~\ref{subfig:freethinply}, every $n^{th}$ fiber in the composite is partially debonded on alternating sides of the fiber. The symmetries of the model allow the use of the upper part of the RUC. It is highlighted by blue lines in Fig.~\ref{fig:laminateModelsA} to~\ref{fig:thickplyalldebonds}. Following the notation introduced in Section~\ref{subsec:names}, we will refer to this model as $n\times 1-free$. In the second sub-model $n=1$, Fig.~\ref{subfig:freethinplyalldebonds}, and a debond appears on each fiber on alternating sides and the corresponding RUC contains only one fiber. We will refer to this model as $1\times 1-free$.
 
 \begin{figure}[!h]
 \centering
     \begin{subfigure}[b]{\textwidth}
     \centering
         \includegraphics[height=0.3\textheight]{thickPlycentraldebondsline.pdf}
-        \caption{Multiple layers of fibers with debonds appearing on each fiber beloging to the central layer.}\label{subfig:thickplycentraldebonds}
+        \caption{Multiple \say{rows} of fibers with debonds appearing on each fiber beloging to the central \say{row}.}\label{subfig:thickplycentraldebonds}
     \end{subfigure} 
 
     \begin{subfigure}[b]{\textwidth}
         \includegraphics[width=\textwidth]{thickPly.pdf}
-        \caption{Mutiple layers of fibers with a debond appearing every $m$ fibers within the central layer.}\label{subfig:thickply}
+        \caption{Mutiple \say{rows} of fibers with a debond appearing every $m$ fibers within the central \say{row}.}\label{subfig:thickply}
     \end{subfigure} 
 
-\caption{Models of UD laminates with different layers of fibers and debonds repeating at different distances. The corresponding repeating element (RVE) is highlighted in blue.}\label{fig:laminateModelsB}
+\caption{Models of UD composites with different ``rows'' of fibers and debonds repeating at different distances. The corresponding repeating element (RUC) is highlighted in blue, while debonds are represented in red.}\label{fig:laminateModelsB}
 \end{figure}
 
-The second set of models in Fig. 2 and Fig. 3 considers laminates with multiple “layers” of fibers across the thickness: a finite number of layers in the first two sub-models in Fig.2; an infinite number in the model of Fig. 3. In Fig. 2a, the RUC contains n=1 fiber in the x-direction and k fibers across the thickness and the central fiber is debonded This model will be referred to in the following as 1 × k − free. Thinking in terms of “layers”, in this model we have a central “layer”, where each fiber is debonded. This “layer” is surrounded from each side by (k-1)/2 “layers” with perfectly bonded fibers. In the sub-model in Fig. 2b, in the central “layer” each n-th fiber is debonded and this “layer” is surrounded by (k-1)/2 undamaged layers from each side. We will refer to this model as n × k – free (because the horizontal boundary of the RUC is free of any constraint.
-
-%The second set of models considers instead laminates with multiple layers of fibers across the thickness: a finite number of layers in the first two models (~\ref{subfig:thickplycentraldebonds} and~\ref{subfig:thickply}); an infinite number in the model of Fig.~\ref{fig:thickplyalldebonds}. In the first representative laminate (Fig.~\ref{subfig:thickplycentraldebonds}), all the fibers in the central layer are debonded. The UD is made by $2p+1$ layers of fibers across the thickness, corresponding to a RUC with $p+1$ fibers in the z direction. This model will be referred to in the following as $1\times\left(p+1\right)-free$, where $n=1,k=\left(p+1\right)$. In the second model (Fig.~\ref{subfig:thickply}), a debond appear every $\left(m+1\right)^{th}$ fiber in the central line of fibers in a laminate with $2p+1$ layers. The corresponding RUC has thus $\frac{m}{2}$ fiber(s) on each side and $p$ above the partially debonded fiber. We will refer to this model as $\left(m+1\right)\times\left(p+1\right)-free$, where $n=\left(m+1\right), k=\left(p+1\right)$.
+The second set of models in Fig.~\ref{fig:laminateModelsB} and Fig.~\ref{fig:thickplyalldebonds} considers laminates with multiple \say{rows} of fibers across the thickness: a finite number of rows in the first two sub-models in Fig.~\ref{fig:laminateModelsB}; an infinite number in the model of Fig.~\ref{fig:thickplyalldebonds}. In Fig. ~\ref{subfig:thickplycentraldebonds}, the RUC contains $n=1$ fiber in the x-direction, $k$ fibers across the thickness and the central fiber is debonded. This model will be referred to in the following as $1\times k − free$. Thinking in terms of \say{rows}, in this model we have a central \say{row} where each fiber is debonded. This \say{rows} is surrounded from each side by $\nicefrac{\left(k-1\right)}{2}$ \say{rows} with perfectly bonded fibers. In the sub-model in Fig.~\ref{subfig:thickply}, each $n^{th}$ fiber in the central \say{row} is debonded and this \say{row} is surrounded by $\nicefrac{\left(k-1\right)}{2}$ \say{rows} of undamaged fibers from each side. We will refer to this model as $n\times k – free$ (because the horizontal boundary of the RUC is free of any constraint).
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{thickPlyAllDebonds.pdf}
-\caption{Model of UD laminates with an infinite number of  layers of fibers and debonds appearing on each fiber. The corresponding repeating element (RVE) is highlighted in blue.}\label{fig:thickplyalldebonds}
+\caption{Model of UD composites with an infinite number of  ``rows'' of fibers and debonds appearing on each fiber. The corresponding repeating element (RUC) is highlighted in blue, while debonds are represented in red.}\label{fig:thickplyalldebonds}
 \end{figure}
 
 Finally, the model in Fig.~\ref{fig:thickplyalldebonds} considers an UD composite with an infinite number of \say{rows}; all of them with partially debonded fibers. As all fibers have debonds, the corresponding RUC is made of a single partially debonded fiber with kinematic coupling conditions applied to the upper boundary to assure periodicity. This model is referred to as $1\times 1−coupling$.
@@ -192,19 +191,19 @@ Finally, the model in Fig.~\ref{fig:thickplyalldebonds} considers an UD composit
 
 \subsection{Finite Element (FE) discretization}
 
-Each RUC is discretized using the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM package~\cite{abq12}. The length $l$ and height $h$ of the model (see Fig.~\ref{subfig:modelschem}) are determined by number of fibers $n$ in the horizontal direction and $k$ across the thickness (see~\ref{subsec:rve}) according to Eq.~\ref{eq:lengthheight}:
+Each RUC is discretized using the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM package~\cite{abq12}. The length $l$ and height $h$ of the model are determined by number of fibers $n$ in the horizontal direction and $k$ across the thickness (see~\ref{subsec:rve}) according to Eq.~\ref{eq:lengthheight}:
 
 \begin{equation}\label{eq:lengthheight}
 l=2nL\qquad h=2kL;
 \end{equation}
 
-where the reference length $L$ is defined as a function of the fiber volume fraction $V_{f}$ and the fibers' radius according to
+where the reference length $L$, see Fig.~\ref{subfig:modelschem}, is defined as a function of the fiber volume fraction $V_{f}$ and the fibers' radius according to
 
 \begin{equation}\label{eq:LVf}
 L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}.
 \end{equation}
 
-The fibers' radius $R_{f}$ is assumed to be the same for each fiber present in the model and equal to $1\ \mu m$. The relationships in Eqs.~\ref{eq:lengthheight} and~\ref{eq:LVf} thus ensure that the local and global $V_{f}$ are everywhere equal. 
+The fibers' radius $R_{f}$ is assumed to be the same for each fiber present in the model and equal to $1\ \mu m$. The latter value is not physical and it has been chosen for simplicity. It is worth to note at this point that, in a linear elastic solution as the one presented here, the ERR is proportional to the geometrical dimensions and recalculation of the ERR for fibers of any size thus requires a simple multiplication. Furthermore, notice that the relationships in Eqs.~\ref{eq:lengthheight} and~\ref{eq:LVf} ensure that the local and global $V_{f}$ are everywhere equal. 
 
 \begin{figure}[!h]
 \centering

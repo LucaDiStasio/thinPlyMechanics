@@ -431,67 +431,40 @@ The results in Fig.~\ref{fig:sideabovefibersthickfixed} show that the converse i
 
 \subsection{Comparison with the single fiber model with equivalent boundary conditions}
 
-The comparison of the single fiber models with the corresponding multi-fiber models (Figs.~\ref{fig:comparisonfreeMI},~\ref{fig:comparisonfreeMII},~\ref{fig:comparisonfreeMI} and~\ref{fig:comparisonfreeMII}) show that the former provide in general the lowest estimation of the ERR and correspond to the most damaged state of the laminate, i.e. the state in which the greatest number of debonds is present. The $1\times 1-free$ or simply free model (Figs.~\ref{fig:comparisonfreeMI} and~\ref{fig:comparisonfreeMII}), which represents a UD with a single layer of partially debonded fibers, agrees with the results of Sec.~\ref{subsec:singlefiberud} and constitutes the extreme case for UDs with a single layer of fibers, i.e. the case in which all the fibers are partially debonded.
+The single fiber RUC ($1\times 1-free$ or $1\times 1-coupling$) corresponds to the most damaged state of the composite, i.e. the state in which all fibers have debonds. The $1\times 1-free$ model represents an ultra-thin UD composite with a single row of partially debonded fibers. The $1\times 1-coupling$ model, where the displacement coupling is used to enforce periodic boundary conditions, represents an infinite composite.\\
+The comparison of the $1\times 1-free$  model with one row multi-fiber models $n\times 1-free$ in Figure~\ref{fig:comparisonfree} show that the former provide in general the lowest value of the ERR (the highest crack shielding case) which is consistent with the trends observed in Section~\ref{subsec:singlefiberud}.
 
 \begin{figure}[!h]
 \centering
-    \begin{subfigure}[b]{0.475\textwidth}
-        \includegraphics[width=\textwidth]{comparefreesidefibers-vf30-GI.pdf}
-        \caption{$V_{f}=30\%$.}\label{subfig:comparisonfree30MI}
-    \end{subfigure} ~
     \begin{subfigure}[b]{0.475\textwidth}
         \includegraphics[width=\textwidth]{comparefreesidefibers-vf60-GI.pdf}
-        \caption{$V_{f}=60\%$.}\label{subfig:comparisonfree60MI}
-    \end{subfigure}
-
-\caption{Comparison of Mode I ERR between the single fiber model with free upper boundary and the multiple fibers model with fibers only on the side at different levels of fiber volume fraction $V_{f}$, subject to an applied transverse strain $\varepsilon_{x}$ of $1\%$.}\label{fig:comparisonfreeMI}
-\end{figure}
-
-\begin{figure}[!h]
-\centering
-    \begin{subfigure}[b]{0.475\textwidth}
-        \includegraphics[width=\textwidth]{comparefreesidefibers-vf30-GII.pdf}
-        \caption{$V_{f}=30\%$.}\label{subfig:comparisonfree30MII}
+        \caption{$G_{I}$.}\label{subfig:comparisonfree60MI}
     \end{subfigure} ~
     \begin{subfigure}[b]{0.475\textwidth}
         \includegraphics[width=\textwidth]{comparefreesidefibers-vf60-GII.pdf}
-        \caption{$V_{f}=60\%$.}\label{subfig:comparisonfree60MII}
+        \caption{$G_{II}$.}\label{subfig:comparisonfree60MII}
     \end{subfigure}
 
-\caption{Comparison of Mode II ERR between the single fiber model with free upper boundary and the multiple fibers model with fibers only on the side at different levels of fiber volume fraction $V_{f}$.}\label{fig:comparisonfreeMII}
+\caption{Comparison of the ERR between the single fiber model with free upper boundary and the multiple fibers model with fibers only on the side. $V_{f}=60\%$ and $\varepsilon_{x}=1\%$.}\label{fig:comparisonfree}
 \end{figure}
 
-The $1\times 1-coupling$ or coupling model (Figs.~\ref{fig:comparisoncouplingMI} and~\ref{fig:comparisoncouplingMII}) underestimates consistently the ERR in Mode I and Mode II when compared with $n\times k-free$ models, as it represents an infinitely thick UD with all the fibers partially debonded. When compared with the $1\times k-free$ model, it shows interestingly a good agreement, especially in Mode I (Fig.~\ref{subfig:comparisoncoupling30MI}).
+The $1\times 1-coupling$ model is compared with $1\times 3-free$ and $1\times 201-free$ models in Fig.~\ref{fig:comparisoncoupling}. In all three models the distance between debonds in the $x$-direction is the same and the difference is in the vertical direction. The $1\times 1-coupling$ model describes the interaction between debonds in different rows of debonded fibers whereas the $1\times k-free$ models describe the effect of the proximity of the composite's free surface. The Mode I ERR in the $1\times 3-free$ model and in the $1\times 1-coupling$ model is very similar, which leads to a rather surprising conclusion. In both models we have, on the top of the central one, a large amount of fibers (bonded in one case and debonded in the other case). It appears that the effect of bonded and debonded fibers on the central debond is the same. This implies that the interaction between debonded fibers in elements placed on top of each other is small. The volume fraction effect is much smaller in high fiber content composites of this type.
 
 \begin{figure}[!h]
 \centering
-    \begin{subfigure}[b]{0.475\textwidth}
-        \includegraphics[width=\textwidth]{comparecouplingabovesidefibers-vf30-GI.pdf}
-        \caption{$V_{f}=30\%$.}\label{subfig:comparisoncoupling30MI}
-    \end{subfigure} ~
     \begin{subfigure}[b]{0.475\textwidth}
         \includegraphics[width=\textwidth]{comparecouplingabovesidefibers-vf60-GI.pdf}
-        \caption{$V_{f}=60\%$.}\label{subfig:comparisoncoupling60MI}
-    \end{subfigure}
-
-\caption{Comparison of Mode I ERR between the single fiber model with coupling conditions along the upper boundary and the multiple fibers model with fibers above and both above and on the side at different levels of fiber volume fraction $V_{f}$, subject to an applied transverse strain $\varepsilon_{x}$ of $1\%$.}\label{fig:comparisoncouplingMI}
-\end{figure}
-
-In Mode II, it shows a sizeable difference in the range $50^{\circ}-90^{\circ}$, while its results coincide with those of the $1\times k-free$ model for other values of $\Delta\theta$. These observations point to the evidence that debonds' interaction has a significant effect in the loading direction and not in the transverse one. The lower estimates of $G_{II}$ in the range  $50^{\circ}-90^{\circ}$ are due to the presence of a debond of the same size in the fiber just above the central one (modeled by the coupling boundary condition), which leaves the strip of matrix between the two fibers free to deform away from both fibers due to Poisson's effect and thus favors Mode I and reduces Mode II. This translates in the lower estimates in Fig.~\ref{fig:comparisoncouplingMII} and to the delay in the appearance of the contact zone, particularly evident in Fig.~\ref{subfig:comparisoncoupling60MI}.
-
-\begin{figure}[!h]
-\centering
-    \begin{subfigure}[b]{0.475\textwidth}
-        \includegraphics[width=\textwidth]{comparecouplingabovesidefibers-vf30-GII.pdf}
-        \caption{$V_{f}=30\%$.}\label{subfig:comparisoncoupling30MII}
+        \caption{$G_{I}$.}\label{subfig:comparisoncoupling60MI}
     \end{subfigure} ~
-    \begin{subfigure}[b]{0.475\textwidth}
+   \begin{subfigure}[b]{0.475\textwidth}
         \includegraphics[width=\textwidth]{comparecouplingabovesidefibers-vf60-GII.pdf}
-        \caption{$V_{f}=60\%$.}\label{subfig:comparisoncoupling60MII}
+        \caption{$G_{II}$.}\label{subfig:comparisoncoupling60MII}
     \end{subfigure}
 
-\caption{Comparison of Mode II ERR between the single fiber model with coupling conditions along the upper boundary and the multiple fibers model with fibers above and both above and on the side at different levels of fiber volume fraction $V_{f}$, subject to an applied transverse strain $\varepsilon_{x}$ of $1\%$.}\label{fig:comparisoncouplingMII}
+\caption{Comparison of the ERR between the single fiber model with coupling conditions along the upper boundary and the multiple fibers model with fibers above. $V_{f}=60\%$ and $\varepsilon_{x}=1\%$.}\label{fig:comparisoncoupling}
 \end{figure}
+
+The same comparison for Mode II shows a sizeable difference in the range $50^{\circ}-90^{\circ}$, while the results almost coincide for smaller values of $\Delta\theta$. These observations point to the evidence that debond interaction is more significant in the loading direction than in the transverse one. The lower values of $G_{II}$ of the $1\times 1-coupling$ model in the range $50^{\circ}-90^{\circ}$ are due to the shielding effect of a debond of the same size in the fiber just above the central one (modeled by the coupling boundary condition), which leaves the strip of matrix between the two fibers free to deform away from both of them due to the Poisson’s effect and thus favors Mode I and reduces Mode II. This translates into the lower estimates in Fig.~\ref{subfig:comparisoncoupling60MII} and into the delay in the appearance of the contact zone, particularly evident in Fig.~\ref{subfig:comparisoncoupling60MI}.
 
 \section{Conclusions \& Outlook}
 

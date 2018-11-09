@@ -5,6 +5,7 @@
 \usepackage{dirtytalk}
 \usepackage{subcaption}
 \usepackage{tabularx}
+%\usepackage{natbib}
 \usepackage{nicefrac}
 \usepackage[usenames]{xcolor}
 \usepackage{lineno,hyperref}
@@ -76,10 +77,9 @@
 
 \end{abstract}
 
-%\begin{keyword}
-%\texttt{elsarticle.cls}\sep \LaTeX\sep Elsevier \sep template
-%\MSC[2010] 00-01\sep  99-00
-%\end{keyword}
+\begin{keyword}
+Polymer-matrix Composites (PMCs)\sep Thin-ply\sep Transverse Failure \sep Debonding \sep Finite Element Analysis (FEA)
+\end{keyword}
 
 \end{frontmatter}
 
@@ -87,18 +87,20 @@
 
 \section{Introduction}
 
-\textcolor{blue}{
-\begin{enumerate}
-\item We start with a few lines devoted to the spread tow technology and thin plies: what they are, what can be done, what are the possible applications.
-\item By quoting the relevant references, we report on the observation that one of the main beneficial mechanisms in thin ply is the retardation of transverse crack propagation. We then enlarge by reporting the microscopical observations by Saito, in which debonds where also observed. We observe that available microscopic observations are just a few and mainly in 2D.
-\item Propagation of transverse cracks has been widely investigated both analytically and numerically
-\item Initiation at the level of fiber/matrix interface is instead a less researched subject.
-\item cohesive elements are a possible choice, but have some drawbacks, which makes a LEFM approach valuable
-\item With regard to LEFM studies of laminates under transverse loading, models can be found in the literature about: the single fiber in infinite matrix under different mode of loading, the effect of adjacent fibers on a fiber in infinite matrix under different mode of loading, the single fiber in an equivalent composite in transverse tension, the effect of adjacent fibers on a fiber in an equivalent composite in transverse tension.
-\item For initiation of transverse cracking at the fiber/matrix interface in UD laminates under transverse tension, there is thus a gap regarding: the effect of fiber volume fraction; the interaction of debonded and bonded fibers in micro-structured assemblies, i.e. no homogenization. This article addresses these two points.
-\item We conclude the introduction with a summary of the article's structure.
-\end{enumerate}
-}
+
+%\item We start with a few lines devoted to the spread tow technology and thin plies: what they are, what can be done, what are the possible applications.
+%\item By quoting the relevant references, we report on the observation that one of the main beneficial mechanisms in thin ply is the retardation of transverse crack propagation. We then enlarge by reporting the microscopical observations by Saito, in which debonds where also observed. We observe that available microscopic observations are just a few and mainly in 2D.
+%\item Propagation of transverse cracks has been widely investigated both analytically and numerically
+%\item Initiation at the level of fiber/matrix interface is instead a less researched subject.
+%\item cohesive elements are a possible choice, but have some drawbacks, which makes a LEFM approach valuable
+%\item With regard to LEFM studies of laminates under transverse loading, models can be found in the literature about: the single fiber in infinite matrix under different mode of loading, the effect of adjacent fibers on a fiber in infinite matrix under different mode of loading, the single fiber in an equivalent composite in transverse tension, the effect of adjacent fibers on a fiber in an equivalent composite in transverse tension.
+%\item For initiation of transverse cracking at the fiber/matrix interface in UD laminates under transverse tension, there is thus a gap regarding: the effect of fiber volume fraction; the interaction of debonded and bonded fibers in micro-structured assemblies, i.e. no homogenization. This article addresses these two points.
+%\item We conclude the introduction with a summary of the article's structure.
+
+Stimulated by the ever more stringent requirements in terms of weight and mechanical performances of the aerospace industry, the composite community has turned its attention in recent years to \emph{thin ply} laminates and alternative design approaches are now considered based on this non-conventional laminate in applications ranging from cryogenic pressure vessels~\cite{McCarville2018}, to airplanes' wings~\cite{Kim2017}, and even reusable space launchers~\cite{Kopp2017}.\\
+\emph{Thin ply} laminates are the result of a technological innovation, the \emph{spread tow technology}, which consists in opening or spreading the tows in which fibers are usually shipped in into very thin tapes then used for laminate production. Ply thicknesses of less than $50\ \mu m$ can be mass-produced, and record thicknesses of around $20-25\ \mu m$, or $\sim 4-5$ times the average fiber's diameter, have been achieved. The technique in its current form, sometimes referred to as \say{FUKUI method} from the name of the Japanese prefecture it originated in, was firstly proposed towards the end of 1990s~\cite{Kawabe1997} and perfected in subsequent decade~\cite{Kawabe2008,Kawabe2008en}.\\
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

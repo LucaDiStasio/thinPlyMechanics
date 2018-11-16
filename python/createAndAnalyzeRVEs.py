@@ -4234,36 +4234,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
 #===============================================================================#
-#                                Applied load
-#===============================================================================#
-
-    skipLineToLogFile(logfilepath,'a',True)
-    writeLineToLogFile(logfilepath,'a',2*logindent + 'Assigning loads ...',True)
-
-    for load in parameters['loads'].values():
-        writeLineToLogFile(logfilepath,'a',3*logindent + 'Apply ' + load['type'] + ' on ' + load['set'] + 'set',True)
-        if 'appliedstrain' in load['type'] or 'appliedStrain' in load['type'] or 'Applied Strain' in load['type'] or 'applied strain' in load['type']:
-            if 'right' in load['set'] or 'Right' in load['set'] or 'RIGHT' in load['set']:
-                model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*CornerBx, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
-            elif 'left' in load['set'] or 'Left' in load['set'] or 'LEFT' in load['set']:
-                model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*CornerAx, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
-            elif 'upper' in load['set'] or 'Upper' in load['set'] or 'UPPER' in load['set']:
-                model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u2=load['value'][1]*CornerBy, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
-        elif 'applieddisplacement' in load['type'] or 'appliedDisplacement' in load['type'] or 'Applied Displacement' in load['type'] or 'applied displacement' in load['type']:
-            model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0], amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
-        elif 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
-            model.Pressure(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], magnitude=load['value'],distributionType=UNIFORM)
-        elif 'temperature' in load['type'] or 'Temperature' in load['type'] or 'TEMPERATURE' in load['type']:
-            model.TemperatureBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], magnitude=load['value'],distributionType=UNIFORM)
-        # elif 'appliedstress' in load['type'] or 'appliedStress' in load['type'] or 'Applied Stress' in load['type'] or 'applied stress' in load['type']:
-        #
-        # elif 'appliedforce' in load['type'] or 'appliedForce' in load['type'] or 'Applied Force' in load['type'] or 'applied Force' in load['type']:
-
-    mdb.save()
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-
-#===============================================================================#
 #                                   Crack
 #===============================================================================#
 
@@ -4300,7 +4270,37 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     mdb.save()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    
+#===============================================================================#
+#                                Applied load
+#===============================================================================#
 
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',2*logindent + 'Assigning loads ...',True)
+
+    for load in parameters['loads'].values():
+        writeLineToLogFile(logfilepath,'a',3*logindent + 'Apply ' + load['type'] + ' on ' + load['set'] + ' set',True)
+        if 'appliedstrain' in load['type'] or 'appliedStrain' in load['type'] or 'Applied Strain' in load['type'] or 'applied strain' in load['type']:
+            if 'right' in load['set'] or 'Right' in load['set'] or 'RIGHT' in load['set']:
+                model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*CornerBx, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+            elif 'left' in load['set'] or 'Left' in load['set'] or 'LEFT' in load['set']:
+                model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*CornerAx, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+            elif 'upper' in load['set'] or 'Upper' in load['set'] or 'UPPER' in load['set']:
+                model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u2=load['value'][1]*CornerBy, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+        elif 'applieddisplacement' in load['type'] or 'appliedDisplacement' in load['type'] or 'Applied Displacement' in load['type'] or 'applied displacement' in load['type']:
+            model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0], amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+        elif 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
+            model.Pressure(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], magnitude=load['value'],distributionType=UNIFORM)
+        elif 'temperature' in load['type'] or 'Temperature' in load['type'] or 'TEMPERATURE' in load['type']:
+            model.TemperatureBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], magnitude=load['value'],distributionType=UNIFORM)
+        # elif 'appliedstress' in load['type'] or 'appliedStress' in load['type'] or 'Applied Stress' in load['type'] or 'applied stress' in load['type']:
+        #
+        # elif 'appliedforce' in load['type'] or 'appliedForce' in load['type'] or 'Applied Force' in load['type'] or 'applied Force' in load['type']:
+
+    mdb.save()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    
 #===============================================================================#
 #                                   Mesh
 #===============================================================================#

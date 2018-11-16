@@ -4206,21 +4206,21 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     if 'full' in parameters['geometry']['fiber']['type']:
         for step in parameters['steps'].values():
-	    if 'symmetric' in parameters['BC']['northSide']['type']:
-		model.YsymmBC(name='NorthSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['UPPERSIDE'], localCsys=None)
-	    if 'symmetric' in parameters['BC']['southSide']['type']:
-		model.YsymmBC(name='SouthSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
-	    if 'symmetric' in parameters['BC']['rightSide']['type']:
-		model.XsymmBC(name='RightSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'], localCsys=None)
-	    if 'symmetric' in parameters['BC']['leftSide']['type']:
-		model.XsymmBC(name='LeftSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'], localCsys=None)
+            if 'symmetric' in parameters['BC']['northSide']['type']:
+                model.YsymmBC(name='NorthSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['UPPERSIDE'], localCsys=None)
+            if 'symmetric' in parameters['BC']['southSide']['type']:
+                model.YsymmBC(name='SouthSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
+            if 'symmetric' in parameters['BC']['rightSide']['type']:
+                model.XsymmBC(name='RightSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'], localCsys=None)
+            if 'symmetric' in parameters['BC']['leftSide']['type']:
+                model.XsymmBC(name='LeftSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'], localCsys=None)
     elif 'half' in parameters['geometry']['fiber']['type']:
         for step in parameters['steps'].values():
             model.YsymmBC(name='SymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
             if 'symmetric' in parameters['BC']['rightSide']['type']:
-		model.XsymmBC(name='RightSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'], localCsys=None)
-	    if 'symmetric' in parameters['BC']['leftSide']['type']:
-		model.XsymmBC(name='LeftSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'], localCsys=None)
+                model.XsymmBC(name='RightSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'], localCsys=None)
+            if 'symmetric' in parameters['BC']['leftSide']['type']:
+                model.XsymmBC(name='LeftSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'], localCsys=None)
     elif 'quarter' in parameters['geometry']['fiber']['type']:
         for step in parameters['steps'].values():
             model.YsymmBC(name='LowerSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
@@ -4241,6 +4241,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',2*logindent + 'Assigning loads ...',True)
 
     for load in parameters['loads'].values():
+        writeLineToLogFile(logfilepath,'a',3*logindent + 'Apply ' + load['type'] + ' on ' + load['set'] + 'set',True)
         if 'appliedstrain' in load['type'] or 'appliedStrain' in load['type'] or 'Applied Strain' in load['type'] or 'applied strain' in load['type']:
             if 'right' in load['set'] or 'Right' in load['set'] or 'RIGHT' in load['set']:
                 model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*CornerBx, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)

@@ -6063,12 +6063,13 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 inp.write(line)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write loads  ...',True)
-        inp.write('** LOADS' + '\n')
-        inp.write('**' + '\n')
-        for load in parameters['loads'].values(): 
-            if 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
-                inp.write('*DSLOAD, OP=MOD' + '\n')
-                inp.write(' ' + load['set'] + ', P, ' + str(load['value']) + '\n')
+        with open(modinpfullpath,'a') as inp:
+            inp.write('** LOADS' + '\n')
+            inp.write('**' + '\n')
+            for load in parameters['loads'].values(): 
+                if 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
+                    inp.write('*DSLOAD, OP=MOD' + '\n')
+                    inp.write(' ' + load['set'] + ', P, ' + str(load['value']) + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
         with open(modinpfullpath,'a') as inp:
@@ -6118,12 +6119,13 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 inp.write(line)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write loads  ...',True)
-        inp.write('** LOADS' + '\n')
-        inp.write('**' + '\n')
-        for load in parameters['loads'].values(): 
-            if 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
-                inp.write('*DSLOAD, OP=MOD' + '\n')
-                inp.write(' ' + load['set'] + ', P, ' + str(load['value']) + '\n')
+        with open(modinpfullpath,'a') as inp:
+            inp.write('** LOADS' + '\n')
+            inp.write('**' + '\n')
+            for load in parameters['loads'].values(): 
+                if 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
+                    inp.write('*DSLOAD, OP=MOD' + '\n')
+                    inp.write(' ' + load['set'] + ', P, ' + str(load['value']) + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
         with open(modinpfullpath,'a') as inp:

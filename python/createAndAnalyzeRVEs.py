@@ -4389,7 +4389,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
         regionSets.append(['FOURTHCIRCLE-UPPERCRACK-CTUP',nTangential])
         regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
-	regionSets.append(['SECONDCIRCLE-UPPERCRACK-CTLOW',nTangential])
+        regionSets.append(['SECONDCIRCLE-UPPERCRACK-CTLOW',nTangential])
         regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
         regionSets.append(['THIRDCIRCLE-UPPERCRACK-CTLOW',nTangential])
         regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
@@ -4564,9 +4564,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for step in parameters['steps'].values():
         model.HistoryOutputRequest(name='H-Output-1',createStepName=step['name'])
         if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-	    model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='DebondUp',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
-	    model.historyOutputRequests['H-Output-2'].setValues(contourIntegral='DebondLow',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
-	else:
+            model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='DebondUp',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+            model.historyOutputRequests['H-Output-2'].setValues(contourIntegral='DebondLow',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+        else:
             model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
@@ -6228,14 +6228,14 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
 
     RFcracktip = getFieldOutput(odb,step,frame,'RF',nodesVCCT['cracktipDummyNode'])
     if 'second' in order:
-	RFfirstbounded = getFieldOutput(odb,step,frame,'RF',nodesVCCT['firstboundedDummyNode'])
-	if 'inverseSquareRoot' in singularity:
-	    RFsecondbounded = getFieldOutput(odb,step,frame,'RF',nodesVCCT['secondboundedDummyNode'])
+        RFfirstbounded = getFieldOutput(odb,step,frame,'RF',nodesVCCT['firstboundedDummyNode'])
+        if 'inverseSquareRoot' in singularity:
+            RFsecondbounded = getFieldOutput(odb,step,frame,'RF',nodesVCCT['secondboundedDummyNode'])
     fiberCracktipDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['fiberCracktipDispMeas'])
     matrixCracktipDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['matrixCracktipDispMeas'])
     if 'second' in order:
-	fiberFirstboundedDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['fiberFirstboundedDispMeas'])
-	matrixFirstboundedDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['matrixFirstboundedDispMeas'])
+        fiberFirstboundedDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['fiberFirstboundedDispMeas'])
+        matrixFirstboundedDisplacement = getFieldOutput(odb,step,frame,'U',nodesVCCT['matrixFirstboundedDispMeas'])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
@@ -6246,29 +6246,29 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     rRFcracktip = np.cos(phi)*xRFcracktip + np.sin(phi)*yRFcracktip
     thetaRFcracktip = -np.sin(phi)*xRFcracktip + np.cos(phi)*yRFcracktip
     if 'second' in order:
-	xRFfirstbounded = RFfirstbounded.values[0].data[0]
-	yRFfirstbounded = RFfirstbounded.values[0].data[1]
-	rRFfirstbounded = np.cos(phi)*xRFfirstbounded + np.sin(phi)*yRFfirstbounded
-	thetaRFfirstbounded = -np.sin(phi)*xRFfirstbounded + np.cos(phi)*yRFfirstbounded
-	if isPressureLoaded:
-	    rRFcracktip -= uniformP*(Rf*delta*np.pi/180.0)/6
-	    rRFfirstbounded -= 2*uniformP*(Rf*delta*np.pi/180.0)/3
-	results['xRFfirstbounded'] = xRFfirstbounded
-	results['yRFfirstbounded'] = yRFfirstbounded
-	results['rRFfirstbounded'] = rRFfirstbounded
-	results['thetaRFfirstbounded'] = thetaRFfirstbounded
-	if 'inverseSquareRoot' in singularity:
-	    xRFsecondbounded = RFsecondbounded.values[0].data[0]
-	    yRFsecondbounded = RFsecondbounded.values[0].data[1]
-	    rRFsecondbounded = np.cos(phi)*xRFsecondbounded + np.sin(phi)*yRFsecondbounded
-	    thetaRFsecondbounded = -np.sin(phi)*xRFsecondbounded + np.cos(phi)*yRFsecondbounded
-	    results['xRFsecondbounded'] = xRFsecondbounded
-	    results['yRFsecondbounded'] = yRFsecondbounded
-	    results['rRFsecondbounded'] = rRFsecondbounded
-	    results['thetaRFsecondbounded'] = thetaRFsecondbounded
+        xRFfirstbounded = RFfirstbounded.values[0].data[0]
+        yRFfirstbounded = RFfirstbounded.values[0].data[1]
+        rRFfirstbounded = np.cos(phi)*xRFfirstbounded + np.sin(phi)*yRFfirstbounded
+        thetaRFfirstbounded = -np.sin(phi)*xRFfirstbounded + np.cos(phi)*yRFfirstbounded
+        if isPressureLoaded:
+            rRFcracktip -= uniformP*(Rf*delta*np.pi/180.0)/6
+            rRFfirstbounded -= 2*uniformP*(Rf*delta*np.pi/180.0)/3
+        results['xRFfirstbounded'] = xRFfirstbounded
+        results['yRFfirstbounded'] = yRFfirstbounded
+        results['rRFfirstbounded'] = rRFfirstbounded
+        results['thetaRFfirstbounded'] = thetaRFfirstbounded
+        if 'inverseSquareRoot' in singularity:
+            xRFsecondbounded = RFsecondbounded.values[0].data[0]
+            yRFsecondbounded = RFsecondbounded.values[0].data[1]
+            rRFsecondbounded = np.cos(phi)*xRFsecondbounded + np.sin(phi)*yRFsecondbounded
+            thetaRFsecondbounded = -np.sin(phi)*xRFsecondbounded + np.cos(phi)*yRFsecondbounded
+            results['xRFsecondbounded'] = xRFsecondbounded
+            results['yRFsecondbounded'] = yRFsecondbounded
+            results['rRFsecondbounded'] = rRFsecondbounded
+            results['thetaRFsecondbounded'] = thetaRFsecondbounded
     else:
-	if isPressureLoaded:
-	    rRFcracktip -= uniformP*(Rf*delta*np.pi/180.0)/2
+        if isPressureLoaded:
+            rRFcracktip -= uniformP*(Rf*delta*np.pi/180.0)/2
     results['xRFcracktip'] = xRFcracktip
     results['yRFcracktip'] = yRFcracktip
     results['rRFcracktip'] = rRFcracktip
@@ -6292,22 +6292,22 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     results['rmatrixCracktipDisplacement'] = rmatrixCracktipDisplacement
     results['thetamatrixCracktipDisplacement'] = thetamatrixCracktipDisplacement
     if 'second' in order:
-	xfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[0]
-	yfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[1]
-	rfiberFirstboundedDisplacement = np.cos(phi)*xfiberFirstboundedDisplacement + np.sin(phi)*yfiberFirstboundedDisplacement
-	thetafiberFirstboundedDisplacement = -np.sin(phi)*xfiberFirstboundedDisplacement + np.cos(phi)*yfiberFirstboundedDisplacement
-	xmatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[0]
-	ymatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[1]
-	rmatrixFirstboundedDisplacement = np.cos(phi)*xmatrixFirstboundedDisplacement + np.sin(phi)*ymatrixFirstboundedDisplacement
-	thetamatrixFirstboundedDisplacement = -np.sin(phi)*xmatrixFirstboundedDisplacement + np.cos(phi)*ymatrixFirstboundedDisplacement
-	results['xfiberFirstboundedDisplacement'] = xfiberFirstboundedDisplacement
-	results['yfiberFirstboundedDisplacement'] = yfiberFirstboundedDisplacement
-	results['rfiberFirstboundedDisplacement'] = rfiberFirstboundedDisplacement
-	results['thetafiberFirstboundedDisplacement'] = thetafiberFirstboundedDisplacement
-	results['xmatrixFirstboundedDisplacement'] = xmatrixFirstboundedDisplacement
-	results['ymatrixFirstboundedDisplacement'] = ymatrixFirstboundedDisplacement
-	results['rmatrixFirstboundedDisplacement'] = rmatrixFirstboundedDisplacement
-	results['thetamatrixFirstboundedDisplacement'] = thetamatrixFirstboundedDisplacement
+        xfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[0]
+        yfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[1]
+        rfiberFirstboundedDisplacement = np.cos(phi)*xfiberFirstboundedDisplacement + np.sin(phi)*yfiberFirstboundedDisplacement
+        thetafiberFirstboundedDisplacement = -np.sin(phi)*xfiberFirstboundedDisplacement + np.cos(phi)*yfiberFirstboundedDisplacement
+        xmatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[0]
+        ymatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[1]
+        rmatrixFirstboundedDisplacement = np.cos(phi)*xmatrixFirstboundedDisplacement + np.sin(phi)*ymatrixFirstboundedDisplacement
+        thetamatrixFirstboundedDisplacement = -np.sin(phi)*xmatrixFirstboundedDisplacement + np.cos(phi)*ymatrixFirstboundedDisplacement
+        results['xfiberFirstboundedDisplacement'] = xfiberFirstboundedDisplacement
+        results['yfiberFirstboundedDisplacement'] = yfiberFirstboundedDisplacement
+        results['rfiberFirstboundedDisplacement'] = rfiberFirstboundedDisplacement
+        results['thetafiberFirstboundedDisplacement'] = thetafiberFirstboundedDisplacement
+        results['xmatrixFirstboundedDisplacement'] = xmatrixFirstboundedDisplacement
+        results['ymatrixFirstboundedDisplacement'] = ymatrixFirstboundedDisplacement
+        results['rmatrixFirstboundedDisplacement'] = rmatrixFirstboundedDisplacement
+        results['thetamatrixFirstboundedDisplacement'] = thetamatrixFirstboundedDisplacement
 
     xcracktipDisplacement = xmatrixCracktipDisplacement - xfiberCracktipDisplacement
     ycracktipDisplacement = ymatrixCracktipDisplacement - yfiberCracktipDisplacement
@@ -6318,14 +6318,14 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     results['rcracktipDisplacement'] = rcracktipDisplacement
     results['thetacracktipDisplacement'] = thetacracktipDisplacement
     if 'second' in order:
-	xfirstboundedDisplacement = xmatrixFirstboundedDisplacement - xfiberFirstboundedDisplacement
-	yfirstboundedDisplacement = ymatrixFirstboundedDisplacement - yfiberFirstboundedDisplacement
-	rfirstboundedDisplacement = rmatrixFirstboundedDisplacement - rfiberFirstboundedDisplacement
-	thetafirstboundedDisplacement = thetamatrixFirstboundedDisplacement - thetafiberFirstboundedDisplacement
-	results['xfirstboundedDisplacement'] = xfirstboundedDisplacement
-	results['yfirstboundedDisplacement'] = yfirstboundedDisplacement
-	results['rfirstboundedDisplacement'] = rfirstboundedDisplacement
-	results['thetafirstboundedDisplacement'] = thetafirstboundedDisplacement
+        xfirstboundedDisplacement = xmatrixFirstboundedDisplacement - xfiberFirstboundedDisplacement
+        yfirstboundedDisplacement = ymatrixFirstboundedDisplacement - yfiberFirstboundedDisplacement
+        rfirstboundedDisplacement = rmatrixFirstboundedDisplacement - rfiberFirstboundedDisplacement
+        thetafirstboundedDisplacement = thetamatrixFirstboundedDisplacement - thetafiberFirstboundedDisplacement
+        results['xfirstboundedDisplacement'] = xfirstboundedDisplacement
+        results['yfirstboundedDisplacement'] = yfirstboundedDisplacement
+        results['rfirstboundedDisplacement'] = rfirstboundedDisplacement
+        results['thetafirstboundedDisplacement'] = thetafirstboundedDisplacement
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
@@ -6333,22 +6333,22 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
 
     if 'second' in order:
         if 'inverseSquareRoot' in singularity:
-	    t11 = 14.0-33.0*np.pi/8.0
-	    t12 = -52.0+33.0*np.pi/2.0
-	    t21 = -7.0/2.0+21.0*np.pi/16.0
-	    t22 = 17.0-21.0*np.pi/4.0
-	    t31 = 8.0-21.0*np.pi/8.0
-	    t32 = -32.0+21.0*np.pi/2.0
-	    GI = np.abs(0.5*(rRFcracktip*(t11*rcracktipDisplacement+t12*rfirstboundedDisplacement)+rRFfirstbounded*(t21*rcracktipDisplacement+t22*rfirstboundedDisplacement)+rRFsecondbounded*(t31*rcracktipDisplacement+t32*rfirstboundedDisplacement))/(Rf*delta*np.pi/180.0))
-	    GII = np.abs(0.5*(rRFcracktip*(t11*thetacracktipDisplacement+t12*thetafirstboundedDisplacement)+thetaRFfirstbounded*(t21*thetacracktipDisplacement+t22*thetafirstboundedDisplacement)+thetaRFsecondbounded*(t31*thetacracktipDisplacement+t32*thetafirstboundedDisplacement))/(Rf*delta*np.pi/180.0))
-	else:
-	    GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
-	    GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
-	GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement+xRFfirstbounded*xfirstboundedDisplacement+yRFfirstbounded*yfirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
+            t11 = 14.0-33.0*np.pi/8.0
+            t12 = -52.0+33.0*np.pi/2.0
+            t21 = -7.0/2.0+21.0*np.pi/16.0
+            t22 = 17.0-21.0*np.pi/4.0
+            t31 = 8.0-21.0*np.pi/8.0
+            t32 = -32.0+21.0*np.pi/2.0
+            GI = np.abs(0.5*(rRFcracktip*(t11*rcracktipDisplacement+t12*rfirstboundedDisplacement)+rRFfirstbounded*(t21*rcracktipDisplacement+t22*rfirstboundedDisplacement)+rRFsecondbounded*(t31*rcracktipDisplacement+t32*rfirstboundedDisplacement))/(Rf*delta*np.pi/180.0))
+            GII = np.abs(0.5*(rRFcracktip*(t11*thetacracktipDisplacement+t12*thetafirstboundedDisplacement)+thetaRFfirstbounded*(t21*thetacracktipDisplacement+t22*thetafirstboundedDisplacement)+thetaRFsecondbounded*(t31*thetacracktipDisplacement+t32*thetafirstboundedDisplacement))/(Rf*delta*np.pi/180.0))
+        else:
+            GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
+            GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
+            GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement+xRFfirstbounded*xfirstboundedDisplacement+yRFfirstbounded*yfirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
     else:
-	GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement)/(Rf*delta*np.pi/180.0))
-	GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(Rf*delta*np.pi/180.0))
-	GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement)/(Rf*delta*np.pi/180.0))
+        GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement)/(Rf*delta*np.pi/180.0))
+        GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(Rf*delta*np.pi/180.0))
+        GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement)/(Rf*delta*np.pi/180.0))
 
     GTOT = GI + GII
 
@@ -6357,9 +6357,9 @@ def computeVCCT(logfilepath,baselogindent,logindent,odb,step,frame,order,singula
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Compute VCCT with GI=GTOT-GII ...',True)
 
     if 'second' in parameters['mesh']['elements']['order']:
-	GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
+        GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(Rf*delta*np.pi/180.0))
     else:
-	GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(Rf*delta*np.pi/180.0))
+        GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(Rf*delta*np.pi/180.0))
 
     GTOTv2 = Jintegral
 

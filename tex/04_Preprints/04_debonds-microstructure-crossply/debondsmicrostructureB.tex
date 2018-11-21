@@ -1,6 +1,7 @@
 \documentclass[review]{elsarticle}
 
 \usepackage{amsmath}
+\usepackage{dirtytalk}
 \usepackage{subcaption}
 \usepackage[usenames]{xcolor}
 \usepackage{lineno,hyperref}
@@ -44,7 +45,7 @@
 
 \begin{frontmatter}
 
-\title{Effect of uniform distributions of bonded and debonded fibers on the growth of the fiber/matrix interface crack in cross-ply $\left[0^{\circ}_{n},90^{\circ}\right]_{S}$ laminates with different fiber contents under transverse loading}
+\title{Effect of uniform distributions of bonded and debonded fibers on the growth of the fiber/matrix interface crack in thin cross-ply $\left[0^{\circ}_{n},90^{\circ}\right]_{S}$ laminates with different fiber contents under transverse loading}
 %\tnotetext[mytitlenote]{Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.}
 
 %% Group authors per affiliation:
@@ -67,15 +68,15 @@
 
 \begin{abstract}
 \noindent
-\textcolor{purple}{{\em Priority}: 1}\\
-\textcolor{purple}{{\em Target journal(s)}: Composites Part B: Engineering, Composites Part A: Applied Science and Manufacturing, Composite Science and Technology, Composite Structures, Journal of Composite Materials, Composite Communications}\\
-
+%\textcolor{purple}{{\em Priority}: 1}\\
+%\textcolor{purple}{{\em Target journal(s)}: Composites Part B: Engineering, Composites Part A: Applied Science and Manufacturing, Composite Structures, Journal of Composite Materials, Composite Communications}\\
+The effects of crack shielding, fiber content and ratio of $0^{\circ}$ to $90^{\circ}$ ply thickness on fiber/matrix debond growth in thin cross-ply laminates are investigated with Representative Volume Elements (RVEs) of different ordered microstructures. Debond growth is characterized by the estimation of the Energy Release Rates (ERRs) using the Virtual Crack Closure Technique (VCCT) and the J-integral. It is found that 
 \end{abstract}
 
-%\begin{keyword}
-%\texttt{elsarticle.cls}\sep \LaTeX\sep Elsevier \sep template
-%\MSC[2010] 00-01\sep  99-00
-%\end{keyword}
+\begin{keyword}
+Polymer-matrix Composites (PMCs)\sep Thin-ply\sep Transverse Failure \sep Debonding \sep Finite Element Analysis (FEA)
+\end{keyword}
+
 
 \end{frontmatter}
 
@@ -83,21 +84,7 @@
 
 \section{Introduction}
 
-\textcolor{purple}{The structure is designed to very similar to the paper about UD, i.e. the line of thought is the same but applied to cross-plies. Maybe we could consider the two as part of one big work and call the two articles \emph{Part 1} and \emph{Part 2}. Thoughts?}\\
-
-\textcolor{blue}{
-\begin{enumerate}
-\item We start with a few lines devoted to the spread tow technology and thin plies: what they are, what can be done, what are the possible applications.
-\item By quoting the relevant references, we report on the observation that one of the main beneficial mechanisms in thin ply is the retardation of transverse crack propagation. We then enlarge by reporting the microscopical observations by Saito, in which debonds where also observed. We observe that available microscopic observations are just a few and mainly in 2D.
-\item Propagation of transverse cracks has been widely investigated both analytically and numerically
-\item Initiation at the level of fiber/matrix interface is instead a less researched subject.
-\item cohesive elements are a possible choice, but have some drawbacks, which makes a LEFM approach valuable
-\item With regard to LEFM studies of laminates under transverse loading, models can be found in the literature about: the single fiber in infinite matrix under different mode of loading, the effect of adjacent fibers on a fiber in infinite matrix under different mode of loading, the single fiber in an equivalent composite in transverse tension, the effect of adjacent fibers on a fiber in an equivalent composite in transverse tension. We mention these works more briefly.
-\item We concentrate a little more on works with cohesive elements, as there is more of them on fiber/matrix interface crack in cross-ply
-\item Initiation of transverse cracking at the fiber/matrix interface in cross-ply laminates under transverse tension hasn't been directly addressed with LEFM in the literature. We address this gap with this paper and we focus on (in analogy with the work on UDs): the effect of fiber volume fraction; the interaction of debonded and bonded fibers in micro-structured assemblies, i.e. no homogenization.
-\item We conclude the introduction with a summary of the article's structure.
-\end{enumerate}
-}
+Since the development of the \emph{spred tow} technology or \say{FUKUI method} (from the Japanese prefecture that hosted its invention)~\cite{Kawabe2008,Kawabe2008en}, significant efforts have been directed toward the characterization of \emph{thin-ply} laminates~\cite{Sasayama2003,Yamaguchi2005,Tsai2005,Sihn2007,Yokozeki2008,Yokozeki2010,Saito2012,Arteiro2013,Arteiro2014,Amacher2014,Guillamet2014,Huang2018,Cugnoni2018} and their application to mission-critical structures in the aerospace sector~\cite{Moon2011,Kim2017,Kopp2017,McCarville2018}.
 
 \section{RVE models \& FE discretization}
 
@@ -980,5 +967,11 @@
 \end{figure}
 
 \section{Conclusions \& Outlook}
+
+\section*{Acknowledgements}
+
+Luca Di Stasio gratefully acknowledges the support of the European School of Materials (EUSMAT) through the DocMASE Doctoral Programme and the European Commission through the Erasmus Mundus Programme.
+
+\bibliography{refs}
 
 \end{document}

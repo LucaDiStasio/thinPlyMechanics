@@ -4260,7 +4260,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     mdb.save()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-  
+
 #===============================================================================#
 #                                   Crack
 #===============================================================================#
@@ -4298,7 +4298,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     mdb.save()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-      
+
 #===============================================================================#
 #                                   Mesh
 #===============================================================================#
@@ -6014,6 +6014,13 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         inp.write(' MatrixSurface, FiberSurface' + '\n')
         inp.write('*SURFACE INTERACTION, NAME=CrackFacesContact' + '\n')
         inp.write(' 1.0' + '\n')
+    if 'static' in parameters['surface']['friction']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Static friction (Coulomb model) is present between crack faces',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*FRICTION, TAUMAX=' + str(parameters['surface']['friction']['maxtau']) + '\n')
+            inp.write(' ' + str(parameters['surface']['friction']['static']) + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 5*logindent + 'Maximum tangential stress = ' + str(parameters['surface']['friction']['maxtau']) + '[MPa]',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 5*logindent + 'Static friction coefficient = ' + str(parameters['surface']['friction']['static']) + '[-]',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if len(parameters['steps'])>1:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
@@ -6066,7 +6073,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         with open(modinpfullpath,'a') as inp:
             inp.write('** LOADS' + '\n')
             inp.write('**' + '\n')
-            for load in parameters['loads'].values(): 
+            for load in parameters['loads'].values():
                 if 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
                     inp.write('*DSLOAD, OP=MOD' + '\n')
                     inp.write(' ' + load['set'] + ', P, ' + str(load['value']) + '\n')
@@ -6122,7 +6129,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         with open(modinpfullpath,'a') as inp:
             inp.write('** LOADS' + '\n')
             inp.write('**' + '\n')
-            for load in parameters['loads'].values(): 
+            for load in parameters['loads'].values():
                 if 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
                     inp.write('*DSLOAD, OP=MOD' + '\n')
                     inp.write(' ' + load['set'] + ', P, ' + str(load['value']) + '\n')

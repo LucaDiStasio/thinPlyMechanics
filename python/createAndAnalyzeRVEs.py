@@ -6017,9 +6017,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     if 'static' in parameters['surface']['friction']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Static friction (Coulomb model) is present between crack faces',True)
         with open(modinpfullpath,'a') as inp:
-            inp.write('*FRICTION, TAUMAX=' + str(parameters['surface']['friction']['maxtau']) + '\n')
+            if 'maxtau' in parameters['surface']['friction']['type']:
+                inp.write('*FRICTION, TAUMAX=' + str(parameters['surface']['friction']['maxtau']) + '\n')
+                writeLineToLogFile(logfilepath,'a',baselogindent + 5*logindent + 'Maximum tangential stress = ' + str(parameters['surface']['friction']['maxtau']) + '[MPa]',True)
+            else:
+                inp.write('*FRICTION' + '\n')
             inp.write(' ' + str(parameters['surface']['friction']['static']) + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 5*logindent + 'Maximum tangential stress = ' + str(parameters['surface']['friction']['maxtau']) + '[MPa]',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 5*logindent + 'Static friction coefficient = ' + str(parameters['surface']['friction']['static']) + '[-]',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if len(parameters['steps'])>1:

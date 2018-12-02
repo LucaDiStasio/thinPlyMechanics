@@ -199,19 +199,19 @@ The fiber radius $R_{f}$ is assumed to be the same for each fiber in the model a
 
 \begin{figure}[!h]
 \centering
-    \begin{subfigure}[b]{0.55\textwidth}
+    %\begin{subfigure}[b]{0.55\textwidth}
         \includegraphics[width=\textwidth]{RUC.pdf}
-        \caption{Schematic of the model with its main parameters.}\label{subfig:modelschem}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{mesh-detail.eps}
-        \caption{Mesh near the crack tip. Crack's faces shown in red.}\label{subfig:meshdetail}
-    \end{subfigure}
+        %\caption{Schematic of the model with its main parameters.}\label{subfig:modelschem}
+    %\end{subfigure} ~
+    %\begin{subfigure}[b]{0.4\textwidth}
+        %\includegraphics[width=\textwidth]{mesh-detail.eps}
+       % \caption{Mesh near the crack tip. Crack's faces shown in red.}\label{subfig:meshdetail}
+    %\end{subfigure}
 
-\caption{Details and main parameters of the Finite Element model.}\label{fig:FEmodel}
+\caption{Schematic of the model with its main parameters.}\label{subfig:modelschem}
 \end{figure}
 
-The debond is placed symmetrically with respect to the $x$ axis (in red in~\ref{subfig:modelschem}) and has an angular size of $\Delta\theta$ (the full debond's size is thus $2\Delta\theta$). For large debond's sizes ($\geq 60^{\circ}-80^{\circ}$), a region of variable size $\Delta\Phi$ appears at the crack tip in which the crack faces are in contact and slide on each other. Due to its appearance, frictionless contact is considered between the two crack's faces to allow free sliding and avoid interpenetration. Symmetry with respect to the $x$ axis is applied on the lower boundary and kinematic coupling on the $x$-displacement along the left and right sides. The upper boundary is in general free, except for the model $1\times 1-coupling$ (Fig.~\ref{fig:thickplyalldebonds}) which requires kinematic coupling of vertical displacements also on the upper side. Constant $x$-displacement $\pm\varepsilon l$, corresponding to transverse strain $\varepsilon$ equal to $1\%$ is applied to the right and left boundaries.
+The debond is placed symmetrically with respect to the $x$ axis (in red in Fig.~\ref{subfig:modelschem}) and has an angular size of $\Delta\theta$ (the full debond's size is thus $2\Delta\theta$). For large debond's sizes ($\geq 60^{\circ}-80^{\circ}$), a region of variable size $\Delta\Phi$ appears at the crack tip in which the crack faces are in contact and slide on each other. Due to its appearance, frictionless contact is considered between the two crack's faces to allow free sliding and avoid interpenetration. Symmetry with respect to the $x$ axis is applied on the lower boundary and kinematic coupling on the $x$-displacement along the left and right sides. The upper boundary is in general free, except for the model $1\times 1-coupling$ (Fig.~\ref{fig:thickplyalldebonds}) which requires kinematic coupling of vertical displacements also on the upper side. Constant $x$-displacement $\pm\varepsilon l$, corresponding to transverse strain $\varepsilon$ equal to $1\%$ is applied to the right and left boundaries.
 
 \begin{table}[!htbp]
  \centering
@@ -225,7 +225,7 @@ Epoxy    & 3.5    & 1.25   & 0.4
 \label{tab:phaseprop}
 \end{table}
 
-The model is meshed using second order, 2D, plane strain triangular (CPE6) and rectangular (CPE8) elements. A regular mesh of quadrilateral elements with an almost unitary aspect ratio is required at the crack tip, as shown in Fig.~\ref{subfig:meshdetail}. The angular size $\delta$ of an element in the crack tip region is always equal to $0.05^{\circ}$. The crack faces are modeled as element-based surfaces and a small-sliding contact pair interaction with no friction is established between them. The Mode I, Mode II and total Energy Release Rates (ERRs) (respectively referred to as $G_{I}$, $G_{II}$ and $G_{TOT}$) represent the main output of the FEM analysis; they are evaluated using the VCCT technique~\cite{Krueger2004} implemented in a custom Python routine and, for the total ERR, the J-integral~\cite{Rice1968} by application of the Abaqus built-in functionality. A glass fiber-epoxy system is considered in every model, and it is assumed that their response lies always in the linear elastic domain. The properties used are listed in Table~\ref{tab:phaseprop}.
+The model is meshed using second order, 2D, plane strain triangular (CPE6) and rectangular (CPE8) elements. A regular mesh of quadrilateral elements with an almost unitary aspect ratio is required at the crack tip. The angular size $\delta$ of an element in the crack tip region is always equal to $0.05^{\circ}$. The crack faces are modeled as element-based surfaces and a small-sliding contact pair interaction with no friction is established between them. The Mode I, Mode II and total Energy Release Rates (ERRs) (respectively referred to as $G_{I}$, $G_{II}$ and $G_{TOT}$) represent the main output of the FEM analysis; they are evaluated using the VCCT technique~\cite{Krueger2004} implemented in a custom Python routine and, for the total ERR, the J-integral~\cite{Rice1968} by application of the Abaqus built-in functionality. A glass fiber-epoxy system is considered in every model, and it is assumed that their response lies always in the linear elastic domain. The properties used are listed in Table~\ref{tab:phaseprop}.
 
 \subsection{Validation of the model}
 

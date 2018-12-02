@@ -55,11 +55,31 @@ xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
 ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
 % LEGEND ENTRIES
-legend entries={{$3\times 1-free$},{$5\times 1-free$},{$7\times 1-free$},{$11\times 1-free$},{$21\times 1-free$},{$101\times 1-free$},{$201\times 1-free$}},
+legend entries={{$1\times 1-free$},{$3\times 1-free$},{$5\times 1-free$},{$7\times 1-free$},{$11\times 1-free$},{$21\times 1-free$},{$101\times 1-free$},{$201\times 1-free$}},
 ]
 
-% SF1
+% FREE
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+table{
+10.00	0.52182519
+20.00	0.54456858
+30.00	0.37577139
+40.00	0.19718556
+50.00	0.06636225
+60.00	0.00366987
+70.00	0.00000623
+80.00	0.00001022
+90.00	0.00000753
+100.00	0.00000593
+110.00	0.00000332
+120.00	0.00000180
+130.00	0.00000068
+140.00	0.00000013
+150.00	0.00000538
+};
+
+% SF1
+\addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=square*]
 table{
 10.00	0.43663272
 20.00	0.54940798

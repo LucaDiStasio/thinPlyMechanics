@@ -140,7 +140,7 @@
 }
 
 
-\foreach \x in {-2,-1,1,2}{
+\foreach \x in {-1,1}{
 
 % center fiber
 \draw[line width=1.25mm] (\Rf,0+\x*2*\l,0)arc (0:360:\Rf);
@@ -164,23 +164,22 @@
 
 \begin{scope}[style=axes]
  \draw[->,line width=0.75mm] (-5.1*\l,0) -- (5.2*\l,0) node[right] {\Huge$\underline{i}, x$};
-  \draw[->,line width=0.75mm] (0,-5.2*\l) -- (0,5.3*\l) node[above] {\Huge$\underline{k}, z$};
+  \draw[->,line width=0.75mm] (0,-3.2*\l) -- (0,3.3*\l) node[above] {\Huge$\underline{k}, z$};
 \end{scope}
 
 \pgfmathsetmacro\ltot{\l+\tratio*\l}
 
 
-\draw[line width=1.25mm] (-5*\l,5*\l) -- (5*\l,5*\l) ;
-\draw[line width=1.25mm] (-5*\l,-5*\l) -- (5*\l,-5*\l) ;
-\draw[line width=1.25mm] (5*\l,5*\l) -- (5*\l,-5*\l);
-\draw[line width=1.25mm] (-5*\l,5*\l) -- (-5*\l,-5*\l);
+\draw[line width=1.25mm] (-5*\l,3*\l) -- (5*\l,3*\l) ;
+\draw[line width=1.25mm] (-5*\l,-3*\l) -- (5*\l,-3*\l) ;
+\draw[line width=1.25mm] (5*\l,3*\l) -- (5*\l,-3*\l);
+\draw[line width=1.25mm] (-5*\l,3*\l) -- (-5*\l,-3*\l);
 
 
-
-\draw[dashed,blue, line width=1.25mm] (\l,0) -- (\l,5*\l) ;
-\draw[dashed,blue, line width=1.25mm] (-\l,0) -- (-\l,5*\l) ;
+\draw[dashed,blue, line width=1.25mm] (\l,0) -- (\l,3*\l) ;
+\draw[dashed,blue, line width=1.25mm] (-\l,0) -- (-\l,3*\l) ;
 \draw[dashed,blue, line width=1.25mm] (-\l,0) -- (\l,0) ;
-\draw[dashed,blue, line width=1.25mm] (-\l,5*\l) -- (\l,5*\l) ;
+\draw[dashed,blue, line width=1.25mm] (-\l,3*\l) -- (\l,3*\l) ;
 
 %bottom symmetry
 \foreach \x in {4,...,8}{
@@ -189,27 +188,27 @@
 \draw[dashed,blue, line width=1.25mm] (-3*\l+\x*2*\symmsyml+0.5*\symmsyml,-\symmsymh-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
 
 %left symmetry
-\foreach \x in {0,...,10}{
+\foreach \x in {0,...,6}{
 \draw[dashed,blue, line width=1.25mm](-\l,\x*2*\symmsyml)--(-\l-\symmsymh,\x*2*\symmsyml-0.5*\symmsyml)--(-\l-\symmsymh,\x*2*\symmsyml+0.5*\symmsyml)--(-\l,\x*2*\symmsyml);
 \draw[dashed,blue, line width=1.25mm] (-\l-\symmsymh,\x*2*\symmsyml-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
 \draw[dashed,blue, line width=1.25mm] (-\l-\symmsymh,\x*2*\symmsyml+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
 
 %right symmetry
-\foreach \x in {0,...,10}{
+\foreach \x in {0,...,6}{
 \draw[dashed,blue, line width=1.25mm](\l,\x*2*\symmsyml)--(\l+\symmsymh,\x*2*\symmsyml-0.5*\symmsyml)--(\l+\symmsymh,\x*2*\symmsyml+0.5*\symmsyml)--(\l,\x*2*\symmsyml);
 \draw[dashed,blue, line width=1.25mm] (\l+\symmsymh+0.5*\symmsyml,\x*2*\symmsyml-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
 \draw[dashed,blue, line width=1.25mm] (\l+\symmsymh+0.5*\symmsyml,\x*2*\symmsyml+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
 
-\draw[blue,line width=1.25mm] (-\l,-5.25*\l) -- (\l,-5.25*\l) ;
-\draw[blue,line width=1.25mm] (-\l,-5.15*\l) -- (-\l,-5.35*\l) ;
-\draw[blue,line width=1.25mm] (\l,-5.15*\l) -- (\l,-5.35*\l) ;
+\draw[blue,line width=1.25mm] (-\l,-3.25*\l) -- (\l,-3.25*\l) ;
+\draw[blue,line width=1.25mm] (-\l,-3.15*\l) -- (-\l,-3.35*\l) ;
+\draw[blue,line width=1.25mm] (\l,-3.15*\l) -- (\l,-3.35*\l) ;
 
-\draw[blue,line width=1.25mm] (-5.25*\l,-5*\l) -- (-5.25*\l,5*\l) ;
-\draw[blue,line width=1.25mm] (-5.15*\l,5*\l) -- (-5.35*\l,5*\l) ;
-\draw[blue,line width=1.25mm] (-5.15*\l,-5*\l) -- (-5.35*\l,-5*\l) ;
+\draw[blue,line width=1.25mm] (-5.25*\l,-3*\l) -- (-5.25*\l,3*\l) ;
+\draw[blue,line width=1.25mm] (-5.15*\l,3*\l) -- (-5.35*\l,3*\l) ;
+\draw[blue,line width=1.25mm] (-5.15*\l,-3*\l) -- (-5.35*\l,-3*\l) ;
 
-\draw (0,-5.35*\l) node[blue,left,below] {\Huge$\mathbf{n=1}$};
-\draw (-5.3*\l,0) node[blue,above,rotate=90] {\Huge$\mathbf{k=5}$};
+\draw (0,-3.35*\l) node[blue,left,below] {\Huge$\mathbf{n=1}$};
+\draw (-5.3*\l,0) node[blue,above,rotate=90] {\Huge$\mathbf{k=3}$};
 
 \end{tikzpicture}
 

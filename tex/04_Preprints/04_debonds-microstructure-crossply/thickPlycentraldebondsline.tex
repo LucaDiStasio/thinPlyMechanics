@@ -120,7 +120,7 @@
 \draw[dashed,line width=0.75mm] (0,0)--(\costhetabot,\sinthetabot);
 \draw[dashed,line width=0.75mm] (0,0)--(\costhetaup,\sinthetaup);
 
-\foreach \x in {0}{
+\foreach \x in {-1,...,1}{
 % debond on the right
 \draw[line width=1.25mm] (\costhetaup+\x*4*\l,\sinthetaup)arc (\thetaup:\thetaround:\Rf);
 \draw[draw=red,line width=1.25mm](\costhetaup+\x*4*\l,\sinthetaup) arc(\thetaup:\thetabot:\Rf);
@@ -128,32 +128,13 @@
 \tkzCircumCenter(A,B,C)\tkzGetPoint{O}
 \tkzDrawArc[draw=red,line width=1.25mm](O,C)(A)
 }
-
-
-\foreach \x in {-2,1}{
+\foreach \x in {-2,...,1}{
 % debond on the left
 \draw[line width=1.25mm] (2*\l+\x*4*\l-\costhetaup,-\sinthetaup)arc (-\thetaup:\thetaround:-\Rf);
 \draw[draw=red,line width=1.25mm](2*\l+\x*4*\l-\costhetaup,\sinthetaup) arc(180+\thetabot:180-\thetaup:\Rf);
-\tkzDefPoint(2*\l+\x*4*\l-\costhetaup,\sinthetaup){A}\tkzDefPoint(2*\l+\x*4*\l-1.2*\Rf,0){B}\tkzDefPoint(2*\l+\x*4*\l-\costhetabot,\sinthetabot){C}
+\tkzDefPoint(-\costhetaup+2*\l+\x*4*\l,\sinthetaup){A}\tkzDefPoint(-1.2*\Rf+2*\l+\x*4*\l,0){B}\tkzDefPoint(-\costhetabot+2*\l+\x*4*\l,\sinthetabot){C}
 \tkzCircumCenter(A,B,C)\tkzGetPoint{O}
 \tkzDrawArc[draw=red,line width=1.25mm](O,A)(C)
-}
-
-\foreach \x in {0}{
-
-
-% fully bonded fibers +/- 1
-\draw[line width=1.25mm] (2*\l+\Rf,0+\x*2*\l,0)arc (0:360:\Rf);
-\draw[line width=1.25mm] (-2*\l+\Rf,0+\x*2*\l,0)arc (0:360:\Rf);
-
-% fully bonded fibers +/- 2
-\draw[line width=1.25mm] (4*\l+\Rf,0+\x*2*\l,0)arc (0:360:\Rf);
-\draw[line width=1.25mm] (-4*\l+\Rf,0+\x*2*\l,0)arc (0:360:\Rf);
-
-
-% fully bonded fibers +/- 4
-%\draw[line width=1.25mm] (8*\l+\Rf,0+\x*2*\l,0)arc (0:360:\Rf);
-%\draw[line width=1.25mm] (-8*\l+\Rf,0+\x*2*\l,0)arc (0:360:\Rf);
 }
 
 \foreach \x in {-1,1}{
@@ -199,32 +180,32 @@
 \draw[line width=1.25mm] (-7*\l,9*\l) -- (7*\l,9*\l) ;
 \draw[line width=1.25mm] (-7*\l,-9*\l) -- (7*\l,-9*\l) ;
 
-\draw[dashed,blue, line width=1.25mm] (3*\l,0) -- (3*\l,9*\l) ;
-\draw[dashed,blue, line width=1.25mm] (-3*\l,0) -- (-3*\l,9*\l) ;
-\draw[dashed,blue, line width=1.25mm] (-3*\l,0) -- (3*\l,0) ;
-\draw[dashed,blue, line width=1.25mm] (-3*\l,9*\l) -- (3*\l,9*\l) ;
+\draw[dashed,blue, line width=1.25mm] (\l,0) -- (\l,9*\l) ;
+\draw[dashed,blue, line width=1.25mm] (-\l,0) -- (-\l,9*\l) ;
+\draw[dashed,blue, line width=1.25mm] (-\l,0) -- (\l,0) ;
+\draw[dashed,blue, line width=1.25mm] (-\l,9*\l) -- (\l,9*\l) ;
 
 %bottom symmetry
-\foreach \x in {0,...,12}{
+\foreach \x in {4,...,8}{
 \draw[dashed,blue, line width=1.25mm](-3*\l+\x*2*\symmsyml,0)--(-3*\l+\x*2*\symmsyml-0.5*\symmsyml,-\symmsymh)--(-3*\l+\x*2*\symmsyml-0.5*\symmsyml+\symmsyml,-\symmsymh)--(-3*\l+\x*2*\symmsyml,0);
 \draw[dashed,blue, line width=1.25mm] (-3*\l+\x*2*\symmsyml,-\symmsymh-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
 \draw[dashed,blue, line width=1.25mm] (-3*\l+\x*2*\symmsyml+0.5*\symmsyml,-\symmsymh-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
 
 %left symmetry
 \foreach \x in {0,...,18}{
-\draw[dashed,blue, line width=1.25mm](-3*\l,\x*2*\symmsyml)--(-3*\l-\symmsymh,\x*2*\symmsyml-0.5*\symmsyml)--(-3*\l-\symmsymh,\x*2*\symmsyml+0.5*\symmsyml)--(-3*\l,\x*2*\symmsyml);
-\draw[dashed,blue, line width=1.25mm] (-3*\l-\symmsymh,\x*2*\symmsyml-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
-\draw[dashed,blue, line width=1.25mm] (-3*\l-\symmsymh,\x*2*\symmsyml+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
+\draw[dashed,blue, line width=1.25mm](-\l,\x*2*\symmsyml)--(-\l-\symmsymh,\x*2*\symmsyml-0.5*\symmsyml)--(-\l-\symmsymh,\x*2*\symmsyml+0.5*\symmsyml)--(-\l,\x*2*\symmsyml);
+\draw[dashed,blue, line width=1.25mm] (-\l-\symmsymh,\x*2*\symmsyml-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
+\draw[dashed,blue, line width=1.25mm] (-\l-\symmsymh,\x*2*\symmsyml+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
 
 %right symmetry
 \foreach \x in {0,...,18}{
-\draw[dashed,blue, line width=1.25mm](3*\l,\x*2*\symmsyml)--(3*\l+\symmsymh,\x*2*\symmsyml-0.5*\symmsyml)--(3*\l+\symmsymh,\x*2*\symmsyml+0.5*\symmsyml)--(3*\l,\x*2*\symmsyml);
-\draw[dashed,blue, line width=1.25mm] (3*\l+\symmsymh+0.5*\symmsyml,\x*2*\symmsyml-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
-\draw[dashed,blue, line width=1.25mm] (3*\l+\symmsymh+0.5*\symmsyml,\x*2*\symmsyml+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
+\draw[dashed,blue, line width=1.25mm](\l,\x*2*\symmsyml)--(\l+\symmsymh,\x*2*\symmsyml-0.5*\symmsyml)--(\l+\symmsymh,\x*2*\symmsyml+0.5*\symmsyml)--(\l,\x*2*\symmsyml);
+\draw[dashed,blue, line width=1.25mm] (\l+\symmsymh+0.5*\symmsyml,\x*2*\symmsyml-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
+\draw[dashed,blue, line width=1.25mm] (\l+\symmsymh+0.5*\symmsyml,\x*2*\symmsyml+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
 
-\draw[blue,line width=1.25mm] (-3*\l,-9.25*\l) -- (3*\l,-9.25*\l) ;
-\draw[blue,line width=1.25mm] (-3*\l,-9.15*\l) -- (-3*\l,-9.35*\l) ;
-\draw[blue,line width=1.25mm] (3*\l,-9.15*\l) -- (3*\l,-9.35*\l) ;
+\draw[blue,line width=1.25mm] (-\l,-9.25*\l) -- (\l,-9.25*\l) ;
+\draw[blue,line width=1.25mm] (-\l,-9.15*\l) -- (-\l,-9.35*\l) ;
+\draw[blue,line width=1.25mm] (\l,-9.15*\l) -- (\l,-9.35*\l) ;
 
 \draw[blue,line width=1.25mm] (-7.25*\l,-3*\l) -- (-7.25*\l,3*\l) ;
 \draw[blue,line width=1.25mm] (-7.15*\l,3*\l) -- (-7.35*\l,3*\l) ;
@@ -243,7 +224,7 @@
 \draw[->,line width=1.25mm] (5*\l,6*\l) -- (6*\l,6*\l)node[right] {\Huge$\mathbf{0^{\circ}}$};
 \draw[->,line width=1.25mm] (5*\l,-6*\l) -- (6*\l,-6*\l)node[right] {\Huge$\mathbf{0^{\circ}}$};
 
-\draw (0,-9.35*\l) node[blue,left,below] {\Huge$\mathbf{n=3}$};
+\draw (0,-9.35*\l) node[blue,left,below] {\Huge$\mathbf{n=1}$};
 \draw (-7.3*\l,0) node[blue,above,rotate=90] {\Huge$\mathbf{k=3}$};
 
 \draw (8.3*\l,6*\l) node[blue,below,rotate=90] {\Huge$\mathbf{p\cdot t_{90^{\circ}}}$};

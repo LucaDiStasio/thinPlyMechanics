@@ -147,18 +147,18 @@
 %\draw[line width=1.25mm] (8*\l+\Rf,0,0)arc (0:360:\Rf);
 %\draw[line width=1.25mm] (-8*\l+\Rf,0,0)arc (0:360:\Rf);
 
-% debonded fibers +/- 3
-\draw[line width=1.25mm] (6*\l-\costhetaup,-\sinthetaup)arc (-\thetaup:\thetaround:-\Rf);
-\draw[draw=red,line width=1.25mm](6*\l-\costhetaup,\sinthetaup) arc(180+\thetabot:180-\thetaup:\Rf);
-\tkzDefPoint(6*\l-\costhetaup,\sinthetaup){A}\tkzDefPoint(6*\l-1.2*\Rf,0){B}\tkzDefPoint(6*\l-\costhetabot,\sinthetabot){C}
-\tkzCircumCenter(A,B,C)\tkzGetPoint{O}
-\tkzDrawArc[draw=red,line width=1.25mm](O,A)(C)
-
-\draw[line width=1.25mm] (-6*\l-\costhetaup,-\sinthetaup)arc (-\thetaup:\thetaround:-\Rf);
-\draw[draw=red,line width=1.25mm](-6*\l-\costhetaup,\sinthetaup) arc(180+\thetabot:180-\thetaup:\Rf);
-\tkzDefPoint(-6*\l-\costhetaup,\sinthetaup){A}\tkzDefPoint(-6*\l-1.2*\Rf,0){B}\tkzDefPoint(-6*\l-\costhetabot,\sinthetabot){C}
-\tkzCircumCenter(A,B,C)\tkzGetPoint{O}
-\tkzDrawArc[draw=red,line width=1.25mm](O,A)(C)
+%% debonded fibers +/- 3
+%\draw[line width=1.25mm] (6*\l-\costhetaup,-\sinthetaup)arc (-\thetaup:\thetaround:-\Rf);
+%\draw[draw=red,line width=1.25mm](6*\l-\costhetaup,\sinthetaup) arc(180+\thetabot:180-\thetaup:\Rf);
+%\tkzDefPoint(6*\l-\costhetaup,\sinthetaup){A}\tkzDefPoint(6*\l-1.2*\Rf,0){B}\tkzDefPoint(6*\l-\costhetabot,\sinthetabot){C}
+%\tkzCircumCenter(A,B,C)\tkzGetPoint{O}
+%\tkzDrawArc[draw=red,line width=1.25mm](O,A)(C)
+%
+%\draw[line width=1.25mm] (-6*\l-\costhetaup,-\sinthetaup)arc (-\thetaup:\thetaround:-\Rf);
+%\draw[draw=red,line width=1.25mm](-6*\l-\costhetaup,\sinthetaup) arc(180+\thetabot:180-\thetaup:\Rf);
+%\tkzDefPoint(-6*\l-\costhetaup,\sinthetaup){A}\tkzDefPoint(-6*\l-1.2*\Rf,0){B}\tkzDefPoint(-6*\l-\costhetabot,\sinthetabot){C}
+%\tkzCircumCenter(A,B,C)\tkzGetPoint{O}
+%\tkzDrawArc[draw=red,line width=1.25mm](O,A)(C)
 % axes
 \begin{scope}[style=axes]
   \draw[->,line width=0.75mm] (-7.1*\l,0) -- (7.2*\l,0) node[right] {\Huge$\underline{i}, x$};

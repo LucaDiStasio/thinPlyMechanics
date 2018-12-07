@@ -19,7 +19,7 @@
 
 \begin{document}
 
-\def\markersize{3.5pt}
+\def\markersize{4.5pt}
 \def\linewidth{2.5pt}
 
 %Tikz picture starts%
@@ -29,6 +29,8 @@
 %Tikz axis starts%
 
 \begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
 % STYLE
 %title style={font=\fontsize{40}{8}\selectfont},
 xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
@@ -47,7 +49,7 @@ y grid style={lightgray!92.026143790849673!black},
 line width=0.75mm,
 % GRID SIZE
 xmin=0.0,
-xmax=160.0,
+xmax=90.0,
 ymin=0.0,
 xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0},
 % CONTENT
@@ -79,7 +81,7 @@ table{
 };
 
 % SF1
-\addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=square*,mark options={fill=white}]
 table{
 10.00	3.37424045
 20.00	2.90292831
@@ -99,7 +101,7 @@ table{
 };
 
 % SF2
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*]
 table{
 10.00	3.59024652
 20.00	3.43213858
@@ -119,7 +121,7 @@ table{
 };
 
 % SF3
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
 table{
 10.00	3.68563091
 20.00	3.70219412
@@ -139,7 +141,7 @@ table{
 };
 
 % SF5
-\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=triangle*]
 table{
 10.00	3.77954547
 20.00	3.97698250
@@ -159,7 +161,7 @@ table{
 };
 
 % SF10
-\addplot[line width=\linewidth,mark size=\markersize,purple,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,purple,smooth,mark=triangle*,mark options={fill=white}]
 table{
 10.00	3.86104004
 20.00	4.23151217
@@ -179,7 +181,7 @@ table{
 };
 
 % SF50
-\addplot[line width=\linewidth,mark size=\markersize,cyan,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,cyan,smooth,mark=diamond*]
 table{
 10.00	3.93096196
 20.00	4.47285076
@@ -199,7 +201,7 @@ table{
 };
 
 % SF100
-\addplot[line width=\linewidth,mark size=\markersize,magenta,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,magenta,smooth,mark=diamond*,mark options={fill=white}]
 table{
 10.00	3.93986709
 20.00	4.50648731

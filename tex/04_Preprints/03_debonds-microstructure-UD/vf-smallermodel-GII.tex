@@ -19,8 +19,8 @@
 
 \begin{document}
 
-\def\markersize{3.5pt}
-\def\linewidth{2.5pt}
+\def\markersize{4.5pt}
+\def\linewidth{3.pt}
 
 %Tikz picture starts%
 
@@ -29,6 +29,8 @@
 %Tikz axis starts%
 
 \begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
 % STYLE
 %title style={font=\fontsize{40}{8}\selectfont},
 xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
@@ -49,7 +51,8 @@ line width=0.75mm,
 xmin=0.0,
 xmax=160.0,
 ymin=0.0,
-xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0},
+ymax=5.0,
+xtick={0.0,10.0,30.0,50.0,70.0,90.0,110.0,130.0,150.0},
 % CONTENT
 %title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
@@ -81,7 +84,7 @@ table{
 };
 
 % 50%
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
 table{
 10.00	0.52331695
 20.00	1.30866638
@@ -101,7 +104,7 @@ table{
 };
 
 % 60%
-\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*]
 table{
 10.00	0.72822190
 20.00	1.57183944
@@ -121,7 +124,7 @@ table{
 };
 
 % 65%
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*,mark options={fill=white}]
 table{
 10.00	0.57710576
 20.00	1.52774176

@@ -114,6 +114,9 @@ ENV/
 *.cb
 *.cb2
 
+# Style files
+*.sty
+
 ## Intermediate documents:
 *.dvi
 *-converted-to.*

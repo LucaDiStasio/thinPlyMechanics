@@ -19,8 +19,8 @@
 
 \begin{document}
 
-\def\markersize{3.5pt}
-\def\linewidth{2.5pt}
+\def\markersize{4.5pt}
+\def\linewidth{3.pt}
 
 %Tikz picture starts%
 
@@ -29,14 +29,16 @@
 %Tikz axis starts%
 
 \begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
 % STYLE
 %title style={font=\fontsize{40}{8}\selectfont},
 xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
 ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
 tick align=outside,
 tick label style={font=\huge},
-legend style={draw=white!80.0!black,font=\fontsize{28}{24}\selectfont,row sep=15pt},
-legend image post style={xscale=1.5,yscale=1.5},
+legend style={draw=white!80.0!black,font=\fontsize{19}{14}\selectfont,row sep=7pt},
+legend image post style={xscale=1.25,yscale=1.25},
 legend cell align={left},
 clip mode=individual,
 % GRID STYLE
@@ -49,7 +51,7 @@ line width=0.75mm,
 xmin=0.0,
 xmax=160.0,
 ymin=0.0,
-xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0},
+xtick={0.0,10.0,30.0,50.0,70.0,90.0,110.0,130.0,150.0},
 % CONTENT
 %title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
@@ -79,7 +81,7 @@ table{
 };
 
 % AF2
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*,mark options={fill=white}]
 table{
 10.00	0.17901082
 20.00	0.31747550
@@ -99,7 +101,7 @@ table{
 };
 
 % AF3
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
 table{
 10.00	0.17809300
 20.00	0.31572933
@@ -119,7 +121,7 @@ table{
 };
 
 % AF5
-\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=*,mark options={fill=white}]
 table{
 10.00	0.16695951
 20.00	0.30902327
@@ -139,7 +141,7 @@ table{
 };
 
 % AF10
-\addplot[line width=\linewidth,mark size=\markersize,purple,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,purple,smooth,mark=triangle*]
 table{
 10.00	0.15656579
 20.00	0.32526618
@@ -159,7 +161,7 @@ table{
 };
 
 % AF50
-\addplot[line width=\linewidth,mark size=\markersize,cyan,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,cyan,smooth,mark=triangle*,mark options={fill=white}]
 table{
 10.00	0.17872090
 20.00	0.31767193
@@ -179,7 +181,7 @@ table{
 };
 
 % AF100
-\addplot[line width=\linewidth,mark size=\markersize,magenta,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,magenta,smooth,mark=diamond*]
 table{
 10.00	0.17268993
 20.00	0.31308397

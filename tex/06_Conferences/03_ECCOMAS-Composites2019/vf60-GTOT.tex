@@ -165,8 +165,12 @@ legend entries={},
 
 \node [above right] at (rel axis cs:0.015,0.575) {\includegraphics[width=10cm]{thickPly.pdf}};
 
+\node [right] at (rel axis cs:0.2,0.545) {\LARGE$\mathbf{21\times 21-free}$};
+
+\draw[line width=0.5mm] (rel axis cs:0.375,0.515) -- (rel axis cs:0.275,0.365) ;
+
 % SF10, AF10
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=square*]
 table[x=theta, y expr={\thisrow{GI} + \thisrow{GII}}]{
 theta    GI                 GII
 10.00	  3.53079692 0.72745157

@@ -48,18 +48,20 @@ ymajorgrids,
 y grid style={lightgray!92.026143790849673!black},
 line width=0.75mm,
 % GRID SIZE
-xmin=0.0,
-xmax=160.0,
+%xmin=0.0,
+xmax=75.0,
 ymin=0.0,
-xtick={0.0,10.0,30.0,50.0,70.0,90.0,110.0,130.0,150.0},
+%xtick={0.0,10.0,30.0,50.0,70.0,90.0,110.0,130.0,150.0},
 % CONTENT
 %title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
-ylabel={$G_{II}\left[\nicefrac{J}{m^{2}}\right]$},
+ylabel={$G\left[\nicefrac{J}{m^{2}}\right]$},
 % LEGEND ENTRIES
 %legend entries={{$3\times 2-free$},{$5\times 2-free$},{$5\times 3-free$},{$11\times 2-free$},{$11\times 6-free$},{$21\times 2-free$},{$21\times 11-free$},{$101\times 2-free$},{$101\times 11-free$},{$201\times 2-free$},{$201\times 11-free$}},
-legend entries={{$21\times 3-free$},{$21\times 5-free$},{$21\times 7-free$},{$21\times 11-free$},{$21\times 21-free$}},
+legend pos={south east},
+legend entries={},
 ]
+%$21\times 21-free$
 
 %% SF1, AF1
 %\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
@@ -161,105 +163,100 @@ legend entries={{$21\times 3-free$},{$21\times 5-free$},{$21\times 7-free$},{$21
 %150.00	0.01157588
 %};
 
-% SF10, AF1
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table{
-10.00	0.73860732
-20.00	1.63085641
-30.00	2.75222980
-40.00	3.75046675
-50.00	4.51332764
-60.00	4.95891157
-70.00	4.80158884
-80.00	4.32804222
-90.00	3.61884767
-100.00	2.44665940
-110.00	1.25086457
-120.00	0.52589505
-130.00	0.19758337
-140.00	0.05591398
-150.00	0.00750841
-};
-
-% SF10, AF2
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=square*,mark options={fill=white}]
-table{
-10.00	0.73025895
-20.00	1.59723307
-30.00	2.65606980
-40.00	3.57187838
-50.00	4.24402208
-60.00	4.61065783
-70.00	4.43541732
-80.00	3.95162249
-90.00	3.30111073
-100.00	2.26969694
-110.00	1.19953316
-120.00	0.52643156
-130.00	0.20675383
-140.00	0.06150199
-150.00	0.00880908
-};
-
-% SF10, AF3
-\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=*]
-table{
-10.00	0.73132710
-20.00	1.58997092
-30.00	2.63730172
-40.00	3.53897020
-50.00	4.19554028
-60.00	4.54667871
-70.00	4.36473047
-80.00	3.86916556
-90.00	3.22744954
-100.00	2.23310260
-110.00	1.19601361
-120.00	0.53392136
-130.00	0.21373490
-140.00	0.06545552
-150.00	0.01010881
-};
-
-% SF10, AF5
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*,mark options={fill=white}]
-table{
-10.00	0.73025494
-20.00	1.58616029
-30.00	2.62885283
-40.00	3.52445072
-50.00	4.17488643
-60.00	4.52094703
-70.00	4.33733661
-80.00	3.83453890
-90.00	3.19667634
-100.00	2.22051464
-110.00	1.19873142
-120.00	0.54049645
-130.00	0.21893908
-140.00	0.06838814
-150.00	0.01119215
-};
+\node [above right] at (rel axis cs:0.015,0.575) {\includegraphics[width=10cm]{thickPly.pdf}};
 
 % SF10, AF10
-\addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=triangle*]
-table{
-10.00	0.72745157
-20.00	1.58361364
-30.00	2.62415975
-40.00	3.51755089
-50.00	4.16619181
-60.00	4.51054060
-70.00	4.32694752
-80.00	3.81995778
-90.00	3.18341270
-100.00	2.21668480
-110.00	1.20227684
-120.00	0.54528508
-130.00	0.22249952
-140.00	0.07042414
-150.00	0.01200957
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+table[x=theta, y expr={\thisrow{GI} + \thisrow{GII}}]{
+theta    GI                 GII
+10.00	  3.53079692 0.72745157
+20.00	  3.57968267 1.58361364
+30.00	  2.85235663 2.62415975
+40.00	  1.89413525 3.51755089
+50.00	  1.00169026 4.16619181
+60.00	  0.29150430 4.51054060
+70.00	  0.00035418 4.32694752
+80.00   0.00006936 3.81995778
+90.00	  0.00007606 3.18341270
+100.00 0.00007286 2.21668480
+110.00 0.00003954 1.20227684
+120.00 0.00001867 0.54528508
+130.00 0.00000644 0.22249952
+140.00 0.00000112 0.07042414
+150.00 0.00201653 0.01200957
 };
+\addlegendentry{$G_{TOT}$}
+
+\def\GIref{3.53079692 }
+\def\GIIref{0.72745157}
+\def\lambda{0.35}
+\pgfmathsetmacro\GTOTref{\GIref+\GIIref}
+\pgfmathsetmacro\psiref{rad(atan(sqrt(\GIIref/\GIref)))}
+\pgfmathsetmacro\ratioref{1+(tan(deg((1-\lambda)*\psiref)))^(2)}
+\pgfmathsetmacro\GIc{\GTOTref/\ratioref}
+
+
+% SF10, AF10
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*,mark options={fill=white}]
+table[x=theta, y expr={\GIc*(1+(tan(deg((1-\lambda)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
+theta    GI                 GII
+10.00	  3.53079692 0.72745157
+20.00	  3.57968267 1.58361364
+30.00	  2.85235663 2.62415975
+40.00	  1.89413525 3.51755089
+50.00	  1.00169026 4.16619181
+60.00	  0.29150430 4.51054060
+70.00	  0.00035418 4.32694752
+80.00   0.00006936 3.81995778
+90.00	  0.00007606 3.18341270
+100.00 0.00007286 2.21668480
+110.00 0.00003954 1.20227684
+120.00 0.00001867 0.54528508
+130.00 0.00000644 0.22249952
+140.00 0.00000112 0.07042414
+150.00 0.00201653 0.01200957
+};
+\addlegendentry{$G_{c}, \Delta\theta_{ref}=10^{\circ}$}
+
+\def\lambda{0.35}
+
+\def\GIten{3.53079692}
+\def\GIIten{0.72745157}
+\def\GItwe{3.57968267}
+\def\GIItwe{1.58361364}
+
+\pgfmathsetmacro\mI{(\GItwe-\GIten)/(10.0)}
+
+\pgfmathsetmacro\GIref{\GIten+\mI*(-10.0)}
+\pgfmathsetmacro\GIIref{0.0}
+
+\pgfmathsetmacro\GTOTref{\GIref+\GIIref}
+\pgfmathsetmacro\psiref{rad(atan(sqrt(\GIIref/\GIref)))}
+\pgfmathsetmacro\ratioref{1+(tan(deg((1-\lambda)*\psiref)))^(2)}
+\pgfmathsetmacro\GIc{\GTOTref/\ratioref}
+
+
+% SF10, AF10
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=diamond*,mark options={fill=white}]
+table[x=theta, y expr={\GIc*(1+(tan(deg((1-\lambda)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
+theta    GI                 GII
+10.00	  3.53079692 0.72745157
+20.00	  3.57968267 1.58361364
+30.00	  2.85235663 2.62415975
+40.00	  1.89413525 3.51755089
+50.00	  1.00169026 4.16619181
+60.00	  0.29150430 4.51054060
+70.00	  0.00035418 4.32694752
+80.00   0.00006936 3.81995778
+90.00	  0.00007606 3.18341270
+100.00 0.00007286 2.21668480
+110.00 0.00003954 1.20227684
+120.00 0.00001867 0.54528508
+130.00 0.00000644 0.22249952
+140.00 0.00000112 0.07042414
+150.00 0.00201653 0.01200957
+};
+\addlegendentry{$G_{c}, \Delta\theta_{ref}=0^{\circ}$}
 
 %% SF50, AF1
 %\addplot[line width=\linewidth,mark size=\markersize,magenta,smooth,mark=square*]

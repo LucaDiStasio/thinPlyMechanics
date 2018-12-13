@@ -1,0 +1,9 @@
+latex cseethesis_example.tex
+bibtex bu1
+bibtex bu2
+bibtex bu3
+bibtex bu4
+latex cseethesis_example.tex
+latex cseethesis_example.tex
+pdflatex cseethesis_example.tex
+pause

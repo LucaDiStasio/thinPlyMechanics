@@ -1,0 +1,197 @@
+\section{General information}
+Current version of the \texttt{cseethesis} document class is: \classversion.\\
+Last modification: \classdate\\
+
+\noindent As of version 3.0, the template is no longer backwards compatible.
+
+\subsection{About the document class}
+This document class was originally created in 2002 when I was working on my own PhD thesis. Since then, many people used it, found bugs (and occasionally even corrected them), and suggested improvements.
+
+The style is tailor-made for the typical types of theses that we write at the department, i.e.\ an introductory part followed by a collection of published or submitted research papers. 
+
+The template supports the use of both \LaTeX\ and pdfLaTeX. If you use the command \texttt{$\backslash$includegraphics} to import your figure and you supply the filename with its extension (e.g.\ .eps, .pdf), compilation should be possible with either one. For this to work, both .eps and .pdf versions of all figures must be available.
+
+The template is totally free to use, modify and distribute, as long as reference to the original author is kept and as long as all files remain in the package. Modified versions can only be distributed if it is clearly mentioned in the document class that modifications have been made and by whom.
+
+The whole package comes AS IS. I will correct bugs every now and then, but other than that, don't expect any support whatsoever.
+
+
+\subsection{About this document}
+This document, as well as the actual \LaTeX\ code for it, makes up the documentation on how to use the document class.
+
+Only this chapter contains any readable information. Chapters 2 and 3 are only included as examples of some of the features of the template. The text is nonsense, but the corresponding \LaTeX\ code may be of some use. The same goes for the appended papers, which are only there as examples of a few options of the document class.
+
+Read this chapter carefully. If you have comments on what else should be in here in order to simplify the use of the document class, let me know.
+
+\section{Chapters}
+\subsection{Defining chapters}
+In order to add flexibility to the template, a new command, called \texttt{$\backslash$makechapter} is provided. This command takes three mandatory and one optional argument, as 
+\begin{center}
+	\texttt{$\backslash$makechapter[optional quote]\{page header\}\{toc entry\}\{Chapter title\}}
+\end{center}
+
+The reason this is solved like this is to allow for shorter page headers if the chapter name is very long. Also, if the actual chapter heading needs to be manually split in several lines (if the automatic splitting does not look so good), the table of contents (toc) entry might have to be defined differently. Note that normally, the last three arguments can be the same. 
+
+The use of an optional quote as an introduction to the chapter is demonstrated in this chapter. It can just as well be left out, which is demonstrated in this document (see the code).
+
+\subsection{Importing chapter contents}
+The sub-documents containing the chapters should start directly, i.e.\ they must not contain any $\backslash$begin\{document\} or $\backslash$end\{document\} tags.
+
+See this file, \textit{chapter1.tex} for details.
+
+\section{How to append papers}
+Papers are included using the \texttt{$\backslash$input} command, just as with chapters. You have to typeset paper title, authors, and abstract manually. See the example papers accompanying this document for an example.
+
+To make the separator sheet preceding each paper, use one of the following commands:
+\begin{itemize}
+	\item \texttt{$\backslash$makepaper} -- Published paper.
+	\item \texttt{$\backslash$makepaperaccepted} -- Accepted, not yet published paper.
+	\item \texttt{$\backslash$makepapersubmitted} -- Submitted, not yet accepted paper.
+	\item \texttt{$\backslash$makepapertobesubmitted} -- Not yet submitted paper.
+\end{itemize}
+
+See code for this example document for examples on how to use.
+
+\section{Cross-references}
+All labels throughout the thesis have to be unique. If the same
+equation or figure shows up twice e.g.\ a figure used
+both in the introduction and one of the included papers), it has
+to be given different labels. Referring to labels is done as
+usual.
+
+A simple trick to make sure this is the case and that will also help you keep track of all labels you used is to use the following naming convention:
+\begin{itemize}
+	\item \texttt{ch1:fig:labelname}, \texttt{ch1:tab:labelname}, \texttt{ch1:eq:labelname}, etc.\ all denote figures, tables and equations in Chapter 1.
+	\item \texttt{paperA:fig:labelname}, \texttt{paperA:tab:labelname}, \texttt{paperA:eq:labelname}, etc.\ all denote figures, tables and equations in Paper A.
+\end{itemize}
+
+For existing text, e.g.\ papers, this is easily achieved by a simple search-and-replace operation on the string \texttt{$\backslash$label\{}. Any text editor will do that for you!
+
+\section{Appendices\label{sec:app}}
+It is possible to have any number of appendices for each chapter.
+Simply type \texttt{$\backslash$appendix} before the first appendix,
+which is then a normal \texttt{section}, but numbered differently.
+
+To add appendices to papers, use the
+\texttt{$\backslash$paperappendix} command
+
+\section{Including bibliography lists\label{sec:bib}}
+In a thesis one might want several separate bibliographies. For
+example, one for the first part, and then separate bibliographies
+for each of the included papers.
+
+This is solved using the \texttt{bibunits} package together with a
+slight work-around in this template. For the first part of the
+thesis, there is only one bibliography list, typeset like a chapter
+(see this example document). In the papers, the bibliography lists
+are typeset as un-numbered sections. See this file
+\texttt{cseethesis\_example.tex} and \texttt{paper1.tex} for examples
+how to place the bibliographies. 
+
+Note that the command
+\begin{itemize}
+	\item \texttt{$\backslash$makebib} is used in Part I, to typeset the reference list in the thesis introduction.
+	\item \texttt{$\backslash$putbib} is used in the papers in Part II.
+\end{itemize}
+
+\section{How to compile your project}
+Finally, you probably like to know how to build your project to a
+final PDF or PostScript file. Start by verifying that you can
+compile this document. This is how it goes:
+%
+\begin{enumerate}
+    \item Run \LaTeX\ (or pdfLaTex) once.
+    \item Then run BibTeX on all the
+    bu<i> files.
+    \item Run \LaTeX\ twice more, to build the final DVI document
+    (or pdfLaTeX if you want a PDF file).
+\end{enumerate}
+
+The above steps are easily collected in a script or batch file. See
+the files \texttt{make.bat} and \texttt{compilebibunits.bat} for
+examples.
+
+\section{Revision history}
+The template has evolved during several years and the exact
+revisions are not clear to anyone. Starting from version 1.6,
+however, the changes are more well-documented. This example
+document will always support only the latest release of the
+template. Below is a list of the revisions made to the document
+class (and when applicable, the example document):%
+\begin{itemize}
+	 \item Version 3.1, September 1, 2010
+		\begin{itemize}
+			\item Fixed bug related to appendix numbering.
+			\item Fixed page numbering of ``Part" pages.
+			\item Added a comment at top of cseethesis\_example.tex, for improved compatibility with some editors.
+		\end{itemize}
+	 \item Version 3.0, June 7, 2009
+		\begin{itemize}
+			\item Fixed bug related to page headers in chapters containing no subsections.
+		   \item Removed the EU class option and replaced with a logo argument to the preamble. See the code of this document for an example.
+			\item The template is \textbf{no longer compatible with previous versions}.
+         \item Removed the definition of boldface Greek letters from the document class, since this is not the proper place for that.
+		\end{itemize}
+  	 \item Version 2.5, March 5 2009
+		\begin{itemize}
+         \item Renamed the template \textit{cseethesis}. It is a continuation of the project initially called \textit{eisthesis}, but since its use has spread I decided to change the name.
+			\item Various minor bug fixes.
+			\item Update of example document, making examples of additions and revisions in recent versions of the template.
+		\end{itemize}
+	 \item Version 2.36: Added "Part" to the table of contents.
+    \item Version 2.35:
+        \begin{itemize}
+				\item Fixed a bug regarding the page headers in the "appended papers part".
+				\item Fixed a bug causing the section numbering to be wrong in a chapter succeeding a chapter containing appendices.
+			   \item Added a chapter 3 in this example document, illustrating how to handle page headers for chapters without any sections. See the code at the top of \texttt{chapter3.tex}.
+		  \end{itemize}
+    \item Version 2.3:
+        \begin{itemize}
+            \item Added the commands \texttt{$\backslash$appendix}
+            and \texttt{$\backslash$paperappendix}, see section
+            \ref{sec:app}.
+            \item The bibliography list is now typeset similar to a
+            chapter in Part I, and as an un-numbered section in Part
+            II. This required the use of separate commands for
+            including the lists (see Sec.~\ref{sec:bib})
+            \item Typesetting fixes for the table of contents page.
+            As a consequence, the package \texttt{titletoc} is now
+            required.
+            \item Minor other code cleanup and bug fixes.
+        \end{itemize}
+    \item Version 2.25:
+    \begin{itemize}
+        \item Fixed a minor bug that used to generate a warning
+        message regarding font shapes in the page headers.
+    \end{itemize}
+    \item Version 2.2:
+    \begin{itemize}
+        \item pdf and eps class options removed. The document class
+        compiles with either pdfLaTeX or \LaTeX.
+        \item The reference lists in papers are now typeset in the
+        same way as in Part I of the thesis.
+        \item Some minor adjustments of page header heights.
+    \end{itemize}
+    \item Version 2.1:
+    \begin{itemize}
+        \item Cross-references to chapters now work like they
+        should. See the main document of this example.
+        \item Major bug fixes to BibTeX reference lists, table of
+        contents generation etc.
+        \item The only change the user has to do is to use the new \texttt{$\backslash$makebib} instead of
+        bibunits' \texttt{$\backslash$putbib}.
+    \end{itemize}
+    \item Version 2.0:
+    \begin{itemize}
+        \item Support for EU logotype on main page. The files
+        \texttt{eu1\_f\_eng.pdf} and\\ \texttt{eu1\_f\_eng.eps} must be
+        placed in the same directory as the document class.
+        \item Support for pdf class options.
+        \item Update of the \texttt{$\backslash$makechapter}
+        command. It now requires three arguments. See main
+        document for example.
+        \item Support for BibTeX, using the \texttt{bibunits.sty}
+        package.
+    \end{itemize}
+    \item Version 1.6: Various bug fixes to figure spacing etc.
+\end{itemize}

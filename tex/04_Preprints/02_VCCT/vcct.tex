@@ -86,7 +86,7 @@ Bi-material interfaces represent the basic load transfer mechanism at the heart 
 The problem was first addressed in the 1950's by Williams~\cite{Williams1959}, who derived through a linear elastic asymptotic analysis the stress distribution around an \emph{open} crack (with crack faces nowhere in contact for any size of the crack) between two infinite half-planes of dissimilar materials and found the existence of a strong oscillatory behavior in the stress singularity at the crack tip of the form 
 
 \begin{equation}\label{eq:singularitywilliams}
-r^{-\frac{1}{2}}\sin\left(\varepsilon\log r\right)\quad\text{with}\quad\varepsilon=\frac{1}{2\pi}\log\left(\frac{1-\beta}{1+beta}\right);
+r^{-\frac{1}{2}}\sin\left(\varepsilon\log r\right)\quad\text{with}\quad\varepsilon=\frac{1}{2\pi}\log\left(\frac{1-\beta}{1+\beta}\right);
 \end{equation}
 
 in which $\beta$ is one of the two parameters introduced by Dundurs~\cite{Dundurs1969} to characterize bi-material interfaces:
@@ -97,6 +97,7 @@ in which $\beta$ is one of the two parameters introduced by Dundurs~\cite{Dundur
 
 where $\kappa=3-4\nu$ in plane strain and $\kappa=\frac{3-4\nu}{1+\nu}$ in plane stress, $\mu$ is the shear modulus, $\nu$ Poisson's coefficient, and indexes $1,2$ refer to the two bulk materials joined at the interface. Defining $a$ as the length of the crack, it was found that the size of the oscillatory region is in the order of $10^{-6}a$~\cite{Erdogan1963}. Given the oscillatory behaviour of the crack tip singularity of the stress field of Eq.~\ref{eq:singularitywilliams}, the definition of Stress Intensity Factor (SIF) $\lim_{r\rightarrow 0}\sqrt{2\pi r}\sigma$ ceases to be valid as it returns logarithmically infinite terms~\cite{Comninou1990}. Furthermore, it implies that the Mode mixity problem at the crack tip is ill-posed.\\
 It was furthermore observed, always in the context of Linear Elastic Fracture Mechanics (LEFM), that an interpenetration zone exists close to the crack tip~\cite{England1965,Malyshev1965} with a length in the order of $10^{-4}$~\cite{England1965}. Following conclusions firstly proposed in\cite{Malyshev1965}, the presence of a \emph{contact zone} in the crack tip neighborhood, of a length to be determined from the solution of the elastic problem, was introduced in~\cite{Comninou1977} and shown to provide a physically consistent solution to the straight bi-material interface crack problem.\\
+The curved bi-material interface crack, more often refered to as the fiber-matrix interface due to its relevance in FRPCs, was first treated by Perlman and Sih~\cite{Perlman1967}, who provided the analytical solution of stress and displacement fields for a circular inclusion with an arbitrary number of cracks. Building on their work, Toya~\cite{Toya1974} particularized the solution for an inclusion with a single interface crack (or debond) and provided the expression of the Energy Release Rate (ERR) at the crack  tip.
 
 \section{Vectorial formulation of the Virtual Crack Closure Technique (VCCT)}
 

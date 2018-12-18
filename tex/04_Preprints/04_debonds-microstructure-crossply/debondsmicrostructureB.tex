@@ -82,153 +82,51 @@ Polymer-matrix Composites (PMCs)\sep Thin-ply\sep Transverse Failure \sep Debond
 
 \linenumbers
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1. INTRODUCTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Introduction}
 
 Since the development of the \emph{spred tow} technology or \say{FUKUI method}~\cite{Kawabe2008,Kawabe2008en}, significant efforts have been directed toward the characterization of \emph{thin-ply} laminates~\cite{Sasayama2003,Yamaguchi2005,Tsai2005,Sihn2007,Yokozeki2008,Yokozeki2010,Saito2012,Arteiro2013,Arteiro2014,Amacher2014,Guillamet2014,Huang2018,Cugnoni2018} and their application to mission-critical structures in the aerospace sector~\cite{Moon2011,Kim2017,Kopp2017,McCarville2018}.\\
 At the lamina level, the use of \emph{thin-plies} leads to more regular and homogeneous microstructures but no significant imporvement in static properties except for an apparent improvement in compressive strength~\cite{Amacher2014}. Improvements in fatigue life have been observed, although contrasting results can be found in the literature~\cite{Yamaguchi2005,Tsai2005,Sihn2007}. The beneficial effect of the use of \emph{thin-plies} with respect to damage propagation has been instead commonly observed by different researchers under static~\cite{Sasayama2003,Sihn2007,Yokozeki2008,Yokozeki2010,Saito2012,Arteiro2013,Arteiro2014,Amacher2014}, fatigue~\cite{Yamaguchi2005,Sihn2007,Yokozeki2008,Yokozeki2010,Amacher2014} and impact loadings~\cite{Sihn2007,Yokozeki2008,Yokozeki2010,Amacher2014}. It seems apparent that \emph{thin-ply} laminates possess an increased ability to delay, and in some cases even suppress, the onset and propagation of transverse cracks (or matrix or micro-cracks).\\
 The first appearance of transverse cracking phenomena is known to be characterized by the appearance of fiber/matrix interface cracks (also referred to as debonds), which grow along the fiber's arc direction, then kink out of the interface and coalesce forming a transverse crack~\cite{Bailey1981}. Different approaches have been applied to model the initiation and growth of debonds. The Cohesive Zone Model (CZM) has been used to mimic the propagation of debonds along fiber interfaces; coupled with a failure criterion for the matrix, it has provided simulations of the growth of transverse cracks starting from a virgin material~\cite{Kushch2011,Canal2012,Bouhala2013,Herraez2015}. The main advantages of this approach are the possibility to observe the development of a simulated crack path and to record a load-displacement curve to compare with experimental measurement. However, various observations cast a doubt about the applicability of the CZM: the bi- (for 2D models) and tri- (in 3D) axiality of the matrix stress state in the inter-fiber region that is linked with a cavitation-like failure of the polymer~\cite{Asp1995}; the locality and mode dependency of the interface failure~\cite{Mantic2009}; the problematic use at the microscopic level of properties measured in UD specimens at the laminate level~\cite{Canal2012}. A second approach that obviates these drawbacks is the application of Linear Elastic Fracture Mechanics (LEFM) arguments to the study of debond growth. The analysis focuses on the evaluation of Mode I and Mode II Energy Release Rate (ERR) at the crack tip by means of the Virtual Crack Closure Technique (VCCT)~\cite{Krueger2004} or the J-Integral method~\cite{Rice1968}. The stress and strain field, required for the ERR computation, can be solved by application of different methodologies such as analytical solutions~\cite{Toya1974}, the Boundary Element Method (BEM)~\cite{Paris1996} or the Finite Element Method (FEM)~\cite{Zhuang2018}. Different works have followed this approach and studied models of one or two fibers in an effectively infinite matrix~\cite{Correa2011,Correa2013,Correa2014,Sandino2016,Sandino2018} and of an hexagonal cluster of fibers in an effectively infinite homogenized UD composite~\cite{Varna2017,Zhuang2018}. The problem of debond growth along the fiber-matrix interface in a cross-ply laminate has been only addressed very recently in~\cite{Velasco2018,Paris2018}, where the author embed a single partially debonded fiber in an effectively infinite homogenized $90^{\circ}$ ply bounded by homogenized $0^{\circ}$ layers. Thus, the effect of debond-debond interaction and of the relative proximity of a bi-material interface on the debond's ERR in cross-ply laminates is yet to be addressed. The present work is devoted to this problem. Models of Repeating Unit Cells (RUCs) are developed to represent laminates with different degrees of damage (here only in the form of debonds). The number of fully bonded fibers across the thickness of the $90^{\circ}$ ply is varied in order to investigate the effect of the proximity of the bi-material interface. The thickness of the bounding $0^{\circ}$ layers is also analyzed as a parameter of the study. The stress and strain fields are solved with the Finite Element Method in Abaqus~\cite{abq12} and the crack characterized by its Mode I and Mode II ERR, calculated with the VCCT and the J-integral method.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2. RVE MODELS AND FE DISCRETIZATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{RVE models \& FE discretization}
 
-\subsection{Models of Representative Volume Element(RVE)}
+% 2.1 Introduction and nomenclature
 
-\textcolor{blue}{We start by describing the different idealized micro-structures considered and the corresponding repeating element or RVE used to model them. Fig.~\ref{fig:fibersOnSideModels}, Fig.~\ref{fig:fibersOnTopModels} and Fig.~\ref{fig:fibersOnSideAndTopModels}}
+\subsection{Introduction \& Nomenclature}\label{subsec:names}
+
+\subsection{Models of Representative Volume Element (RVE)}\label{subsec:rve}
 
 \begin{figure}[!h]
 \centering
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{A debonded fiber every 2 fully bonded ones.}\label{subfig:every2}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Central debonded fiber with 1 fiber each side.}\label{subfig:1eachside}
-    \end{subfigure}
-
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{A debonded fiber every 4 fully bonded ones.}\label{subfig:every4}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Central debonded fiber with 2 fibers each side.}\label{subfig:2eachside}
-    \end{subfigure}
-
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{A debonded fiber every 6 fully bonded ones.}\label{subfig:every6}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Central debonded fiber with 3 fibers each side.}\label{subfig:3eachside}
-    \end{subfigure}
-\caption{Models of $\left[0^{\circ}_{n}, 90^{\circ}\right]_{S}$ laminates in which the central $90^{\circ}$ ply possesses a single layer of fibers and debonds repeating at different distances (left column), and corresponding Representative Volume Elements (right column) with symmetry applied on the lower boundary line. The interface crack is represented in red.}\label{fig:fibersOnSideModels}
+  \includegraphics[width=\textwidth]{freeThinPly.pdf}
+\caption{Models of ultra-thin UD composites with a single ``row'' of fibers and debonds repeating at different distances.}\label{fig:laminateModelsA}
 \end{figure}
 
 \begin{figure}[!h]
 \centering
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{3 layers with a central line of debonded fibers.}\label{subfig:3layers}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Central debonded fiber with 1 fiber above.}\label{subfig:1above}
-    \end{subfigure}
-
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{5 layers with a central line of debonded fibers.}\label{subfig:5layers}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Central debonded fiber with 2 fibers above.}\label{subfig:1above}
-    \end{subfigure}
-
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{7 layers with a central line of debonded fibers.}\label{subfig:7layers}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Central debonded fiber with 3 fibers above.}\label{subfig:1above}
-    \end{subfigure}
-\caption{Models of $\left[0^{\circ}_{n}, 90^{\circ}\right]_{S}$ laminates in which the central $90^{\circ}$ ply possesses a central line of debonded fibers (left column), and corresponding Representative Volume Elements (right column) with symmetry applied on the lower boundary line. The interface crack is represented in red.}\label{fig:fibersOnTopModels}
+        \includegraphics[height=0.3\textheight]{thickPlycentraldebondsline.pdf}
+  %      \caption{Multiple rows of fibers with debonds appearing on each fiber beloging to the central row: model $1\times k-free$ ($k=3$ in the figure).}\label{subfig:thickplycentraldebonds}
+\caption{Models of UD composites with different ``rows'' of fibers and debonds repeating at different distances.}\label{fig:laminateModelsB}
 \end{figure}
 
 \begin{figure}[!h]
 \centering
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{3 layers with a debonded fiber every 2 fully bonded ones in the central line of fibers.}\label{subfig:3layersevery2}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Central debonded fiber with 1 fiber on each side and 1 above.}\label{subfig:1eachside1above}
-    \end{subfigure}
-
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{3 layers with a debonded fiber every 4 fully bonded ones in the central line of fibers.}\label{subfig:3layersevery4}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Central debonded fiber with 2 fibers on each side and 1 above.}\label{subfig:2eachside1above}
-    \end{subfigure}
-
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{5 layers with a debonded fiber every 4 fully bonded ones in the central line of fibers.}\label{subfig:5layersevery4}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Central debonded fiber with 2 fibers on each side and 2 above.}\label{subfig:2eachside2above}
-    \end{subfigure}
-
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{3 layers with a debonded fiber every 6 fully bonded ones in the central line of fibers.}\label{subfig:3layersevery6}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Central debonded fiber with 3 fibers on each side and 1 above.}\label{subfig:3eachside1above}
-    \end{subfigure}
-\caption{Models of$\left[0^{\circ}_{n}, 90^{\circ}\right]_{S}$ laminates in which the central $90^{\circ}$ ply possesses multiple layers of fibers with debonds repeating at different distances in the central line of fibers (left column), and corresponding Representative Volume Elements (right column) with symmetry applied on the lower boundary line.}\label{fig:fibersOnSideAndTopModels}
-\end{figure}
-
-\begin{figure}[!h]
-\centering
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Single layer of debonded fibers inside a cross-ply laminates.}\label{subfig:singlelayerdebfibers}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Element with a single debonded fiber and, on the top surface, coupled vertical displacement and linearly distributed horizontal displacement.}\label{subfig:free}
-    \end{subfigure}
-
-\caption{Models of $\left[0^{\circ}_{n}, 90^{\circ}\right]_{S}$ laminates in which fibers belonging to the central $90^{\circ}$ ply are all debonded  (left column), and corresponding Representative Volume Elements (right column) with symmetry applied on the lower boundary line.}\label{fig:allFibersDebonded}
+        \includegraphics[width=\textwidth]{thickPly.pdf}
+   %    \caption{Mutiple rows of fibers with a debond appearing every $n$ fibers within the central row: model $n\times k-free$ ($n=3$ and $k=3$ in the figure).}\label{subfig:thickply}
+\caption{Models of UD composites with different ``rows'' of fibers and debonds repeating at different distances.}\label{fig:laminateModelsB}
 \end{figure}
 
 \subsection{Finite Element (FE) discretization}
 
-\textcolor{blue}{We describe the model implemented: schematic + description of parameters, formulation (LEFM, frictionless contact, VCCT, J-Integral), implementation of BCs, mesh. Fig.~\ref{fig:FEmodel}}
 
-\begin{figure}[!h]
-\centering
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Schematic of the model with its main parameters.}\label{subfig:modelschem}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        %\includegraphics[width=\textwidth]{}
-        \caption{Detail of the mesh in the crack tip's neighborhood.}\label{subfig:meshdetail}
-    \end{subfigure}
-
-\caption{Details and main parameters of the Finite Element model.}\label{fig:FEmodel}
-\end{figure}
-
-\textcolor{blue}{We mention the validation of the model with respect to BEM results by referring to the other paper.}
 
 \section{Results \& Discussion}
 

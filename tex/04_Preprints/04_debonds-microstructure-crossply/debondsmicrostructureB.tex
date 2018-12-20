@@ -165,14 +165,12 @@ The debond appears symmetrically with respect to the $x$ axis (see Fig.~\ref{fig
 \midrule
 Glass fiber &-   & 70.0 & 70.0  & 29.2 & 0.2  & 0.2\\
 Epoxy    &-& 3.5 & 3.5   & 1.25 &  0.4& 0.4\\
-UD&60.0& & & & & \\
+UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \end{tabular}
 \label{tab:phaseprop}
 \end{table}
 
-% TO REVIEW + ADD REF FOR CC MODEL
-
-%The model is meshed using second order, 2D, plane strain triangular (CPE6) and rectangular (CPE8) elements. A regular mesh of quadrilateral elements with an almost unitary aspect ratio is required at the crack tip. The angular size $\delta$ of an element in the crack tip region is always equal to $0.05^{\circ}$. The crack faces are modeled as element-based surfaces and a small-sliding contact pair interaction with no friction is established between them. The Mode I, Mode II and total Energy Release Rates (ERRs) (respectively referred to as $G_{I}$, $G_{II}$ and $G_{TOT}$) represent the main output of the FEM analysis; they are evaluated using the VCCT technique~\cite{Krueger2004} implemented in a custom Python routine and, for the total ERR, the J-integral~\cite{Rice1968} is obtained by application of the Abaqus built-in functionality. A glass fiber-epoxy system is considered throughout this paper, and it is assumed that their response lies always in the linear elastic domain. The properties used are listed in Table~\ref{tab:phaseprop}.
+The FEM model is discretized using second order, 2D, plane strain triangular (CPE6) and rectangular (CPE8) elements. In the crack tip neighborhood, a refined regular mesh of quadrilateral elements with almost unitary aspect ratio is needed to ensure a correct evaluation of the ERR. The angular size $\delta$ of an element in this refined region close to the crack tip is by design equal to $0.05^{\circ}$. The crack faces are modeled as element-based surfaces with a frictionless small-sliding contact pair interaction. The Mode I, Mode II and total Energy Release Rates (ERRs) (respectively $G_{I}$, $G_{II}$ and $G_{TOT}$) represent the main result of the numerical analysis. They are computed using the VCCT~\cite{Krueger2004} implemented in a custom Python routine and the total ERR is obtained from the J-integral~\cite{Rice1968} evaluation by means of the Abaqus built-in functionality. Glass fiber and epoxy are considered throughout this article, and it is assumed that their response always lies in the linear elastic domain. The effective UD properties are computed using Hashin's Concentric Cylinder Assembly model~\cite{Hashin1983} with the self-consistency scheme for the out-of-plane shear modulus of Christensen~\cite{Christensen1979}. The properties used are listed in Table~\ref{tab:phaseprop}. The model was validated with respect to BEM results of~\cite{Paris2007,Sandino2016}; considerations about the order of accuracy can be found in~\cite{}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 3. RESULTS AND DISCUSSION
@@ -180,7 +178,7 @@ UD&60.0& & & & & \\
 
 \section{Results \& Discussion}
 
-\subsection{Interaction between debonds in a $90^{\circ}$ ply with a single layer of fibers inside a $\left[0^{\circ}_{n}, 90^{\circ}\right]_{S}$ laminate}
+\subsection{Effect of the proximity of the inter-ply interface on debond-debond interaction in a single fiber row $90^{\circ}$ ply of a $\left[0^{\circ}_{n}, 90^{\circ}\right]_{S}$ laminate}
 
 
 \subsection{Interaction between layers of fully bonded fibers and a centrally located line of debonded fibers in a $90^{\circ}$ ply inside a $\left[0^{\circ}_{n}, 90^{\circ}\right]_{S}$ laminate}

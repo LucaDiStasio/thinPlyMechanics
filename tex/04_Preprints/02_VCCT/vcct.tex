@@ -1,7 +1,11 @@
 \documentclass[review]{elsarticle}
 
 \usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{dirtytalk}
 \usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{nicefrac}
 \usepackage[usenames]{xcolor}
 \usepackage{lineno,hyperref}
 \modulolinenumbers[5]
@@ -83,7 +87,7 @@
 \section{Introduction}
 
 Bi-material interfaces represent the basic load transfer mechanism at the heart of Fiber Reinforced Polymer Composite (FRPC) materials. They are present at the macroscale, in the form of adhesive joints; at the mesoscale, as interfaces between layers with different orientations; at the microscale, as fiber-matrix interfaces. Bi-material interfaces have for long attracted the attention of researchers in Fracture Mechanics~\cite{Comninou1990,Hills1993}, due to their hidden complexity.\\
-The problem was first addressed in the 1950's by Williams~\cite{Williams1959}, who derived through a linear elastic asymptotic analysis the stress distribution around an \emph{open} crack (with crack faces nowhere in contact for any size of the crack) between two infinite half-planes of dissimilar materials and found the existence of a strong oscillatory behavior in the stress singularity at the crack tip of the form 
+The problem was first addressed in the 1950's by Williams~\cite{Williams1959}, who derived through a linear elastic asymptotic analysis the stress distribution around an \emph{open} crack (i.e. with crack faces nowhere in contact for any size of the crack) between two infinite half-planes of dissimilar materials and found the existence of a strong oscillatory behavior in the stress singularity at the crack tip of the form 
 
 \begin{equation}\label{eq:singularitywilliams}
 r^{-\frac{1}{2}}\sin\left(\varepsilon\log r\right)\quad\text{with}\quad\varepsilon=\frac{1}{2\pi}\log\left(\frac{1-\beta}{1+\beta}\right);
@@ -102,6 +106,36 @@ In order to treat cases more complex than the single partially debonded fiber in
 Recently the Finite Element Method (FEM) was also applied to the solution of the fiber-matrix interface crack problem~\cite{Zhuang2018,Varna2017,Zhuang2018a}, in conjunction with the Virtual Crack Closure Technique (VCCT)~\cite{Rybicki1977,Krueger2004} for the evaluation of the ERR at the crack tip. In~\cite{Zhuang2018}, the authors validated their model with respect to the BEM results of~\cite{Paris1996}, but no analysis of the effect of the discretization in the crack tip neighborhood comparable to~\cite{DelCano1997} was proposed. Thanks to the interest in evaluating the ERR of interlaminar delamination, different studies exist in the literature on the effect of mesh discretization on Mode I and Mode II ERR of the bi-material interface crack when evaluated with the VCCT in the context of the FEM~\cite{Sun1987,Manoharan1990,Sun1997}. However, no comparable analysis can be found in the literature on the application of the VCCT to the fiber-matrix interface crack (circular bi-material interface crack) problem in the context of a linear elastic FEM solution. It is this gap that the present work aims to address. We first present the FEM formulation of the problem, together with the main geometrical characteristics, material properties, boundary conditions and loading. We then propose a vectorial formulation of the VCCT and express the Mode I and Mode II ERR in terms of the FEM natural variables. With this tool, we derive an analytical estimate of the ERR convergence and compare it with numerical results.
 
 \section{FEM formulation of the fiber-matrix interface crack problem}
+
+In order to investigate the fiber-matrix interface crack problem, a 2-dimensional model of a single fiber inserted in a rectangular matrix element is considered (see Figure~\ref{fig:modelschem}). Total element length and height are respectively $2L$ and $L$, where $L$ is determined by the fiber radius $R_{f}$ and the fiber volume fraction $V_{f}$ by
+
+\begin{equation}\label{eq:LVf}
+L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}.
+\end{equation}
+
+The fiber radius $R_{f}$ is assumed to be equal to $1\ \mu m$. This choice is not dictated by physical considerations but for simplicity. It is thus useful to remark that, in a linear elastic solution as the one considered in the present work, the ERR is proportional to the geometrical dimensions of the model and, consequently, recalculation of the ERR for fibers of any size requires a simple multiplication.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{RUC.pdf}
+\caption{Schematic of the model with its main parameters.}\label{fig:modelschem}
+\end{figure}
+
+As shown in Fig.~\ref{fig:modelschem}, the debond is placed symmetrically with respect to the $x$ axis and its size is characterized by the angle $\Delta\theta$ (which makes the full debond size equal to $2\Delta\theta$ and the full crack length equal to $R_{f}2{\Delta\theta}$). A region $\Delta\Phi$ of variable size appears at the crack tip for large debond sizes (at least $\geq 60^{\circ}-80^{\circ}$), in which the crack faces are in contact with each other and free to slide. Frictionless contact is thus considered between the two crack faces to allow free sliding and avoid interpenetration. Symmetry with respect to the $x$ axis is applied on the lower boundary while the upper surface is left free. Kinematic coupling on the $x$-displacement is applied along the left and right sides of the model in the form of a constant $x$-displacement $\pm\bar{\varepsilon}_{x} L$, which corresponds to transverse strain $\bar{\varepsilon}_{x}$ equal to $1\%$.
+
+\begin{table}[!htbp]
+ \centering
+ \caption{Summary of the mechanical properties of fiber and matrix. $E$ stands for Young's modulus, $\mu$ for shear modulus and $\nu$ for Poisson's ratio.}
+ \begin{tabular}{cccc}
+\textbf{Material} & \textbf{$E\left[GPa\right]$}\ & \textbf{$\mu\left[GPa\right]$} & \textbf{$\nu\left[-\right]$} \\
+\midrule
+Glass fiber    & 70.0  & 29.2   & 0.2  \\
+Epoxy    & 3.5    & 1.25   & 0.4
+\end{tabular}
+\label{tab:phaseprop}
+\end{table}
+
+The model problem is solved with the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM software~\cite{abq12}. The model is meshed with second order, 2D, plane strain triangular (CPE6) and rectangular (CPE8) elements. A regular mesh of quadrilateral elements with almost unitary aspect ratio is used at the crack tip. The angular size $\delta$ of an element in the crack tip neighborhood represents the main parameter of the numerical analysis. The crack faces are modeled as element-based surfaces and a small-sliding contact pair interaction with no friction is imposed between them. The Mode I, Mode II and total Energy Release Rates (ERRs) (respectively referred to as $G_{I}$, $G_{II}$ and $G_{TOT}$) are evaluated using the VCCT~\cite{Krueger2004}, implemented in a in-house Python routine. A glass fiber-epoxy system is considered in the present work, and it is assumed that their response lies always in the linear elastic domain. The material properties of glass fiber and epoxy are reported in Table~\ref{tab:phaseprop}.
 
 \section{Vectorial formulation of the Virtual Crack Closure Technique (VCCT)}
 

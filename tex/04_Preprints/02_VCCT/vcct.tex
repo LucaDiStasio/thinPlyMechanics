@@ -2,7 +2,6 @@
 
 \usepackage{amsmath}
 \usepackage{booktabs}
-\usepackage{dirtytalk}
 \usepackage{subcaption}
 \usepackage{tabularx}
 \usepackage{nicefrac}
@@ -140,6 +139,95 @@ The model problem is solved with the Finite Element Method (FEM) within the Abaq
 \section{Vectorial formulation of the Virtual Crack Closure Technique (VCCT)}
 
 \subsection{Foundational relations}
+
+In the isoparametric formulation of the Finite Element Method, the element Jacobian $J$ and its inverse $J^{-1}$ can be expressed in general as 
+
+\begin{equation}
+\underline{\underline{J}}=\begin{bmatrix}
+\underline{e}_{\xi}|\underline{e}_{\eta}
+\end{bmatrix}=\begin{bmatrix}
+\frac{\partial x}{\partial\xi}&\frac{\partial x}{\partial\eta}\\\frac{\partial y}{\partial\xi}&\frac{\partial y}{\partial\eta}
+\end{bmatrix}\qquad\underline{\underline{J}}^{-1}=\begin{bmatrix}
+\underline{e}^{x}|\underline{e}^{y}
+\end{bmatrix}=\begin{bmatrix}
+\frac{\partial \xi}{\partial x}&\frac{\partial \xi}{\partial y}\\\frac{\partial \eta}{\partial x}&\frac{\partial \eta}{\partial y}
+\end{bmatrix}
+\end{equation}
+
+where $\left\{e_{\xi}, e_{\eta}\right\}$ and $\left\{e^{x}, e^{y}\right\}$ are respectively the covariant and contravariant basis vectors of the mapping between global $\left\{x, y\right\}$ and local element $\left\{\xi, \eta\right\}$ coordinates:
+
+\begin{equation}
+\underline{e}_{\xi}=\begin{bmatrix}
+\frac{\partial x}{\partial\xi}\\\frac{\partial y}{\partial\xi}
+\end{bmatrix}\quad\underline{e}_{\eta}=\begin{bmatrix}
+\frac{\partial x}{\partial\eta}\\\frac{\partial y}{\partial\eta}
+\end{bmatrix},
+\end{equation}
+
+\begin{equation}
+\underline{e}_{x}=\begin{bmatrix}
+\frac{\partial \xi}{\partial x}\\\frac{\partial \eta}{\partial x}
+\end{bmatrix}\quad\underline{e}_{y}=\begin{bmatrix}
+\frac{\partial \xi}{\partial y}\\\frac{\partial \eta}{\partial y}
+\end{bmatrix}.
+\end{equation}
+
+Denoting by $d$ the number of geometrical dimensions of the problem ($d=2$ in the present work) and by $\underline{p}$ the $d\times 1$ position vector in global coordinates, we can formally introduce the $3\left(d-1\right)\times d$ matrix operator of partial differentiation $\underline{\underline{\widetilde{B}}}$ such that
+
+\begin{equation}\label{eq:introB}
+\underline{\varepsilon}\left(\underline{p}\right)=\underline{\underline{\widetilde{B}}}\cdot\underline{u}\left(\underline{p}\right),
+\end{equation}
+
+where $\underline{u}$ and $\underline{\varepsilon}$ are respectively the $d\times 1$ displacement vector and the $3\left(d-1\right)\times 1$ strain vector in Voigt notation. Denoting by $n$ the number of nodes of a generic element ($n=s\times m$ where $s$ represents the number of sides of the element and $m$ the order of the shape functions), we can furthermore introduce the $d\times d\cdot n$ matrix \underline{\underline{N}} of shape functions such that
+
+\begin{equation}\label{eq:introN}
+\underline{u}=\underline{\underline{N}}\cdot\underline{u}_{N},
+\end{equation}
+
+where $\underline{u}_{N}$ is the $d\cdot n\times 1$ vector of element nodal variables. Having introduced $\underline{\underline{\widetilde{B}}}$ and $\underline{\underline{N}}$ in Equations~\ref{eq:introB} and~\ref{eq:introN} respectively, it is possible to define the $3\left(d-1\right)\times d\cdot n$ matrix $\underline{\underline{B}}$ of derivatives (with respect to global coordinates) of shape functions as
+
+\begin{equation}
+\underline{\underline{B}}=\underline{\underline{\widetilde{B}}}\cdot\underline{\underline{N}}.
+\end{equation}
+
+We introduce the linear elastic material behavior in the form of the $3\left(d-1\right)\times 3\left(d-1\right)$ rigidity matrix $\underline{\underline{D}}$ such that
+
+\begin{equation}
+\underline{\sigma}=\underline{\underline{D}}\cdot\underline{\varepsilon},
+\end{equation}
+
+where $\underline{\sigma}$ the $3\left(d-1\right)\times 1$ stress vector in Voigt notation. It is finally possible to define the $n\times n$ element stiffness matrix $\underline{\underline{k_{e}}}$ as 
+
+\begin{equation}\label{eq:elestiff}
+\underline{\underline{k_{e}}}=\int_{V_{e}\left(x,y\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV_{e}\left(x,\dots,y\right)=\int_{V_{e}\left(\xi,\eta\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)\sqrt{g}dV_{e}\left(\xi,\dots,\eta\right),
+\end{equation}
+
+where $g=det\left(\underline{\underline{J}}^{T}\underline{\underline{J}}\right)$ and $V_{e}$ is the element volume. Given that isoparametric elements are always defined between $-1$ and $1$ in each dimension, Equation~\ref{eq:elestiff} can simplified to
+
+\begin{equation}
+\underline{\underline{k_{e}}}=\int_{-1}^{1}\dots\int_{-1}^{1}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)\sqrt{g}d\xi,\dots, d\eta,
+\end{equation}
+
+which is amenable to numerical integration by means of a Gaussian quadrature of the form
+
+\begin{equation}\label{eq:elstiffnum}
+\underline{\underline{k_{e}}}\approx \sum_{i=1}^{N}\dots\sum_{j=1}^{N}w_{i}\dots w_{j}\left(\underline{\underline{B}}^{T}\left(\xi_{i}, \dots,\eta_{j}\right)\cdot\underline{\underline{D}}\cdot\underline{\underline{B}}\left(\xi_{i}, \dots,\eta_{j}\right)\sqrt{g}\right),
+\end{equation}
+
+where $\left(\xi_{i}, \dots,\eta_{j}\right)$ are the coordinates of the $N$ Gaussian quadrature points. The element stiffness matrix as evaluated in Eq.~\ref{eq:elstiffnum} is in general a full symmetric (in the case of linear elasticity) matrix of the form
+
+\begin{equation}
+k_{e}=\begin{bmatrix}
+k_{e|11}&k_{e|12}&k_{e|13}&k_{e|14}&k_{e|15}&k_{e|16}&k_{e|17}&k_{e|18}\\
+k_{e|12}&k_{e|22}&k_{e|23}&k_{e|24}&k_{e|25}&k_{e|26}&k_{e|27}&k_{e|28}\\
+k_{e|13}&k_{e|23}&k_{e|33}&k_{e|34}&k_{e|35}&k_{e|36}&k_{e|37}&k_{e|38}\\
+k_{e|14}&k_{e|24}&k_{e|34}&k_{e|44}&k_{e|45}&k_{e|46}&k_{e|47}&k_{e|48}\\
+k_{e|15}&k_{e|25}&k_{e|35}&k_{e|45}&k_{e|55}&k_{e|56}&k_{e|57}&k_{e|58}\\
+k_{e|16}&k_{e|26}&k_{e|36}&k_{e|46}&k_{e|56}&k_{e|66}&k_{e|67}&k_{e|68}\\
+k_{e|17}&k_{e|27}&k_{e|37}&k_{e|47}&k_{e|57}&k_{e|67}&k_{e|77}&k_{e|78}\\
+k_{e|18}&k_{e|28}&k_{e|38}&k_{e|48}&k_{e|58}&k_{e|68}&k_{e|78}&k_{e|88}\\
+\end{bmatrix}.
+\end{equation}
 
 \subsection{Formulation of the ERR with respect to FEM variables}
 

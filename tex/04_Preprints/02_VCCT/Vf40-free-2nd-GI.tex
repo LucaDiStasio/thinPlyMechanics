@@ -37,7 +37,7 @@ xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{
 ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
 tick align=outside,
 tick label style={font=\huge},
-legend style={draw=white!80.0!black,font=\fontsize{18}{14}\selectfont,row sep=7.5pt},
+legend style={draw=white!80.0!black,font=\fontsize{24}{14}\selectfont,row sep=7.5pt},
 legend image post style={xscale=1.5,yscale=1.5},
 legend cell align={left},
 clip mode=individual,
@@ -63,56 +63,168 @@ legend entries={},
 % delta = 1.0
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
 table{
-
+10.00	0.91157402
+20.00	0.87190348
+30.00	0.62097166
+40.00	0.36384156
+50.00	0.16280898
+60.00	0.03617913
+70.00	0.00007167
+80.00	0.00032193
+90.00	0.00030070
+100.00	0.00020096
+110.00	0.00011647
+120.00	0.00005564
+130.00	0.00001688
+140.00	0.00000096
+150.00	0.00016688
 };
 \addlegendentry{$1.0^{\circ}$};
 
 % delta = 0.5
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
 table{
-
+10.00	0.89147288
+20.00	0.83624023
+30.00	0.58317142
+40.00	0.33122354
+50.00	0.14003790
+60.00	0.02586155
+70.00	0.00000313
+80.00	0.00014063
+90.00	0.00012481
+100.00	0.00008254
+110.00	0.00004766
+120.00	0.00002291
+130.00	0.00000737
+140.00	0.00000023
+150.00	0.00012035
 };
 \addlegendentry{$0.5^{\circ}$};
 
 % delta = 0.25
 \addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
 table{
-
+10.00	0.87022747
+20.00	0.80251564
+30.00	0.54844519
+40.00	0.30202259
+50.00	0.12034374
+60.00	0.01782257
+70.00	0.00001302
+80.00	0.00006034
+90.00	0.00005115
+100.00	0.00003355
+110.00	0.00001933
+120.00	0.00000937
+130.00	0.00000317
+140.00	0.00000031
+150.00	0.00008004
 };
 \addlegendentry{$0.25^{\circ}$};
 
 % delta = 0.2
 \addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
 table{
-
+10.00	0.86260273
+20.00	0.79104830
+30.00	0.53687862
+40.00	0.29246593
+50.00	0.11406894
+60.00	0.01546569
+70.00	0.00001360
+80.00	0.00004633
+90.00	0.00003877
+100.00	0.00002538
+110.00	0.00001459
+120.00	0.00000712
+130.00	0.00000244
+140.00	0.00000030
+150.00	0.00006794
 };
 \addlegendentry{$0.2^{\circ}$};
 
 % delta = 0.125
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
 table{
-
+10.00	0.84658066
+20.00	0.76754133
+30.00	0.51343567
+40.00	0.27333961
+50.00	0.10175248
+60.00	0.01115440
+70.00	0.00001143
+80.00	0.00002697
+90.00	0.00002176
+100.00	0.00001415
+110.00	0.00000804
+120.00	0.00000393
+130.00	0.00000140
+140.00	0.00000023
+150.00	0.00004586
 };
 \addlegendentry{$0.125^{\circ}$};
 
 % delta = 0.1
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
 table{
-
+10.00	0.83852391
+20.00	0.75601910
+30.00	0.50209341
+40.00	0.26421706
+50.00	0.09600833
+60.00	0.00930599
+70.00	0.00001036
+80.00	0.00002062
+90.00	0.00001663
+100.00	0.00001050
+110.00	0.00000633
+120.00	0.00000296
+130.00	0.00000109
+140.00	0.00000020
+150.00	0.00003650
 };
 \addlegendentry{$0.1^{\circ}$};
 
 % delta = 0.0625
 \addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=diamond*]
 table{
-
+10.00	0.82162763
+20.00	0.73228331
+30.00	0.47899786
+40.00	0.24588692
+50.00	0.08470873
+60.00	0.00600128
+70.00	0.00000748
+80.00	0.00001235
+90.00	0.00000942
+100.00	0.00000613
+110.00	0.00000338
+120.00	0.00000164
+130.00	0.00000064
+140.00	0.00000014
+150.00	0.00002020
 };
 \addlegendentry{$0.0625^{\circ}$};
 
 % delta = 0.05
 \addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=diamond*,mark options={fill=white}]
 table{
-
+10.00	0.81333906
+20.00	0.72085443
+30.00	0.46803258
+40.00	0.23727353
+50.00	0.07953765
+60.00	0.00465450
+70.00	0.00000674
+80.00	0.00000958
+90.00	0.00000631
+100.00	0.00000455
+110.00	0.00000247
+120.00	0.00000135
+130.00	0.00000051
+140.00	0.00000009
+150.00	0.00001383
 };
 \addlegendentry{$0.05^{\circ}$};
 

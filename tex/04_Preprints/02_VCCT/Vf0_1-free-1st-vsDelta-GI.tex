@@ -72,7 +72,7 @@ G 0.21008936	0.20731888	0.20333014	0.20178158	0.19844589	0.19682949	0.19315858	0
 \addplot[only marks,mark size=\markersize,black,mark=square*]
 table[x=delta,y=G]{\transposedatatableA};
 \addlegendentry{$10.0^{\circ}$};
-\addplot[black,dashed, line width=\linewidth, domain=0.01:1.075]{0.0064*ln(\x)+0.2113}node[below] {$0.0064\ln\delta+0.2113$};
+\addplot[black,dashed, line width=\linewidth, domain=0.01:1.075]{0.0064*ln(\x)+0.2113}node[black,pos=0.5,anchor=north west] {\Large$\mathbf{0.0064\ln\delta+0.2113}$};
 
 % deltatheta = 20
 \pgfplotstableread{

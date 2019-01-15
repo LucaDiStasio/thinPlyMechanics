@@ -282,7 +282,34 @@ As $G_{TOT}$ was defined according to Equation~\ref{eq:gtot} and given that $Tr\
 G_{TOT} = \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{r\theta,q}\right)=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{xy,q}\right),
 \end{equation}
 
-which shows that the total Energy Release Rate is invariant to rigid rotations and can be calculated equivalently with forces and displacements expressed in the local crack tip reference frame or the global reference frame. The result of Equation~\ref{eq:gtotrotinv} has also a physical implication: given that the stress and displacement fields in the vicinity of the crack tip are the same, two cracks with different crack propagation directions are energetically equivalent with respect to the total Energy Release Rate. For two such cracks, given that laws of the type $G_{TOT}\geq G_{c}$ govern crack propagation, if $G_{c}$ did not depend on mode ratio, crack orientation would not at all affect its growth. 
+which shows that the total Energy Release Rate is invariant to rigid rotations and can be calculated equivalently with forces and displacements expressed in the local crack tip reference frame or the global reference frame. The analytical result is confirmed by the numerical solution of the fiber-matrix interface crack with different element orders and model fiber volume fractions, as shown in Figure~\ref{fig:gtotrotinvnum}.
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Vf0_1-free-1st-05-invrot-GTOT.pdf}
+       \caption{$V_{f}=0.1\%$, $1^{st}$ order elements, $\delta=0.05^{\circ}$.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Vf0_1-free-2nd-05-invrot-GTOT.pdf}
+       \caption{$V_{f}=0.1\%$, $2^{nd}$ order elements, $\delta=0.05^{\circ}$.}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Vf40-free-1st-05-invrot-GTOT.pdf}
+       \caption{$V_{f}=40\%$, $1^{st}$ order elements, $\delta=0.05^{\circ}$.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Vf40-free-2nd-05-invrot-GTOT.pdf}
+       \caption{$V_{f}=40\%$, $2^{nd}$ order elements, $\delta=0.05^{\circ}$ .}
+    \end{subfigure}
+
+\caption{Numerical invariance of the total Energy Release Rate: $G_{TOT}$ computed with the VCCT with rotated forces and displacements (label \emph{rotated}), with the VCCT with forces and displacements in the global reference frame (label \emph{unrotated}) and with J-integral method (label \emph{J-integral}).}\label{fig:gtotrotinvnum}
+\end{figure}
+
+The result of Equation~\ref{eq:gtotrotinv} has also a physical implication: given that the stress and displacement fields in the vicinity of the crack tip are the same, two cracks with different crack propagation directions are energetically equivalent with respect to the total Energy Release Rate. For two such cracks, given that laws of the type $G_{TOT}\geq G_{c}$ govern crack propagation, if $G_{c}$ did not depend on mode ratio, crack orientation would not at all affect its growth.
 
 \section{Convergence analysis}
 

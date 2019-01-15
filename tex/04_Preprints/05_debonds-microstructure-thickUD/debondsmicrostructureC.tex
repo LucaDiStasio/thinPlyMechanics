@@ -113,7 +113,7 @@ The model shown in Fig.~\ref{fig:laminateModelsA} represents an infinite UD lami
 \caption{Rows of fibers with debonds repeating at different distances along the horizontal direction and rows with debonded fibers repeating at different distances along the vertical direction: models $n\times k-coupling$.}\label{fig:laminateModelsA}
 \end{figure}
 
-Models in Figures~\ref{fig:laminateModelsB} and~\ref{fig:laminateModelsC} represent instead a UD composite with respectively vertical lines and horizontal rows of partially debonded fibers repeating at the regular intervals respectively in the horizontal and vertical direction, measured respectively in terms of vertical lines and horizontal rows of fully bonded (undamaged) fibers. According to the nomenclature introduced in~\ref{subsec:names}, these two models are identified respectively by $n\times 1-coupling$ and $1\times k-coupling$.
+Models in Figures~\ref{fig:laminateModelsB} and~\ref{fig:laminateModelsC} represent instead a UD composite with respectively vertical lines and horizontal rows of partially debonded fibers repeating at the regular intervals respectively in the horizontal and vertical direction, measured respectively in terms of vertical lines and horizontal rows of fully bonded (undamaged) fibers. According to the nomenclature introduced in Section~\ref{subsec:names}, these two models are identified respectively by $n\times 1-coupling$ and $1\times k-coupling$.
 
 \begin{figure}[!h]
 \centering
@@ -133,13 +133,13 @@ On the other hand, model $n\times 1-coupling$ in Figure~\ref{fig:laminateModelsC
 
 \subsection{Finite Element (FE) discretization}
 
-Discretization and analysis of RUCs is performed with the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM software~\cite{abq12}. Length $l$ and height $h$ of the model are respectively determined by the number of fibers $n$ in the horizontal direction and $k$ across the thickness (see~\ref{subsec:rve}) according to Eq.~\ref{eq:lengthheight}:
+Discretization and analysis of RUCs is performed with the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM software~\cite{abq12}. Length $l$ and height $h$ of the model are respectively determined by the number of fibers $n$ in the horizontal direction and $k$ across the thickness (see Sec.~\ref{subsec:rve}) according to Eq.~\ref{eq:lengthheight}:
 
 \begin{equation}\label{eq:lengthheight}
 l=2nL\qquad h=kL;
 \end{equation}
 
-where $2L$ is the length of a one-fiber unit, see Fig.~\ref{subfig:modelschem}, and $L$ is defined as a function of the fiber volume fraction $V_{f}$ and the fiber radius $R_{f}$ according to
+where $2L$ is the length of a one-fiber unit, see Fig.~\ref{fig:modelschem}, and $L$ is defined as a function of the fiber volume fraction $V_{f}$ and the fiber radius $R_{f}$ according to
 
 \begin{equation}\label{eq:LVf}
 L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}.

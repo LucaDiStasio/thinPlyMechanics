@@ -138,6 +138,235 @@ Epoxy    & 3.5    & 1.25   & 0.4
 The model problem is solved with the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM software~\cite{abq12}. The model is meshed with second order, 2D, plane strain triangular (CPE6) and rectangular (CPE8) elements. A regular mesh of quadrilateral elements with almost unitary aspect ratio is used at the crack tip. The angular size $\delta$ of an element in the crack tip neighborhood represents the main parameter of the numerical analysis. The crack faces are modeled as element-based surfaces and a small-sliding contact pair interaction with no friction is imposed between them. The Mode I, Mode II and total Energy Release Rates (ERRs) (respectively referred to as $G_{I}$, $G_{II}$ and $G_{TOT}$) are evaluated using the VCCT~\cite{Krueger2004}, implemented in a in-house Python routine. A glass fiber-epoxy system is considered in the present work, and it is assumed that their response lies always in the linear elastic domain. The material properties of glass fiber and epoxy are reported in Table~\ref{tab:phaseprop}.
 
 \section{Vectorial formulation of the Virtual Crack Closure Technique (VCCT)}
+ 
+In order to express the VCCT formulation of the ERR in terms of FEM variables, we need to introduce a few rotation matrices in order to represent the discretized representation (FE mesh) of a crack along a circular interface. The position of the crack tip is characterized by the angular size of the crack (see Sec.~\ref{sec:femmodel} and Fig.~\ref{fig:modelschem} for reference) and the rotation corresponding to the crack tip reference frame is represented by the matrix $\underline{\underline{R}}_{\Delta\theta}$ defined as
+
+\begin{equation}\label{eq:Rmatrix}
+\underline{\underline{R}}_{\Delta\theta}=\begin{bmatrix}
+\cos\left(\Delta\theta\right) & \sin\left(\Delta\theta\right) \\
+-\sin\left(\Delta\theta\right) & \cos\left(\Delta\theta\right)
+\end{bmatrix}.
+\end{equation}
+
+Nodes belonging to the elements sharing the crack tip are involved in the VCCT estimation of the ERR and it is assumed that, given a sufficiently fine discretization, they are aligned with the crack propagation direction defined at the crack tip. However small the elements in the crack tip neighborhood, a misalignment always exists with respect to the assumed crack propagation direction. This is measured by the matrices $\underline{\underline{P}}_{\delta}\left(p\right)$, defined as
+
+\begin{equation}\label{eq:Pmatrix}
+\underline{\underline{P}}_{\delta}\left(p\right)=\begin{bmatrix}
+\cos\left(\left(1+\frac{1-p}{m}\right)\delta\right) & \sin\left(\left(1+\frac{1-p}{m}\right)\delta\right) \\
+-\sin\left(\left(1+\frac{1-p}{m}\right)\delta\right) & \cos\left(\left(1+\frac{1-p}{m}\right)\delta\right)
+\end{bmatrix}
+\end{equation}
+
+ and $\underline{\underline{Q}}_{\delta}\left(q\right)$, equal to 
+
+\begin{equation}\label{eq:Qmatrix}
+\underline{\underline{Q}}_{\delta}\left(q\right)=\begin{bmatrix}
+\cos\left(\frac{q-1}{m}\delta\right) & \sin\left(\frac{q-1}{m}\delta\right) \\
+-\sin\left(\frac{q-1}{m}\delta\right) & \cos\left(\frac{q-1}{m}\delta\right)
+\end{bmatrix},
+\end{equation}
+
+respectively for the free and bonded nodes involved in the VCCT estimation. In Eqs.~\ref{eq:Pmatrix} and~\ref{eq:Qmatrix}, $\delta$ is the angular size of an element in the crack tip neighborhood (see Sec.~\ref{sec:femmodel} and Fig.~\ref{fig:modelschem}), $m$ is the order of the element shape functions and $p,q$ are indices referring to the nodes belonging respectively to free and bonded elements sharing the crack tip. Introducing the permutation matrix
+
+
+\begin{equation}
+\underline{\underline{P}}_{\pi}=\begin{bmatrix}
+0 & 1\\
+-1& 0
+\end{bmatrix},
+\end{equation}
+
+it is possible to express the derivatives of rotation matrices $\underline{\underline{R}}_{\Delta\theta}$, $\underline{\underline{P}}_{\delta}$ and $\underline{\underline{Q}}_{\delta}$ with respect to their argument:
+
+\begin{equation}\label{eq:rotmatdev}
+\frac{\partial \underline{\underline{R}}_{\Delta\theta}}{\partial \Delta\theta}=\underline{\underline{D}}\cdot\underline{\underline{R}}_{\Delta\theta},\quad\frac{\partial \underline{\underline{P}}_{\delta}}{\partial \delta}=\left(1+\frac{1-p}{m}\right)\underline{\underline{D}}\cdot\underline{\underline{P}}_{\delta},\quad\frac{\partial \underline{\underline{Q}}_{\delta}}{\partial \delta}=\frac{q-1}{m}\underline{\underline{D}}\cdot\underline{\underline{Q}}_{\delta}.
+\end{equation}
+
+By means of Eqs.~\ref{eq:Pmatrix} and~\ref{eq:Qmatrix}, we can express the crack tip forces $
+\underline{F}_{xy}=\begin{bmatrix}
+F_{x} \\
+F_{y}
+\end{bmatrix}$ and crack displacements  $
+\underline{u}_{xy}=\begin{bmatrix}
+u_{x} \\
+u_{y}
+\end{bmatrix}$ in the crack tip reference frame (where the tangential direction $\theta$ correspond to the direction of crack propagation) while taking into account the misalignment to the finite  discretization as 
+
+\begin{equation}\label{eq:FUrot}
+\underline{F}_{r\theta}=\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy}\qquad\underline{u}_{r\theta}=\underline{\underline{P}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{u}_{xy}
+\end{equation}
+
+where $\underline{F}_{r\theta}=\begin{bmatrix}
+F_{r} \\
+F_{\theta}
+\end{bmatrix}$ and $\underline{u}_{r\theta}=\begin{bmatrix}
+u_{r} \\
+u_{\theta}
+\end{bmatrix}$.
+
+The crack tip forces can be expressed as a function of the crack opening displacement as 
+
+\begin{equation}\label{eq:ctforce1}
+\underline{F}_{xy}=\underline{\underline{K}}_{xy}\underline{u}_{xy}+\underline{\widetilde{F}}_{xy},
+\end{equation}
+ 
+where $\underline{\underline{K}}_{xy}$ is in general a full matrix of the form $\underline{\underline{K}}_{xy}=\begin{bmatrix}
+K_{xx}  K_{xy}\\
+K_{yx}  K_{yy}
+\end{bmatrix}$ and $\underline{\widetilde{F}}_{xy}$ represents the effect of the rest of the FE solution through the remaining nodes of the elements attached to the crack tip. As such, the term $\underline{\widetilde{F}}_{xy}$ can be expressed as a linear combination of the solution vector $\underline{u}_{N}$ of nodal displacements of the form $\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}$. Equation~\ref{eq:ctforce1} thus become
+
+\begin{equation}\label{eq:ctforce2}
+\underline{F}_{xy}=\underline{\underline{K}}_{xy}\underline{u}_{xy}+\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}.
+\end{equation}
+
+An exemplifying derivation of the relationships expressed in Equations~\ref{eq:ctforce1} and~\ref{eq:ctforce2} can be found in \ref{app:ctforcesexample}. It is worthwhile to observe that another author~\cite{Valvo2011} proposed a relationship of the form $\underline{F}_{xy}=\underline{\underline{K}}_{xy}\underline{u}_{xy}$. However, in~\cite{Valvo2011}, this relationship is assumed \emph{a priori} and manipulated to propose a revised version of the VCCT, based on the assumption that the matrix $\underline{\underline{K}}_{xy}$ should be diagonal to provide physically-consistent fracture mode partitioning. On the other hand, in the present work we derive the relationships of Eqs.~\ref{eq:ctforce1} and~\ref{eq:ctforce2} from the formulation of the Finite Element Method. According to our derivation, it seems correct that the matrix $\underline{\underline{K}}_{xy}$ should not in general be diagonal in order to take into account Poisson's effect. In fact, a positive crack opening displacement would cause a transverse displacement in the neighborhood of the crack tip. Given that material properties are different on the two sides of a bi-material interface, a net shear would be applied to the crack tip which would correspond to a net contribution to the crack tip force related to crack shear displacement. The analytical derivations presented in \ref{app:ctforcesexample} confirm these physical considerations.\\
+Based upon the work of Raju~\cite{Raju1987}, we introduce the matrix $\underline{\underline{T}}_{pq}$ to represent the weights needed in the VCCT to account for the use of singular elements. As already done previously, indices $p$ and $q$ refer to nodes placed respectively on the free (crack face) and bonded side of the crack tip. Nodes are enumerated so that the crack tip has always index $1$, i.e. the higher the index the further the node is from the crack tip. Matrix $\underline{\underline{T}}_{pq}$ has always a size of $d\times d$ where $d$ is the number of geometrical dimensions of the system. An element $\underline{\underline{T}}_{pq}\left(i,j\right)$ with $i,j=1,\dots,d$ represents the weight to be assigned to the product of component $i$ of the displacement extracted at node $p$ with component $j$ of the force extracted at node $q$. The expression of $\underline{\underline{T}}_{pq}$ for quadrilateral elements with or without singularity is reported in \ref{app:Tpq}. Notice that, given $m$ is the order of the element shape functions, the element side has $m+1$ nodes and this represents the upper limit of indices $p$ and $q$.\\
+By using matrix $\underline{\underline{T}}_{pq}$, it is possible to express the total ERR $G$ evaluated with the VCCT as
+
+\begin{equation}\label{eq:gtot}
+G_{TOT} = \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{r\theta,q}\right).
+\end{equation}
+
+Introducing the vector $\underline{G}=\begin{bmatrix}
+G_{I} \\
+G_{II}
+\end{bmatrix}$ of fracture mode ERRs, Mode I and Mode II ERR evaluated with the VCCT can be expressed as 
+
+\begin{equation}\label{eq:g}
+\underline{G} =\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{F}_{r\theta,q}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\right),
+\end{equation}
+
+where $Diag\left(\right)$ is the function that extracts as a column vector the diagonal of the matrix provided as argument. Substituting Equations~\ref{eq:FUrot} and~\ref{eq:ctforce2} in Equations~\ref{eq:gtot} and~\ref{eq:g}, we can express the Mode I, Mode II and total Energy Release Rate as a function of the crack displacements and the FE solution (mode details in \ref{app:errvecfor}) as 
+
+\begin{equation}\label{eq:gtotlong}
+\begin{split}
+G_{TOT} =&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy,q}\underline{u}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\&+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\widetilde{F}}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)
+\end{split}
+\end{equation}
+
+and
+
+\begin{equation}
+\begin{split}
+\underline{G}=\begin{bmatrix}
+G_{I} \\
+G_{II}
+\end{bmatrix}=&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy,q}\underline{u}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
+&+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N,q}\underline{u}_{N}\underline{u}_{xy,p}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)
+\end{split}
+\end{equation}
+
+\section{Rotational invariance of $G_{TOT}$}
+
+Recalling Equation~\ref{eq:gtotlong} and observing that matrix $\underline{\underline{T}}_{pq}$ is always equal to the identity matrix pre-multiplied by a suitable real constant (see Eq.~\ref{eq:Tpq} in \ref{app:Tpq}), the total Energy Release Rate can be rewritten as
+
+\begin{equation}\label{eq:gtotlong1}
+\begin{split}
+G_{TOT}&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\left(\underline{\underline{K}}_{xy,q}\underline{u}_{xy,q}+\underline{\widetilde{F}}_{xy,q}\right)\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\right)=\\
+&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\right),
+\end{split}
+\end{equation}
+
+where $\underline{F}_{xy}$ and $\underline{u}_{xy}$ are the vectors of respectively the crack tip forces and crack displacements in the global ($x-y$) reference frame. Given that $\underline{\underline{Q}}_{\delta}$, $\underline{\underline{P}}_{\delta}$ and $\underline{\underline{R}}_{\Delta\theta}$ all represent a linear transformation (a rigid rotation in particular), the invariance of the trace to linear transformations ensures that
+
+\begin{equation}\label{eq:gtotlong2}
+\begin{split}
+G_{TOT}&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\right)=\\
+&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\right).
+\end{split}
+\end{equation}
+
+As $G_{TOT}$ was defined according to Equation~\ref{eq:gtot} and given that $Tr\left(AB\right)=Tr\left(BA\right)$, it holds that 
+
+\begin{equation}\label{eq:gtotrotinv}
+G_{TOT} = \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{r\theta,q}\right)=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{xy,q}\right),
+\end{equation}
+
+which shows that the total Energy Release Rate is invariant to rigid rotations and can be calculated equivalently with forces and displacements expressed in the local crack tip reference frame or the global reference frame. The result of Equation~\ref{eq:gtotrotinv} has also a physical implication: given that the stress and displacement fields in the vicinity of the crack tip are the same, two cracks with different crack propagation directions are energetically equivalent with respect to the total Energy Release Rate. For two such cracks, given that laws of the type $G_{TOT}\geq G_{c}$ govern crack propagation, if $G_{c}$ did not depend on mode ratio, crack orientation would not at all affect its growth. 
+
+\section{Convergence analysis}
+
+\subsection{Analytical considerations}
+
+Substituting Equations~\ref{eq:rotmatdev} in the derivative of Equation~\ref{eq:g}, we can investigate the dependency of Mode I and Mode II ERR with respect to the size $\delta$ of an element in the crack tip neighborhood through 
+
+\begin{equation}
+\scriptsize
+\begin{split}
+\frac{\partial \underline{G}}{\partial \delta}=&-\frac{1}{2R_{f}\delta^{2}}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)-\frac{1}{2R_{f}\delta^{2}}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
++&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{D}}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{D}}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
++&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{D}}\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{D}}\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
++&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\frac{\partial \underline{u}_{xy}}{\partial \delta}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\frac{\partial \underline{u}_{N}}{\partial \delta}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
++&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\frac{\partial \underline{u}_{xy}^{T}}{\partial \delta}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\frac{\partial \underline{u}_{xy}^{T}}{\partial \delta}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right);
+\end{split}
+\end{equation}
+
+which, after refactoring, provides
+
+\begin{equation}\label{eq:Gdev}
+\scriptsize
+\begin{split}
+\frac{\partial \underline{G}}{\partial \delta}=&\frac{1}{\delta}\underline{G}+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\left(\underline{\underline{K}}_{xy}\underline{u}_{xy}+\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\right)\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{D}}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
++&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{D}}\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\left(\underline{\underline{K}}_{xy}\underline{u}_{xy}+\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\right)\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
++&\frac{1}{R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\frac{\partial \underline{u}_{xy}}{\partial \delta}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\frac{\partial \underline{u}_{N}}{\partial \delta}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
++&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\frac{\partial \underline{u}_{xy}^{T}}{\partial \delta}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right).
+\end{split}
+\end{equation}
+
+Following the asymptotic analysis of~\cite{Williams1959,Comninou1990}, the displacement in the crack tip neighborhood will have a functional form of the type
+
+\begin{equation}\label{eq:basicasymptotic}
+u\left(\delta\right)\sim \sqrt{\delta}\left(\sin,\cos\right)\left(\epsilon\log{\delta}\right)\quad\text{with}\quad\epsilon=\frac{1}{2\pi}\log{\left(\frac{1-\beta}{1+\beta}\right)}
+\end{equation}
+
+and $\beta$ is Dundurs' parameter introduced in Section~\ref{sec:intro}. Application of Equation~\ref{eq:basicasymptotic} to the terms on the right hand side of Eq.~\ref{eq:Gdev} provides:
+
+\begin{equation}\label{eq:asym1}
+\underline{u}_{xy},\underline{u}_{N}\sim u\left(\delta\right)\sim\sqrt{\delta}\left(\sin,\cos\right)\left(\epsilon\log{\delta}\right)\xrightarrow{\delta\rightarrow 0}0;
+\end{equation}
+
+\begin{equation}\label{eq:asym2}
+\underline{u}_{xy}\underline{u}_{xy}^{T},\underline{u}_{N}\underline{u}_{xy}^{T}\sim u^{2}\left(\delta\right)\sim\delta\left(\sin^{2},\cos^{2},\sin\cdot\cos\right)\left(\epsilon\log{\delta}\right)\xrightarrow{\delta\rightarrow 0}0;
+\end{equation}
+
+\begin{equation}\label{eq:asym3}
+\frac{\partial \underline{u}_{xy}}{\partial \delta}\underline{u}_{xy}^{T},\frac{\partial \underline{u}_{N}}{\partial \delta}\underline{u}_{xy}^{T}\sim -\frac{1}{2}\left(\sin^{2},\cos^{2},\sin\cdot\cos\right)\left(\epsilon\log{\delta}\right)+\left(-\sin^{2},\cos^{2},\pm\sin\cdot\cos\right)\left(\epsilon\log{\delta}\right)\xrightarrow{\delta\rightarrow 0}finite;
+\end{equation}
+
+\begin{equation}\label{eq:asym4}
+\underline{G}\sim\frac{1}{\delta}\underline{u}_{xy}\underline{u}_{xy}^{T}\sim \frac{1}{\delta}u^{2}\left(\delta\right)\sim\left(\sin^{2},\cos^{2},\sin\cdot\cos\right)\left(\epsilon\log{\delta}\right)\xrightarrow{\delta\rightarrow 0}finite.
+\end{equation}
+
+In Equations~\ref{eq:asym1}-\ref{eq:asym4}, the multiplication by a trigonometric function of the type $\left(\sin,\cos,\sin^{2},\cos^{2},\sin\cdot\cos\right)$ prevents the divergence of the asymptote. Recalling Eqs.~\ref{eq:Pmatrix} and~\ref{eq:Qmatrix}, in the limit of $\delta\rightarrow 0$ the rotation matrices become equal to the identity matrix:
+
+\begin{equation}\label{eq:PQasym}
+\underline{\underline{P}}_{\delta},\underline{\underline{Q}}_{\delta}\xrightarrow{\delta\rightarrow 0}\begin{bmatrix}1&0\\0&1\end{bmatrix}.
+\end{equation}
+
+Applying the results of Equations~\ref{eq:asym1}-\ref{eq:PQasym} to Eq.~\ref{eq:Gdev}, it can be shown that the derivative of $\underline{G}$ can be split in a factor that goes to $0$ in the limit of $\delta\rightarrow 0$ and in a factor independent of $\delta$:
+
+\begin{equation}
+\lim_{\delta\rightarrow 0}\frac{\partial \underline{G}}{\partial \delta}\sim\frac{1}{\delta}\left(\cancelto{0}{\underline{F}\left(\delta\right)}+\underline{C}\right).
+\end{equation}
+
+Thus, asymptotically, the Mode I and Mode II Energy Release Rate behave like the logarithm of the angular size $\delta$ of the elements in the crack tip neighborhood:
+
+\begin{equation}
+\lim_{\delta\rightarrow 0}\frac{\partial \underline{G}}{\partial \delta}\sim\frac{1}{\delta}\quad\xrightarrow{\int d\delta}\quad\lim_{\delta\rightarrow 0}\underline{G}\sim \underline{A}\log(\delta)+\underline{B}.
+\end{equation}
+
+\subsection{Numerical results}
+
+\section{Conclusions \& Outlook}
+
+\section*{Acknowledgements}
+
+Luca Di Stasio gratefully acknowledges the support of the European School of Materials (EUSMAT) through the DocMASE Doctoral Programme and the European Commission through the Erasmus Mundus Programme.
+
+\bibliography{refs}
+
+\appendix
+\section{Derivation of the relationship between crack tip forces and displacements for first order quadrilateral elements}\label{app:ctforcesexample}
 
 \subsection{Foundational relations}
 
@@ -230,208 +459,12 @@ k_{e|18}&k_{e|28}&k_{e|38}&k_{e|48}&k_{e|58}&k_{e|68}&k_{e|78}&k_{e|88}\\
 \end{bmatrix}.
 \end{equation}
 
-\subsection{Formulation of the ERR with respect to FEM variables}
- 
-In order to express the VCCT formulation of the ERR in terms of FEM variables, we need to introduce a few rotation matrices in order to represent the discretized representation (FE mesh) of a crack along a circular interface. The position of the crack tip is characterized by the angular size of the crack (see Sec.~\ref{sec:femmodel} and Fig.~\ref{fig:modelschem} for reference) and the rotation corresponding to the crack tip reference frame is represented by the matrix $\underline{\underline{R}}_{\Delta\theta}$ defined as
+\subsection{Calculation of displacements and reaction forces}
 
-\begin{equation}\label{eq:Rmatrix}
-\underline{\underline{R}}_{\Delta\theta}=\begin{bmatrix}
-\cos\left(\Delta\theta\right) & \sin\left(\Delta\theta\right) \\
--\sin\left(\Delta\theta\right) & \cos\left(\Delta\theta\right)
-\end{bmatrix}.
-\end{equation}
-
-Nodes belonging to the elements sharing the crack tip are involved in the VCCT estimation of the ERR and it is assumed that, given a sufficiently fine discretization, they are aligned with the crack propagation direction defined at the crack tip. However small the elements in the crack tip neighborhood, a misalignment always exists with respect to the assumed crack propagation direction. This is measured by the matrices $\underline{\underline{P}}_{\delta}\left(p\right)$, defined as
-
-\begin{equation}\label{eq:Pmatrix}
-\underline{\underline{P}}_{\delta}\left(p\right)=\begin{bmatrix}
-\cos\left(\left(1+\frac{1-p}{m}\right)\delta\right) & \sin\left(\left(1+\frac{1-p}{m}\right)\delta\right) \\
--\sin\left(\left(1+\frac{1-p}{m}\right)\delta\right) & \cos\left(\left(1+\frac{1-p}{m}\right)\delta\right)
-\end{bmatrix}
-\end{equation}
-
- and $\underline{\underline{Q}}_{\delta}\left(q\right)$, equal to 
-
-\begin{equation}\label{eq:Qmatrix}
-\underline{\underline{Q}}_{\delta}\left(q\right)=\begin{bmatrix}
-\cos\left(\frac{q-1}{m}\delta\right) & \sin\left(\frac{q-1}{m}\delta\right) \\
--\sin\left(\frac{q-1}{m}\delta\right) & \cos\left(\frac{q-1}{m}\delta\right)
-\end{bmatrix},
-\end{equation}
-
-respectively for the free and bonded nodes involved in the VCCT estimation. In Eqs.~\ref{eq:Pmatrix} and~\ref{eq:Qmatrix}, $\delta$ is the angular size of an element in the crack tip neighborhood (see Sec.~\ref{sec:femmodel} and Fig.~\ref{fig:modelschem}), $m$ is the order of the element shape functions and $p,q$ are indices referring to the nodes belonging respectively to free and bonded elements sharing the crack tip. Introducing the permutation matrix
-
-
-\begin{equation}
-\underline{\underline{P}}_{\pi}=\begin{bmatrix}
-0 & 1\\
--1& 0
-\end{bmatrix},
-\end{equation}
-
-it is possible to express the derivatives of rotation matrices $\underline{\underline{R}}_{\Delta\theta}$, $\underline{\underline{P}}_{\delta}$ and $\underline{\underline{Q}}_{\delta}$ with respect to their argument:
-
-\begin{equation}\label{eq:rotmatdev}
-\frac{\partial \underline{\underline{R}}_{\Delta\theta}}{\partial \Delta\theta}=\underline{\underline{D}}\cdot\underline{\underline{R}}_{\Delta\theta},\quad\frac{\partial \underline{\underline{P}}_{\delta}}{\partial \delta}=\left(1+\frac{1-p}{m}\right)\underline{\underline{D}}\cdot\underline{\underline{P}}_{\delta},\quad\frac{\partial \underline{\underline{Q}}_{\delta}}{\partial \delta}=\frac{q-1}{m}\underline{\underline{D}}\cdot\underline{\underline{Q}}_{\delta}.
-\end{equation}
-
-By means of Eqs.~\ref{eq:Pmatrix} and~\ref{eq:Qmatrix}, we can express the crack tip forces $
-\underline{F}_{xy}=\begin{bmatrix}
-F_{x} \\
-F_{y}
-\end{bmatrix}$ and crack displacements  $
-\underline{u}_{xy}=\begin{bmatrix}
-u_{x} \\
-u_{y}
-\end{bmatrix}$ in the crack tip reference frame (where the tangential direction $\theta$ correspond to the direction of crack propagation) while taking into account the misalignment to the finite  discretization as 
-
-\begin{equation}\label{eq:FUrot}
-\underline{F}_{r\theta}=\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy}\qquad\underline{u}_{r\theta}=\underline{\underline{P}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{u}_{xy}
-\end{equation}
-
-where $\underline{F}_{r\theta}=\begin{bmatrix}
-F_{r} \\
-F_{\theta}
-\end{bmatrix}$ and $\underline{u}_{r\theta}=\begin{bmatrix}
-u_{r} \\
-u_{\theta}
-\end{bmatrix}$.
-
-The crack tip forces can be expressed as a function of the crack opening displacement as 
-
-\begin{equation}\label{eq:ctforce1}
-\underline{F}_{xy}=\underline{\underline{K}}_{xy}\underline{u}_{xy}+\underline{\widetilde{F}}_{xy},
-\end{equation}
- 
-where $\underline{\underline{K}}_{xy}$ is in general a full matrix of the form $\underline{\underline{K}}_{xy}=\begin{bmatrix}
-K_{xx}  K_{xy}\\
-K_{yx}  K_{yy}
-\end{bmatrix}$ and $\underline{\widetilde{F}}_{xy}$ represents the effect of the rest of the FE solution through the remaining nodes of the elements attached to the crack tip. As such, the term $\underline{\widetilde{F}}_{xy}$ can be expressed as a linear combination of the solution vector $\underline{u}_{N}$ of nodal displacements of the form $\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}$. Equation~\ref{eq:ctforce1} thus become
-
-\begin{equation}\label{eq:ctforce2}
-\underline{F}_{xy}=\underline{\underline{K}}_{xy}\underline{u}_{xy}+\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}.
-\end{equation}
-
-An exemplifying derivation of the relationships expressed in Equations~\ref{eq:ctforce1} and~\ref{eq:ctforce2} can be found in \ref{app:ctforcesexample}. It is worthwhile to observe that another author~\cite{Valvo2011} proposed a relationship of the form $\underline{F}_{xy}=\underline{\underline{K}}_{xy}\underline{u}_{xy}$. However, in~\cite{Valvo2011}, this relationship is assumed \emph{a priori} and manipulated to propose a revised version of the VCCT, based on the assumption that the matrix $\underline{\underline{K}}_{xy}$ should be diagonal to provide physically-consistent fracture mode partitioning. On the other hand, in the present work we derive the relationships of Eqs.~\ref{eq:ctforce1} and~\ref{eq:ctforce2} from the formulation of the Finite Element Method. According to our derivation, it seems correct that the matrix $\underline{\underline{K}}_{xy}$ should not in general be diagonal in order to take into account Poisson's effect. In fact, a positive crack opening displacement would cause a transverse displacement in the neighborhood of the crack tip. Given that material properties are different on the two sides of a bi-material interface, a net shear would be applied to the crack tip which would correspond to a net contribution to the crack tip force related to crack shear displacement. The analytical derivations presented in \ref{app:ctforcesexample} confirm these physical considerations.\\
-Based upon the work of Raju~\cite{Raju1987}, we introduce the matrix $\underline{\underline{T}}_{pq}$ to represent the weights needed in the VCCT to account for the use of singular elements. As already done previously, indices $p$ and $q$ refer to nodes placed respectively on the free (crack face) and bonded side of the crack tip. Nodes are enumerated so that the crack tip has always index $1$, i.e. the higher the index the further the node is from the crack tip. Matrix $\underline{\underline{T}}_{pq}$ has always a size of $d\times d$ where $d$ is the number of geometrical dimensions of the system. An element $\underline{\underline{T}}_{pq}\left(i,j\right)$ with $i,j=1,\dots,d$ represents the weight to be assigned to the product of component $i$ of the displacement extracted at node $p$ with component $j$ of the force extracted at node $q$. The expression of $\underline{\underline{T}}_{pq}$ for quadrilateral elements with or without singularity is reported in \ref{app:Tpq}. Notice that, given $m$ is the order of the element shape functions, the element side has $m+1$ nodes and this represents the upper limit of indices $p$ and $q$.\\
-By using matrix $\underline{\underline{T}}_{pq}$, it is possible to express the total ERR $G$ evaluated with the VCCT as
-
-\begin{equation}\label{eq:gtot}
-G_{TOT} = \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{r\theta,q}.
-\end{equation}
-
-Introducing the vector $\underline{G}=\begin{bmatrix}
-G_{I} \\
-G_{II}
-\end{bmatrix}$ of fracture mode ERRs, Mode I and Mode II ERR evaluated with the VCCT can be expressed as 
-
-\begin{equation}\label{eq:g}
-\underline{G} =\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{F}_{r\theta,q}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\right),
-\end{equation}
-
-where $Diag\left(\right)$ is the function that extracts as a column vector the diagonal of the matrix provided as argument. Substituting Equations~\ref{eq:FUrot} and~\ref{eq:ctforce2} in Equations~\ref{eq:gtot} and~\ref{eq:g}, we can express the Mode I, Mode II and total Energy Release Rate as a function of the crack displacements and the FE solution (mode details in \ref{app:errvecfor}) as 
-
-\begin{equation}
-\begin{split}
-G_{TOT} =&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\&+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\widetilde{F}}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)
-\end{split}
-\end{equation}
-
-and
-
-\begin{equation}
-\begin{split}
-\underline{G}=\begin{bmatrix}
-G_{I} \\
-G_{II}
-\end{bmatrix}=&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
-&+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)
-\end{split}
-\end{equation}
-
-\section{Convergence analysis}
-
-\subsection{Analytical considerations}
-
-Substituting Equations~\ref{eq:rotmatdev} in the derivative of Equation~\ref{eq:g}, we can investigate the dependency of Mode I and Mode II ERR with respect to the size $\delta$ of an element in the crack tip neighborhood through 
-
-\begin{equation}
-\scriptsize
-\begin{split}
-\frac{\partial \underline{G}}{\partial \delta}=&-\frac{1}{2R_{f}\delta^{2}}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)-\frac{1}{2R_{f}\delta^{2}}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
-+&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{D}}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{D}}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
-+&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{D}}\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{D}}\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
-+&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\frac{\partial \underline{u}_{xy}}{\partial \delta}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\frac{\partial \underline{u}_{N}}{\partial \delta}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
-+&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\frac{\partial \underline{u}_{xy}^{T}}{\partial \delta}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\frac{\partial \underline{u}_{xy}^{T}}{\partial \delta}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right);
-\end{split}
-\end{equation}
-
-which, after refactoring, provides
-
-\begin{equation}\label{eq:Gdev}
-\scriptsize
-\begin{split}
-\frac{\partial \underline{G}}{\partial \delta}=&\frac{1}{\delta}\underline{G}+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\left(\underline{\underline{K}}_{xy}\underline{u}_{xy}+\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\right)\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{D}}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
-+&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{D}}\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\left(\underline{\underline{K}}_{xy}\underline{u}_{xy}+\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\right)\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
-+&\frac{1}{R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\frac{\partial \underline{u}_{xy}}{\partial \delta}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\frac{\partial \underline{u}_{N}}{\partial \delta}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
-+&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\frac{\partial \underline{u}_{xy}^{T}}{\partial \delta}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right).
-\end{split}
-\end{equation}
-
-Following the asymptotic analysis of~\cite{Williams1959,Comninou1990}, the displacement in the crack tip neighborhood will have a functional form of the type
-
-\begin{equation}\label{eq:basicasymptotic}
-u\left(\delta\right)\sim \sqrt{\delta}\left(\sin,\cos\right)\left(\epsilon\log{\delta}\right)\quad\text{with}\quad\epsilon=\frac{1}{2\pi}\log{\left(\frac{1-\beta}{1+\beta}\right)}
-\end{equation}
-
-and $\beta$ is Dundurs' parameter introduced in Section~\ref{sec:intro}. Application of Equation~\ref{eq:basicasymptotic} to the terms on the right hand side of Eq.~\ref{eq:Gdev} provides:
-
-\begin{equation}\label{eq:asym1}
-\underline{u}_{xy},\underline{u}_{N}\sim u\left(\delta\right)\sim\sqrt{\delta}\left(\sin,\cos\right)\left(\epsilon\log{\delta}\right)\xrightarrow{\delta\rightarrow 0}0;
-\end{equation}
-
-\begin{equation}\label{eq:asym2}
-\underline{u}_{xy}\underline{u}_{xy}^{T},\underline{u}_{N}\underline{u}_{xy}^{T}\sim u^{2}\left(\delta\right)\sim\delta\left(\sin^{2},\cos^{2},\sin\cdot\cos\right)\left(\epsilon\log{\delta}\right)\xrightarrow{\delta\rightarrow 0}0;
-\end{equation}
-
-\begin{equation}\label{eq:asym3}
-\frac{\partial \underline{u}_{xy}}{\partial \delta}\underline{u}_{xy}^{T},\frac{\partial \underline{u}_{N}}{\partial \delta}\underline{u}_{xy}^{T}\sim -\frac{1}{2}\left(\sin^{2},\cos^{2},\sin\cdot\cos\right)\left(\epsilon\log{\delta}\right)+\left(-\sin^{2},\cos^{2},\pm\sin\cdot\cos\right)\left(\epsilon\log{\delta}\right)\xrightarrow{\delta\rightarrow 0}finite;
-\end{equation}
-
-\begin{equation}\label{eq:asym4}
-\underline{G}\sim\frac{1}{\delta}\underline{u}_{xy}\underline{u}_{xy}^{T}\sim \frac{1}{\delta}u^{2}\left(\delta\right)\sim\left(\sin^{2},\cos^{2},\sin\cdot\cos\right)\left(\epsilon\log{\delta}\right)\xrightarrow{\delta\rightarrow 0}finite.
-\end{equation}
-
-In Equations~\ref{eq:asym1}-\ref{eq:asym4}, the multiplication by a trigonometric function of the type $\left(\sin,\cos,\sin^{2},\cos^{2},\sin\cdot\cos\right)$ prevents the divergence of the asymptote. Recalling Eqs.~\ref{eq:Pmatrix} and~\ref{eq:Qmatrix}, in the limit of $\delta\rightarrow 0$ the rotation matrices become equal to the identity matrix:
-
-\begin{equation}\label{eq:PQasym}
-\underline{\underline{P}}_{\delta},\underline{\underline{Q}}_{\delta}\xrightarrow{\delta\rightarrow 0}\begin{bmatrix}1&0\\0&1\end{bmatrix}.
-\end{equation}
-
-Applying the results of Equations~\ref{eq:asym1}-\ref{eq:PQasym} to Eq.~\ref{eq:Gdev}, it can be shown that the derivative of $\underline{G}$ can be split in a factor that goes to $0$ in the limit of $\delta\rightarrow 0$ and in a factor independent of $\delta$:
-
-\begin{equation}
-\lim_{\delta\rightarrow 0}\frac{\partial \underline{G}}{\partial \delta}\sim\frac{1}{\delta}\left(\cancelto{0}{\underline{F}\left(\delta\right)}+\underline{C}\right).
-\end{equation}
-
-Thus, asymptotically, the Mode I and Mode II Energy Release Rate behave like the logarithm of the angular size $\delta$ of the elements in the crack tip neighborhood:
-
-\begin{equation}
-\lim_{\delta\rightarrow 0}\frac{\partial \underline{G}}{\partial \delta}\sim\frac{1}{\delta}\quad\xrightarrow{\int d\delta}\quad\lim_{\delta\rightarrow 0}\underline{G}\sim \underline{A}\log(\delta)+\underline{B}.
-\end{equation}
-
-\subsection{Numerical results}
-
-\section{Conclusions \& Outlook}
-
-\section*{Acknowledgements}
-
-Luca Di Stasio gratefully acknowledges the support of the European School of Materials (EUSMAT) through the DocMASE Doctoral Programme and the European Commission through the Erasmus Mundus Programme.
-
-\bibliography{refs}
-
-\appendix
-\section{Derivation of the relationship between crack tip forces and displacements for first order quadrilateral elements}\label{app:ctforcesexample}
+\begin{figure}[!h]
+\includegraphics[width=\textwidth]{VCCT-linear.pdf}
+\caption{Schematic representation of the discretized crack tip geometry for  $1^{st}$ order quadrilateral elements.}\label{fig:vcctlinear}
+\end{figure}
 
 \begin{equation}
 u_{x}=u_{x,M}-u_{x,F}\qquad u_{y}=u_{y,M}-u_{y,F}
@@ -576,7 +609,7 @@ F_{y,CT}&= K_{yx}u_{x}+K_{yy}u_{y}+\widetilde{F}_{y}\\
 
 The expression of $\underline{\underline{T}}_{pq}$ for quadrilateral elements with or without singularity is
 
-\begin{equation}
+\begin{equation}\label{eq:Tpq}
 \scriptsize
 \begin{split}
 \underline{\underline{T}}_{pq}&=\begin{cases}

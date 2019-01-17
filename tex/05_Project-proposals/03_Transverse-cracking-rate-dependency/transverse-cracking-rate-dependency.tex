@@ -1,0 +1,109 @@
+\documentclass[review]{elsarticle}
+
+\usepackage{amsmath}
+\usepackage{lineno,hyperref}
+\modulolinenumbers[5]
+
+\journal{Project proposal}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Elsevier bibliography styles
+%%%%%%%%%%%%%%%%%%%%%%%
+%% To change the style, put a % in front of the second line of the current style and
+%% remove the % from the second line of the style you would like to use.
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Numbered
+%\bibliographystyle{model1-num-names}
+
+%% Numbered without titles
+%\bibliographystyle{model1a-num-names}
+
+%% Harvard
+%\bibliographystyle{model2-names.bst}\biboptions{authoryear}
+
+%% Vancouver numbered
+%\usepackage{numcompress}\bibliographystyle{model3-num-names}
+
+%% Vancouver name/year
+%\usepackage{numcompress}\bibliographystyle{model4-names}\biboptions{authoryear}
+
+%% APA style
+%\bibliographystyle{model5-names}\biboptions{authoryear}
+
+%% AMA style
+%\usepackage{numcompress}\bibliographystyle{model6-num-names}
+
+%% `Elsevier LaTeX' style
+\bibliographystyle{elsarticle-num}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{{\bf - Project proposal -}\\Temperature and loading rate effects on transverse cracking in cross-ply laminates}
+%\tnotetext[mytitlenote]{Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.}
+
+%% Group authors per affiliation:
+%\author{Luca Di Stasio\fnref{myfootnote}}
+%\address{Radarweg 29, Amsterdam}
+%\fntext[myfootnote]{Since 1880.}
+
+%% or include affiliations in footnotes:
+\author{Luca Di Stasio}
+\author{Janis Varna}
+%\ead[url]{www.elsevier.com}
+
+%\author[mysecondaryaddress]{Global Customer Service\corref{mycorrespondingauthor}}
+%\cortext[mycorrespondingauthor]{Corresponding author}
+%\ead{support@elsevier.com}
+
+%\address[nancy]{Universit\'e de Lorraine, EEIGM, IJL, 6 Rue Bastien Lepage, F-54010 Nancy, France}
+%\address[lulea]{Lule\aa\ University of Technology, University Campus, SE-97187 Lule\aa, Sweden}
+
+%\begin{abstract}
+
+%\end{abstract}
+
+%\begin{keyword}
+%\texttt{elsarticle.cls}\sep \LaTeX\sep Elsevier \sep template
+%\MSC[2010] 00-01\sep  99-00
+%\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
+
+\section{Introduction}
+
+Detection and geometric characterization of fiber/matrix interface cracks (or debonds) in carbon and glass fiber reinforced polymers is important to develop a correct understanding of the mechanisms underpinning the onset and propagation of transverse cracks at the microscopic level. Given the many variables at play, a statistical treatment of the problem is unavoidable, which requires large amount of data to provide reliable results. However, characterization of debonds can today be performed on an optical microscope only in a manual, where the operator identifies the debonds and performs the necessary measurements. Automation of these tasks would thus translate into significant gain in terms of a reduced tests' time as well as in an increased number of measurements, and thus more reliable statistics. The development of an algorithm for automatic detection of debonds represents the first towards automating the characterization of the fiber/matrix interface crack.
+
+\section{Objectives}
+
+Develop an algorithm that, given an image of a ply at $90^{\circ}$, is capable of
+
+\begin{enumerate}
+\item identify each debond, and for each one
+\item measure the radius of the fiber,
+\item measure the angular size of the debond,
+\item measure the position of the crack tips,
+\item measure starting position and direction of kinked cracks,
+\item measure angular position and distance of the closest fiber.
+\end{enumerate}
+
+\section{Materials}
+
+Images recorded with the optical microscope of glass and carbon fiber reinforced cross-ply laminates after being loaded in transverse strain.
+
+\section{Methods}
+
+OpenCV in conjunction with C/C++ or Python. Matlab with its Image Processing and Computer Vision Toolbox is also an option.
+
+\section{Expected outcomes}
+
+\section{Audience}
+
+1-2 students for Project Course or Master thesis.
+
+\end{document}

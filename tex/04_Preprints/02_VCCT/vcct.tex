@@ -279,7 +279,10 @@ G_{TOT}&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underlin
 As $G_{TOT}$ was defined according to Equation~\ref{eq:gtot} and given that $Tr\left(AB\right)=Tr\left(BA\right)$, it holds that 
 
 \begin{equation}\label{eq:gtotrotinv}
-G_{TOT} = \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{r\theta,q}\right)=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{xy,q}\right),
+\begin{split}
+G_{TOT} &= \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{r\theta,q}=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{F}_{r\theta,q}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\right)=\\
+&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\right)=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{xy,q}
+\end{split}
 \end{equation}
 
 which shows that the total Energy Release Rate is invariant to rigid rotations and can be calculated equivalently with forces and displacements expressed in the local crack tip reference frame or the global reference frame. The analytical result is confirmed by the numerical solution of the fiber-matrix interface crack with different element orders and model fiber volume fractions, as shown in Figure~\ref{fig:gtotrotinvnum}.
@@ -384,6 +387,8 @@ Thus, asymptotically, the Mode I and Mode II Energy Release Rate behave like the
 
 \subsection{Numerical results}
 
+Evaluations of the Mode I, Mode II and total Energy Release Rate using the VCCT applied to the FE solution of the fiber-matrix interface crack in the single fiber model of Sec.~\ref{sec:femmodel} are reported respectively in Fig.~\ref{fig:ginum}, Fig.~\ref{fig:giinum} and Fig.~\ref{fig:gtotnum}.
+
 \begin{figure}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
@@ -408,6 +413,8 @@ Thus, asymptotically, the Mode I and Mode II Energy Release Rate behave like the
 
 \caption{Effect of the size $\delta$ of an element at the crack tip on Mode I ERR.}\label{fig:ginum}
 \end{figure}
+
+Results for Mode I ERR in Fig.~\ref{fig:ginum} show clearly the transition from the \emph{open} crack regime, where Mode I ERR is different from zero, to the \emph{closed} crack regime of the debond, where $G_{I}=0$. Looking at Fig.~\ref{fig:ginum}, the crack is \emph{open} for $\Delta\theta\leq60^{\circ}$ and it is \emph{closed}, i.e. a contact zone is present, for $\Delta\theta\geq70^{\circ}$. As expected from the analysis of the previous section, and given that Mode I ERR is different from zero only in the \emph{open} crack regime, a significant dependence on the element size $\delta$ can be observed in  Fig.~\ref{fig:ginum} when using both $1^{st}$ and $2^{nd}$ order elements and with both an effectively infinite ($V_{f}=0.1\%$) and finite size ($V_{f}=40\%$) matrix. At first sight, it is immediate to see from Fig.~\ref{fig:ginum} that a decrease in $\delta$ leads to a decrease in $G_{I}$. However, two further effects can be observed due to the refinement of the mesh at the crack tip, i.e. the decrease of the element size $\delta$. First, the occurrence of the peak $G_{I}$ is shifted to lower angles for very low volume fractions: it occurs at $\Delta\theta=30^{\circ}$ with $\delta=1.0^{\circ}, 0.5^{\circ}$ and at $\Delta\theta=20^{\circ}$ with $\delta\leq0.25^{\circ}$ for both $1^{st}$ and $2^{nd}$ order elements and $V_{f}=0.1\%$. Second, the apperance of the contact zone, i.e. the switch to the \emph{closed} crack regime, is anticipated to smaller debonds: it occurs at  $\Delta\theta=70^{\circ}$ with $\delta\geq0.2^{\circ}$ and at $\Delta\theta=60^{\circ}$ with $\delta<0.2^{\circ}$ for both $1^{st}$ and $2^{nd}$ order elements and both $V_{f}=0.1\%$ and $V_{f}=40\%$.
 
 \begin{figure}[!h]
 \centering
@@ -434,6 +441,8 @@ Thus, asymptotically, the Mode I and Mode II Energy Release Rate behave like the
 \caption{Effect of the size $\delta$ of an element at the crack tip on Mode II ERR.}\label{fig:giinum}
 \end{figure}
 
+Observing Figure~\ref{fig:giinum}, it possible to notice the existence of two distinct regimes in the behavior of $G_{II}$ with respect to the element size $\delta$. For $\Delta\theta\leq60^{\circ}$ $G_{II}$ depends on the value of $\delta$, while $\Delta\theta\geq70^{\circ}$ it is effectively independent of the element size at the crack tip for both $1^{st}$ and $2^{nd}$ order elements and both an effectively infinite ($V_{f}=0.1\%$) and finite size ($V_{f}=40\%$) matrix. Comparing the value of $\Delta\theta$ at which the change from the $\delta$-dependency regime to the $\delta$-independency regime occurs for $G_{II}$ with Mode I ERR in Fig.~\ref{fig:ginum}, it is possible to observe that the $\delta$-dependency regime change of Mode II ERR coincides with the onset of the contact zone, i.e. the transition from \emph{open} crack regime to the \emph{closed} crack regime. The result confirms the analytical considerations of the previous section: for an \emph{open} crack both Mode I and Mode II ERR depend on the element size $\delta$ at the crack tip.
+
 \begin{figure}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
@@ -458,6 +467,8 @@ Thus, asymptotically, the Mode I and Mode II Energy Release Rate behave like the
 
 \caption{Effect of the size $\delta$ of an element at the crack tip on total ERR.}\label{fig:gtotnum}
 \end{figure}
+
+Further observation of Figure~\ref{fig:giinum} reveals that, in the \emph{open} crack regime, decreasing the element size $\delta$ causes an increase of Mode II ERR. Similarly to Mode I ERR, a shift of the peak $G_{II}$ can also observed for $V_{f}=0.1\%$: the maximum value of $G_{II}$ occurs at $\Delta\theta=70^{\circ}$ for $\delta>0.25^{\circ}$ for $1^{st}$ order elements and for $\delta>0.5^{\circ}$ for $2^{nd}$ order elements, while it is shifted to $\Delta\theta=60^{\circ}$ for $\delta\leq0.25^{\circ}$ for $1^{st}$ order elements and for $\delta\leq0.5^{\circ}$ for $2^{nd}$ order elements.
 
 \begin{table}[!h]
  \centering
@@ -495,6 +506,8 @@ Thus, asymptotically, the Mode I and Mode II Energy Release Rate behave like the
 &&		\small60.0&	\small0.0097&\small	0.0329&\small	0.9890&\small	0.9781&\small	4.96E-06&\small	1.99E-07\\
 \end{tabular}
 \end{table}
+
+Analysis of the total ERR in Figure~\ref{fig:gtotnum} leads to an observation that was not predicted by the considerations of the previous section: $G_{TOT}$ is effectively independent of the element size $\delta$ in both the \emph{open} and the \emph{closed} crack regimes. Given that $G_{II}=G_{TOT}$ for the \emph{closed} crack, it explains the independency of $G_{II}$ from $\delta$ after the onset of the contact zone.
 
 \begin{table}[!h]
  \centering
@@ -930,36 +943,36 @@ The expression of $\underline{\underline{T}}_{pq}$ for quadrilateral elements wi
 
 where $\underline{\underline{I}}$ is the identity matrix.
 
-\section{Derivation of the vectorial formulation of the ERR}\label{app:errvecfor}
-
-\begin{equation}
-\begin{split}
-G_{TOT} &= \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{r\theta,q}=\\
-&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{F}_{r\theta,q}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\right)=\\&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\begin{bmatrix}
-t_{pq|11}F_{r,q}u_{r,p}&t_{pq|12}F_{r,q}u_{\theta,p}\\
-t_{pq|21}F_{\theta,q}u_{r,p}&t_{pq|22}F_{\theta,q}u_{\theta,p}\\
-\end{bmatrix}\right)=\\
-&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)
-\end{split}
-\end{equation}
-
-\begin{equation}
-\underline{G}=\begin{bmatrix}
-G_{I} \\
-G_{II}
-\end{bmatrix}=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)
-\end{equation}
-
-\begin{equation}
-\begin{split}
-\underline{G}=\begin{bmatrix}
-G_{I} \\
-G_{II}
-\end{bmatrix}=&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
-&+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\widetilde{F}}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)=\\
-=&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
-&+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)
-\end{split}
-\end{equation}
+%\section{Derivation of the vectorial formulation of the ERR}\label{app:errvecfor}
+%
+%\begin{equation}
+%\begin{split}
+%G_{TOT} &= \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{r\theta,q}=\\
+%&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{F}_{r\theta,q}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\right)=\\&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\begin{bmatrix}
+%t_{pq|11}F_{r,q}u_{r,p}&t_{pq|12}F_{r,q}u_{\theta,p}\\
+%t_{pq|21}F_{\theta,q}u_{r,p}&t_{pq|22}F_{\theta,q}u_{\theta,p}\\
+%\end{bmatrix}\right)=\\
+%&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)
+%\end{split}
+%\end{equation}
+%
+%\begin{equation}
+%\underline{G}=\begin{bmatrix}
+%G_{I} \\
+%G_{II}
+%\end{bmatrix}=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)
+%\end{equation}
+%
+%\begin{equation}
+%\begin{split}
+%\underline{G}=\begin{bmatrix}
+%G_{I} \\
+%G_{II}
+%\end{bmatrix}=&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
+%&+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\widetilde{F}}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)=\\
+%=&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy}\underline{u}_{xy}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
+%&+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)
+%\end{split}
+%\end{equation}
 
 \end{document}

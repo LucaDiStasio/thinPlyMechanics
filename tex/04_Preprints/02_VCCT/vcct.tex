@@ -72,8 +72,7 @@
 
 \begin{abstract}
 \noindent
-\textcolor{purple}{{\em Priority}: 3}\\
-\textcolor{purple}{{\em Target journal(s)}: Engineering Fracture Mechanics, Theoretical and Applied Fracture Mechanics, International Journal of Fracture}\\
+The bi-material interface arc crack has been the focus of interest in the composite community, where it is usually referred to as the fiber-matrix interface crack. In this work, we investigate the convergence properties of the Virtual Crack Closure Technique (VCCT) when applied to the evaluation of the Mode I, Mode II and total Energy Release Rate of the fiber-matrix interface crack in the context of the Finite Element Method (FEM). We first propose a synthetic vectorial formulation of the VCCT. Thanks to this formulation, we then study the convergence properties of the method, both analytically and numerically. It is found that Mode I and Mode II ERR possess a logarithmic dependency with respect to the size of the elements in the crack tip neighborhood, while the total ERR is independent of element size.
 \end{abstract}
 
 %\begin{keyword}
@@ -669,7 +668,7 @@ The application of the Virtual Crack Closure Technique to the calculation of Mod
 \item the sign of the logarithmic is always positive for $G_{I}$, it decreases when $\delta$ decreases, and negative for $G_{II}$, it increase when $\delta$ decreases.
 \end{itemize}
 
-The conclusion is significant: as the behavior of Mode I and Mode II is logarithmic with respect to mesh size, there exists no limit and thus no convergence of the values. A convergence analysis based on the reduction of the error between successive iterations would not provide a reliable assessment of the accuracy of the FE solution of the fiber-matrix interface crack. A validation is thus required with respect to data obtained through a different method, be it analytical, numerical or experimental.
+The conclusion is significant: as the behavior of Mode I and Mode II is logarithmic with respect to mesh size, there exists no limit and thus no convergence of the values. A convergence analysis based on the reduction of the error between successive iterations would not provide a reliable assessment of the accuracy of the FE solution of Mode I and Mode II Energy Release Rate of the fiber-matrix interface crack. A validation is thus required with respect to data obtained through a different method, be it analytical, numerical or experimental. Moreover, it has been shown that: first, the same behavior appears when using $1^{st}$ as well as $2^{nd}$ order elements; second, no improvement is expected with the use of singular elements, as the logarithmic dependency of $G_{I}$ and $G_{II}$ is governed by the definition of ERR itself together with the asymptotic behavior of the displacement field at the crack tip. These two conclusions run contrary to the suggestions provided in the manuals of many commercial level FEM packages, such as Abaqus~\cite{abq12}.
 
 \FloatBarrier
 

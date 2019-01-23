@@ -5135,7 +5135,27 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         if not node in [northeastIndex,northwestIndex]:
             northSideWithoutCornersNodeset.append(node)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    #here find center of north boundary, left and right sides
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-CENTER ...',True)
+    for node in northSideNodeset:
+        if nodes[node][0]==0.0:
+            northSideCenter = nodes
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node ' + str(northSideCenter) + ' is at the center of the NORTH boundary',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-POSSIDE ...',True)
+    northSidePosSide = []
+    for node in northSideNodeset:
+        if nodes[node][0]>0.0:
+            northSidePosSide.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set northSidePosSide contains ' + str(len(northSidePosSide)) + ' nodes',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-NEGSIDE ...',True)
+    northSideNegSide = []
+    for node in northSideNodeset:
+        if nodes[node][0]<0.0:
+            northSideNegSide.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set northSideNegSide contains ' + str(len(northSideNegSide)) + ' nodes',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)
     numNodes = mdbData['numNodes']
     numEls = mdbData['numEls']

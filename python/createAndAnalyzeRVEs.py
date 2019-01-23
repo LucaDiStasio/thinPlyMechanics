@@ -5903,6 +5903,33 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     with open(modinpfullpath,'a') as inp:
         inp.write('*NSET, NSET=NORTHEAST-CORNER, INSTANCE=RVE-assembly' + '\n')
         inp.write(' ' + str(northeastIndex) + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=NORTHSIDE-CENTER, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(northSideCenter) + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=NORTHSIDE-POSSIDE, INSTANCE=RVE-assembly' + '\n')
+        line = ''
+        for n,node in enumerate(northSidePosSide):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=NORTHSIDE-NEGSIDE, INSTANCE=RVE-assembly' + '\n')
+        line = ''
+        for n,node in enumerate(northSideNegSide):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if 'ulinearCoupling' in parameters['BC']['northSide']['type'] or 'vkinCouplingmeanside' in parameters['BC']['northSide']['type']:
         with open(modinpfullpath,'a') as inp:

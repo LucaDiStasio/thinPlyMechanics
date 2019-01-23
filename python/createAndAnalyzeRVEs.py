@@ -5147,6 +5147,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for node in northSideNodeset:
         if nodes[node][0]>0.0:
             northSidePosSide.append(node)
+    northSidePosSideCoords = [nodes[i][0] for i in northSidePosSide]
+    northSidePosSide = np.array(northSidePosSide)[np.argsort(northSidePosSideCoords)].tolist()
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set northSidePosSide contains ' + str(len(northSidePosSide)) + ' nodes',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-NEGSIDE ...',True)
@@ -5154,6 +5156,9 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for node in northSideNodeset:
         if nodes[node][0]<0.0:
             northSideNegSide.append(node)
+    northSideNegSideCoords = [nodes[i][0] for i in northSideNegSide]
+    northSideNegSide = np.array(northSideNegSide)[np.argsort(northSideNegSideCoords)].tolist()
+    northSideNegSide = northSideNegSide[::-1]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set northSideNegSide contains ' + str(len(northSideNegSide)) + ' nodes',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)

@@ -6049,6 +6049,17 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 if len(line)>0:
                     line += '\n'
                     inp.write(line)
+    elif 'antisymmetry' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: antisymmetry',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*EQUATION' + '\n')
+            for n,node in enumerate(northSideWithoutCornersNodeset):
+                inp.write(' 3' + '\n')
+                inp.write(' NORTHSIDE-POSSIDE-N'+ str(n+1) +', 2, 1, NORTHSIDE-NEGSIDE-N'+ str(n+1) +', 2, 1, NORTHSIDE-CENTER, 2, -2' + '\n')
+                inp.write(' 2' + '\n')
+                inp.write(' NORTHSIDE-POSSIDE-N'+ str(n+1) +', 1, 1, NORTHSIDE-NEGSIDE-N'+ str(n+1) +', 1, 1' + '\n')
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if 'ulinearCoupling' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: applied linear horizontal displacement',True)

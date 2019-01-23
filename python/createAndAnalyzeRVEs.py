@@ -5936,6 +5936,14 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             for n,node in enumerate(northSideWithoutCornersNodeset):
                 inp.write('*NSET, NSET=NORTHSIDE-N'+ str(n+1) +', INSTANCE=RVE-assembly' + '\n')
                 inp.write(' ' + str(node) + '\n')
+    if 'antisymmetry' in parameters['BC']['northSide']['type']:
+        with open(modinpfullpath,'a') as inp:
+            for n,node in enumerate(northSidePosSide):
+                inp.write('*NSET, NSET=NORTHSIDE-POSSIDE-N'+ str(n+1) +', INSTANCE=RVE-assembly' + '\n')
+                inp.write(' ' + str(node) + '\n')
+            for n,node in enumerate(northSideNegSide):
+                inp.write('*NSET, NSET=NORTHSIDE-NEGSIDE-N'+ str(n+1) +', INSTANCE=RVE-assembly' + '\n')
+                inp.write(' ' + str(node) + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write equation definitions ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*EQUATION' + '\n')

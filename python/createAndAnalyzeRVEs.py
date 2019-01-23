@@ -4452,14 +4452,19 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         regionSets.append(['THIRDCIRCLE-LOWERCRACK',nTangential3])
         regionSets.append(['FOURTHCIRCLE-LOWERCRACK',nTangential3])
 
+    nFibersHorizontal = 1
 
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+        nFibersHorizontal += parameters['BC']['rightSide']['nFibers']
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
             regionSets.append(['LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),10])
 
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+        nFibersHorizontal += parameters['BC']['leftSide']['nFibers']
         for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
             regionSets.append(['LOWERSIDE-LEFT-FIBER'+str(nFiber+1),10])
+
+    regionSets.append(['UPPERSIDE',30*nFibersHorizontal])
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
@@ -5130,6 +5135,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         if not node in [northeastIndex,northwestIndex]:
             northSideWithoutCornersNodeset.append(node)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #here find center of north boundary, left and right sides
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)
     numNodes = mdbData['numNodes']
     numEls = mdbData['numEls']

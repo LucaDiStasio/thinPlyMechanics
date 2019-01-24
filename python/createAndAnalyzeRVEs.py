@@ -5138,7 +5138,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-CENTER ...',True)
     for node in northSideNodeset:
         if nodes[node][0]==0.0:
-            northSideCenter = nodes
+            northSideCenter = node
             break
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node ' + str(northSideCenter) + ' is at the center of the NORTH boundary',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

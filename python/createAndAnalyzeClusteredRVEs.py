@@ -3688,12 +3688,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             setsOfEdgesData.append([0.99*CornerAx,0.001,0.0,0.99*CornerAx,-0.001,0.0,'LOWERSIDE-LEFT-HOMOGENIZED-PLY'])
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-                setsOfEdgesData.append([(nFiber+1)*2*L,0.001,0.0,(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)])
-                setsOfEdgesData.append([(nFiber+1)*2*L+1.01*Rf,0.001,0.0,(nFiber+1)*2*L+1.01*Rf,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)+'-RIGHTMAT'])
+                setsOfEdgesData.append([-clusterShift*(nFiber+1)+(nFiber+1)*2*L,0.001,0.0,-clusterShift*(nFiber+1)+(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)])
+                setsOfEdgesData.append([-clusterShift*(nFiber+1)+(nFiber+1)*2*L+1.01*Rf,0.001,0.0,-clusterShift*(nFiber+1)+(nFiber+1)*2*L+1.01*Rf,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)+'-RIGHTMAT'])
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-                setsOfEdgesData.append([-(nFiber+1)*2*L,0.001,0.0,-(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)])
-                setsOfEdgesData.append([-(nFiber+1)*2*L-1.01*Rf,0.001,0.0,-(nFiber+1)*2*L-1.01*Rf,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)+'-LEFTMAT'])
+                setsOfEdgesData.append([clusterShift*(nFiber+1)-(nFiber+1)*2*L,0.001,0.0,clusterShift*(nFiber+1)-(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)])
+                setsOfEdgesData.append([clusterShift*(nFiber+1)-(nFiber+1)*2*L-1.01*Rf,0.001,0.0,clusterShift*(nFiber+1)-(nFiber+1)*2*L-1.01*Rf,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)+'-LEFTMAT'])
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
             lowerSideSets.append(RVEpart.sets[setOfEdgesData[-1]])
@@ -3946,15 +3946,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     booleanSets = []
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-            setsOfFacesData.append([0.0, (nFiber+1)*2*L, 0.0,'UPPER-FIBER-C'+str(nFiber+1)])
+            setsOfFacesData.append([0.0,-clusterShift*(nFiber+1)+(nFiber+1)*2*L, 0.0,'UPPER-FIBER-C'+str(nFiber+1)])
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for mFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    setsOfFacesData.append([(mFiber+1)*2*L, (nFiber+1)*2*L, 0.0,'UPPER-FIBER-R'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
+                    setsOfFacesData.append([-clusterShift*(mFiber+1)+(mFiber+1)*2*L, -clusterShift*(nFiber+1)+(nFiber+1)*2*L, 0.0,'UPPER-FIBER-R'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    setsOfFacesData.append([-(mFiber+1)*2*L, (nFiber+1)*2*L, 0.0,'UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
+                    setsOfFacesData.append([clusterShift*(mFiber+1)-(mFiber+1)*2*L, -clusterShift*(nFiber+1)+(nFiber+1)*2*L, 0.0,'UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
             booleanSets.append(RVEpart.sets[setOfFacesData[-1]])

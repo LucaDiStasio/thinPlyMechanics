@@ -6059,7 +6059,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: antisymmetry',True)
         with open(modinpfullpath,'a') as inp:
             inp.write('*EQUATION' + '\n')
-            for n,node in enumerate(northSideWithoutCornersNodeset):
+            for n,node in enumerate(northSidePosSide):
                 inp.write(' 3' + '\n')
                 inp.write(' NORTHSIDE-POSSIDE-N'+ str(n+1) +', 2, 1, NORTHSIDE-NEGSIDE-N'+ str(n+1) +', 2, 1, NORTHSIDE-CENTER, 2, -2' + '\n')
                 inp.write(' 2' + '\n')

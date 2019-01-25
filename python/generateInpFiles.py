@@ -384,6 +384,8 @@ def main():
 
             writeStepsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),steps)
 
+            writeLoadsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),loads)
+
 
 
 

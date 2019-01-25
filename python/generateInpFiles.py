@@ -159,7 +159,7 @@ def main():
     Ls = ['1_144'] # out of ['1_618','1_25','1_144','1_0992']
     #homogSize = ['1','2','3','5']
     nFibsAb = [1,2,3,5,10,50,100]
-    nFibsSi = [10,50,100]
+    nFibsSi = [1,2,3,5,10,50,100]
 
     nickName = 'Asymm'
 
@@ -407,12 +407,12 @@ def main():
             bcRIGHT = {}
             bcRIGHT['type'] = 'adjacentFibers'
             bcRIGHT['wRatio'] = '0.0'
-            bcRIGHT['nFibers'] = '1'
+            bcRIGHT['nFibers'] = str(n)
 
             bcLEFT = {}
             bcLEFT['type'] = 'adjacentFibers'
             bcLEFT['wRatio'] = '0.0'
-            bcLEFT['nFibers'] = '1'
+            bcLEFT['nFibers'] = str(n)
 
 
 

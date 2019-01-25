@@ -156,6 +156,23 @@ def writeBCsControls(fullPath,bcNORTHcontrols,bcRIGHTcontrols,bcLEFTcontrols):
         out.write('BC, leftSide, nFibers   @' + str(bcLEFTcontrols['nFibers'])  + ' $int'  + '\n')
         out.write('#' + '\n')
 
+def writeSurfacefrictionControls(fullPath,surfacefrictionControls):
+    with open(fullPath,'a') as out:
+        out.write('# Surface friction' + '\n')
+        out.write('# none         ==> frictionless surface' + '\n')
+        out.write('# static       ==> static friction is present' + '\n')
+        out.write('# dynamic      ==> dynamic friction is present' + '\n')
+        out.write('# cpress       ==> contact pressure dependent' + '\n')
+        out.write('# temperature  ==> temperature dependent' + '\n')
+        out.write('# maxtau       ==> maximum value of frictional shear stress' + '\n')
+        out.write('surface, friction, type          @' + str(surfacefrictionControls['type'])         + ' $string' + '\n')
+        out.write('surface, friction, static        @' + str(surfacefrictionControls['static'])       + ' $float'  + '\n')
+        out.write('surface, friction, dynamic       @' + str(surfacefrictionControls['dynamic'])      + ' $float'  + '\n')
+        out.write('surface, friction, cpress        @' + str(surfacefrictionControls['cpress'])       + ' $float'  + '\n')
+        out.write('surface, friction, temperature   @' + str(surfacefrictionControls['temperature'])  + ' $float'  + '\n')
+        out.write('surface, friction, maxtau        @' + str(surfacefrictionControls['maxtau'])       + ' $float'  + '\n')
+        out.write('#' + '\n')
+
 def main():
 
     PC = 'LucaPC'
@@ -390,6 +407,14 @@ def main():
     bcLEFT['type'] = 'adjacentFibers'
     bcLEFT['wRatio'] = '0.0'
     bcLEFT['nFibers'] = '1'
+
+    friction = {}
+    friction['type'] = 'none'
+    friction['static'] = '0.0'
+    friction['dynamic'] = '0.0'
+    friction['cpress'] = '0.0'
+    friction['temperature'] = '0.0'
+    friction['maxtau'] = '0.0'
 
     for L in Ls:
         #for s in homogSize:

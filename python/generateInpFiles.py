@@ -477,7 +477,20 @@ def main():
     output['local']['filenames']['crackdisplacements'] = 'C:/'
     output['local']['filenames']['contactzonetolerance'] = 'C:/'
     output['report'] = {}
+    output['report']['global'] = {}
+    output['report']['global']['directory'] = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/LucaPC/sweepOverDeltathetaL1_0992A1S1F'
+    output['report']['global']['filename'] = 'sweepOverDeltathetaL1_0992A1S1F-report'
+    output['report']['local'] = {}
+    output['report']['local']['directory'] = '[]'
+    output['report']['local']['filenames'] = {}
+    output['report']['local']['filenames']['Jintegral'] = '[]'
+    output['report']['local']['filenames']['stressesatboundary'] = '[]'
+    output['report']['local']['filenames']['crackdisplacements'] = '[]'
+    output['report']['local']['filenames']['contactzonetolerance'] = '[]'
     output['sql'] = {}
+    output['sql']['global'] = {}
+    output['sql']['global']['directory'] = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/LucaPC/sweepOverDeltathetaL1_0992A1S1F'
+    output['sql']['global']['filename'] = 'sweepOverDeltathetaL1_0992A1S1FDB'
 
     for L in Ls:
         #for s in homogSize:

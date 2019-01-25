@@ -166,6 +166,9 @@ def main():
     mat2['elProps'] = '[3.5e3,0.4]'
     materials.append(mat2)
 
+    postproc  = {}
+    postproc['nu-G0'] = '0.4'
+    postproc['G-G0'] = '1250.0'
 
     for L in Ls:
         #for s in homogSize:
@@ -182,6 +185,8 @@ def main():
 
             geometry['L'] = L.replace('_','.')
             writeGeometryControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),geometry)
+
+            writeMaterialsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),materials)
 
 
 

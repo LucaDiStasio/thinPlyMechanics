@@ -186,6 +186,13 @@ def writeMeshControls(fullPath,meshControls):
         out.write('mesh, elements, order     @' + str(meshControls['order'])    + ' $string'  + '\n')
         out.write('#' + '\n')
 
+def writeJintegralControls(fullPath,jintegralControls):
+    with open(fullPath,'a') as out:
+        out.write('# J-Integral' + '\n')
+        out.write('Jintegral, numberOfContours  @' + str(jintegralControls['numberOfContours']) + ' $int' + '\n')
+        out.write('singularity, type            @' + str(jintegralControls['type'])             + ' $string'  + '\n')
+        out.write('#' + '\n')
+
 def main():
 
     PC = 'LucaPC'
@@ -438,6 +445,10 @@ def main():
     mesh['delta3']   = '1.0'
     mesh['minElNum'] = '5'
     mesh['order']    = 'second'
+
+    jint = {}
+    jint['numberOfContours'] = '5'
+    jint['type'] = 'none'
 
     for L in Ls:
         #for s in homogSize:

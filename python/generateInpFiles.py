@@ -285,12 +285,12 @@ def main():
     pipeline['report-EXCEL'] = 'False'
 
     analysis = {}
-    pipeline['report-energyreleaserates'] = 'True'
-    pipeline['report-contactzone'] = 'False'
-    pipeline['report-stressesatboundary'] = 'False'
-    pipeline['report-stressesatsymmetryline'] = 'False'
-    pipeline['report-stressesatbondedinterface'] = 'False'
-    pipeline['report-crackdisplacements'] = 'False'
+    analysis['report-energyreleaserates'] = 'True'
+    analysis['report-contactzone'] = 'False'
+    analysis['report-stressesatboundary'] = 'False'
+    analysis['report-stressesatsymmetryline'] = 'False'
+    analysis['report-stressesatbondedinterface'] = 'False'
+    analysis['report-crackdisplacements'] = 'False'
 
     input = {}
     input['wd'] = 'C:/Abaqus_WD/CurvedInterface'

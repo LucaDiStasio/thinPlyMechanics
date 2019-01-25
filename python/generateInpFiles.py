@@ -51,20 +51,28 @@ def writePipelineControls(fullPath,pipelineControls):
     with open(fullPath,'a') as out:
         out.write('# Select execution steps in the pipeline' + '\n')
         for key in pipelineControls:
-            out.write('# simulation-pipeline,' + str(key) + '@' + str(pipelineControls[key]) + '$boolean' + '\n')
+            out.write('# simulation-pipeline, ' + str(key) + ' @' + str(pipelineControls[key]) + ' $boolean' + '\n')
         out.write('#' + '\n')
 
 def writeAnalysisControls(fullPath,analysisControls):
     with open(fullPath,'a') as out:
-        out.write('# Select execution steps in the pipeline' + '\n')
-        for key in pipelineControls:
-            out.write('# simulation-pipeline,' + str(key) + '@' + str(pipelineControls[key]) + '$boolean' + '\n')
+        out.write('# Select outputs in the analysis phase' + '\n')
+        for key in analysisControls:
+            out.write('# simulation-pipeline, analysis, ' + str(key) + ' @' + str(analysisControls[key]) + ' $boolean' + '\n')
         out.write('#' + '\n')
 
 def main():
-    #outDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/new'
-    outDir = 'C:/Users/lucdis/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/new'
-    #outDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
+
+    PC = 'LucaPC'
+    onedriveSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM/InputData/new'
+
+    if PC=='LucaPC':
+        outDir = 'C:/Users/luca/OneDrive/' + onedriveSubfolder
+    elif PC=='EEIGM':
+        outDir = 'D:/OneDrive/' + onedriveSubfolder
+    else:
+        outDir = 'C:/Users/lucdis/OneDrive/' + onedriveSubfolder
+
     datbaseName = 'inputRVEdata'
     itbaseName = 'inputRVEiterables'
     ext = '.deck'
@@ -79,6 +87,21 @@ def main():
         os.mkdir(outDir)
 
     pipeline = {}
+    pipeline['create-CAE'] = 'True'
+    pipeline['modify-INP'] = 'True'
+    pipeline['analyze-ODB'] = 'True'
+    pipeline['archive-ODB'] = 'False'
+    pipeline['archive-CAE'] = 'False'
+    pipeline['remove-ODB'] = 'True'
+    pipeline['remove-DAT'] = 'True'
+    pipeline['remove-PRT'] = 'True'
+    pipeline['remove-STA'] = 'True'
+    pipeline['remove-SIM'] = 'True'
+    pipeline['remove-MSG'] = 'True $boolean
+    pipeline['remove-INP'] = 'True $boolean
+    pipeline['remove-COM'] = 'True $boolean
+    pipeline['report-LATEX'] = 'False  $boolean
+    pipeline['report-EXCEL'] = 'False  $boolean
     analysis = {}
     for L in Ls:
         #for s in homogSize:

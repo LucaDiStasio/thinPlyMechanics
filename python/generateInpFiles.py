@@ -499,8 +499,7 @@ def main():
 
             writeMeshControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),mesh)
 
-
-
+            writeJintegralControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),jint)
 
 if __name__ == '__main__':
     main()

@@ -358,6 +358,19 @@ def main():
     load2['stepName'] = 'Load-Step'
     loads.append(load2)
 
+    bcNORTH = {}
+    bcNORTH['type'] = 'adjacentFibers'
+    bcNORTH['tRatio'] = '0.0'
+    bcNORTH['nFibers'] = '1'
+    bcRIGHT = {}
+    bcRIGHT['type'] = 'adjacentFibers'
+    bcRIGHT['wRatio'] = '0.0'
+    bcRIGHT['nFibers'] = '1'
+    bcLEFT = {}
+    bcLEFT['type'] = 'adjacentFibers'
+    bcLEFT['wRatio'] = '0.0'
+    bcLEFT['nFibers'] = '1'
+
     for L in Ls:
         #for s in homogSize:
         for n in nFibsSi:

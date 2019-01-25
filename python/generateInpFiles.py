@@ -590,5 +590,73 @@ def main():
 
             writeOutputControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),output)
 
+        for n in nFibsAb:
+            writeIntro(join(inpDir,datbaseName+nickName+'L'+L+'A'+str(n)+ending+ext))
+            writeIntro(join(inpDir,itbaseName+nickName+'L'+L+'A'+str(n)+ending+ext))
+
+            writePipelineControls(join(inpDir,datbaseName+nickName+'L'+L+'A'+str(n)+ending+ext),pipeline)
+
+            writeAnalysisControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),analysis)
+
+            input['caefilename'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending
+            writeInputControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),input)
+
+            geometry['L'] = L.replace('_','.')
+            writeGeometryControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),geometry)
+
+            writeMaterialsControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),materials)
+
+            writePostprocControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),postproc)
+
+            writeSectionsControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),sections)
+
+            writeSectionregionsControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),sectionRegionsSide)
+
+            writeStepsControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),steps)
+
+            writeLoadsControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),loads)
+
+            bcNORTH = {}
+            bcNORTH['type'] = 'antisymmetryadjacentFibers'
+            bcNORTH['tRatio'] = '0.0'
+            bcNORTH['nFibers'] = str(n)
+
+            bcRIGHT = {}
+            bcRIGHT['type'] = 'none'
+            bcRIGHT['wRatio'] = '0.0'
+            bcRIGHT['nFibers'] = '0'
+
+            bcLEFT = {}
+            bcLEFT['type'] = 'none'
+            bcLEFT['wRatio'] = '0.0'
+            bcLEFT['nFibers'] = '0'
+
+            writeBCsControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),bcNORTH,bcRIGHT,bcLEFT)
+
+            writeSurfacefrictionControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),friction)
+
+            writeMeshControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),mesh)
+
+            writeJintegralControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),jint)
+
+            writeSolverControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),solver)
+
+
+            output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending
+
+            output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending + '-performances'
+            output['global']['filenames']['energyreleaserates'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending + '-energyreleaserates'
+            output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending + '-inputdata'
+
+            output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending
+
+            output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending
+            output['report']['global']['filename'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending + '-report'
+
+            output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending
+            output['sql']['global']['filename'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending + 'DB'
+
+            writeOutputControls(join(inpDir,datbaseName+nickName+'L' + L + 'A'+str(n)+ending+ext),output)
+
 if __name__ == '__main__':
     main()

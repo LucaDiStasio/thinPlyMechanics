@@ -195,6 +195,8 @@ def main():
 
             writeMaterialsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),materials)
 
+            writePostprocControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),postproc)
+
 
 
 

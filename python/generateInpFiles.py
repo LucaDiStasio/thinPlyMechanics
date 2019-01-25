@@ -417,14 +417,14 @@ def main():
     friction['maxtau']      = '0.0'
 
     mesh = {}
-    mesh['deltapsi'] = 'none'
-    mesh['deltaphi'] = '0.0'
-    mesh['delta']    = '0.0'
-    mesh['delta1']   = '0.0'
-    mesh['delta2']   = '0.0'
-    mesh['delta3']   = '0.0'
-    mesh['minElNum'] = 'none'
-    mesh['order']    = '0.0'
+    mesh['deltapsi'] = '10.0'
+    mesh['deltaphi'] = '10.0'
+    mesh['delta']    = '0.05'
+    mesh['delta1']   = '1.0'
+    mesh['delta2']   = '1.0'
+    mesh['delta3']   = '1.0'
+    mesh['minElNum'] = '5'
+    mesh['order']    = 'second'
 
     for L in Ls:
         #for s in homogSize:

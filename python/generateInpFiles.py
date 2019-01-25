@@ -226,16 +226,16 @@ def writeOutputControls(fullPath,outputControls):
 def main():
 
     runningOn = 'LTU'
-    
+
     PC = 'LucaPC'
     onedriveSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM/InputData/asymm'
 
     if runningOn=='LucaPC':
-        outDir = 'C:/Users/luca/OneDrive/' + onedriveSubfolder
+        inpDir = 'C:/Users/luca/OneDrive/' + onedriveSubfolder
     elif runningOn=='EEIGM':
-        outDir = 'D:/OneDrive/' + onedriveSubfolder
+        inpDir = 'D:/OneDrive/' + onedriveSubfolder
     else:
-        outDir = 'C:/Users/lucdis/OneDrive/' + onedriveSubfolder
+        inpDir = 'C:/Users/lucdis/OneDrive/' + onedriveSubfolder
 
     if PC=='LucaPC':
         ending = '-LPC'

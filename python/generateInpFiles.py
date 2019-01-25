@@ -484,7 +484,9 @@ def main():
 
             writeBCsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),bcNORTH,bcRIGHT,bcLEFT)
 
-            writeSurfacefrictionControls(fullPath,friction)
+            writeSurfacefrictionControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),friction)
+
+            writeMeshControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),mesh)
 
 
 

@@ -504,7 +504,7 @@ def main():
     output['global']['directory'] = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/LucaPC/sweepOverDeltathetaL1_0992A1S1F'
     output['global']['filenames'] = {}
     output['global']['filenames']['performances'] = 'sweepOverDeltathetaL1_0992A1S1F-performances'
-    output['global']['filenames']['energyreleaserates'] = 'sweepOverDeltathetaL1_0992A1S1F-energyreleaserates'
+    output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltathetaL1_0992A1S1F-energyreleaserates'
     output['global']['filenames']['inputdata'] = 'sweepOverDeltathetaL1_0992A1S1F-inputdata'
     output['local'] = {}
     output['local']['directory'] = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/LucaPC/sweepOverDeltathetaL1_0992A1S1F'
@@ -588,7 +588,7 @@ def main():
             output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending
 
             output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + '-performances'
-            output['global']['filenames']['energyreleaserates'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + '-energyreleaserates'
+            output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + '-energyreleaserates'
             output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + '-inputdata'
 
             output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending
@@ -658,7 +658,7 @@ def main():
             output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending
 
             output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending + '-performances'
-            output['global']['filenames']['energyreleaserates'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending + '-energyreleaserates'
+            output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending + '-energyreleaserates'
             output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending + '-inputdata'
 
             output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'A' + str(n) + ending
@@ -729,7 +729,7 @@ def main():
                 output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
 
                 output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-performances'
-                output['global']['filenames']['energyreleaserates'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-energyreleaserates'
+                output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-energyreleaserates'
                 output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-inputdata'
 
                 output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending

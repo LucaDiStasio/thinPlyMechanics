@@ -227,7 +227,7 @@ def main():
 
     runningOn = 'LTU'
     PC = 'LucaPC'
-    onedriveSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM/InputData/new'
+    onedriveSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM/InputData/asymm'
 
     if runningOn=='LucaPC':
         outDir = 'C:/Users/luca/OneDrive/' + onedriveSubfolder
@@ -238,8 +238,12 @@ def main():
 
     if PC=='LucaPC':
         ending = '-LPC'
+        onedriveDir = 'C:/Users/luca/OneDrive/'
+        onedriveOutSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM/LucaPC'
     else:
-        ending = '-COARED'
+        ending = 'COARED'
+        onedriveDir = 'D:/OneDrive/'
+        onedriveOutSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM'
 
     datbaseName = 'inputRVEdata'
     itbaseName = 'inputRVEiterables'
@@ -526,7 +530,7 @@ def main():
 
             writeAnalysisControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),analysis)
 
-            input['caefilename'] = 'sweepOverDeltatheta' + nickName+'L'+L+'S'+str(n)+ending
+            input['caefilename'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending
             writeInputControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),input)
 
             geometry['L'] = L.replace('_','.')
@@ -568,6 +572,23 @@ def main():
             writeJintegralControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),jint)
 
             writeSolverControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),solver)
+
+
+            output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending
+
+            output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + '-performances'
+            output['global']['filenames']['energyreleaserates'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + '-energyreleaserates'
+            output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + '-inputdata'
+
+            output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending
+
+            output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending
+            output['report']['global']['filename'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + '-report'
+
+            output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending
+            output['sql']['global']['filename'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + 'DB'
+
+            writeOutputControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),output)
 
 if __name__ == '__main__':
     main()

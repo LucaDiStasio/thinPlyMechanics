@@ -73,6 +73,11 @@ def main():
     else:
         outDir = 'C:/Users/lucdis/OneDrive/' + onedriveSubfolder
 
+    if PC=='LucaPC':
+        ending = '-LPC'
+    else:
+        ending = '-COARED'
+
     datbaseName = 'inputRVEdata'
     itbaseName = 'inputRVEiterables'
     ext = '.deck'
@@ -97,11 +102,11 @@ def main():
     pipeline['remove-PRT'] = 'True'
     pipeline['remove-STA'] = 'True'
     pipeline['remove-SIM'] = 'True'
-    pipeline['remove-MSG'] = 'True $boolean
-    pipeline['remove-INP'] = 'True $boolean
-    pipeline['remove-COM'] = 'True $boolean
-    pipeline['report-LATEX'] = 'False  $boolean
-    pipeline['report-EXCEL'] = 'False  $boolean
+    pipeline['remove-MSG'] = 'True'
+    pipeline['remove-INP'] = 'True'
+    pipeline['remove-COM'] = 'True'
+    pipeline['report-LATEX'] = 'False'
+    pipeline['report-EXCEL'] = 'False'
     analysis = {}
     for L in Ls:
         #for s in homogSize:

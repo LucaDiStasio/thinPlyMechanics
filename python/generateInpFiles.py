@@ -118,11 +118,22 @@ def writeSectionregionsControls(fullPath,sectionregionsControls):
 
 def writeStepsControls(fullPath,stepsControls):
     with open(fullPath,'a') as out:
-        out.write('# Section properties (repeat for every section to be defined)' + '\n')
+        out.write('# Step data' + '\n')
         for s,step in enumerate(stepsControls):
-            out.write('steps, ' + str(s+1) + ', name             @' + str(step['name']) + ' $string'  + '\n')
-            out.write('steps, ' + str(s+1) + ', previous         @' + str(step['previous']) +   ' $string'  + '\n')
+            out.write('steps, ' + str(s+1) + ', name             @' + str(step['name'])             + ' $string'  + '\n')
+            out.write('steps, ' + str(s+1) + ', previous         @' + str(step['previous'])         + ' $string'  + '\n')
             out.write('steps, ' + str(s+1) + ', minimumIncrement @' + str(step['minimumIncrement']) + ' $float'  + '\n')
+        out.write('#' + '\n')
+
+def writeLoadsControls(fullPath,loadsControls):
+    with open(fullPath,'a') as out:
+        out.write('# Loads' + '\n')
+        for l,load in enumerate(loadsControls):
+            out.write('loads, ' + str(l+1) + ', name     @' + str(load['name'])     + ' $string'  + '\n')
+            out.write('loads, ' + str(l+1) + ', type     @' + str(load['type'])     + ' $string'  + '\n')
+            out.write('loads, ' + str(l+1) + ', set      @' + str(load['set'])      + ' $string'  + '\n')
+            out.write('loads, ' + str(l+1) + ', value    @' + str(load['value'])    + ' $list of float'  + '\n')
+            out.write('loads, ' + str(l+1) + ', stepName @' + str(load['stepName']) + ' $string'  + '\n')
         out.write('#' + '\n')
 
 def main():
@@ -231,6 +242,7 @@ def main():
     secRegion1['thicknessAssignment'] = 'FROM_SECTION'
     secRegion1['offsetValue'] = '0.0'
     sectionRegionsSideAbove.append(secRegion1)
+    secRegion2 = {}
     secRegion2['name'] = 'matrixSection'
     secRegion2['set'] = 'MATRIX'
     secRegion2['offSetType'] = 'MIDDLE_SURFACE'
@@ -238,6 +250,7 @@ def main():
     secRegion2['thicknessAssignment'] = 'FROM_SECTION'
     secRegion2['offsetValue'] = '0.0'
     sectionRegionsSideAbove.append(secRegion2)
+    secRegion3 = {}
     secRegion3['name'] = 'fiberSection'
     secRegion3['set'] = 'UPPER-FIBERS'
     secRegion3['offSetType'] = 'MIDDLE_SURFACE'
@@ -245,6 +258,7 @@ def main():
     secRegion3['thicknessAssignment'] = 'FROM_SECTION'
     secRegion3['offsetValue'] = '0.0'
     sectionRegionsSideAbove.append(secRegion3)
+    secRegion4 = {}
     secRegion4['name'] = 'fiberSection'
     secRegion4['set'] = 'LEFT-FIBERS'
     secRegion4['offSetType'] = 'MIDDLE_SURFACE'
@@ -252,6 +266,7 @@ def main():
     secRegion4['thicknessAssignment'] = 'FROM_SECTION'
     secRegion4['offsetValue'] = '0.0'
     sectionRegionsSideAbove.append(secRegion4)
+    secRegion5 = {}
     secRegion5['name'] = 'fiberSection'
     secRegion5['set'] = 'RIGHT-FIBERS'
     secRegion5['offSetType'] = 'MIDDLE_SURFACE'
@@ -269,6 +284,7 @@ def main():
     secRegion1['thicknessAssignment'] = 'FROM_SECTION'
     secRegion1['offsetValue'] = '0.0'
     sectionRegionsSideAbove.append(secRegion1)
+    secRegion2 = {}
     secRegion2['name'] = 'matrixSection'
     secRegion2['set'] = 'MATRIX'
     secRegion2['offSetType'] = 'MIDDLE_SURFACE'
@@ -276,6 +292,7 @@ def main():
     secRegion2['thicknessAssignment'] = 'FROM_SECTION'
     secRegion2['offsetValue'] = '0.0'
     sectionRegionsSideAbove.append(secRegion2)
+    secRegion4 = {}
     secRegion4['name'] = 'fiberSection'
     secRegion4['set'] = 'LEFT-FIBERS'
     secRegion4['offSetType'] = 'MIDDLE_SURFACE'
@@ -283,6 +300,7 @@ def main():
     secRegion4['thicknessAssignment'] = 'FROM_SECTION'
     secRegion4['offsetValue'] = '0.0'
     sectionRegionsSideAbove.append(secRegion4)
+    secRegion5 = {}
     secRegion5['name'] = 'fiberSection'
     secRegion5['set'] = 'RIGHT-FIBERS'
     secRegion5['offSetType'] = 'MIDDLE_SURFACE'
@@ -300,6 +318,7 @@ def main():
     secRegion1['thicknessAssignment'] = 'FROM_SECTION'
     secRegion1['offsetValue'] = '0.0'
     sectionRegionsSideAbove.append(secRegion1)
+    secRegion2 = {}
     secRegion2['name'] = 'matrixSection'
     secRegion2['set'] = 'MATRIX'
     secRegion2['offSetType'] = 'MIDDLE_SURFACE'
@@ -307,6 +326,7 @@ def main():
     secRegion2['thicknessAssignment'] = 'FROM_SECTION'
     secRegion2['offsetValue'] = '0.0'
     sectionRegionsSideAbove.append(secRegion2)
+    secRegion3 = {}
     secRegion3['name'] = 'fiberSection'
     secRegion3['set'] = 'UPPER-FIBERS'
     secRegion3['offSetType'] = 'MIDDLE_SURFACE'
@@ -321,6 +341,22 @@ def main():
     step1['previous'] = 'Initial'
     step1['minimumIncrement'] = '1e-10'
     steps.append(step1)
+
+    loads = []
+    load1 = {}
+    load1['name'] = 'rightBC'
+    load1['type'] = 'appliedStrain'
+    load1['set'] = 'RIGHTSIDE'
+    load1['value'] = '[0.01,0.0,0.0]'
+    load1['stepName'] = 'Load-Step'
+    loads.append(load1)
+    load2 = {}
+    load2['name'] = 'leftBC'
+    load2['type'] = 'appliedStrain'
+    load2['set'] = 'LEFTSIDE'
+    load2['value'] = '[0.01,0.0,0.0]'
+    load2['stepName'] = 'Load-Step'
+    loads.append(load2)
 
     for L in Ls:
         #for s in homogSize:

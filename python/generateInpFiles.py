@@ -459,6 +459,8 @@ def main():
     solver = {}
     solver['cpus'] = '4'
 
+    solver = {}
+
     for L in Ls:
         #for s in homogSize:
         for n in nFibsSi:
@@ -509,6 +511,8 @@ def main():
             writeMeshControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),mesh)
 
             writeJintegralControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),jint)
+
+            writeSolverControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),solver)
 
 if __name__ == '__main__':
     main()

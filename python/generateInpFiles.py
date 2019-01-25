@@ -149,10 +149,10 @@ def writeBCsControls(fullPath,bcNORTHcontrols,bcRIGHTcontrols,bcLEFTcontrols):
         out.write('BC, northSide, tRatio   @' + str(bcNORTHcontrols['tRatio'])  + ' $float'  + '\n')
         out.write('BC, northSide, nFibers  @' + str(bcNORTHcontrols['nFibers']) + ' $int'  + '\n')
         out.write('BC, rightSide, type     @' + str(bcRIGHTcontrols['type'])    + ' $string'  + '\n')
-        out.write('BC, rightSide, tRatio   @' + str(bcRIGHTcontrols['tRatio'])  + ' $float'  + '\n')
+        out.write('BC, rightSide, tRatio   @' + str(bcRIGHTcontrols['wRatio'])  + ' $float'  + '\n')
         out.write('BC, rightSide, nFibers  @' + str(bcRIGHTcontrols['nFibers']) + ' $int'  + '\n')
         out.write('BC, leftSide, type      @' + str(bcLEFTcontrols['type'])     + ' $string'  + '\n')
-        out.write('BC, leftSide, tRatio    @' + str(bcLEFTcontrols['tRatio'])   + ' $float'  + '\n')
+        out.write('BC, leftSide, tRatio    @' + str(bcLEFTcontrols['wRatio'])   + ' $float'  + '\n')
         out.write('BC, leftSide, nFibers   @' + str(bcLEFTcontrols['nFibers'])  + ' $int'  + '\n')
         out.write('#' + '\n')
 

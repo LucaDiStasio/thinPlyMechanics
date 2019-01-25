@@ -201,12 +201,13 @@ def writeSolverControls(fullPath,solverControls):
 
 def main():
 
+    runningOn = 'LTU'
     PC = 'LucaPC'
     onedriveSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM/InputData/new'
 
-    if PC=='LucaPC':
+    if runningOn=='LucaPC':
         outDir = 'C:/Users/luca/OneDrive/' + onedriveSubfolder
-    elif PC=='EEIGM':
+    elif runningOn=='EEIGM':
         outDir = 'D:/OneDrive/' + onedriveSubfolder
     else:
         outDir = 'C:/Users/lucdis/OneDrive/' + onedriveSubfolder
@@ -460,6 +461,23 @@ def main():
     solver['cpus'] = '4'
 
     output = {}
+    output['archive'] = {}
+    output['archive']['directory'] = 'G:/sweepDeltathetaVff-GF-BCvkinmeancornerscoupling'
+    output['global'] = {}
+    output['global']['directory'] = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/LucaPC/sweepOverDeltathetaL1_0992A1S1F'
+    output['global']['filenames'] = {}
+    output['global']['filenames']['performances'] = 'sweepOverDeltathetaL1_0992A1S1F-performances'
+    output['global']['filenames']['energyreleaserates'] = 'sweepOverDeltathetaL1_0992A1S1F-energyreleaserates'
+    output['global']['filenames']['inputdata'] = 'sweepOverDeltathetaL1_0992A1S1F-inputdata'
+    output['local'] = {}
+    output['local']['directory'] = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/LucaPC/sweepOverDeltathetaL1_0992A1S1F'
+    output['local']['filenames'] = {}
+    output['local']['filenames']['Jintegral'] = 'C:/'
+    output['local']['filenames']['stressesatboundary'] = 'C:/'
+    output['local']['filenames']['crackdisplacements'] = 'C:/'
+    output['local']['filenames']['contactzonetolerance'] = 'C:/'
+    output['report'] = {}
+    output['sql'] = {}
 
     for L in Ls:
         #for s in homogSize:

@@ -282,7 +282,7 @@ def main():
     secRegion5['offsetValue'] = '0.0'
     sectionRegionsSideAbove.append(secRegion5)
 
-    sectionRegionsSideAbove = []
+    sectionRegionsAbove = []
     secRegion1 = {}
     secRegion1['name'] = 'fiberSection'
     secRegion1['set'] = 'FIBER'
@@ -327,6 +327,8 @@ def main():
             writePostprocControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),postproc)
 
             writeSectionsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),sections)
+
+            writeSectionregionsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),sectionRegionsSide)
 
 
 

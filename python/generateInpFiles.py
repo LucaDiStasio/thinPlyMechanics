@@ -116,6 +116,15 @@ def writeSectionregionsControls(fullPath,sectionregionsControls):
             out.write('sectionRegions, ' + str(r+1) + ', offsetValue          @' + str(sectionregion['offsetValue']) + ' $float'  + '\n')
         out.write('#' + '\n')
 
+def writeStepsControls(fullPath,stepsControls):
+    with open(fullPath,'a') as out:
+        out.write('# Section properties (repeat for every section to be defined)' + '\n')
+        for s,step in enumerate(stepsControls):
+            out.write('steps, ' + str(s+1) + ', name             @' + str(step['name']) + ' $string'  + '\n')
+            out.write('steps, ' + str(s+1) + ', previous         @' + str(step['previous']) +   ' $string'  + '\n')
+            out.write('steps, ' + str(s+1) + ', minimumIncrement @' + str(step['minimumIncrement']) + ' $float'  + '\n')
+        out.write('#' + '\n')
+
 def main():
 
     PC = 'LucaPC'
@@ -305,6 +314,12 @@ def main():
     secRegion3['thicknessAssignment'] = 'FROM_SECTION'
     secRegion3['offsetValue'] = '0.0'
     sectionRegionsSideAbove.append(secRegion3)
+
+    steps = []
+    step1 = {}
+    step1['name'] = 'Load-Step'
+    step1['previous'] = 'Initial'
+    step1['minimumIncrement'] = '1e-10'
 
     for L in Ls:
         #for s in homogSize:

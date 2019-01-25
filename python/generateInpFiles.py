@@ -264,8 +264,8 @@ def main():
 
     nickName = 'Asymm'
 
-    if not exists(outDir):
-        os.mkdir(outDir)
+    if not exists(inpDir):
+        os.mkdir(inpDir)
 
     pipeline = {}
     pipeline['create-CAE'] = 'True'

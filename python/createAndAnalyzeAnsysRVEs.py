@@ -4,7 +4,7 @@
 '''
 =====================================================================================
 
-Copyright (c) 2016-2018 Université de Lorraine or Luleå tekniska universitet
+Copyright (c) 2016-2019 Université de Lorraine or Luleå tekniska universitet
 Author: Luca Di Stasio <luca.distasio@gmail.com>
                        <luca.distasio@ingpec.eu>
 

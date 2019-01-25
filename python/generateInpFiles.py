@@ -136,7 +136,7 @@ def writeLoadsControls(fullPath,loadsControls):
             out.write('loads, ' + str(l+1) + ', stepName @' + str(load['stepName']) + ' $string'  + '\n')
         out.write('#' + '\n')
 
-def writeBCsControls(fullPath,bcNORTH,bcRIGHT,bcLEFT):
+def writeBCsControls(fullPath,bcNORTHcontrols,bcRIGHTcontrols,bcLEFTcontrols):
     with open(fullPath,'a') as out:
         out.write('# Boundary conditions' + '\n')
         out.write('# vgeomcoupling           ==> nodes belong to line, free to move and rotate rigidly' + '\n')
@@ -145,15 +145,15 @@ def writeBCsControls(fullPath,bcNORTH,bcRIGHT,bcLEFT):
         out.write('# ulinearCoupling         ==> linear distribution of horizontal displacement' + '\n')
         out.write('# boundingPly             ==> homogenized material' + '\n')
         out.write('# adjacentFibers          ==> fibers and matrix (microstructure)' + '\n')
-        out.write('BC, northSide, type     @' + str(bcNORTH['type'])    + ' $string'  + '\n')
-        out.write('BC, northSide, tRatio   @' + str(bcNORTH['tRatio'])  + ' $float'  + '\n')
-        out.write('BC, northSide, nFibers  @' + str(bcNORTH['nFibers']) + ' $int'  + '\n')
-        out.write('BC, rightSide, type     @' + str(bcRIGHT['type'])    + ' $string'  + '\n')
-        out.write('BC, rightSide, tRatio   @' + str(bcRIGHT['tRatio'])  + ' $float'  + '\n')
-        out.write('BC, rightSide, nFibers  @' + str(bcRIGHT['nFibers']) + ' $int'  + '\n')
-        out.write('BC, leftSide, type      @' + str(bcLEFT['type'])     + ' $string'  + '\n')
-        out.write('BC, leftSide, tRatio    @' + str(bcLEFT['tRatio'])   + ' $float'  + '\n')
-        out.write('BC, leftSide, nFibers   @' + str(bcLEFT['nFibers'])  + ' $int'  + '\n')
+        out.write('BC, northSide, type     @' + str(bcNORTHcontrols['type'])    + ' $string'  + '\n')
+        out.write('BC, northSide, tRatio   @' + str(bcNORTHcontrols['tRatio'])  + ' $float'  + '\n')
+        out.write('BC, northSide, nFibers  @' + str(bcNORTHcontrols['nFibers']) + ' $int'  + '\n')
+        out.write('BC, rightSide, type     @' + str(bcRIGHTcontrols['type'])    + ' $string'  + '\n')
+        out.write('BC, rightSide, tRatio   @' + str(bcRIGHTcontrols['tRatio'])  + ' $float'  + '\n')
+        out.write('BC, rightSide, nFibers  @' + str(bcRIGHTcontrols['nFibers']) + ' $int'  + '\n')
+        out.write('BC, leftSide, type      @' + str(bcLEFTcontrols['type'])     + ' $string'  + '\n')
+        out.write('BC, leftSide, tRatio    @' + str(bcLEFTcontrols['tRatio'])   + ' $float'  + '\n')
+        out.write('BC, leftSide, nFibers   @' + str(bcLEFTcontrols['nFibers'])  + ' $int'  + '\n')
         out.write('#' + '\n')
 
 def main():
@@ -433,6 +433,8 @@ def main():
             bcLEFT['type'] = 'adjacentFibers'
             bcLEFT['wRatio'] = '0.0'
             bcLEFT['nFibers'] = str(n)
+
+            writeBCsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),bcNORTH,bcRIGHT,bcLEFT)
 
 
 

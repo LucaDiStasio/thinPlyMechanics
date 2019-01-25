@@ -173,6 +173,19 @@ def writeSurfacefrictionControls(fullPath,surfacefrictionControls):
         out.write('surface, friction, maxtau        @' + str(surfacefrictionControls['maxtau'])       + ' $float'  + '\n')
         out.write('#' + '\n')
 
+def writeMeshControls(fullPath,meshControls):
+    with open(fullPath,'a') as out:
+        out.write('# Mesh' + '\n')
+        out.write('mesh, size, deltapsi      @' + str(meshControls['deltapsi']) + ' $float' + '\n')
+        out.write('mesh, size, deltaphi      @' + str(meshControls['deltaphi']) + ' $float'  + '\n')
+        out.write('mesh, size, delta         @' + str(meshControls['delta'])    + ' $float'  + '\n')
+        out.write('mesh, size, delta1        @' + str(meshControls['delta1'])   + ' $float'  + '\n')
+        out.write('mesh, size, delta2        @' + str(meshControls['delta2'])   + ' $float'  + '\n')
+        out.write('mesh, size, delta3        @' + str(meshControls['delta3'])   + ' $float'  + '\n')
+        out.write('mesh, elements, minElNum  @' + str(meshControls['minElNum']) + ' $int' + '\n')
+        out.write('mesh, elements, order     @' + str(meshControls['order'])    + ' $string'  + '\n')
+        out.write('#' + '\n')
+
 def main():
 
     PC = 'LucaPC'

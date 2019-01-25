@@ -51,31 +51,40 @@ def writePipelineControls(fullPath,pipelineControls):
     with open(fullPath,'a') as out:
         out.write('# Select execution steps in the pipeline' + '\n')
         for key in pipelineControls:
-            out.write('# simulation-pipeline, ' + str(key) + ' @' + str(pipelineControls[key]) + ' $boolean' + '\n')
+            out.write('simulation-pipeline, ' + str(key) + ' @' + str(pipelineControls[key]) + ' $boolean' + '\n')
         out.write('#' + '\n')
 
 def writeAnalysisControls(fullPath,analysisControls):
     with open(fullPath,'a') as out:
         out.write('# Select outputs in the analysis phase' + '\n')
         for key in analysisControls:
-            out.write('# simulation-pipeline, analysis, ' + str(key) + ' @' + str(analysisControls[key]) + ' $boolean' + '\n')
+            out.write('simulation-pipeline, analysis, ' + str(key) + ' @' + str(analysisControls[key]) + ' $boolean' + '\n')
         out.write('#' + '\n')
 
 def writeInputControls(fullPath,inputControls):
     with open(fullPath,'a') as out:
         out.write('# Directory and names for CAE model generation' + '\n')
         for key in inputControls:
-            out.write('# input, ' + str(key) + ' @' + str(inputControls[key]) + ' $string' + '\n')
+            out.write('input, ' + str(key) + ' @' + str(inputControls[key]) + ' $string' + '\n')
         out.write('#' + '\n')
 
 def writeGeometryControls(fullPath,geometryControls):
     with open(fullPath,'a') as out:
-        out.write('# Directory and names for CAE model generation' + '\n')
+        out.write('# Geometry' + '\n')
         for key in geometryControls:
             if 'fiberType' in key:
-                out.write('# geometry, fiber, type @' + str(geometryControls[key]) + ' $string' + '\n')
+                out.write('geometry, fiber, type @' + str(geometryControls[key]) + ' $string' + '\n')
             else:
-                out.write('# geometry, ' + str(key) + ' @' + str(geometryControls[key]) + ' $float' + '\n')
+                out.write('geometry, ' + str(key) + ' @' + str(geometryControls[key]) + ' $float' + '\n')
+        out.write('#' + '\n')
+
+def writeMaterialsControls(fullPath,materialsControls):
+    with open(fullPath,'a') as out:
+        out.write('# Materials (repeat keywords for every material to be defined)' + '\n')
+        for m,material in enumerate(materialsControls):
+            out.write('materials ' + str(m+1) + ', name            @' + str(material['name']) + ' $string'  + '\n')
+            out.write('materials ' + str(m+1) + ', elastic, type   @' + str(material['type']) +   ' $ABAQUS keyword'  + '\n')
+            out.write('materials ' + str(m+1) + ', elastic, values @' + str(material['elProps']) + ' $list of float'  + '\n')
         out.write('#' + '\n')
 
 def main():
@@ -144,6 +153,19 @@ def main():
     geometry['Rf'] = '1.0'
     geometry['theta'] = '0.0'
     geometry['deltatheta'] = '10.0'
+
+    materials = []
+    mat1 = {}
+    mat1['name'] = 'glassFiber'
+    mat1['type'] = 'ISOTROPIC'
+    mat1['elProps'] = '[70e3,0.2]'
+    materials.append(mat1)
+    mat2 = {}
+    mat2['name'] = 'epoxy'
+    mat2['type'] = 'ISOTROPIC'
+    mat2['elProps'] = '[3.5e3,0.4]'
+    materials.append(mat2)
+
 
     for L in Ls:
         #for s in homogSize:

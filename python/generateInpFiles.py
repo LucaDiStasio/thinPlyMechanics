@@ -320,6 +320,7 @@ def main():
     step1['name'] = 'Load-Step'
     step1['previous'] = 'Initial'
     step1['minimumIncrement'] = '1e-10'
+    steps.append(step1)
 
     for L in Ls:
         #for s in homogSize:
@@ -344,6 +345,8 @@ def main():
             writeSectionsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),sections)
 
             writeSectionregionsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),sectionRegionsSide)
+
+            writeStepsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),steps)
 
 
 

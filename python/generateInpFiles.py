@@ -605,7 +605,7 @@ def main():
             writeIntro(join(inpDir,datbaseName+nickName+'L'+L+'A'+str(n)+ending+ext))
             writeIntro(join(inpDir,itbaseName+nickName+'L'+L+'A'+str(n)+ending+ext))
 
-            writeIterables(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),'RVE' + L + '-HSD-af' + str(n) + nickName)
+            writeIterables(join(inpDir,itbaseName+nickName+'L'+L+'A'+str(n)+ending+ext),'RVE' + L + '-HSD-af' + str(n) + nickName)
 
             writePipelineControls(join(inpDir,datbaseName+nickName+'L'+L+'A'+str(n)+ending+ext),pipeline)
 
@@ -676,7 +676,7 @@ def main():
                 writeIntro(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext))
                 writeIntro(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext))
 
-                writeIterables(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),'RVE' + L + '-HSD-sf' + str(n) + 'af' + str(m) + nickName)
+                writeIterables(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),'RVE' + L + '-HSD-sf' + str(n) + 'af' + str(m) + nickName)
 
                 writePipelineControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),pipeline)
 

@@ -87,6 +87,13 @@ def writeMaterialsControls(fullPath,materialsControls):
             out.write('materials ' + str(m+1) + ', elastic, values @' + str(material['elProps']) + ' $list of float'  + '\n')
         out.write('#' + '\n')
 
+def writePostprocControls(fullPath,postprocControls):
+    with open(fullPath,'a') as out:
+        out.write('# Values of nu and G needed for postprocessing' + '\n')
+        for key in postprocControls:
+            out.write('postproc, ' + str(key) + ' @' + str(postprocControls[key]) + ' $float' + '\n')
+        out.write('#' + '\n')
+
 def main():
 
     PC = 'LucaPC'

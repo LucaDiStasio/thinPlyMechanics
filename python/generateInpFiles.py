@@ -193,6 +193,12 @@ def writeJintegralControls(fullPath,jintegralControls):
         out.write('singularity, type            @' + str(jintegralControls['type'])             + ' $string'  + '\n')
         out.write('#' + '\n')
 
+def writeSolverControls(fullPath,solverControls):
+    with open(fullPath,'a') as out:
+        out.write('# Solver properties' + '\n')
+        out.write('solver, cpus  @' + str(solverControls['cpus']) + ' $int' + '\n')
+        out.write('#' + '\n')
+
 def main():
 
     PC = 'LucaPC'
@@ -449,6 +455,9 @@ def main():
     jint = {}
     jint['numberOfContours'] = '5'
     jint['type'] = 'none'
+
+    solver = {}
+    solver['cpus'] = '4'
 
     for L in Ls:
         #for s in homogSize:

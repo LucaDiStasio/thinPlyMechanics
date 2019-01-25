@@ -199,6 +199,30 @@ def writeSolverControls(fullPath,solverControls):
         out.write('solver, cpus  @' + str(solverControls['cpus']) + ' $int' + '\n')
         out.write('#' + '\n')
 
+def writeOutputControls(fullPath,outputControls):
+    with open(fullPath,'a') as out:
+        out.write('# Output directory and filenames' + '\n')
+        out.write('output, archive, directory                             @' + str(outputControls['archive']['directory']) + ' $string' + '\n')
+        out.write('output, global, directory                              @' + str(outputControls['global']['directory']) + ' $string' + '\n')
+        out.write('output, global, filenames, performances                @' + str(outputControls['global']['filenames']['performances']) + ' $string' + '\n')
+        out.write('output, global, filenames, energyreleaserate           @' + str(outputControls['global']['filenames']['energyreleaserate']) + ' $string' + '\n')
+        out.write('output, global, filenames, inputdata                   @' + str(outputControls['global']['filenames']['inputdata']) + ' $string' + '\n')
+        out.write('output, local, directory                               @' + str(outputControls['local']['directory']) + ' $string' + '\n')
+        out.write('output, local, filenames, Jintegral                    @' + str(outputControls['local']['filenames']['Jintegral']) + ' $string' + '\n')
+        out.write('output, local, filenames, stressesatboundary           @' + str(outputControls['local']['filenames']['stressesatboundary']) + ' $string' + '\n')
+        out.write('output, local, filenames, crackdisplacements           @' + str(outputControls['local']['filenames']['crackdisplacements']) + ' $string' + '\n')
+        out.write('output, local, filenames, contactzonetolerance         @' + str(outputControls['local']['filenames']['contactzonetolerance']) + ' $string' + '\n')
+        out.write('output, report, global, directory                      @' + str(outputControls['report']['global']['directory']) + ' $string' + '\n')
+        out.write('output, report, global, filename                       @' + str(outputControls['report']['global']['filename']) + ' $string' + '\n')
+        out.write('output, report, local, directory                       @' + str(outputControls['report']['local']['directory']) + ' $list of string' + '\n')
+        out.write('output, report, local, filenames, Jintegral            @' + str(outputControls['report']['local']['filenames']['Jintegral']) + ' $list of string' + '\n')
+        out.write('output, report, local, filenames, stressesatboundary   @' + str(outputControls['report']['local']['filenames']['stressesatboundary']) + ' $list of string' + '\n')
+        out.write('output, report, local, filenames, crackdisplacements   @' + str(outputControls['report']['local']['filenames']['crackdisplacements']) + ' $list of string' + '\n')
+        out.write('output, report, local, filenames, contactzonetolerance @' + str(outputControls['report']['local']['filenames']['contactzonetolerance']) + ' $list of string' + '\n')
+        out.write('output, sql, global, directory                         @' + str(outputControls['sql']['global']['directory']) + ' $string' + '\n')
+        out.write('output, sql, global, filename                          @' + str(outputControls['sql']['global']['filename']) + ' $string' + '\n')
+        out.write('#' + '\n')
+
 def main():
 
     runningOn = 'LTU'

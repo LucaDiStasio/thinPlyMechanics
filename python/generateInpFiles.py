@@ -156,7 +156,7 @@ def main():
     datbaseName = 'inputRVEdata'
     itbaseName = 'inputRVEiterables'
     ext = '.deck'
-    Ls = ['1_25','1_144','1_0992']
+    Ls = ['1_144'] # out of ['1_618','1_25','1_144','1_0992']
     #homogSize = ['1','2','3','5']
     nFibsAb = [1,2,3,5,10,50,100]
     nFibsSi = [10,50,100]
@@ -398,6 +398,21 @@ def main():
             writeStepsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),steps)
 
             writeLoadsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),loads)
+
+            bcNORTH = {}
+            bcNORTH['type'] = 'antisymmetry'
+            bcNORTH['tRatio'] = '0.0'
+            bcNORTH['nFibers'] = '0'
+
+            bcRIGHT = {}
+            bcRIGHT['type'] = 'adjacentFibers'
+            bcRIGHT['wRatio'] = '0.0'
+            bcRIGHT['nFibers'] = '1'
+
+            bcLEFT = {}
+            bcLEFT['type'] = 'adjacentFibers'
+            bcLEFT['wRatio'] = '0.0'
+            bcLEFT['nFibers'] = '1'
 
 
 

@@ -409,12 +409,22 @@ def main():
     bcLEFT['nFibers'] = '1'
 
     friction = {}
-    friction['type'] = 'none'
-    friction['static'] = '0.0'
-    friction['dynamic'] = '0.0'
-    friction['cpress'] = '0.0'
+    friction['type']        = 'none'
+    friction['static']      = '0.0'
+    friction['dynamic']     = '0.0'
+    friction['cpress']      = '0.0'
     friction['temperature'] = '0.0'
-    friction['maxtau'] = '0.0'
+    friction['maxtau']      = '0.0'
+
+    mesh = {}
+    mesh['deltapsi'] = 'none'
+    mesh['deltaphi'] = '0.0'
+    mesh['delta']    = '0.0'
+    mesh['delta1']   = '0.0'
+    mesh['delta2']   = '0.0'
+    mesh['delta3']   = '0.0'
+    mesh['minElNum'] = 'none'
+    mesh['order']    = '0.0'
 
     for L in Ls:
         #for s in homogSize:

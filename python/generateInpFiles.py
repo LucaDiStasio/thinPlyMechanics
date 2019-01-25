@@ -61,6 +61,23 @@ def writeAnalysisControls(fullPath,analysisControls):
             out.write('# simulation-pipeline, analysis, ' + str(key) + ' @' + str(analysisControls[key]) + ' $boolean' + '\n')
         out.write('#' + '\n')
 
+def writeInputControls(fullPath,inputControls):
+    with open(fullPath,'a') as out:
+        out.write('# Directory and names for CAE model generation' + '\n')
+        for key in inputControls:
+            out.write('# input, ' + str(key) + ' @' + str(inputControls[key]) + ' $string' + '\n')
+        out.write('#' + '\n')
+
+def writeGeometryControls(fullPath,geometryControls):
+    with open(fullPath,'a') as out:
+        out.write('# Directory and names for CAE model generation' + '\n')
+        for key in geometryControls:
+            if 'fiberType' in key:
+                out.write('# geometry, fiber, type @' + str(geometryControls[key]) + ' $string' + '\n')
+            else:
+                out.write('# geometry, ' + str(key) + ' @' + str(geometryControls[key]) + ' $float' + '\n')
+        out.write('#' + '\n')
+
 def main():
 
     PC = 'LucaPC'
@@ -107,12 +124,42 @@ def main():
     pipeline['remove-COM'] = 'True'
     pipeline['report-LATEX'] = 'False'
     pipeline['report-EXCEL'] = 'False'
+
     analysis = {}
+    pipeline['report-energyreleaserates'] = 'True'
+    pipeline['report-contactzone'] = 'False'
+    pipeline['report-stressesatboundary'] = 'False'
+    pipeline['report-stressesatsymmetryline'] = 'False'
+    pipeline['report-stressesatbondedinterface'] = 'False'
+    pipeline['report-crackdisplacements'] = 'False'
+
+    input = {}
+    input['wd'] = 'C:/Abaqus_WD/CurvedInterface'
+    input['caefilename'] = 'sweepOverDeltathetaL1_0992A1S2F'
+    input['modelname'] = 'aname'
+
+    geometry  = {}
+    geometry['fiberType'] = 'half'
+    geometry['L'] = '1.0992'
+    geometry['Rf'] = '1.0'
+    geometry['theta'] = '0.0'
+    geometry['deltatheta'] = '10.0'
+
     for L in Ls:
         #for s in homogSize:
         for n in nFibsSi:
-            writeIntro(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'-LPC'+ext))
-            writeIntro(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+'-LPC'+ext))
+            writeIntro(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext))
+            writeIntro(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+ending+ext))
+
+            writePipelineControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),pipeline)
+
+            writeAnalysisControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),analysis)
+
+            input['caefilename'] = 'sweepOverDeltatheta' + nickName+'L'+L+'S'+str(n)+ending
+            writeInputControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),input)
+
+            geometry['L'] = L.replace('_','.')
+            writeGeometryControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),geometry)
 
 
 

@@ -82,9 +82,9 @@ def writeMaterialsControls(fullPath,materialsControls):
     with open(fullPath,'a') as out:
         out.write('# Materials (repeat keywords for every material to be defined)' + '\n')
         for m,material in enumerate(materialsControls):
-            out.write('materials ' + str(m+1) + ', name            @' + str(material['name']) + ' $string'  + '\n')
-            out.write('materials ' + str(m+1) + ', elastic, type   @' + str(material['type']) +   ' $ABAQUS keyword'  + '\n')
-            out.write('materials ' + str(m+1) + ', elastic, values @' + str(material['elProps']) + ' $list of float'  + '\n')
+            out.write('materials, ' + str(m+1) + ', name            @' + str(material['name']) + ' $string'  + '\n')
+            out.write('materials, ' + str(m+1) + ', elastic, type   @' + str(material['type']) +   ' $ABAQUS keyword'  + '\n')
+            out.write('materials, ' + str(m+1) + ', elastic, values @' + str(material['elProps']) + ' $list of float'  + '\n')
         out.write('#' + '\n')
 
 def writePostprocControls(fullPath,postprocControls):
@@ -92,6 +92,16 @@ def writePostprocControls(fullPath,postprocControls):
         out.write('# Values of nu and G needed for postprocessing' + '\n')
         for key in postprocControls:
             out.write('postproc, ' + str(key) + ' @' + str(postprocControls[key]) + ' $float' + '\n')
+        out.write('#' + '\n')
+
+def writeSectionsControls(fullPath,sectionsControls):
+    with open(fullPath,'a') as out:
+        out.write('# Section properties (repeat for every section to be defined)' + '\n')
+        for s,section in enumerate(sectionsControls):
+            out.write('sections, ' + str(s+1) + ', name      @' + str(section['name']) + ' $string'  + '\n')
+            out.write('sections, ' + str(s+1) + ', type      @' + str(section['type']) +   ' $string'  + '\n')
+            out.write('sections, ' + str(s+1) + ', material  @' + str(section['material']) + ' $string'  + '\n')
+            out.write('sections, ' + str(s+1) + ', thickness @' + str(section['thickness']) + ' $float'  + '\n')
         out.write('#' + '\n')
 
 def main():
@@ -173,9 +183,57 @@ def main():
     mat2['elProps'] = '[3.5e3,0.4]'
     materials.append(mat2)
 
-    postproc  = {}
+    postproc = {}
     postproc['nu-G0'] = '0.4'
     postproc['G-G0'] = '1250.0'
+
+    sections = []
+    sec1 = {}
+    sec1['name'] = 'fiberSection'
+    sec1['type'] = 'HomogeneousSolidSection'
+    sec1['material'] = 'glassFiber'
+    sec1['thickness'] = '1.0'
+    sections.append(sec1)
+    sec2 = {}
+    sec2['name'] = 'matrixSection'
+    sec2['type'] = 'HomogeneousSolidSection'
+    sec2['material'] = 'epoxy'
+    sec2['thickness'] = '1.0'
+    sections.append(sec2)
+
+    sectionRegionsSideAbove = []
+    secRegion1 = {}
+    secRegion1['name'] = 'fiberSection'
+    secRegion1['set'] = 'FIBER'
+    secRegion1['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion1['offsetField'] = ' '
+    secRegion1['thicknessAssignment'] = 'FROM_SECTION'
+    secRegion1['offsetValue'] = '0.0'
+    secRegion2['name'] = 'matrixSection'
+    secRegion2['set'] = 'MATRIX'
+    secRegion2['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion2['offsetField'] = ' '
+    secRegion2['thicknessAssignment'] = 'FROM_SECTION'
+    secRegion2['offsetValue'] = '0.0'
+    secRegion3['name'] = 'fiberSection'
+    secRegion3['set'] = 'UPPER-FIBERS'
+    secRegion3['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion3['offsetField'] = ' '
+    secRegion3['thicknessAssignment'] = 'FROM_SECTION'
+    secRegion3['offsetValue'] = '0.0'
+    secRegion4['name'] = 'fiberSection'
+    secRegion4['set'] = 'LEFT-FIBERS'
+    secRegion4['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion4['offsetField'] = ' '
+    secRegion4['thicknessAssignment'] = 'FROM_SECTION'
+    secRegion4['offsetValue'] = '0.0'
+    secRegion5['name'] = 'fiberSection'
+    secRegion5['set'] = 'RIGHT-FIBERS'
+    secRegion5['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion5['offsetField'] = ' '
+    secRegion5['thicknessAssignment'] = 'FROM_SECTION'
+    secRegion5['offsetValue'] = '0.0'
+    sectionRegionsSideAbove.append(secRegion1)
 
     for L in Ls:
         #for s in homogSize:
@@ -196,6 +254,8 @@ def main():
             writeMaterialsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),materials)
 
             writePostprocControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),postproc)
+
+            writeSectionsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),sections)
 
 
 

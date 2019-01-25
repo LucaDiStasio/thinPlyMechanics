@@ -226,6 +226,7 @@ def writeOutputControls(fullPath,outputControls):
 def main():
 
     runningOn = 'LTU'
+    
     PC = 'LucaPC'
     onedriveSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM/InputData/asymm'
 
@@ -660,35 +661,35 @@ def main():
 
         for n in nFibsSi:
             for m in nFibsAb:
-                writeIntro(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext))
-                writeIntro(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+ending+ext))
+                writeIntro(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext))
+                writeIntro(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext))
 
-                writePipelineControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),pipeline)
+                writePipelineControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),pipeline)
 
-                writeAnalysisControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),analysis)
+                writeAnalysisControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),analysis)
 
-                input['caefilename'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending
-                writeInputControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),input)
+                input['caefilename'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
+                writeInputControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),input)
 
                 geometry['L'] = L.replace('_','.')
-                writeGeometryControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),geometry)
+                writeGeometryControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),geometry)
 
-                writeMaterialsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),materials)
+                writeMaterialsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),materials)
 
-                writePostprocControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),postproc)
+                writePostprocControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),postproc)
 
-                writeSectionsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),sections)
+                writeSectionsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),sections)
 
-                writeSectionregionsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),sectionRegionsSide)
+                writeSectionregionsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),sectionRegionsSide)
 
-                writeStepsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),steps)
+                writeStepsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),steps)
 
-                writeLoadsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),loads)
+                writeLoadsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),loads)
 
                 bcNORTH = {}
-                bcNORTH['type'] = 'antisymmetry'
+                bcNORTH['type'] = 'antisymmetryadjacentFibers'
                 bcNORTH['tRatio'] = '0.0'
-                bcNORTH['nFibers'] = '0'
+                bcNORTH['nFibers'] = str(m)
 
                 bcRIGHT = {}
                 bcRIGHT['type'] = 'adjacentFibers'
@@ -700,32 +701,32 @@ def main():
                 bcLEFT['wRatio'] = '0.0'
                 bcLEFT['nFibers'] = str(n)
 
-                writeBCsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),bcNORTH,bcRIGHT,bcLEFT)
+                writeBCsControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),bcNORTH,bcRIGHT,bcLEFT)
 
-                writeSurfacefrictionControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),friction)
+                writeSurfacefrictionControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),friction)
 
-                writeMeshControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),mesh)
+                writeMeshControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),mesh)
 
-                writeJintegralControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),jint)
+                writeJintegralControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),jint)
 
-                writeSolverControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),solver)
+                writeSolverControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),solver)
 
 
-                output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending
+                output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
 
-                output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + '-performances'
-                output['global']['filenames']['energyreleaserates'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + '-energyreleaserates'
-                output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + '-inputdata'
+                output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-performances'
+                output['global']['filenames']['energyreleaserates'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-energyreleaserates'
+                output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-inputdata'
 
-                output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending
+                output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
 
-                output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending
-                output['report']['global']['filename'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + '-report'
+                output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
+                output['report']['global']['filename'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-report'
 
-                output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending
-                output['sql']['global']['filename'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) + ending + 'DB'
+                output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
+                output['sql']['global']['filename'] = 'sweepOverDeltatheta' + nickName + 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + 'DB'
 
-                writeOutputControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),output)
+                writeOutputControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),output)
 
 if __name__ == '__main__':
     main()

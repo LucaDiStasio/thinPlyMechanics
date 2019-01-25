@@ -104,6 +104,18 @@ def writeSectionsControls(fullPath,sectionsControls):
             out.write('sections, ' + str(s+1) + ', thickness @' + str(section['thickness']) + ' $float'  + '\n')
         out.write('#' + '\n')
 
+def writeSectionregionsControls(fullPath,sectionregionsControls):
+    with open(fullPath,'a') as out:
+        out.write('# Section assignments (repeat as needed)' + '\n')
+        for r,sectionregion in enumerate(sectionregionsControls):
+            out.write('sectionRegions, ' + str(r+1) + ', name                 @' + str(sectionregion['name']) + ' $string'  + '\n')
+            out.write('sectionRegions, ' + str(r+1) + ', set                  @' + str(sectionregion['set']) +   ' $string'  + '\n')
+            out.write('sectionRegions, ' + str(r+1) + ', offsetType           @' + str(sectionregion['offsetType']) + ' $ABAQUS keyword'  + '\n')
+            out.write('sectionRegions, ' + str(r+1) + ', offsetField          @' + str(sectionregion['offsetField']) + ' $string'  + '\n')
+            out.write('sectionRegions, ' + str(r+1) + ', thicknessAssignment  @' + str(sectionregion['thicknessAssignment']) + ' $ABAQUS keyword'  + '\n')
+            out.write('sectionRegions, ' + str(r+1) + ', offsetValue          @' + str(sectionregion['offsetValue']) + ' $float'  + '\n')
+        out.write('#' + '\n')
+
 def main():
 
     PC = 'LucaPC'
@@ -209,31 +221,90 @@ def main():
     secRegion1['offsetField'] = ' '
     secRegion1['thicknessAssignment'] = 'FROM_SECTION'
     secRegion1['offsetValue'] = '0.0'
+    sectionRegionsSideAbove.append(secRegion1)
     secRegion2['name'] = 'matrixSection'
     secRegion2['set'] = 'MATRIX'
     secRegion2['offSetType'] = 'MIDDLE_SURFACE'
     secRegion2['offsetField'] = ' '
     secRegion2['thicknessAssignment'] = 'FROM_SECTION'
     secRegion2['offsetValue'] = '0.0'
+    sectionRegionsSideAbove.append(secRegion2)
     secRegion3['name'] = 'fiberSection'
     secRegion3['set'] = 'UPPER-FIBERS'
     secRegion3['offSetType'] = 'MIDDLE_SURFACE'
     secRegion3['offsetField'] = ' '
     secRegion3['thicknessAssignment'] = 'FROM_SECTION'
     secRegion3['offsetValue'] = '0.0'
+    sectionRegionsSideAbove.append(secRegion3)
     secRegion4['name'] = 'fiberSection'
     secRegion4['set'] = 'LEFT-FIBERS'
     secRegion4['offSetType'] = 'MIDDLE_SURFACE'
     secRegion4['offsetField'] = ' '
     secRegion4['thicknessAssignment'] = 'FROM_SECTION'
     secRegion4['offsetValue'] = '0.0'
+    sectionRegionsSideAbove.append(secRegion4)
     secRegion5['name'] = 'fiberSection'
     secRegion5['set'] = 'RIGHT-FIBERS'
     secRegion5['offSetType'] = 'MIDDLE_SURFACE'
     secRegion5['offsetField'] = ' '
     secRegion5['thicknessAssignment'] = 'FROM_SECTION'
     secRegion5['offsetValue'] = '0.0'
+    sectionRegionsSideAbove.append(secRegion5)
+
+    sectionRegionsSide = []
+    secRegion1 = {}
+    secRegion1['name'] = 'fiberSection'
+    secRegion1['set'] = 'FIBER'
+    secRegion1['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion1['offsetField'] = ' '
+    secRegion1['thicknessAssignment'] = 'FROM_SECTION'
+    secRegion1['offsetValue'] = '0.0'
     sectionRegionsSideAbove.append(secRegion1)
+    secRegion2['name'] = 'matrixSection'
+    secRegion2['set'] = 'MATRIX'
+    secRegion2['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion2['offsetField'] = ' '
+    secRegion2['thicknessAssignment'] = 'FROM_SECTION'
+    secRegion2['offsetValue'] = '0.0'
+    sectionRegionsSideAbove.append(secRegion2)
+    secRegion4['name'] = 'fiberSection'
+    secRegion4['set'] = 'LEFT-FIBERS'
+    secRegion4['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion4['offsetField'] = ' '
+    secRegion4['thicknessAssignment'] = 'FROM_SECTION'
+    secRegion4['offsetValue'] = '0.0'
+    sectionRegionsSideAbove.append(secRegion4)
+    secRegion5['name'] = 'fiberSection'
+    secRegion5['set'] = 'RIGHT-FIBERS'
+    secRegion5['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion5['offsetField'] = ' '
+    secRegion5['thicknessAssignment'] = 'FROM_SECTION'
+    secRegion5['offsetValue'] = '0.0'
+    sectionRegionsSideAbove.append(secRegion5)
+
+    sectionRegionsSideAbove = []
+    secRegion1 = {}
+    secRegion1['name'] = 'fiberSection'
+    secRegion1['set'] = 'FIBER'
+    secRegion1['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion1['offsetField'] = ' '
+    secRegion1['thicknessAssignment'] = 'FROM_SECTION'
+    secRegion1['offsetValue'] = '0.0'
+    sectionRegionsSideAbove.append(secRegion1)
+    secRegion2['name'] = 'matrixSection'
+    secRegion2['set'] = 'MATRIX'
+    secRegion2['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion2['offsetField'] = ' '
+    secRegion2['thicknessAssignment'] = 'FROM_SECTION'
+    secRegion2['offsetValue'] = '0.0'
+    sectionRegionsSideAbove.append(secRegion2)
+    secRegion3['name'] = 'fiberSection'
+    secRegion3['set'] = 'UPPER-FIBERS'
+    secRegion3['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion3['offsetField'] = ' '
+    secRegion3['thicknessAssignment'] = 'FROM_SECTION'
+    secRegion3['offsetValue'] = '0.0'
+    sectionRegionsSideAbove.append(secRegion3)
 
     for L in Ls:
         #for s in homogSize:

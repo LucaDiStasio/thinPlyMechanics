@@ -459,7 +459,7 @@ def main():
     solver = {}
     solver['cpus'] = '4'
 
-    solver = {}
+    output = {}
 
     for L in Ls:
         #for s in homogSize:

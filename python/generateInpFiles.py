@@ -223,6 +223,14 @@ def writeOutputControls(fullPath,outputControls):
         out.write('output, sql, global, filename                          @' + str(outputControls['sql']['global']['filename']) + ' $string' + '\n')
         out.write('#' + '\n')
 
+def writeIterables(fullPath,basename):
+    with open(fullPath,'a') as out:
+        out.write('# Output directory and filenames' + '\n')
+        out.write('basename             @' + basename + '$string' + '\n')
+        out.write('free parameters      @1             $int' + '\n')
+        out.write('geometry, deltatheta @[10,150,10]   $min,max,step #other possibility: [v1,v2,...,vn] $ list of values' + '\n')
+
+
 def main():
 
     runningOn = 'LTU'
@@ -527,6 +535,8 @@ def main():
             writeIntro(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext))
             writeIntro(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+ending+ext))
 
+            writeIterables(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),'RVE' + L + '-HSD-sf' + str(n) + nickName)
+
             writePipelineControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),pipeline)
 
             writeAnalysisControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),analysis)
@@ -594,6 +604,8 @@ def main():
         for n in nFibsAb:
             writeIntro(join(inpDir,datbaseName+nickName+'L'+L+'A'+str(n)+ending+ext))
             writeIntro(join(inpDir,itbaseName+nickName+'L'+L+'A'+str(n)+ending+ext))
+
+            writeIterables(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),'RVE' + L + '-HSD-af' + str(n) + nickName)
 
             writePipelineControls(join(inpDir,datbaseName+nickName+'L'+L+'A'+str(n)+ending+ext),pipeline)
 
@@ -663,6 +675,8 @@ def main():
             for m in nFibsAb:
                 writeIntro(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext))
                 writeIntro(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext))
+
+                writeIterables(join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+ending+ext),'RVE' + L + '-HSD-sf' + str(n) + 'af' + str(m) + nickName)
 
                 writePipelineControls(join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),pipeline)
 

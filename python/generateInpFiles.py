@@ -226,7 +226,7 @@ def writeOutputControls(fullPath,outputControls):
 def writeIterables(fullPath,basename):
     with open(fullPath,'a') as out:
         out.write('# Output directory and filenames' + '\n')
-        out.write('basename             @' + basename + '$string' + '\n')
+        out.write('basename             @' + basename + ' $string' + '\n')
         out.write('free parameters      @1             $int' + '\n')
         out.write('geometry, deltatheta @[10,150,10]   $min,max,step #other possibility: [v1,v2,...,vn] $ list of values' + '\n')
 

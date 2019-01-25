@@ -236,7 +236,7 @@ def main():
     runningOn = 'LTU'
 
     PC = 'LucaPC'
-    onedriveSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM/InputData/frictionUD'
+    onedriveSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM/InputData/frictionUDfree'
 
     if runningOn=='LucaPC':
         inpDir = 'C:/Users/luca/OneDrive/' + onedriveSubfolder
@@ -264,7 +264,7 @@ def main():
 
     mus = ['0_2','0_4','0_6','0_8','1_0','1_2','2_0','4_0']
 
-    nickName = 'FrictUD'
+    nickName = 'FrictUDfree'
 
     if not exists(inpDir):
         os.mkdir(inpDir)
@@ -563,7 +563,7 @@ def main():
                 writeLoadsControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),loads)
 
                 bcNORTH = {}
-                bcNORTH['type'] = 'antisymmetry'
+                bcNORTH['type'] = 'none'
                 bcNORTH['tRatio'] = '0.0'
                 bcNORTH['nFibers'] = '0'
 
@@ -634,7 +634,7 @@ def main():
                 writeLoadsControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L' + L + 'A'+str(n)+ending+ext),loads)
 
                 bcNORTH = {}
-                bcNORTH['type'] = 'antisymmetryadjacentFibers'
+                bcNORTH['type'] = 'adjacentFibers'
                 bcNORTH['tRatio'] = '0.0'
                 bcNORTH['nFibers'] = str(n)
 
@@ -706,7 +706,7 @@ def main():
                     writeLoadsControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext),loads)
 
                     bcNORTH = {}
-                    bcNORTH['type'] = 'antisymmetryadjacentFibers'
+                    bcNORTH['type'] = 'adjacentFibers'
                     bcNORTH['tRatio'] = '0.0'
                     bcNORTH['nFibers'] = str(m)
 

@@ -546,13 +546,13 @@ def main():
             writeIntro(fullpathName)
             writeIntro(fullpathITName)
 
-            writeIterables(fullpathITName,'RVE' + L + '-HSD-sf' + str(n) + nickName+'mu'+str(mu))
+            writeIterables(fullpathITName,'RVE' + L + '-HSD-sf' + str(n) + nickName)
 
             writePipelineControls(fullpathName,pipeline)
 
             writeAnalysisControls(fullpathName,analysis)
 
-            input['caefilename'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending
+            input['caefilename'] = 'sweepOverDeltatheta' + nickName+ 'L' + L + 'S' + str(n) + ending
             writeInputControls(fullpathName,input)
 
             geometry['L'] = L.replace('_','.')
@@ -622,13 +622,13 @@ def main():
             writeIntro(fullpathName)
             writeIntro(fullpathITName)
 
-            writeIterables(fullpathITName,'RVE' + L + '-HSD-af' + str(n) + nickName+'mu'+str(mu))
+            writeIterables(fullpathITName,'RVE' + L + '-HSD-af' + str(n) + nickName)
 
             writePipelineControls(fullpathName,pipeline)
 
             writeAnalysisControls(fullpathName,analysis)
 
-            input['caefilename'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'A' + str(n) + ending
+            input['caefilename'] = 'sweepOverDeltatheta' + nickName+ 'L' + L + 'A' + str(n) + ending
             writeInputControls(fullpathName,input)
 
             geometry['L'] = L.replace('_','.')
@@ -699,13 +699,13 @@ def main():
                 writeIntro(fullpathName)
                 writeIntro(fullpathITName)
 
-                writeIterables(fullpathITName,'RVE' + L + '-HSD-sf' + str(n) + 'af' + str(m) + nickName+'mu'+str(mu))
+                writeIterables(fullpathITName,'RVE' + L + '-HSD-sf' + str(n) + 'af' + str(m) + nickName)
 
                 writePipelineControls(fullpathName,pipeline)
 
                 writeAnalysisControls(fullpathName,analysis)
 
-                input['caefilename'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
+                input['caefilename'] = 'sweepOverDeltatheta' + nickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
                 writeInputControls(fullpathName,input)
 
                 geometry['L'] = L.replace('_','.')

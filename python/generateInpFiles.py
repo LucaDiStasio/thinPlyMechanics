@@ -235,7 +235,7 @@ def main():
 
     runningOn = 'LucaPC'
 
-    PC = 'EEIGM'
+    PC = 'LucaPC'
     onedriveSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM/InputData/asymm'
 
     if runningOn=='LucaPC':

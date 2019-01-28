@@ -389,7 +389,7 @@ def main():
     secRegion1['offsetField'] = ' '
     secRegion1['thicknessAssignment'] = 'FROM_SECTION'
     secRegion1['offsetValue'] = '0.0'
-    sectionRegionsSideAbove.append(secRegion1)
+    sectionRegionsSide.append(secRegion1)
     secRegion2 = {}
     secRegion2['name'] = 'matrixSection'
     secRegion2['set'] = 'MATRIX'
@@ -397,7 +397,7 @@ def main():
     secRegion2['offsetField'] = ' '
     secRegion2['thicknessAssignment'] = 'FROM_SECTION'
     secRegion2['offsetValue'] = '0.0'
-    sectionRegionsSideAbove.append(secRegion2)
+    sectionRegionsSide.append(secRegion2)
     secRegion4 = {}
     secRegion4['name'] = 'fiberSection'
     secRegion4['set'] = 'LEFT-FIBERS'
@@ -405,7 +405,7 @@ def main():
     secRegion4['offsetField'] = ' '
     secRegion4['thicknessAssignment'] = 'FROM_SECTION'
     secRegion4['offsetValue'] = '0.0'
-    sectionRegionsSideAbove.append(secRegion4)
+    sectionRegionsSide.append(secRegion4)
     secRegion5 = {}
     secRegion5['name'] = 'fiberSection'
     secRegion5['set'] = 'RIGHT-FIBERS'
@@ -413,7 +413,7 @@ def main():
     secRegion5['offsetField'] = ' '
     secRegion5['thicknessAssignment'] = 'FROM_SECTION'
     secRegion5['offsetValue'] = '0.0'
-    sectionRegionsSideAbove.append(secRegion5)
+    sectionRegionsSide.append(secRegion5)
 
     sectionRegionsAbove = []
     secRegion1 = {}
@@ -423,7 +423,7 @@ def main():
     secRegion1['offsetField'] = ' '
     secRegion1['thicknessAssignment'] = 'FROM_SECTION'
     secRegion1['offsetValue'] = '0.0'
-    sectionRegionsSideAbove.append(secRegion1)
+    sectionRegionsAbove.append(secRegion1)
     secRegion2 = {}
     secRegion2['name'] = 'matrixSection'
     secRegion2['set'] = 'MATRIX'
@@ -431,7 +431,7 @@ def main():
     secRegion2['offsetField'] = ' '
     secRegion2['thicknessAssignment'] = 'FROM_SECTION'
     secRegion2['offsetValue'] = '0.0'
-    sectionRegionsSideAbove.append(secRegion2)
+    sectionRegionsAbove.append(secRegion2)
     secRegion3 = {}
     secRegion3['name'] = 'fiberSection'
     secRegion3['set'] = 'UPPER-FIBERS'
@@ -439,7 +439,7 @@ def main():
     secRegion3['offsetField'] = ' '
     secRegion3['thicknessAssignment'] = 'FROM_SECTION'
     secRegion3['offsetValue'] = '0.0'
-    sectionRegionsSideAbove.append(secRegion3)
+    sectionRegionsAbove.append(secRegion3)
 
     steps = []
     step1 = {}

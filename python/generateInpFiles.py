@@ -539,11 +539,11 @@ def main():
         #for s in homogSize:
         for n in nFibsSi:
             
-            #fullpathName = join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext
-            fullpathName = join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext
-            fullpathITName = join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+ending+ext
-            
             fullnickName = nickName
+            
+            #fullpathName = join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext
+            fullpathName = join(inpDir,datbaseName+fullnickName+'L'+L+'S'+str(n)+ending+ext
+            fullpathITName = join(inpDir,itbaseName+fullnickName+'L'+L+'S'+str(n)+ending+ext
             
             writeIntro(fullpathName)
             writeIntro(fullpathITName)
@@ -617,15 +617,15 @@ def main():
 
         for n in nFibsAb:
             
+            fullnickName = nickName
+            
             #fullpathName = join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'A'+str(n)+ending+ext)
-            fullpathName = join(inpDir,datbaseName+nickName+'L'+L+'A'+str(n)+ending+ext)
-            fullpathITName = join(inpDir,itbaseName+nickName+'L'+L+'A'+str(n)+ending+ext)
+            fullpathName = join(inpDir,datbaseName+fullnickName+'L'+L+'A'+str(n)+ending+ext)
+            fullpathITName = join(inpDir,itbaseName+fullnickName+'L'+L+'A'+str(n)+ending+ext)
             
             writeIntro(fullpathName)
             writeIntro(fullpathITName)
             
-            fullnickName = nickName
-
             writeIterables(fullpathITName,'RVE' + L + '-HSD-af' + str(n) + fullnickName)
 
             writePipelineControls(fullpathName,pipeline)

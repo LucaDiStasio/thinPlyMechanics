@@ -343,7 +343,7 @@ def main():
     secRegion1 = {}
     secRegion1['name'] = 'fiberSection'
     secRegion1['set'] = 'FIBER'
-    secRegion1['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion1['offsetType'] = 'MIDDLE_SURFACE'
     secRegion1['offsetField'] = ' '
     secRegion1['thicknessAssignment'] = 'FROM_SECTION'
     secRegion1['offsetValue'] = '0.0'
@@ -351,7 +351,7 @@ def main():
     secRegion2 = {}
     secRegion2['name'] = 'matrixSection'
     secRegion2['set'] = 'MATRIX'
-    secRegion2['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion2['offsetType'] = 'MIDDLE_SURFACE'
     secRegion2['offsetField'] = ' '
     secRegion2['thicknessAssignment'] = 'FROM_SECTION'
     secRegion2['offsetValue'] = '0.0'
@@ -359,7 +359,7 @@ def main():
     secRegion3 = {}
     secRegion3['name'] = 'fiberSection'
     secRegion3['set'] = 'UPPER-FIBERS'
-    secRegion3['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion3['offsetType'] = 'MIDDLE_SURFACE'
     secRegion3['offsetField'] = ' '
     secRegion3['thicknessAssignment'] = 'FROM_SECTION'
     secRegion3['offsetValue'] = '0.0'
@@ -367,7 +367,7 @@ def main():
     secRegion4 = {}
     secRegion4['name'] = 'fiberSection'
     secRegion4['set'] = 'LEFT-FIBERS'
-    secRegion4['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion4['offsetType'] = 'MIDDLE_SURFACE'
     secRegion4['offsetField'] = ' '
     secRegion4['thicknessAssignment'] = 'FROM_SECTION'
     secRegion4['offsetValue'] = '0.0'
@@ -375,7 +375,7 @@ def main():
     secRegion5 = {}
     secRegion5['name'] = 'fiberSection'
     secRegion5['set'] = 'RIGHT-FIBERS'
-    secRegion5['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion5['offsetType'] = 'MIDDLE_SURFACE'
     secRegion5['offsetField'] = ' '
     secRegion5['thicknessAssignment'] = 'FROM_SECTION'
     secRegion5['offsetValue'] = '0.0'
@@ -385,7 +385,7 @@ def main():
     secRegion1 = {}
     secRegion1['name'] = 'fiberSection'
     secRegion1['set'] = 'FIBER'
-    secRegion1['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion1['offsetType'] = 'MIDDLE_SURFACE'
     secRegion1['offsetField'] = ' '
     secRegion1['thicknessAssignment'] = 'FROM_SECTION'
     secRegion1['offsetValue'] = '0.0'
@@ -393,7 +393,7 @@ def main():
     secRegion2 = {}
     secRegion2['name'] = 'matrixSection'
     secRegion2['set'] = 'MATRIX'
-    secRegion2['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion2['offsetType'] = 'MIDDLE_SURFACE'
     secRegion2['offsetField'] = ' '
     secRegion2['thicknessAssignment'] = 'FROM_SECTION'
     secRegion2['offsetValue'] = '0.0'
@@ -401,7 +401,7 @@ def main():
     secRegion4 = {}
     secRegion4['name'] = 'fiberSection'
     secRegion4['set'] = 'LEFT-FIBERS'
-    secRegion4['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion4['offsetType'] = 'MIDDLE_SURFACE'
     secRegion4['offsetField'] = ' '
     secRegion4['thicknessAssignment'] = 'FROM_SECTION'
     secRegion4['offsetValue'] = '0.0'
@@ -409,7 +409,7 @@ def main():
     secRegion5 = {}
     secRegion5['name'] = 'fiberSection'
     secRegion5['set'] = 'RIGHT-FIBERS'
-    secRegion5['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion5['offsetType'] = 'MIDDLE_SURFACE'
     secRegion5['offsetField'] = ' '
     secRegion5['thicknessAssignment'] = 'FROM_SECTION'
     secRegion5['offsetValue'] = '0.0'
@@ -419,7 +419,7 @@ def main():
     secRegion1 = {}
     secRegion1['name'] = 'fiberSection'
     secRegion1['set'] = 'FIBER'
-    secRegion1['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion1['offsetType'] = 'MIDDLE_SURFACE'
     secRegion1['offsetField'] = ' '
     secRegion1['thicknessAssignment'] = 'FROM_SECTION'
     secRegion1['offsetValue'] = '0.0'
@@ -427,7 +427,7 @@ def main():
     secRegion2 = {}
     secRegion2['name'] = 'matrixSection'
     secRegion2['set'] = 'MATRIX'
-    secRegion2['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion2['offsetType'] = 'MIDDLE_SURFACE'
     secRegion2['offsetField'] = ' '
     secRegion2['thicknessAssignment'] = 'FROM_SECTION'
     secRegion2['offsetValue'] = '0.0'
@@ -435,7 +435,7 @@ def main():
     secRegion3 = {}
     secRegion3['name'] = 'fiberSection'
     secRegion3['set'] = 'UPPER-FIBERS'
-    secRegion3['offSetType'] = 'MIDDLE_SURFACE'
+    secRegion3['offsetType'] = 'MIDDLE_SURFACE'
     secRegion3['offsetField'] = ' '
     secRegion3['thicknessAssignment'] = 'FROM_SECTION'
     secRegion3['offsetValue'] = '0.0'

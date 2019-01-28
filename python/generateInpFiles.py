@@ -233,7 +233,7 @@ def writeIterables(fullPath,basename):
 
 def main():
     
-    nickName = 'FrictionUDfree'
+    nickName = 'FrictionUDvk'
 
     runningOn = 'LucaPC'
 
@@ -572,7 +572,7 @@ def main():
                 writeLoadsControls(fullpathName,loads)
     
                 bcNORTH = {}
-                bcNORTH['type'] = 'none'
+                bcNORTH['type'] = 'vkinCouplingmeancorners'
                 bcNORTH['tRatio'] = '0.0'
                 bcNORTH['nFibers'] = '0'
     
@@ -649,7 +649,7 @@ def main():
                 writeLoadsControls(fullpathName,loads)
     
                 bcNORTH = {}
-                bcNORTH['type'] = 'adjacentFibers'
+                bcNORTH['type'] = 'vkinCouplingmeancornersadjacentFibers'
                 bcNORTH['tRatio'] = '0.0'
                 bcNORTH['nFibers'] = str(n)
     
@@ -727,7 +727,7 @@ def main():
                     writeLoadsControls(fullpathName,loads)
     
                     bcNORTH = {}
-                    bcNORTH['type'] = 'adjacentFibers'
+                    bcNORTH['type'] = 'vkinCouplingmeancornersadjacentFibers'
                     bcNORTH['tRatio'] = '0.0'
                     bcNORTH['nFibers'] = str(m)
     

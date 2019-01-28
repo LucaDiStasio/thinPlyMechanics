@@ -542,8 +542,8 @@ def main():
             fullnickName = nickName
             
             #fullpathName = join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext
-            fullpathName = join(inpDir,datbaseName+fullnickName+'L'+L+'S'+str(n)+ending+ext
-            fullpathITName = join(inpDir,itbaseName+fullnickName+'L'+L+'S'+str(n)+ending+ext
+            fullpathName = join(inpDir,datbaseName+fullnickName+'L'+L+'S'+str(n)+ending+ext)
+            fullpathITName = join(inpDir,itbaseName+fullnickName+'L'+L+'S'+str(n)+ending+ext)
             
             writeIntro(fullpathName)
             writeIntro(fullpathITName)

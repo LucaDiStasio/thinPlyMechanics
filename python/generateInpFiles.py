@@ -239,7 +239,7 @@ def main():
     onedriveSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM/InputData/asymm'
 
     if runningOn=='LucaPC':
-        inpDir = 'C:/Users/luca/OneDrive/' + onedriveSubfolder
+        inpDir = 'C:/Users/lucad/OneDrive/' + onedriveSubfolder
     elif runningOn=='EEIGM':
         inpDir = 'D:/OneDrive/' + onedriveSubfolder
     else:
@@ -247,7 +247,7 @@ def main():
 
     if PC=='LucaPC':
         ending = '-LPC'
-        onedriveDir = 'C:/Users/luca/OneDrive/'
+        onedriveDir = 'C:/Users/lucad/OneDrive/'
         onedriveOutSubfolder = '01_Luca/07_DocMASE/07_Data/03_FEM/LucaPC'
     else:
         ending = 'COARED'

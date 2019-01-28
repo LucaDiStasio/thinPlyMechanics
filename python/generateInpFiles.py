@@ -538,32 +538,36 @@ def main():
     for L in Ls:
         #for s in homogSize:
         for n in nFibsSi:
-            writeIntro(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext))
-            writeIntro(join(inpDir,itbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext))
+            
+            #fullpathName = join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext
+            fullpathName = join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext
+            
+            writeIntro(fullpathName)
+            writeIntro(fullpathName)
 
-            writeIterables(join(inpDir,itbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),'RVE' + L + '-HSD-sf' + str(n) + nickName+'mu'+str(mu))
+            writeIterables(fullpathName,'RVE' + L + '-HSD-sf' + str(n) + nickName+'mu'+str(mu))
 
-            writePipelineControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),pipeline)
+            writePipelineControls(fullpathName,pipeline)
 
-            writeAnalysisControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),analysis)
+            writeAnalysisControls(fullpathName,analysis)
 
             input['caefilename'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending
-            writeInputControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),input)
+            writeInputControls(fullpathName,input)
 
             geometry['L'] = L.replace('_','.')
-            writeGeometryControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),geometry)
+            writeGeometryControls(fullpathName,geometry)
 
-            writeMaterialsControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),materials)
+            writeMaterialsControls(fullpathName,materials)
 
-            writePostprocControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),postproc)
+            writePostprocControls(fullpathName,postproc)
 
-            writeSectionsControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),sections)
+            writeSectionsControls(fullpathName,sections)
 
-            writeSectionregionsControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),sectionRegionsSide)
+            writeSectionregionsControls(fullpathName,sectionRegionsSide)
 
-            writeStepsControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),steps)
+            writeStepsControls(fullpathName,steps)
 
-            writeLoadsControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),loads)
+            writeLoadsControls(fullpathName,loads)
 
             bcNORTH = {}
             bcNORTH['type'] = 'antisymmetry'
@@ -580,16 +584,16 @@ def main():
             bcLEFT['wRatio'] = '0.0'
             bcLEFT['nFibers'] = str(n)
 
-            writeBCsControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),bcNORTH,bcRIGHT,bcLEFT)
+            writeBCsControls(fullpathName,bcNORTH,bcRIGHT,bcLEFT)
 
             #friction['static'] = mu.replace('_','.')
-            writeSurfacefrictionControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),friction)
+            writeSurfacefrictionControls(fullpathName,friction)
 
-            writeMeshControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),mesh)
+            writeMeshControls(fullpathName,mesh)
 
-            writeJintegralControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),jint)
+            writeJintegralControls(fullpathName,jint)
 
-            writeSolverControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),solver)
+            writeSolverControls(fullpathName,solver)
 
 
             output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending
@@ -606,9 +610,13 @@ def main():
             output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending
             output['sql']['global']['filename'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending + 'DB'
 
-            writeOutputControls(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'S'+str(n)+ending+ext),output)
+            writeOutputControls(fullpathName,output)
 
         for n in nFibsAb:
+            
+            #fullpathName = join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'A'+str(n)+ending+ext)
+            fullpathName = join(inpDir,datbaseName+nickName+'L'+L+'A'+str(n)+ending+ext)
+            
             writeIntro(join(inpDir,datbaseName+nickName+'mu'+str(mu)+'L'+L+'A'+str(n)+ending+ext))
             writeIntro(join(inpDir,itbaseName+nickName+'mu'+str(mu)+'L'+L+'A'+str(n)+ending+ext))
 

@@ -644,7 +644,7 @@ def main():
 
             writeSectionsControls(fullpathName,sections)
 
-            writeSectionregionsControls(fullpathName,sectionRegionsSide)
+            writeSectionregionsControls(fullpathName,sectionRegionsAbove)
 
             writeStepsControls(fullpathName,steps)
 
@@ -723,7 +723,7 @@ def main():
 
                 writeSectionsControls(fullpathName,sections)
 
-                writeSectionregionsControls(fullpathName,sectionRegionsSide)
+                writeSectionregionsControls(fullpathName,sectionRegionsSideAbove)
 
                 writeStepsControls(fullpathName,steps)
 

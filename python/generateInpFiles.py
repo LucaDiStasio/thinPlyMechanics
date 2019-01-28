@@ -543,16 +543,18 @@ def main():
             fullpathName = join(inpDir,datbaseName+nickName+'L'+L+'S'+str(n)+ending+ext
             fullpathITName = join(inpDir,itbaseName+nickName+'L'+L+'S'+str(n)+ending+ext
             
+            fullnickName = nickName
+            
             writeIntro(fullpathName)
             writeIntro(fullpathITName)
 
-            writeIterables(fullpathITName,'RVE' + L + '-HSD-sf' + str(n) + nickName)
+            writeIterables(fullpathITName,'RVE' + L + '-HSD-sf' + str(n) + fullnickName)
 
             writePipelineControls(fullpathName,pipeline)
 
             writeAnalysisControls(fullpathName,analysis)
 
-            input['caefilename'] = 'sweepOverDeltatheta' + nickName+ 'L' + L + 'S' + str(n) + ending
+            input['caefilename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
             writeInputControls(fullpathName,input)
 
             geometry['L'] = L.replace('_','.')
@@ -597,19 +599,19 @@ def main():
             writeSolverControls(fullpathName,solver)
 
 
-            output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending
+            output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
 
-            output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending + '-performances'
-            output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending + '-energyreleaserates'
-            output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending + '-inputdata'
+            output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + '-performances'
+            output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + '-energyreleaserates'
+            output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + '-inputdata'
 
-            output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending
+            output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
 
-            output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending
-            output['report']['global']['filename'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending + '-report'
+            output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
+            output['report']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + '-report'
 
-            output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending
-            output['sql']['global']['filename'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'S' + str(n) + ending + 'DB'
+            output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
+            output['sql']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + 'DB'
 
             writeOutputControls(fullpathName,output)
 
@@ -621,14 +623,16 @@ def main():
             
             writeIntro(fullpathName)
             writeIntro(fullpathITName)
+            
+            fullnickName = nickName
 
-            writeIterables(fullpathITName,'RVE' + L + '-HSD-af' + str(n) + nickName)
+            writeIterables(fullpathITName,'RVE' + L + '-HSD-af' + str(n) + fullnickName)
 
             writePipelineControls(fullpathName,pipeline)
 
             writeAnalysisControls(fullpathName,analysis)
 
-            input['caefilename'] = 'sweepOverDeltatheta' + nickName+ 'L' + L + 'A' + str(n) + ending
+            input['caefilename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
             writeInputControls(fullpathName,input)
 
             geometry['L'] = L.replace('_','.')
@@ -673,19 +677,19 @@ def main():
             writeSolverControls(fullpathName,solver)
 
 
-            output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'A' + str(n) + ending
+            output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
 
-            output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'A' + str(n) + ending + '-performances'
-            output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'A' + str(n) + ending + '-energyreleaserates'
-            output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'A' + str(n) + ending + '-inputdata'
+            output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + '-performances'
+            output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + '-energyreleaserates'
+            output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + '-inputdata'
 
-            output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'A' + str(n) + ending
+            output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
 
-            output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'A' + str(n) + ending
-            output['report']['global']['filename'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'A' + str(n) + ending + '-report'
+            output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
+            output['report']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + '-report'
 
-            output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'A' + str(n) + ending
-            output['sql']['global']['filename'] = 'sweepOverDeltatheta' + nickName+'mu'+str(mu)+ 'L' + L + 'A' + str(n) + ending + 'DB'
+            output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
+            output['sql']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + 'DB'
 
             writeOutputControls(fullpathName,output)
 

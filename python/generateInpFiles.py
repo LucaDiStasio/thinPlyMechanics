@@ -236,7 +236,7 @@ def writeIterables(fullPath,basename):
 
 def main():
 
-    nickName = 'PressureCP1t'
+    nickName = 'ClCP1t'
 
     runningOn = 'LTU'
 
@@ -267,7 +267,8 @@ def main():
     nFibsAb = [1,2,3,5,10,50,100]
     nFibsSi = [1,2,3,5,10,50,100]
 
-    mus = ['0_2','0_4','0_6','0_8','1_0','1_2','2_0','4_0']
+    #mus = ['0_2','0_4','0_6','0_8','1_0','1_2','2_0','4_0']
+    #ps = ['1_0','10_0','25_0','50_0','100_0']
 
     if not exists(inpDir):
         os.mkdir(inpDir)
@@ -311,6 +312,8 @@ def main():
     geometry['Rf'] = '1.0'
     geometry['theta'] = '0.0'
     geometry['deltatheta'] = '10.0'
+    geometry['clusterShift'] = '0.16974'
+    #geometry['clusterShift'] = '1.11756'
 
     materials = []
     mat1 = {}
@@ -327,6 +330,7 @@ def main():
     mat3['name'] = 'UD'
     mat3['type'] = 'ENGINEERING_CONSTANTS'
     mat3['elProps'] = '[43442,13714,13714,0.273,0.273,0.465,4315,4315,4681]'
+    #mat3['elProps'] = '[23489,6710,6710,0.333,0.333,0.556,2200,2200,2156]'
     materials.append(mat3)
 
     postproc = {}
@@ -516,7 +520,7 @@ def main():
     bcLEFT['nFibers'] = '1'
 
     friction = {}
-    friction['type']        = 'static'
+    friction['type']        = 'none'
     friction['static']      = '0.0'
     friction['dynamic']     = '0.0'
     friction['cpress']      = '0.0'
@@ -572,26 +576,210 @@ def main():
     output['sql']['global']['directory'] = 'C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/LucaPC/sweepOverDeltathetaL1_0992A1S1F'
     output['sql']['global']['filename'] = 'sweepOverDeltathetaL1_0992A1S1FDB'
 
-    for mu in mus:
-        for L in Ls:
-            #for s in homogSize:
-            for n in nFibsSi:
+    #for p in ps:
+        #loads = []
+        #load1 = {}
+        #load1['name'] = 'rightBC'
+        #load1['type'] = 'appliedStrain'
+        #load1['set'] = 'RIGHTSIDE'
+        #load1['value'] = '[0.01,0.0,0.0]'
+        #load1['stepName'] = 'Load-Step'
+        #loads.append(load1)
+        #load2 = {}
+        #load2['name'] = 'leftBC'
+        #load2['type'] = 'appliedStrain'
+        #load2['set'] = 'LEFTSIDE'
+        #load2['value'] = '[0.01,0.0,0.0]'
+        #load2['stepName'] = 'Load-Step'
+        #loads.append(load2)
+        #load3 = {}
+        #load3['name'] = 'crackfacePressure'
+        #load3['type'] = 'appliedUniformPressure'
+        #load3['set'] = 'FiberSurface'
+        #load3['value'] = p.replace('_','.')
+        #load3['stepName'] = 'Load-Step'
+        #loads.append(load3)
+        #load4 = {}
+        #load4['name'] = 'crackfacePressure'
+        #load4['type'] = 'appliedUniformPressure'
+        #load4['set'] = 'MatrixSurface'
+        #load4['value'] = p.replace('_','.')
+        #load4['stepName'] = 'Load-Step'
+        #loads.append(load4)
+    for L in Ls:
+        #for s in homogSize:
+        for n in nFibsSi:
 
-                fullnickName = nickName +'mu' + str(mu)
+            fullnickName = nickName
 
-                fullpathName = join(inpDir,datbaseName+fullnickName+'L'+L+'S'+str(n)+ending+ext)
-                fullpathITName = join(inpDir,itbaseName+fullnickName+'L'+L+'S'+str(n)+ending+ext)
+            fullpathName = join(inpDir,datbaseName+fullnickName+'L'+L+'S'+str(n)+ending+ext)
+            fullpathITName = join(inpDir,itbaseName+fullnickName+'L'+L+'S'+str(n)+ending+ext)
+
+            writeIntro(fullpathName)
+            writeIntro(fullpathITName)
+
+            writeIterables(fullpathITName,'RVE' + L + '-HSD-sf' + str(n) + fullnickName)
+
+            writePipelineControls(fullpathName,pipeline)
+
+            writeAnalysisControls(fullpathName,analysis)
+
+            input['caefilename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
+            writeInputControls(fullpathName,input)
+
+            geometry['L'] = L.replace('_','.')
+            writeGeometryControls(fullpathName,geometry)
+
+            writeMaterialsControls(fullpathName,materials)
+
+            writePostprocControls(fullpathName,postproc)
+
+            writeSectionsControls(fullpathName,sections)
+
+            writeSectionregionsControls(fullpathName,sectionRegionsSide)
+
+            writeStepsControls(fullpathName,steps)
+
+            writeLoadsControls(fullpathName,loads)
+
+            bcNORTH = {}
+            bcNORTH['type'] = 'boundingPly'
+            bcNORTH['tRatio'] = '1.0'
+            bcNORTH['nFibers'] = '0'
+
+            bcRIGHT = {}
+            bcRIGHT['type'] = 'adjacentFibers'
+            bcRIGHT['wRatio'] = '0.0'
+            bcRIGHT['nFibers'] = str(n)
+
+            bcLEFT = {}
+            bcLEFT['type'] = 'adjacentFibers'
+            bcLEFT['wRatio'] = '0.0'
+            bcLEFT['nFibers'] = str(n)
+
+            writeBCsControls(fullpathName,bcNORTH,bcRIGHT,bcLEFT)
+
+            #friction['static'] = mu.replace('_','.')
+            writeSurfacefrictionControls(fullpathName,friction)
+
+            writeMeshControls(fullpathName,mesh)
+
+            writeJintegralControls(fullpathName,jint)
+
+            writeSolverControls(fullpathName,solver)
+
+
+            output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
+
+            output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + '-performances'
+            output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + '-energyreleaserates'
+            output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + '-inputdata'
+
+            output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
+
+            output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
+            output['report']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + '-report'
+
+            output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
+            output['sql']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + 'DB'
+
+            writeOutputControls(fullpathName,output)
+
+        for n in nFibsAb:
+
+            fullnickName = nickName
+
+            fullpathName = join(inpDir,datbaseName+fullnickName+'L'+L+'A'+str(n)+ending+ext)
+            fullpathITName = join(inpDir,itbaseName+fullnickName+'L'+L+'A'+str(n)+ending+ext)
+
+            writeIntro(fullpathName)
+            writeIntro(fullpathITName)
+
+            writeIterables(fullpathITName,'RVE' + L + '-HSD-af' + str(n) + fullnickName)
+
+            writePipelineControls(fullpathName,pipeline)
+
+            writeAnalysisControls(fullpathName,analysis)
+
+            input['caefilename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
+            writeInputControls(fullpathName,input)
+
+            geometry['L'] = L.replace('_','.')
+            writeGeometryControls(fullpathName,geometry)
+
+            writeMaterialsControls(fullpathName,materials)
+
+            writePostprocControls(fullpathName,postproc)
+
+            writeSectionsControls(fullpathName,sections)
+
+            writeSectionregionsControls(fullpathName,sectionRegionsAbove)
+
+            writeStepsControls(fullpathName,steps)
+
+            writeLoadsControls(fullpathName,loads)
+
+            bcNORTH = {}
+            bcNORTH['type'] = 'adjacentFibersboundingPly'
+            bcNORTH['tRatio'] = '1.0'
+            bcNORTH['nFibers'] = str(n)
+
+            bcRIGHT = {}
+            bcRIGHT['type'] = 'none'
+            bcRIGHT['wRatio'] = '0.0'
+            bcRIGHT['nFibers'] = '0'
+
+            bcLEFT = {}
+            bcLEFT['type'] = 'none'
+            bcLEFT['wRatio'] = '0.0'
+            bcLEFT['nFibers'] = '0'
+
+            writeBCsControls(fullpathName,bcNORTH,bcRIGHT,bcLEFT)
+
+            #friction['static'] = mu.replace('_','.')
+            writeSurfacefrictionControls(fullpathName,friction)
+
+            writeMeshControls(fullpathName,mesh)
+
+            writeJintegralControls(fullpathName,jint)
+
+            writeSolverControls(fullpathName,solver)
+
+
+            output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
+
+            output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + '-performances'
+            output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + '-energyreleaserates'
+            output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + '-inputdata'
+
+            output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
+
+            output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
+            output['report']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + '-report'
+
+            output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
+            output['sql']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + 'DB'
+
+            writeOutputControls(fullpathName,output)
+
+        for n in nFibsSi:
+            for m in nFibsAb:
+
+                fullnickName = nickName
+
+                fullpathName = join(inpDir,datbaseName+fullnickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext)
+                fullpathITName = join(inpDir,itbaseName+fullnickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext)
 
                 writeIntro(fullpathName)
                 writeIntro(fullpathITName)
 
-                writeIterables(fullpathITName,'RVE' + L + '-HSD-sf' + str(n) + fullnickName)
+                writeIterables(fullpathITName,'RVE' + L + '-HSD-sf' + str(n) + 'af' + str(m) + fullnickName)
 
                 writePipelineControls(fullpathName,pipeline)
 
                 writeAnalysisControls(fullpathName,analysis)
 
-                input['caefilename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
+                input['caefilename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
                 writeInputControls(fullpathName,input)
 
                 geometry['L'] = L.replace('_','.')
@@ -603,16 +791,16 @@ def main():
 
                 writeSectionsControls(fullpathName,sections)
 
-                writeSectionregionsControls(fullpathName,sectionRegionsSide)
+                writeSectionregionsControls(fullpathName,sectionRegionsSideAbove)
 
                 writeStepsControls(fullpathName,steps)
 
                 writeLoadsControls(fullpathName,loads)
 
                 bcNORTH = {}
-                bcNORTH['type'] = 'boundingPly'
+                bcNORTH['type'] = 'adjacentFibersboundingPly'
                 bcNORTH['tRatio'] = '1.0'
-                bcNORTH['nFibers'] = '0'
+                bcNORTH['nFibers'] = str(m)
 
                 bcRIGHT = {}
                 bcRIGHT['type'] = 'adjacentFibers'
@@ -626,7 +814,7 @@ def main():
 
                 writeBCsControls(fullpathName,bcNORTH,bcRIGHT,bcLEFT)
 
-                friction['static'] = mu.replace('_','.')
+                #friction['static'] = mu.replace('_','.')
                 writeSurfacefrictionControls(fullpathName,friction)
 
                 writeMeshControls(fullpathName,mesh)
@@ -636,176 +824,21 @@ def main():
                 writeSolverControls(fullpathName,solver)
 
 
-                output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
+                output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
 
-                output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + '-performances'
-                output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + '-energyreleaserates'
-                output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + '-inputdata'
+                output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-performances'
+                output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-energyreleaserates'
+                output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-inputdata'
 
-                output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
+                output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
 
-                output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
-                output['report']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + '-report'
+                output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
+                output['report']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-report'
 
-                output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending
-                output['sql']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) + ending + 'DB'
-
-                writeOutputControls(fullpathName,output)
-
-            for n in nFibsAb:
-
-                fullnickName = nickName+'mu'+str(mu)
-
-                fullpathName = join(inpDir,datbaseName+fullnickName+'L'+L+'A'+str(n)+ending+ext)
-                fullpathITName = join(inpDir,itbaseName+fullnickName+'L'+L+'A'+str(n)+ending+ext)
-
-                writeIntro(fullpathName)
-                writeIntro(fullpathITName)
-
-                writeIterables(fullpathITName,'RVE' + L + '-HSD-af' + str(n) + fullnickName)
-
-                writePipelineControls(fullpathName,pipeline)
-
-                writeAnalysisControls(fullpathName,analysis)
-
-                input['caefilename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
-                writeInputControls(fullpathName,input)
-
-                geometry['L'] = L.replace('_','.')
-                writeGeometryControls(fullpathName,geometry)
-
-                writeMaterialsControls(fullpathName,materials)
-
-                writePostprocControls(fullpathName,postproc)
-
-                writeSectionsControls(fullpathName,sections)
-
-                writeSectionregionsControls(fullpathName,sectionRegionsAbove)
-
-                writeStepsControls(fullpathName,steps)
-
-                writeLoadsControls(fullpathName,loads)
-
-                bcNORTH = {}
-                bcNORTH['type'] = 'boundingPlyadjacentFibers'
-                bcNORTH['tRatio'] = '1.0'
-                bcNORTH['nFibers'] = str(n)
-
-                bcRIGHT = {}
-                bcRIGHT['type'] = 'none'
-                bcRIGHT['wRatio'] = '0.0'
-                bcRIGHT['nFibers'] = '0'
-
-                bcLEFT = {}
-                bcLEFT['type'] = 'none'
-                bcLEFT['wRatio'] = '0.0'
-                bcLEFT['nFibers'] = '0'
-
-                writeBCsControls(fullpathName,bcNORTH,bcRIGHT,bcLEFT)
-
-                friction['static'] = mu.replace('_','.')
-                writeSurfacefrictionControls(fullpathName,friction)
-
-                writeMeshControls(fullpathName,mesh)
-
-                writeJintegralControls(fullpathName,jint)
-
-                writeSolverControls(fullpathName,solver)
-
-
-                output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
-
-                output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + '-performances'
-                output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + '-energyreleaserates'
-                output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + '-inputdata'
-
-                output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
-
-                output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
-                output['report']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + '-report'
-
-                output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending
-                output['sql']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'A' + str(n) + ending + 'DB'
+                output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
+                output['sql']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + 'DB'
 
                 writeOutputControls(fullpathName,output)
-
-            for n in nFibsSi:
-                for m in nFibsAb:
-
-                    fullnickName = nickName+'mu'+str(mu)
-
-                    fullpathName = join(inpDir,datbaseName+fullnickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext)
-                    fullpathITName = join(inpDir,itbaseName+fullnickName+'L'+L+'S'+str(n)+'A'+str(m)+ending+ext)
-
-                    writeIntro(fullpathName)
-                    writeIntro(fullpathITName)
-
-                    writeIterables(fullpathITName,'RVE' + L + '-HSD-sf' + str(n) + 'af' + str(m) + fullnickName)
-
-                    writePipelineControls(fullpathName,pipeline)
-
-                    writeAnalysisControls(fullpathName,analysis)
-
-                    input['caefilename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
-                    writeInputControls(fullpathName,input)
-
-                    geometry['L'] = L.replace('_','.')
-                    writeGeometryControls(fullpathName,geometry)
-
-                    writeMaterialsControls(fullpathName,materials)
-
-                    writePostprocControls(fullpathName,postproc)
-
-                    writeSectionsControls(fullpathName,sections)
-
-                    writeSectionregionsControls(fullpathName,sectionRegionsSideAbove)
-
-                    writeStepsControls(fullpathName,steps)
-
-                    writeLoadsControls(fullpathName,loads)
-
-                    bcNORTH = {}
-                    bcNORTH['type'] = 'boundingPlyadjacentFibers'
-                    bcNORTH['tRatio'] = '1.0'
-                    bcNORTH['nFibers'] = str(m)
-
-                    bcRIGHT = {}
-                    bcRIGHT['type'] = 'adjacentFibers'
-                    bcRIGHT['wRatio'] = '0.0'
-                    bcRIGHT['nFibers'] = str(n)
-
-                    bcLEFT = {}
-                    bcLEFT['type'] = 'adjacentFibers'
-                    bcLEFT['wRatio'] = '0.0'
-                    bcLEFT['nFibers'] = str(n)
-
-                    writeBCsControls(fullpathName,bcNORTH,bcRIGHT,bcLEFT)
-
-                    friction['static'] = mu.replace('_','.')
-                    writeSurfacefrictionControls(fullpathName,friction)
-
-                    writeMeshControls(fullpathName,mesh)
-
-                    writeJintegralControls(fullpathName,jint)
-
-                    writeSolverControls(fullpathName,solver)
-
-
-                    output['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
-
-                    output['global']['filenames']['performances'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-performances'
-                    output['global']['filenames']['energyreleaserate'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-energyreleaserates'
-                    output['global']['filenames']['inputdata'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-inputdata'
-
-                    output['local']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
-
-                    output['report']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
-                    output['report']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + '-report'
-
-                    output['sql']['global']['directory'] = onedriveDir + onedriveOutSubfolder + '/' + 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending
-                    output['sql']['global']['filename'] = 'sweepOverDeltatheta' + fullnickName+ 'L' + L + 'S' + str(n) +'A'+str(m)+ ending + 'DB'
-
-                    writeOutputControls(fullpathName,output)
 
 if __name__ == '__main__':
     main()

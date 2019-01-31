@@ -129,7 +129,8 @@ AL, 1, 7, 2*nAb+8
  AL, nAb+8+i, 2*nAb+8+i                              ! Fibers
 *ENDDO
 
-*LSEL, S, LINE, ,
+*LSEL, S, LINE, , 2, 3, 1
+*LSEL, A, LINE, , 6,
 
 ! Define Material Properties
 ! 1 is fiber, 2 is matrix

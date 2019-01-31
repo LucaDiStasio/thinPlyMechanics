@@ -95,22 +95,31 @@ K, 8, L, heightCply         ! E interface corner
 
 ! Lines
 
-L, 1, 5            !1 -- S side, fiber
-L, 5, 2            !2 -- S side, matrix
-L, 2, 8            !3 -- E side, 90 ply
-L, 8, 3            !3 -- E side, 0 ply
-L, 3, 4            !4 -- N side
-L, 7, 8            !5 -- Ply interface
+L, 1, 5                                              !1 -- S side, fiber
+L, 5, 2                                              !2 -- S side, matrix
+L, 2, 8                                              !3 -- E side, 90 ply
+L, 8, 3                                              !4 -- E side, 0 ply
+L, 3, 4                                              !5 -- N side
+L, 7, 8                                              !6 -- Ply interface
+
+L, 6, 9                                              !7 -- W side
+L, 4, 8+3*(nAb-1)+3                                  !8 -- W side
+
+*DO, i, 1, nAb-1, 1
+ L, 8+3*(i-1)+3, 8+3*(i-1)+4                         ! W side
+*ENDDO
 
 *DO, i, 1, nAb, 1
- K, 8+3*(i-1)+1, 0.0, L*i-Rf         ! Lower node fiber i
- K, 8+3*(i-1)+2, 0.0, L*i            ! Center fiber i
- K, 8+3*(i-1)+3, 0.0, L*i+Rf         ! Upper node fiber i
+ L, 8+3*(i-1)+1, 8+3*(i-1)+3                         ! W side
 *ENDDO
 
 ! Arcs
 
-LARC, 5, 6, 1, Rf !7 -- fiber/matrix interface
+LARC, 5, 6, 1, Rf                                    ! Fiber/matrix interface
+
+*DO, i, 1, nAb, 1
+ LARC, 8+3*(i-1)+1, 8+3*(i-1)+3, 8+3*(i-1)+2, Rf     ! Fiber/matrix interface
+*ENDDO
 
 ! Areas
 

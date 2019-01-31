@@ -61,7 +61,7 @@ angSize = 0.1! Angular size of elements at the interface
 
 ! ===> END INPUT DATA
 
-appliedDisp = epsx*L ! [mm] applied displacement
+appliedDisp = epsx*L ! [mum] applied displacement
 
 dispreactfile = 'allDispsRFs'
 stressstrainfile = 'allStressStrain'

@@ -123,6 +123,12 @@ LARC, 5, 6, 1, Rf                                    ! Fiber/matrix interface
 
 ! Areas
 
+AL, 1, 7, 2*nAb+8
+
+*DO, i, 1, nAb, 1
+ AL, nAb+8+i, 2*nAb+8+i                              ! Fibers
+*ENDDO
+
 AL, 1, 7, 6           ! 1, fiber
 AL, 2, 3, 4, 5, 7     ! 2, matrix
 

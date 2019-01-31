@@ -46,6 +46,7 @@ Vf = 0.6! [-] Fiber volume fraction
 
 Rf = 1.0           ! [mum] radius of the fiber
 L = 1.144          ! [mum] length of the RVE
+nAb = 1            ! [-] number of fibers above
 tRatio = 1         ! [-]  ratio of bounding ply thickness to main ply
 epsx = 0.01        ! [-]  applied strain
 
@@ -60,6 +61,11 @@ elOrder = 2
 angSize = 0.1! Angular size of elements at the interface
 
 ! ===> END INPUT DATA
+
+heightCply = (2*nAb+1)*L
+heightUDply = tRatio*2*heightCply
+
+heightTOT = heightCply + heightUDply
 
 appliedDisp = epsx*L ! [mum] applied displacement
 

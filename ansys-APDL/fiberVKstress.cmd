@@ -46,7 +46,6 @@ Vf = 0.6! [-] Fiber volume fraction
 
 Rf = 1.0           ! [mum] radius of the fiber
 L = 1.144          ! [mum] length of the RVE
-tRatio = 1         ! [-]  ratio of bounding ply thickness to main ply
 epsx = 0.01        ! [-]  applied strain
 
 EG = 70000.0! [MPa] Glass fiber Young's modulus

@@ -57,6 +57,8 @@ nuEp = 0.4! [-] Carbon fiber Poisson ratio
 
 elOrder = 2
 
+angSize = 0.1! Angular size of elements at the interface
+
 ! ===> END INPUT DATA
 
 appliedDisp = epsx*L ! [mm] applied displacement
@@ -115,20 +117,13 @@ ALLSEL
 
 ! Seed the edges
 ! LESIZE, NL1, SIZE, ANGSIZ, NDIV, SPACE, KFORC, LAYER1, LAYER2, KYNDIV
-LESIZE, 11, elSize
-LESIZE, 12, elSize
-LESIZE, 13, elSize
-LESIZE, 14, elSize
-LESIZE, 3, elSize
-LESIZE, 4, elSize
-LESIZE, 8, elSize
-LESIZE, 9, elSize
-LESIZE, 20, elSize
-LESIZE, 21, elSize
-LESIZE, 15, elSize
-LESIZE, 16, elSize
-LESIZE, 18, elSize
-LESIZE, 19, elSize
+LESIZE, 1, 20
+LESIZE, 2, 50
+LESIZE, 3, 100
+LESIZE, 4, 100
+LESIZE, 5, 50
+LESIZE, 1, 20
+LESIZE, 7, , angSize
 
 ! Define Element Type
 
@@ -139,19 +134,14 @@ LESIZE, 19, elSize
  ET,1,PLANE182,0,,2      ! Linear plane strain quadrilaterals
  ET,2,PLANE182,1,,2      ! Linear plane strain triangles
 *ENDIF
-ET,3,CONTA172
-KEYOPT, 3, 1, 0
-KEYOPT, 3, 2, 0
 
 ALLSEL
 
 ! Generate mesh
 ! MSHKEY, KEY (0 == free, 1 == mapped)
 ! AMESH, NA1, NA2, NINC
-MSHKEY, 1
-AMESH, 1, 2, 1
 MSHKEY, 0
-AMESH, 3, 4, 1
+AMESH, 1, 2, 1
 
 ALLSEL
 

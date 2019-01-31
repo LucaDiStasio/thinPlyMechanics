@@ -87,6 +87,12 @@ K, 6, 0.0, Rf
 K, 7, 0.0, heightCply       ! W interface corner
 K, 8, L, heightCply         ! E interface corner
 
+*DO, i, 1, nAb, 1
+ K, 8+3*(i-1)+1, 0.0, L*i-Rf         ! Lower node fiber i
+ K, 8+3*(i-1)+2, 0.0, L*i            ! Center fiber i
+ K, 8+3*(i-1)+3, 0.0, L*i+Rf         ! Upper node fiber i
+*ENDDO
+
 ! Lines
 
 L, 1, 5            !1 -- S side, fiber

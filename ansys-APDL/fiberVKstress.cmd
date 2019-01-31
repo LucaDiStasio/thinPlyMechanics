@@ -55,6 +55,8 @@ nuG = 0.4! [-] Glass fiber Poisson ratio
 EEp = 3500.0! [MPa] Carbon fiber Young's modulus
 nuEp = 0.4! [-] Carbon fiber Poisson ratio
 
+elOrder = 2
+
 ! ===> END INPUT DATA
 
 appliedDisp = epsx*L ! [mm] applied displacement
@@ -101,28 +103,13 @@ MP,NUXY,1,nuG     ! mp,Poisson's ratio,material number,value
 MP,EX,2,EEp        ! mp,Young's modulus,material number,value
 MP,NUXY,2,nuEp     ! mp,Poisson's ratio,material number,value
 
-MP,MU,3,0
-
 ! Assign properties to areas
 ! ASEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP
 ! AATT, MAT, REAL, TYPE, ESYS, SECN
 ASEL, S, AREA, , 1
 AATT, 1
-ASEL, S, AREA, , 3
-AATT, 1
-ASEL, S, AREA, , 5
-AATT, 1
 ASEL, S, AREA, , 2
 AATT, 2
-ASEL, S, AREA, , 4
-AATT, 2
-ASEL, S, AREA, , 6
-AATT, 2
-
-ALLSEL
-
-KSEL, S, KP, , 7
-CM,CRACKTIP,KP
 
 ALLSEL
 

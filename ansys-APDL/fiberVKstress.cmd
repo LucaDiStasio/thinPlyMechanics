@@ -42,33 +42,20 @@
 
 ! ===> START INPUT DATA
 
-Vf = 0.0! [-] Fiber volume fraction
+Vf = 0.6! [-] Fiber volume fraction
 
-t = 1             ! [mm] 2t = thickness of the element
-tRatio = 1        ! [-]  ratio of bounding ply thickness to main ply
-epsx = 0.01       ! [-]  applied strain
+Rf = 1.0           ! [mum] radius of the fiber
+L = 1.144          ! [mum] length of the RVE
+tRatio = 1         ! [-]  ratio of bounding ply thickness to main ply
+epsx = 0.01        ! [-]  applied strain
 
-EL = 3500.0! [MPa] UD longitudinal Young's modulus
-ET = 3500.0! [MPa] UD transverse Young's modulus
-nuLT = 0.4! [-] UD in-plane Poisson ratio
-nuTT = 0.4! [-] UD transverse Poisson ratio
-!GL = ! [MPa] UD in-plane shear modulus
-!GT = ! [MPa] UD transverse shear modulus
+EG = 3500.0! [MPa] Glass fiber Young's modulus
+nuG = 0.4! [-] Glass fiber Poisson ratio
+
+EEp = 3500.0! [MPa] Carbon fiber Young's modulus
+nuEp = 0.4! [-] Carbon fiber Poisson ratio
 
 ! ===> END INPUT DATA
-
-L = 2*t/rhon        ! [mm] length of the RVE
-a = aLRatio*L     ! [mm] 2a = crack length
-
-refHlow = (1-reftRatio)*t
-refHup = (1+reftRatio)*t
-
-tBPly = tRatio*(2*t) ! [mm] thickness of the bounding ply
-tTOT = t + tBPly     ! [mm] thickness of the bounding ply
-
-elSize = daOvera*a ! [mm] size of element in refined region close to crack tip
-
-vcctRegion = a+elSize
 
 appliedDisp = epsx*L ! [mm] applied displacement
 
@@ -79,60 +66,31 @@ stressstrainfile = 'allStressStrain'
 
 ! Points
 
-K, 1, 0.0, 0.0
-K, 2, L, 0.0
-K, 3, L, tTOT
-K, 4, 0.0, tTOT
+K, 1, 0.0, 0.0      ! SW corner
+K, 2, L, 0.0        ! SE corner
+K, 3, L, L          ! NE corner
+K, 4, 0.0, L        ! NW corner
 
-K, 5, 0.0, refHlow
-K, 6, L, refHlow
-K, 7, L, refHup
-K, 8, 0.0, refHup
-
-K, 9, a, refHlow
-K,10, a, t
-K,11, a, t
-K,12, a, refHup
-K,13, 0.0, t
-K,14, 0.0, t
-K,15, vcctRegion,t
-
-K,16, L, t
+K, 5, Rf, 0.0
+K, 6, 0.0, Rf
 
 ! Lines
 
-L, 1, 2            !1
-L, 2, 6            !2
-L, 6, 16           !3
-L, 16, 7           !4
-L, 7, 3            !5
-L, 3, 4            !6
-L, 4, 8            !7
-L, 8, 14           !8
-L, 13, 5           !9
-L, 5, 1            !10
-L, 5, 9            !11
-L, 9, 6            !12
-L, 8, 12           !13
-L, 12, 7           !14
-L, 10, 15          !15
-L, 11, 15          !16
-L, 15, 16          !17
-L, 13, 10          !18
-L, 14, 11          !19
-L, 9, 10           !20
-L, 11, 12          !21
+L, 1, 5            !1 -- S side, fiber
+L, 5, 2            !1 -- S side, matrix
+L, 2, 3            !2 -- E side
+L, 3, 4            !3 -- N side
+L, 4, 6            !4 -- W side, matrix
+L, 6, 1            !4 -- W side, fiber
+
+! Arcs
+
+LARC, 5, 6, 1, Rf
 
 ! Areas
 
-AL, 1, 2, 12, 11, 10     ! 1, lower ply, coarse area
-AL, 13, 14, 5, 6, 7      ! 2, upper ply, coarse area
-
-AL, 11, 20, 18, 9        ! 3, lower ply, free area
-AL, 19, 21, 13, 8        ! 4, upper ply, free area
-
-AL, 12, 3, 17, 15, 20    ! 5, lower ply, bonded area
-AL, 4, 14, 21, 16, 17    ! 6, upper ply, bonded area
+AL, 1, 2, 12, 11, 10     ! 1, fiber
+AL, 13, 14, 5, 6, 7      ! 2, matrix
 
 ! Define Material Properties
 

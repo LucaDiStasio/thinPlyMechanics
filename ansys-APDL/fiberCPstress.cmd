@@ -129,9 +129,6 @@ AL, 1, 7, 2*nAb+8
  AL, nAb+8+i, 2*nAb+8+i                              ! Fibers
 *ENDDO
 
-AL, 1, 7, 6           ! 1, fiber
-AL, 2, 3, 4, 5, 7     ! 2, matrix
-
 ! Define Material Properties
 ! 1 is fiber, 2 is matrix
 

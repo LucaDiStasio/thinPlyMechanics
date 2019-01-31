@@ -145,6 +145,9 @@ AMESH, 1, 2, 1
 
 ALLSEL
 
+LSEL, S, LINE, , 4
+NSLL, S, 1
+
 FINISH              ! Finish pre-processing
 
 /SOLU               ! Enter the solution processor

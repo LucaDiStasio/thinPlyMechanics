@@ -76,13 +76,16 @@ stressstrainfile = 'allStressStrain'
 
 ! Points
 
-K, 1, 0.0, 0.0      ! SW corner
-K, 2, L, 0.0        ! SE corner
-K, 3, L, L          ! NE corner
-K, 4, 0.0, L        ! NW corner
+K, 1, 0.0, 0.0              ! SW corner
+K, 2, L, 0.0                ! SE corner
+K, 3, L, heightTOT          ! NE corner
+K, 4, 0.0, heightTOT        ! NW corner
 
 K, 5, Rf, 0.0
 K, 6, 0.0, Rf
+
+K, 7, 0.0, heightCply       ! W interface corner
+K, 8, L, heightCply         ! E interface corner
 
 ! Lines
 

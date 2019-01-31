@@ -95,8 +95,11 @@ AL, 2, 3, 4, 5, 7     ! 2, matrix
 ! Define Material Properties
 ! 1 is fiber, 2 is matrix
 
-MP,EX,1,ET        ! mp,Young's modulus,material number,value
-MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
+MP,EX,1,EG        ! mp,Young's modulus,material number,value
+MP,NUXY,1,nuG     ! mp,Poisson's ratio,material number,value
+
+MP,EX,2,EEp        ! mp,Young's modulus,material number,value
+MP,NUXY,2,nuEp     ! mp,Poisson's ratio,material number,value
 
 MP,MU,3,0
 

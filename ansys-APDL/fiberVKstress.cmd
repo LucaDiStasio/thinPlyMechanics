@@ -203,7 +203,7 @@ ALLSEL
 *VGET, resArray(1,13), NODE, 1, RF, FY
 
 *CFOPEN, dispreactfile, csv
-*VWRITE, 'NODE','LABEL,','X[mm],','Z[mm],','UX','[mm],','UZ','[mm],','RX','[kN],','RZ','[kN]'
+*VWRITE, 'NODE','LABEL,','X[mum],','Z[mum],','UX','[mum],','UZ','[mum],','RX','[MN],','RZ','[MN]'
 (A5,A6,A6,A6,A2,A5,A2,A5,A2,A5,A2,A4)
 *VWRITE, resArray(1,1), ',', resArray(1,2), ',', resArray(1,3), ',', resArray(1,4), ',', resArray(1,5), ',', resArray(1,12), ',', resArray(1,13)
 (F7.0,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8,A1,F12.8)

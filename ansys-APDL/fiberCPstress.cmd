@@ -1,4 +1,4 @@
-! 2D Model of Fiber/Matrix Interface in UDs
+! 2D Model of Fiber/Matrix Interface
 ! Stress Analysis
 
 !
@@ -34,7 +34,7 @@
 !==============================================================================
 !
 
-/title, 2D Model of Fiber/Matrix Interface in UDs
+/title, 2D Model of Fiber/Matrix Interface
 
 /prep7               ! Enter the pre-processor
 

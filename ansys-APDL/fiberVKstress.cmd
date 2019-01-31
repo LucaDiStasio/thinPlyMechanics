@@ -145,20 +145,6 @@ AMESH, 1, 2, 1
 
 ALLSEL
 
-LSEL,S,LINE,,18
-NSLL,S,1
-TYPE,3
-MAT,3
-ESURF
-
-LSEL,S,LINE,,19
-NSLL,S,1
-TYPE,3
-MAT,3
-ESURF
-
-ALLSEL
-
 FINISH              ! Finish pre-processing
 
 /SOLU               ! Enter the solution processor
@@ -168,30 +154,13 @@ ANTYPE,0            ! Analysis type,static
 ! Define Displacement Constraints on Lines   (dl command)
 ! DL, LINE, AREA, Lab, Value1, Value2
 DL, 1, ,SYMM
-DL, 7, ,SYMM
-DL, 8, ,SYMM
-DL, 2, ,UX,appliedDisp
+DL, 2, ,SYMM
+DL, 5, ,SYMM
+DL, 6, ,SYMM
 DL, 3, ,UX,appliedDisp
-DL, 4, ,UX,appliedDisp
-DL, 5, ,UX,appliedDisp
+DL, 4, ,
 
 ALLSEL
-
-! Coincident constraints
-LSEL,S,LINE,,15,16,1
-NSLL,S,1
-CPINTF,ALL
-
-ALLSEL
-
-! Apply pressure, if present
-! SFL, Line, Lab, VALI, VALJ, VAL2I, VAL2J
-*IF, uniP, GT, 0.0, THEN
-   SFL, 9, PRES, uniP
-   SFL, 10, PRES, uniP
-   SFL, 18, PRES, uniP
-   SFL, 19, PRES, uniP
-*ENDIF
 
 ! For output setting: OUTRES, Item, Freq, Cname, -- , NSVAR, DSUBres
 
@@ -209,8 +178,6 @@ FINISH               ! Finish the solution processor
 SAVE                 ! Save your work to the database
 
 /POST1               ! Post processing
-
-PRCINT, 2, , JINT
 
 ALLSEL
 

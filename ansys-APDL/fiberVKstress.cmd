@@ -49,11 +49,11 @@ L = 1.144          ! [mum] length of the RVE
 tRatio = 1         ! [-]  ratio of bounding ply thickness to main ply
 epsx = 0.01        ! [-]  applied strain
 
-EG = 3500.0! [MPa] Glass fiber Young's modulus
-nuG = 0.4! [-] Glass fiber Poisson ratio
+EG = 70000.0! [MPa] Glass fiber Young's modulus
+nuG = 0.2! [-] Glass fiber Poisson ratio
 
-EEp = 3500.0! [MPa] Carbon fiber Young's modulus
-nuEp = 0.4! [-] Carbon fiber Poisson ratio
+EEp = 3500.0! [MPa] Epoxy Young's modulus
+nuEp = 0.4! [-] Epoxy Poisson ratio
 
 elOrder = 2
 

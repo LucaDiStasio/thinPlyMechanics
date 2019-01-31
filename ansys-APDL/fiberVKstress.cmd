@@ -147,6 +147,9 @@ ALLSEL
 
 LSEL, S, LINE, , 4
 NSLL, S, 1
+CP, 1, UY, ALL
+
+ALLSEL
 
 FINISH              ! Finish pre-processing
 
@@ -161,7 +164,6 @@ DL, 2, ,SYMM
 DL, 5, ,SYMM
 DL, 6, ,SYMM
 DL, 3, ,UX,appliedDisp
-DL, 4, ,
 
 ALLSEL
 

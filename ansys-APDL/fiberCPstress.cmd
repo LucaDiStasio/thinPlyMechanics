@@ -1,4 +1,4 @@
-! 2D Model of Fiber/Matrix Interface
+! 2D Model of Fiber/Matrix Interface in cross-plies
 ! Stress Analysis
 
 !
@@ -34,7 +34,7 @@
 !==============================================================================
 !
 
-/title, 2D Model of Fiber/Matrix Interface
+/title, 2D Model of Fiber/Matrix Interface in cross-plies
 
 /prep7               ! Enter the pre-processor
 

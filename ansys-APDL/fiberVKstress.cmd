@@ -77,52 +77,26 @@ K, 6, 0.0, Rf
 ! Lines
 
 L, 1, 5            !1 -- S side, fiber
-L, 5, 2            !1 -- S side, matrix
-L, 2, 3            !2 -- E side
-L, 3, 4            !3 -- N side
-L, 4, 6            !4 -- W side, matrix
-L, 6, 1            !4 -- W side, fiber
+L, 5, 2            !2 -- S side, matrix
+L, 2, 3            !3 -- E side
+L, 3, 4            !4 -- N side
+L, 4, 6            !5 -- W side, matrix
+L, 6, 1            !6 -- W side, fiber
 
 ! Arcs
 
-LARC, 5, 6, 1, Rf
+LARC, 5, 6, 1, Rf !7 -- fiber/matrix interface
 
 ! Areas
 
-AL, 1, 2, 12, 11, 10     ! 1, fiber
-AL, 13, 14, 5, 6, 7      ! 2, matrix
+AL, 1, 7, 6           ! 1, fiber
+AL, 2, 3, 4, 5, 7     ! 2, matrix
 
 ! Define Material Properties
+! 1 is fiber, 2 is matrix
 
-*IF, crossPly, EQ, 0, THEN
-   MP,EX,1,ET        ! 1 is cross-ply, 2 is ud-ply
-   MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
-*ELSE
-   MP,EX,1,ET        ! 1 is cross-ply, 2 is ud-ply
-   MP,EY,1,ET        ! 1 is cross-ply, 2 is ud-ply
-   MP,EZ,1,EL        ! 1 is cross-ply, 2 is ud-ply
-   MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
-   MP,NUYZ,1,nuLT    ! mp,Poisson's ratio,material number,value
-   MP,NUXZ,1,nuLT    ! mp,Poisson's ratio,material number,value
-   MP,GXY,1,GTT      ! mp,Poisson's ratio,material number,value
-   MP,GYZ,1,GLT      ! mp,Poisson's ratio,material number,value
-   MP,GXZ,1,GLT      ! mp,Poisson's ratio,material number,value
-*ENDIF
-
-*IF, udPly, EQ, 0, THEN
-   MP,EX,2,EL        ! 1 is cross-ply, 2 is ud-ply
-   MP,NUXY,2,nuLT    ! mp,Poisson's ratio,material number,value
-*ELSE
-   MP,EX,2,EL        ! 1 is cross-ply, 2 is ud-ply
-   MP,EY,2,ET        ! 1 is cross-ply, 2 is ud-ply
-   MP,EZ,2,ET        ! 1 is cross-ply, 2 is ud-ply
-   MP,NUXY,2,nuLT    ! mp,Poisson's ratio,material number,value
-   MP,NUYZ,2,nuTT    ! mp,Poisson's ratio,material number,value
-   MP,NUXZ,2,nuLT    ! mp,Poisson's ratio,material number,value
-   MP,GXY,2,GLT      ! mp,Poisson's ratio,material number,value
-   MP,GYZ,2,GTT      ! mp,Poisson's ratio,material number,value
-   MP,GXZ,2,GLT      ! mp,Poisson's ratio,material number,value
-*ENDIF
+MP,EX,1,ET        ! mp,Young's modulus,material number,value
+MP,NUXY,1,nuTT    ! mp,Poisson's ratio,material number,value
 
 MP,MU,3,0
 

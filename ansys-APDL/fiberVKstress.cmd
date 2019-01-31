@@ -46,14 +46,7 @@ Vf = 0.0! [-] Fiber volume fraction
 
 t = 1             ! [mm] 2t = thickness of the element
 tRatio = 1        ! [-]  ratio of bounding ply thickness to main ply
-aLRatio = 0.1     ! [-]  ratio of crack length to main ply thickness
-rhon = 0.01       ! [-]  normalized crack density
-daOvera = 0.05    ! [-]  ratio of crack increment (i.e. crack tip element size) to crack length
 epsx = 0.01       ! [-]  applied strain
-uniP = 0.0        ! [-]  uniform pressure applied to crack face
-reftRatio = 0.2   ! [-]  ratio of refined area height to cross-ply thickness
-
-nContours = 10 ! [-]  number of contours for J-integral evaluation
 
 EL = 3500.0! [MPa] UD longitudinal Young's modulus
 ET = 3500.0! [MPa] UD transverse Young's modulus

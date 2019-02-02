@@ -3866,7 +3866,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MATRIX-INTANNULUS',True)
 
     setsOfFacesData = [[0.0, R2, 0,'MATRIX-INTERMEDIATEANNULUS'],
-                       [0.975*L, 0.975*L, 0,'MATRIX-BODY']]
+                       [Rf+0.75*(2*(L-Rf)-clusterShift), Rf+0.75*(2*(L-Rf)-clusterShift), 0,'MATRIX-BODY']]
 
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)

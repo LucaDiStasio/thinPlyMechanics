@@ -3621,12 +3621,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-SECONDRING',True)
 
-        if L>2*Rf:
-            R1 = (1+0.5*0.25)*Rf
-            R2 = (1.25+0.5*0.25)*Rf
-        else:
-            R1 = Rf+0.5*0.25*(L-Rf)
-            R2 = Rf+1.5*0.25*(L-Rf)
+        R1 = Rf+0.5*0.25*(2*(L-Rf)-clusterShift)
+        R2 = Rf+1.5*0.25*(2*(L-Rf)-clusterShift)
 
         setsOfEdgesData = [[R1,0.001,0.0,R1,-0.001,0.0,'LOWERSIDE-THIRDRING-RIGHT']]
         if 'half' in parameters['geometry']['fiber']['type']:
@@ -3683,10 +3679,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         betas = [theta + deltatheta + deltapsi,theta - deltatheta - deltapsi]
         gammas = [theta + deltatheta + deltapsi + deltaphi,theta - deltatheta - deltapsi - deltaphi]
         incs = [1.0,-1.0]
-        if L>2*Rf:
-            R4 = 1.25*Rf
-        else:
-            R4 = Rf+0.25*(L-Rf)
+        R4 = Rf+0.25*(2*(L-Rf)-clusterShift)
         radiuses = [0.75*Rf,Rf,R4]
         for rIndex,rValue in enumerate(radiuses):
             for aIndex,aValue in enumerate(alphas):
@@ -3718,10 +3711,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfEdgesData.append([0.99*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-FIRSTBOUNDED'])
         setsOfEdgesData.append([0.99*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,1.01*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'THIRDCIRCLE-SECONDBOUNDED'])
         setsOfEdgesData.append([0.99*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.99*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,1.01*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),1.01*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'THIRDCIRCLE-RESTBOUNDED'])
-        if L>2*Rf:
-            R4 = 1.25*Rf
-        else:
-            R4 = Rf+0.25*(L-Rf)
+        R4 = Rf+0.25*(2*(L-Rf)-clusterShift)
         setsOfEdgesData.append([0.99*R4*np.cos(0.5*alpha*np.pi/180),0.99*R4*np.sin(0.5*alpha*np.pi/180),0.0,1.01*R4*np.cos(0.5*alpha*np.pi/180),1.01*R4*np.sin(0.5*alpha*np.pi/180),0.0,'FOURTHCIRCLE-LOWERCRACK'])
         setsOfEdgesData.append([0.99*R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'FOURTHCIRCLE-UPPERCRACK'])
         setsOfEdgesData.append([0.99*R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'FOURTHCIRCLE-FIRSTBOUNDED'])
@@ -3843,12 +3833,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     RVEpart.SetByBoolean(name='FIBER', sets=[RVEpart.sets['FIBER-CENTER'],RVEpart.sets['FIBER-INTERMEDIATEANNULUS'],RVEpart.sets['FIBER-EXTANNULUS']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FIBER',True)
 
-    if L>2*Rf:
-        R1 = (1+0.5*0.25)*Rf
-        R2 = (1.25+0.5*0.25)*Rf
-    else:
-        R1 = Rf+0.5*0.25*(L-Rf)
-        R2 = Rf+1.5*0.25*(L-Rf)
+    R1 = Rf+0.5*0.25*(2*(L-Rf)-clusterShift)
+    R2 = Rf+1.5*0.25*(2*(L-Rf)-clusterShift)
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         setsOfFacesData = []

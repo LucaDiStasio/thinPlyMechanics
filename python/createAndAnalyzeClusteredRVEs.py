@@ -3214,17 +3214,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-0.5*Rf, 0.0)) # fiberGeometry[8]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
-        if L>2*Rf:
-            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-1.25*Rf, 0.0)) # fiberGeometry[9]
-            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-1.5*Rf, 0.0)) # fiberGeometry[10]
-        else:
-            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-(Rf+0.25*(L-Rf)), 0.0)) # fiberGeometry[9]
-            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-(Rf+0.5*(L-Rf)), 0.0)) # fiberGeometry[10]
-            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-(Rf+0.25*(2*(L-Rf)-clusterShift)), 0.0)) # fiberGeometry[9]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-(Rf+0.5*(2*(L-Rf)-clusterShift)), 0.0)) # fiberGeometry[10]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     elif 'half' in parameters['geometry']['fiber']['type']:
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(Rf,0.0), direction=CLOCKWISE) # fiberGeometry[6]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
@@ -3235,17 +3229,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-0.5*Rf, 0.0), point2=(0.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[8]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
-        if L>2*Rf:
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.25*Rf, 0.0), point2=(1.25*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[9]
-            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.5*Rf, 0.0), point2=(1.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[10]
-        else:
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.25*(L-Rf)), 0.0), point2=((Rf+0.25*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
-            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.5*(L-Rf)), 0.0), point2=((Rf+0.5*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
-            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.25*(2*(L-Rf)-clusterShift)), 0.0), point2=((Rf+0.25*(2*(L-Rf)-clusterShift)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.5*(2*(L-Rf)-clusterShift)), 0.0), point2=((Rf+0.5*(2*(L-Rf)-clusterShift)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     elif 'quarter' in parameters['geometry']['fiber']['type']:
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+Rf), point2=(Rf,0.0), direction=CLOCKWISE) # fiberGeometry[6]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
@@ -3256,17 +3244,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+0.5*Rf), point2=(0.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[8]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
-        if L>2*Rf:
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+1.25*Rf), point2=(1.25*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[9]
-            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+1.5*Rf), point2=(1.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[10]
-        else:
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+(Rf+0.25*(L-Rf))), point2=((Rf+0.25*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
-            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+(Rf+0.5*(L-Rf))), point2=((Rf+0.5*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
-            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+(Rf+0.25*(2*(L-Rf)-clusterShift))), point2=((Rf+0.25*(2*(L-Rf)-clusterShift)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+(Rf+0.5*(2*(L-Rf)-clusterShift))), point2=((Rf+0.5*(2*(L-Rf)-clusterShift)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     else:
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(Rf,0.0), direction=CLOCKWISE) # fiberGeometry[6]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
@@ -3277,17 +3259,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-0.5*Rf, 0.0), point2=(0.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[8]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
-        if L>2*Rf:
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.25*Rf, 0.0), point2=(1.25*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[9]
-            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.5*Rf, 0.0), point2=(1.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[10]
-        else:
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.25*(L-Rf)), 0.0), point2=((Rf+0.25*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
-            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.5*(L-Rf)), 0.0), point2=((Rf+0.5*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
-            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.25*(2*(L-Rf)-clusterShift)), 0.0), point2=((Rf+0.25*(2*(L-Rf)-clusterShift)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.5*(2*(L-Rf)-clusterShift)), 0.0), point2=((Rf+0.5*(2*(L-Rf)-clusterShift)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # calculate angles for construction lines
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calculate angles for construction lines ...',True)
@@ -3324,10 +3300,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'draw angular sections to identify the crack and for mesh generation ...',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute internal and external radii ...',True)
     Rint = 0.75*Rf
-    if L>2*Rf:
-        Rext = 1.25*Rf
-    else:
-        Rext = Rf+0.25*(L-Rf)
+    Rext = Rf+0.25*(2*(L-Rf)-clusterShift)
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     #raw_input()
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
@@ -3416,10 +3389,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'draw angular sections to identify the crack and for mesh generation ...',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute internal and external radii ...',True)
         Rint = 0.75*Rf
-        if L>2*Rf:
-            Rext = 1.25*Rf
-        else:
-            Rext = Rf+0.25*(L-Rf)
+        Rext = Rf+0.25*(2*(L-Rf)-clusterShift)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         #raw_input()
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)

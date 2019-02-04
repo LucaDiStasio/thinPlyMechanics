@@ -191,13 +191,17 @@ ALLSEL
 
 ! Seed the edges
 ! LESIZE, NL1, SIZE, ANGSIZ, NDIV, SPACE, KFORC, LAYER1, LAYER2, KYNDIV
-LESIZE, 1, , , 20
-LESIZE, 2, , , 50
-LESIZE, 3, , , 100
-LESIZE, 4, , , 100
-LESIZE, 5, , , 50
-LESIZE, 1, , , 20
-LESIZE, 7, , angSize
+LESIZE, 1, , , 20                                    !1  -- S side, fiber
+LESIZE, 2, , , 50                                    !2  -- S side, matrix
+LESIZE, 3, , , 200*nAb                               !3  -- E side, 90 ply
+LESIZE, 4, , , 50                                    !4  -- E side, 0 ply
+LESIZE, 5, , , 70                                    !5  -- N side
+LESIZE, 6, , , 70                                    !6  -- Ply interface
+LESIZE, 7, , , 50                                    !7  -- W side, 0 ply
+LESIZE, 8, , , 20                                    !8  -- W side, 90 ply, fiber
+LESIZE, 9, , , 100                                   !9  -- W side, 90 ply, first interfiber matrix region
+
+LESIZE, 2*nAb+10, , angSize
 
 ! Define Element Type
 
@@ -215,13 +219,7 @@ ALLSEL
 ! MSHKEY, KEY (0 == free, 1 == mapped)
 ! AMESH, NA1, NA2, NINC
 MSHKEY, 0
-AMESH, 1, 2, 1
-
-ALLSEL
-
-LSEL, S, LINE, , 4
-NSLL, S, 1
-CP, 1, UY, ALL
+AMESH, 1, nAb+3, 1
 
 ALLSEL
 

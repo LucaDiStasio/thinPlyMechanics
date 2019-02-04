@@ -201,8 +201,7 @@ LESIZE, 1, , , 20                                    !1  -- S side, fiber
 LESIZE, 2, , , 50                                    !2  -- S side, matrix
 LESIZE, 3, , , 200*nAb                               !3  -- E side, 90 ply
 LESIZE, 4, , , 25                                    !4  -- E side, 0 ply
-LESIZE, 5, , , 20                                    !5  -- N side
-LESIZE, 6, , , 20                                    !6  -- Ply interface
+LESIZE, 6, , , 70                                    !6  -- Ply interface
 LESIZE, 7, , , 25                                    !7  -- W side, 0 ply
 LESIZE, 8, , , 20                                    !8  -- W side, 90 ply, fiber
 LESIZE, 9, , , 100                                   !9  -- W side, 90 ply, first interfiber matrix region

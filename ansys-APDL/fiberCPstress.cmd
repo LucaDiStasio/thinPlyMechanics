@@ -94,9 +94,10 @@ K, 7, 0.0, heightCply       ! W interface corner
 K, 8, L, heightCply         ! E interface corner
 
 *DO, i, 1, nAb, 1
- K, 8+3*(i-1)+1, 0.0, 2*L*i-Rf         ! Lower node fiber i
- K, 8+3*(i-1)+2, 0.0, 2*L*i            ! Center fiber i
- K, 8+3*(i-1)+3, 0.0, 2*L*i+Rf         ! Upper node fiber i
+ K, 8+4*(i-1)+1, 0.0, 2*L*i-Rf         ! Lower node fiber i
+ K, 8+4*(i-1)+2, 0.0, 2*L*i            ! Center fiber i
+ K, 8+4*(i-1)+3, 0.0, 2*L*i+Rf         ! Upper node fiber i
+ K, 8+4*(i-1)+4,  Rf, 2*L*i            ! Right node fiber i
 *ENDDO
 
 ! Lines
@@ -114,11 +115,11 @@ L, 6, 9                                              !9  -- W side, 90 ply, firs
 L, 4, 8+3*(nAb-1)+3                                  !10 -- W side, 90 ply, last interfiber matrix region
 
 *DO, i, 1, nAb-1, 1
- L, 8+3*(i-1)+3, 8+3*(i-1)+4                         ! W side, 90 ply, interfiber matrix regions
+ L, 8+4*(i-1)+3, 8+4*(i-1)+5                         ! W side, 90 ply, interfiber matrix regions
 *ENDDO
 
 *DO, i, 1, nAb, 1
- L, 8+3*(i-1)+1, 8+3*(i-1)+3                         ! W side, 90 ply, fibers
+ L, 8+4*(i-1)+1, 8+4*(i-1)+3                         ! W side, 90 ply, fibers
 *ENDDO
 
 ! Arcs
@@ -126,7 +127,8 @@ L, 4, 8+3*(nAb-1)+3                                  !10 -- W side, 90 ply, last
 LARC, 5, 6, 1, Rf                                    ! Fiber/matrix interface, quarter fiber
 
 *DO, i, 1, nAb, 1
- LARC, 8+3*(i-1)+1, 8+3*(i-1)+3, 8+3*(i-1)+2, Rf     ! Fiber/matrix interface, half fiber
+ LARC, 8+3*(i-1)+1, 8+3*(i-1)+4, 8+3*(i-1)+2, Rf     ! Fiber/matrix interface, half fiber
+ LARC, 8+3*(i-1)+4, 8+3*(i-1)+3, 8+3*(i-1)+2, Rf     ! Fiber/matrix interface, half fiber
 *ENDDO
 
 ! Areas

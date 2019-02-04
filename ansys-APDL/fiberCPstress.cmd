@@ -112,7 +112,7 @@ L, 7, 8                                              !6  -- Ply interface
 L, 4, 7                                              !7  -- W side, 0 ply
 L, 1, 6                                              !8  -- W side, 90 ply, fiber
 L, 6, 9                                              !9  -- W side, 90 ply, first interfiber matrix region
-L, 4, 8+3*(nAb-1)+3                                  !10 -- W side, 90 ply, last interfiber matrix region
+L, 7, 8+3*(nAb-1)+3                                  !10 -- W side, 90 ply, last interfiber matrix region
 
 *DO, i, 1, nAb-1, 1
  L, 8+4*(i-1)+3, 8+4*(i-1)+5                         ! W side, 90 ply, interfiber matrix regions
@@ -135,7 +135,7 @@ LARC, 5, 6, 1, Rf                                    ! Fiber/matrix interface, q
 
 AL, 6, 4, 5, 7                                         ! UD
 
-AL, 1, 7, 2*nAb+10                                     ! Quarter fiber
+AL, 1, 8, 2*nAb+10                                     ! Quarter fiber
 
 *DO, i, 1, nAb, 1
  AL, nAb+9+i, 2*nAb+10+2*(i-1)+1, 2*nAb+10+2*(i-1)+2   ! Half fibers

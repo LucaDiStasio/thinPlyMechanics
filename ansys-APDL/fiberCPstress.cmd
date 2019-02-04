@@ -131,6 +131,8 @@ LARC, 5, 6, 1, Rf                                    ! Fiber/matrix interface, q
 
 ! Areas
 
+AL, 6, 4, 5, 7                                      ! UD
+
 AL, 1, 7, 2*nAb+10                                  ! Quarter fiber
 
 *DO, i, 1, nAb, 1
@@ -173,8 +175,16 @@ MP,GXY,1,G12       ! mp,shear modulus,material number,value
 ! ASEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP
 ! AATT, MAT, REAL, TYPE, ESYS, SECN
 ASEL, S, AREA, , 1
-AATT, 1
+AATT, 3
 ASEL, S, AREA, , 2
+AATT, 1
+
+*DO, i, 1, nAb, 1
+ ASEL, S, AREA, , 2+i
+ AATT, 1
+*ENDDO
+
+ASEL, S, AREA, , nAb+3
 AATT, 2
 
 ALLSEL

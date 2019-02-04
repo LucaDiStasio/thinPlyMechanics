@@ -233,9 +233,21 @@ ANTYPE,0            ! Analysis type,static
 ! DL, LINE, AREA, Lab, Value1, Value2
 DL, 1, ,SYMM
 DL, 2, ,SYMM
-DL, 5, ,SYMM
-DL, 6, ,SYMM
+
 DL, 3, ,UX,appliedDisp
+DL, 4, ,UX,appliedDisp
+
+DL, 7, ,SYMM
+DL, 8, ,SYMM
+DL, 9, ,SYMM
+
+*DO, i, 1, nAb-1, 1
+ DL, 10+i, ,SYMM
+*ENDDO
+
+*DO, i, 1, nAb, 1
+ DL, nAb+9+i, ,SYMM
+*ENDDO
 
 ALLSEL
 

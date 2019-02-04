@@ -152,7 +152,8 @@ LSEL, A, LINE, , 9, 10, 1
 LSEL, A, LINE, , 2*nAb+10
 
 *DO, i, 1, nAb, 1
- LSEL, A, LINE, , 2*nAb+10+i
+ LSEL, A, LINE, , 2*nAb+10+2*(i-1)+1
+ LSEL, A, LINE, , 2*nAb+10+2*(i-1)+2
 *ENDDO
 
 AL, ALL

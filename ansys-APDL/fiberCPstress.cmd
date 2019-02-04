@@ -46,7 +46,7 @@ Vf = 0.6! [-] Fiber volume fraction
 
 Rf = 1.0           ! [mum] radius of the fiber
 L = 1.144          ! [mum] length of the RVE
-nAb = 3            ! [-] number of fibers above
+nAb = 50           ! [-] number of fibers above
 tRatio = 1         ! [-]  ratio of bounding ply thickness to main ply
 epsx = 0.01        ! [-]  applied strain
 

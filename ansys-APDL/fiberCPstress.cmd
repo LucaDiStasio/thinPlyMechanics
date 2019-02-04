@@ -34,8 +34,6 @@
 !==============================================================================
 !
 
-/CLEAR, START
-
 /TITLE, 2D Model of Fiber/Matrix Interface in cross-plies
 
 /PREP7               ! Enter the pre-processor

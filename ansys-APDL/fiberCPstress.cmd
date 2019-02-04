@@ -128,7 +128,7 @@ LARC, 5, 6, 1, Rf                                    ! Fiber/matrix interface, q
 AL, 1, 7, 2*nAb+8                                    ! Quarter fiber
 
 *DO, i, 1, nAb, 1
- AL, nAb+10+i, 2*nAb+10+i                            ! Half fibers
+ AL, nAb+9+i, 2*nAb+10+i                            ! Half fibers
 *ENDDO
 
 *LSEL, S, LINE, , 2, 3, 1

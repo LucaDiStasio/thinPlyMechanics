@@ -56,6 +56,13 @@ nuG = 0.2! [-] Glass fiber Poisson ratio
 EEp = 3500.0! [MPa] Epoxy Young's modulus
 nuEp = 0.4! [-] Epoxy Poisson ratio
 
+E1 = 70000.0! [MPa] UD longitudinal Young's modulus
+E2 = 70000.0! [MPa] UD transverse Young's modulus
+nu12 = 0.2! [-] UD in-plane Poisson ratio
+nu23 = 0.2! [-] UD out-of-plane Poisson ratio
+G1 = 70000.0! [MPa] UD in-plane shear modulus
+
+
 elOrder = 2
 
 angSize = 0.1! Angular size of elements at the interface

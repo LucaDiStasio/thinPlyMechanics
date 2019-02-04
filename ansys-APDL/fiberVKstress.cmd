@@ -99,10 +99,10 @@ AL, 2, 3, 4, 5, 7     ! 2, matrix
 ! 1 is fiber, 2 is matrix
 
 MP,EX,1,EG        ! mp,Young's modulus,material number,value
-MP,NUXY,1,nuG     ! mp,Poisson's ratio,material number,value
+MP,PRXY,1,nuG     ! mp,Poisson's ratio,material number,value
 
 MP,EX,2,EEp        ! mp,Young's modulus,material number,value
-MP,NUXY,2,nuEp     ! mp,Poisson's ratio,material number,value
+MP,PRXY,2,nuEp     ! mp,Poisson's ratio,material number,value
 
 ! Assign properties to areas
 ! ASEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP

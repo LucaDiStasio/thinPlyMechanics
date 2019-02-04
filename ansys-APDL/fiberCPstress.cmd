@@ -56,12 +56,11 @@ nuG = 0.2! [-] Glass fiber Poisson ratio
 EEp = 3500.0! [MPa] Epoxy Young's modulus
 nuEp = 0.4! [-] Epoxy Poisson ratio
 
-E1 = 70000.0! [MPa] UD longitudinal Young's modulus
-E2 = 70000.0! [MPa] UD transverse Young's modulus
-nu12 = 0.2! [-] UD in-plane Poisson ratio
-nu23 = 0.2! [-] UD out-of-plane Poisson ratio
-G1 = 70000.0! [MPa] UD in-plane shear modulus
-
+E1 = 43442.0! [MPa] UD longitudinal Young's modulus
+E2 = 13714.0! [MPa] UD transverse Young's modulus
+nu12 = 0.273! [-] UD in-plane Poisson ratio
+nu23 = 0.465! [-] UD out-of-plane Poisson ratio
+G12 = 4315.0! [MPa] UD in-plane shear modulus
 
 elOrder = 2
 
@@ -102,16 +101,16 @@ K, 8, L, heightCply         ! E interface corner
 
 ! Lines
 
-L, 1, 5                                              !1 -- S side, fiber
-L, 5, 2                                              !2 -- S side, matrix
-L, 2, 8                                              !3 -- E side, 90 ply
-L, 8, 3                                              !4 -- E side, 0 ply
-L, 3, 4                                              !5 -- N side
-L, 7, 8                                              !6 -- Ply interface
+L, 1, 5                                              !1  -- S side, fiber
+L, 5, 2                                              !2  -- S side, matrix
+L, 2, 8                                              !3  -- E side, 90 ply
+L, 8, 3                                              !4  -- E side, 0 ply
+L, 3, 4                                              !5  -- N side
+L, 7, 8                                              !6  -- Ply interface
 
-L, 4, 7                                              !7 -- W side, 0 ply
-L, 1, 6                                              !8 -- W side, 90 ply, fiber
-L, 6, 9                                              !9 -- W side, 90 ply, first interfiber matrix region
+L, 4, 7                                              !7  -- W side, 0 ply
+L, 1, 6                                              !8  -- W side, 90 ply, fiber
+L, 6, 9                                              !9  -- W side, 90 ply, first interfiber matrix region
 L, 4, 8+3*(nAb-1)+3                                  !10 -- W side, 90 ply, last interfiber matrix region
 
 *DO, i, 1, nAb-1, 1
@@ -149,17 +148,26 @@ AL, 1, 7, 2*nAb+10                                  ! Quarter fiber
 *LSEL, A, LINE, , 2*nAb+10,
 
 *DO, i, 1, nAb, 1
- *LSEL, A, LINE, , 2*nAb+10+i, 
+ *LSEL, A, LINE, , 2*nAb+10+i,
 *ENDDO
 
+AL, ALL
+
+ALLSEL
+
 ! Define Material Properties
-! 1 is fiber, 2 is matrix
+! 1 is fiber, 2 is matrix, 3 is UD
 
 MP,EX,1,EG        ! mp,Young's modulus,material number,value
-MP,NUXY,1,nuG     ! mp,Poisson's ratio,material number,value
+MP,PRXY,1,nuG     ! mp,Poisson's ratio,material number,value
 
 MP,EX,2,EEp        ! mp,Young's modulus,material number,value
-MP,NUXY,2,nuEp     ! mp,Poisson's ratio,material number,value
+MP,PRXY,2,nuEp     ! mp,Poisson's ratio,material number,value
+
+MP,EX,3,E1         ! mp,Young's modulus,material number,value
+MP,EY,3,E2         ! mp,Young's modulus,material number,value
+MP,PRXY,1,nu12     ! mp,Poisson's ratio,material number,value
+MP,GXY,1,G12       ! mp,shear modulus,material number,value
 
 ! Assign properties to areas
 ! ASEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP

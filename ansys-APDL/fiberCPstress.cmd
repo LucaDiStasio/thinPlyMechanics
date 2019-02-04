@@ -199,7 +199,7 @@ ALLSEL
 ! LESIZE, NL1, SIZE, ANGSIZ, NDIV, SPACE, KFORC, LAYER1, LAYER2, KYNDIV
 LESIZE, 1, , , 20                                    !1  -- S side, fiber
 LESIZE, 2, , , 50                                    !2  -- S side, matrix
-LESIZE, 3, , , 100+50*nAb                            !3  -- E side, 90 ply
+!LESIZE, 3, , , 100+50*nAb                            !3  -- E side, 90 ply
 LESIZE, 4, , , 25                                    !4  -- E side, 0 ply
 LESIZE, 6, , , 70                                    !6  -- Ply interface
 LESIZE, 7, , , 25                                    !7  -- W side, 0 ply

@@ -46,7 +46,7 @@ Vf = 0.6! [-] Fiber volume fraction
 
 Rf = 1.0           ! [mum] radius of the fiber
 L = 1.144          ! [mum] length of the RVE
-nAb = 1            ! [-] number of fibers above
+nAb = 3            ! [-] number of fibers above
 tRatio = 1         ! [-]  ratio of bounding ply thickness to main ply
 epsx = 0.01        ! [-]  applied strain
 
@@ -127,8 +127,8 @@ L, 7, 8+3*(nAb-1)+3                                  !10 -- W side, 90 ply, last
 LARC, 5, 6, 1, Rf                                    ! Fiber/matrix interface, quarter fiber
 
 *DO, i, 1, nAb, 1
- LARC, 8+3*(i-1)+1, 8+3*(i-1)+4, 8+3*(i-1)+2, Rf     ! Fiber/matrix interface, half fiber
- LARC, 8+3*(i-1)+4, 8+3*(i-1)+3, 8+3*(i-1)+2, Rf     ! Fiber/matrix interface, half fiber
+ LARC, 8+4*(i-1)+1, 8+4*(i-1)+4, 8+4*(i-1)+2, Rf     ! Fiber/matrix interface, half fiber
+ LARC, 8+4*(i-1)+4, 8+4*(i-1)+3, 8+4*(i-1)+2, Rf     ! Fiber/matrix interface, half fiber
 *ENDDO
 
 ! Areas

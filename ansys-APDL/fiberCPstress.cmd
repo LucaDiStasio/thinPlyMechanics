@@ -163,16 +163,19 @@ ALLSEL
 ! Define Material Properties
 ! 1 is fiber, 2 is matrix, 3 is UD
 
-MP,EX,1,EG        ! mp,Young's modulus,material number,value
+MP,EX,  1,EG      ! mp,Young's modulus,material number,value
 MP,PRXY,1,nuG     ! mp,Poisson's ratio,material number,value
 
-MP,EX,2,EEp        ! mp,Young's modulus,material number,value
+MP,EX,  2,EEp      ! mp,Young's modulus,material number,value
 MP,PRXY,2,nuEp     ! mp,Poisson's ratio,material number,value
 
-MP,EX,3,E1         ! mp,Young's modulus,material number,value
-MP,EY,3,E2         ! mp,Young's modulus,material number,value
-MP,PRXY,1,nu12     ! mp,Poisson's ratio,material number,value
-MP,GXY,1,G12       ! mp,shear modulus,material number,value
+MP,EX,  3,E1       ! mp,Young's modulus,material number,value
+MP,EY,  3,E2       ! mp,Young's modulus,material number,value
+MP,EZ,  3,E2       ! mp,Young's modulus,material number,value
+MP,PRXY,3,nu12     ! mp,Poisson's ratio,material number,value
+MP,PRYZ,3,nu23     ! mp,Poisson's ratio,material number,value
+MP,PRXZ,3,nu12     ! mp,Poisson's ratio,material number,value
+MP,GXY, 3,G12      ! mp,shear modulus,material number,value
 
 ! Assign properties to areas
 ! ASEL, Type, Item, Comp, VMIN, VMAX, VINC, KSWP
@@ -197,10 +200,10 @@ ALLSEL
 LESIZE, 1, , , 20                                    !1  -- S side, fiber
 LESIZE, 2, , , 50                                    !2  -- S side, matrix
 LESIZE, 3, , , 200*nAb                               !3  -- E side, 90 ply
-LESIZE, 4, , , 50                                    !4  -- E side, 0 ply
-LESIZE, 5, , , 70                                    !5  -- N side
-LESIZE, 6, , , 70                                    !6  -- Ply interface
-LESIZE, 7, , , 50                                    !7  -- W side, 0 ply
+LESIZE, 4, , , 25                                    !4  -- E side, 0 ply
+LESIZE, 5, , , 20                                    !5  -- N side
+LESIZE, 6, , , 20                                    !6  -- Ply interface
+LESIZE, 7, , , 25                                    !7  -- W side, 0 ply
 LESIZE, 8, , , 20                                    !8  -- W side, 90 ply, fiber
 LESIZE, 9, , , 100                                   !9  -- W side, 90 ply, first interfiber matrix region
 

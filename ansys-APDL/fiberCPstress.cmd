@@ -46,7 +46,7 @@ Vf = 0.6! [-] Fiber volume fraction
 
 Rf = 1.0           ! [mum] radius of the fiber
 L = 1.144          ! [mum] length of the RVE
-nAb = 10           ! [-] number of fibers above
+nAb = 5            ! [-] number of fibers above
 tRatio = 1         ! [-]  ratio of bounding ply thickness to main ply
 epsx = 0.01        ! [-]  applied strain
 
@@ -199,7 +199,7 @@ ALLSEL
 ! LESIZE, NL1, SIZE, ANGSIZ, NDIV, SPACE, KFORC, LAYER1, LAYER2, KYNDIV
 LESIZE, 1, , , 20                                    !1  -- S side, fiber
 LESIZE, 2, , , 50                                    !2  -- S side, matrix
-LESIZE, 3, , , 100+100*nAb                            !3  -- E side, 90 ply
+LESIZE, 3, , , 100+50*nAb                            !3  -- E side, 90 ply
 LESIZE, 4, , , 25                                    !4  -- E side, 0 ply
 LESIZE, 6, , , 70                                    !6  -- Ply interface
 LESIZE, 7, , , 25                                    !7  -- W side, 0 ply

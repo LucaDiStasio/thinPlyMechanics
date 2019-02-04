@@ -4772,6 +4772,18 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             northwestIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
             break
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading south-east corner node set and saving to variable ...',True)
+    for l,line in enumerate(inpfilelines):
+        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['SE-CORNER','se-corner']:
+            southeastIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading south-west corner node set  and saving to variable ...',True)
+    for l,line in enumerate(inpfilelines):
+        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['SW-CORNER','sw-corner']:
+            southwestIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack faces element set and saving to list ...',True)
     crackfacesElementset = []
     store = False

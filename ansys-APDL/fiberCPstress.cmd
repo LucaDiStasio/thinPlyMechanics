@@ -133,12 +133,12 @@ LARC, 5, 6, 1, Rf                                    ! Fiber/matrix interface, q
 
 ! Areas
 
-AL, 6, 4, 5, 7                                      ! UD
+AL, 6, 4, 5, 7                                         ! UD
 
-AL, 1, 7, 2*nAb+10                                  ! Quarter fiber
+AL, 1, 7, 2*nAb+10                                     ! Quarter fiber
 
 *DO, i, 1, nAb, 1
- AL, nAb+9+i, 2*nAb+10+i                            ! Half fibers
+ AL, nAb+9+i, 2*nAb+10+2*(i-1)+1, 2*nAb+10+2*(i-1)+2   ! Half fibers
 *ENDDO
 
 *LSEL, S, LINE, , 2, 3, 1

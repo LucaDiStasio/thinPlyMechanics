@@ -132,7 +132,7 @@ LARC, 5, 6, 1, Rf                                    ! Fiber/matrix interface, q
 
 ! Areas
 
-AL, 1, 7, 2*nAb+8                                    ! Quarter fiber
+AL, 1, 7, 2*nAb+10                                  ! Quarter fiber
 
 *DO, i, 1, nAb, 1
  AL, nAb+9+i, 2*nAb+10+i                            ! Half fibers
@@ -140,6 +140,17 @@ AL, 1, 7, 2*nAb+8                                    ! Quarter fiber
 
 *LSEL, S, LINE, , 2, 3, 1
 *LSEL, A, LINE, , 6,
+*LSEL, A, LINE, , 9, 10, 1
+
+*DO, i, 1, nAb-1, 1
+ *LSEL, A, LINE, , 10+i,
+*ENDDO
+
+*LSEL, A, LINE, , 2*nAb+10,
+
+*DO, i, 1, nAb, 1
+ *LSEL, A, LINE, , 2*nAb+10+i, 
+*ENDDO
 
 ! Define Material Properties
 ! 1 is fiber, 2 is matrix

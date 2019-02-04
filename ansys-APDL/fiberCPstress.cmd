@@ -34,9 +34,11 @@
 !==============================================================================
 !
 
-/title, 2D Model of Fiber/Matrix Interface in cross-plies
+/CLEAR, START
 
-/prep7               ! Enter the pre-processor
+/TITLE, 2D Model of Fiber/Matrix Interface in cross-plies
+
+/PREP7               ! Enter the pre-processor
 
 ! Parameters
 
@@ -46,7 +48,7 @@ Vf = 0.6! [-] Fiber volume fraction
 
 Rf = 1.0           ! [mum] radius of the fiber
 L = 1.144          ! [mum] length of the RVE
-nAb = 1            ! [-] number of fibers above
+nAb = 2            ! [-] number of fibers above
 tRatio = 1         ! [-]  ratio of bounding ply thickness to main ply
 epsx = 0.01        ! [-]  applied strain
 
@@ -94,9 +96,9 @@ K, 7, 0.0, heightCply       ! W interface corner
 K, 8, L, heightCply         ! E interface corner
 
 *DO, i, 1, nAb, 1
- K, 8+3*(i-1)+1, 0.0, L*i-Rf         ! Lower node fiber i
- K, 8+3*(i-1)+2, 0.0, L*i            ! Center fiber i
- K, 8+3*(i-1)+3, 0.0, L*i+Rf         ! Upper node fiber i
+ K, 8+3*(i-1)+1, 0.0, 2*L*i-Rf         ! Lower node fiber i
+ K, 8+3*(i-1)+2, 0.0, 2*L*i            ! Center fiber i
+ K, 8+3*(i-1)+3, 0.0, 2*L*i+Rf         ! Upper node fiber i
 *ENDDO
 
 ! Lines

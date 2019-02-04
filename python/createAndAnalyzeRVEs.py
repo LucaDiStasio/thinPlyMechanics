@@ -5209,6 +5209,18 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     northSideNegSide = northSideNegSide[::-1]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set northSideNegSide contains ' + str(len(northSideNegSide)) + ' nodes',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set RIGHT-SIDE-WITHOUT-CORNERS ...',True)
+    rightSideWithoutCornersNodeset = []
+    for node in northSideNodeset:
+        if not node in [northeastIndex,southeastIndex]:
+            rightSideWithoutCornersNodeset.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set LEFT-SIDE-WITHOUT-CORNERS ...',True)
+    leftSideWithoutCornersNodeset = []
+    for node in northSideNodeset:
+        if not node in [southwestIndex,northwestIndex]:
+            leftSideWithoutCornersNodeset.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)
     numNodes = mdbData['numNodes']
     numEls = mdbData['numEls']

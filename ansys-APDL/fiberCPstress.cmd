@@ -224,7 +224,9 @@ ALLSEL
 ! MSHKEY, KEY (0 == free, 1 == mapped)
 ! AMESH, NA1, NA2, NINC
 MSHKEY, 0
-AMESH, nAb+3, 1, -1
+AMESH, nAb+3
+MSHKEY, 0
+AMESH, 1, nAb+2, 1
 
 ALLSEL
 

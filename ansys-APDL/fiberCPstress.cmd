@@ -1,4 +1,4 @@
-! 2D Model of Fiber/Matrix Interface in cross-plies
+! 2D Model of Fiber/Matrix Interface in Cross-ply Laminates
 ! Stress Analysis
 
 !
@@ -34,7 +34,7 @@
 !==============================================================================
 !
 
-/TITLE, 2D Model of Fiber/Matrix Interface in cross-plies
+/TITLE, 2D Model of Fiber/Matrix Interface in Cross-ply Laminates
 
 /PREP7               ! Enter the pre-processor
 

@@ -142,17 +142,17 @@ AL, 1, 8, 2*nAb+10                                     ! Quarter fiber
 *ENDDO
 
 *LSEL, S, LINE, , 2, 3, 1
-*LSEL, A, LINE, , 6,
+*LSEL, A, LINE, , 6
 *LSEL, A, LINE, , 9, 10, 1
 
 *DO, i, 1, nAb-1, 1
- *LSEL, A, LINE, , 10+i,
+ *LSEL, A, LINE, , 10+i
 *ENDDO
 
-*LSEL, A, LINE, , 2*nAb+10,
+*LSEL, A, LINE, , 2*nAb+10
 
 *DO, i, 1, nAb, 1
- *LSEL, A, LINE, , 2*nAb+10+i,
+ *LSEL, A, LINE, , 2*nAb+10+i
 *ENDDO
 
 AL, ALL

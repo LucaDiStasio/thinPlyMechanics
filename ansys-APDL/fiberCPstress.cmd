@@ -102,15 +102,17 @@ L, 8, 3                                              !4 -- E side, 0 ply
 L, 3, 4                                              !5 -- N side
 L, 7, 8                                              !6 -- Ply interface
 
-L, 6, 9                                              !7 -- W side
-L, 4, 8+3*(nAb-1)+3                                  !8 -- W side
+L, 4, 7                                              !7 -- W side, 0 ply
+L, 1, 6                                              !8 -- W side, 90 ply, fiber
+L, 6, 9                                              !9 -- W side, 90 ply, first interfiber matrix region
+L, 4, 8+3*(nAb-1)+3                                  !10 -- W side, 90 ply, last interfiber matrix region
 
 *DO, i, 1, nAb-1, 1
- L, 8+3*(i-1)+3, 8+3*(i-1)+4                         ! W side
+ L, 8+3*(i-1)+3, 8+3*(i-1)+4                         ! W side, 90 ply, interfiber matrix regions
 *ENDDO
 
 *DO, i, 1, nAb, 1
- L, 8+3*(i-1)+1, 8+3*(i-1)+3                         ! W side
+ L, 8+3*(i-1)+1, 8+3*(i-1)+3                         ! W side, 90 ply, fibers
 *ENDDO
 
 ! Arcs

@@ -5953,6 +5953,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write north side node sets ...',True)
     with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=SOUTHWEST-CORNER, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(southwestIndex) + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=SOUTHEAST-CORNER, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(southeastIndex) + '\n')
+    with open(modinpfullpath,'a') as inp:
         inp.write('*NSET, NSET=UPPERSIDE-WITHOUT-CORNERS, INSTANCE=RVE-assembly' + '\n')
         line = ''
         for n,node in enumerate(northSideWithoutCornersNodeset):
@@ -6160,6 +6166,26 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 inp.write(' 2' + '\n')
                 inp.write(' NORTHSIDE-N'+ str(n+1) +', 1, 1, NORTHEAST-CORNER, 1, ' + str(-nodes[node][0]/nodes[northeastIndex][0]) + '\n')
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'vkinCouplingmeancorners' in parameters['BC']['rightSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on RIGHT side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: ne and se horizontal displacements are set to be equal and all other points are set to this value',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*EQUATION' + '\n')
+            inp.write(' 2' + '\n')
+            inp.write(' SOUTHEAST-CORNER, 1, 1, NORTHEAST-CORNER, 1, -1' + '\n')
+            inp.write(' 3' + '\n')
+            inp.write(' RIGHTSIDE-WITHOUT-CORNERS, 1, 1, SOUTHEAST-CORNER, 1, -0.5, NORTHEAST-CORNER, 1, -0.5' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'vkinCouplingmeancorners' in parameters['BC']['leftSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on LEFT side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: nw and sw horizontal displacements are set to be equal and all other points are set to this value',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*EQUATION' + '\n')
+            inp.write(' 2' + '\n')
+            inp.write(' SOUTHWEST-CORNER, 1, 1, NORTHWEST-CORNER, 1, -1' + '\n')
+            inp.write(' 3' + '\n')
+            inp.write(' LEFTSIDE-WITHOUT-CORNERS, 1, 1, SOUTHWEST-CORNER, 1, -0.5, NORTHWEST-CORNER, 1, -0.5' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*SURFACE, NAME=FiberSurface, TYPE=ELEMENT' + '\n')

@@ -4724,6 +4724,40 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['UPPERSIDE','upperside']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading right side node set and saving to list ...',True)
+    rightSideNodeset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    rightSideNodeset.append(int(index))
+            store = False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    rightSideNodeset.append(int(index))
+        elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['RIGHTSIDE','rightside']:
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading left side node set and saving to list ...',True)
+    leftSideNodeset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    leftSideNodeset.append(int(index))
+            store = False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    leftSideNodeset.append(int(index))
+        elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['LEFTSIDE','leftside']:
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading north-east corner node set and saving to variable ...',True)
     for l,line in enumerate(inpfilelines):
         if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['NE-CORNER','ne-corner']:

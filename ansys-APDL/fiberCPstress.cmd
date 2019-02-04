@@ -117,18 +117,18 @@ L, 4, 8+3*(nAb-1)+3                                  !10 -- W side, 90 ply, last
 
 ! Arcs
 
-LARC, 5, 6, 1, Rf                                    ! Fiber/matrix interface
+LARC, 5, 6, 1, Rf                                    ! Fiber/matrix interface, quarter fiber
 
 *DO, i, 1, nAb, 1
- LARC, 8+3*(i-1)+1, 8+3*(i-1)+3, 8+3*(i-1)+2, Rf     ! Fiber/matrix interface
+ LARC, 8+3*(i-1)+1, 8+3*(i-1)+3, 8+3*(i-1)+2, Rf     ! Fiber/matrix interface, half fiber
 *ENDDO
 
 ! Areas
 
-AL, 1, 7, 2*nAb+8
+AL, 1, 7, 2*nAb+8                                    ! Quarter fiber
 
 *DO, i, 1, nAb, 1
- AL, nAb+8+i, 2*nAb+8+i                              ! Fibers
+ AL, nAb+10+i, 2*nAb+10+i                            ! Half fibers
 *ENDDO
 
 *LSEL, S, LINE, , 2, 3, 1

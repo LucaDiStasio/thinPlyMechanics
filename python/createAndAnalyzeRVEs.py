@@ -5211,13 +5211,13 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set RIGHT-SIDE-WITHOUT-CORNERS ...',True)
     rightSideWithoutCornersNodeset = []
-    for node in northSideNodeset:
+    for node in rightSideNodeset:
         if not node in [northeastIndex,southeastIndex]:
             rightSideWithoutCornersNodeset.append(node)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set LEFT-SIDE-WITHOUT-CORNERS ...',True)
     leftSideWithoutCornersNodeset = []
-    for node in northSideNodeset:
+    for node in leftSideNodeset:
         if not node in [southwestIndex,northwestIndex]:
             leftSideWithoutCornersNodeset.append(node)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

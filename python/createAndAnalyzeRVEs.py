@@ -6848,6 +6848,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along radial paths ...',True)
 
     if parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']:
+        sessionOdb = session.openOdb(name=odbfullpath)
+        session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
+        psis = np.arange(0,360,5)
 
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

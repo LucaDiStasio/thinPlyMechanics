@@ -6854,18 +6854,18 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],'VARIABLE, angle [°], Ri, Rf, FOLDER, FILENAME')
         for angleNum,pathAngle in enumerate(pathAngles):
             pathRadius = parameters['geometry']['L']/np.cos(pathAngle*np.pi/180.0)
-            session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'], radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
+            session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'], radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
             radpath = session.paths['RadPath-Ang' + str(pathAngle)]
             # sigmaxx
-            sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+            sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmaxx,appendMode=OFF)
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S11 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat']])
             # sigmayy
-            sigmayy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+            sigmayy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmayy,appendMode=OFF)
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S22 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmayy-RadPath-Ang' + str(pathAngle) + '.dat']])
             # tauxy
-            tauxy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+            tauxy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=tauxy,appendMode=OFF)
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S12 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'tauxy-RadPath-Ang' + str(pathAngle) + '.dat']])
 
@@ -6886,18 +6886,18 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         pathRsExt = np.linspace(parameters['geometry']['L'],np.sqrt(2)*parameters['geometry']['L'],20,endpoint=False)[1:]
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressescircumferentialpaths'],'VARIABLE, R, angle_i [°], angle_f [°], FOLDER, FILENAME')
         for rNum,pathR in enumerate(pathRsInt):
-            session.Path(name='CircPath-R' + str(pathR).replace('.','_'), type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'], startAngle=0, endAngle=180, radius=CIRCLE_RADIUS)
+            session.Path(name='CircPath-R' + str(pathR).replace('.','_'), type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'], startAngle=0, endAngle=180, radius=CIRCLE_RADIUS)
             circpath = session.paths['CircPath-R' + str(pathR).replace('.','_')]
             # sigmaxx
-            sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+            sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=sigmaxx,appendMode=OFF)
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressescircumferentialpaths'],[['S11 [MPa]',str(pathRadius),str(0),str(360),parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
             # sigmayy
-            sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+            sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=sigmayy,appendMode=OFF)
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressescircumferentialpaths'],[['S22 [MPa]',str(pathRadius),str(0),str(360),parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
             # tauxy
-            tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+            tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=tauxy,appendMode=OFF)
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressescircumferentialpaths'],[['S12 [MPa]',str(pathRadius),str(0),str(360),parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
         for rNum,pathR in enumerate(pathRsExt):
@@ -6905,33 +6905,33 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             angleStart2 = 90.0-angleStart1
             angleStart3 = 90.0+angleStart1
             angleStart4 = 180.0-angleStart1
-            session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'East' , type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'], startAngle=angleStart1, endAngle=angleStart2, radius=CIRCLE_RADIUS)
-            session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'West' , type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'], startAngle=angleStart3, endAngle=angleStart4, radius=CIRCLE_RADIUS)
+            session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'East' , type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'], startAngle=angleStart1, endAngle=angleStart2, radius=CIRCLE_RADIUS)
+            session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'West' , type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'], startAngle=angleStart3, endAngle=angleStart4, radius=CIRCLE_RADIUS)
             circpath = session.paths['CircPath-R' + str(pathR).replace('.','_') + 'East']
             # sigmaxx
-            sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+            sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=sigmaxx,appendMode=OFF)
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressescircumferentialpaths'],[['S11 [MPa]',str(pathRadius),str(angleStart1),str(angleStart2),parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
             # sigmayy
-            sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+            sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=sigmayy,appendMode=OFF)
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressescircumferentialpaths'],[['S22 [MPa]',str(pathRadius),str(angleStart1),str(angleStart2),parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
             # tauxy
-            tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+            tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=tauxy,appendMode=OFF)
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressescircumferentialpaths'],[['S12 [MPa]',str(pathRadius),str(angleStart1),str(angleStart2),parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
             #
             circpath = session.paths['CircPath-R' + str(pathR).replace('.','_') + 'West']
             # sigmaxx
-            sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+            sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=sigmaxx,appendMode=OFF)
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressescircumferentialpaths'],[['S11 [MPa]',str(pathRadius),str(angleStart3),str(angleStart4),parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
             # sigmayy
-            sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+            sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=sigmayy,appendMode=OFF)
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressescircumferentialpaths'],[['S22 [MPa]',str(pathRadius),str(angleStart3),str(angleStart4),parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
             # tauxy
-            tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+            tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=tauxy,appendMode=OFF)
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressescircumferentialpaths'],[['S12 [MPa]',str(pathRadius),str(angleStart3),str(angleStart4),parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
 
@@ -6951,25 +6951,21 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         pathYsLow = np.linspace(0,parameters['geometry']['Rf'],20,endpoint=True)
         pathYsUp = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],20,endpoint=True)[1:]
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],'VARIABLE, y, xi, xf, FOLDER, FILENAME')
-        pathXs = np.linspace(-parameters['geometry']['L'],parameters['geometry']['L'],['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],endpoint=True)
-        for yNum,pathY in enumerate(pathYsLow):
-            pointList = ()
-            for x in pathXs:
-                pointList = pointList + ((x,pathY),0.0)
-            session.Path(name='HPath-Y' + str(pathY), type=POINT_LIST, expression=pointList)
+        for yNum,pathY in enumerate(pathYsUp):
+            session.Path(name='HPath-Y' + str(pathY), type=POINT_LIST, expression=((-parameters['geometry']['L'],pathY,0.0),(parameters['geometry']['L'],pathY,0.0)))
             hpath = session.paths['HPath-Y' + str(pathY)]
             # sigmaxx
-            sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
-            session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmaxx,appendMode=OFF)
-            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S11 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat']])
+            sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['geometry']['L'],['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+            session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + '.dat'),xyData=sigmaxx,appendMode=OFF)
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],[['S11 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + '.dat']])
             # sigmaxx
-            sigmayy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
-            session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmayy,appendMode=OFF)
-            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S22 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmayy-RadPath-Ang' + str(pathAngle) + '.dat']])
+            sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['geometry']['L'],['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+            session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + '.dat'),xyData=sigmayy,appendMode=OFF)
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],[['S22 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + '.dat']])
             # sigmaxx
-            tauxy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
-            session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=tauxy,appendMode=OFF)
-            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S12 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'tauxy-RadPath-Ang' + str(pathAngle) + '.dat']])
+            tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['geometry']['L'],['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+            session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + '.dat'),xyData=tauxy,appendMode=OFF)
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],[['S12 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + '.dat']])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

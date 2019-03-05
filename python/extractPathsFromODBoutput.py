@@ -4,7 +4,7 @@
 '''
 =====================================================================================
 
-Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet
+Copyright (c) 2016-2019 Universite de Lorraine & Lulea tekniska universitet
 Author: Luca Di Stasio <luca.distasio@gmail.com>
                        <luca.distasio@ingpec.eu>
 
@@ -103,7 +103,7 @@ def extractPathsfromODBoutputSet01(wd,project,deltapsi,nl,nSegsOnPath,tol):
         csv.write('DATA\n')
         csv.write('NODE TYPE, NODE LABEL, X, Y\n')
         for value in nodesCoords.values:
-            csv.write('NODAL' + ', ' + str(value.nodeLabel) + ', ' + str(value.data[0]) + ', ' + str(value.data[1]) + '\n') 
+            csv.write('NODAL' + ', ' + str(value.nodeLabel) + ', ' + str(value.data[0]) + ', ' + str(value.data[1]) + '\n')
     with open(join(csvfolder,'defintpointCoords.csv'),'w') as csv:
         csv.write('DATA\n')
         csv.write('NODE TYPE, NODE LABEL, X, Y\n')
@@ -278,12 +278,12 @@ def extractPathsfromODBoutputSet01(wd,project,deltapsi,nl,nSegsOnPath,tol):
     print('...done.\n')
 
 def main(argv):
-    
+
     #wd = 'D:/01_Luca/07_Data/03_FEM'
     wd= 'H:/01_Luca/07_DocMASE/07_Data/03_FEM'
     #statusfile = '2017-02-02_AbaqusParametricRun_2017-02-02_18-05-02.sta'
     statusfile = '2017-04-11_AbaqusParametricRun_2017-04-11_13-31-05.sta'
-    
+
 
     with open(join(wd,statusfile),'r') as sta:
         lines = sta.readlines()

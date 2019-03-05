@@ -6853,6 +6853,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         pathAngles = np.arange(0,360,5)
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],'VARIABLE, angle [°], Ri, Rf, FOLDER, FILENAME')
         for angleNum,pathAngle in enumerate(pathAngles):
+            session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (minL,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, radialAngle=pathAngle, startRadius=0, endRadius=CIRCLE_RADIUS)
+            radpath = session.paths['Radius-' + str(j+1)]
 
 
 

@@ -6884,6 +6884,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
         pathRsInt = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],20,endpoint=True)
         pathRsExt = np.linspace(parameters['geometry']['L'],np.sqrt(2)*parameters['geometry']['L'],20,endpoint=True)[1:]
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressescircumferentialpaths'],'VARIABLE, angle [°], Ri, Rf, FOLDER, FILENAME')
+        for rNum,pathR in enumerate(pathRsInt):
+            session.Path(name='CircPath-R' + str(pathR).replace('.','_'), type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'], startAngle=0, endAngle=180, radius=CIRCLE_RADIUS)
+            circpath = session.paths['CircPath-R' + str(pathR).replace('.','_')]
 
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

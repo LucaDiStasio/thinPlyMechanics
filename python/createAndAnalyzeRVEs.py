@@ -6850,12 +6850,17 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     if parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']:
         sessionOdb = session.openOdb(name=odbfullpath)
         session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
-        pathAngles = np.arange(0,360,5)
+        pathAngles = np.arange(0,180,5)
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],'VARIABLE, angle [°], Ri, Rf, FOLDER, FILENAME')
         for angleNum,pathAngle in enumerate(pathAngles):
-            pathRadius = parameters['geometry']['L']/np.cos(pathAngle*np.pi/360.0)
-            session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'], radialAngle=pathAngle, startRadius=0, endRadius=CIRCLE_RADIUS)
-            radpath = session.paths['Radius-' + str(j+1)]
+            pathRadius = parameters['geometry']['L']/np.cos(pathAngle*np.pi/180.0)
+            session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'], radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
+            radpath = session.paths['RadPath-Ang' + str(pathAngle)]
+            # sigmaxx
+            sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=DEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+            session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmaxx,appendMode=OFF)
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S11',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat']])
+            
 
 
 

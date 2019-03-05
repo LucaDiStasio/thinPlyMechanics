@@ -6850,9 +6850,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     if parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']:
         sessionOdb = session.openOdb(name=odbfullpath)
         session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
-        psis = np.arange(0,360,5)
+        pathAngles = np.arange(0,360,5)
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],'VARIABLE, angle [°], Ri, Rf, FOLDER, FILENAME')
-        
+        for angleNum,pathAngle in enumerate(pathAngles):
+
 
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

@@ -6952,9 +6952,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         pathYsUp = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],20,endpoint=True)[1:]
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],'VARIABLE, y, xi, xf, FOLDER, FILENAME')
         for yNum,pathY in enumerate(pathYsLow):
-            pathRadius = parameters['geometry']['L']/np.cos(pathAngle*np.pi/180.0)
-            session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'], radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
-            radpath = session.paths['RadPath-Ang' + str(pathAngle)]
+            session.Path(name='HPath-Y' + str(pathY), type=POINT_LIST, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)))
+            hpath = session.paths['RadPath-Ang' + str(pathAngle)]
             # sigmaxx
             sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmaxx,appendMode=OFF)

@@ -6843,6 +6843,32 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
 
     #=======================================================================
+    # BEGIN - extract stresses along radial paths
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along radial paths ...',True)
+
+    if parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']:
+
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - extract stresses along radial paths
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - extract stresses along circumferential paths
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along circumferential paths ...',True)
+
+    if parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']:
+
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - extract stresses along circumferential paths
+    #=======================================================================
+
+    #=======================================================================
     # BEGIN - extract stresses along the bonded interface
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along the bonded interface ...',True)

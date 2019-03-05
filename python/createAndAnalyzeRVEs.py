@@ -6851,6 +6851,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         sessionOdb = session.openOdb(name=odbfullpath)
         session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
         psis = np.arange(0,360,5)
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],'VARIABLE, angle [°], Ri, Rf, FOLDER, FILENAME')
+        
 
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

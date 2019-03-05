@@ -6880,6 +6880,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along circumferential paths ...',True)
 
     if parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']:
+        sessionOdb = session.openOdb(name=odbfullpath)
+        session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
+        pathRsInt = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],20,endpoint=True)
+        pathRsExt = np.linspace(parameters['geometry']['L'],np.sqrt(2)*parameters['geometry']['L'],20,endpoint=True)[1:]
 
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

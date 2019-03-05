@@ -7013,6 +7013,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     if 'report-stressesverticalpaths' in parameters['simulation-pipeline']['analysis'].keys():
         if parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along vertical paths ...',True)
+            sessionOdb = session.openOdb(name=odbfullpath)
+            session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
+            pathXs = np.linspace(-parameters['geometry']['L'],parameters['geometry']['L'],40,endpoint=True)
+            createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesverticalpaths'],'VARIABLE, x, yi, yf, FOLDER, FILENAME')
+            for xNum,pathX in enumerate(pathXs):
 
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 

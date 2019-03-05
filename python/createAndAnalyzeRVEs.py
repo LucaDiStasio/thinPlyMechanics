@@ -6859,7 +6859,15 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             # sigmaxx
             sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
             session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmaxx,appendMode=OFF)
-            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S11',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat']])
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S11 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat']])
+            # sigmaxx
+            sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+            session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmaxx,appendMode=OFF)
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S22 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmayy-RadPath-Ang' + str(pathAngle) + '.dat']])
+            # sigmaxx
+            sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+            session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmaxx,appendMode=OFF)
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S12 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'tauxy-RadPath-Ang' + str(pathAngle) + '.dat']])
 
 
 

@@ -6941,6 +6941,39 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
 
     #=======================================================================
+    # BEGIN - extract stresses along horizontal paths
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along horizontal paths ...',True)
+
+    if parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']:
+        sessionOdb = session.openOdb(name=odbfullpath)
+        session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
+        pathYsLow = np.linspace(0,parameters['geometry']['Rf'],20,endpoint=True)
+        pathYsUp = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],20,endpoint=True)[1:]
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],'VARIABLE, y, xi, xf, FOLDER, FILENAME')
+        for yNum,pathY in enumerate(pathYsLow):
+            pathRadius = parameters['geometry']['L']/np.cos(pathAngle*np.pi/180.0)
+            session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'], radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
+            radpath = session.paths['RadPath-Ang' + str(pathAngle)]
+            # sigmaxx
+            sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+            session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmaxx,appendMode=OFF)
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S11 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat']])
+            # sigmaxx
+            sigmayy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+            session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmayy,appendMode=OFF)
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S22 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmayy-RadPath-Ang' + str(pathAngle) + '.dat']])
+            # sigmaxx
+            tauxy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+            session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=tauxy,appendMode=OFF)
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesradialpaths'],[['S12 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'tauxy-RadPath-Ang' + str(pathAngle) + '.dat']])
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - extract stresses along horizontal paths
+    #=======================================================================
+
+    #=======================================================================
     # BEGIN - extract stresses along the bonded interface
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along the bonded interface ...',True)

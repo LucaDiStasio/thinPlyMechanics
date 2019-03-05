@@ -4,7 +4,7 @@
 '''
 =====================================================================================
 
-Copyright (c) 2016 - 2018 Université de Lorraine & Luleå tekniska universitet
+Copyright (c) 2016 - 2019 Université de Lorraine & Luleå tekniska universitet
 Author: Luca Di Stasio <luca.distasio@gmail.com>
                        <luca.distasio@ingpec.eu>
 
@@ -398,7 +398,7 @@ def main(argv):
         toSql = False
 
     bemData = provideBEMdata()
-    
+
     print('Reading file ' + join(workdir,inputfile) + ' ...')
     try:
         with open(join(workdir,inputfile),'r') as csv:
@@ -410,9 +410,9 @@ def main(argv):
         print(str(Exception))
         print(str(error))
         sys.exit(2)
-        
+
     if toExcel:
-        
+
         print('Open workbook ' + join(outdir,outputfileBasename + '.xlsx'))
         workbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '.xlsx'),{'nan_inf_to_errors': True})
 
@@ -432,7 +432,7 @@ def main(argv):
             for c,value in enumerate(row):
                 worksheet.write(r+1,c,value,numberFormat)
         print('...done.')
-        
+
         print('Creating sheets for results ...')
         for line in lines[1:]:
             csvPath = line.replace('\n','').split(',')[0]

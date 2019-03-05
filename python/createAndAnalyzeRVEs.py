@@ -6954,7 +6954,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         for yNum,pathY in enumerate(pathYsLow):
             xEast = np.sqrt(parameters['geometry']['Rf']*parameters['geometry']['Rf']-pathY*pathY)
             xWest = -xEast
-            session.Path(name='HPath-Y' + str(pathY) + 'East', type=POINT_LIST, expression=((-parameters['geometry']['L'],pathY,0.0),(parameters['geometry']['L'],pathY,0.0)))
+            session.Path(name='HPath-Y' + str(pathY) + 'East', type=POINT_LIST, expression=((xEast,pathY,0.0),(parameters['geometry']['L'],pathY,0.0)))
+            session.Path(name='HPath-Y' + str(pathY) + 'West', type=POINT_LIST, expression=((-parameters['geometry']['L'],pathY,0.0),(xWest,pathY,0.0)))
         for yNum,pathY in enumerate(pathYsUp):
             session.Path(name='HPath-Y' + str(pathY), type=POINT_LIST, expression=((-parameters['geometry']['L'],pathY,0.0),(parameters['geometry']['L'],pathY,0.0)))
             hpath = session.paths['HPath-Y' + str(pathY)]

@@ -6964,11 +6964,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=int(0.5*parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath']),shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=sigmaxx,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],[['S11 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + 'East' + '.dat']])
-                # sigmaxx
+                # sigmayy
                 sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=int(0.5*parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath']),shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=sigmayy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],[['S22 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + 'East' + '.dat']])
-                # sigmaxx
+                # tauxy
                 tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=int(0.5*parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath']),shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=tauxy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],[['S12 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'East' + '.dat']])
@@ -6977,11 +6977,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=int(0.5*parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath']),shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=sigmaxx,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],[['S11 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + 'West' + '.dat']])
-                # sigmaxx
+                # sigmayy
                 sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=int(0.5*parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath']),shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=sigmayy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],[['S22 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + 'West' + '.dat']])
-                # sigmaxx
+                # tauxy
                 tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=int(0.5*parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath']),shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=tauxy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],[['S12 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'West' + '.dat']])
@@ -6992,11 +6992,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + '.dat'),xyData=sigmaxx,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],[['S11 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + '.dat']])
-                # sigmaxx
+                # sigmayy
                 sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + '.dat'),xyData=sigmayy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],[['S22 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + '.dat']])
-                # sigmaxx
+                # tauxy
                 tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + '.dat'),xyData=tauxy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],[['S12 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + '.dat']])
@@ -7018,8 +7018,29 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             pathXs = np.linspace(-parameters['geometry']['L'],parameters['geometry']['L'],40,endpoint=True)
             createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesverticalpaths'],'VARIABLE, x, yi, yf, FOLDER, FILENAME')
             for xNum,pathX in enumerate(pathXs):
-
+                if pathX>-parameters['geometry']['Rf'] and pathX<parameters['geometry']['Rf']:
+                    startY = np.sqrt(parameters['geometry']['Rf']*parameters['geometry']['Rf']-pathX*pathX)
+                else:
+                    startY = 0.0
+                session.Path(name='VPath-X' + str(pathX), type=POINT_LIST, expression=((pathX,startY,0.0),(pathX,parameters['geometry']['L'],0.0)))
+                vpath = session.paths['VPath-X' + str(pathX)]
+                # sigmaxx
+                sigmaxx = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-VPath-X' + str(pathX) + '.dat'),xyData=sigmaxx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesverticalpaths'],[['S11 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmaxx-VPath-X' + str(pathX) + '.dat']])
+                # sigmayy
+                sigmayy = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-VPath-X' + str(pathX) + '.dat'),xyData=sigmayy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesverticalpaths'],[['S22 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmayy-VPath-X' + str(pathX) + '.dat']])
+                # tauxy
+                tauxy = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=TRUE_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-VPath-X' + str(pathX) + '.dat'),xyData=tauxy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stressesverticalpaths'],[['S12 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-VPath-X' + str(pathX) + '.dat']])
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+    #=======================================================================
+    # END - extract stresses along vertical paths
+    #=======================================================================
 
     #=======================================================================
     # BEGIN - extract stresses along the bonded interface

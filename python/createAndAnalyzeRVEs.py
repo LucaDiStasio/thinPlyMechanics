@@ -6951,6 +6951,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         pathYsLow = np.linspace(0,parameters['geometry']['Rf'],20,endpoint=True)
         pathYsUp = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],20,endpoint=True)[1:]
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['stresseshorizontalpaths'],'VARIABLE, y, xi, xf, FOLDER, FILENAME')
+        for yNum,pathY in enumerate(pathYsLow):
+            xEast = np.sqrt(parameters['geometry']['Rf']*parameters['geometry']['Rf']-pathY*pathY)
+            xWest = -xEast
+            session.Path(name='HPath-Y' + str(pathY) + 'East', type=POINT_LIST, expression=((-parameters['geometry']['L'],pathY,0.0),(parameters['geometry']['L'],pathY,0.0)))
         for yNum,pathY in enumerate(pathYsUp):
             session.Path(name='HPath-Y' + str(pathY), type=POINT_LIST, expression=((-parameters['geometry']['L'],pathY,0.0),(parameters['geometry']['L'],pathY,0.0)))
             hpath = session.paths['HPath-Y' + str(pathY)]

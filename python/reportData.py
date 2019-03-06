@@ -411,6 +411,18 @@ def main(argv):
         print(str(error))
         sys.exit(2)
 
+    print('Extracting names of subfolders ' + join(workdir,inputfile) + ' ...')
+    try:
+        with open(join(workdir,inputfile),'r') as csv:
+            lines = csv.readlines()
+        print('    Number of lines: ' + str(len(lines)))
+        print('...done.')
+    except Exception,error:
+        print('EXCEPTION ENCOUNTERED')
+        print(str(Exception))
+        print(str(error))
+        sys.exit(2)
+
     if toExcel:
 
         print('Open workbook ' + join(outdir,outputfileBasename + '.xlsx'))

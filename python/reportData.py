@@ -565,14 +565,30 @@ def main(argv):
             verticalpathsnumberFormat = verticalpathsWorkbook.add_format({'num_format': '0.000000'})
 
             for subFolder in subfoldersList:
-                radialpathsSummary = subFolder + subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv'
-                circumferentialpathsSummary = subFolder + subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv'
-                horizontalpathsSummary = subFolder + subFolder.split('/')[-1] + '-stresseshorizontalpaths' + '.csv'
-                verticalpathsSummary = subFolder + subFolder.split('/')[-1] + '-stressesverticalpaths' + '.csv'
+                radialpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv')
+                circumferentialpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv')
+                horizontalpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stresseshorizontalpaths' + '.csv')
+                verticalpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressesverticalpaths' + '.csv')
                 if subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of radial paths for folder ' + subFolder)
                     with open(radialpathsSummary,'r') as csv:
                         lines = csv.readlines()
+                    sigmaxx = []
+                    sigmayy = []
+                    tauxy = []
+                    sigmarr = []
+                    sigmatt = []
+                    taurt = []
+                    sigma1 = []
+                    sigma2 = []
+                    sigmaMises = []
+                    sigmayy = []
+                    for line in lines[1:]:
+                        stressComp = line.replace('\n','').split(',')[0]
+                        pathAngle = line.replace('\n','').split(',')[1]
+                        datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
+                        with open(datfilePath,'r') as dat:
+                            datLines = dat.readlines()
                 if subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)
                     with open(circumferentialpathsSummary,'r') as csv:

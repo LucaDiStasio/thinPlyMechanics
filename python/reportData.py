@@ -538,12 +538,31 @@ def main(argv):
         print('Workbook closed.')
         if isDatPresent:
             print('Analysis of path data ...')
-            print('    Open workbook ' + join(outdir,outputfileBasename + '-pathData' + '.xlsx'))
-            workbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-pathData' + '.xlsx'),{'nan_inf_to_errors': True})
 
+            print('    Open workbook ' + join(outdir,outputfileBasename + '-radialpathsData' + '.xlsx'))
+            radialpathsWorkbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-radialpathsData' + '.xlsx'),{'nan_inf_to_errors': True})
             print('    Set string and number format')
-            stringFormat = workbook.add_format({'bold': 1})
-            numberFormat = workbook.add_format({'num_format': '0.000000'})
+            radialpathsstringFormat = radialpathsWorkbook.add_format({'bold': 1})
+            radialpathsnumberFormat = radialpathsWorkbook.add_format({'num_format': '0.000000'})
+
+            print('    Open workbook ' + join(outdir,outputfileBasename + '-circumferentialpathsData' + '.xlsx'))
+            circumferentialpathsWorkbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-circumferentialpathsData' + '.xlsx'),{'nan_inf_to_errors': True})
+            print('    Set string and number format')
+            circumferentialpathsstringFormat = circumferentialpathsWorkbook.add_format({'bold': 1})
+            circumferentialpathsnumberFormat = circumferentialpathsWorkbook.add_format({'num_format': '0.000000'})
+
+            print('    Open workbook ' + join(outdir,outputfileBasename + '-horizontalpathsData' + '.xlsx'))
+            horizontalpathsWorkbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-horizontalpathsData' + '.xlsx'),{'nan_inf_to_errors': True})
+            print('    Set string and number format')
+            horizontalpathsstringFormat = horizontalpathsWorkbook.add_format({'bold': 1})
+            horizontalpathsnumberFormat = horizontalpathsWorkbook.add_format({'num_format': '0.000000'})
+
+            print('    Open workbook ' + join(outdir,outputfileBasename + '-verticalpathsData' + '.xlsx'))
+            verticalpathsWorkbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-verticalpathsData' + '.xlsx'),{'nan_inf_to_errors': True})
+            print('    Set string and number format')
+            verticalpathsstringFormat = verticalpathsWorkbook.add_format({'bold': 1})
+            verticalpathsnumberFormat = verticalpathsWorkbook.add_format({'num_format': '0.000000'})
+
             for subFolder in subfoldersList:
                 radialpathsSummary = subFolder + subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv'
                 circumferentialpathsSummary = subFolder + subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv'

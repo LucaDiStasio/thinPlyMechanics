@@ -4,7 +4,7 @@
 '''
 =====================================================================================
 
-Copyright (c) 2016-2018 Universite de Lorraine & Lulea tekniska universitet
+Copyright (c) 2016-2019 Universite de Lorraine & Lulea tekniska universitet
 Author: Luca Di Stasio <luca.distasio@gmail.com>
                        <luca.distasio@ingpec.eu>
 
@@ -129,7 +129,7 @@ def writeErrorToLogFile(logFileFullPath,mode,exc,err,toScreen):
 #                       Data extraction sets
 #===============================================================================#
 #===============================================================================#
-        
+
 def extractPathsfromODBoutputSet01(wd,project,deltapsi,nl,nSegsOnPath,tol,logfile):
     writeLineToLogFile(logfile,'a','Starting path extraction on project ' + project + '\n',True)
     # define database name
@@ -175,7 +175,7 @@ def extractPathsfromODBoutputSet01(wd,project,deltapsi,nl,nSegsOnPath,tol,logfil
         csv.write('DATA\n')
         csv.write('NODE TYPE, NODE LABEL, X, Y\n')
         for value in nodesCoords.values:
-            csv.write('NODAL' + ', ' + str(value.nodeLabel) + ', ' + str(value.data[0]) + ', ' + str(value.data[1]) + '\n') 
+            csv.write('NODAL' + ', ' + str(value.nodeLabel) + ', ' + str(value.data[0]) + ', ' + str(value.data[1]) + '\n')
     with open(join(csvfolder,'defintpointCoords.csv'),'w') as csv:
         csv.write('DATA\n')
         csv.write('NODE TYPE, NODE LABEL, X, Y\n')

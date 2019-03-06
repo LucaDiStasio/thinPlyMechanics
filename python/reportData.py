@@ -544,6 +544,11 @@ def main(argv):
             print('    Set string and number format')
             stringFormat = workbook.add_format({'bold': 1})
             numberFormat = workbook.add_format({'num_format': '0.000000'})
+            for subFolder in subfoldersList:
+                radialpathsSummary = subFolder + subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv'
+                circumferentialpathsSummary = subFolder + subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv'
+                horizontalpathsSummary = subFolder + subFolder.split('/')[-1] + '-stresseshorizontalpaths' + '.csv'
+                verticalpathsSummary = subFolder + subFolder.split('/')[-1] + '-stressesverticalpaths' + '.csv'
 
 
     if toLatex: # only for errts file

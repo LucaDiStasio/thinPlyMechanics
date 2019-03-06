@@ -581,8 +581,10 @@ def main(argv):
                     taurt = []
                     sigma1 = []
                     sigma2 = []
+                    sigma3 = []
                     sigmaMises = []
-                    sigmayy = []
+                    tauTresca = []
+                    sigmaDilat = []
                     for line in lines[1:]:
                         stressComp = line.replace('\n','').split(',')[0]
                         pathAngle = line.replace('\n','').split(',')[1]

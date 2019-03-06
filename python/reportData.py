@@ -411,10 +411,11 @@ def main(argv):
         print(str(error))
         sys.exit(2)
 
-    print('Extracting names of subfolders ' + join(workdir,inputfile) + ' ...')
+    print('Extracting names of subfolders ...')
     try:
-        with open(join(workdir,inputfile),'r') as csv:
-            lines = csv.readlines()
+        subfoldersList = []
+        for line in lines[1:]:
+            subfoldersList.append('/'.join(line.replace('\n','').split(',')[0].replace('\\','/').split('/')[:-1]))
         print('    Number of lines: ' + str(len(lines)))
         print('...done.')
     except Exception,error:

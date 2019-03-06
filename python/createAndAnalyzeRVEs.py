@@ -7051,7 +7051,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along the bonded interface ...',True)
 
-    if parameters['simulation-pipeline']['analysis']['report-stressesatsymmetryline']:
+    if parameters['simulation-pipeline']['analysis']['report-stressesatbondedinterface']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract node labels of crack faces ...',True)
         crackfaceNodes = []
         crackfaceUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',fiberCrackfaceNodes)

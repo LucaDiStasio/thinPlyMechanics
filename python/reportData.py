@@ -416,7 +416,24 @@ def main(argv):
         subfoldersList = []
         for line in lines[1:]:
             subfoldersList.append('/'.join(line.replace('\n','').split(',')[0].replace('\\','/').split('/')[:-1]))
-        print('    Number of lines: ' + str(len(lines)))
+        print('...done.')
+    except Exception,error:
+        print('EXCEPTION ENCOUNTERED')
+        print(str(Exception))
+        print(str(error))
+        sys.exit(2)
+
+    print('Check if .dat files are present ...')
+    try:
+        isDatPresent = False
+        for fileName in listdir(subfoldersList[0]):
+            if '.dat'in fileName:
+                isDatPresent = True
+                print('    .dat files are present,')
+                print('    analysis of path data needs to be performed')
+                break
+        if not isDatPresent:
+            print('    .dat files are not present.')
         print('...done.')
     except Exception,error:
         print('EXCEPTION ENCOUNTERED')

@@ -575,10 +575,16 @@ def main(argv):
                         lines = csv.readlines()
                 if subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)
+                    with open(circumferentialpathsSummary,'r') as csv:
+                        lines = csv.readlines()
                 if subFolder.split('/')[-1] + '-stresseshorizontalpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of horizontal paths for folder ' + subFolder)
+                    with open(horizontalpathsSummary,'r') as csv:
+                        lines = csv.readlines()
                 if subFolder.split('/')[-1] + '-stressesverticalpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of vertical paths for folder ' + subFolder)
+                    with open(verticalpathsSummary,'r') as csv:
+                        lines = csv.readlines()
 
 
     if toLatex: # only for errts file

@@ -536,6 +536,15 @@ def main(argv):
         print('...done.')
         workbook.close()
         print('Workbook closed.')
+        if isDatPresent:
+            print('Analysis of path data ...')
+            print('    Open workbook ' + join(outdir,outputfileBasename + '-pathData' + '.xlsx'))
+            workbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-pathData' + '.xlsx'),{'nan_inf_to_errors': True})
+
+            print('    Set string and number format')
+            stringFormat = workbook.add_format({'bold': 1})
+            numberFormat = workbook.add_format({'num_format': '0.000000'})
+
 
     if toLatex: # only for errts file
 

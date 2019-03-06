@@ -536,6 +536,7 @@ def main(argv):
         print('...done.')
         workbook.close()
         print('Workbook closed.')
+
         if isDatPresent:
             print('Analysis of path data ...')
 
@@ -568,6 +569,14 @@ def main(argv):
                 circumferentialpathsSummary = subFolder + subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv'
                 horizontalpathsSummary = subFolder + subFolder.split('/')[-1] + '-stresseshorizontalpaths' + '.csv'
                 verticalpathsSummary = subFolder + subFolder.split('/')[-1] + '-stressesverticalpaths' + '.csv'
+                if radialpathsSummary in listdir(subFolder):
+                    print('    Analysis of radial paths for folder ' + subFolder)
+                if circumferentialpathsSummary in listdir(subFolder):
+                    print('    Analysis of circumferential paths for folder ' + subFolder)
+                if horizontalpathsSummary in listdir(subFolder):
+                    print('    Analysis of horizontal paths for folder ' + subFolder)
+                if verticalpathsSummary in listdir(subFolder):
+                    print('    Analysis of vertical paths for folder ' + subFolder)
 
 
     if toLatex: # only for errts file

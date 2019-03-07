@@ -593,7 +593,6 @@ def main(argv):
                     pathRfs = []
                     pathCoords = []
                     pathNormCoords = []
-                    counter = 0
                     for line in lines[1:]:
                         stressComp = line.replace('\n','').split(',')[0]
                         pathAngle = line.replace('\n','').split(',')[1]
@@ -618,22 +617,49 @@ def main(argv):
                         xData = []
                         yData = []
                         for xyPair in currentxyData:
-                            xData.append(pathRi + xyPair[0])
+                            normxData.append(xyPair[0])
+                            xData.append(pathRi+(pathRf-pathRi)*xyPair[0])
                             yData.append(xyPair[1])
+                        if 'S11' in stressComp:
+                            Sxx.append(yData)
+                            pathCoords.append(xData)
+                            pathNormCoords.append(normxData)
+                        elif 'S22' in stressComp:
+                            Syy.append(yData)
+                        elif 'S33' in stressComp:
+                            Szz.append(yData)
+                        elif 'S12' in stressComp:
+                            Sxy.append(yData)
+                        elif 'S13' in stressComp:
+                            Szx.append(yData)
+                        elif 'S23' in stressComp:
+                            Syz.append(yData)
+                            currentSxx = Sxx[-1]
+                            currentSyy = Syy[-1]
+                            currentSzz = Szz[-1]
+                            currentSxy = Sxy[-1]
+                            currentSzx = Szx[-1]
+                            currentSyz = yData
+                            currentSrr = []
+                            currentStt = []
+                            currentSrt = []
+                            currentS1 = []
+                            currentS2 = []
+                            currentS3 = []
+                            currentSMises = []
+                            currentSTresca = []
+                            currentSDilat = []
 
-                        if 'S11' in str(value.split(',')[0]):
-                            S11.append(xy)
-                        elif 'S22' in str(value.split(',')[0]):
-                            S22.append(xy)
-                        elif 'S12' in str(value.split(',')[0]):
-                            S12.append(xy)
-                        elif 'EE11' in str(value.split(',')[0]):
-                            E11.append(xy)
-                        elif 'EE22' in str(value.split(',')[0]):
-                            E22.append(xy)
-                        elif 'EE12' in str(value.split(',')[0]):
-                            E12.append(xy)
-                        xy =[]
+                            Srr.append(currentSrr)
+                            Stt.append(currentStt)
+                            Srt.append(currentSrt)
+                            S1.append(currentS1)
+                            S2.append(currentS2)
+                            S3.append(currentS3)
+                            SMises.append(currentSMises)
+                            STresca.append(currentSTresca)
+                            SDilat.append(currentSDilat)
+
                 if subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)
                     with open(circumferentialpathsSummary,'r') as csv:

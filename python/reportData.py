@@ -588,12 +588,46 @@ def main(argv):
                     SMises = []
                     STresca = []
                     SDilat = []
+                    pathAngles = []
+                    pathRis = []
+                    pathTrueDist = []
                     for line in lines[1:]:
                         stressComp = line.replace('\n','').split(',')[0]
                         pathAngle = line.replace('\n','').split(',')[1]
+                        pathAngles.append(pathAngle)
+                        pathRi = line.replace('\n','').split(',')[2]
+                        pathRis.append(pathRi)
                         datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
+                        currentxyData = []
+                        for datLine in datLines:
+                            if len(datLine.replace('\n','').replace(' ',''))>0 and 'X' not in datLine:
+                                lineParts = datLine.replace('\n','').split(' ')
+                                rowVec = []
+                                for linePart in lineParts:
+                                    if linePart!='':
+                                        rowVec.append(float(linePart))
+                                currentxyData.append(rowVec)
+                        xData = []
+                        yData = []
+                        for xyPair in currentxyData:
+                            xData.append(pathRi + xyPair[0])
+                            yData.append(xyPair[1])
+
+                        if 'S11' in str(value.split(',')[0]):
+                            S11.append(xy)
+                        elif 'S22' in str(value.split(',')[0]):
+                            S22.append(xy)
+                        elif 'S12' in str(value.split(',')[0]):
+                            S12.append(xy)
+                        elif 'EE11' in str(value.split(',')[0]):
+                            E11.append(xy)
+                        elif 'EE22' in str(value.split(',')[0]):
+                            E22.append(xy)
+                        elif 'EE12' in str(value.split(',')[0]):
+                            E12.append(xy)
+                        xy =[]
                 if subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)
                     with open(circumferentialpathsSummary,'r') as csv:

@@ -649,6 +649,16 @@ def main(argv):
                             currentSMises = []
                             currentSTresca = []
                             currentSDilat = []
+                            rotateBy = pathAngle*np.pi/180.0
+                            cosRot = np.cos(rotateBy)
+                            sinRor = np.sin(rotateBy)
+
+                            for s, sxx in currentSxx:
+                                syy = currentSyy[s]
+                                szz = currentSzz[s]
+                                sxy = currentSxy[s]
+                                szx = currentSzx[s]
+                                syz = currentSyz[s]
 
                             Srr.append(currentSrr)
                             Stt.append(currentStt)

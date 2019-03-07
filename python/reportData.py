@@ -590,13 +590,18 @@ def main(argv):
                     SDilat = []
                     pathAngles = []
                     pathRis = []
-                    pathTrueDist = []
+                    pathRfs = []
+                    pathCoords = []
+                    pathNormCoords = []
+                    counter = 0
                     for line in lines[1:]:
                         stressComp = line.replace('\n','').split(',')[0]
                         pathAngle = line.replace('\n','').split(',')[1]
                         pathAngles.append(pathAngle)
                         pathRi = line.replace('\n','').split(',')[2]
                         pathRis.append(pathRi)
+                        pathRf = line.replace('\n','').split(',')[3]
+                        pathRfs.append(pathRf)
                         datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
@@ -609,6 +614,7 @@ def main(argv):
                                     if linePart!='':
                                         rowVec.append(float(linePart))
                                 currentxyData.append(rowVec)
+                        normxData = []
                         xData = []
                         yData = []
                         for xyPair in currentxyData:

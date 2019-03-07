@@ -660,6 +660,13 @@ def main(argv):
                                 szx = currentSzx[s]
                                 syz = currentSyz[s]
 
+                                srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
+                                stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
+                                srt = -sxx*cosRot*sinRot+syy*cosRot*sinRot+sxy*(cosRot*cosRot-sinRot*sinRot)
+                                Srr.append(srr)
+                                Stt.append(stt)
+                                Srt.append(srt)
+
                             Srr.append(currentSrr)
                             Stt.append(currentStt)
                             Srt.append(currentSrt)

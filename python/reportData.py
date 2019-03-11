@@ -694,11 +694,11 @@ def main(argv):
                                 I1D2 = sxx + syy
                                 I1D3 = sxx + syy + szz
 
-                                Hpress2D =  I1D2/3.0
-                                Hpress3D =  I1D3/3.0
-
                                 I2D2 = sxx*syy - sxy*sxy
                                 I2D3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
+
+                                Smises2D =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
+                                Smises3D =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
 
                             Srr.append(currentSrr)
                             Stt.append(currentStt)

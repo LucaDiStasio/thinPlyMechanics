@@ -590,14 +590,14 @@ def main(argv):
                     I3D3 = []
                     SMisesD3 = []
                     SDilatD3 = []
-                    SHpressD3 = []
+                    SaverD3 = []
                     S1D2 = []
                     S2D2 = []
                     I1D2 = []
                     I2D2 = []
                     SMisesD2 = []
                     SDilatD2 = []
-                    SHpressD2 = []
+                    SaverD2 = []
                     pathAngles = []
                     pathRis = []
                     pathRfs = []
@@ -661,14 +661,14 @@ def main(argv):
                             current3DI3 = []
                             current3DSMises = []
                             current3DSDilat = []
-                            current3DSHpress = []
+                            current3DSaver = []
                             current2DS1 = []
                             current2DS2 = []
                             current2DI1 = []
                             current2DI2 = []
                             current2DSMises = []
                             current2DSDilat = []
-                            current2DSHpress = []
+                            current2DSaver = []
                             rotateBy = pathAngle*np.pi/180.0
                             cosRot = np.cos(rotateBy)
                             sinRor = np.sin(rotateBy)
@@ -695,8 +695,8 @@ def main(argv):
 
                                 I3D3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
 
-                                SHpressD2 = I1D2/2.0
-                                SHpressD3 = I1D3/3.0
+                                SaverD2 = I1D2/2.0
+                                SaverD3 = I1D3/3.0
 
                                 Smises2D =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
                                 Smises3D =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))

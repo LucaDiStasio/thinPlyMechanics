@@ -705,6 +705,14 @@ def main(argv):
                                 s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
 
                                 try:
+                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
+                                    s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
+                                    s2d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
+                                    s3d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
+                                except Exception:
+                                    s1d3 = s1d2
+                                    s2d3 = s2d2
+                                    s3d3 = 0.0
 
 
                             Srr.append(currentSrr)

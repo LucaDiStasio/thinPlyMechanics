@@ -697,6 +697,9 @@ def main(argv):
                                 I2D2 = sxx*syy - sxy*sxy
                                 I2D3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
 
+                                SHpressD2 = I1D2/2.0
+                                SHpressD3 = I1D3/3.0
+
                                 Smises2D =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
                                 Smises3D =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
 

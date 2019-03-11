@@ -691,6 +691,15 @@ def main(argv):
                                 currentStt.append(stt)
                                 currentSrt.append(srt)
 
+                                I1D2 = sxx + syy
+                                I1D3 = sxx + syy + szz
+
+                                Hpress2D =  I1D2/3.0
+                                Hpress3D =  I1D3/3.0
+
+                                I2D2 = sxx*syy - sxy*sxy
+                                I2D3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
+
                             Srr.append(currentSrr)
                             Stt.append(currentStt)
                             Srt.append(currentSrt)

@@ -697,6 +697,8 @@ def main(argv):
                                 I2D2 = sxx*syy - sxy*sxy
                                 I2D3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
 
+                                I3D3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
+
                                 SHpressD2 = I1D2/2.0
                                 SHpressD3 = I1D3/3.0
 

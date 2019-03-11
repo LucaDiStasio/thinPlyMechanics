@@ -687,19 +687,25 @@ def main(argv):
                                 currentStt.append(stt)
                                 currentSrt.append(srt)
 
-                                I1D2 = sxx + syy
-                                I1D3 = sxx + syy + szz
+                                i1d2 = sxx + syy
+                                i1d3 = sxx + syy + szz
 
-                                I2D2 = sxx*syy - sxy*sxy
-                                I2D3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
+                                i2d2 = sxx*syy - sxy*sxy
+                                i2d3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
 
-                                I3D3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
+                                i3d3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
 
-                                SaverD2 = I1D2/2.0
-                                SaverD3 = I1D3/3.0
+                                saverd2 = I1D2/2.0
+                                saverd3 = I1D3/3.0
 
-                                Smises2D =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
-                                Smises3D =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
+                                smises2d =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
+                                smises3d =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
+
+                                s1d2 = 0.5*(sxx+syy)+np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
+                                s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
+
+                                try:
+
 
                             Srr.append(currentSrr)
                             Stt.append(currentStt)

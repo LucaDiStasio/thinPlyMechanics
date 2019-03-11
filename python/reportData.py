@@ -660,14 +660,12 @@ def main(argv):
                             current3DI2 = []
                             current3DI3 = []
                             current3DSMises = []
-                            current3DSDilat = []
                             current3DSaver = []
                             current2DS1 = []
                             current2DS2 = []
                             current2DI1 = []
                             current2DI2 = []
                             current2DSMises = []
-                            current2DSDilat = []
                             current2DSaver = []
                             rotateBy = pathAngle*np.pi/180.0
                             cosRot = np.cos(rotateBy)

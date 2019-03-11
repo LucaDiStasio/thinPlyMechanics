@@ -582,12 +582,24 @@ def main(argv):
                     Srr = []
                     Stt = []
                     Srt = []
-                    S1 = []
-                    S2 = []
-                    S3 = []
-                    SMises = []
-                    STresca = []
-                    SDilat = []
+                    S1D3 = []
+                    S2D3 = []
+                    S3D3 = []
+                    I1D3 = []
+                    I2D3 = []
+                    I3D3 = []
+                    SMisesD3 = []
+                    STrescaD3 = []
+                    SDilatD3 = []
+                    SHpressD3 = []
+                    S1D2 = []
+                    S2D2 = []
+                    I1D2 = []
+                    I2D2 = []
+                    SMisesD2 = []
+                    STrescaD2 = []
+                    SDilatD2 = []
+                    SHpressD2 = []
                     pathAngles = []
                     pathRis = []
                     pathRfs = []
@@ -643,12 +655,24 @@ def main(argv):
                             currentSrr = []
                             currentStt = []
                             currentSrt = []
-                            currentS1 = []
-                            currentS2 = []
-                            currentS3 = []
-                            currentSMises = []
-                            currentSTresca = []
-                            currentSDilat = []
+                            current3DS1 = []
+                            current3DS2 = []
+                            current3DS3 = []
+                            current3DI1 = []
+                            current3DI2 = []
+                            current3DI3 = []
+                            current3DSMises = []
+                            current3DSTresca = []
+                            current3DSDilat = []
+                            current3DSHpress = []
+                            current2DS1 = []
+                            current2DS2 = []
+                            current2DI1 = []
+                            current2DI2 = []
+                            current2DSMises = []
+                            current2DSTresca = []
+                            current2DSDilat = []
+                            current2DSHpress = []
                             rotateBy = pathAngle*np.pi/180.0
                             cosRot = np.cos(rotateBy)
                             sinRor = np.sin(rotateBy)
@@ -663,9 +687,9 @@ def main(argv):
                                 srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
                                 stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
                                 srt = -sxx*cosRot*sinRot+syy*cosRot*sinRot+sxy*(cosRot*cosRot-sinRot*sinRot)
-                                Srr.append(srr)
-                                Stt.append(stt)
-                                Srt.append(srt)
+                                currentSrr.append(srr)
+                                currentStt.append(stt)
+                                currentSrt.append(srt)
 
                             Srr.append(currentSrr)
                             Stt.append(currentStt)

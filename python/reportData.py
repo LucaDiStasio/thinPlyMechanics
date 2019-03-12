@@ -725,7 +725,6 @@ def main(argv):
                                 current2DSMises.append(smises2d)
                                 current2DSaver.append(saverd2)
 
-
                             Srr.append(currentSrr)
                             Stt.append(currentStt)
                             Srt.append(currentSrt)
@@ -762,31 +761,31 @@ def main(argv):
                             current2DSMises = []
                             current2DSaver = []
 
-                            
-
-                            Sxx = []
-                            Syy = []
-                            Szz = []
-                            Sxy = []
-                            Szx = []
-                            Syz = []
-                            Srr = []
-                            Stt = []
-                            Srt = []
-                            S1D3 = []
-                            S2D3 = []
-                            S3D3 = []
-                            I1D3 = []
-                            I2D3 = []
-                            I3D3 = []
-                            SMisesD3 = []
-                            SaverD3 = []
-                            S1D2 = []
-                            S2D2 = []
-                            I1D2 = []
-                            I2D2 = []
-                            SMisesD2 = []
-                            SaverD2 = []
+                    sheetName = 'pathAngle=' +
+                    worksheet = radialpathsWorkbook.add_worksheet(sheetName.decode('utf-8'))
+                    Sxx = []
+                    Syy = []
+                    Szz = []
+                    Sxy = []
+                    Szx = []
+                    Syz = []
+                    Srr = []
+                    Stt = []
+                    Srt = []
+                    S1D3 = []
+                    S2D3 = []
+                    S3D3 = []
+                    I1D3 = []
+                    I2D3 = []
+                    I3D3 = []
+                    SMisesD3 = []
+                    SaverD3 = []
+                    S1D2 = []
+                    S2D2 = []
+                    I1D2 = []
+                    I2D2 = []
+                    SMisesD2 = []
+                    SaverD2 = []
 
                 if subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)

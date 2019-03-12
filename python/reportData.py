@@ -589,14 +589,12 @@ def main(argv):
                     I2D3 = []
                     I3D3 = []
                     SMisesD3 = []
-                    SDilatD3 = []
                     SaverD3 = []
                     S1D2 = []
                     S2D2 = []
                     I1D2 = []
                     I2D2 = []
                     SMisesD2 = []
-                    SDilatD2 = []
                     SaverD2 = []
                     pathAngles = []
                     pathRis = []
@@ -712,6 +710,21 @@ def main(argv):
                                     s2d3 = s2d2
                                     s3d3 = 0.0
 
+                                current3DS1.append()
+                                current3DS2.append()
+                                current3DS3.append()
+                                current3DI1.append()
+                                current3DI2.append()
+                                current3DI3.append()
+                                current3DSMises.append()
+                                current3DSaver.append()
+                                current2DS1.append()
+                                current2DS2.append()
+                                current2DI1.append()
+                                current2DI2.append()
+                                current2DSMises.append()
+                                current2DSaver.append()
+
 
                             Srr.append(currentSrr)
                             Stt.append(currentStt)
@@ -722,6 +735,20 @@ def main(argv):
                             SMises.append(currentSMises)
                             STresca.append(currentSTresca)
                             SDilat.append(currentSDilat)
+                            S1D3.append(current)
+                            S2D3.append(current)
+                            S3D3.append(current)
+                            I1D3.append(current)
+                            I2D3.append(current)
+                            I3D3.append(current)
+                            SMisesD3.append(current)
+                            SaverD3.append(current)
+                            S1D2.append(current)
+                            S2D2.append(current)
+                            I1D2.append(current)
+                            I2D2.append(current)
+                            SMisesD2.append(current)
+                            SaverD2.append(current)
 
                 if subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)

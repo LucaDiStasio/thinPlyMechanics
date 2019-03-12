@@ -765,18 +765,21 @@ def main(argv):
                             current2DSMises = []
                             current2DSaver = []
 
-                    sheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    worksheet = radialpathsWorkbook.add_worksheet(sheetName.decode('utf-8'))
                     pathVariableName = 'pathAngle [deg]'
                     pathStartVariableName = 'Ri [mum]'
                     pathEndVariableName = 'Rf [mum]'
+                    pathCoordinateName = 'R [mum]'
+                    sheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                    worksheet = radialpathsWorkbook.add_worksheet(sheetName.decode('utf-8'))
                     for p, pathVariable in enumerate(pathVariables):
                         worksheet.write(0,p*25,pathVariableName,stringFormat)
                         worksheet.write(1,p*25,pathVariable,radialpathsnumberFormatReduced)
                         worksheet.write(0,p*25+1,pathStartVariableName,stringFormat)
-                        worksheet.write(1,p*25+1,pathStartVariables[p],radialpathsnumberFormatReduced)
+                        worksheet.write(1,p*25+1,pathStartVariables[p],radialpathsnumberFormat)
                         worksheet.write(0,p*25+2,pathEndVariableName,stringFormat)
-                        worksheet.write(1,p*25+2,pathEndVariables[p],radialpathsnumberFormatReduced)
+                        worksheet.write(1,p*25+2,pathEndVariables[p],radialpathsnumberFormat)
+                        worksheet.write(2,p*25,pathCoordinateName,stringFormat)
+                        worksheet.write(2,p*25+1,'Norm ' + pathCoordinateName,stringFormat)
 
 
 

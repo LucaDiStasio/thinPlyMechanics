@@ -603,11 +603,11 @@ def main(argv):
                     pathNormCoords = []
                     for line in lines[1:]:
                         stressComp = line.replace('\n','').split(',')[0]
-                        pathAngle = line.replace('\n','').split(',')[1]
+                        pathAngle = float(line.replace('\n','').split(',')[1])
                         pathAngles.append(pathAngle)
-                        pathRi = line.replace('\n','').split(',')[2]
+                        pathRi = float(line.replace('\n','').split(',')[2])
                         pathRis.append(pathRi)
-                        pathRf = line.replace('\n','').split(',')[3]
+                        pathRf = float(line.replace('\n','').split(',')[3])
                         pathRfs.append(pathRf)
                         datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
@@ -761,8 +761,10 @@ def main(argv):
                             current2DSMises = []
                             current2DSaver = []
 
-                    sheetName = 'pathAngle=' +
+                    for pathAngle in pathAngles:
+                        sheetName = 'pathAngle=' +
                     worksheet = radialpathsWorkbook.add_worksheet(sheetName.decode('utf-8'))
+
                     Sxx = []
                     Syy = []
                     Szz = []

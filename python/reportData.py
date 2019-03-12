@@ -761,9 +761,11 @@ def main(argv):
                             current2DSMises = []
                             current2DSaver = []
 
-                    for pathAngle in pathAngles:
-                        sheetName = 'pathAngle=' + str(pathAngle) + '°'
+                    sheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                     worksheet = radialpathsWorkbook.add_worksheet(sheetName.decode('utf-8'))
+                    pathVariableName = 'pathAngle [deg]'
+                    for p, pathAngle in enumerate(pathAngles):
+
 
                     Sxx = []
                     Syy = []
@@ -788,6 +790,11 @@ def main(argv):
                     I2D2 = []
                     SMisesD2 = []
                     SaverD2 = []
+                    pathAngles = []
+                    pathRis = []
+                    pathRfs = []
+                    pathCoords = []
+                    pathNormCoords = []
 
                 if subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)

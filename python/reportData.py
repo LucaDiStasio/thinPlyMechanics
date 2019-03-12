@@ -545,24 +545,28 @@ def main(argv):
             print('    Set string and number format')
             radialpathsstringFormat = radialpathsWorkbook.add_format({'bold': 1})
             radialpathsnumberFormat = radialpathsWorkbook.add_format({'num_format': '0.000000'})
+            radialpathsnumberFormatReduced = radialpathsWorkbook.add_format({'num_format': '0.00'})
 
             print('    Open workbook ' + join(outdir,outputfileBasename + '-circumferentialpathsData' + '.xlsx'))
             circumferentialpathsWorkbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-circumferentialpathsData' + '.xlsx'),{'nan_inf_to_errors': True})
             print('    Set string and number format')
             circumferentialpathsstringFormat = circumferentialpathsWorkbook.add_format({'bold': 1})
             circumferentialpathsnumberFormat = circumferentialpathsWorkbook.add_format({'num_format': '0.000000'})
+            circumferentialpathsnumberFormatReduced = radialpathsWorkbook.add_format({'num_format': '0.00'})
 
             print('    Open workbook ' + join(outdir,outputfileBasename + '-horizontalpathsData' + '.xlsx'))
             horizontalpathsWorkbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-horizontalpathsData' + '.xlsx'),{'nan_inf_to_errors': True})
             print('    Set string and number format')
             horizontalpathsstringFormat = horizontalpathsWorkbook.add_format({'bold': 1})
             horizontalpathsnumberFormat = horizontalpathsWorkbook.add_format({'num_format': '0.000000'})
+            horizontalpathsnumberFormatReduced = radialpathsWorkbook.add_format({'num_format': '0.00'})
 
             print('    Open workbook ' + join(outdir,outputfileBasename + '-verticalpathsData' + '.xlsx'))
             verticalpathsWorkbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-verticalpathsData' + '.xlsx'),{'nan_inf_to_errors': True})
             print('    Set string and number format')
             verticalpathsstringFormat = verticalpathsWorkbook.add_format({'bold': 1})
             verticalpathsnumberFormat = verticalpathsWorkbook.add_format({'num_format': '0.000000'})
+            verticalpathsnumberFormatReduced = radialpathsWorkbook.add_format({'num_format': '0.00'})
 
             for subFolder in subfoldersList:
                 radialpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv')
@@ -596,15 +600,15 @@ def main(argv):
                     I2D2 = []
                     SMisesD2 = []
                     SaverD2 = []
-                    pathAngles = []
+                    pathVariables = []
                     pathRis = []
                     pathRfs = []
                     pathCoords = []
                     pathNormCoords = []
                     for line in lines[1:]:
                         stressComp = line.replace('\n','').split(',')[0]
-                        pathAngle = float(line.replace('\n','').split(',')[1])
-                        pathAngles.append(pathAngle)
+                        pathVariable = float(line.replace('\n','').split(',')[1])
+                        pathVariables.append(pathVariable)
                         pathRi = float(line.replace('\n','').split(',')[2])
                         pathRis.append(pathRi)
                         pathRf = float(line.replace('\n','').split(',')[3])
@@ -665,7 +669,7 @@ def main(argv):
                             current2DI2 = []
                             current2DSMises = []
                             current2DSaver = []
-                            rotateBy = pathAngle*np.pi/180.0
+                            rotateBy = pathVariable*np.pi/180.0
                             cosRot = np.cos(rotateBy)
                             sinRor = np.sin(rotateBy)
 
@@ -764,7 +768,10 @@ def main(argv):
                     sheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                     worksheet = radialpathsWorkbook.add_worksheet(sheetName.decode('utf-8'))
                     pathVariableName = 'pathAngle [deg]'
-                    for p, pathAngle in enumerate(pathAngles):
+                    worksheet.write(0,0,pathVariableName,stringFormat)
+                    for p, pathVariable in enumerate(pathVariables):
+                        worksheet.write(1,0,pathVariableName,numberFormat)
+
 
 
                     Sxx = []
@@ -790,7 +797,7 @@ def main(argv):
                     I2D2 = []
                     SMisesD2 = []
                     SaverD2 = []
-                    pathAngles = []
+                    pathVariables = []
                     pathRis = []
                     pathRfs = []
                     pathCoords = []

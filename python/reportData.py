@@ -744,6 +744,50 @@ def main(argv):
                             SMisesD2.append(current2DSMises)
                             SaverD2.append(current2DSaver)
 
+                            currentSrr = []
+                            currentStt = []
+                            currentSrt = []
+                            current3DS1 = []
+                            current3DS2 = []
+                            current3DS3 = []
+                            current3DI1 = []
+                            current3DI2 = []
+                            current3DI3 = []
+                            current3DSMises = []
+                            current3DSaver = []
+                            current2DS1 = []
+                            current2DS2 = []
+                            current2DI1 = []
+                            current2DI2 = []
+                            current2DSMises = []
+                            current2DSaver = []
+
+                            
+
+                            Sxx = []
+                            Syy = []
+                            Szz = []
+                            Sxy = []
+                            Szx = []
+                            Syz = []
+                            Srr = []
+                            Stt = []
+                            Srt = []
+                            S1D3 = []
+                            S2D3 = []
+                            S3D3 = []
+                            I1D3 = []
+                            I2D3 = []
+                            I3D3 = []
+                            SMisesD3 = []
+                            SaverD3 = []
+                            S1D2 = []
+                            S2D2 = []
+                            I1D2 = []
+                            I2D2 = []
+                            SMisesD2 = []
+                            SaverD2 = []
+
                 if subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)
                     with open(circumferentialpathsSummary,'r') as csv:

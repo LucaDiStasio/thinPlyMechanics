@@ -762,7 +762,7 @@ def main(argv):
                             current2DSaver = []
 
                     for pathAngle in pathAngles:
-                        sheetName = 'pathAngle=' +
+                        sheetName = 'pathAngle=' + str(pathAngle) + '°'
                     worksheet = radialpathsWorkbook.add_worksheet(sheetName.decode('utf-8'))
 
                     Sxx = []

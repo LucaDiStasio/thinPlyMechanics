@@ -601,18 +601,18 @@ def main(argv):
                     SMisesD2 = []
                     SaverD2 = []
                     pathVariables = []
-                    pathRis = []
-                    pathRfs = []
+                    pathStartVariables = []
+                    pathEndVariables = []
                     pathCoords = []
                     pathNormCoords = []
                     for line in lines[1:]:
                         stressComp = line.replace('\n','').split(',')[0]
                         pathVariable = float(line.replace('\n','').split(',')[1])
                         pathVariables.append(pathVariable)
-                        pathRi = float(line.replace('\n','').split(',')[2])
-                        pathRis.append(pathRi)
-                        pathRf = float(line.replace('\n','').split(',')[3])
-                        pathRfs.append(pathRf)
+                        pathStartVariable = float(line.replace('\n','').split(',')[2])
+                        pathStartVariables.append(pathRi)
+                        pathEndVariable = float(line.replace('\n','').split(',')[3])
+                        pathEndVariables.append(pathRf)
                         datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
@@ -630,7 +630,7 @@ def main(argv):
                         yData = []
                         for xyPair in currentxyData:
                             normxData.append(xyPair[0])
-                            xData.append(pathRi+(pathRf-pathRi)*xyPair[0])
+                            xData.append(pathStartVariable+(pathEndVariable-pathStartVariable)*xyPair[0])
                             yData.append(xyPair[1])
                         if 'S11' in stressComp:
                             Sxx.append(yData)
@@ -768,9 +768,15 @@ def main(argv):
                     sheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                     worksheet = radialpathsWorkbook.add_worksheet(sheetName.decode('utf-8'))
                     pathVariableName = 'pathAngle [deg]'
-                    worksheet.write(0,0,pathVariableName,stringFormat)
+                    pathStartVariableName = 'Ri [mum]'
+                    pathEndVariableName = 'Rf [mum]'
                     for p, pathVariable in enumerate(pathVariables):
-                        worksheet.write(1,0,pathVariableName,numberFormat)
+                        worksheet.write(0,p*25,pathVariableName,stringFormat)
+                        worksheet.write(1,p*25,pathVariable,radialpathsnumberFormatReduced)
+                        worksheet.write(0,p*25+1,pathStartVariableName,stringFormat)
+                        worksheet.write(1,p*25+1,pathStartVariables[p],radialpathsnumberFormatReduced)
+                        worksheet.write(0,p*25+2,pathEndVariableName,stringFormat)
+                        worksheet.write(1,p*25+2,pathEndVariables[p],radialpathsnumberFormatReduced)
 
 
 
@@ -798,8 +804,8 @@ def main(argv):
                     SMisesD2 = []
                     SaverD2 = []
                     pathVariables = []
-                    pathRis = []
-                    pathRfs = []
+                    pathStartVariables = []
+                    pathEndVariables = []
                     pathCoords = []
                     pathNormCoords = []
 

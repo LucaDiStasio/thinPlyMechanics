@@ -834,16 +834,532 @@ def main(argv):
                     worksheet = radialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
                     for p, pathVariable in enumerate(pathVariables):
                         dataLength = len(pathCoords[p])
+                        variableNames = ['Sxx','Syy','Szz','Sxx','Sxx']
+                        # Sxx
                         chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         chart.add_series({
                                         'name':       pathVariableName + '=' + str(pathVariable),
                                         'categories': [datasheetName,3,0,dataLength,0],
                                         'values':     [datasheetName,3,2,dataLength,2],
                                          })
-                        chart.set_title ({'name': plot[-1].decode('utf-8')})
-                        chart.set_x_axis({'name': plot[-3].decode('utf-8')})
-                        chart.set_y_axis({'name': plot[-2].decode('utf-8')})
-                        worksheet.insert_chart(len(csvlines)+10,10*p, chart)
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Syy
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,3,dataLength,3],
+                                         })
+                        chart.set_title ({'name': 'Syy vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Syy'})
+                        worksheet.insert_chart(p*40,20,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,3,dataLength,3],
+                                         })
+                        chart.set_title ({'name': 'Syy vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Syy'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
+                        # Sxx
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,2,dataLength,2],
+                                         })
+                        chart.set_title ({'name': 'Sxx vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': 'Sxx'})
+                        worksheet.insert_chart(p*40+20,0,chart)
 
                     Sxx = []
                     Syy = []

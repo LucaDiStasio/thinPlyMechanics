@@ -909,14 +909,958 @@ def main(argv):
                     print('    Analysis of circumferential paths for folder ' + subFolder)
                     with open(circumferentialpathsSummary,'r') as csv:
                         lines = csv.readlines()
+                    Sxx = []
+                    Syy = []
+                    Szz = []
+                    Sxy = []
+                    Szx = []
+                    Syz = []
+                    Srr = []
+                    Stt = []
+                    Srt = []
+                    S1D3 = []
+                    S2D3 = []
+                    S3D3 = []
+                    I1D3 = []
+                    I2D3 = []
+                    I3D3 = []
+                    SMisesD3 = []
+                    SaverD3 = []
+                    S1D2 = []
+                    S2D2 = []
+                    I1D2 = []
+                    I2D2 = []
+                    SMisesD2 = []
+                    SaverD2 = []
+                    pathVariables = []
+                    pathStartVariables = []
+                    pathEndVariables = []
+                    pathCoords = []
+                    pathNormCoords = []
+
+                    for line in lines[1:]:
+                        stressComp = line.replace('\n','').split(',')[0]
+                        pathVariable = float(line.replace('\n','').split(',')[1])
+                        pathVariables.append(pathVariable)
+                        pathStartVariable = float(line.replace('\n','').split(',')[2])
+                        pathStartVariables.append(pathRi)
+                        pathEndVariable = float(line.replace('\n','').split(',')[3])
+                        pathEndVariables.append(pathRf)
+                        datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
+                        with open(datfilePath,'r') as dat:
+                            datLines = dat.readlines()
+                        currentxyData = []
+                        for datLine in datLines:
+                            if len(datLine.replace('\n','').replace(' ',''))>0 and 'X' not in datLine:
+                                lineParts = datLine.replace('\n','').split(' ')
+                                rowVec = []
+                                for linePart in lineParts:
+                                    if linePart!='':
+                                        rowVec.append(float(linePart))
+                                currentxyData.append(rowVec)
+                        normxData = []
+                        xData = []
+                        yData = []
+                        for xyPair in currentxyData:
+                            normxData.append(xyPair[0])
+                            xData.append(pathStartVariable+(pathEndVariable-pathStartVariable)*xyPair[0])
+                            yData.append(xyPair[1])
+                        if 'S11' in stressComp:
+                            Sxx.append(yData)
+                            pathCoords.append(xData)
+                            pathNormCoords.append(normxData)
+                        elif 'S22' in stressComp:
+                            Syy.append(yData)
+                        elif 'S33' in stressComp:
+                            Szz.append(yData)
+                        elif 'S12' in stressComp:
+                            Sxy.append(yData)
+                        elif 'S13' in stressComp:
+                            Szx.append(yData)
+                        elif 'S23' in stressComp:
+                            Syz.append(yData)
+                            currentSxx = Sxx[-1]
+                            currentSyy = Syy[-1]
+                            currentSzz = Szz[-1]
+                            currentSxy = Sxy[-1]
+                            currentSzx = Szx[-1]
+                            currentSyz = yData
+                            currentSrr = []
+                            currentStt = []
+                            currentSrt = []
+                            current3DS1 = []
+                            current3DS2 = []
+                            current3DS3 = []
+                            current3DI1 = []
+                            current3DI2 = []
+                            current3DI3 = []
+                            current3DSMises = []
+                            current3DSaver = []
+                            current2DS1 = []
+                            current2DS2 = []
+                            current2DI1 = []
+                            current2DI2 = []
+                            current2DSMises = []
+                            current2DSaver = []
+                            rotateBy = pathVariable*np.pi/180.0
+                            cosRot = np.cos(rotateBy)
+                            sinRor = np.sin(rotateBy)
+
+                            for s, sxx in currentSxx:
+                                syy = currentSyy[s]
+                                szz = currentSzz[s]
+                                sxy = currentSxy[s]
+                                szx = currentSzx[s]
+                                syz = currentSyz[s]
+
+                                srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
+                                stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
+                                srt = -sxx*cosRot*sinRot+syy*cosRot*sinRot+sxy*(cosRot*cosRot-sinRot*sinRot)
+                                currentSrr.append(srr)
+                                currentStt.append(stt)
+                                currentSrt.append(srt)
+
+                                i1d2 = sxx + syy
+                                i1d3 = sxx + syy + szz
+
+                                i2d2 = sxx*syy - sxy*sxy
+                                i2d3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
+
+                                i3d3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
+
+                                saverd2 = I1D2/2.0
+                                saverd3 = I1D3/3.0
+
+                                smises2d =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
+                                smises3d =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
+
+                                s1d2 = 0.5*(sxx+syy)+np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
+                                s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
+
+                                try:
+                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
+                                    s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
+                                    s2d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
+                                    s3d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
+                                except Exception:
+                                    s1d3 = s1d2
+                                    s2d3 = s2d2
+                                    s3d3 = 0.0
+
+                                current3DS1.append(s1d3)
+                                current3DS2.append(s2d3)
+                                current3DS3.append(s2d3)
+                                current3DI1.append(i1d3)
+                                current3DI2.append(i2d3)
+                                current3DI3.append(i3d3)
+                                current3DSMises.append(smises3d)
+                                current3DSaver.append(saverd3)
+                                current2DS1.append(s1d2)
+                                current2DS2.append(s2d2)
+                                current2DI1.append(i1d2)
+                                current2DI2.append(i2d2)
+                                current2DSMises.append(smises2d)
+                                current2DSaver.append(saverd2)
+
+                            Srr.append(currentSrr)
+                            Stt.append(currentStt)
+                            Srt.append(currentSrt)
+                            S1D3.append(current3DS1)
+                            S2D3.append(current3DS2)
+                            S3D3.append(current3DS3)
+                            S1D2.append(current2DS1)
+                            S2D2.append(current2DS2)
+                            I1D3.append(current3DI1)
+                            I2D3.append(current3DI2)
+                            I3D3.append(current3DI3)
+                            I1D2.append(current2DI1)
+                            I2D2.append(current2DI2)
+                            SMisesD3.append(current3DSMises)
+                            SaverD3.append(current3DSaver)
+                            SMisesD2.append(current2DSMises)
+                            SaverD2.append(current2DSaver)
+
+                            currentSrr = []
+                            currentStt = []
+                            currentSrt = []
+                            current3DS1 = []
+                            current3DS2 = []
+                            current3DS3 = []
+                            current3DI1 = []
+                            current3DI2 = []
+                            current3DI3 = []
+                            current3DSMises = []
+                            current3DSaver = []
+                            current2DS1 = []
+                            current2DS2 = []
+                            current2DI1 = []
+                            current2DI2 = []
+                            current2DSMises = []
+                            current2DSaver = []
+
+                    pathVariableName = 'pathAngle [deg]'
+                    pathStartVariableName = 'Ri [mum]'
+                    pathEndVariableName = 'Rf [mum]'
+                    pathCoordinateName = 'R [mum]'
+                    datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                    radialpathsSheetnames.append(datasheetName)
+                    numberOfRadialpaths.append(len(pathVariables))
+                    worksheet = radialpathsWorkbook.add_worksheet(datasheetName.decode('utf-8'))
+                    for p, pathVariable in enumerate(pathVariables):
+                        worksheet.write(0,p*25,pathVariableName,stringFormat)
+                        worksheet.write(1,p*25,pathVariable,radialpathsnumberFormatReduced)
+                        worksheet.write(0,p*25+1,pathStartVariableName,stringFormat)
+                        worksheet.write(1,p*25+1,pathStartVariables[p],radialpathsnumberFormat)
+                        worksheet.write(0,p*25+2,pathEndVariableName,stringFormat)
+                        worksheet.write(1,p*25+2,pathEndVariables[p],radialpathsnumberFormat)
+                        worksheet.write(2,p*25,pathCoordinateName,stringFormat)
+                        worksheet.write(2,p*25+1,'Norm ' + pathCoordinateName,stringFormat)
+                        worksheet.write(2,p*25+2,'Sxx [MPa]',stringFormat)
+                        worksheet.write(2,p*25+3,'Syy [MPa]',stringFormat)
+                        worksheet.write(2,p*25+4,'Szz [MPa]',stringFormat)
+                        worksheet.write(2,p*25+5,'Sxy [MPa]',stringFormat)
+                        worksheet.write(2,p*25+6,'Szx [MPa]',stringFormat)
+                        worksheet.write(2,p*25+7,'Syz [MPa]',stringFormat)
+                        worksheet.write(2,p*25+8,'Srr [MPa]',stringFormat)
+                        worksheet.write(2,p*25+9,'Stt [MPa]',stringFormat)
+                        worksheet.write(2,p*25+10,'Srt [MPa]',stringFormat)
+                        worksheet.write(2,p*25+11,'S1_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+12,'S2_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+13,'S3_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+14,'S1_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+15,'S2_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+16,'Smises_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+17,'Smises_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+18,'Saverage_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+19,'Saverage_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+20,'I1_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+21,'I2_3D [MPa^2]',stringFormat)
+                        worksheet.write(2,p*25+22,'I3_3D [MPa^3]',stringFormat)
+                        worksheet.write(2,p*25+23,'I1_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+24,'I2_2D [MPa^2]',stringFormat)
+                        for c,coord in enumerate(pathCoords[p]):
+                            worksheet.write(3+c,p*25,coord,radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+1,pathNormCoords[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+2,Sxx[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+3,Syy[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+4,Szz[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+5,Sxy[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+6,Szx[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+7,Syz[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+8,Srr[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+9,Stt[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+10,Srt[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+11,S1D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+12,S2D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+13,S3D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+14,S1D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+15,S2D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+16,SMisesD3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+17,SMisesD2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+18,SaverD3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+19,SaverD2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+20,I1D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+21,I2D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+22,I3D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+23,I1D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+24,I2D2[p][c],radialpathsnumberFormat)
+
+                    graphsheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                    worksheet = radialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                    radialpathsDatalengths.append(len(pathCoords[p]))
+                    for v,variableName in enumerate(variableName):
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        for p, pathVariable in enumerate(pathVariables):
+                            dataLength = len(pathCoords[p])
+                            chart.add_series({
+                                            'name':       pathVariableName + '=' + str(pathVariable),
+                                            'categories': [datasheetName,3,0,dataLength,0],
+                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                             })
+                        chart.set_title ({'name': variableName + ' vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': variableName})
+                        worksheet.insert_chart(v*20,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        for p, pathVariable in enumerate(pathVariables):
+                            dataLength = len(pathCoords[p])
+                            chart.add_series({
+                                            'name':       pathVariableName + '=' + str(pathVariable),
+                                            'categories': [datasheetName,3,1,dataLength,1],
+                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                             })
+                        chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': variableName})
+                        worksheet.insert_chart(v*20,30,chart)
+
+                    Sxx = []
+                    Syy = []
+                    Szz = []
+                    Sxy = []
+                    Szx = []
+                    Syz = []
+                    Srr = []
+                    Stt = []
+                    Srt = []
+                    S1D3 = []
+                    S2D3 = []
+                    S3D3 = []
+                    I1D3 = []
+                    I2D3 = []
+                    I3D3 = []
+                    SMisesD3 = []
+                    SaverD3 = []
+                    S1D2 = []
+                    S2D2 = []
+                    I1D2 = []
+                    I2D2 = []
+                    SMisesD2 = []
+                    SaverD2 = []
+                    pathVariables = []
+                    pathStartVariables = []
+                    pathEndVariables = []
+                    pathCoords = []
+                    pathNormCoords = []
+
                 if subFolder.split('/')[-1] + '-stresseshorizontalpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of horizontal paths for folder ' + subFolder)
                     with open(horizontalpathsSummary,'r') as csv:
                         lines = csv.readlines()
+                    Sxx = []
+                    Syy = []
+                    Szz = []
+                    Sxy = []
+                    Szx = []
+                    Syz = []
+                    Srr = []
+                    Stt = []
+                    Srt = []
+                    S1D3 = []
+                    S2D3 = []
+                    S3D3 = []
+                    I1D3 = []
+                    I2D3 = []
+                    I3D3 = []
+                    SMisesD3 = []
+                    SaverD3 = []
+                    S1D2 = []
+                    S2D2 = []
+                    I1D2 = []
+                    I2D2 = []
+                    SMisesD2 = []
+                    SaverD2 = []
+                    pathVariables = []
+                    pathStartVariables = []
+                    pathEndVariables = []
+                    pathCoords = []
+                    pathNormCoords = []
+
+                    for line in lines[1:]:
+                        stressComp = line.replace('\n','').split(',')[0]
+                        pathVariable = float(line.replace('\n','').split(',')[1])
+                        pathVariables.append(pathVariable)
+                        pathStartVariable = float(line.replace('\n','').split(',')[2])
+                        pathStartVariables.append(pathRi)
+                        pathEndVariable = float(line.replace('\n','').split(',')[3])
+                        pathEndVariables.append(pathRf)
+                        datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
+                        with open(datfilePath,'r') as dat:
+                            datLines = dat.readlines()
+                        currentxyData = []
+                        for datLine in datLines:
+                            if len(datLine.replace('\n','').replace(' ',''))>0 and 'X' not in datLine:
+                                lineParts = datLine.replace('\n','').split(' ')
+                                rowVec = []
+                                for linePart in lineParts:
+                                    if linePart!='':
+                                        rowVec.append(float(linePart))
+                                currentxyData.append(rowVec)
+                        normxData = []
+                        xData = []
+                        yData = []
+                        for xyPair in currentxyData:
+                            normxData.append(xyPair[0])
+                            xData.append(pathStartVariable+(pathEndVariable-pathStartVariable)*xyPair[0])
+                            yData.append(xyPair[1])
+                        if 'S11' in stressComp:
+                            Sxx.append(yData)
+                            pathCoords.append(xData)
+                            pathNormCoords.append(normxData)
+                        elif 'S22' in stressComp:
+                            Syy.append(yData)
+                        elif 'S33' in stressComp:
+                            Szz.append(yData)
+                        elif 'S12' in stressComp:
+                            Sxy.append(yData)
+                        elif 'S13' in stressComp:
+                            Szx.append(yData)
+                        elif 'S23' in stressComp:
+                            Syz.append(yData)
+                            currentSxx = Sxx[-1]
+                            currentSyy = Syy[-1]
+                            currentSzz = Szz[-1]
+                            currentSxy = Sxy[-1]
+                            currentSzx = Szx[-1]
+                            currentSyz = yData
+                            currentSrr = []
+                            currentStt = []
+                            currentSrt = []
+                            current3DS1 = []
+                            current3DS2 = []
+                            current3DS3 = []
+                            current3DI1 = []
+                            current3DI2 = []
+                            current3DI3 = []
+                            current3DSMises = []
+                            current3DSaver = []
+                            current2DS1 = []
+                            current2DS2 = []
+                            current2DI1 = []
+                            current2DI2 = []
+                            current2DSMises = []
+                            current2DSaver = []
+                            rotateBy = pathVariable*np.pi/180.0
+                            cosRot = np.cos(rotateBy)
+                            sinRor = np.sin(rotateBy)
+
+                            for s, sxx in currentSxx:
+                                syy = currentSyy[s]
+                                szz = currentSzz[s]
+                                sxy = currentSxy[s]
+                                szx = currentSzx[s]
+                                syz = currentSyz[s]
+
+                                srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
+                                stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
+                                srt = -sxx*cosRot*sinRot+syy*cosRot*sinRot+sxy*(cosRot*cosRot-sinRot*sinRot)
+                                currentSrr.append(srr)
+                                currentStt.append(stt)
+                                currentSrt.append(srt)
+
+                                i1d2 = sxx + syy
+                                i1d3 = sxx + syy + szz
+
+                                i2d2 = sxx*syy - sxy*sxy
+                                i2d3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
+
+                                i3d3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
+
+                                saverd2 = I1D2/2.0
+                                saverd3 = I1D3/3.0
+
+                                smises2d =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
+                                smises3d =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
+
+                                s1d2 = 0.5*(sxx+syy)+np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
+                                s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
+
+                                try:
+                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
+                                    s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
+                                    s2d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
+                                    s3d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
+                                except Exception:
+                                    s1d3 = s1d2
+                                    s2d3 = s2d2
+                                    s3d3 = 0.0
+
+                                current3DS1.append(s1d3)
+                                current3DS2.append(s2d3)
+                                current3DS3.append(s2d3)
+                                current3DI1.append(i1d3)
+                                current3DI2.append(i2d3)
+                                current3DI3.append(i3d3)
+                                current3DSMises.append(smises3d)
+                                current3DSaver.append(saverd3)
+                                current2DS1.append(s1d2)
+                                current2DS2.append(s2d2)
+                                current2DI1.append(i1d2)
+                                current2DI2.append(i2d2)
+                                current2DSMises.append(smises2d)
+                                current2DSaver.append(saverd2)
+
+                            Srr.append(currentSrr)
+                            Stt.append(currentStt)
+                            Srt.append(currentSrt)
+                            S1D3.append(current3DS1)
+                            S2D3.append(current3DS2)
+                            S3D3.append(current3DS3)
+                            S1D2.append(current2DS1)
+                            S2D2.append(current2DS2)
+                            I1D3.append(current3DI1)
+                            I2D3.append(current3DI2)
+                            I3D3.append(current3DI3)
+                            I1D2.append(current2DI1)
+                            I2D2.append(current2DI2)
+                            SMisesD3.append(current3DSMises)
+                            SaverD3.append(current3DSaver)
+                            SMisesD2.append(current2DSMises)
+                            SaverD2.append(current2DSaver)
+
+                            currentSrr = []
+                            currentStt = []
+                            currentSrt = []
+                            current3DS1 = []
+                            current3DS2 = []
+                            current3DS3 = []
+                            current3DI1 = []
+                            current3DI2 = []
+                            current3DI3 = []
+                            current3DSMises = []
+                            current3DSaver = []
+                            current2DS1 = []
+                            current2DS2 = []
+                            current2DI1 = []
+                            current2DI2 = []
+                            current2DSMises = []
+                            current2DSaver = []
+
+                    pathVariableName = 'pathAngle [deg]'
+                    pathStartVariableName = 'Ri [mum]'
+                    pathEndVariableName = 'Rf [mum]'
+                    pathCoordinateName = 'R [mum]'
+                    datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                    radialpathsSheetnames.append(datasheetName)
+                    numberOfRadialpaths.append(len(pathVariables))
+                    worksheet = radialpathsWorkbook.add_worksheet(datasheetName.decode('utf-8'))
+                    for p, pathVariable in enumerate(pathVariables):
+                        worksheet.write(0,p*25,pathVariableName,stringFormat)
+                        worksheet.write(1,p*25,pathVariable,radialpathsnumberFormatReduced)
+                        worksheet.write(0,p*25+1,pathStartVariableName,stringFormat)
+                        worksheet.write(1,p*25+1,pathStartVariables[p],radialpathsnumberFormat)
+                        worksheet.write(0,p*25+2,pathEndVariableName,stringFormat)
+                        worksheet.write(1,p*25+2,pathEndVariables[p],radialpathsnumberFormat)
+                        worksheet.write(2,p*25,pathCoordinateName,stringFormat)
+                        worksheet.write(2,p*25+1,'Norm ' + pathCoordinateName,stringFormat)
+                        worksheet.write(2,p*25+2,'Sxx [MPa]',stringFormat)
+                        worksheet.write(2,p*25+3,'Syy [MPa]',stringFormat)
+                        worksheet.write(2,p*25+4,'Szz [MPa]',stringFormat)
+                        worksheet.write(2,p*25+5,'Sxy [MPa]',stringFormat)
+                        worksheet.write(2,p*25+6,'Szx [MPa]',stringFormat)
+                        worksheet.write(2,p*25+7,'Syz [MPa]',stringFormat)
+                        worksheet.write(2,p*25+8,'Srr [MPa]',stringFormat)
+                        worksheet.write(2,p*25+9,'Stt [MPa]',stringFormat)
+                        worksheet.write(2,p*25+10,'Srt [MPa]',stringFormat)
+                        worksheet.write(2,p*25+11,'S1_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+12,'S2_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+13,'S3_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+14,'S1_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+15,'S2_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+16,'Smises_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+17,'Smises_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+18,'Saverage_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+19,'Saverage_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+20,'I1_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+21,'I2_3D [MPa^2]',stringFormat)
+                        worksheet.write(2,p*25+22,'I3_3D [MPa^3]',stringFormat)
+                        worksheet.write(2,p*25+23,'I1_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+24,'I2_2D [MPa^2]',stringFormat)
+                        for c,coord in enumerate(pathCoords[p]):
+                            worksheet.write(3+c,p*25,coord,radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+1,pathNormCoords[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+2,Sxx[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+3,Syy[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+4,Szz[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+5,Sxy[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+6,Szx[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+7,Syz[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+8,Srr[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+9,Stt[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+10,Srt[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+11,S1D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+12,S2D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+13,S3D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+14,S1D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+15,S2D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+16,SMisesD3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+17,SMisesD2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+18,SaverD3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+19,SaverD2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+20,I1D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+21,I2D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+22,I3D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+23,I1D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+24,I2D2[p][c],radialpathsnumberFormat)
+
+                    graphsheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                    worksheet = radialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                    radialpathsDatalengths.append(len(pathCoords[p]))
+                    for v,variableName in enumerate(variableName):
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        for p, pathVariable in enumerate(pathVariables):
+                            dataLength = len(pathCoords[p])
+                            chart.add_series({
+                                            'name':       pathVariableName + '=' + str(pathVariable),
+                                            'categories': [datasheetName,3,0,dataLength,0],
+                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                             })
+                        chart.set_title ({'name': variableName + ' vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': variableName})
+                        worksheet.insert_chart(v*20,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        for p, pathVariable in enumerate(pathVariables):
+                            dataLength = len(pathCoords[p])
+                            chart.add_series({
+                                            'name':       pathVariableName + '=' + str(pathVariable),
+                                            'categories': [datasheetName,3,1,dataLength,1],
+                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                             })
+                        chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': variableName})
+                        worksheet.insert_chart(v*20,30,chart)
+
+                    Sxx = []
+                    Syy = []
+                    Szz = []
+                    Sxy = []
+                    Szx = []
+                    Syz = []
+                    Srr = []
+                    Stt = []
+                    Srt = []
+                    S1D3 = []
+                    S2D3 = []
+                    S3D3 = []
+                    I1D3 = []
+                    I2D3 = []
+                    I3D3 = []
+                    SMisesD3 = []
+                    SaverD3 = []
+                    S1D2 = []
+                    S2D2 = []
+                    I1D2 = []
+                    I2D2 = []
+                    SMisesD2 = []
+                    SaverD2 = []
+                    pathVariables = []
+                    pathStartVariables = []
+                    pathEndVariables = []
+                    pathCoords = []
+                    pathNormCoords = []
+
                 if subFolder.split('/')[-1] + '-stressesverticalpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of vertical paths for folder ' + subFolder)
                     with open(verticalpathsSummary,'r') as csv:
                         lines = csv.readlines()
+                    Sxx = []
+                    Syy = []
+                    Szz = []
+                    Sxy = []
+                    Szx = []
+                    Syz = []
+                    Srr = []
+                    Stt = []
+                    Srt = []
+                    S1D3 = []
+                    S2D3 = []
+                    S3D3 = []
+                    I1D3 = []
+                    I2D3 = []
+                    I3D3 = []
+                    SMisesD3 = []
+                    SaverD3 = []
+                    S1D2 = []
+                    S2D2 = []
+                    I1D2 = []
+                    I2D2 = []
+                    SMisesD2 = []
+                    SaverD2 = []
+                    pathVariables = []
+                    pathStartVariables = []
+                    pathEndVariables = []
+                    pathCoords = []
+                    pathNormCoords = []
+
+                    for line in lines[1:]:
+                        stressComp = line.replace('\n','').split(',')[0]
+                        pathVariable = float(line.replace('\n','').split(',')[1])
+                        pathVariables.append(pathVariable)
+                        pathStartVariable = float(line.replace('\n','').split(',')[2])
+                        pathStartVariables.append(pathRi)
+                        pathEndVariable = float(line.replace('\n','').split(',')[3])
+                        pathEndVariables.append(pathRf)
+                        datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
+                        with open(datfilePath,'r') as dat:
+                            datLines = dat.readlines()
+                        currentxyData = []
+                        for datLine in datLines:
+                            if len(datLine.replace('\n','').replace(' ',''))>0 and 'X' not in datLine:
+                                lineParts = datLine.replace('\n','').split(' ')
+                                rowVec = []
+                                for linePart in lineParts:
+                                    if linePart!='':
+                                        rowVec.append(float(linePart))
+                                currentxyData.append(rowVec)
+                        normxData = []
+                        xData = []
+                        yData = []
+                        for xyPair in currentxyData:
+                            normxData.append(xyPair[0])
+                            xData.append(pathStartVariable+(pathEndVariable-pathStartVariable)*xyPair[0])
+                            yData.append(xyPair[1])
+                        if 'S11' in stressComp:
+                            Sxx.append(yData)
+                            pathCoords.append(xData)
+                            pathNormCoords.append(normxData)
+                        elif 'S22' in stressComp:
+                            Syy.append(yData)
+                        elif 'S33' in stressComp:
+                            Szz.append(yData)
+                        elif 'S12' in stressComp:
+                            Sxy.append(yData)
+                        elif 'S13' in stressComp:
+                            Szx.append(yData)
+                        elif 'S23' in stressComp:
+                            Syz.append(yData)
+                            currentSxx = Sxx[-1]
+                            currentSyy = Syy[-1]
+                            currentSzz = Szz[-1]
+                            currentSxy = Sxy[-1]
+                            currentSzx = Szx[-1]
+                            currentSyz = yData
+                            currentSrr = []
+                            currentStt = []
+                            currentSrt = []
+                            current3DS1 = []
+                            current3DS2 = []
+                            current3DS3 = []
+                            current3DI1 = []
+                            current3DI2 = []
+                            current3DI3 = []
+                            current3DSMises = []
+                            current3DSaver = []
+                            current2DS1 = []
+                            current2DS2 = []
+                            current2DI1 = []
+                            current2DI2 = []
+                            current2DSMises = []
+                            current2DSaver = []
+                            rotateBy = pathVariable*np.pi/180.0
+                            cosRot = np.cos(rotateBy)
+                            sinRor = np.sin(rotateBy)
+
+                            for s, sxx in currentSxx:
+                                syy = currentSyy[s]
+                                szz = currentSzz[s]
+                                sxy = currentSxy[s]
+                                szx = currentSzx[s]
+                                syz = currentSyz[s]
+
+                                srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
+                                stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
+                                srt = -sxx*cosRot*sinRot+syy*cosRot*sinRot+sxy*(cosRot*cosRot-sinRot*sinRot)
+                                currentSrr.append(srr)
+                                currentStt.append(stt)
+                                currentSrt.append(srt)
+
+                                i1d2 = sxx + syy
+                                i1d3 = sxx + syy + szz
+
+                                i2d2 = sxx*syy - sxy*sxy
+                                i2d3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
+
+                                i3d3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
+
+                                saverd2 = I1D2/2.0
+                                saverd3 = I1D3/3.0
+
+                                smises2d =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
+                                smises3d =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
+
+                                s1d2 = 0.5*(sxx+syy)+np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
+                                s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
+
+                                try:
+                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
+                                    s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
+                                    s2d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
+                                    s3d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
+                                except Exception:
+                                    s1d3 = s1d2
+                                    s2d3 = s2d2
+                                    s3d3 = 0.0
+
+                                current3DS1.append(s1d3)
+                                current3DS2.append(s2d3)
+                                current3DS3.append(s2d3)
+                                current3DI1.append(i1d3)
+                                current3DI2.append(i2d3)
+                                current3DI3.append(i3d3)
+                                current3DSMises.append(smises3d)
+                                current3DSaver.append(saverd3)
+                                current2DS1.append(s1d2)
+                                current2DS2.append(s2d2)
+                                current2DI1.append(i1d2)
+                                current2DI2.append(i2d2)
+                                current2DSMises.append(smises2d)
+                                current2DSaver.append(saverd2)
+
+                            Srr.append(currentSrr)
+                            Stt.append(currentStt)
+                            Srt.append(currentSrt)
+                            S1D3.append(current3DS1)
+                            S2D3.append(current3DS2)
+                            S3D3.append(current3DS3)
+                            S1D2.append(current2DS1)
+                            S2D2.append(current2DS2)
+                            I1D3.append(current3DI1)
+                            I2D3.append(current3DI2)
+                            I3D3.append(current3DI3)
+                            I1D2.append(current2DI1)
+                            I2D2.append(current2DI2)
+                            SMisesD3.append(current3DSMises)
+                            SaverD3.append(current3DSaver)
+                            SMisesD2.append(current2DSMises)
+                            SaverD2.append(current2DSaver)
+
+                            currentSrr = []
+                            currentStt = []
+                            currentSrt = []
+                            current3DS1 = []
+                            current3DS2 = []
+                            current3DS3 = []
+                            current3DI1 = []
+                            current3DI2 = []
+                            current3DI3 = []
+                            current3DSMises = []
+                            current3DSaver = []
+                            current2DS1 = []
+                            current2DS2 = []
+                            current2DI1 = []
+                            current2DI2 = []
+                            current2DSMises = []
+                            current2DSaver = []
+
+                    pathVariableName = 'pathAngle [deg]'
+                    pathStartVariableName = 'Ri [mum]'
+                    pathEndVariableName = 'Rf [mum]'
+                    pathCoordinateName = 'R [mum]'
+                    datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                    radialpathsSheetnames.append(datasheetName)
+                    numberOfRadialpaths.append(len(pathVariables))
+                    worksheet = radialpathsWorkbook.add_worksheet(datasheetName.decode('utf-8'))
+                    for p, pathVariable in enumerate(pathVariables):
+                        worksheet.write(0,p*25,pathVariableName,stringFormat)
+                        worksheet.write(1,p*25,pathVariable,radialpathsnumberFormatReduced)
+                        worksheet.write(0,p*25+1,pathStartVariableName,stringFormat)
+                        worksheet.write(1,p*25+1,pathStartVariables[p],radialpathsnumberFormat)
+                        worksheet.write(0,p*25+2,pathEndVariableName,stringFormat)
+                        worksheet.write(1,p*25+2,pathEndVariables[p],radialpathsnumberFormat)
+                        worksheet.write(2,p*25,pathCoordinateName,stringFormat)
+                        worksheet.write(2,p*25+1,'Norm ' + pathCoordinateName,stringFormat)
+                        worksheet.write(2,p*25+2,'Sxx [MPa]',stringFormat)
+                        worksheet.write(2,p*25+3,'Syy [MPa]',stringFormat)
+                        worksheet.write(2,p*25+4,'Szz [MPa]',stringFormat)
+                        worksheet.write(2,p*25+5,'Sxy [MPa]',stringFormat)
+                        worksheet.write(2,p*25+6,'Szx [MPa]',stringFormat)
+                        worksheet.write(2,p*25+7,'Syz [MPa]',stringFormat)
+                        worksheet.write(2,p*25+8,'Srr [MPa]',stringFormat)
+                        worksheet.write(2,p*25+9,'Stt [MPa]',stringFormat)
+                        worksheet.write(2,p*25+10,'Srt [MPa]',stringFormat)
+                        worksheet.write(2,p*25+11,'S1_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+12,'S2_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+13,'S3_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+14,'S1_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+15,'S2_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+16,'Smises_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+17,'Smises_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+18,'Saverage_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+19,'Saverage_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+20,'I1_3D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+21,'I2_3D [MPa^2]',stringFormat)
+                        worksheet.write(2,p*25+22,'I3_3D [MPa^3]',stringFormat)
+                        worksheet.write(2,p*25+23,'I1_2D [MPa]',stringFormat)
+                        worksheet.write(2,p*25+24,'I2_2D [MPa^2]',stringFormat)
+                        for c,coord in enumerate(pathCoords[p]):
+                            worksheet.write(3+c,p*25,coord,radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+1,pathNormCoords[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+2,Sxx[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+3,Syy[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+4,Szz[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+5,Sxy[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+6,Szx[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+7,Syz[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+8,Srr[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+9,Stt[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+10,Srt[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+11,S1D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+12,S2D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+13,S3D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+14,S1D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+15,S2D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+16,SMisesD3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+17,SMisesD2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+18,SaverD3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+19,SaverD2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+20,I1D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+21,I2D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+22,I3D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+23,I1D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+24,I2D2[p][c],radialpathsnumberFormat)
+
+                    graphsheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                    worksheet = radialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                    radialpathsDatalengths.append(len(pathCoords[p]))
+                    for v,variableName in enumerate(variableName):
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        for p, pathVariable in enumerate(pathVariables):
+                            dataLength = len(pathCoords[p])
+                            chart.add_series({
+                                            'name':       pathVariableName + '=' + str(pathVariable),
+                                            'categories': [datasheetName,3,0,dataLength,0],
+                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                             })
+                        chart.set_title ({'name': variableName + ' vs path coordinates'})
+                        chart.set_x_axis({'name': pathVariableName})
+                        chart.set_y_axis({'name': variableName})
+                        worksheet.insert_chart(v*20,0,chart)
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        for p, pathVariable in enumerate(pathVariables):
+                            dataLength = len(pathCoords[p])
+                            chart.add_series({
+                                            'name':       pathVariableName + '=' + str(pathVariable),
+                                            'categories': [datasheetName,3,1,dataLength,1],
+                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                             })
+                        chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chart.set_y_axis({'name': variableName})
+                        worksheet.insert_chart(v*20,30,chart)
+
+                    Sxx = []
+                    Syy = []
+                    Szz = []
+                    Sxy = []
+                    Szx = []
+                    Syz = []
+                    Srr = []
+                    Stt = []
+                    Srt = []
+                    S1D3 = []
+                    S2D3 = []
+                    S3D3 = []
+                    I1D3 = []
+                    I2D3 = []
+                    I3D3 = []
+                    SMisesD3 = []
+                    SaverD3 = []
+                    S1D2 = []
+                    S2D2 = []
+                    I1D2 = []
+                    I2D2 = []
+                    SMisesD2 = []
+                    SaverD2 = []
+                    pathVariables = []
+                    pathStartVariables = []
+                    pathEndVariables = []
+                    pathCoords = []
+                    pathNormCoords = []
 
             pathVariableName = 'pathAngle [deg]'
             for n in range(0,min(numberOfRadialpaths)):

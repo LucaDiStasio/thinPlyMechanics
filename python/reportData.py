@@ -832,7 +832,17 @@ def main(argv):
 
                     sheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                     worksheet = radialpathsWorkbook.add_worksheet(sheetName.decode('utf-8'))
-                    chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    for p, pathVariable in enumerate(pathVariables):
+                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart.add_series({
+                                        'name':       pathVariableName + '=' + str(pathVariable),
+                                        'categories': [sheetName,1,curve[0],len(csvlines),curve[0]],
+                                        'values':     [sheetName,1,curve[1],len(csvlines),curve[1]],
+                                         })
+                        chart.set_title ({'name': plot[-1].decode('utf-8')})
+                        chart.set_x_axis({'name': plot[-3].decode('utf-8')})
+                        chart.set_y_axis({'name': plot[-2].decode('utf-8')})
+                        worksheet.insert_chart(len(csvlines)+10,10*p, chart)
 
                     Sxx = []
                     Syy = []

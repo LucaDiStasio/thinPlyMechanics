@@ -779,6 +779,8 @@ def main(argv):
                     pathEndVariableName = 'Rf [mum]'
                     pathCoordinateName = 'R [mum]'
                     datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                    radialpathsSheetnames.append(datasheetName)
+                    numberOfRadialpaths.append(len(pathVariables))
                     worksheet = radialpathsWorkbook.add_worksheet(datasheetName.decode('utf-8'))
                     for p, pathVariable in enumerate(pathVariables):
                         worksheet.write(0,p*25,pathVariableName,stringFormat)

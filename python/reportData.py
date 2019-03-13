@@ -1644,11 +1644,13 @@ def main(argv):
                             current2DI2 = []
                             current2DSMises = []
                             current2DSaver = []
-                            rotateBy = pathVariable*np.pi/180.0
-                            cosRot = np.cos(rotateBy)
-                            sinRor = np.sin(rotateBy)
 
                             for s, sxx in currentSxx:
+
+                                rotateBy = np.arctan2(xData[s],pathVariable)
+                                cosRot = np.cos(rotateBy)
+                                sinRor = np.sin(rotateBy)
+
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]
@@ -1740,10 +1742,10 @@ def main(argv):
                             current2DSMises = []
                             current2DSaver = []
 
-                    pathVariableName = 'pathAngle [deg]'
-                    pathStartVariableName = 'Ri [mum]'
-                    pathEndVariableName = 'Rf [mum]'
-                    pathCoordinateName = 'R [mum]'
+                    pathVariableName = 'x [mum]'
+                    pathStartVariableName = 'yi [mum]'
+                    pathEndVariableName = 'yf [mum]'
+                    pathCoordinateName = 'y [mum]'
                     datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                     radialpathsSheetnames.append(datasheetName)
                     numberOfRadialpaths.append(len(pathVariables))

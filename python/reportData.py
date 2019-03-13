@@ -1168,9 +1168,9 @@ def main(argv):
                             worksheet.write(3+c,p*25+24,I2D2[p][c],radialpathsnumberFormat)
 
                     graphsheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    worksheet = radialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                    worksheet = circumferentialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
                     variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
-                    radialpathsDatalengths.append(len(pathCoords[p]))
+                    circumferentialpathsDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableName):
                         chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         for p, pathVariable in enumerate(pathVariables):
@@ -1264,9 +1264,9 @@ def main(argv):
                         pathVariable = float(line.replace('\n','').split(',')[1])
                         pathVariables.append(pathVariable)
                         pathStartVariable = float(line.replace('\n','').split(',')[2])
-                        pathStartVariables.append(pathRi)
+                        pathStartVariables.append(pathStartVariable)
                         pathEndVariable = float(line.replace('\n','').split(',')[3])
-                        pathEndVariables.append(pathRf)
+                        pathEndVariables.append(pathEndVariable)
                         datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
@@ -1323,11 +1323,13 @@ def main(argv):
                             current2DI2 = []
                             current2DSMises = []
                             current2DSaver = []
-                            rotateBy = pathVariable*np.pi/180.0
-                            cosRot = np.cos(rotateBy)
-                            sinRor = np.sin(rotateBy)
 
                             for s, sxx in currentSxx:
+
+                                rotateBy = pathVariable*np.pi/180.0
+                                cosRot = np.cos(rotateBy)
+                                sinRor = np.sin(rotateBy)
+                                
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]

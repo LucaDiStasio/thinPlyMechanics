@@ -1100,14 +1100,14 @@ def main(argv):
                             current2DSMises = []
                             current2DSaver = []
 
-                    pathVariableName = 'pathAngle [deg]'
-                    pathStartVariableName = 'Ri [mum]'
-                    pathEndVariableName = 'Rf [mum]'
-                    pathCoordinateName = 'R [mum]'
+                    pathVariableName = 'pathRadius [mum]'
+                    pathStartVariableName = 'startAngle [deg]'
+                    pathEndVariableName = 'endAngle [deg]'
+                    pathCoordinateName = 'angle [deg]'
                     datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    radialpathsSheetnames.append(datasheetName)
-                    numberOfRadialpaths.append(len(pathVariables))
-                    worksheet = radialpathsWorkbook.add_worksheet(datasheetName.decode('utf-8'))
+                    circumferentialpathsSheetnames.append(datasheetName)
+                    numberOfCircumferentialpaths.append(len(pathVariables))
+                    worksheet = circumferentialpathsWorkbook.add_worksheet(datasheetName.decode('utf-8'))
                     for p, pathVariable in enumerate(pathVariables):
                         worksheet.write(0,p*25,pathVariableName,stringFormat)
                         worksheet.write(1,p*25,pathVariable,radialpathsnumberFormatReduced)

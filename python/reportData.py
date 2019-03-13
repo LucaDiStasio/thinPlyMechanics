@@ -830,7 +830,9 @@ def main(argv):
                             worksheet.write(3+c,p*25+23,I1D2[p][c],radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+24,I2D2[p][c],radialpathsnumberFormat)
 
-
+                    sheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                    worksheet = radialpathsWorkbook.add_worksheet(sheetName.decode('utf-8'))
+                    chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
 
                     Sxx = []
                     Syy = []

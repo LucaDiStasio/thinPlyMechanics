@@ -1172,7 +1172,7 @@ def main(argv):
                     variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     circumferentialpathsDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableName):
-                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
                             chart.add_series({
@@ -1184,7 +1184,7 @@ def main(argv):
                         chart.set_x_axis({'name': pathVariableName})
                         chart.set_y_axis({'name': variableName})
                         worksheet.insert_chart(v*20,0,chart)
-                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
                             chart.add_series({
@@ -1887,7 +1887,7 @@ def main(argv):
                     chart.set_x_axis({'name': pathVariableName})
                     chart.set_y_axis({'name': variableName})
                     worksheet.insert_chart(v*20,0,chart)
-                    chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     for s,subFolder in enumerate(subfoldersList):
                         dataLength = radialpathsDatalengths[s]
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
@@ -1920,7 +1920,73 @@ def main(argv):
                     chart.set_x_axis({'name': pathVariableName})
                     chart.set_y_axis({'name': variableName})
                     worksheet.insert_chart(v*20,0,chart)
-                    chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    chart = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    for s,subFolder in enumerate(subfoldersList):
+                        dataLength = circumferentialpathsDatalengths[s]
+                        datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                        chart.add_series({
+                                        'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
+                                         })
+                    chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                    chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                    chart.set_y_axis({'name': variableName})
+                    worksheet.insert_chart(v*20,30,chart)
+
+            pathVariableName = 'pathAngle [deg]'
+            for n in range(0,min(numberOfRadialpaths)):
+                graphsheetName = 'Graphs, path n. ' + str(n)
+                worksheet = radialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                for v,variableName in enumerate(variableName):
+                    chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    for s,subFolder in enumerate(subfoldersList):
+                        dataLength = radialpathsDatalengths[s]
+                        datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                        chart.add_series({
+                                        'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
+                                         })
+                    chart.set_title ({'name': variableName + ' vs path coordinates'})
+                    chart.set_x_axis({'name': pathVariableName})
+                    chart.set_y_axis({'name': variableName})
+                    worksheet.insert_chart(v*20,0,chart)
+                    chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    for s,subFolder in enumerate(subfoldersList):
+                        dataLength = radialpathsDatalengths[s]
+                        datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                        chart.add_series({
+                                        'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
+                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
+                                         })
+                    chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                    chart.set_x_axis({'name': 'Norm ' + pathVariableName})
+                    chart.set_y_axis({'name': variableName})
+                    worksheet.insert_chart(v*20,30,chart)
+
+            pathVariableName = 'pathAngle [deg]'
+            for n in range(0,min(numberOfRadialpaths)):
+                graphsheetName = 'Graphs, path n. ' + str(n)
+                worksheet = radialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                for v,variableName in enumerate(variableName):
+                    chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    for s,subFolder in enumerate(subfoldersList):
+                        dataLength = radialpathsDatalengths[s]
+                        datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
+                        chart.add_series({
+                                        'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
+                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
+                                         })
+                    chart.set_title ({'name': variableName + ' vs path coordinates'})
+                    chart.set_x_axis({'name': pathVariableName})
+                    chart.set_y_axis({'name': variableName})
+                    worksheet.insert_chart(v*20,0,chart)
+                    chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     for s,subFolder in enumerate(subfoldersList):
                         dataLength = radialpathsDatalengths[s]
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')

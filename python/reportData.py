@@ -1326,10 +1326,10 @@ def main(argv):
 
                             for s, sxx in currentSxx:
 
-                                rotateBy = pathVariable*np.pi/180.0
+                                rotateBy = np.arctan2(pathVariable,xData[s])
                                 cosRot = np.cos(rotateBy)
                                 sinRor = np.sin(rotateBy)
-                                
+
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]

@@ -1585,9 +1585,9 @@ def main(argv):
                         pathVariable = float(line.replace('\n','').split(',')[1])
                         pathVariables.append(pathVariable)
                         pathStartVariable = float(line.replace('\n','').split(',')[2])
-                        pathStartVariables.append(pathRi)
+                        pathStartVariables.append(pathStartVariable)
                         pathEndVariable = float(line.replace('\n','').split(',')[3])
-                        pathEndVariables.append(pathRf)
+                        pathEndVariables.append(pathEndVariable)
                         datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()

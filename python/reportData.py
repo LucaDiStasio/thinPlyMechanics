@@ -569,9 +569,13 @@ def main(argv):
             verticalpathsnumberFormatReduced = radialpathsWorkbook.add_format({'num_format': '0.00'})
 
             radialpathsSheetnames = []
+            numberOfRadialpaths = []
             circumferentialpathsSheetnames = []
+            numberOfCircumferentialpaths = []
             horizontalpathsSheetnames = []
+            numberOfHorizontalpaths = []
             verticalpathsSheetnames = []
+            numberOfVerticalpaths = []
 
             for subFolder in subfoldersList:
                 radialpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv')

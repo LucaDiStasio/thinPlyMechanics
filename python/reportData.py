@@ -901,6 +901,21 @@ def main(argv):
                     with open(verticalpathsSummary,'r') as csv:
                         lines = csv.readlines()
 
+            print('    Close workbook ' + join(outdir,outputfileBasename + '-radialpathsData' + '.xlsx'))
+            radialpathsWorkbook.close()
+            print('Workbook closed.')
+
+            print('    Close workbook ' + join(outdir,outputfileBasename + '-circumferentialpathsData' + '.xlsx'))
+            circumferentialpathsWorkbook.close()
+            print('Workbook closed.')
+
+            print('    Close workbook ' + join(outdir,outputfileBasename + '-horizontalpathsData' + '.xlsx'))
+            horizontalpathsWorkbook.close()
+            print('Workbook closed.')
+
+            print('    Close workbook ' + join(outdir,outputfileBasename + '-verticalpathsData' + '.xlsx'))
+            verticalpathsWorkbook.close()
+            print('Workbook closed.')
 
     if toLatex: # only for errts file
 

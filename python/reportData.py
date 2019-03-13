@@ -1421,10 +1421,10 @@ def main(argv):
                             current2DSMises = []
                             current2DSaver = []
 
-                    pathVariableName = 'pathAngle [deg]'
-                    pathStartVariableName = 'Ri [mum]'
-                    pathEndVariableName = 'Rf [mum]'
-                    pathCoordinateName = 'R [mum]'
+                    pathVariableName = 'y [mum]'
+                    pathStartVariableName = 'xi [mum]'
+                    pathEndVariableName = 'xf [mum]'
+                    pathCoordinateName = 'x [mum]'
                     datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                     radialpathsSheetnames.append(datasheetName)
                     numberOfRadialpaths.append(len(pathVariables))

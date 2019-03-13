@@ -570,12 +570,16 @@ def main(argv):
 
             radialpathsSheetnames = []
             numberOfRadialpaths = []
+            radialpathsDatalengths = []
             circumferentialpathsSheetnames = []
             numberOfCircumferentialpaths = []
+            circumferentialpathsDatalengths = []
             horizontalpathsSheetnames = []
             numberOfHorizontalpaths = []
+            horizontalpathsDatalengths = []
             verticalpathsSheetnames = []
             numberOfVerticalpaths = []
+            verticalpathsDatalengths = []
 
             for subFolder in subfoldersList:
                 radialpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv')
@@ -925,7 +929,7 @@ def main(argv):
                         chart.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
                                         'categories': [datasheetName,3,0,dataLength,0],
-                                        'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                        'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                     chart.set_title ({'name': variableName + ' vs path coordinates'})
                     chart.set_x_axis({'name': pathVariableName})
@@ -938,7 +942,7 @@ def main(argv):
                         chart.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
                                         'categories': [datasheetName,3,1,dataLength,1],
-                                        'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                        'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                     chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
                     chart.set_x_axis({'name': 'Norm ' + pathVariableName})

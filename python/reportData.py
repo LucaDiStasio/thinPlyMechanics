@@ -943,9 +943,9 @@ def main(argv):
                         pathVariable = float(line.replace('\n','').split(',')[1])
                         pathVariables.append(pathVariable)
                         pathStartVariable = float(line.replace('\n','').split(',')[2])
-                        pathStartVariables.append(pathRi)
+                        pathStartVariables.append(pathStartVariable)
                         pathEndVariable = float(line.replace('\n','').split(',')[3])
-                        pathEndVariables.append(pathRf)
+                        pathEndVariables.append(pathEndVariable)
                         datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
@@ -1002,11 +1002,13 @@ def main(argv):
                             current2DI2 = []
                             current2DSMises = []
                             current2DSaver = []
-                            rotateBy = pathVariable*np.pi/180.0
-                            cosRot = np.cos(rotateBy)
-                            sinRor = np.sin(rotateBy)
 
                             for s, sxx in currentSxx:
+
+                                rotateBy = xData[s]*np.pi/180.0
+                                cosRot = np.cos(rotateBy)
+                                sinRor = np.sin(rotateBy)
+
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]

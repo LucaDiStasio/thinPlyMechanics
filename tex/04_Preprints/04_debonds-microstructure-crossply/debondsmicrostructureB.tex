@@ -135,7 +135,7 @@ By increasing the number $n$ of fibers in the horizontal direction in the RUC, d
 
 \subsection{Finite Element (FE) discretization}
 
-The RUCs are discretized using the Finite Element Method (FEM) with the commercial FEM package Abaqus~\cite{abq12}. The length $l$ and height $h$ of the model are determined by the number of fibers $n$ in the horizontal direction, the number of fiber rows $k$ across the thickness and the thickness ratio $i$ (see Sec.~\ref{subsec:rve}) according to Eq.~\ref{eq:lengthheight}:
+The RUCs are discretized and solved with the Finite Element Method (FEM) using the commercial FEM package Abaqus~\cite{abq12}. The length $l$ and height $h$ of the model are determined by the number of fibers $n$ in the horizontal direction, the number of fiber rows $k$ across the thickness and the thickness ratio $i$ (see Sec.~\ref{subsec:rve}) according to Eq.~\ref{eq:lengthheight}:
 
 \begin{equation}\label{eq:lengthheight}
 l=2nL\qquad h=\left(1+2i\right)kL.
@@ -159,7 +159,7 @@ The debond appears symmetrically with respect to the $x$ axis (see Fig.~\ref{fig
 
 \begin{table}[!htbp]
  \centering
- \caption{Summary of the mechanical properties of fiber, matrix and UD layer. $E$ stands for Young's modulus, $\mu$ for shear modulus and $\nu$ for Poisson's ratio. Indexes $L$ and $T$ stand respectively for \emph{longitudinal} and \emph{transverse}.}
+ \caption{Summary of mechanical properties of fiber, matrix and UD layer. $E$ stands for Young's modulus, $\mu$ for shear modulus and $\nu$ for Poisson's ratio. Indexes $L$ and $T$ stand respectively for \emph{longitudinal} and \emph{transverse}.}
  \begin{tabular}{ccccccc}
 \textbf{Material} & \textbf{$V_{f}\left[\%\right]$}\  & \textbf{$E_{L}\left[GPa\right]$}\ & \textbf{$E_{T}\left[GPa\right]$}\  & \textbf{$\mu_{LT}\left[GPa\right]$} &\textbf{$\nu_{LT}\left[-\right]$} & \textbf{$\nu_{TT}\left[-\right]$} \\
 \midrule

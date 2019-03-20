@@ -2976,7 +2976,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     modelname = parameters['input']['modelname']
     L = parameters['geometry']['L']
     Rf = parameters['geometry']['Rf']
-    clusterShift = parameters['geometry']['clusterShift']
     if 'full' in parameters['geometry']['fiber']['type']:
         CornerAy = -L
     elif 'half' in parameters['geometry']['fiber']['type']:
@@ -3214,11 +3213,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-0.5*Rf, 0.0)) # fiberGeometry[8]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
-        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-(Rf+0.25*(2*(L-Rf)-clusterShift)), 0.0)) # fiberGeometry[9]
-        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-(Rf+0.5*(2*(L-Rf)-clusterShift)), 0.0)) # fiberGeometry[10]
-        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        if L>2*Rf:
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-1.25*Rf, 0.0)) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-1.5*Rf, 0.0)) # fiberGeometry[10]
+        else:
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-(Rf+0.25*(L-Rf)), 0.0)) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-(Rf+0.5*(L-Rf)), 0.0)) # fiberGeometry[10]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     elif 'half' in parameters['geometry']['fiber']['type']:
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(Rf,0.0), direction=CLOCKWISE) # fiberGeometry[6]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
@@ -3229,11 +3234,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-0.5*Rf, 0.0), point2=(0.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[8]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.25*(2*(L-Rf)-clusterShift)), 0.0), point2=((Rf+0.25*(2*(L-Rf)-clusterShift)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
-        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.5*(2*(L-Rf)-clusterShift)), 0.0), point2=((Rf+0.5*(2*(L-Rf)-clusterShift)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
-        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        if L>2*Rf:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.25*Rf, 0.0), point2=(1.25*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.5*Rf, 0.0), point2=(1.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[10]
+        else:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.25*(L-Rf)), 0.0), point2=((Rf+0.25*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.5*(L-Rf)), 0.0), point2=((Rf+0.5*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     elif 'quarter' in parameters['geometry']['fiber']['type']:
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+Rf), point2=(Rf,0.0), direction=CLOCKWISE) # fiberGeometry[6]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
@@ -3244,11 +3255,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+0.5*Rf), point2=(0.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[8]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+(Rf+0.25*(2*(L-Rf)-clusterShift))), point2=((Rf+0.25*(2*(L-Rf)-clusterShift)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
-        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+(Rf+0.5*(2*(L-Rf)-clusterShift))), point2=((Rf+0.5*(2*(L-Rf)-clusterShift)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
-        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        if L>2*Rf:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+1.25*Rf), point2=(1.25*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+1.5*Rf), point2=(1.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[10]
+        else:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+(Rf+0.25*(L-Rf))), point2=((Rf+0.25*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+(Rf+0.5*(L-Rf))), point2=((Rf+0.5*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     else:
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(Rf,0.0), direction=CLOCKWISE) # fiberGeometry[6]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
@@ -3259,11 +3276,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-0.5*Rf, 0.0), point2=(0.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[8]
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.25*(2*(L-Rf)-clusterShift)), 0.0), point2=((Rf+0.25*(2*(L-Rf)-clusterShift)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
-        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.5*(2*(L-Rf)-clusterShift)), 0.0), point2=((Rf+0.5*(2*(L-Rf)-clusterShift)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
-        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        if L>2*Rf:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.25*Rf, 0.0), point2=(1.25*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.5*Rf, 0.0), point2=(1.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[10]
+        else:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.25*(L-Rf)), 0.0), point2=((Rf+0.25*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.5*(L-Rf)), 0.0), point2=((Rf+0.5*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # calculate angles for construction lines
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calculate angles for construction lines ...',True)
@@ -3300,7 +3323,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'draw angular sections to identify the crack and for mesh generation ...',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute internal and external radii ...',True)
     Rint = 0.75*Rf
-    Rext = Rf+0.25*(2*(L-Rf)-clusterShift)
+    if L>2*Rf:
+        Rext = 1.25*Rf
+    else:
+        Rext = Rf+0.25*(L-Rf)
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     #raw_input()
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
@@ -3389,7 +3415,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'draw angular sections to identify the crack and for mesh generation ...',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute internal and external radii ...',True)
         Rint = 0.75*Rf
-        Rext = Rf+0.25*(2*(L-Rf)-clusterShift)
+        if L>2*Rf:
+            Rext = 1.25*Rf
+        else:
+            Rext = Rf+0.25*(L-Rf)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         #raw_input()
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
@@ -3469,35 +3498,35 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers above ...',True)
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-            fiberSketch.CircleByCenterPerimeter(center=(0.0, -clusterShift*(nFiber+1)+(nFiber+1)*2*L), point1=(Rf, -clusterShift*(nFiber+1)+(nFiber+1)*2*L))
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0+(nFiber+1)*2*L), point1=(Rf, 0.0+(nFiber+1)*2*L))
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for mFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    fiberSketch.CircleByCenterPerimeter(center=(-clusterShift*(mFiber+1)+(mFiber+1)*2*L, -clusterShift*(nFiber+1)+(nFiber+1)*2*L), point1=(-clusterShift*(mFiber+1)+(mFiber+1)*2*L+Rf, -clusterShift*(nFiber+1)+(nFiber+1)*2*L))
+                    fiberSketch.CircleByCenterPerimeter(center=((mFiber+1)*2*L, 0.0+(nFiber+1)*2*L), point1=((mFiber+1)*2*L+Rf, 0.0+(nFiber+1)*2*L))
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    fiberSketch.CircleByCenterPerimeter(center=(clusterShift*(mFiber+1)-(mFiber+1)*2*L, -clusterShift*(nFiber+1)+(nFiber+1)*2*L), point1=(clusterShift*(mFiber+1)-(mFiber+1)*2*L+Rf, -clusterShift*(nFiber+1)+(nFiber+1)*2*L))
+                    fiberSketch.CircleByCenterPerimeter(center=(-(mFiber+1)*2*L, 0.0+(nFiber+1)*2*L), point1=(-(mFiber+1)*2*L+Rf, 0.0+(nFiber+1)*2*L))
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers to the right ...',True)
         if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-                fiberSketch.CircleByCenterPerimeter(center=(-clusterShift*(nFiber+1)+(nFiber+1)*2*L, 0.0), point1=(-clusterShift*(nFiber+1)+(nFiber+1)*2*L-Rf, 0.0))
+                fiberSketch.CircleByCenterPerimeter(center=((nFiber+1)*2*L, 0.0), point1=((nFiber+1)*2*L-Rf, 0.0))
         else:
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-                fiberSketch.ArcByCenterEnds(center=(-clusterShift*(nFiber+1)+(nFiber+1)*2*L, 0.0), point1=(-clusterShift*(nFiber+1)+(nFiber+1)*2*L-Rf, 0.0), point2=(-clusterShift*(nFiber+1)+(nFiber+1)*2*L+Rf,0.0), direction=CLOCKWISE)
+                fiberSketch.ArcByCenterEnds(center=((nFiber+1)*2*L, 0.0), point1=((nFiber+1)*2*L-Rf, 0.0), point2=((nFiber+1)*2*L+Rf,0.0), direction=CLOCKWISE)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers to the left ...',True)
         if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-                fiberSketch.CircleByCenterPerimeter(center=(clusterShift*(nFiber+1)-(nFiber+1)*2*L, 0.0), point1=(clusterShift*(nFiber+1)-(nFiber+1)*2*L-Rf, 0.0))
+                fiberSketch.CircleByCenterPerimeter(center=(-(nFiber+1)*2*L, 0.0), point1=(-(nFiber+1)*2*L-Rf, 0.0))
         else:
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-                fiberSketch.ArcByCenterEnds(center=(clusterShift*(nFiber+1)-(nFiber+1)*2*L, 0.0), point1=(clusterShift*(nFiber+1)-(nFiber+1)*2*L-Rf, 0.0), point2=(clusterShift*(nFiber+1)-(nFiber+1)*2*L+Rf,0.0), direction=CLOCKWISE)
+                fiberSketch.ArcByCenterEnds(center=(-(nFiber+1)*2*L, 0.0), point1=(-(nFiber+1)*2*L-Rf, 0.0), point2=(-(nFiber+1)*2*L+Rf,0.0), direction=CLOCKWISE)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)
@@ -3543,6 +3572,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,CornerBy,0.0,0.00001*Rf,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
     defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,CornerBy,0.0,0.00001*Rf,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,0.0,0.0,0.00001*Rf,'SE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,0.0,0.0,0.00001*Rf,'SW-CORNER',logfilepath,baselogindent + 4*logindent,True)
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type']:
@@ -3621,8 +3652,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT']])
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-SECONDRING',True)
 
-        R1 = Rf+0.5*0.25*(2*(L-Rf)-clusterShift)
-        R2 = Rf+1.5*0.25*(2*(L-Rf)-clusterShift)
+        if L>2*Rf:
+            R1 = (1+0.5*0.25)*Rf
+            R2 = (1.25+0.5*0.25)*Rf
+        else:
+            R1 = Rf+0.5*0.25*(L-Rf)
+            R2 = Rf+1.5*0.25*(L-Rf)
 
         setsOfEdgesData = [[R1,0.001,0.0,R1,-0.001,0.0,'LOWERSIDE-THIRDRING-RIGHT']]
         if 'half' in parameters['geometry']['fiber']['type']:
@@ -3654,12 +3689,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             setsOfEdgesData.append([0.99*CornerAx,0.001,0.0,0.99*CornerAx,-0.001,0.0,'LOWERSIDE-LEFT-HOMOGENIZED-PLY'])
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-                setsOfEdgesData.append([-clusterShift*(nFiber+1)+(nFiber+1)*2*L,0.001,0.0,-clusterShift*(nFiber+1)+(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)])
-                setsOfEdgesData.append([-clusterShift*(nFiber+1)+(nFiber+1)*2*L+1.01*Rf,0.001,0.0,-clusterShift*(nFiber+1)+(nFiber+1)*2*L+1.01*Rf,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)+'-RIGHTMAT'])
+                setsOfEdgesData.append([(nFiber+1)*2*L,0.001,0.0,(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)])
+                setsOfEdgesData.append([(nFiber+1)*2*L+1.01*Rf,0.001,0.0,(nFiber+1)*2*L+1.01*Rf,-0.001,0.0,'LOWERSIDE-RIGHT-FIBER'+str(nFiber+1)+'-RIGHTMAT'])
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-                setsOfEdgesData.append([clusterShift*(nFiber+1)-(nFiber+1)*2*L,0.001,0.0,clusterShift*(nFiber+1)-(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)])
-                setsOfEdgesData.append([clusterShift*(nFiber+1)-(nFiber+1)*2*L-1.01*Rf,0.001,0.0,clusterShift*(nFiber+1)-(nFiber+1)*2*L-1.01*Rf,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)+'-LEFTMAT'])
+                setsOfEdgesData.append([-(nFiber+1)*2*L,0.001,0.0,-(nFiber+1)*2*L,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)])
+                setsOfEdgesData.append([-(nFiber+1)*2*L-1.01*Rf,0.001,0.0,-(nFiber+1)*2*L-1.01*Rf,-0.001,0.0,'LOWERSIDE-LEFT-FIBER'+str(nFiber+1)+'-LEFTMAT'])
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
             lowerSideSets.append(RVEpart.sets[setOfEdgesData[-1]])
@@ -3679,7 +3714,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         betas = [theta + deltatheta + deltapsi,theta - deltatheta - deltapsi]
         gammas = [theta + deltatheta + deltapsi + deltaphi,theta - deltatheta - deltapsi - deltaphi]
         incs = [1.0,-1.0]
-        R4 = Rf+0.25*(2*(L-Rf)-clusterShift)
+        if L>2*Rf:
+            R4 = 1.25*Rf
+        else:
+            R4 = Rf+0.25*(L-Rf)
         radiuses = [0.75*Rf,Rf,R4]
         for rIndex,rValue in enumerate(radiuses):
             for aIndex,aValue in enumerate(alphas):
@@ -3711,7 +3749,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfEdgesData.append([0.99*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-FIRSTBOUNDED'])
         setsOfEdgesData.append([0.99*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,1.01*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'THIRDCIRCLE-SECONDBOUNDED'])
         setsOfEdgesData.append([0.99*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.99*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,1.01*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),1.01*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'THIRDCIRCLE-RESTBOUNDED'])
-        R4 = Rf+0.25*(2*(L-Rf)-clusterShift)
+        if L>2*Rf:
+            R4 = 1.25*Rf
+        else:
+            R4 = Rf+0.25*(L-Rf)
         setsOfEdgesData.append([0.99*R4*np.cos(0.5*alpha*np.pi/180),0.99*R4*np.sin(0.5*alpha*np.pi/180),0.0,1.01*R4*np.cos(0.5*alpha*np.pi/180),1.01*R4*np.sin(0.5*alpha*np.pi/180),0.0,'FOURTHCIRCLE-LOWERCRACK'])
         setsOfEdgesData.append([0.99*R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'FOURTHCIRCLE-UPPERCRACK'])
         setsOfEdgesData.append([0.99*R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'FOURTHCIRCLE-FIRSTBOUNDED'])
@@ -3770,16 +3811,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfEdgesData.append([0.99999*CornerAx,0.5*L,0.0,1.00001*CornerAx,0.5*L,0.0,'LEFTSIDE'])
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-            setsOfEdgesData.append([0.99*Rf,-clusterShift*(nFiber+1)+(nFiber+1)*2*L,0.0,1.01*Rf,-clusterShift*(nFiber+1)+(nFiber+1)*2*L,0.0,'INTERFACE-UPPER-FIBER-C'+str(nFiber+1)])
+            setsOfEdgesData.append([0.99*Rf,(nFiber+1)*2*L,0.0,1.01*Rf,(nFiber+1)*2*L,0.0,'INTERFACE-UPPER-FIBER-C'+str(nFiber+1)])
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for mFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    setsOfEdgesData.append([-clusterShift*(mFiber+1)+(mFiber+1)*2*L+0.99*Rf,-clusterShift*(nFiber+1)+(nFiber+1)*2*L,0.0,-clusterShift*(mFiber+1)+(mFiber+1)*2*L+1.01*Rf,-clusterShift*(nFiber+1)+(nFiber+1)*2*L,0.0,'INTERFACE-UPPER-FIBER-R'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
+                    setsOfEdgesData.append([(mFiber+1)*2*L+0.99*Rf,(nFiber+1)*2*L,0.0,(mFiber+1)*2*L+1.01*Rf,(nFiber+1)*2*L,0.0,'INTERFACE-UPPER-FIBER-R'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             Nfibers = parameters['BC']['northSide']['nFibers']
             for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    setsOfEdgesData.append([clusterShift*(mFiber+1)-(mFiber+1)*2*L+0.99*Rf,-clusterShift*(nFiber+1)+(nFiber+1)*2*L,0.0,clusterShift*(mFiber+1)-(mFiber+1)*2*L+1.01*Rf,-clusterShift*(nFiber+1)+(nFiber+1)*2*L,0.0,'INTERFACE-UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
+                    setsOfEdgesData.append([-(mFiber+1)*2*L+0.99*Rf,(nFiber+1)*2*L,0.0,-(mFiber+1)*2*L+1.01*Rf,(nFiber+1)*2*L,0.0,'INTERFACE-UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
 
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
@@ -3833,8 +3874,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     RVEpart.SetByBoolean(name='FIBER', sets=[RVEpart.sets['FIBER-CENTER'],RVEpart.sets['FIBER-INTERMEDIATEANNULUS'],RVEpart.sets['FIBER-EXTANNULUS']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FIBER',True)
 
-    R1 = Rf+0.5*0.25*(2*(L-Rf)-clusterShift)
-    R2 = Rf+1.5*0.25*(2*(L-Rf)-clusterShift)
+    if L>2*Rf:
+        R1 = (1+0.5*0.25)*Rf
+        R2 = (1.25+0.5*0.25)*Rf
+    else:
+        R1 = Rf+0.5*0.25*(L-Rf)
+        R2 = Rf+1.5*0.25*(L-Rf)
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         setsOfFacesData = []
@@ -3866,7 +3911,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MATRIX-INTANNULUS',True)
 
     setsOfFacesData = [[0.0, R2, 0,'MATRIX-INTERMEDIATEANNULUS'],
-                       [Rf+0.75*(2*(L-Rf)-clusterShift), Rf+0.75*(2*(L-Rf)-clusterShift), 0,'MATRIX-BODY']]
+                       [0.975*L, 0.975*L, 0,'MATRIX-BODY']]
 
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
@@ -3902,15 +3947,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     booleanSets = []
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-            setsOfFacesData.append([0.0,-clusterShift*(nFiber+1)+(nFiber+1)*2*L, 0.0,'UPPER-FIBER-C'+str(nFiber+1)])
+            setsOfFacesData.append([0.0, (nFiber+1)*2*L, 0.0,'UPPER-FIBER-C'+str(nFiber+1)])
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for mFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    setsOfFacesData.append([-clusterShift*(mFiber+1)+(mFiber+1)*2*L, -clusterShift*(nFiber+1)+(nFiber+1)*2*L, 0.0,'UPPER-FIBER-R'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
+                    setsOfFacesData.append([(mFiber+1)*2*L, (nFiber+1)*2*L, 0.0,'UPPER-FIBER-R'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    setsOfFacesData.append([clusterShift*(mFiber+1)-(mFiber+1)*2*L, -clusterShift*(nFiber+1)+(nFiber+1)*2*L, 0.0,'UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
+                    setsOfFacesData.append([-(mFiber+1)*2*L, (nFiber+1)*2*L, 0.0,'UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers']))])
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
             booleanSets.append(RVEpart.sets[setOfFacesData[-1]])
@@ -3920,7 +3965,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     booleanSets = []
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-            setsOfFacesData.append([-clusterShift*(nFiber+1)+(nFiber+1)*2*L, 0.25*Rf, 0.0,'RIGHT-FIBER'+str(nFiber+1)])
+            setsOfFacesData.append([(nFiber+1)*2*L, 0.25*Rf, 0.0,'RIGHT-FIBER'+str(nFiber+1)])
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
             booleanSets.append(RVEpart.sets[setOfFacesData[-1]])
@@ -3930,7 +3975,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     booleanSets = []
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-            setsOfFacesData.append([clusterShift*(nFiber+1)-(nFiber+1)*2*L, 0.25*Rf, 0.0,'LEFT-FIBER'+str(nFiber+1)])
+            setsOfFacesData.append([-(nFiber+1)*2*L, 0.25*Rf, 0.0,'LEFT-FIBER'+str(nFiber+1)])
         for setOfFacesData in setsOfFacesData:
             defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
             booleanSets.append(RVEpart.sets[setOfFacesData[-1]])
@@ -4681,6 +4726,40 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['UPPERSIDE','upperside']:
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading right side node set and saving to list ...',True)
+    rightSideNodeset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    rightSideNodeset.append(int(index))
+            store = False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    rightSideNodeset.append(int(index))
+        elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['RIGHTSIDE','rightside']:
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading left side node set and saving to list ...',True)
+    leftSideNodeset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    leftSideNodeset.append(int(index))
+            store = False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    leftSideNodeset.append(int(index))
+        elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['LEFTSIDE','leftside']:
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading north-east corner node set and saving to variable ...',True)
     for l,line in enumerate(inpfilelines):
         if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['NE-CORNER','ne-corner']:
@@ -4691,6 +4770,18 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     for l,line in enumerate(inpfilelines):
         if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['NW-CORNER','nw-corner']:
             northwestIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading south-east corner node set and saving to variable ...',True)
+    for l,line in enumerate(inpfilelines):
+        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['SE-CORNER','se-corner']:
+            southeastIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading south-west corner node set  and saving to variable ...',True)
+    for l,line in enumerate(inpfilelines):
+        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['SW-CORNER','sw-corner']:
+            southwestIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
             break
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading crack faces element set and saving to list ...',True)
@@ -5117,6 +5208,18 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     northSideNegSide = np.array(northSideNegSide)[np.argsort(northSideNegSideCoords)].tolist()
     northSideNegSide = northSideNegSide[::-1]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set northSideNegSide contains ' + str(len(northSideNegSide)) + ' nodes',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set RIGHT-SIDE-WITHOUT-CORNERS ...',True)
+    rightSideWithoutCornersNodeset = []
+    for node in rightSideNodeset:
+        if not node in [northeastIndex,southeastIndex]:
+            rightSideWithoutCornersNodeset.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set LEFT-SIDE-WITHOUT-CORNERS ...',True)
+    leftSideWithoutCornersNodeset = []
+    for node in leftSideNodeset:
+        if not node in [southwestIndex,northwestIndex]:
+            leftSideWithoutCornersNodeset.append(node)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)
     numNodes = mdbData['numNodes']
@@ -5822,7 +5925,39 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                     inp.write('*NSET, NSET=SECONDBOUNDED-DUMMY-NODE, INSTANCE=RVE-assembly' + '\n')
                     inp.write(' ' + str(secondBehindCracktipDummyIndex) + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write right side node sets ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=RIGHTSIDE-WITHOUT-CORNERS, INSTANCE=RVE-assembly' + '\n')
+        line = ''
+        for n,node in enumerate(rightSideWithoutCornersNodeset):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write left side node sets ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=LEFTSIDE-WITHOUT-CORNERS, INSTANCE=RVE-assembly' + '\n')
+        line = ''
+        for n,node in enumerate(leftSideWithoutCornersNodeset):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write north side node sets ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=SOUTHWEST-CORNER, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(southwestIndex) + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=SOUTHEAST-CORNER, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(southeastIndex) + '\n')
     with open(modinpfullpath,'a') as inp:
         inp.write('*NSET, NSET=UPPERSIDE-WITHOUT-CORNERS, INSTANCE=RVE-assembly' + '\n')
         line = ''
@@ -6031,6 +6166,26 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 inp.write(' 2' + '\n')
                 inp.write(' NORTHSIDE-N'+ str(n+1) +', 1, 1, NORTHEAST-CORNER, 1, ' + str(-nodes[node][0]/nodes[northeastIndex][0]) + '\n')
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'vkinCouplingmeancorners' in parameters['BC']['rightSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on RIGHT side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: ne and se horizontal displacements are set to be equal and all other points are set to this value',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*EQUATION' + '\n')
+            inp.write(' 2' + '\n')
+            inp.write(' SOUTHEAST-CORNER, 1, 1, NORTHEAST-CORNER, 1, -1' + '\n')
+            inp.write(' 3' + '\n')
+            inp.write(' RIGHTSIDE-WITHOUT-CORNERS, 1, 1, SOUTHEAST-CORNER, 1, -0.5, NORTHEAST-CORNER, 1, -0.5' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'vkinCouplingmeancorners' in parameters['BC']['leftSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on LEFT side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: nw and sw horizontal displacements are set to be equal and all other points are set to this value',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*EQUATION' + '\n')
+            inp.write(' 2' + '\n')
+            inp.write(' SOUTHWEST-CORNER, 1, 1, NORTHWEST-CORNER, 1, -1' + '\n')
+            inp.write(' 3' + '\n')
+            inp.write(' LEFTSIDE-WITHOUT-CORNERS, 1, 1, SOUTHWEST-CORNER, 1, -0.5, NORTHWEST-CORNER, 1, -0.5' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write surface definitions ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*SURFACE, NAME=FiberSurface, TYPE=ELEMENT' + '\n')
@@ -6688,11 +6843,313 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
 
     #=======================================================================
+    # BEGIN - extract stresses along radial paths
+    #=======================================================================
+
+    if 'report-stressesradialpaths' in parameters['simulation-pipeline']['analysis'].keys():
+        if parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along radial paths ...',True)
+            sessionOdb = session.openOdb(name=odbfullpath)
+            session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
+            pathAngles = np.arange(0,180,5)
+            csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stressesradialpaths'
+            createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, angle [°], Ri, Rf, FOLDER, FILENAME')
+            for angleNum,pathAngle in enumerate(pathAngles):
+                pathRadius = parameters['geometry']['L']/np.cos(pathAngle*np.pi/180.0)
+                session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'], radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
+                radpath = session.paths['RadPath-Ang' + str(pathAngle)]
+                # sigmaxx
+                sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmaxx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat']])
+                # sigmayy
+                sigmayy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmayy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmayy-RadPath-Ang' + str(pathAngle) + '.dat']])
+                # tauxy
+                tauxy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=tauxy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'tauxy-RadPath-Ang' + str(pathAngle) + '.dat']])
+                # sigmazz
+                sigmazz = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmazz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmazz-RadPath-Ang' + str(pathAngle) + '.dat']])
+                # tauzx
+                tauzx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=tauzx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'tauzx-RadPath-Ang' + str(pathAngle) + '.dat']])
+                # tauyz
+                tauyz = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=tauyz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'tauyz-RadPath-Ang' + str(pathAngle) + '.dat']])
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+    #=======================================================================
+    # END - extract stresses along radial paths
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - extract stresses along circumferential paths
+    #=======================================================================
+
+    if 'report-stressescircumferentialpaths' in parameters['simulation-pipeline']['analysis'].keys():
+        if parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along circumferential paths ...',True)
+            sessionOdb = session.openOdb(name=odbfullpath)
+            session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
+            pathRsInt = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],20,endpoint=True)
+            pathRsExt = np.linspace(parameters['geometry']['L'],np.sqrt(2)*parameters['geometry']['L'],20,endpoint=False)[1:]
+            csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stressescircumferentialpaths'
+            createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, R, angle_i [°], angle_f [°], FOLDER, FILENAME')
+            for rNum,pathR in enumerate(pathRsInt):
+                session.Path(name='CircPath-R' + str(pathR).replace('.','_'), type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'], startAngle=0, endAngle=180, radius=CIRCLE_RADIUS)
+                circpath = session.paths['CircPath-R' + str(pathR).replace('.','_')]
+                # sigmaxx
+                sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=sigmaxx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
+                # sigmayy
+                sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=sigmayy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
+                # tauxy
+                tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=tauxy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
+                # sigmazz
+                sigmazz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=sigmazz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'sigmazz-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
+                # tauzx
+                tauzx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=tauzx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauzx-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
+                # tauyz
+                tauyz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=tauyz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+            for rNum,pathR in enumerate(pathRsExt):
+                angleStart1 = np.ceil(np.arccos(parameters['geometry']['L']/pathR)*180.0/np.pi)
+                angleStart2 = 90.0-angleStart1
+                angleStart3 = 90.0+angleStart1
+                angleStart4 = 180.0-angleStart1
+                session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'East' , type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'], startAngle=angleStart1, endAngle=angleStart2, radius=CIRCLE_RADIUS)
+                session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'West' , type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'], startAngle=angleStart3, endAngle=angleStart4, radius=CIRCLE_RADIUS)
+                circpath = session.paths['CircPath-R' + str(pathR).replace('.','_') + 'East']
+                # sigmaxx
+                sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=sigmaxx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathRadius),str(angleStart1),str(angleStart2),parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
+                # sigmayy
+                sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=sigmayy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathRadius),str(angleStart1),str(angleStart2),parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
+                # tauxy
+                tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=tauxy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathRadius),str(angleStart1),str(angleStart2),parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
+                # sigmazz
+                sigmazz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=sigmazz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'sigmazz-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
+                # tauzx
+                tauzx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=tauzx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauzx-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
+                # tauyz
+                tauyz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=tauyz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
+                #
+                circpath = session.paths['CircPath-R' + str(pathR).replace('.','_') + 'West']
+                # sigmaxx
+                sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=sigmaxx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathRadius),str(angleStart3),str(angleStart4),parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
+                # sigmayy
+                sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=sigmayy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathRadius),str(angleStart3),str(angleStart4),parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
+                # tauxy
+                tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=tauxy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathRadius),str(angleStart3),str(angleStart4),parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
+                # sigmazz
+                sigmazz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=sigmazz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'sigmazz-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
+                # tauzx
+                tauzx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=tauzx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauzx-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
+                # tauyz
+                tauyz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=tauyz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+    #=======================================================================
+    # END - extract stresses along circumferential paths
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - extract stresses along horizontal paths
+    #=======================================================================
+
+    if 'report-stresseshorizontalpaths' in parameters['simulation-pipeline']['analysis'].keys():
+        if parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along horizontal paths ...',True)
+            sessionOdb = session.openOdb(name=odbfullpath)
+            session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
+            pathYsLow = np.linspace(0,parameters['geometry']['Rf'],20,endpoint=True)
+            pathYsUp = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],20,endpoint=True)[1:]
+            csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stresseshorizontalpaths'
+            createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, y, xi, xf, FOLDER, FILENAME')
+            for yNum,pathY in enumerate(pathYsLow):
+                xEast = np.sqrt(parameters['geometry']['Rf']*parameters['geometry']['Rf']-pathY*pathY)
+                xWest = -xEast
+                session.Path(name='HPath-Y' + str(pathY) + 'East', type=POINT_LIST, expression=((xEast,pathY,0.0),(parameters['geometry']['L'],pathY,0.0)))
+                session.Path(name='HPath-Y' + str(pathY) + 'West', type=POINT_LIST, expression=((-parameters['geometry']['L'],pathY,0.0),(xWest,pathY,0.0)))
+                hpath = session.paths['HPath-Y' + str(pathY) + 'East']
+                # sigmaxx
+                sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=sigmaxx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + 'East' + '.dat']])
+                # sigmayy
+                sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=sigmayy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + 'East' + '.dat']])
+                # tauxy
+                tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=tauxy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'East' + '.dat']])
+                # sigmazz
+                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=sigmazz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + 'East' + '.dat']])
+                # tauzx
+                tauzx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=tauzx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauzx-HPath-Y' + str(pathY) + 'East' + '.dat']])
+                # tauyz
+                tauyz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=tauyz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + 'East' + '.dat']])
+                #
+                hpath = session.paths['HPath-Y' + str(pathY) + 'West']
+                # sigmaxx
+                sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=sigmaxx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + 'West' + '.dat']])
+                # sigmayy
+                sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=sigmayy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + 'West' + '.dat']])
+                # tauxy
+                tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=tauxy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'West' + '.dat']])
+                # sigmazz
+                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=sigmazz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + 'West' + '.dat']])
+                # tauzx
+                tauzx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=tauzx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'tauzx-HPath-Y' + str(pathY) + 'West' + '.dat']])
+                # tauyz
+                tauyz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=tauyz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + 'West' + '.dat']])
+            for yNum,pathY in enumerate(pathYsUp):
+                session.Path(name='HPath-Y' + str(pathY), type=POINT_LIST, expression=((-parameters['geometry']['L'],pathY,0.0),(parameters['geometry']['L'],pathY,0.0)))
+                hpath = session.paths['HPath-Y' + str(pathY)]
+                # sigmaxx
+                sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + '.dat'),xyData=sigmaxx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + '.dat']])
+                # sigmayy
+                sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + '.dat'),xyData=sigmayy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + '.dat']])
+                # tauxy
+                tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + '.dat'),xyData=tauxy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + '.dat']])
+                # sigmazz
+                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + '.dat'),xyData=sigmazz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + '.dat']])
+                # tauzx
+                tauzx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-HPath-Y' + str(pathY) + '.dat'),xyData=tauzx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauzx-HPath-Y' + str(pathY) + '.dat']])
+                # tauyz
+                tauyz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + '.dat'),xyData=tauyz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + '.dat']])
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+    #=======================================================================
+    # END - extract stresses along horizontal paths
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - extract stresses along vertical paths
+    #=======================================================================
+
+    if 'report-stressesverticalpaths' in parameters['simulation-pipeline']['analysis'].keys():
+        if parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along vertical paths ...',True)
+            sessionOdb = session.openOdb(name=odbfullpath)
+            session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
+            pathXs = np.linspace(-parameters['geometry']['L'],parameters['geometry']['L'],40,endpoint=True)
+            csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stressesverticalpaths'
+            createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, x, yi, yf, FOLDER, FILENAME')
+            for xNum,pathX in enumerate(pathXs):
+                if pathX>-parameters['geometry']['Rf'] and pathX<parameters['geometry']['Rf']:
+                    startY = np.sqrt(parameters['geometry']['Rf']*parameters['geometry']['Rf']-pathX*pathX)
+                else:
+                    startY = 0.0
+                session.Path(name='VPath-X' + str(pathX), type=POINT_LIST, expression=((pathX,startY,0.0),(pathX,parameters['geometry']['L'],0.0)))
+                vpath = session.paths['VPath-X' + str(pathX)]
+                # sigmaxx
+                sigmaxx = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-VPath-X' + str(pathX) + '.dat'),xyData=sigmaxx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmaxx-VPath-X' + str(pathX) + '.dat']])
+                # sigmayy
+                sigmayy = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-VPath-X' + str(pathX) + '.dat'),xyData=sigmayy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmayy-VPath-X' + str(pathX) + '.dat']])
+                # tauxy
+                tauxy = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-VPath-X' + str(pathX) + '.dat'),xyData=tauxy,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-VPath-X' + str(pathX) + '.dat']])
+                # sigmazz
+                sigmazz = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-VPath-X' + str(pathX) + '.dat'),xyData=sigmazz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmazz-VPath-X' + str(pathX) + '.dat']])
+                # tauzx
+                tauzx = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-VPath-X' + str(pathX) + '.dat'),xyData=tauzx,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauzx-VPath-X' + str(pathX) + '.dat']])
+                # tauyz
+                tauyz = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-VPath-X' + str(pathX) + '.dat'),xyData=tauyz,appendMode=OFF)
+                appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauyz-VPath-X' + str(pathX) + '.dat']])
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+
+    #=======================================================================
+    # END - extract stresses along vertical paths
+    #=======================================================================
+
+    #=======================================================================
     # BEGIN - extract stresses along the bonded interface
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along the bonded interface ...',True)
 
-    if parameters['simulation-pipeline']['analysis']['report-stressesatsymmetryline']:
+    if parameters['simulation-pipeline']['analysis']['report-stressesatbondedinterface']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract node labels of crack faces ...',True)
         crackfaceNodes = []
         crackfaceUndefcoords = getFieldOutput(odb,initialStep,0,'COORD',fiberCrackfaceNodes)
@@ -7629,9 +8086,7 @@ def main(argv):
     createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_TIME','ITERATION PARAMETER VALUE, T(createRVE()) [s], T(modifyRVEinputfile()) [s], T(runRVEsimulation()) [s], T(analyzeRVEresults()) [s],TOTAL TIME FOR ITERATION [s]')
 
     createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata'],'Rf [um],L [um],L/Rf [-],Vff [-],BC,applied strain [-],fiber,matrix')
-    appendCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata'],[[RVEparams['geometry']['Rf'],RVEparams['geometry']['L'],RVEparams['geometry']['L']/RVEparams['geometry']['Rf'],(RVEparams['geometry']['Rf']*RVEparams['geometry']['Rf']*np.pi)/(4*RVEparams['geometry']['L']*RVEparams['geometry']['L']),
-                                                                                                                      'FREE',RVEparams['loads']['1']['value'][0],RVEparams['sections']['1']['material'],RVEparams['sections']['2']['material']]])
-
+    appendCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata'],[[RVEparams['geometry']['Rf'],RVEparams['geometry']['L'],RVEparams['geometry']['L']/RVEparams['geometry']['Rf'],(RVEparams['geometry']['Rf']*RVEparams['geometry']['Rf']*np.pi)/(4*RVEparams['geometry']['L']*RVEparams['geometry']['L']),RVEparams['sections']['1']['material'],RVEparams['sections']['2']['material']]])
 
     createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist','ABSOLUTE PATH, NAME, TO PLOT, PLOT VARIABLES')
     appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata']+'.csv'),'MODEL-DATA',RVEparams['plot']['global']['inputdata']['toPlot'],RVEparams['plot']['global']['inputdata']['variables']]])

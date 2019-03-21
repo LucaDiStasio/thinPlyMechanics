@@ -3472,6 +3472,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # draw upper debonded fibers
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw partially debonded fibers above ...',True)
+    for nDebond in range(0,nDebonds):
+        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(Rf, 0.0+(nDebond+1)*2*L))
+    listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # if bounding ply is present, draw interface line
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw upper ply interface line ...',True)

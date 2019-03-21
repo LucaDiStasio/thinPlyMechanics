@@ -2976,6 +2976,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     modelname = parameters['input']['modelname']
     L = parameters['geometry']['L']
     Rf = parameters['geometry']['Rf']
+    nDebonds = parameters['geometry']['nDebonds']
     if 'full' in parameters['geometry']['fiber']['type']:
         CornerAy = -L
     elif 'half' in parameters['geometry']['fiber']['type']:

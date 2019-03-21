@@ -2988,18 +2988,19 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'boundingPly' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['northSide']['type']:
         nFibers = parameters['BC']['northSide']['nFibers']
         tRatio = parameters['BC']['northSide']['tRatio']
-        Lply = nFibers*(2*L)
+        Lply = (nFibers+nDebonds)*(2*L)
         Ludply = tRatio*(2*(L + Lply))
         CornerBy = L + Lply + Ludply
     elif 'boundingPly' in parameters['BC']['northSide']['type'] or 'adjacentFibers' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type']:
             tRatio = parameters['BC']['northSide']['nFibers']
+            Lply = tRatio*(2*L)
         else:
             tRatio = parameters['BC']['northSide']['tRatio']
-        Lply = tRatio*(2*L)
-        CornerBy = L + Lply
+            Lply = tRatio*(2*(L+nDebonds*(2*L)))
+        CornerBy = L + nDebonds*(2*L) + Lply
     else:
-        CornerBy = L
+        CornerBy = L + nDebonds*(2*L)
     if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         if 'quarter' in parameters['geometry']['fiber']['type']:
             skipLineToLogFile(logfilepath,'a',True)

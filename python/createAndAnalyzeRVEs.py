@@ -96,7 +96,7 @@ def printHelp():
     print >> sys.__stdout__,(' ')
     print >> sys.__stdout__,('                                              by')
     print >> sys.__stdout__,(' ')
-    print >> sys.__stdout__,('                                    Luca Di Stasio, 2016-2018')
+    print >> sys.__stdout__,('                                    Luca Di Stasio, 2016-2019')
     print >> sys.__stdout__,(' ')
     print >> sys.__stdout__,(' ')
     print >> sys.__stdout__,('*****************************************************************************************************')

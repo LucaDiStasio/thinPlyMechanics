@@ -3478,6 +3478,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(Rf, 0.0+(nDebond+1)*2*L))
         deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
         thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(nDebond) + '. Debond centered at ' + str(thetaDebond) + ' deg of size 2x' + str(thetaDebond) + ' deg',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(nDebond) + '  Start at ' + str(thetaDebond+deltathetaDebond) + ' deg and ends at ' + str(thetaDebond-deltathetaDebond) + ' deg (clockwise rotation)',True)
         xA = 0.95*Rf*np.cos((thetaDebond+deltathetaDebond)*np.pi/180.0)
         yA = 0.95*Rf*np.sin((thetaDebond+deltathetaDebond)*np.pi/180.0)
         xB = 0.95*Rf*np.cos((thetaDebond-deltathetaDebond)*np.pi/180.0)

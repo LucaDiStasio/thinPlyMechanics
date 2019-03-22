@@ -1,0 +1,157 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{2.5pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={draw=white!80.0!black,font=\fontsize{24}{14}\selectfont,row sep=7.5pt},
+legend image post style={xscale=1.5,yscale=1.5},
+legend cell align={left},
+legend pos=outer north east,
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+%xmin=0.0,
+%xmax=90.0,
+ymin=0.0,
+%xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$\delta\left[^{\circ}\right]$},
+ylabel={$G_{II}\left[\nicefrac{J}{m^{2}}\right]$},
+% LEGEND ENTRIES
+legend entries={},
+]
+
+% deltatheta = 10.0
+\pgfplotstableread{
+colnames 0 1 2 3 4 5 6 7
+delta 1.00000	0.50000	0.25000	0.20000	0.12500	0.10000	0.06250	0.05000
+G 0.02316841	0.02804428	0.03310018	0.03476191	0.03837135	0.04015972	0.04393857	0.04578182
+}\datatableA;
+\pgfplotstabletranspose[colnames from=colnames]\transposedatatableA{\datatableA}
+\addplot[only marks,mark size=\markersize,black,mark=square*]
+table[x=delta,y=G]{\transposedatatableA};
+\addlegendentry{$10.0^{\circ}$};
+
+% deltatheta = 20
+\pgfplotstableread{
+colnames 0 1 2 3 4 5 6 7
+delta 1.00000	0.50000	0.25000	0.20000	0.12500	0.10000	0.06250	0.05000
+G 0.12112545	0.13459587	0.14790753	0.15219794	0.16135894	0.16573461	0.17495872	0.17933896
+}\datatableB;
+\pgfplotstabletranspose[colnames from=colnames]\transposedatatableB{\datatableB}
+\addplot[only marks,mark size=\markersize,black,mark=square*,mark options={fill=white}]
+table[x=delta,y=G]{\transposedatatableB};
+\addlegendentry{$20.0^{\circ}$};
+
+% deltatheta = 30.0
+\pgfplotstableread{
+colnames 0 1 2 3 4 5 6 7
+delta 1.00000	0.50000	0.25000	0.20000	0.12500	0.10000	0.06250	0.05000
+G 0.29993026	0.32104752	0.34134249	0.34775261	0.36118331	0.36752801	0.38075204	0.38700335
+}\datatableC;
+\pgfplotstabletranspose[colnames from=colnames]\transposedatatableC{\datatableC}
+\addplot[only marks,mark size=\markersize,red,mark=*]
+table[x=delta,y=G]{\transposedatatableC};
+\addlegendentry{$30.0^{\circ}$};
+
+% deltatheta = 40.0
+\pgfplotstableread{
+colnames 0 1 2 3 4 5 6 7
+delta 1.00000	0.50000	0.25000	0.20000	0.12500	0.10000	0.06250	0.05000
+G 0.52530937	0.54904364	0.57107948	0.57803871	0.59236091	0.59891828	0.61255303	0.61883188
+}\datatableD;
+\pgfplotstabletranspose[colnames from=colnames]\transposedatatableD{\datatableD}
+\addplot[only marks,mark size=\markersize,red,mark=*,mark options={fill=white}]
+table[x=delta,y=G]{\transposedatatableD};
+\addlegendentry{$40.0^{\circ}$};
+
+% deltatheta = 50.0
+\pgfplotstableread{
+colnames 0 1 2 3 4 5 6 7
+delta 1.00000	0.50000	0.25000	0.20000	0.12500	0.10000	0.06250	0.05000
+G 0.73505199	0.75481541	0.77227578	0.77774377	0.78848632	0.79328452	0.80304258	0.80738372
+}\datatableE;
+\pgfplotstabletranspose[colnames from=colnames]\transposedatatableE{\datatableE}
+\addplot[only marks,mark size=\markersize,blue,mark=triangle*]
+table[x=delta,y=G]{\transposedatatableE};
+\addlegendentry{$50.0^{\circ}$};
+
+% deltatheta = 60.0
+\pgfplotstableread{
+colnames 0 1 2 3 4 5 6 7
+delta 1.00000	0.50000	0.25000	0.20000	0.12500	0.10000	0.06250	0.05000
+G 0.86574483	0.87577998	0.88337921	0.88548607	0.88937398	0.89094822	0.89359520	0.89464579
+}\datatableF;
+\pgfplotstabletranspose[colnames from=colnames]\transposedatatableF{\datatableF}
+\addplot[only marks,mark size=\markersize,blue,mark=triangle*,mark options={fill=white}]
+table[x=delta,y=G]{\transposedatatableF};
+\addlegendentry{$60.0^{\circ}$};
+
+\addplot[black,dashed, line width=\linewidth, domain=0.01:1.075]{-0.0076*ln(\x)+0.0228}node[black,pos=0.5,anchor=south west] {\Large$\mathbf{-0.0076\ln\delta+0.0228}$};
+
+\addplot[black,dashed, line width=\linewidth, domain=0.01:1.075]{-0.0194*ln(\x)+0.1211}node[black,pos=0.4,anchor=south west] {\Large$\mathbf{-0.0194\ln\delta+0.1211}$};
+
+\addplot[red,dashed, line width=\linewidth, domain=0.01:1.075]{-0.029*ln(\x)+0.3007}node[red,pos=0.4,anchor=north east] {\Large$\mathbf{-0.0290\ln\delta+0.3007}$};
+
+\addplot[red,dashed, line width=\linewidth, domain=0.01:1.075]{-0.0311*ln(\x)+0.5270}node[red,pos=0.8,anchor=north east] {\Large$\mathbf{-0.0311\ln\delta+0.5270}$};
+
+\addplot[blue,dashed, line width=\linewidth, domain=0.01:1.075]{-0.024*ln(\x)+0.7375}node[blue,pos=0.7,anchor=north east] {\Large$\mathbf{-0.0240\ln\delta+0.7375}$};
+
+\addplot[blue,dashed, line width=\linewidth, domain=0.01:1.075]{-0.0095*ln(\x)+0.8685}node[blue,pos=0.5,anchor=north east] {\Large$\mathbf{-0.0095\ln\delta+0.8685}$};
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

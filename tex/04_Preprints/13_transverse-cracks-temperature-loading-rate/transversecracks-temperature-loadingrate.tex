@@ -1,0 +1,214 @@
+\documentclass[review]{elsarticle}
+
+\usepackage{amsmath}
+\usepackage{lineno,hyperref}
+\modulolinenumbers[5]
+
+\journal{Composites Science and Technology}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Elsevier bibliography styles
+%%%%%%%%%%%%%%%%%%%%%%%
+%% To change the style, put a % in front of the second line of the current style and
+%% remove the % from the second line of the style you would like to use.
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Numbered
+%\bibliographystyle{model1-num-names}
+
+%% Numbered without titles
+%\bibliographystyle{model1a-num-names}
+
+%% Harvard
+%\bibliographystyle{model2-names.bst}\biboptions{authoryear}
+
+%% Vancouver numbered
+%\usepackage{numcompress}\bibliographystyle{model3-num-names}
+
+%% Vancouver name/year
+%\usepackage{numcompress}\bibliographystyle{model4-names}\biboptions{authoryear}
+
+%% APA style
+%\bibliographystyle{model5-names}\biboptions{authoryear}
+
+%% AMA style
+%\usepackage{numcompress}\bibliographystyle{model6-num-names}
+
+%% `Elsevier LaTeX' style
+\bibliographystyle{elsarticle-num}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Effect of temperature and loading rate on the propagation of transverse cracks in gllass fiber/epoxy cross-ply laminates}
+%\tnotetext[mytitlenote]{Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.}
+
+%% Group authors per affiliation:
+%\author{Luca Di Stasio\fnref{myfootnote}}
+%\address{Radarweg 29, Amsterdam}
+%\fntext[myfootnote]{Since 1880.}
+
+%% or include affiliations in footnotes:
+\author[nancy,lulea]{Luca Di Stasio}
+\author[lulea]{Janis Varna}
+%\author[nancy]{Zoubir Ayadi}
+%\ead[url]{www.elsevier.com}
+
+%\author[mysecondaryaddress]{Global Customer Service\corref{mycorrespondingauthor}}
+%\cortext[mycorrespondingauthor]{Corresponding author}
+%\ead{support@elsevier.com}
+
+\address[nancy]{Universit\'e de Lorraine, EEIGM, IJL, 6 Rue Bastien Lepage, F-54010 Nancy, France}
+\address[lulea]{Lule\aa\ University of Technology, University Campus, SE-97187 Lule\aa, Sweden}
+
+\begin{abstract}
+A set of criteria is proposed to predict the initiation and propagation of fiber-matrix interface debonds and the transition to collective mesoscopic behavior in the form of transverse cracks. It features:
+\begin{itemize}
+\item a group of deterministic equations to determine the driving quantities of the fracture process: Energy Release Rates and dilatational energy;
+\item a set of probabilistic expressions to quantify the random distributions of critical values.
+\end{itemize}
+\end{abstract}
+
+%\begin{keyword}
+%\texttt{elsarticle.cls}\sep \LaTeX\sep Elsevier \sep template
+%\MSC[2010] 00-01\sep  99-00
+%\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
+
+\section{Normalization function}
+
+\begin{equation}
+G_{0}=G_{0}\left(\varepsilon_{0},V_{f},E_{1f},E_{2f},E_{m},\nu_{12f},\nu_{23f},\nu_{m},G_{12f},G_{23f}\right)
+\end{equation}
+
+Given the elastic properties of the transversely isotropic UD ply $E_{1},E_{2},nu_{12},nu_{23}$, for a $90^{\circ}$ ply under transverse tension the cross section along the direction of the load coincides with the plane of transversal isotropy. It is thus possible, for a system in plane strain, to define equivalent isotropic Young's modulus and Poisson's ratio as follows. The effective Young's modulus and Poisson's ratio in plane strain in the plane of isotropy are defined as
+
+\begin{equation}\label{eq:equiplanestraintransiso}
+E^{*}=\frac{E_{2}}{1-\nu_{21}\nu_{12}}\qquad\nu^{*}=\frac{\nu_{23}+\nu_{21}\nu_{12}}{1+\nu_{23}}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+G_{0}=\frac{\sigma_{0}^{2}}{E^{*}}\pi R_{f}\quad&\text{for a stress or force controlled test}\\[5pt]
+G_{0}=E^{*}\varepsilon_{0}^{2}\pi R_{f}\quad&\text{for a strain or displacement controlled test}
+\end{split}
+\end{equation}
+
+\section{Boundary conditions}
+
+The ratio of maximum radial and tangential crack displacements with respect to the free case (single repeating element or single fiber layer ply?) can be considered as proxies for the effect of boundary conditions
+
+\begin{equation}
+\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}
+\end{equation}
+
+\section{Initiation of fiber-matrix debonds}
+
+Following Asp,
+
+\begin{equation}
+U_{\nu,m}=\frac{1-2\nu}{6E}\left(\sigma_{1,m}+\sigma_{2,m}+\sigma_{3,m}\right)
+\end{equation}
+
+\begin{equation}
+U_{\nu,m}\geq U_{\nu,m}^{cr}
+\end{equation}
+
+\begin{equation}
+\theta_{0}=\max_{\theta}{U_{\nu,m}},\quad U_{\nu,m}\geq U_{\nu,m}^{cr}
+\end{equation}
+
+\begin{itemize}[$\rightarrow$]
+\item Measurable with hybrid laminate $[[90^{\circ}_{2},0^{\circ}]_{S},epoxy,[90^{\circ}_{2},0^{\circ}]_{S}]$ as in Paper III Asp's thesis; from which we can derive $p\left(U_{\nu,m}^{cr}\right)$
+\end{itemize}
+
+\section{Propagation of fiber-matrix debonds}
+
+\begin{equation}
+\frac{G_{I}}{G_{0}}=\begin{cases}
+A_{\delta}\left(V_{f}\right)\log\left(\delta\right)&+A_{\Delta\theta}\left(V_{f},\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)\sin\left(B_{\Delta\theta}\Delta\theta+C_{\Delta\theta}\right)+D\\
+&B_{\Delta\theta}\Delta\theta_{max}\left(V_{f},\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)+C_{\Delta\theta}=\frac{\pi}{2}\\
+&B_{\Delta\theta}\Delta\theta_{CZ}\left(\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)+C_{\Delta\theta}=\pi\\
+&for\ \Delta\theta<\Delta\theta_{CZ}\left(\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)\\
+0&otherwise
+\end{cases}
+\end{equation}
+
+\begin{equation}
+\frac{G_{II}}{G_{0}}=\begin{cases}
+E_{\delta}\left(V_{f}\right)\log\left(\delta\right)&+F_{\Delta\theta}\left(V_{f},\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)\sin\left(G_{\Delta\theta}\Delta\theta+H_{\Delta\theta}\right)+\\&+I_{\Delta\theta}\left(V_{f},\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)\sin\left(2G_{\Delta\theta}\Delta\theta+H_{\Delta\theta}\right)+L\\
+&G_{\Delta\theta}\Delta\theta_{max}\left(V_{f},\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)+H_{\Delta\theta}=\frac{\pi}{2}\\
+&G_{\Delta\theta}\Delta\theta_{CZ}\left(\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)+H_{\Delta\theta}=\pi\\
+&for\ \Delta\theta<\Delta\theta_{CZ}\left(\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)\\
+F_{\Delta\theta}\left(V_{f},\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)&\sin\left(G_{\Delta\theta}\Delta\theta+H_{\Delta\theta}\right)+\\&+I_{\Delta\theta}\left(V_{f},\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)\sin\left(2G_{\Delta\theta}\Delta\theta+H_{\Delta\theta}\right)+L\\
+&G_{\Delta\theta}\Delta\theta_{max}\left(V_{f},\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)+H_{\Delta\theta}=\frac{\pi}{2}\\
+&G_{\Delta\theta}\Delta\theta_{CZ}\left(\frac{u^{BC}_{r,max}}{u^{free}_{r,max}},\frac{u^{BC}_{\theta,max}}{u^{free}_{\theta,max}}\right)+H_{\Delta\theta}=\pi\\
+&otherwise
+\end{cases}
+\end{equation}
+
+\begin{equation}
+\frac{\Delta\Phi}{\Delta\theta}=\begin{cases}
+A_{\Delta\Phi}\left(\Delta\theta-\Delta\theta_{CZ}\right)\ for\ \Delta\theta\geq\Delta\theta_{CZ}\\
+0\ otherwise
+\end{cases}
+\end{equation}
+
+\begin{equation}
+\Delta\Phi=\begin{cases}
+A_{\Delta\Phi}\left(\Delta\theta-\Delta\theta_{CZ}\right)^{2}\ for\ \Delta\theta\geq\Delta\theta_{CZ}\\
+0\ otherwise
+\end{cases}
+\end{equation}
+
+\section{Fracture toughness}
+
+\begin{equation}
+G_{c}=G_{Ic}\left(1+\tan^{2}{\left(\left(1-\lambda\right)\psi\right)}\right)\qquad\psi=\tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right)
+\end{equation}
+
+\em{Hypothesis}
+
+\begin{equation}
+p\left(\Delta\theta\right)=p\left(\Delta\theta|\varepsilon\right)\sim\frac{1}{\sqrt{2\pi}\sigma_{\Delta\theta}\left(\varepsilon\right)}e^{\left(\frac{\Delta\theta-\overline{\Delta\theta}}{\sigma_{\Delta\theta}}\left(\varepsilon\right)\right)}
+\end{equation}
+
+\begin{itemize}[$\rightarrow$]
+\item Verified by measuring debond's size at different strain levels (see preliminary experimental work)\\
+\end{itemize}
+
+\begin{equation}
+\begin{cases}
+G_{TOT}\left(\Delta\theta\right)=G_{Ic}\left(1+\tan^{2}{\left(\left(1-\lambda\right)\psi\right)}\right)\\
+\psi=\tan^{-1}\left(\sqrt{\frac{G_{II}\left(\Delta\theta\right)}{G_{I}\left(\Delta\theta\right)}}\right)
+\end{cases}\quad\forall\ \Delta\theta : p(\Delta\theta)\neq 0
+\end{equation}
+
+\begin{equation}
+p\left(G_{c}|\psi\right)=p\left(G_{Ic}|\psi\right)p\left(\lambda|\psi\right)
+\end{equation}
+
+\section{Transition to collective mesoscopic behavior}
+
+\begin{equation}
+\begin{cases}
+\frac{G_{TOT}}{G_{0}}|_{debond}&>\frac{G_{TOT}}{G_{0}}|_{transverse\ crack}\\ &\rightarrow\text{\scriptsize Propagation of debonds at fiber/matrix interface level will occur, discrete events, "debonds' regime"}\\
+\frac{G_{TOT}}{G_{0}}|_{debond}&<\frac{G_{TOT}}{G_{0}}|_{transverse\ crack}\\ &\rightarrow\text{\scriptsize Propagation of transverse cracks will occur, collective behavior of debonds}\\
+&\quad\text{\scriptsize inter-fiber matrix cracks propagating and coalescing, "transverse cracks' regime"}\\
+\end{cases}
+\end{equation}
+
+\section{Global propagation function}
+
+\em{Hypothesis}
+
+\begin{equation}
+\frac{G_{TOT}}{G_{0}}\left(a,\frac{t_{0^{\circ}}}{t_{90^{\circ}}}\right)=-A\cdot\left(\frac{t_{0^{\circ}}}{t_{90^{\circ}}}-\frac{t_{0^{\circ}}}{t_{90^{\circ}}}|_{ref}\right)^{2n+1}\sqrt{a}+\frac{G_{TOT}}{G_{0}}|_{0}
+\end{equation}
+
+\end{document}

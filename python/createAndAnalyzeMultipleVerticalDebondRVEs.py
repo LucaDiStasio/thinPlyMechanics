@@ -4368,6 +4368,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # assign seam
     model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
 
+    for nDebond in range(0,nDebonds):
+        model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond)+'-DEBONDEDINTERFACE'])
+
     if 'inverseSquareRoot' in parameters['singularity']['type']:
         midNodePos = 0.25
     else:

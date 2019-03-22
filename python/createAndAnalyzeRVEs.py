@@ -3769,6 +3769,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+    setsOfEdgesData = []
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-CENTERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK-CTUP'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED-CTUP'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED-CTUP'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK-CTLOW'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED-CTLOW'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED-CTLOW'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
@@ -3824,7 +3825,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-
+    setsOfEdgesData = []
+    
     if ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']) and not 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']:
             RVEpart.SetByBoolean(name='UPPERSIDE', sets=[RVEpart.sets['CENTER-RUC-UPPERSIDE'],RVEpart.sets['RIGHT-HOMOPLY-UPPERSIDE'],RVEpart.sets['LEFT-HOMOPLY-UPPERSIDE']])

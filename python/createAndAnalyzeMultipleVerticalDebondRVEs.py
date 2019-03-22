@@ -4374,8 +4374,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     for nDebond in range(0,nDebonds):
         model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond+1)+'-DEBONDEDINTERFACE'])
-        masterSurface = model.rootAssembly.Surface(side1Edges=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond+1)+'-DEBONDEDINTERFACE'],name='DEBFIBER-N'+str(nDebond+1)+'-MASTERSURFACE')
-        slaveSurface = model.rootAssembly.Surface(side2Edges=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond+1)+'-DEBONDEDINTERFACE'],name='DEBFIBER-N'+str(nDebond+1)+'-SLAVESURFACE')
+        masterSurface = model.rootAssembly.Surface(side1Edges=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond+1)+'-DEBONDEDINTERFACE'].edges,name='DEBFIBER-N'+str(nDebond+1)+'-MASTERSURFACE')
+        slaveSurface = model.rootAssembly.Surface(side2Edges=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond+1)+'-DEBONDEDINTERFACE'].edges,name='DEBFIBER-N'+str(nDebond+1)+'-SLAVESURFACE')
         mdb.models['Model-1'].SurfaceToSurfaceContactStd(name='DEBFIBER-N'+str(nDebond+1)+'-CONTACTINTERACTION',createStepName='Initial',master=masterSurface,slave=slaveSurface,sliding=SMALL,interactionProperty='PARTIALLYDEBONDEDFIBERS')
 
     if 'inverseSquareRoot' in parameters['singularity']['type']:

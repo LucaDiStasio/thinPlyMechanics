@@ -4477,6 +4477,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         regionSets.append(['LEFT-FIBERS',QUAD_DOMINATED,FREE])
 
+    for nDebond in range(0,nDebonds):
+        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-MATRIX-CIRCSEC',QUAD,STRUCTURED])
+        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-FIBER-CIRCSEC',QUAD,STRUCTURED])
+        regionSets.append(['DEBFIBER-N'+str(nDebonds)+'-FIBER-BODY',QUAD_DOMINATED,FREE])
+
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
 

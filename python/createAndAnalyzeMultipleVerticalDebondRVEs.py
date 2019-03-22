@@ -3522,15 +3522,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fibers above ...',True)
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0+(nFiber+1)*2*L), point1=(Rf, 0.0+(nFiber+1)*2*L))
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0+nDebonds*2*L+(nFiber+1)*2*L), point1=(Rf, 0.0+nDebonds*2*L+(nFiber+1)*2*L))
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for mFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    fiberSketch.CircleByCenterPerimeter(center=((mFiber+1)*2*L, 0.0+(nFiber+1)*2*L), point1=((mFiber+1)*2*L+Rf, 0.0+(nFiber+1)*2*L))
+                    fiberSketch.CircleByCenterPerimeter(center=((mFiber+1)*2*L, 0.0+nDebonds*2*L+(nFiber+1)*2*L), point1=((mFiber+1)*2*L+Rf, 0.0+nDebonds*2*L+(nFiber+1)*2*L))
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                    fiberSketch.CircleByCenterPerimeter(center=(-(mFiber+1)*2*L, 0.0+(nFiber+1)*2*L), point1=(-(mFiber+1)*2*L+Rf, 0.0+(nFiber+1)*2*L))
+                    fiberSketch.CircleByCenterPerimeter(center=(-(mFiber+1)*2*L, 0.0+nDebonds*2*L+(nFiber+1)*2*L), point1=(-(mFiber+1)*2*L+Rf, 0.0+nDebonds*2*L+(nFiber+1)*2*L))
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
@@ -3541,6 +3541,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         else:
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 fiberSketch.ArcByCenterEnds(center=((nFiber+1)*2*L, 0.0), point1=((nFiber+1)*2*L-Rf, 0.0), point2=((nFiber+1)*2*L+Rf,0.0), direction=CLOCKWISE)
+        for nDebond in range(0,nDebonds):
+            fiberSketch.CircleByCenterPerimeter(center=((nFiber+1)*2*L, 0.0+(nDebond+1)*2*L), point1=((nFiber+1)*2*L+Rf, 0.0+(nDebond+1)*2*L))
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
@@ -3551,6 +3553,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         else:
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 fiberSketch.ArcByCenterEnds(center=(-(nFiber+1)*2*L, 0.0), point1=(-(nFiber+1)*2*L-Rf, 0.0), point2=(-(nFiber+1)*2*L+Rf,0.0), direction=CLOCKWISE)
+        for nDebond in range(0,nDebonds):
+            fiberSketch.CircleByCenterPerimeter(center=(-(nFiber+1)*2*L, 0.0+(nDebond+1)*2*L), point1=(-(nFiber+1)*2*L+Rf, 0.0+(nDebond+1)*2*L))
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)

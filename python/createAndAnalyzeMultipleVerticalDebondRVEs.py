@@ -3979,6 +3979,26 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
+    for nDebond in range(0,nDebonds):
+        RVEpart.SetByBoolean(name='DEBFIBER-N'+str(nDebonds)+'-FIBER', sets=[RVEpart.sets['DEBFIBER-N'+str(nDebonds)+'-FIBER-BODY'],RVEpart.sets['DEBFIBER-N'+str(nDebond)+'-FIBER-CIRCSEC']])
+
+    debondedFibersSets = []
+    for nDebond in range(0,nDebonds):
+        debondedFibersSets.append(RVEpart.sets['DEBFIBER-N'+str(nDebonds)+'-FIBER'])
+        if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+            for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+                debondedFibersSets.append(RVEpart.sets['DEBFIBER-ROW-N'+str(nDebond)+'RIGHT-FIBER-N'+str(nFiber)])
+        if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+            for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
+                debondedFibersSets.append(RVEpart.sets['DEBFIBER-ROW-N'+str(nDebond)+'LEFT-FIBER-N'+str(nFiber)])
+
+    RVEpart.SetByBoolean(name='DEBFIBER-ROWS-FIBERS', sets=debondedFibersSets)
+
+    debondedFibersSets = []
+    for nDebond in range(0,nDebonds):
+        debondedFibersSets.append(RVEpart.sets['DEBFIBER-N'+str(nDebond)+'-MATRIX-CIRCSEC'])
+    RVEpart.SetByBoolean(name='DEBFIBER-ROWS-MATRIX', sets=debondedFibersSets)
+
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         RVEpart.SetByBoolean(name='MATRIX-EXTANNULUS', sets=[RVEpart.sets['MATRIX-EXTANNULUS-CENTERCRACK'],RVEpart.sets['MATRIX-EXTANNULUS-UPPERCRACK-CTUP'],RVEpart.sets['MATRIX-EXTANNULUS-FIRSTBOUNDED-CTUP'],RVEpart.sets['MATRIX-EXTANNULUS-SECONDBOUNDED-CTUP'],RVEpart.sets['MATRIX-EXTANNULUS-UPPERCRACK-CTLOW'],RVEpart.sets['MATRIX-EXTANNULUS-FIRSTBOUNDED-CTLOW'],RVEpart.sets['MATRIX-EXTANNULUS-SECONDBOUNDED-CTLOW'],RVEpart.sets['MATRIX-EXTANNULUS-RESTBOUNDED']])
     else:
@@ -3991,7 +4011,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
-    RVEpart.SetByBoolean(name='MATRIX', sets=[RVEpart.sets['MATRIX-BODY'],RVEpart.sets['MATRIX-INTERMEDIATEANNULUS'],RVEpart.sets['MATRIX-INTANNULUS']])
+    RVEpart.SetByBoolean(name='MATRIX', sets=[RVEpart.sets['MATRIX-BODY'],RVEpart.sets['MATRIX-INTERMEDIATEANNULUS'],RVEpart.sets['MATRIX-INTANNULUS'],RVEpart.sets['DEBFIBER-ROWS-MATRIX']])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MATRIX',True)
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
@@ -4056,7 +4076,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             booleanSets.append(RVEpart.sets[setOfFacesData[-1]])
         RVEpart.SetByBoolean(name='LEFT-FIBERS', sets=booleanSets)
 
-    booleanSets = [RVEpart.sets['FIBER'],RVEpart.sets['MATRIX']]
+    booleanSets = [RVEpart.sets['FIBER'],RVEpart.sets['MATRIX'],RVEpart.sets['DEBFIBER-ROWS-FIBERS']]
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         booleanSets.append(RVEpart.sets['BOUNDING-PLY'])
     if 'boundingPly' in parameters['BC']['rightSide']['type']:

@@ -3961,6 +3961,13 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                            [R1*np.cos((beta+0.5*deltaphi)*np.pi/180), R1*np.sin((beta+0.5*deltaphi)*np.pi/180), 0,'MATRIX-INTANNULUS-SECONDBOUNDED'],
                            [R1*np.cos((gamma+0.5*(180-gamma))*np.pi/180), R1*np.sin((gamma+0.5*(180-gamma))*np.pi/180), 0,'MATRIX-INTANNULUS-RESTBOUNDED']]
 
+    for nDebond in range(0,nDebonds):
+        deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
+        thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
+        setsOfFacesData.append([1.025*Rf*np.cos(thetaDebond*np.pi/180), (nDebond+1)*2*L+1.025*Rf*np.sin(thetaDebond*np.pi/180), 0.0,'DEBFIBER-N'+str(nDebonds)+'-MATRIX-CIRCSEC'])
+        setsOfFacesData.append([0.975*Rf*np.cos(thetaDebond*np.pi/180), (nDebond+1)*2*L+0.975*Rf*np.sin(thetaDebond*np.pi/180), 0.0,'DEBFIBER-N'+str(nDebonds)+'-FIBER-CIRCSEC'])
+        setsOfFacesData.append([0.0, (nDebond+1)*2*L, 0.0,'DEBFIBER-N'+str(nDebonds)+'-FIBER-BODY'])
+
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 

@@ -3476,6 +3476,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw partially debonded fibers above ...',True)
     for nDebond in range(0,nDebonds):
         fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(Rf, 0.0+(nDebond+1)*2*L))
+        deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
+        thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
+        xA = Rf*np.cos((thetaDebond-deltathetaDebond)*np.pi/180.0)
+        yA = Rf*np.sin((thetaDebond-deltathetaDebond)*np.pi/180.0)
+        xB = Rf*np.cos((thetaDebond+deltathetaDebond)*np.pi/180.0)
+        yB = Rf*np.sin((thetaDebond+deltathetaDebond)*np.pi/180.0)
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # if bounding ply is present, draw interface line

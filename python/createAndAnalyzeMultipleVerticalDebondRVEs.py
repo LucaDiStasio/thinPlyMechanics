@@ -3478,8 +3478,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(Rf, 0.0+(nDebond+1)*2*L))
         deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
         thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(nDebond) + '. Debond centered at ' + str(thetaDebond) + ' deg of size 2x' + str(thetaDebond) + ' deg',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(nDebond) + '  Start at ' + str(thetaDebond+deltathetaDebond) + ' deg and ends at ' + str(thetaDebond-deltathetaDebond) + ' deg (clockwise rotation)',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(nDebond+1) + '. Debond centered at ' + str(thetaDebond) + ' deg of size 2x' + str(thetaDebond) + ' deg',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(nDebond+1) + '  Start at ' + str(thetaDebond+deltathetaDebond) + ' deg and ends at ' + str(thetaDebond-deltathetaDebond) + ' deg (clockwise rotation)',True)
         xA = 0.95*Rf*np.cos((thetaDebond+deltathetaDebond)*np.pi/180.0)
         yA = 0.95*Rf*np.sin((thetaDebond+deltathetaDebond)*np.pi/180.0)
         xB = 0.95*Rf*np.cos((thetaDebond-deltathetaDebond)*np.pi/180.0)
@@ -3818,27 +3818,27 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for nDebond in range(0,nDebonds):
         deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
         thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
-        setsOfEdgesData.append([0.975*Rf*np.cos((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0),0.975*Rf*np.sin((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0)+(nDebond+1)*2*L,0.0,1.025*Rf*np.cos((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0),1.025*Rf*np.sin((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond)+'-BONDEDINTERFACE'])
-        setsOfEdgesData.append([0.975*Rf*np.cos(thetaDebond*np.pi/180.0),0.975*Rf*np.sin(thetaDebond*np.pi/180.0)+(nDebond+1)*2*L,0.0,1.025*Rf*np.cos(thetaDebond*np.pi/180.0),1.025*Rf*np.sin(thetaDebond*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond)+'-DEBONDEDINTERFACE'])
-        setsOfEdgesData.append([0.945*Rf*np.cos((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0),0.945*Rf*np.sin((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0)+(nDebond+1)*2*L,0.0,0.955*Rf*np.cos((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0),0.955*Rf*np.sin((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond)+'-FIBERARC'])
-        setsOfEdgesData.append([1.045*Rf*np.cos((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0),1.045*Rf*np.sin((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0)+(nDebond+1)*2*L,0.0,1.055*Rf*np.cos((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0),1.055*Rf*np.sin((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond)+'-MATRIXARC'])
-        setsOfEdgesData.append([0.975*Rf*np.cos((thetaDebond+deltathetaDebond+1.0)*np.pi/180.0),0.975*Rf*np.sin((thetaDebond+deltathetaDebond+1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,0.975*Rf*np.cos((thetaDebond+deltathetaDebond-1.0)*np.pi/180.0),0.975*Rf*np.sin((thetaDebond+deltathetaDebond-1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond)+'-STARTFIBERCIRCSEC'])
-        setsOfEdgesData.append([0.975*Rf*np.cos((thetaDebond-deltathetaDebond+1.0)*np.pi/180.0),0.975*Rf*np.sin((thetaDebond-deltathetaDebond+1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,0.975*Rf*np.cos((thetaDebond-deltathetaDebond-1.0)*np.pi/180.0),0.975*Rf*np.sin((thetaDebond-deltathetaDebond-1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond)+'-ENDFIBERCIRCSEC'])
-        setsOfEdgesData.append([1.025*Rf*np.cos((thetaDebond+deltathetaDebond+1.0)*np.pi/180.0),1.025*Rf*np.sin((thetaDebond+deltathetaDebond+1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,1.025*Rf*np.cos((thetaDebond+deltathetaDebond-1.0)*np.pi/180.0),1.025*Rf*np.sin((thetaDebond+deltathetaDebond-1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond)+'-STARTMATRIXCIRCSEC'])
-        setsOfEdgesData.append([1.025*Rf*np.cos((thetaDebond-deltathetaDebond+1.0)*np.pi/180.0),1.025*Rf*np.sin((thetaDebond-deltathetaDebond+1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,1.025*Rf*np.cos((thetaDebond-deltathetaDebond-1.0)*np.pi/180.0),1.025*Rf*np.sin((thetaDebond-deltathetaDebond-1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond)+'-ENDMATRIXCIRCSEC'])
+        setsOfEdgesData.append([0.975*Rf*np.cos((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0),0.975*Rf*np.sin((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0)+(nDebond+1)*2*L,0.0,1.025*Rf*np.cos((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0),1.025*Rf*np.sin((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond+1)+'-BONDEDINTERFACE'])
+        setsOfEdgesData.append([0.975*Rf*np.cos(thetaDebond*np.pi/180.0),0.975*Rf*np.sin(thetaDebond*np.pi/180.0)+(nDebond+1)*2*L,0.0,1.025*Rf*np.cos(thetaDebond*np.pi/180.0),1.025*Rf*np.sin(thetaDebond*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond+1)+'-DEBONDEDINTERFACE'])
+        setsOfEdgesData.append([0.945*Rf*np.cos((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0),0.945*Rf*np.sin((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0)+(nDebond+1)*2*L,0.0,0.955*Rf*np.cos((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0),0.955*Rf*np.sin((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond+1)+'-FIBERARC'])
+        setsOfEdgesData.append([1.045*Rf*np.cos((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0),1.045*Rf*np.sin((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0)+(nDebond+1)*2*L,0.0,1.055*Rf*np.cos((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0),1.055*Rf*np.sin((thetaDebond+deltathetaDebond+0.05*(180.0-deltathetaDebond))*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond+1)+'-MATRIXARC'])
+        setsOfEdgesData.append([0.975*Rf*np.cos((thetaDebond+deltathetaDebond+1.0)*np.pi/180.0),0.975*Rf*np.sin((thetaDebond+deltathetaDebond+1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,0.975*Rf*np.cos((thetaDebond+deltathetaDebond-1.0)*np.pi/180.0),0.975*Rf*np.sin((thetaDebond+deltathetaDebond-1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond+1)+'-STARTFIBERCIRCSEC'])
+        setsOfEdgesData.append([0.975*Rf*np.cos((thetaDebond-deltathetaDebond+1.0)*np.pi/180.0),0.975*Rf*np.sin((thetaDebond-deltathetaDebond+1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,0.975*Rf*np.cos((thetaDebond-deltathetaDebond-1.0)*np.pi/180.0),0.975*Rf*np.sin((thetaDebond-deltathetaDebond-1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond+1)+'-ENDFIBERCIRCSEC'])
+        setsOfEdgesData.append([1.025*Rf*np.cos((thetaDebond+deltathetaDebond+1.0)*np.pi/180.0),1.025*Rf*np.sin((thetaDebond+deltathetaDebond+1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,1.025*Rf*np.cos((thetaDebond+deltathetaDebond-1.0)*np.pi/180.0),1.025*Rf*np.sin((thetaDebond+deltathetaDebond-1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond+1)+'-STARTMATRIXCIRCSEC'])
+        setsOfEdgesData.append([1.025*Rf*np.cos((thetaDebond-deltathetaDebond+1.0)*np.pi/180.0),1.025*Rf*np.sin((thetaDebond-deltathetaDebond+1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,1.025*Rf*np.cos((thetaDebond-deltathetaDebond-1.0)*np.pi/180.0),1.025*Rf*np.sin((thetaDebond-deltathetaDebond-1.0)*np.pi/180.0)+(nDebond+1)*2*L,0.0,'DEBFIBER-N'+str(nDebond+1)+'-ENDMATRIXCIRCSEC'])
 
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
             for nDebond in range(0,nDebonds):
                 deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
                 thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
-                setsOfEdgesData.append([(nFiber+1)*2*L+0.975*Rf,0.975*Rf+(nDebond+1)*2*L,0.0,(nFiber+1)*2*L+1.025*Rf,1.025*Rf+(nDebond+1)*2*L,0.0,'DEBFIBER-ROW-N'+str(nDebond)+'-FIBER-RIGHT-N'+str(nFiber)+'-INTERFACE'])
+                setsOfEdgesData.append([(nFiber+1)*2*L+0.975*Rf,0.975*Rf+(nDebond+1)*2*L,0.0,(nFiber+1)*2*L+1.025*Rf,1.025*Rf+(nDebond+1)*2*L,0.0,'DEBFIBER-ROW-N'+str(nDebond+1)+'-FIBER-RIGHT-N'+str(nFiber+1)+'-INTERFACE'])
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
             for nDebond in range(0,nDebonds):
                 deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
                 thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
-                setsOfEdgesData.append([-(nFiber+1)*2*L+0.975*Rf,0.975*Rf+(nDebond+1)*2*L,0.0,-(nFiber+1)*2*L+1.025*Rf,1.025*Rf+(nDebond+1)*2*L,0.0,'DEBFIBER-ROW-N'+str(nDebond)+'-FIBER-LEFT-N'+str(nFiber)+'-INTERFACE'])
+                setsOfEdgesData.append([-(nFiber+1)*2*L+0.975*Rf,0.975*Rf+(nDebond+1)*2*L,0.0,-(nFiber+1)*2*L+1.025*Rf,1.025*Rf+(nDebond+1)*2*L,0.0,'DEBFIBER-ROW-N'+str(nDebond+1)+'-FIBER-LEFT-N'+str(nFiber+1)+'-INTERFACE'])
 
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
@@ -3964,39 +3964,39 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for nDebond in range(0,nDebonds):
         deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
         thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
-        setsOfFacesData.append([1.025*Rf*np.cos(thetaDebond*np.pi/180), (nDebond+1)*2*L+1.025*Rf*np.sin(thetaDebond*np.pi/180), 0.0,'DEBFIBER-N'+str(nDebond)+'-MATRIX-CIRCSEC'])
-        setsOfFacesData.append([0.975*Rf*np.cos(thetaDebond*np.pi/180), (nDebond+1)*2*L+0.975*Rf*np.sin(thetaDebond*np.pi/180), 0.0,'DEBFIBER-N'+str(nDebond)+'-FIBER-CIRCSEC'])
-        setsOfFacesData.append([0.0, (nDebond+1)*2*L, 0.0,'DEBFIBER-N'+str(nDebond)+'-FIBER-BODY'])
+        setsOfFacesData.append([1.025*Rf*np.cos(thetaDebond*np.pi/180), (nDebond+1)*2*L+1.025*Rf*np.sin(thetaDebond*np.pi/180), 0.0,'DEBFIBER-N'+str(nDebond+1)+'-MATRIX-CIRCSEC'])
+        setsOfFacesData.append([0.975*Rf*np.cos(thetaDebond*np.pi/180), (nDebond+1)*2*L+0.975*Rf*np.sin(thetaDebond*np.pi/180), 0.0,'DEBFIBER-N'+str(nDebond+1)+'-FIBER-CIRCSEC'])
+        setsOfFacesData.append([0.0, (nDebond+1)*2*L, 0.0,'DEBFIBER-N'+str(nDebond+1)+'-FIBER-BODY'])
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         for nDebond in range(0,nDebonds):
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-                setsOfFacesData.append([(nFiber+1)*2*L, (nDebond+1)*2*L, 0.0,'DEBFIBER-ROW-N'+str(nDebond)+'RIGHT-FIBER-N'+str(nFiber)])
+                setsOfFacesData.append([(nFiber+1)*2*L, (nDebond+1)*2*L, 0.0,'DEBFIBER-ROW-N'+str(nDebond+1)+'RIGHT-FIBER-N'+str(nFiber+1)])
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         for nDebond in range(0,nDebonds):
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-                setsOfFacesData.append([(nFiber+1)*2*L, (nDebond+1)*2*L, 0.0,'DEBFIBER-ROW-N'+str(nDebond)+'LEFT-FIBER-N'+str(nFiber)])
+                setsOfFacesData.append([(nFiber+1)*2*L, (nDebond+1)*2*L, 0.0,'DEBFIBER-ROW-N'+str(nDebond+1)+'LEFT-FIBER-N'+str(nFiber+1)])
 
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
     for nDebond in range(0,nDebonds):
-        RVEpart.SetByBoolean(name='DEBFIBER-N'+str(nDebonds)+'-FIBER', sets=[RVEpart.sets['DEBFIBER-N'+str(nDebonds)+'-FIBER-BODY'],RVEpart.sets['DEBFIBER-N'+str(nDebond)+'-FIBER-CIRCSEC']])
+        RVEpart.SetByBoolean(name='DEBFIBER-N'+str(nDebond+1)+'-FIBER', sets=[RVEpart.sets['DEBFIBER-N'+str(nDebond+1)+'-FIBER-BODY'],RVEpart.sets['DEBFIBER-N'+str(nDebond+1)+'-FIBER-CIRCSEC']])
 
     debondedFibersSets = []
     for nDebond in range(0,nDebonds):
-        debondedFibersSets.append(RVEpart.sets['DEBFIBER-N'+str(nDebonds)+'-FIBER'])
+        debondedFibersSets.append(RVEpart.sets['DEBFIBER-N'+str(nDebond+1)+'-FIBER'])
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-                debondedFibersSets.append(RVEpart.sets['DEBFIBER-ROW-N'+str(nDebond)+'RIGHT-FIBER-N'+str(nFiber)])
+                debondedFibersSets.append(RVEpart.sets['DEBFIBER-ROW-N'+str(nDebond+1)+'RIGHT-FIBER-N'+str(nFiber+1)])
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-                debondedFibersSets.append(RVEpart.sets['DEBFIBER-ROW-N'+str(nDebond)+'LEFT-FIBER-N'+str(nFiber)])
+                debondedFibersSets.append(RVEpart.sets['DEBFIBER-ROW-N'+str(nDebond+1)+'LEFT-FIBER-N'+str(nFiber+1)])
 
     RVEpart.SetByBoolean(name='DEBFIBER-ROWS-FIBERS', sets=debondedFibersSets)
 
     debondedFibersSets = []
     for nDebond in range(0,nDebonds):
-        debondedFibersSets.append(RVEpart.sets['DEBFIBER-N'+str(nDebond)+'-MATRIX-CIRCSEC'])
+        debondedFibersSets.append(RVEpart.sets['DEBFIBER-N'+str(nDebond+1)+'-MATRIX-CIRCSEC'])
     RVEpart.SetByBoolean(name='DEBFIBER-ROWS-MATRIX', sets=debondedFibersSets)
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
@@ -4373,10 +4373,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
 
     for nDebond in range(0,nDebonds):
-        model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond)+'-DEBONDEDINTERFACE'])
-        masterSurface = model.rootAssembly.Surface(side1Edges=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond)+'-DEBONDEDINTERFACE'],name='DEBFIBER-N'+str(nDebond)+'-MASTERSURFACE')
-        slaveSurface = model.rootAssembly.Surface(side2Edges=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond)+'-DEBONDEDINTERFACE'],name='DEBFIBER-N'+str(nDebond)+'-SLAVESURFACE')
-        mdb.models['Model-1'].SurfaceToSurfaceContactStd(name='DEBFIBER-N'+str(nDebond)+'-CONTACTINTERACTION',createStepName='Initial',master=masterSurface,slave=slaveSurface,sliding=SMALL,interactionProperty='PARTIALLYDEBONDEDFIBERS')
+        model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond+1)+'-DEBONDEDINTERFACE'])
+        masterSurface = model.rootAssembly.Surface(side1Edges=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond+1)+'-DEBONDEDINTERFACE'],name='DEBFIBER-N'+str(nDebond+1)+'-MASTERSURFACE')
+        slaveSurface = model.rootAssembly.Surface(side2Edges=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond+1)+'-DEBONDEDINTERFACE'],name='DEBFIBER-N'+str(nDebond+1)+'-SLAVESURFACE')
+        mdb.models['Model-1'].SurfaceToSurfaceContactStd(name='DEBFIBER-N'+str(nDebond+1)+'-CONTACTINTERACTION',createStepName='Initial',master=masterSurface,slave=slaveSurface,sliding=SMALL,interactionProperty='PARTIALLYDEBONDEDFIBERS')
 
     if 'inverseSquareRoot' in parameters['singularity']['type']:
         midNodePos = 0.25
@@ -4478,17 +4478,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         regionSets.append(['LEFT-FIBERS',QUAD_DOMINATED,FREE])
 
     for nDebond in range(0,nDebonds):
-        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-MATRIX-CIRCSEC',QUAD,STRUCTURED])
-        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-FIBER-CIRCSEC',QUAD,STRUCTURED])
-        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-FIBER-BODY',QUAD_DOMINATED,FREE])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-MATRIX-CIRCSEC',QUAD,STRUCTURED])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-FIBER-CIRCSEC',QUAD,STRUCTURED])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-FIBER-BODY',QUAD_DOMINATED,FREE])
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for nDebond in range(0,nDebonds):
                 for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-                    regionSets.append(['DEBFIBER-ROW-N'+str(nDebond)+'RIGHT-FIBER-N'+str(nFiber),QUAD_DOMINATED,FREE])
+                    regionSets.append(['DEBFIBER-ROW-N'+str(nDebond+1)+'RIGHT-FIBER-N'+str(nFiber+1),QUAD_DOMINATED,FREE])
         if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
             for nDebond in range(0,nDebonds):
                 for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-                    regionSets.append(['DEBFIBER-ROW-N'+str(nDebond)+'LEFT-FIBER-N'+str(nFiber),QUAD_DOMINATED,FREE])
+                    regionSets.append(['DEBFIBER-ROW-N'+str(nDebond+1)+'LEFT-FIBER-N'+str(nFiber+1),QUAD_DOMINATED,FREE])
 
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
@@ -4576,14 +4576,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
         nElDebInterface = int(floor(2*deltathetaDebond/1.0))
         nElDebBonded = int(floor((360.0-2*deltathetaDebond)/5.0))
-        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-BONDEDINTERFACE',nElDebBonded])
-        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-DEBONDEDINTERFACE',nElDebInterface])
-        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-FIBERARC',nElDebInterface])
-        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-MATRIXARC',nElDebInterface])
-        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-STARTFIBERCIRCSEC',3])
-        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-ENDFIBERCIRCSEC',3])
-        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-STARTMATRIXCIRCSEC',3])
-        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-ENDMATRIXCIRCSEC',3])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-BONDEDINTERFACE',nElDebBonded])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-DEBONDEDINTERFACE',nElDebInterface])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-FIBERARC',nElDebInterface])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-MATRIXARC',nElDebInterface])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-STARTFIBERCIRCSEC',3])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-ENDFIBERCIRCSEC',3])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-STARTMATRIXCIRCSEC',3])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-ENDMATRIXCIRCSEC',3])
 
     nFibersHorizontal = 1
 
@@ -4592,14 +4592,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
             regionSets.append(['LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),10])
             for nDebond in range(0,nDebonds):
-                regionSets.append(['DEBFIBER-ROW-N'+str(nDebond)+'-FIBER-RIGHT-N'+str(nFiber)+'-INTERFACE',20])
+                regionSets.append(['DEBFIBER-ROW-N'+str(nDebond+1)+'-FIBER-RIGHT-N'+str(nFiber+1)+'-INTERFACE',20])
 
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         nFibersHorizontal += parameters['BC']['leftSide']['nFibers']
         for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
             regionSets.append(['LOWERSIDE-LEFT-FIBER'+str(nFiber+1),10])
             for nDebond in range(0,nDebonds):
-                regionSets.append(['DEBFIBER-ROW-N'+str(nDebond)+'-FIBER-LEFT-N'+str(nFiber)+'-INTERFACE',20])
+                regionSets.append(['DEBFIBER-ROW-N'+str(nDebond+1)+'-FIBER-LEFT-N'+str(nFiber+1)+'-INTERFACE',20])
 
     regionSets.append(['UPPERSIDE',30*nFibersHorizontal])
 

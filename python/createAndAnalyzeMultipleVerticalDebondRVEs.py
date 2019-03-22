@@ -4365,11 +4365,18 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating cracks ...',True)
 
+    model.ContactProperty('PARTIALLYDEBONDEDFIBERS')
+    model.interactionProperties['PARTIALLYDEBONDEDFIBERS'].NormalBehavior(pressureOverclosure=HARD,allowSeparation=ON,constraintEnforcementMethod=DEFAULT)
+    model.interactionProperties['PARTIALLYDEBONDEDFIBERS'].TangentialBehavior(formulation=FRICTIONLESS)
+
     # assign seam
     model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
 
     for nDebond in range(0,nDebonds):
         model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond)+'-DEBONDEDINTERFACE'])
+        masterSurface = model.rootAssembly.Surface(side1Edges=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond)+'-DEBONDEDINTERFACE'],name='DEBFIBER-N'+str(nDebond)+'-MASTERSURFACE')
+        slaveSurface = model.rootAssembly.Surface(side2Edges=model.rootAssembly.instances['RVE-assembly'].sets['DEBFIBER-N'+str(nDebond)+'-DEBONDEDINTERFACE'],name='DEBFIBER-N'+str(nDebond)+'-SLAVESURFACE')
+        mdb.models['Model-1'].SurfaceToSurfaceContactStd(name='DEBFIBER-N'+str(nDebond)+'-CONTACTINTERACTION',createStepName='Initial',master=masterSurface,slave=slaveSurface,sliding=SMALL,interactionProperty='PARTIALLYDEBONDEDFIBERS')
 
     if 'inverseSquareRoot' in parameters['singularity']['type']:
         midNodePos = 0.25

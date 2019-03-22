@@ -3966,7 +3966,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
         setsOfFacesData.append([1.025*Rf*np.cos(thetaDebond*np.pi/180), (nDebond+1)*2*L+1.025*Rf*np.sin(thetaDebond*np.pi/180), 0.0,'DEBFIBER-N'+str(nDebond)+'-MATRIX-CIRCSEC'])
         setsOfFacesData.append([0.975*Rf*np.cos(thetaDebond*np.pi/180), (nDebond+1)*2*L+0.975*Rf*np.sin(thetaDebond*np.pi/180), 0.0,'DEBFIBER-N'+str(nDebond)+'-FIBER-CIRCSEC'])
-        setsOfFacesData.append([0.0, (nDebond+1)*2*L, 0.0,'DEBFIBER-N'+str(nDebonds)+'-FIBER-BODY'])
+        setsOfFacesData.append([0.0, (nDebond+1)*2*L, 0.0,'DEBFIBER-N'+str(nDebond)+'-FIBER-BODY'])
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         for nDebond in range(0,nDebonds):
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
@@ -4480,7 +4480,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for nDebond in range(0,nDebonds):
         regionSets.append(['DEBFIBER-N'+str(nDebond)+'-MATRIX-CIRCSEC',QUAD,STRUCTURED])
         regionSets.append(['DEBFIBER-N'+str(nDebond)+'-FIBER-CIRCSEC',QUAD,STRUCTURED])
-        regionSets.append(['DEBFIBER-N'+str(nDebonds)+'-FIBER-BODY',QUAD_DOMINATED,FREE])
+        regionSets.append(['DEBFIBER-N'+str(nDebond)+'-FIBER-BODY',QUAD_DOMINATED,FREE])
+        if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+            for nDebond in range(0,nDebonds):
+                for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+                    regionSets.append(['DEBFIBER-ROW-N'+str(nDebond)+'RIGHT-FIBER-N'+str(nFiber),QUAD_DOMINATED,FREE])
+        if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+            for nDebond in range(0,nDebonds):
+                for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
+                    regionSets.append(['DEBFIBER-ROW-N'+str(nDebond)+'LEFT-FIBER-N'+str(nFiber),QUAD_DOMINATED,FREE])
 
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)

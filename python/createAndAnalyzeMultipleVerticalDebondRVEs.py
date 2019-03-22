@@ -3482,6 +3482,23 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         yA = Rf*np.sin((thetaDebond-deltathetaDebond)*np.pi/180.0)
         xB = Rf*np.cos((thetaDebond+deltathetaDebond)*np.pi/180.0)
         yB = Rf*np.sin((thetaDebond+deltathetaDebond)*np.pi/180.0)
+        if xA*xB>0: #both points in the same x half-plane
+            if xA>0: # x>0 half-plane
+                if yA*yB>0: #both points in the same y half-plane
+                    if yA>0: # y>0 half-plane ==> 1st quadrant
+                        if xA<xB:
+                            x1=xA
+                            y1=yA
+                            x2=xB
+                            y2=yB
+                        else:
+                            x1=xB
+                            y1=yB
+                            x2=xA
+                            y2=yA
+                    else:  # y<0 half-plane
+            else:  # x<0 half-plane
+        else: # the points are not in the same halfplane
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # if bounding ply is present, draw interface line

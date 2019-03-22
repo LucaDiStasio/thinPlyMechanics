@@ -3485,7 +3485,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         if xA*xB>0: #both points in the same x half-plane
             if xA>0: # x>0 half-plane
                 if yA*yB>0: #both points in the same y half-plane
-                    if yA>0: # y>0 half-plane ==> 1st quadrant
+                    if yA>0: # y>0 half-plane ==> both in 1st quadrant
                         if xA<xB:
                             x1=xA
                             y1=yA
@@ -3496,7 +3496,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                             y1=yB
                             x2=xA
                             y2=yA
-                    else:  # y<0 half-plane
+                    else:  # y<0 half-plane ==> both in 4th quadrant
+                        if xA>xB:
+                            x1=xA
+                            y1=yA
+                            x2=xB
+                            y2=yB
+                        else:
+                            x1=xB
+                            y1=yB
+                            x2=xA
+                            y2=yA
             else:  # x<0 half-plane
         else: # the points are not in the same halfplane
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)

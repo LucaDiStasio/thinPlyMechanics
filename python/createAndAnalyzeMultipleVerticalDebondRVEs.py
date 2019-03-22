@@ -3478,82 +3478,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(Rf, 0.0+(nDebond+1)*2*L))
         deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
         thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
-        xA = Rf*np.cos((thetaDebond-deltathetaDebond)*np.pi/180.0)
-        yA = Rf*np.sin((thetaDebond-deltathetaDebond)*np.pi/180.0)
-        xB = Rf*np.cos((thetaDebond+deltathetaDebond)*np.pi/180.0)
-        yB = Rf*np.sin((thetaDebond+deltathetaDebond)*np.pi/180.0)
-        if xA*xB>0: #both points in the same x half-plane
-            if xA>0: # x>0 half-plane
-                if yA*yB>0: #both points in the same y half-plane
-                    if yA>0: # y>0 half-plane ==> both in 1st quadrant
-                        if xA<xB:
-                            x1=xA
-                            y1=yA
-                            x2=xB
-                            y2=yB
-                        else:
-                            x1=xB
-                            y1=yB
-                            x2=xA
-                            y2=yA
-                    else:  # y<0 half-plane ==> both in 4th quadrant
-                        if xA>xB:
-                            x1=xA
-                            y1=yA
-                            x2=xB
-                            y2=yB
-                        else:
-                            x1=xB
-                            y1=yB
-                            x2=xA
-                            y2=yA
-                else: # points are in different y half-plane
-                    if yA>yB:
-                        x1=xA
-                        y1=yA
-                        x2=xB
-                        y2=yB
-                    else:
-                        x1=xB
-                        y1=yB
-                        x2=xA
-                        y2=yA
-            else:  # x<0 half-plane
-                if yA*yB>0: #both points in the same y half-plane
-                    if yA>0: # y>0 half-plane ==> both in 2nd quadrant
-                        if xA<xB:
-                            x1=xA
-                            y1=yA
-                            x2=xB
-                            y2=yB
-                        else:
-                            x1=xB
-                            y1=yB
-                            x2=xA
-                            y2=yA
-                    else:  # y<0 half-plane ==> both in 3rd quadrant
-                        if xA>xB:
-                            x1=xA
-                            y1=yA
-                            x2=xB
-                            y2=yB
-                        else:
-                            x1=xB
-                            y1=yB
-                            x2=xA
-                            y2=yA
-                else: # points are in different y half-plane
-                    if yA<yB:
-                        x1=xA
-                        y1=yA
-                        x2=xB
-                        y2=yB
-                    else:
-                        x1=xB
-                        y1=yB
-                        x2=xA
-                        y2=yA
-        else: # the points are not in the same halfplane
+        xA = Rf*np.cos((thetaDebond+deltathetaDebond)*np.pi/180.0)
+        yA = Rf*np.sin((thetaDebond+deltathetaDebond)*np.pi/180.0)
+        xB = Rf*np.cos((thetaDebond-deltathetaDebond)*np.pi/180.0)
+        yB = Rf*np.sin((thetaDebond-deltathetaDebond)*np.pi/180.0)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(0.0+xA, 0.0+(nDebond+1)*2*L+yA), point2=(0.0+xB, 0.0+(nDebond+1)*2*L+yB), direction=CLOCKWISE)
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # if bounding ply is present, draw interface line

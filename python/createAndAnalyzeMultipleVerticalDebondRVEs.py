@@ -3507,6 +3507,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                             y1=yB
                             x2=xA
                             y2=yA
+                else: # points are in different y half-plane
+                    if yA>yB:
+                        x1=xA
+                        y1=yA
+                        x2=xB
+                        y2=yB
+                    else:
+                        x1=xB
+                        y1=yB
+                        x2=xA
+                        y2=yA
             else:  # x<0 half-plane
         else: # the points are not in the same halfplane
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)

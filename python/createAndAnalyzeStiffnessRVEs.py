@@ -3354,7 +3354,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         lowerSideSets = []
-        setsOfEdgesData = [[0.001*Rf,-L+0.001,0.0,0.001*Rf,-L-0.001,0.0,'LOWERSIDE-CENTER']]
+        if np.abs(theta)>0.0 and not 'full' in parameters['geometry']['fiber']['type']:
+            setsOfEdgesData = [[0.001*Rf,0.001,0.0,0.001*Rf,0.001,0.0,'LOWERSIDE-CENTER-FIBER']]
         if 'boundingPly' in parameters['BC']['rightSide']['type']:
             setsOfEdgesData.append([0.99*CornerBx,0.001,0.0,0.99*CornerBx,-0.001,0.0,'LOWERSIDE-RIGHT-HOMOGENIZED-PLY'])
         if 'boundingPly' in parameters['BC']['leftSide']['type']:
@@ -3365,30 +3366,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         RVEpart.SetByBoolean(name='LOWERSIDE', sets=lowerSideSets)
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE',True)
     else:
-        setsOfEdgesData = [[0.001*Rf,0.001,0.0,0.001*Rf,-0.001,0.0,'LOWERSIDE-CENTER'],
-                           [0.65*Rf,0.001,0.0,0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-RIGHT'],
-                           [0.99*L,0.001,0.0,0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-RIGHT']]
-        if 'half' in parameters['geometry']['fiber']['type']:
-            setsOfEdgesData.append([-0.65*Rf,0.001,0.0,-0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-LEFT'])
-            setsOfEdgesData.append([-0.99*L,0.001,0.0,-0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-LEFT'])
+        setsOfEdgesData = [[0.001*Rf,0.001,0.0,0.001*Rf,-0.001,0.0,'LOWERSIDE-CENTER-FIBER']]
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-        if 'half' in parameters['geometry']['fiber']['type']:
-            RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT'],RVEpart.sets['LOWERSIDE-FIRSTRING-LEFT']])
-        else:
-            RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT']])
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FIRSTRING',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-CENTER-FIBER',True)
 
-        setsOfEdgesData = [[0.85*Rf,0.001,0.0,0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-RIGHT']]
-        if 'half' in parameters['geometry']['fiber']['type']:
-            setsOfEdgesData.append([-0.85*Rf,0.001,0.0,-0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-LEFT'])
-        for setOfEdgesData in setsOfEdgesData:
-            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-        if 'half' in parameters['geometry']['fiber']['type']:
-            RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT'],RVEpart.sets['LOWERSIDE-SECONDRING-LEFT']])
-        else:
-            RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT']])
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-SECONDRING',True)
 
         if L>2*Rf:
             R1 = (1+0.5*0.25)*Rf

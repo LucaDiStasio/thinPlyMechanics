@@ -3971,7 +3971,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         for nDebond in range(0,nDebonds):
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-                setsOfFacesData.append([(nFiber+1)*2*L, (nDebond+1)*2*L, 0.0,'DEBFIBER-ROW-N'+str(nDebond+1)+'LEFT-FIBER-N'+str(nFiber+1)])
+                setsOfFacesData.append([-(nFiber+1)*2*L, (nDebond+1)*2*L, 0.0,'DEBFIBER-ROW-N'+str(nDebond+1)+'LEFT-FIBER-N'+str(nFiber+1)])
 
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)

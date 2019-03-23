@@ -4576,7 +4576,19 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # BEGIN - compute average stress and strain and stiffness
     #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute average stress and strain and stiffness ...',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract all elements ...',True)
+
+    rve = getSingleElementSet(odb,'RVE-ASSEMBLY','RVE')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    integralStress = 0.0
+    integralStrain = 0.0
+    totalArea = 0.0
+    for element in rve:
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - compute average stress and strain and stiffness
     #=======================================================================

@@ -3490,8 +3490,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         yD = 1.05*Rf*np.sin((thetaDebond-deltathetaDebond)*np.pi/180.0)
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(0.0+xA, 0.0+(nDebond+1)*2*L+yA), point2=(0.0+xB, 0.0+(nDebond+1)*2*L+yB), direction=CLOCKWISE)
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(0.0+xC, 0.0+(nDebond+1)*2*L+yC), point2=(0.0+xD, 0.0+(nDebond+1)*2*L+yD), direction=CLOCKWISE)
-        fiberSketch.Line(point1=(xA,(nDebond+1)*2*L+yA),point2=(xC,(nDebond+1)*2*L+yB))
-        fiberSketch.Line(point1=(xC,(nDebond+1)*2*L+yC),point2=(xD,(nDebond+1)*2*L+yD))
+        fiberSketch.Line(point1=(xA,(nDebond+1)*2*L+yA),point2=(xC,(nDebond+1)*2*L+yC))
+        fiberSketch.Line(point1=(xB,(nDebond+1)*2*L+yB),point2=(xD,(nDebond+1)*2*L+yD))
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # if bounding ply is present, draw interface line

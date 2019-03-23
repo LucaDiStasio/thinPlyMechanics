@@ -7000,7 +7000,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Determine path variable values ...',True)
-            pathAngles = np.arange(0,180,5)
+            pathAngles = np.arange(0.0,180.0,5.0)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create .csv file...',True)
             csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stressesradialpaths'
@@ -7008,9 +7008,13 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
             for angleNum,pathAngle in enumerate(pathAngles):
                 pathRadius = parameters['geometry']['L']/np.cos(pathAngle*np.pi/180.0)
-                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create radial path with maximum radius ' + str(pathRadius) + ' [mum]',True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create radial path with min radius ' + str(parameters['geometry']['Rf']) + ' [mum]',True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        max radius ' + str(pathRadius) + ' [mum]',True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        orientation ' + str(pathAngle) + ' deg',True)
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        number of segments ' + str(parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath']),True)
                 session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'], radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
                 radpath = session.paths['RadPath-Ang' + str(pathAngle)]
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
                 sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'],shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmaxx,appendMode=OFF)

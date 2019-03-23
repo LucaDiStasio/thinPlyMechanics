@@ -3810,32 +3810,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating cracks ...',True)
 
+    model.ContactProperty('PARTIALLYDEBONDEDFIBERS')
+    model.interactionProperties['PARTIALLYDEBONDEDFIBERS'].NormalBehavior(pressureOverclosure=HARD,allowSeparation=ON,constraintEnforcementMethod=DEFAULT)
+    model.interactionProperties['PARTIALLYDEBONDEDFIBERS'].TangentialBehavior(formulation=FRICTIONLESS)
+
     # assign seam
     model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
-
-    if 'inverseSquareRoot' in parameters['singularity']['type']:
-        midNodePos = 0.25
-    else:
-        midNodePos = 0.5
-
-    # contour integral
-    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-      xC = Rf*np.cos((theta+deltatheta)*np.pi/180)
-      yC = Rf*np.sin((theta+deltatheta)*np.pi/180)
-      xA = Rf*np.cos((theta+1.025*deltatheta)*np.pi/180)
-      yA = -xC*(xA-xC)/yC + yC
-      model.rootAssembly.engineeringFeatures.ContourIntegral(name='DebondUp',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIPUP'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=midNodePos, collapsedElementAtTip=NONE)
-      xC = Rf*np.cos((theta-deltatheta)*np.pi/180)
-      yC = Rf*np.sin((theta-deltatheta)*np.pi/180)
-      xA = Rf*np.cos((theta-1.025*deltatheta)*np.pi/180)
-      yA = -xC*(xA-xC)/yC + yC
-      model.rootAssembly.engineeringFeatures.ContourIntegral(name='DebondLow',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIPLOW'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=midNodePos, collapsedElementAtTip=NONE)
-    else:
-      xC = Rf*np.cos((theta+deltatheta)*np.pi/180)
-      yC = Rf*np.sin((theta+deltatheta)*np.pi/180)
-      xA = Rf*np.cos((theta+1.025*deltatheta)*np.pi/180)
-      yA = -xC*(xA-xC)/yC + yC
-      model.rootAssembly.engineeringFeatures.ContourIntegral(name='Debond',symmetric=OFF,crackFront=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],crackTip=model.rootAssembly.instances['RVE-assembly'].sets['CRACKTIP'],extensionDirectionMethod=Q_VECTORS, qVectors=(((xC,yC,0.0),(xA,yA,0.0)), ), midNodePosition=midNodePos, collapsedElementAtTip=NONE)
+    masterSurface = model.rootAssembly.Surface(side1Edges=model.rootAssembly.instances['RVE-assembly'].sets['CRACK')
+    slaveSurface = model.rootAssembly.Surface(side2Edges=model.rootAssembly.instances['RVE-assembly'].sets['CRACK')
+    model.SurfaceToSurfaceContactStd(name='CRACK-CONTACTINTERACTION',createStepName='Initial',master=masterSurface,slave=slaveSurface,sliding=SMALL,interactionProperty='PARTIALLYDEBONDEDFIBERS')
 
     mdb.save()
 
@@ -3868,49 +3851,21 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # assign mesh controls
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
 
-    regionSets = [['FIBER-CENTER',QUAD_DOMINATED,FREE],
-                  ['FIBER-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
-                  ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD_DOMINATED,FREE],
-                  ['MATRIX-INTANNULUS-RESTBOUNDED',TRI,FREE],
-                  ['MATRIX-INTERMEDIATEANNULUS',TRI,FREE],
-                  ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
-    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-        regionSets.append(['FIBER-EXTANNULUS-CRACK',QUAD_DOMINATED,FREE])
-        regionSets.append(['FIBER-EXTANNULUS-UPPERCRACK-CTUP',QUAD,STRUCTURED])
-        regionSets.append(['FIBER-EXTANNULUS-FIRSTBOUNDED-CTUP',QUAD,STRUCTURED])
-        regionSets.append(['FIBER-EXTANNULUS-SECONDBOUNDED-CTUP',QUAD_DOMINATED,FREE])
-        regionSets.append(['FIBER-EXTANNULUS-UPPERCRACK-CTLOW',QUAD,STRUCTURED])
-        regionSets.append(['FIBER-EXTANNULUS-FIRSTBOUNDED-CTLOW',QUAD,STRUCTURED])
-        regionSets.append(['FIBER-EXTANNULUS-SECONDBOUNDED-CTLOW',QUAD_DOMINATED,FREE])
-        regionSets.append(['MATRIX-INTANNULUS-CRACK',QUAD_DOMINATED,FREE])
-        regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK-CTUP',QUAD,STRUCTURED])
-        regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED-CTUP',QUAD,STRUCTURED])
-        regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED-CTUP',TRI,FREE])
-        regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK-CTLOW',QUAD,STRUCTURED])
-        regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED-CTLOW',QUAD,STRUCTURED])
-        regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED-CTLOW',TRI,FREE])
-    else:
-        regionSets.append(['FIBER-EXTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE])
-        regionSets.append(['FIBER-EXTANNULUS-UPPERCRACK',QUAD,STRUCTURED])
-        regionSets.append(['FIBER-EXTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED])
-        regionSets.append(['FIBER-EXTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE])
-        regionSets.append(['MATRIX-INTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE])
-        regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK',QUAD,STRUCTURED])
-        regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED])
-        regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED',TRI,FREE])
+    regionSets = [['FIBER',TRI,FREE],
+                  ['MATRIX',TRI,FREE]]
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
-        regionSets.append(['BOUNDING-PLY',QUAD_DOMINATED,FREE])
+        regionSets.append(['BOUNDING-PLY',TRI,FREE])
     if 'boundingPly' in parameters['BC']['rightSide']['type']:
-        regionSets.append(['RIGHT-HOMOGENIZED-CROSSPLY',QUAD_DOMINATED,FREE])
+        regionSets.append(['RIGHT-HOMOGENIZED-CROSSPLY',TRI,FREE])
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
-        regionSets.append(['LEFT-HOMOGENIZED-CROSSPLY',QUAD_DOMINATED,FREE])
+        regionSets.append(['LEFT-HOMOGENIZED-CROSSPLY',TRI,FREE])
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
-        regionSets.append(['UPPER-FIBERS',QUAD_DOMINATED,FREE])
+        regionSets.append(['UPPER-FIBERS',TRI,FREE])
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
-        regionSets.append(['RIGHT-FIBERS',QUAD_DOMINATED,FREE])
+        regionSets.append(['RIGHT-FIBERS',TRI,FREE])
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
-        regionSets.append(['LEFT-FIBERS',QUAD_DOMINATED,FREE])
+        regionSets.append(['LEFT-FIBERS',TRI,FREE])
 
     for regionSet in regionSets:
         assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
@@ -3920,53 +3875,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # assign seeds
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
 
-    regionSets = [['FIRSTCIRCLE',18],
-                  ['FIFTHCIRCLE',90]]
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-        regionSets.append(['SECONDCIRCLE-UPPERCRACK-CTUP',nTangential])
-        regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
-        regionSets.append(['THIRDCIRCLE-UPPERCRACK-CTUP',nTangential])
-        regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
-        regionSets.append(['FOURTHCIRCLE-UPPERCRACK-CTUP',nTangential])
-        regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
-        regionSets.append(['SECONDCIRCLE-UPPERCRACK-CTLOW',nTangential])
-        regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
-        regionSets.append(['THIRDCIRCLE-UPPERCRACK-CTLOW',nTangential])
-        regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
-        regionSets.append(['FOURTHCIRCLE-UPPERCRACK-CTLOW',nTangential])
-        regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
-        regionSets.append(['TRANSVERSALCUT-FIRSTFIBER-CTUP',nRadialFiber])
-        regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX-CTUP',nRadialMatrix])
-        regionSets.append(['TRANSVERSALCUT-SECONDFIBER-CTUP',nRadialFiber])
-        regionSets.append(['TRANSVERSALCUT-SECONDMATRIX-CTUP',nRadialMatrix])
-        regionSets.append(['TRANSVERSALCUT-THIRDFIBER-CTUP',nRadialFiber])
-        regionSets.append(['TRANSVERSALCUT-THIRDMATRIX-CTUP',nRadialMatrix])
-        regionSets.append(['TRANSVERSALCUT-FIRSTFIBER-CTLOW',nRadialFiber])
-        regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX-CTLOW',nRadialMatrix])
-        regionSets.append(['TRANSVERSALCUT-SECONDFIBER-CTLOW',nRadialFiber])
-        regionSets.append(['TRANSVERSALCUT-SECONDMATRIX-CTLOW',nRadialMatrix])
-        regionSets.append(['TRANSVERSALCUT-THIRDFIBER-CTLOW',nRadialFiber])
-        regionSets.append(['TRANSVERSALCUT-THIRDMATRIX-CTLOW',nRadialMatrix])
-        regionSets.append(['SECONDCIRCLE-SECONDBOUNDED-CTUP',nTangential1])
-        regionSets.append(['SECONDCIRCLE-SECONDBOUNDED-CTLOW',nTangential1])
-        regionSets.append(['SECONDCIRCLE-RESTBOUNDED',nTangential2])
-        regionSets.append(['THIRDCIRCLE-SECONDBOUNDED-CTUP',nTangential1])
-        regionSets.append(['THIRDCIRCLE-SECONDBOUNDED-CTLOW',nTangential1])
-        regionSets.append(['THIRDCIRCLE-RESTBOUNDED',nTangential2])
-        regionSets.append(['FOURTHCIRCLE-SECONDBOUNDED-CTUP',nTangential1])
-        regionSets.append(['FOURTHCIRCLE-SECONDBOUNDED-CTLOW',nTangential1])
-        regionSets.append(['FOURTHCIRCLE-RESTBOUNDED',nTangential2])
-        regionSets.append(['TRANSVERSALCUT-FOURTHFIBER-CTUP',nRadialFiber])
-        regionSets.append(['TRANSVERSALCUT-FOURTHMATRIX-CTUP',nRadialMatrix])
-        regionSets.append(['TRANSVERSALCUT-FOURTHFIBER-CTLOW',nRadialFiber])
-        regionSets.append(['TRANSVERSALCUT-FOURTHMATRIX-CTLOW',nRadialMatrix])
-        regionSets.append(['SECONDCIRCLE-CRACK',nTangential3])
-        regionSets.append(['THIRDCIRCLE-CRACK',nTangential3])
-        regionSets.append(['FOURTHCIRCLE-CRACK',nTangential3])
-        if 'full' not in parameters['geometry']['fiber']['type']:
-            regionSets.append(['LOWERSIDE-CENTER',6])
-            regionSets.append(['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber])
-            regionSets.append(['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix])
+        regionSets.append(['CRACK',int(floor(2*deltatheta))])
     else:
         regionSets.append(['SECONDCIRCLE-UPPERCRACK',nTangential])
         regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED',nTangential])

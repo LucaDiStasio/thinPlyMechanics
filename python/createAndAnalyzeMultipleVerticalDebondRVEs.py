@@ -3547,7 +3547,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 fiberSketch.ArcByCenterEnds(center=((nFiber+1)*2*L, 0.0), point1=((nFiber+1)*2*L-Rf, 0.0), point2=((nFiber+1)*2*L+Rf,0.0), direction=CLOCKWISE)
         for nDebond in range(0,nDebonds):
-            fiberSketch.CircleByCenterPerimeter(center=((nFiber+1)*2*L, 0.0+(nDebond+1)*2*L), point1=((nFiber+1)*2*L+Rf, 0.0+(nDebond+1)*2*L))
+            for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+                fiberSketch.CircleByCenterPerimeter(center=((nFiber+1)*2*L, 0.0+(nDebond+1)*2*L), point1=((nFiber+1)*2*L+Rf, 0.0+(nDebond+1)*2*L))
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
@@ -3559,7 +3560,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 fiberSketch.ArcByCenterEnds(center=(-(nFiber+1)*2*L, 0.0), point1=(-(nFiber+1)*2*L-Rf, 0.0), point2=(-(nFiber+1)*2*L+Rf,0.0), direction=CLOCKWISE)
         for nDebond in range(0,nDebonds):
-            fiberSketch.CircleByCenterPerimeter(center=(-(nFiber+1)*2*L, 0.0+(nDebond+1)*2*L), point1=(-(nFiber+1)*2*L+Rf, 0.0+(nDebond+1)*2*L))
+            for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
+                fiberSketch.CircleByCenterPerimeter(center=(-(nFiber+1)*2*L, 0.0+(nDebond+1)*2*L), point1=(-(nFiber+1)*2*L+Rf, 0.0+(nDebond+1)*2*L))
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)

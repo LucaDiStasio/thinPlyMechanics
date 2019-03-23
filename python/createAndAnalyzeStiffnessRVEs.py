@@ -3347,10 +3347,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         setsOfEdgesData = [[0.99*Rf*np.cos(theta*np.pi/180),0.99*Rf*np.sin(theta*np.pi/180),0.0,1.01*Rf*np.cos(theta*np.pi/180),1.01*Rf*np.sin(theta*np.pi/180),0.0,'CRACK']]
     else:
         setsOfEdgesData = [[0.99*Rf*np.cos(0.5*deltatheta*np.pi/180),0.99*Rf*np.sin(0.5*deltatheta*np.pi/180),0.0,1.01*Rf*np.cos(0.5*deltatheta*np.pi/180),1.01*Rf*np.sin(0.5*deltatheta*np.pi/180),0.0,'CRACK']]
+    setsOfEdgesData.append([0.99*Rf*np.cos((theta+1.05*deltatheta)*np.pi/180),0.99*Rf*np.sin((theta+1.05*deltatheta)*np.pi/180),0.0,1.01*Rf*np.cos((theta+1.05*deltatheta)*np.pi/180),1.01*Rf*np.sin((theta+1.05*deltatheta)*np.pi/180),0.0,'BONDED-INTERFACE'])
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACK',True)
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         lowerSideSets = []
@@ -3876,33 +3876,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-        regionSets.append(['CRACK',int(floor(2*deltatheta))])
+        regionSets.append(['CRACK',int(floor(2*deltatheta/0.5))])
+        if 'full' in parameters['geometry']['fiber']['type']:
+            regionSets.append(['BONDED-INTERFACE',int(floor((360-2*deltatheta)/5))])
+        else:
+            regionSets.append(['BONDED-INTERFACE',int(floor((180-2*deltatheta)/5))])
     else:
-        regionSets.append(['SECONDCIRCLE-UPPERCRACK',nTangential])
-        regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED',nTangential])
-        regionSets.append(['THIRDCIRCLE-UPPERCRACK',nTangential])
-        regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED',nTangential])
-        regionSets.append(['FOURTHCIRCLE-UPPERCRACK',nTangential])
-        regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED',nTangential])
-        regionSets.append(['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber])
-        regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix])
-        regionSets.append(['TRANSVERSALCUT-SECONDFIBER',nRadialFiber])
-        regionSets.append(['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix])
-        regionSets.append(['TRANSVERSALCUT-THIRDFIBER',nRadialFiber])
-        regionSets.append(['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix])
-        regionSets.append(['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber])
-        regionSets.append(['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix])
-        regionSets.append(['SECONDCIRCLE-SECONDBOUNDED',nTangential1])
-        regionSets.append(['SECONDCIRCLE-RESTBOUNDED',nTangential2])
-        regionSets.append(['THIRDCIRCLE-SECONDBOUNDED',nTangential1])
-        regionSets.append(['THIRDCIRCLE-RESTBOUNDED',nTangential2])
-        regionSets.append(['FOURTHCIRCLE-SECONDBOUNDED',nTangential1])
-        regionSets.append(['FOURTHCIRCLE-RESTBOUNDED',nTangential2])
-        regionSets.append(['TRANSVERSALCUT-FOURTHFIBER',nRadialFiber])
-        regionSets.append(['TRANSVERSALCUT-FOURTHMATRIX',nRadialMatrix])
-        regionSets.append(['SECONDCIRCLE-LOWERCRACK',nTangential3])
-        regionSets.append(['THIRDCIRCLE-LOWERCRACK',nTangential3])
-        regionSets.append(['FOURTHCIRCLE-LOWERCRACK',nTangential3])
+        regionSets.append(['CRACK',int(floor(deltatheta/0.5))])
+        if 'half' in parameters['geometry']['fiber']['type']:
+            regionSets.append(['BONDED-INTERFACE',int(floor((180-deltatheta)/5))])
+        else:
+            regionSets.append(['BONDED-INTERFACE',int(floor((90-deltatheta)/5))])
 
     nFibersHorizontal = 1
 
@@ -3961,12 +3945,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Selecting and assigning element types ...',True)
 
     if 'first' in parameters['mesh']['elements']['order']:
-        elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
+        #elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
         elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
     elif 'second' in parameters['mesh']['elements']['order']:
-        elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
+        #elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
         elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
-    model.rootAssembly.setElementType(regions=(model.rootAssembly.instances['RVE-assembly'].sets['RVE']), elemTypes=(elemType1, elemType2))
+    model.rootAssembly.setElementType(regions=(model.rootAssembly.instances['RVE-assembly'].sets['RVE']), elemTypes=(elemType2))
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

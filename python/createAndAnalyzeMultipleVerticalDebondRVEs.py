@@ -4045,7 +4045,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     booleanSets = []
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-            setsOfFacesData.append([0.0, (nFiber+1)*2*L, 0.0,'UPPER-FIBER-C'+str(nFiber+1)])
+            setsOfFacesData.append([0.0, nDebonds*2*L+(nFiber+1)*2*L, 0.0,'UPPER-FIBER-C'+str(nFiber+1)])
         if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
             for mFiber in range(0,parameters['BC']['rightSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):

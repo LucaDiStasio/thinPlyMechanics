@@ -4583,10 +4583,15 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     rve = getSingleElementSet(odb,'RVE-ASSEMBLY','RVE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute and sum integrands ...',True)
     integralStress = 0.0
     integralStrain = 0.0
     totalArea = 0.0
     for element in rve:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Element n. ' + str(element.label),True)
+        nodes = element.connectivity
+        for node in nodes:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Node n. ' + str(node.label) + ' belonging to element n. ' + str(element.label),True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

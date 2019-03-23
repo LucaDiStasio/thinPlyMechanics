@@ -7012,7 +7012,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        max radius ' + str(pathRadius) + ' [mum]',True)
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        orientation ' + str(pathAngle) + ' deg',True)
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        number of segments ' + str(parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath']),True)
-                session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=100, radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
+                session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=int(parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath']), radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
                 radpath = session.paths['RadPath-Ang' + str(pathAngle)]
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx

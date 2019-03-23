@@ -3831,15 +3831,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
             for nDebond in range(0,nDebonds):
-                deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
-                thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
-                setsOfEdgesData.append([(nFiber+1)*2*L+0.975*Rf,0.975*Rf+(nDebond+1)*2*L,0.0,(nFiber+1)*2*L+1.025*Rf,1.025*Rf+(nDebond+1)*2*L,0.0,'DEBFIBER-ROW-N'+str(nDebond+1)+'-FIBER-RIGHT-N'+str(nFiber+1)+'-INTERFACE'])
+                setsOfEdgesData.append([(nFiber+1)*2*L+0.975*Rf,(nDebond+1)*2*L,0.0,(nFiber+1)*2*L+1.025*Rf,(nDebond+1)*2*L,0.0,'DEBFIBER-ROW-N'+str(nDebond+1)+'-FIBER-RIGHT-N'+str(nFiber+1)+'-INTERFACE'])
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
             for nDebond in range(0,nDebonds):
-                deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
-                thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
-                setsOfEdgesData.append([-(nFiber+1)*2*L+0.975*Rf,0.975*Rf+(nDebond+1)*2*L,0.0,-(nFiber+1)*2*L+1.025*Rf,1.025*Rf+(nDebond+1)*2*L,0.0,'DEBFIBER-ROW-N'+str(nDebond+1)+'-FIBER-LEFT-N'+str(nFiber+1)+'-INTERFACE'])
+                setsOfEdgesData.append([-(nFiber+1)*2*L+0.975*Rf,(nDebond+1)*2*L,0.0,-(nFiber+1)*2*L+1.025*Rf,(nDebond+1)*2*L,0.0,'DEBFIBER-ROW-N'+str(nDebond+1)+'-FIBER-LEFT-N'+str(nFiber+1)+'-INTERFACE'])
 
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)

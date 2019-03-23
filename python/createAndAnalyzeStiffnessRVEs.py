@@ -3344,24 +3344,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of edges',True)
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-        alphaup = theta + deltatheta - deltapsi
-        betaup = theta + deltatheta + deltapsi
-        gammaup = theta + deltatheta + deltapsi + deltaphi
-        alphalow = theta - deltatheta + deltapsi
-        betalow = theta - deltatheta - deltapsi
-        gammalow = theta - deltatheta - deltapsi + deltaphi
-        setsOfEdgesData = [[0.99*Rf*np.cos(theta*np.pi/180),0.99*Rf*np.sin(theta*np.pi/180),0.0,1.01*Rf*np.cos(theta*np.pi/180),1.01*Rf*np.sin(theta*np.pi/180),0.0,'CRACK-CENTER'],   [0.99*Rf*np.cos((alphalow-0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alphalow-0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alphalow-0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alphalow-0.5*deltapsi)*np.pi/180),0.0,'CRACK-LOWER'], [0.99*Rf*np.cos((alphaup+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alphaup+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alphaup+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alphaup+0.5*deltapsi)*np.pi/180),0.0,'CRACK-UPPER']]
-        for setOfEdgesData in setsOfEdgesData:
-            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-        RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-CENTER'],RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
+        setsOfEdgesData = [[0.99*Rf*np.cos(theta*np.pi/180),0.99*Rf*np.sin(theta*np.pi/180),0.0,1.01*Rf*np.cos(theta*np.pi/180),1.01*Rf*np.sin(theta*np.pi/180),0.0,'CRACK']]
     else:
-        alpha = theta + deltatheta - deltapsi
-        beta = theta + deltatheta + deltapsi
-        gamma = theta + deltatheta + deltapsi + deltaphi
-        setsOfEdgesData = [[0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0,1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'CRACK-LOWER'], [0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'CRACK-UPPER']]
-        for setOfEdgesData in setsOfEdgesData:
-            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-        RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
+        setsOfEdgesData = [[0.99*Rf*np.cos(0.5*deltatheta*np.pi/180),0.99*Rf*np.sin(0.5*deltatheta*np.pi/180),0.0,1.01*Rf*np.cos(0.5*deltatheta*np.pi/180),1.01*Rf*np.sin(0.5*deltatheta*np.pi/180),0.0,'CRACK']]
+    for setOfEdgesData in setsOfEdgesData:
+        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACK',True)
 

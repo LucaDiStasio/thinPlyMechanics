@@ -4571,16 +4571,16 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     for nDebond in range(0,nDebonds):
         deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
-        nElDebInterface = int(floor(2*deltathetaDebond/1.0))
+        nElDebInterface = int(floor(2*deltathetaDebond/2.0))
         nElDebBonded = int(floor((360.0-2*deltathetaDebond)/5.0))
         regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-BONDEDINTERFACE',nElDebBonded])
         regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-DEBONDEDINTERFACE',nElDebInterface])
         regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-FIBERARC',nElDebInterface])
         regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-MATRIXARC',nElDebInterface])
-        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-STARTFIBERCIRCSEC',3])
-        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-ENDFIBERCIRCSEC',3])
-        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-STARTMATRIXCIRCSEC',3])
-        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-ENDMATRIXCIRCSEC',3])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-STARTFIBERCIRCSEC',2])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-ENDFIBERCIRCSEC',2])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-STARTMATRIXCIRCSEC',2])
+        regionSets.append(['DEBFIBER-N'+str(nDebond+1)+'-ENDMATRIXCIRCSEC',2])
 
     nFibersHorizontal = 1
 
@@ -4589,14 +4589,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
             regionSets.append(['LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),10])
             for nDebond in range(0,nDebonds):
-                regionSets.append(['DEBFIBER-ROW-N'+str(nDebond+1)+'-FIBER-RIGHT-N'+str(nFiber+1)+'-INTERFACE',20])
+                regionSets.append(['DEBFIBER-ROW-N'+str(nDebond+1)+'-FIBER-RIGHT-N'+str(nFiber+1)+'-INTERFACE',72])
 
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         nFibersHorizontal += parameters['BC']['leftSide']['nFibers']
         for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
             regionSets.append(['LOWERSIDE-LEFT-FIBER'+str(nFiber+1),10])
             for nDebond in range(0,nDebonds):
-                regionSets.append(['DEBFIBER-ROW-N'+str(nDebond+1)+'-FIBER-LEFT-N'+str(nFiber+1)+'-INTERFACE',20])
+                regionSets.append(['DEBFIBER-ROW-N'+str(nDebond+1)+'-FIBER-LEFT-N'+str(nFiber+1)+'-INTERFACE',72])
 
     regionSets.append(['UPPERSIDE',30*nFibersHorizontal])
 

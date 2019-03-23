@@ -3826,7 +3826,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for setOfEdgesData in setsOfEdgesData:
         defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
     setsOfEdgesData = []
-    
+
     if ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']) and not 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'boundingPly' in parameters['BC']['rightSide']['type'] and 'boundingPly' in parameters['BC']['leftSide']:
             RVEpart.SetByBoolean(name='UPPERSIDE', sets=[RVEpart.sets['CENTER-RUC-UPPERSIDE'],RVEpart.sets['RIGHT-HOMOPLY-UPPERSIDE'],RVEpart.sets['LEFT-HOMOPLY-UPPERSIDE']])
@@ -6849,7 +6849,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
 
     if 'report-stressesradialpaths' in parameters['simulation-pipeline']['analysis'].keys():
-        if parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']:
+        if parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['start']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along radial paths ...',True)
             sessionOdb = session.openOdb(name=odbfullpath)
             session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
@@ -6895,7 +6895,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
 
     if 'report-stressescircumferentialpaths' in parameters['simulation-pipeline']['analysis'].keys():
-        if parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']:
+        if parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['start']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along circumferential paths ...',True)
             sessionOdb = session.openOdb(name=odbfullpath)
             session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
@@ -7000,7 +7000,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
 
     if 'report-stresseshorizontalpaths' in parameters['simulation-pipeline']['analysis'].keys():
-        if parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']:
+        if parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['start']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along horizontal paths ...',True)
             sessionOdb = session.openOdb(name=odbfullpath)
             session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
@@ -7102,7 +7102,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
 
     if 'report-stressesverticalpaths' in parameters['simulation-pipeline']['analysis'].keys():
-        if parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']:
+        if parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['start']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along vertical paths ...',True)
             sessionOdb = session.openOdb(name=odbfullpath)
             session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)

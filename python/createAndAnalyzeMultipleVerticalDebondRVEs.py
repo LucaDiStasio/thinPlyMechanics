@@ -3475,9 +3475,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # draw upper debonded fibers
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw partially debonded fibers above ...',True)
     for nDebond in range(0,nDebonds):
-        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(Rf, 0.0+(nDebond+1)*2*L))
         deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
         thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
+        startAngle = thetaDebond-deltathetaDebond - 0.5*(360.0-2*deltathetaDebond)
+        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(Rf*np.cos(startAngle*np.pi/180.0), Rf*np.sin(startAngle*np.pi/180.0)+(nDebond+1)*2*L))
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(nDebond+1) + '. Debond centered at ' + str(thetaDebond) + ' deg of size 2x' + str(thetaDebond) + ' deg',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(nDebond+1) + '  Start at ' + str(thetaDebond+deltathetaDebond) + ' deg and ends at ' + str(thetaDebond-deltathetaDebond) + ' deg (clockwise rotation)',True)
         xA = 0.95*Rf*np.cos((thetaDebond+deltathetaDebond)*np.pi/180.0)

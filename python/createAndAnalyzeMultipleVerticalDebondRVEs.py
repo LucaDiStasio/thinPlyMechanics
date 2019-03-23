@@ -3477,8 +3477,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for nDebond in range(0,nDebonds):
         deltathetaDebond = parameters['geometry']['debonds']['deltatheta'][nDebond]
         thetaDebond = parameters['geometry']['debonds']['theta'][nDebond]
-        startAngle = thetaDebond-deltathetaDebond - 0.5*(360.0-2*deltathetaDebond)
-        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(Rf*np.cos(startAngle*np.pi/180.0), Rf*np.sin(startAngle*np.pi/180.0)+(nDebond+1)*2*L))
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(nDebond+1) + '. Debond centered at ' + str(thetaDebond) + ' deg of size 2x' + str(thetaDebond) + ' deg',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(nDebond+1) + '  Start at ' + str(thetaDebond+deltathetaDebond) + ' deg and ends at ' + str(thetaDebond-deltathetaDebond) + ' deg (clockwise rotation)',True)
         xA = 0.95*Rf*np.cos((thetaDebond+deltathetaDebond)*np.pi/180.0)
@@ -3489,6 +3487,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         yC = 1.05*Rf*np.sin((thetaDebond+deltathetaDebond)*np.pi/180.0)
         xD = 1.05*Rf*np.cos((thetaDebond-deltathetaDebond)*np.pi/180.0)
         yD = 1.05*Rf*np.sin((thetaDebond-deltathetaDebond)*np.pi/180.0)
+        xE = Rf*np.cos((thetaDebond+deltathetaDebond)*np.pi/180.0)
+        yE = Rf*np.sin((thetaDebond+deltathetaDebond)*np.pi/180.0)
+        xF = Rf*np.cos((thetaDebond-deltathetaDebond)*np.pi/180.0)
+        yF = Rf*np.sin((thetaDebond-deltathetaDebond)*np.pi/180.0)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(0.0+xE, 0.0+(nDebond+1)*2*L+yE), point2=(0.0+xF, 0.0+(nDebond+1)*2*L+yF), direction=CLOCKWISE)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(0.0+xF, 0.0+(nDebond+1)*2*L+yF), point2=(0.0+xE, 0.0+(nDebond+1)*2*L+yE), direction=CLOCKWISE)
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(0.0+xA, 0.0+(nDebond+1)*2*L+yA), point2=(0.0+xB, 0.0+(nDebond+1)*2*L+yB), direction=CLOCKWISE)
         fiberSketch.ArcByCenterEnds(center=(0.0, 0.0+(nDebond+1)*2*L), point1=(0.0+xC, 0.0+(nDebond+1)*2*L+yC), point2=(0.0+xD, 0.0+(nDebond+1)*2*L+yD), direction=CLOCKWISE)
         fiberSketch.Line(point1=(xA,(nDebond+1)*2*L+yA),point2=(xC,(nDebond+1)*2*L+yC))

@@ -6997,6 +6997,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along radial paths ...',True)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Open odb session...',True)
             sessionOdb = session.openOdb(name=odbfullpath)
+            session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Determine path variable values ...',True)
             pathAngles = np.arange(0,180,5)

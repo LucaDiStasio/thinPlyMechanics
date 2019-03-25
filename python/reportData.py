@@ -724,8 +724,8 @@ def main(argv):
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]
-                                szx = currentSzx[s]
-                                syz = currentSyz[s]
+                                szx = 0.0
+                                syz = 0.0
 
                                 srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
                                 stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
@@ -1062,8 +1062,8 @@ def main(argv):
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]
-                                szx = currentSzx[s]
-                                syz = currentSyz[s]
+                                szx = 0.0
+                                syz = 0.0
 
                                 srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
                                 stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
@@ -1385,8 +1385,8 @@ def main(argv):
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]
-                                szx = currentSzx[s]
-                                syz = currentSyz[s]
+                                szx = 0.0
+                                syz = 0.0
 
                                 srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
                                 stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
@@ -1708,8 +1708,8 @@ def main(argv):
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]
-                                szx = currentSzx[s]
-                                syz = currentSyz[s]
+                                szx = 0.0
+                                syz = 0.0
 
                                 srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
                                 stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot

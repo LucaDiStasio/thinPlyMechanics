@@ -7025,32 +7025,32 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_xx',True)
-                sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                sigmaxx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmaxx,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmaxx-RadPath-Ang' + str(pathAngle) + '.dat']])
                 # sigmayy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_yy',True)
-                sigmayy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                sigmayy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmayy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmayy-RadPath-Ang' + str(pathAngle) + '.dat']])
                 # tauxy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- tau_xy',True)
-                tauxy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                tauxy = xyPlot.XYDataFromPath(path=radpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=tauxy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'tauxy-RadPath-Ang' + str(pathAngle) + '.dat']])
                 # sigmazz
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_zz',True)
-                sigmazz = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                sigmazz = xyPlot.XYDataFromPath(path=radpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=sigmazz,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'sigmazz-RadPath-Ang' + str(pathAngle) + '.dat']])
                 # tauzx
                 #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- tau_zx',True)
-                #tauzx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                #tauzx = xyPlot.XYDataFromPath(path=radpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=tauzx,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'tauzx-RadPath-Ang' + str(pathAngle) + '.dat']])
                 # tauyz
                 #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- tau_yz',True)
-                #tauyz = xyPlot.XYDataFromPath(path=radpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                #tauyz = xyPlot.XYDataFromPath(path=radpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-RadPath-Ang' + str(pathAngle) + '.dat'),xyData=tauyz,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathAngle),str(parameters['geometry']['Rf']),str(pathRadius),parameters['output']['local']['directory'],'tauyz-RadPath-Ang' + str(pathAngle) + '.dat']])
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '...done.',True)
@@ -7080,30 +7080,30 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_xx',True)
-                sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=sigmaxx,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
                 # sigmayy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_yy',True)
-                sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=sigmayy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
                 # tauxy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- tau_xy',True)
-                tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=tauxy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
                 # sigmazz
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_zz',True)
-                sigmazz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                sigmazz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=sigmazz,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'sigmazz-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
                 # tauzx
-                #tauzx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                #tauzx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=tauzx,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauzx-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
                 # tauyz
-                #tauyz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                #tauyz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + '.dat'),xyData=tauyz,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -7118,30 +7118,30 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_xx',True)
-                sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=sigmaxx,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathRadius),str(angleStart1),str(angleStart2),parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
                 # sigmayy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_yy',True)
-                sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=sigmayy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathRadius),str(angleStart1),str(angleStart2),parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
                 # tauxy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- tau_xy',True)
-                tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=tauxy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathRadius),str(angleStart1),str(angleStart2),parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
                 # sigmazz
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_zz',True)
-                sigmazz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                sigmazz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=sigmazz,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'sigmazz-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
                 # tauzx
-                #tauzx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                #tauzx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=tauzx,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauzx-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
                 # tauyz
-                #tauyz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                #tauyz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat'),xyData=tauyz,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + 'East' + '.dat']])
                 #
@@ -7149,30 +7149,30 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_xx',True)
-                sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                sigmaxx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=sigmaxx,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathRadius),str(angleStart3),str(angleStart4),parameters['output']['local']['directory'],'sigmaxx-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
                 # sigmayy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_yy',True)
-                sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                sigmayy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=sigmayy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathRadius),str(angleStart3),str(angleStart4),parameters['output']['local']['directory'],'sigmayy-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
                 # tauxy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- tau_xy',True)
-                tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                tauxy = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=tauxy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathRadius),str(angleStart3),str(angleStart4),parameters['output']['local']['directory'],'tauxy-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
                 # sigmazz
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_zz',True)
-                sigmazz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                sigmazz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=sigmazz,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'sigmazz-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
                 # tauzx
-                #tauzx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                #tauzx = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=tauzx,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauzx-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
                 # tauyz
-                #tauyz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                #tauyz = xyPlot.XYDataFromPath(path=circpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat'),xyData=tauyz,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + 'West' + '.dat']])
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -7204,30 +7204,30 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_xx',True)
-                sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=sigmaxx,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + 'East' + '.dat']])
                 # sigmayy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_yy',True)
-                sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=sigmayy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + 'East' + '.dat']])
                 # tauxy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- tau_xy',True)
-                tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=tauxy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'East' + '.dat']])
                 # sigmazz
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_zz',True)
-                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=sigmazz,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + 'East' + '.dat']])
                 # tauzx
-                #tauzx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                #tauzx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=tauzx,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauzx-HPath-Y' + str(pathY) + 'East' + '.dat']])
                 # tauyz
-                #tauyz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                #tauyz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=tauyz,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + 'East' + '.dat']])
                 #
@@ -7235,30 +7235,30 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_xx',True)
-                sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=sigmaxx,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + 'West' + '.dat']])
                 # sigmayy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_yy',True)
-                sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=sigmayy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + 'West' + '.dat']])
                 # tauxy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- tau_xy',True)
-                tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=tauxy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'West' + '.dat']])
                 # sigmazz
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_zz',True)
-                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=sigmazz,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + 'West' + '.dat']])
                 # tauzx
-                #tauzx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                #tauzx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=tauzx,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'tauzx-HPath-Y' + str(pathY) + 'West' + '.dat']])
                 # tauyz
-                #tauyz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                #tauyz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=tauyz,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + 'West' + '.dat']])
             for yNum,pathY in enumerate(pathYsUp):
@@ -7267,30 +7267,30 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_xx',True)
-                sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                sigmaxx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + '.dat'),xyData=sigmaxx,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmaxx-HPath-Y' + str(pathY) + '.dat']])
                 # sigmayy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_yy',True)
-                sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                sigmayy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + '.dat'),xyData=sigmayy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmayy-HPath-Y' + str(pathY) + '.dat']])
                 # tauxy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- tau_xy',True)
-                tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                tauxy = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + '.dat'),xyData=tauxy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + '.dat']])
                 # sigmazz
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_zz',True)
-                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + '.dat'),xyData=sigmazz,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + '.dat']])
                 # tauzx
-                #tauzx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                #tauzx = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-HPath-Y' + str(pathY) + '.dat'),xyData=tauzx,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauzx-HPath-Y' + str(pathY) + '.dat']])
                 # tauyz
-                #tauyz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                #tauyz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + '.dat'),xyData=tauyz,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + '.dat']])
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -7322,30 +7322,30 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_xx',True)
-                sigmaxx = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
+                sigmaxx = xyPlot.XYDataFromPath(path=vpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S11' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmaxx-VPath-X' + str(pathX) + '.dat'),xyData=sigmaxx,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S11 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmaxx-VPath-X' + str(pathX) + '.dat']])
                 # sigmayy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_yy',True)
-                sigmayy = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
+                sigmayy = xyPlot.XYDataFromPath(path=vpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S22' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmayy-VPath-X' + str(pathX) + '.dat'),xyData=sigmayy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S22 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmayy-VPath-X' + str(pathX) + '.dat']])
                 # tauxy
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- tau_xy',True)
-                tauxy = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
+                tauxy = xyPlot.XYDataFromPath(path=vpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S12' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauxy-VPath-X' + str(pathX) + '.dat'),xyData=tauxy,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-VPath-X' + str(pathX) + '.dat']])
                 # sigmazz
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_zz',True)
-                sigmazz = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                sigmazz = xyPlot.XYDataFromPath(path=vpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-VPath-X' + str(pathX) + '.dat'),xyData=sigmazz,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmazz-VPath-X' + str(pathX) + '.dat']])
                 # tauzx
-                #tauzx = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
+                #tauzx = xyPlot.XYDataFromPath(path=vpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S13' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauzx-VPath-X' + str(pathX) + '.dat'),xyData=tauzx,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S13 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauzx-VPath-X' + str(pathX) + '.dat']])
                 # tauyz
-                #tauyz = xyPlot.XYDataFromPath(path=vpath,includeIntersections=True,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
+                #tauyz = xyPlot.XYDataFromPath(path=vpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S23' ), ), ))
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-VPath-X' + str(pathX) + '.dat'),xyData=tauyz,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauyz-VPath-X' + str(pathX) + '.dat']])
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

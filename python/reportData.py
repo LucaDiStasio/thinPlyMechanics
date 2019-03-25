@@ -960,6 +960,7 @@ def main(argv):
 
                 if subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)
+                    print('    ')
                     with open(circumferentialpathsSummary,'r') as csv:
                         lines = csv.readlines()
                     Sxx = []
@@ -1065,7 +1066,7 @@ def main(argv):
 
                             for s, sxx in enumerate(currentSxx):
 
-                                rotateBy = xData[s]*np.pi/180.0
+                                rotateBy = pathCoords[-1][s]*np.pi/180.0
                                 cosRot = np.cos(rotateBy)
                                 sinRot = np.sin(rotateBy)
 
@@ -1396,7 +1397,7 @@ def main(argv):
 
                             for s, sxx in enumerate(currentSxx):
 
-                                rotateBy = np.arctan2(pathVariable,xData[s])
+                                rotateBy = np.arctan2(pathVariable,pathCoords[-1][s])
                                 cosRot = np.cos(rotateBy)
                                 sinRot = np.sin(rotateBy)
 

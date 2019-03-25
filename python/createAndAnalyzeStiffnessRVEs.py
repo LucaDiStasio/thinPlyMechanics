@@ -4596,7 +4596,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create dictionary {node label: stress} ...',True)
     sigmaxxDict = {}
-    for 
+    for valueSet in sigmaxxNodes:
+        
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create dictionary {node label: coordinate} ...',True)

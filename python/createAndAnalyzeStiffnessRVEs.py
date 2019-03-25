@@ -4596,12 +4596,14 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create dictionary {node label: stress} ...',True)
     sigmaxxDict = {}
-    for valueSet in sigmaxxNodes:
-        
+    for valueSet in sigmaxxNodes.values:
+        sigmaxxDict[str(valueSet.nodeLabel)] = valueSet.data[0]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create dictionary {node label: coordinate} ...',True)
     coordDict = {}
+    for valueSet in coordNodes.values:
+        coordDict[str(valueSet.nodeLabel)] = [valueSet.data[0],valueSet.data[1]]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute and sum integrands ...',True)
@@ -4613,8 +4615,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         nodes = element.connectivity
         for node in nodes:
             writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Node n. ' + str(node.label) + ' belonging to element n. ' + str(element.label),True)
-            thirdCircle = getSingleNodeSet(odb,'RVE-ASSEMBLY','THIRDCIRCLE')
-            getFieldOutput(odb,step,frame,'RF',nodesVCCT['cracktipDummyNode'])
+            sigma = sigmaxxDict[str(node.label)]
+            x = coordDict[str(node.label)][0]
+            y = coordDict[str(node.label)][1]
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'sigma=' + str(sigma) + ' [MPa] measured at (' + str(x) + ', ' + str(y) + ') mum',True)
+            triArea = 
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

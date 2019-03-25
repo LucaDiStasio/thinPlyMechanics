@@ -869,7 +869,7 @@ def main(argv):
                         worksheet.write(2,p*25+22,'I3_3D [MPa^3]',stringFormat)
                         worksheet.write(2,p*25+23,'I1_2D [MPa]',stringFormat)
                         worksheet.write(2,p*25+24,'I2_2D [MPa^2]',stringFormat)
-                        print('          number of path points = ' + str(pathCoords[p]))
+                        print('          number of path points = ' + str(len(pathCoords[p])))
                         for c,coord in enumerate(pathCoords[p]):
                             worksheet.write(3+c,p*25,coord,radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+1,pathNormCoords[p][c],radialpathsnumberFormat)

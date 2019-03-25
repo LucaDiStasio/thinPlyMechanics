@@ -7219,7 +7219,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'East' + '.dat']])
                 # sigmazz
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_zz',True)
-                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + 'East' + '.dat'),xyData=sigmazz,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathY),str(xEast),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + 'East' + '.dat']])
                 # tauzx
@@ -7250,7 +7250,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + 'West' + '.dat']])
                 # sigmazz
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_zz',True)
-                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=sigmazz,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + 'West' + '.dat']])
                 # tauzx
@@ -7282,7 +7282,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-HPath-Y' + str(pathY) + '.dat']])
                 # sigmazz
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_zz',True)
-                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                sigmazz = xyPlot.XYDataFromPath(path=hpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + '.dat'),xyData=sigmazz,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmazz-HPath-Y' + str(pathY) + '.dat']])
                 # tauzx
@@ -7337,7 +7337,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S12 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'tauxy-VPath-X' + str(pathX) + '.dat']])
                 # sigmazz
                 writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- sigma_zz',True)
-                sigmazz = xyPlot.XYDataFromPath(path=vpath,includeIntersections=False,pathStyle=PATH_POINTS,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
+                sigmazz = xyPlot.XYDataFromPath(path=vpath,includeIntersections=False,pathStyle=UNIFORM_SPACING,numIntervals=nSegsOnPath,shape=UNDEFORMED,labelType=NORM_DISTANCE,variable= ('S',INTEGRATION_POINT, ( (COMPONENT, 'S33' ), ), ))
                 session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'sigmazz-VPath-X' + str(pathX) + '.dat'),xyData=sigmazz,appendMode=OFF)
                 appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S33 [MPa]',str(pathX),str(startY),str(parameters['geometry']['L']),parameters['output']['local']['directory'],'sigmazz-VPath-X' + str(pathX) + '.dat']])
                 # tauzx

@@ -746,8 +746,8 @@ def main(argv):
                                 print('    --> Stress invariants computed.')
                                 print(' ')
 
-                                saverd2 = I1D2/2.0
-                                saverd3 = I1D3/3.0
+                                saverd2 = i1d2/2.0
+                                saverd3 = i1d3/3.0
 
                                 print('    --> Average stress computed.')
                                 print(' ')

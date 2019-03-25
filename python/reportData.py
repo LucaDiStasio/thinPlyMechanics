@@ -719,7 +719,7 @@ def main(argv):
                             current2DSaver = []
                             rotateBy = pathVariable*np.pi/180.0
                             cosRot = np.cos(rotateBy)
-                            sinRor = np.sin(rotateBy)
+                            sinRot = np.sin(rotateBy)
                             for s, sxx in enumerate(currentSxx):
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
@@ -1057,7 +1057,7 @@ def main(argv):
 
                                 rotateBy = xData[s]*np.pi/180.0
                                 cosRot = np.cos(rotateBy)
-                                sinRor = np.sin(rotateBy)
+                                sinRot = np.sin(rotateBy)
 
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
@@ -1380,7 +1380,7 @@ def main(argv):
 
                                 rotateBy = np.arctan2(pathVariable,xData[s])
                                 cosRot = np.cos(rotateBy)
-                                sinRor = np.sin(rotateBy)
+                                sinRot = np.sin(rotateBy)
 
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
@@ -1703,7 +1703,7 @@ def main(argv):
 
                                 rotateBy = np.arctan2(xData[s],pathVariable)
                                 cosRot = np.cos(rotateBy)
-                                sinRor = np.sin(rotateBy)
+                                sinRot = np.sin(rotateBy)
 
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]

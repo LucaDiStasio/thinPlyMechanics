@@ -4579,8 +4579,27 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute average stress and strain and stiffness ...',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract all elements ...',True)
+    rveEls = getSingleElementSet(odb,'RVE-ASSEMBLY','RVE')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    rve = getSingleElementSet(odb,'RVE-ASSEMBLY','RVE')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract all nodes ...',True)
+    rveNodes = getSingleNodeSet(odb,'RVE-ASSEMBLY','RVE')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stresses at all nodes ...',True)
+    sigmaxxNodes = getFieldOutput(odb,step,frame,'S',rveNodes)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract coordinates at all nodes ...',True)
+    coordNodes = getFieldOutput(odb,step,frame,'COORD',rveNodes)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create dictionary {node label: stress} ...',True)
+    sigmaxxDict = {}
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create dictionary {node label: coordinate} ...',True)
+    coordDict = {}
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute and sum integrands ...',True)
@@ -4592,6 +4611,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         nodes = element.connectivity
         for node in nodes:
             writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Node n. ' + str(node.label) + ' belonging to element n. ' + str(element.label),True)
+            thirdCircle = getSingleNodeSet(odb,'RVE-ASSEMBLY','THIRDCIRCLE')
+            getFieldOutput(odb,step,frame,'RF',nodesVCCT['cracktipDummyNode'])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

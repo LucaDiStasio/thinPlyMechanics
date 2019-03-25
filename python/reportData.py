@@ -652,20 +652,22 @@ def main(argv):
                             pathNormCoords.append(normxData)
                         elif 'S22' in stressComp:
                             Syy.append(yData)
-                        elif 'S33' in stressComp:
-                            Szz.append(yData)
+                        elif 'S23' in stressComp:
+                            Syz.append(yData)
                         elif 'S12' in stressComp:
                             Sxy.append(yData)
                         elif 'S13' in stressComp:
                             Szx.append(yData)
-                        elif 'S23' in stressComp:
-                            Syz.append(yData)
+                        elif 'S33' in stressComp:
+                            Szz.append(yData)
+                            Szx.append(0.0)
+                            Syz.append(0.0)
                             currentSxx = Sxx[-1]
                             currentSyy = Syy[-1]
-                            currentSzz = Szz[-1]
+                            currentSzz = yData
                             currentSxy = Sxy[-1]
-                            currentSzx = Szx[-1]
-                            currentSyz = yData
+                            currentSzx = 0.0
+                            currentSyz = 0.0
                             currentSrr = []
                             currentStt = []
                             currentSrt = []
@@ -971,20 +973,22 @@ def main(argv):
                             pathNormCoords.append(normxData)
                         elif 'S22' in stressComp:
                             Syy.append(yData)
-                        elif 'S33' in stressComp:
-                            Szz.append(yData)
+                        elif 'S23' in stressComp:
+                            Syz.append(yData)
                         elif 'S12' in stressComp:
                             Sxy.append(yData)
                         elif 'S13' in stressComp:
                             Szx.append(yData)
-                        elif 'S23' in stressComp:
-                            Syz.append(yData)
+                        elif 'S33' in stressComp:
+                            Szz.append(yData)
+                            Szx.append(0.0)
+                            Syz.append(0.0)
                             currentSxx = Sxx[-1]
                             currentSyy = Syy[-1]
-                            currentSzz = Szz[-1]
+                            currentSzz = yData
                             currentSxy = Sxy[-1]
-                            currentSzx = Szx[-1]
-                            currentSyz = yData
+                            currentSzx = 0.0
+                            currentSyz = 0.0
                             currentSrr = []
                             currentStt = []
                             currentSrt = []
@@ -1292,20 +1296,22 @@ def main(argv):
                             pathNormCoords.append(normxData)
                         elif 'S22' in stressComp:
                             Syy.append(yData)
-                        elif 'S33' in stressComp:
-                            Szz.append(yData)
+                        elif 'S23' in stressComp:
+                            Syz.append(yData)
                         elif 'S12' in stressComp:
                             Sxy.append(yData)
                         elif 'S13' in stressComp:
                             Szx.append(yData)
-                        elif 'S23' in stressComp:
-                            Syz.append(yData)
+                        elif 'S33' in stressComp:
+                            Szz.append(yData)
+                            Szx.append(0.0)
+                            Syz.append(0.0)
                             currentSxx = Sxx[-1]
                             currentSyy = Syy[-1]
-                            currentSzz = Szz[-1]
+                            currentSzz = yData
                             currentSxy = Sxy[-1]
-                            currentSzx = Szx[-1]
-                            currentSyz = yData
+                            currentSzx = 0.0
+                            currentSyz = 0.0
                             currentSrr = []
                             currentStt = []
                             currentSrt = []
@@ -1613,20 +1619,22 @@ def main(argv):
                             pathNormCoords.append(normxData)
                         elif 'S22' in stressComp:
                             Syy.append(yData)
-                        elif 'S33' in stressComp:
-                            Szz.append(yData)
+                        elif 'S23' in stressComp:
+                            Syz.append(yData)
                         elif 'S12' in stressComp:
                             Sxy.append(yData)
                         elif 'S13' in stressComp:
                             Szx.append(yData)
-                        elif 'S23' in stressComp:
-                            Syz.append(yData)
+                        elif 'S33' in stressComp:
+                            Szz.append(yData)
+                            Szx.append(0.0)
+                            Syz.append(0.0)
                             currentSxx = Sxx[-1]
                             currentSyy = Syy[-1]
-                            currentSzz = Szz[-1]
+                            currentSzz = yData
                             currentSxy = Sxy[-1]
-                            currentSzx = Szx[-1]
-                            currentSyz = yData
+                            currentSzx = 0.0
+                            currentSyz = 0.0
                             currentSrr = []
                             currentStt = []
                             currentSrt = []

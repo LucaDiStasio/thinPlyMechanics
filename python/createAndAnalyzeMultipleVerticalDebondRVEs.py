@@ -7185,8 +7185,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # BEGIN - extract stresses along horizontal paths
     #=======================================================================
 
-    if 'report-stresseshorizontalpaths' in parameters['simulation-pipeline']['analysis']['start'].keys():
-        if parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']:
+    if 'report-stresseshorizontalpaths' in parameters['simulation-pipeline']['analysis'].keys():
+        if parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['start']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along horizontal paths ...',True)
             sessionOdb = session.openOdb(name=odbfullpath)
             session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
@@ -7303,8 +7303,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # BEGIN - extract stresses along vertical paths
     #=======================================================================
 
-    if 'report-stressesverticalpaths' in parameters['simulation-pipeline']['analysis']['start'].keys():
-        if parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']:
+    if 'report-stressesverticalpaths' in parameters['simulation-pipeline']['analysis'].keys():
+        if parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['start']:
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along vertical paths ...',True)
             sessionOdb = session.openOdb(name=odbfullpath)
             session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)

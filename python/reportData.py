@@ -997,6 +997,11 @@ def main(argv):
                         pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
                         pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
                         datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
+                        print('    Reading component ' + stressComp)
+                        print('            ' + 'for circumferential path at ' + str(pathVariable) + ' mum')
+                        print('            ' + 'starting at ' + str(pathStartVariable) + ' deg')
+                        print('            ' + 'ending at ' + str(pathEndVariable) + ' deg')
+                        print(' ')
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
                         currentxyData = []
@@ -1320,6 +1325,11 @@ def main(argv):
                         pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
                         pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
                         datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
+                        print('    Reading component ' + stressComp)
+                        print('            ' + 'for horizontal path at ' + str(pathVariable) + ' [mum]')
+                        print('            ' + 'starting at ' + str(pathStartVariable) + ' mum')
+                        print('            ' + 'ending at ' + str(pathEndVariable) + ' mum')
+                        print(' ')
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
                         currentxyData = []
@@ -1646,6 +1656,11 @@ def main(argv):
                         pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
                         pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
                         datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
+                        print('    Reading component ' + stressComp)
+                        print('            ' + 'for vertical path at ' + str(pathVariable) + ' mum')
+                        print('            ' + 'starting at ' + str(pathStartVariable) + ' mum')
+                        print('            ' + 'ending at ' + str(pathEndVariable) + ' mum')
+                        print(' ')
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
                         currentxyData = []

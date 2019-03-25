@@ -836,6 +836,7 @@ def main(argv):
                     print('    --> Writing worksheet')
                     print('        ' + datasheetName)
                     print(' ')
+                    print(str(pathVariables))
                     for p, pathVariable in enumerate(pathVariables):
                         print('          pathAngle = ' + str(pathVariable) + ' deg')
                         worksheet.write(0,p*25,pathVariableName,stringFormat)

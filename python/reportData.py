@@ -416,8 +416,10 @@ def main(argv):
         subfoldersList = []
         for l,line in enumerate(lines[1:]):
             currentSubfolder = '/'.join(line.replace('\n','').split(',')[0].replace('\\','/').split('/')[:-1])
-            print('  ' + str(l+1) + '. ' + str(currentSubfolder))
-            subfoldersList.append(currentSubfolder)
+            if currentSubfolder != workDir:
+                if (len(subfoldersList)>0 and currentSubfolder != subfoldersList[-1]) or len(subfoldersList)==0:
+                    print('  ' + str(l+1) + '. ' + str(currentSubfolder))
+                    subfoldersList.append(currentSubfolder)
         print('...done.')
     except Exception,error:
         print('EXCEPTION ENCOUNTERED')

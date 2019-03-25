@@ -7000,7 +7000,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Determine path variable values ...',True)
-            pathAngles = np.arange(0.0,180.0,5.0)
+            pathAngles = np.arange(parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['startParameter'],parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['endParameter'],parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['stepParameter'])
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create .csv file...',True)
             csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stressesradialpaths'
@@ -7062,8 +7062,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along circumferential paths ...',True)
             sessionOdb = session.openOdb(name=odbfullpath)
             session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
-            pathRsInt = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],20,endpoint=True)
-            pathRsExt = np.linspace(parameters['geometry']['L'],np.sqrt(2)*parameters['geometry']['L'],20,endpoint=False)[1:]
+            pathRsInt = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['stepParameter'],endpoint=True)
+            pathRsExt = np.linspace(parameters['geometry']['L'],np.sqrt(2)*parameters['geometry']['L'],parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['stepParameter'],endpoint=False)[1:]
             csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stressescircumferentialpaths'
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, R, angle_i [°], angle_f [°], FOLDER, FILENAME')
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'])
@@ -7168,8 +7168,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along horizontal paths ...',True)
             sessionOdb = session.openOdb(name=odbfullpath)
             session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
-            pathYsLow = np.linspace(0,parameters['geometry']['Rf'],20,endpoint=True)
-            pathYsUp = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],20,endpoint=True)[1:]
+            pathYsLow = np.linspace(0,parameters['geometry']['Rf'],parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['stepParameter'],endpoint=True)
+            pathYsUp = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['stepParameter'],endpoint=True)[1:]
             csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stresseshorizontalpaths'
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, y, xi, xf, FOLDER, FILENAME')
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'])
@@ -7271,7 +7271,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting stresses along vertical paths ...',True)
             sessionOdb = session.openOdb(name=odbfullpath)
             session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
-            pathXs = np.linspace(-parameters['geometry']['L'],parameters['geometry']['L'],40,endpoint=True)
+            pathXs = np.linspace(-parameters['geometry']['L'],parameters['geometry']['L'],parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['stepParameter'],endpoint=True)
             csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stressesverticalpaths'
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, x, yi, yf, FOLDER, FILENAME')
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['nSegsOnPath'])

@@ -1381,6 +1381,9 @@ def main(argv):
                             current2DSMises = []
                             current2DSaver = []
 
+                            print(str(len(sxx)))
+                            print(str(len(xData)))
+
                             for s, sxx in enumerate(currentSxx):
 
                                 rotateBy = np.arctan2(pathVariable,xData[s])

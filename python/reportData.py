@@ -1392,10 +1392,10 @@ def main(argv):
                             current2DSMises = []
                             current2DSaver = []
 
-                            print(str(len(currentSxx))
-                            print(str(len(currentSyy))
-                            print(str(len(currentSzz))
-                            print(str(len(currentSxy))
+                            print(str(len(currentSxx)))
+                            print(str(len(currentSyy)))
+                            print(str(len(currentSzz)))
+                            print(str(len(currentSxy)))
 
                             for s, sxx in enumerate(currentSxx):
 

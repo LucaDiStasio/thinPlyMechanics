@@ -418,7 +418,7 @@ def main(argv):
             currentSubfolder = '/'.join(line.replace('\n','').split(',')[0].replace('\\','/').split('/')[:-1])
             if currentSubfolder != workdir:
                 if (len(subfoldersList)>0 and currentSubfolder != subfoldersList[-1]) or len(subfoldersList)==0:
-                    print('  ' + str(l+1) + '. ' + str(currentSubfolder))
+                    print('  ' + '-- ' + str(currentSubfolder))
                     subfoldersList.append(currentSubfolder)
         print('...done.')
     except Exception,error:
@@ -543,35 +543,37 @@ def main(argv):
 
         if isDatPresent:
             print('Analysis of path data ...')
-
+            print(' ')
+            print('----------------->')
             print('    Open workbook ' + join(outdir,outputfileBasename + '-radialpathsData' + '.xlsx'))
             radialpathsWorkbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-radialpathsData' + '.xlsx'),{'nan_inf_to_errors': True})
             print('    Set string and number format')
             radialpathsstringFormat = radialpathsWorkbook.add_format({'bold': 1})
             radialpathsnumberFormat = radialpathsWorkbook.add_format({'num_format': '0.000000'})
             radialpathsnumberFormatReduced = radialpathsWorkbook.add_format({'num_format': '0.00'})
-
+            print(' ')
             print('    Open workbook ' + join(outdir,outputfileBasename + '-circumferentialpathsData' + '.xlsx'))
             circumferentialpathsWorkbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-circumferentialpathsData' + '.xlsx'),{'nan_inf_to_errors': True})
             print('    Set string and number format')
             circumferentialpathsstringFormat = circumferentialpathsWorkbook.add_format({'bold': 1})
             circumferentialpathsnumberFormat = circumferentialpathsWorkbook.add_format({'num_format': '0.000000'})
             circumferentialpathsnumberFormatReduced = radialpathsWorkbook.add_format({'num_format': '0.00'})
-
+            print(' ')
             print('    Open workbook ' + join(outdir,outputfileBasename + '-horizontalpathsData' + '.xlsx'))
             horizontalpathsWorkbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-horizontalpathsData' + '.xlsx'),{'nan_inf_to_errors': True})
             print('    Set string and number format')
             horizontalpathsstringFormat = horizontalpathsWorkbook.add_format({'bold': 1})
             horizontalpathsnumberFormat = horizontalpathsWorkbook.add_format({'num_format': '0.000000'})
             horizontalpathsnumberFormatReduced = radialpathsWorkbook.add_format({'num_format': '0.00'})
-
+            print(' ')
             print('    Open workbook ' + join(outdir,outputfileBasename + '-verticalpathsData' + '.xlsx'))
             verticalpathsWorkbook = xlsxwriter.Workbook(join(outdir,outputfileBasename + '-verticalpathsData' + '.xlsx'),{'nan_inf_to_errors': True})
             print('    Set string and number format')
             verticalpathsstringFormat = verticalpathsWorkbook.add_format({'bold': 1})
             verticalpathsnumberFormat = verticalpathsWorkbook.add_format({'num_format': '0.000000'})
             verticalpathsnumberFormatReduced = radialpathsWorkbook.add_format({'num_format': '0.00'})
-
+            print('<-----------------')
+            print(' ')
             radialpathsSheetnames = []
             numberOfRadialpaths = []
             radialpathsDatalengths = []
@@ -624,14 +626,14 @@ def main(argv):
                     pathNormCoords = []
 
                     for line in lines[1:]:
-                        stressComp = line.replace('\n','').split(',')[0]
-                        pathVariable = float(line.replace('\n','').split(',')[1])
+                        stressComp = line.replace('\n','').replace(' ','').split(',')[0]
+                        pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
                         pathVariables.append(pathVariable)
-                        pathStartVariable = float(line.replace('\n','').split(',')[2])
+                        pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
                         pathStartVariables.append(pathStartVariable)
-                        pathEndVariable = float(line.replace('\n','').split(',')[3])
+                        pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
                         pathEndVariables.append(pathEndVariable)
-                        datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
+                        datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
                         currentxyData = []
@@ -945,14 +947,14 @@ def main(argv):
                     pathNormCoords = []
 
                     for line in lines[1:]:
-                        stressComp = line.replace('\n','').split(',')[0]
-                        pathVariable = float(line.replace('\n','').split(',')[1])
+                        stressComp = line.replace('\n','').replace(' ','').split(',')[0]
+                        pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
                         pathVariables.append(pathVariable)
-                        pathStartVariable = float(line.replace('\n','').split(',')[2])
+                        pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
                         pathStartVariables.append(pathStartVariable)
-                        pathEndVariable = float(line.replace('\n','').split(',')[3])
+                        pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
                         pathEndVariables.append(pathEndVariable)
-                        datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
+                        datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
                         currentxyData = []
@@ -1268,14 +1270,14 @@ def main(argv):
                     pathNormCoords = []
 
                     for line in lines[1:]:
-                        stressComp = line.replace('\n','').split(',')[0]
-                        pathVariable = float(line.replace('\n','').split(',')[1])
+                        stressComp = line.replace('\n','').replace(' ','').split(',')[0]
+                        pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
                         pathVariables.append(pathVariable)
-                        pathStartVariable = float(line.replace('\n','').split(',')[2])
+                        pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
                         pathStartVariables.append(pathStartVariable)
-                        pathEndVariable = float(line.replace('\n','').split(',')[3])
+                        pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
                         pathEndVariables.append(pathEndVariable)
-                        datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
+                        datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
                         currentxyData = []
@@ -1591,14 +1593,14 @@ def main(argv):
                     pathNormCoords = []
 
                     for line in lines[1:]:
-                        stressComp = line.replace('\n','').split(',')[0]
-                        pathVariable = float(line.replace('\n','').split(',')[1])
+                        stressComp = line.replace('\n','').replace(' ','').split(',')[0]
+                        pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
                         pathVariables.append(pathVariable)
-                        pathStartVariable = float(line.replace('\n','').split(',')[2])
+                        pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
                         pathStartVariables.append(pathStartVariable)
-                        pathEndVariable = float(line.replace('\n','').split(',')[3])
+                        pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
                         pathEndVariables.append(pathEndVariable)
-                        datfilePath = join(subFolder,line.replace('\n','').split(',')[-1])
+                        datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
                         currentxyData = []

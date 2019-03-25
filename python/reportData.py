@@ -593,7 +593,10 @@ def main(argv):
                 horizontalpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stresseshorizontalpaths' + '.csv')
                 verticalpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressesverticalpaths' + '.csv')
                 if subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv' in listdir(subFolder):
+                    print('----------------->')
+                    print('----------------->')
                     print('    Analysis of radial paths for folder ' + subFolder)
+                    print(' ')
                     with open(radialpathsSummary,'r') as csv:
                         lines = csv.readlines()
                     Sxx = []
@@ -634,8 +637,15 @@ def main(argv):
                         pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
                         pathEndVariables.append(pathEndVariable)
                         datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
+                        print('    Reading component ' + stressComp)
+                        print('            ' + 'for radial path at ' + str(pathVariable) + ' deg')
+                        print('            ' + 'starting at ' + str(pathStartVariable) + ' mum')
+                        print('            ' + 'ending at ' + str(pathEndVariable))
+                        print(' ')
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
+                        print('    --> File read')
+                        print(' ')
                         currentxyData = []
                         for datLine in datLines:
                             if len(datLine.replace('\n','').replace(' ',''))>0 and 'X' not in datLine:
@@ -645,6 +655,8 @@ def main(argv):
                                     if linePart!='':
                                         rowVec.append(float(linePart))
                                 currentxyData.append(rowVec)
+                        print('    --> Lines parsed')
+                        print(' ')
                         normxData = []
                         xData = []
                         yData = []
@@ -652,22 +664,36 @@ def main(argv):
                             normxData.append(xyPair[0])
                             xData.append(pathStartVariable+(pathEndVariable-pathStartVariable)*xyPair[0])
                             yData.append(xyPair[1])
+                        print('    --> Data categorized in independent and dependent variables.')
+                        print(' ')
                         if 'S11' in stressComp:
                             Sxx.append(yData)
                             pathCoords.append(xData)
                             pathNormCoords.append(normxData)
+                            print('    --> Stress component is S11.')
+                            print(' ')
                         elif 'S22' in stressComp:
                             Syy.append(yData)
+                            print('    --> Stress component is S22.')
+                            print(' ')
                         elif 'S23' in stressComp:
                             Syz.append(yData)
+                            print('    --> Stress component is S23.')
+                            print(' ')
                         elif 'S12' in stressComp:
                             Sxy.append(yData)
+                            print('    --> Stress component is S12.')
+                            print(' ')
                         elif 'S13' in stressComp:
                             Szx.append(yData)
+                            print('    --> Stress component is S13.')
+                            print(' ')
                         elif 'S33' in stressComp:
                             Szz.append(yData)
                             Szx.append(0.0)
                             Syz.append(0.0)
+                            print('    --> Stress component is S33.')
+                            print(' ')
                             currentSxx = Sxx[-1]
                             currentSyy = Syy[-1]
                             currentSzz = yData
@@ -694,8 +720,7 @@ def main(argv):
                             rotateBy = pathVariable*np.pi/180.0
                             cosRot = np.cos(rotateBy)
                             sinRor = np.sin(rotateBy)
-
-                            for s, sxx in currentSxx:
+                            for s, sxx in enumerate(currentSxx):
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]
@@ -708,7 +733,8 @@ def main(argv):
                                 currentSrr.append(srr)
                                 currentStt.append(stt)
                                 currentSrt.append(srt)
-
+                                print('    --> Stresses in radial coordinates computed.')
+                                print(' ')
                                 i1d2 = sxx + syy
                                 i1d3 = sxx + syy + szz
 
@@ -717,11 +743,20 @@ def main(argv):
 
                                 i3d3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
 
+                                print('    --> Stress invariants computed.')
+                                print(' ')
+
                                 saverd2 = I1D2/2.0
                                 saverd3 = I1D3/3.0
 
+                                print('    --> Average stress computed.')
+                                print(' ')
+
                                 smises2d =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
                                 smises3d =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
+
+                                print('    --> Von Mises stress computed.')
+                                print(' ')
 
                                 s1d2 = 0.5*(sxx+syy)+np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
                                 s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
@@ -735,6 +770,9 @@ def main(argv):
                                     s1d3 = s1d2
                                     s2d3 = s2d2
                                     s3d3 = 0.0
+
+                                print('    --> Principal stresses computed.')
+                                print(' ')
 
                                 current3DS1.append(s1d3)
                                 current3DS2.append(s2d3)
@@ -912,6 +950,8 @@ def main(argv):
                     pathEndVariables = []
                     pathCoords = []
                     pathNormCoords = []
+                    print('<-----------------')
+                    print('<-----------------')
 
                 if subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)
@@ -1013,7 +1053,7 @@ def main(argv):
                             current2DSMises = []
                             current2DSaver = []
 
-                            for s, sxx in currentSxx:
+                            for s, sxx in enumerate(currentSxx):
 
                                 rotateBy = xData[s]*np.pi/180.0
                                 cosRot = np.cos(rotateBy)
@@ -1336,7 +1376,7 @@ def main(argv):
                             current2DSMises = []
                             current2DSaver = []
 
-                            for s, sxx in currentSxx:
+                            for s, sxx in enumerate(currentSxx):
 
                                 rotateBy = np.arctan2(pathVariable,xData[s])
                                 cosRot = np.cos(rotateBy)
@@ -1659,7 +1699,7 @@ def main(argv):
                             current2DSMises = []
                             current2DSaver = []
 
-                            for s, sxx in currentSxx:
+                            for s, sxx in enumerate(currentSxx):
 
                                 rotateBy = np.arctan2(xData[s],pathVariable)
                                 cosRot = np.cos(rotateBy)

@@ -994,11 +994,8 @@ def main(argv):
                     for line in lines[1:]:
                         stressComp = line.replace('\n','').replace(' ','').split(',')[0]
                         pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
-                        pathVariables.append(pathVariable)
                         pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
-                        pathStartVariables.append(pathStartVariable)
                         pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
-                        pathEndVariables.append(pathEndVariable)
                         datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
@@ -1022,6 +1019,9 @@ def main(argv):
                             Sxx.append(yData)
                             pathCoords.append(xData)
                             pathNormCoords.append(normxData)
+                            pathVariables.append(pathVariable)
+                            pathStartVariables.append(pathStartVariable)
+                            pathEndVariables.append(pathEndVariable)
                         elif 'S22' in stressComp:
                             Syy.append(yData)
                         elif 'S23' in stressComp:
@@ -1317,11 +1317,8 @@ def main(argv):
                     for line in lines[1:]:
                         stressComp = line.replace('\n','').replace(' ','').split(',')[0]
                         pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
-                        pathVariables.append(pathVariable)
                         pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
-                        pathStartVariables.append(pathStartVariable)
                         pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
-                        pathEndVariables.append(pathEndVariable)
                         datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
@@ -1345,6 +1342,9 @@ def main(argv):
                             Sxx.append(yData)
                             pathCoords.append(xData)
                             pathNormCoords.append(normxData)
+                            pathVariables.append(pathVariable)
+                            pathStartVariables.append(pathStartVariable)
+                            pathEndVariables.append(pathEndVariable)
                         elif 'S22' in stressComp:
                             Syy.append(yData)
                         elif 'S23' in stressComp:
@@ -1640,11 +1640,8 @@ def main(argv):
                     for line in lines[1:]:
                         stressComp = line.replace('\n','').replace(' ','').split(',')[0]
                         pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
-                        pathVariables.append(pathVariable)
                         pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
-                        pathStartVariables.append(pathStartVariable)
                         pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
-                        pathEndVariables.append(pathEndVariable)
                         datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
                         with open(datfilePath,'r') as dat:
                             datLines = dat.readlines()
@@ -1668,6 +1665,9 @@ def main(argv):
                             Sxx.append(yData)
                             pathCoords.append(xData)
                             pathNormCoords.append(normxData)
+                            pathVariables.append(pathVariable)
+                            pathStartVariables.append(pathStartVariable)
+                            pathEndVariables.append(pathEndVariable)
                         elif 'S22' in stressComp:
                             Syy.append(yData)
                         elif 'S23' in stressComp:

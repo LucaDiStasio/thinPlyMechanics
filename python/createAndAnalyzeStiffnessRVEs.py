@@ -4988,6 +4988,7 @@ def main(argv):
     workDir = RVEparams['input']['wd']
     RVEparams['output']['global']['filenames']['inputdata'] = basename + '_InputData'
     RVEparams['output']['global']['filenames']['performances'] = basename + '_ABQ-Performances'
+    RVEparams['output']['global']['filenames']['stiffness'] = basename + '_Stiffness'
     RVEparams['output']['global']['filenames']['energyreleaserate'] = basename + '_ERRTS'
     if len(RVEparams['steps'])>1:
         RVEparams['output']['global']['filenames']['thermalenergyreleaserate'] = basename + '_thermalERRTS'
@@ -5010,6 +5011,7 @@ def main(argv):
     createCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist','ABSOLUTE PATH, NAME, TO PLOT, PLOT VARIABLES')
     appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['inputdata']+'.csv'),'MODEL-DATA',RVEparams['plot']['global']['inputdata']['toPlot'],RVEparams['plot']['global']['inputdata']['variables']]])
     appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate']+'.csv'),'GLOBAL-ERRTS',RVEparams['plot']['global']['errts']['toPlot'],RVEparams['plot']['global']['errts']['variables']]])
+    appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['stiffness']+'.csv'),'GLOBAL-STIFFNESS',RVEparams['plot']['global']['errts']['toPlot'],RVEparams['plot']['global']['errts']['variables']]])
     if len(RVEparams['steps'])>1:
         appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['thermalenergyreleaserate']+'.csv'),'GLOBAL-THERMALERRTS',RVEparams['plot']['global']['errts']['toPlot'],RVEparams['plot']['global']['errts']['variables']]])
     appendCSVfile(RVEparams['output']['global']['directory'],logfilename.split('.')[0].split('_')[-1] + '_csvfileslist',[[join(RVEparams['output']['global']['directory'],logfilename.split('.')[0] + '_TIME'+'.csv'),'GLOBAL-TIME',RVEparams['plot']['global']['globaltime']['toPlot'],RVEparams['plot']['global']['globaltime']['variables']]])

@@ -726,7 +726,6 @@ def main(argv):
                                 sxy = currentSxy[s]
                                 szx = 0.0
                                 syz = 0.0
-
                                 srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
                                 stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
                                 srt = -sxx*cosRot*sinRot+syy*cosRot*sinRot+sxy*(cosRot*cosRot-sinRot*sinRot)
@@ -737,30 +736,21 @@ def main(argv):
                                 print(' ')
                                 i1d2 = sxx + syy
                                 i1d3 = sxx + syy + szz
-
                                 i2d2 = sxx*syy - sxy*sxy
                                 i2d3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
-
                                 i3d3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
-
                                 print('    --> Stress invariants computed.')
                                 print(' ')
-
                                 saverd2 = i1d2/2.0
                                 saverd3 = i1d3/3.0
-
                                 print('    --> Average stress computed.')
                                 print(' ')
-
                                 smises2d =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
                                 smises3d =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
-
                                 print('    --> Von Mises stress computed.')
                                 print(' ')
-
                                 s1d2 = 0.5*(sxx+syy)+np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
                                 s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
-
                                 try:
                                     princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
                                     s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
@@ -770,10 +760,8 @@ def main(argv):
                                     s1d3 = s1d2
                                     s2d3 = s2d2
                                     s3d3 = 0.0
-
                                 print('    --> Principal stresses computed.')
                                 print(' ')
-
                                 current3DS1.append(s1d3)
                                 current3DS2.append(s2d3)
                                 current3DS3.append(s2d3)
@@ -788,7 +776,6 @@ def main(argv):
                                 current2DI2.append(i2d2)
                                 current2DSMises.append(smises2d)
                                 current2DSaver.append(saverd2)
-
                             Srr.append(currentSrr)
                             Stt.append(currentStt)
                             Srt.append(currentSrt)
@@ -806,7 +793,6 @@ def main(argv):
                             SaverD3.append(current3DSaver)
                             SMisesD2.append(current2DSMises)
                             SaverD2.append(current2DSaver)
-
                             currentSrr = []
                             currentStt = []
                             currentSrt = []
@@ -898,11 +884,16 @@ def main(argv):
                             worksheet.write(3+c,p*25+24,I2D2[p][c],radialpathsnumberFormat)
 
                     graphsheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    worksheet = radialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                    graphworksheet = radialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                    print('    --> Writing worksheet')
+                    print('        ' + graphsheetName)
+                    print(' ')
                     variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
-                    radialpathsDatalengths.append(len(pathCoords[p]))
+                    #radialpathsDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableNames):
-                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart = radialpathsworkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        print('        Chart ' + str(v+1) + '.A')
+                        print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
                             chart.add_series({
@@ -910,11 +901,21 @@ def main(argv):
                                             'categories': [datasheetName,3,0,dataLength,0],
                                             'values':     [datasheetName,3,2+v,dataLength,2+v],
                                              })
+                            print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
+                            print('        ' + graphsheetName)
+                            print(' ')
                         chart.set_title ({'name': variableName + ' vs path coordinates'})
                         chart.set_x_axis({'name': pathVariableName})
                         chart.set_y_axis({'name': variableName})
-                        worksheet.insert_chart(v*20,0,chart)
-                        chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        print('             Title: ' + variableName + ' vs path coordinates')
+                        print('             x axis: ' + pathVariableName')
+                        print('             y axis: ' + variableName')
+                        print(' ')
+                        print(' ')
+                        graphworksheet.insert_chart(v*20,0,chart)
+                        chart = radialpathsworkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        print('        Chart ' + str(v+1) + '.B')
+                        print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
                             chart.add_series({
@@ -922,41 +923,49 @@ def main(argv):
                                             'categories': [datasheetName,3,1,dataLength,1],
                                             'values':     [datasheetName,3,2+v,dataLength,2+v],
                                              })
+                            print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
+                            print('        ' + graphsheetName)
+                            print(' ')
                         chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
                         chart.set_x_axis({'name': 'Norm ' + pathVariableName})
                         chart.set_y_axis({'name': variableName})
-                        worksheet.insert_chart(v*20,30,chart)
+                        print('             Title: ' + variableName + ' vs path coordinates')
+                        print('             x axis: ' + pathVariableName')
+                        print('             y axis: ' + variableName')
+                        print(' ')
+                        print(' ')
+                        graphworksheet.insert_chart(v*20,30,chart)
 
-                    Sxx = []
-                    Syy = []
-                    Szz = []
-                    Sxy = []
-                    Szx = []
-                    Syz = []
-                    Srr = []
-                    Stt = []
-                    Srt = []
-                    S1D3 = []
-                    S2D3 = []
-                    S3D3 = []
-                    I1D3 = []
-                    I2D3 = []
-                    I3D3 = []
-                    SMisesD3 = []
-                    SaverD3 = []
-                    S1D2 = []
-                    S2D2 = []
-                    I1D2 = []
-                    I2D2 = []
-                    SMisesD2 = []
-                    SaverD2 = []
-                    pathVariables = []
-                    pathStartVariables = []
-                    pathEndVariables = []
-                    pathCoords = []
-                    pathNormCoords = []
-                    print('<-----------------')
-                    print('<-----------------')
+                        Sxx = []
+                        Syy = []
+                        Szz = []
+                        Sxy = []
+                        Szx = []
+                        Syz = []
+                        Srr = []
+                        Stt = []
+                        Srt = []
+                        S1D3 = []
+                        S2D3 = []
+                        S3D3 = []
+                        I1D3 = []
+                        I2D3 = []
+                        I3D3 = []
+                        SMisesD3 = []
+                        SaverD3 = []
+                        S1D2 = []
+                        S2D2 = []
+                        I1D2 = []
+                        I2D2 = []
+                        SMisesD2 = []
+                        SaverD2 = []
+                        pathVariables = []
+                        pathStartVariables = []
+                        pathEndVariables = []
+                        pathCoords = []
+                        pathNormCoords = []
+                        print('<-----------------')
+                        print('<-----------------')
 
                 if subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)

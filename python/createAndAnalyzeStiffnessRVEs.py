@@ -4651,6 +4651,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     integralStrain /= 3.0
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute RVE stiffness ...',True)
+    avgStress = integralStress/totalArea
+    avgStrain = integralStrain/totalArea
+    E1eq = avgStress/avgStrain
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

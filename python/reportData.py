@@ -2212,7 +2212,7 @@ def main(argv):
                     print(' ')
                     graphworksheet.insert_chart(v*20,0,chartA)
                     chartB = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
-                    print('        Chart ' + str(v+1) + '.A')
+                    print('        Chart ' + str(v+1) + '.B')
                     print(' ')
                     for s,subFolder in enumerate(subfoldersList):
                         dataLength = verticalpathsDatalengths[s]

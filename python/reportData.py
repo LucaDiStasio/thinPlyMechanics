@@ -1890,7 +1890,7 @@ def main(argv):
                             worksheet.write(3+c,p*25+24,I2D2[p][c],radialpathsnumberFormat)
 
                     graphsheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    worksheet = radialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                    worksheet = verticalpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
                     variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     verticalpathsDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableName):

@@ -2027,7 +2027,7 @@ def main(argv):
                 print('        ' + graphsheetName)
                 print(' ')
                 variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
-                for v,variableName in enumerate(variableName):
+                for v,variableName in enumerate(variableNames):
                     chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
                     for s,subFolder in enumerate(subfoldersList):
@@ -2080,7 +2080,7 @@ def main(argv):
                 print('        ' + graphsheetName)
                 print(' ')
                 variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
-                for v,variableName in enumerate(variableName):
+                for v,variableName in enumerate(variableNames):
                     chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
                     print(' ')
@@ -2134,7 +2134,7 @@ def main(argv):
                 print('        ' + graphsheetName)
                 print(' ')
                 variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
-                for v,variableName in enumerate(variableName):
+                for v,variableName in enumerate(variableNames):
                     chart = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
                     print(' ')
@@ -2188,7 +2188,7 @@ def main(argv):
                 print('        ' + graphsheetName)
                 print(' ')
                 variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
-                for v,variableName in enumerate(variableName):
+                for v,variableName in enumerate(variableNames):
                     chart = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
                     print(' ')

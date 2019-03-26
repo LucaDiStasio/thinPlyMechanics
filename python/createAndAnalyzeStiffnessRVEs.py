@@ -4590,6 +4590,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     sigmaxxNodes = getFieldOutput(odb,step,frame,'S',rveNodes)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract strains at all nodes ...',True)
+    strainxxNodes = getFieldOutput(odb,step,frame,'EE',rveNodes)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract coordinates at all nodes ...',True)
     coordNodes = getFieldOutput(odb,step,frame,'COORD',rveNodes)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
@@ -4600,26 +4604,53 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         sigmaxxDict[str(valueSet.nodeLabel)] = valueSet.data[0]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create dictionary {node label: strain} ...',True)
+    strainxxDict = {}
+    for valueSet in strainxxNodes.values:
+        strainxxDict[str(valueSet.nodeLabel)] = valueSet.data[0]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create dictionary {node label: coordinate} ...',True)
     coordDict = {}
     for valueSet in coordNodes.values:
         coordDict[str(valueSet.nodeLabel)] = [valueSet.data[0],valueSet.data[1]]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute and sum integrands ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute integrals ...',True)
     integralStress = 0.0
     integralStrain = 0.0
     totalArea = 0.0
     for element in rve:
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Element n. ' + str(element.label),True)
         nodes = element.connectivity
+        triCoords = []
+        nodeLabels = []
+        triSigmas = []
+        triEps = []
         for node in nodes:
             writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Node n. ' + str(node.label) + ' belonging to element n. ' + str(element.label),True)
             sigma = sigmaxxDict[str(node.label)]
+            eps = strainxxDict[str(node.label)]
             x = coordDict[str(node.label)][0]
             y = coordDict[str(node.label)][1]
+            if node.label not in nodeLabels:
+                triCoords.append([x,y])
+                nodeLabels.append(node.label)
+            triSigmas.append(sigma)
+            triEps.append(eps)
             writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'sigma=' + str(sigma) + ' [MPa] measured at (' + str(x) + ', ' + str(y) + ') mum',True)
-            triArea = 
+        ABvec = [triCoords[1][0]-triCoords[0][0],triCoords[1][1]-triCoords[0][1]]
+        ACvec = [triCoords[2][0]-triCoords[0][0],triCoords[2][1]-triCoords[0][1]]
+        ABlen = np.sqrt(ABvec[0]*ABvec[0]+ABvec[1]*ABvec[1])
+        AClen = np.sqrt(ACvec[0]*ACvec[0]+ACvec[1]*ACvec[1])
+        triArea = 0.5*ABlen*AClen*np.sqrt(1-((ABvec[0]*ACvec[0]+ABvec[1]*ACvec[1])/(ABlen*AClen))*((ABvec[0]*ACvec[0]+ABvec[1]*ACvec[1])/(ABlen*AClen)))
+        integralStress += triArea*np.sum(triSigmas)
+        integralStrain += triArea*np.sum(triEps)
+        totalArea += triArea
+    integralStress /= 3.0
+    integralStrain /= 3.0
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

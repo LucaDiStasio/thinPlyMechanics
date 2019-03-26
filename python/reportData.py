@@ -895,6 +895,8 @@ def main(argv):
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
+                            if v==0:
+                                radialpathsDatalengths.append(dataLength)
                             chart.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,0,dataLength,0],
@@ -1247,6 +1249,8 @@ def main(argv):
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
+                            if v==0:
+                                circumferentialpathsDatalengths.append(dataLength)
                             chart.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,0,dataLength,0],
@@ -1596,6 +1600,8 @@ def main(argv):
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
+                            if v==0:
+                                horizontalpathsDatalengths.append(dataLength)
                             chart.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,0,dataLength,0],
@@ -1944,6 +1950,8 @@ def main(argv):
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
+                            if v==0:
+                                verticalpathsDatalengths.append(dataLength)
                             chart.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,0,dataLength,0],
@@ -2022,7 +2030,6 @@ def main(argv):
                 for v,variableName in enumerate(variableName):
                     chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
-                    print(' ')
                     for s,subFolder in enumerate(subfoldersList):
                         dataLength = radialpathsDatalengths[s]
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')

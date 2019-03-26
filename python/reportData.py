@@ -890,7 +890,7 @@ def main(argv):
                     print(' ')
                     variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     for v,variableName in enumerate(variableNames):
-                        chart = radialpathsworkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
@@ -911,7 +911,7 @@ def main(argv):
                         print(' ')
                         print(' ')
                         graphworksheet.insert_chart(v*20,0,chart)
-                        chart = radialpathsworkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.B')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):

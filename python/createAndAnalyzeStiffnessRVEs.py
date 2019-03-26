@@ -4657,6 +4657,13 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     E1eq = avgStress/avgStrain
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write to file ...',True)
+
+    appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['stiffness'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,avgStrain,avgStress,E1eq]])
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

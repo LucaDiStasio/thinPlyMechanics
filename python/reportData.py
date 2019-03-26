@@ -890,50 +890,50 @@ def main(argv):
                     print(' ')
                     variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     for v,variableName in enumerate(variableNames):
-                        chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chartA = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
                             if v==0:
                                 radialpathsDatalengths.append(dataLength)
-                            chart.add_series({
+                            chartA.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,0,dataLength,0],
-                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                            'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
                             print(' ')
-                        chart.set_title ({'name': variableName + ' vs path coordinates'})
-                        chart.set_x_axis({'name': pathVariableName})
-                        chart.set_y_axis({'name': variableName})
+                        chartA.set_title ({'name': variableName + ' vs path coordinates'})
+                        chartA.set_x_axis({'name': pathVariableName})
+                        chartA.set_y_axis({'name': variableName})
                         print('             Title: ' + variableName + ' vs path coordinates')
                         print('             x axis: ' + pathVariableName)
                         print('             y axis: ' + variableName)
                         print(' ')
                         print(' ')
-                        graphworksheet.insert_chart(v*20,0,chart)
-                        chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        graphworksheet.insert_chart(v*20,0,chartA)
+                        chartB = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.B')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
-                            chart.add_series({
+                            chartB.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,1,dataLength,1],
-                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                            'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
                             print(' ')
-                        chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
-                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
-                        chart.set_y_axis({'name': variableName})
+                        chartB.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                        chartB.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chartB.set_y_axis({'name': variableName})
                         print('             Title: ' + variableName + ' vs path coordinates')
                         print('             x axis: ' + pathVariableName)
                         print('             y axis: ' + variableName)
                         print(' ')
                         print(' ')
-                        graphworksheet.insert_chart(v*20,30,chart)
+                        graphworksheet.insert_chart(v*20,30,chartB)
 
                     Sxx = []
                     Syy = []
@@ -1244,50 +1244,50 @@ def main(argv):
                     variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     circumferentialpathsDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableNames):
-                        chart = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chartA = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
                             if v==0:
                                 circumferentialpathsDatalengths.append(dataLength)
-                            chart.add_series({
+                            chartA.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,0,dataLength,0],
-                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                            'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
                             print(' ')
-                        chart.set_title ({'name': variableName + ' vs path coordinates'})
-                        chart.set_x_axis({'name': pathVariableName})
-                        chart.set_y_axis({'name': variableName})
+                        chartA.set_title ({'name': variableName + ' vs path coordinates'})
+                        chartA.set_x_axis({'name': pathVariableName})
+                        chartA.set_y_axis({'name': variableName})
                         print('             Title: ' + variableName + ' vs path coordinates')
                         print('             x axis: ' + pathVariableName)
                         print('             y axis: ' + variableName)
                         print(' ')
                         print(' ')
-                        graphworksheet.insert_chart(v*20,0,chart)
-                        chart = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        graphworksheet.insert_chart(v*20,0,chartA)
+                        chartB = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.B')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
-                            chart.add_series({
+                            chartB.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,1,dataLength,1],
-                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                            'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
                             print(' ')
-                        chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
-                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
-                        chart.set_y_axis({'name': variableName})
+                        chartB.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                        chartB.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chartB.set_y_axis({'name': variableName})
                         print('             Title: ' + variableName + ' vs path coordinates')
                         print('             x axis: ' + pathVariableName)
                         print('             y axis: ' + variableName)
                         print(' ')
                         print(' ')
-                        graphworksheet.insert_chart(v*20,30,chart)
+                        graphworksheet.insert_chart(v*20,30,chartB)
 
                     Sxx = []
                     Syy = []
@@ -1595,50 +1595,50 @@ def main(argv):
                     variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     horizontalpathsDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableNames):
-                        chart = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chartA = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
                             if v==0:
                                 horizontalpathsDatalengths.append(dataLength)
-                            chart.add_series({
+                            chartA.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,0,dataLength,0],
-                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                            'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
                             print(' ')
-                        chart.set_title ({'name': variableName + ' vs path coordinates'})
-                        chart.set_x_axis({'name': pathVariableName})
-                        chart.set_y_axis({'name': variableName})
+                        chartA.set_title ({'name': variableName + ' vs path coordinates'})
+                        chartA.set_x_axis({'name': pathVariableName})
+                        chartA.set_y_axis({'name': variableName})
                         print('             Title: ' + variableName + ' vs path coordinates')
                         print('             x axis: ' + pathVariableName)
                         print('             y axis: ' + variableName)
                         print(' ')
                         print(' ')
-                        graphworksheet.insert_chart(v*20,0,chart)
-                        chart = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        graphworksheet.insert_chart(v*20,0,chartA)
+                        chartB = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
-                            chart.add_series({
+                            chartB.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,1,dataLength,1],
-                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                            'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
                             print(' ')
-                        chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
-                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
-                        chart.set_y_axis({'name': variableName})
+                        chartB.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                        chartB.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chartB.set_y_axis({'name': variableName})
                         print('             Title: ' + variableName + ' vs path coordinates')
                         print('             x axis: ' + pathVariableName)
                         print('             y axis: ' + variableName)
                         print(' ')
                         print(' ')
-                        graphworksheet.insert_chart(v*20,30,chart)
+                        graphworksheet.insert_chart(v*20,30,chartB)
 
                     Sxx = []
                     Syy = []
@@ -1945,50 +1945,50 @@ def main(argv):
                     print(' ')
                     variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     for v,variableName in enumerate(variableNames):
-                        chart = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chartA = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
                             if v==0:
                                 verticalpathsDatalengths.append(dataLength)
-                            chart.add_series({
+                            chartA.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,0,dataLength,0],
-                                            'values':     [datasheetName,3,2+v,dataLength,2+v],
+                                            'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
                             print(' ')
-                        chart.set_title ({'name': variableName + ' vs path coordinates'})
-                        chart.set_x_axis({'name': pathVariableName})
-                        chart.set_y_axis({'name': variableName})
+                        chartA.set_title ({'name': variableName + ' vs path coordinates'})
+                        chartA.set_x_axis({'name': pathVariableName})
+                        chartA.set_y_axis({'name': variableName})
                         print('             Title: ' + variableName + ' vs path coordinates')
                         print('             x axis: ' + pathVariableName)
                         print('             y axis: ' + variableName)
                         print(' ')
                         print(' ')
-                        graphworksheet.insert_chart(v*20,0,chart)
-                        chart = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        graphworksheet.insert_chart(v*20,0,chartA)
+                        chartB = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
-                            chart.add_series({
+                            chartB.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,1,dataLength,1],
                                             'values':     [datasheetName,3,2+v,dataLength,2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
                             print(' ')
-                        chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
-                        chart.set_x_axis({'name': 'Norm ' + pathVariableName})
-                        chart.set_y_axis({'name': variableName})
+                        chartB.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                        chartB.set_x_axis({'name': 'Norm ' + pathVariableName})
+                        chartB.set_y_axis({'name': variableName})
                         print('             Title: ' + variableName + ' vs path coordinates')
                         print('             x axis: ' + pathVariableName)
                         print('             y axis: ' + variableName)
                         print(' ')
                         print(' ')
-                        graphworksheet.insert_chart(v*20,30,chart)
+                        graphworksheet.insert_chart(v*20,30,chartB)
 
                     Sxx = []
                     Syy = []
@@ -2028,49 +2028,49 @@ def main(argv):
                 print(' ')
                 variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                 for v,variableName in enumerate(variableNames):
-                    chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    chartA = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
                     for s,subFolder in enumerate(subfoldersList):
                         dataLength = radialpathsDatalengths[s]
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                        chart.add_series({
+                        chartA.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
                                         'categories': [datasheetName,3,0,dataLength,0],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
                         print(' ')
-                    chart.set_title ({'name': variableName + ' vs path coordinates'})
-                    chart.set_x_axis({'name': pathVariableName})
-                    chart.set_y_axis({'name': variableName})
+                    chartA.set_title ({'name': variableName + ' vs path coordinates'})
+                    chartA.set_x_axis({'name': pathVariableName})
+                    chartA.set_y_axis({'name': variableName})
                     print('             Title: ' + variableName + ' vs path coordinates')
                     print('             x axis: ' + pathVariableName)
                     print('             y axis: ' + variableName)
                     print(' ')
                     print(' ')
-                    graphworksheet.insert_chart(v*20,0,chart)
-                    chart = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    graphworksheet.insert_chart(v*20,0,chartA)
+                    chartB = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.B')
                     print(' ')
                     for s,subFolder in enumerate(subfoldersList):
                         dataLength = radialpathsDatalengths[s]
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                        chart.add_series({
+                        chartB.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
                                         'categories': [datasheetName,3,1,dataLength,1],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
                         print(' ')
-                    chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
-                    chart.set_x_axis({'name': 'Norm ' + pathVariableName})
-                    chart.set_y_axis({'name': variableName})
+                    chartB.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                    chartB.set_x_axis({'name': 'Norm ' + pathVariableName})
+                    chartB.set_y_axis({'name': variableName})
                     print('             Title: ' + variableName + ' vs path coordinates')
                     print('             x axis: ' + pathVariableName)
                     print('             y axis: ' + variableName)
                     print(' ')
                     print(' ')
-                    graphworksheet.insert_chart(v*20,30,chart)
+                    graphworksheet.insert_chart(v*20,30,chartB)
 
             pathVariableName = 'pathRadius [mum]'
             for n in range(0,min(numberOfCircumferentialpaths)):
@@ -2081,50 +2081,50 @@ def main(argv):
                 print(' ')
                 variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                 for v,variableName in enumerate(variableNames):
-                    chart = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    chartA = workbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
                     print(' ')
                     for s,subFolder in enumerate(subfoldersList):
                         dataLength = circumferentialpathsDatalengths[s]
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                        chart.add_series({
+                        chartA.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
                                         'categories': [datasheetName,3,0,dataLength,0],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
                         print(' ')
-                    chart.set_title ({'name': variableName + ' vs path coordinates'})
-                    chart.set_x_axis({'name': pathVariableName})
-                    chart.set_y_axis({'name': variableName})
+                    chartA.set_title ({'name': variableName + ' vs path coordinates'})
+                    chartA.set_x_axis({'name': pathVariableName})
+                    chartA.set_y_axis({'name': variableName})
                     print('             Title: ' + variableName + ' vs path coordinates')
                     print('             x axis: ' + pathVariableName)
                     print('             y axis: ' + variableName)
                     print(' ')
                     print(' ')
-                    graphworksheet.insert_chart(v*20,0,chart)
-                    chart = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    graphworksheet.insert_chart(v*20,0,chartA)
+                    chartB = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.B')
                     print(' ')
                     for s,subFolder in enumerate(subfoldersList):
                         dataLength = circumferentialpathsDatalengths[s]
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                        chart.add_series({
+                        chartB.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
                                         'categories': [datasheetName,3,1,dataLength,1],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
                         print(' ')
-                    chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
-                    chart.set_x_axis({'name': 'Norm ' + pathVariableName})
-                    chart.set_y_axis({'name': variableName})
+                    chartB.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                    chartB.set_x_axis({'name': 'Norm ' + pathVariableName})
+                    chartB.set_y_axis({'name': variableName})
                     print('             Title: ' + variableName + ' vs path coordinates')
                     print('             x axis: ' + pathVariableName)
                     print('             y axis: ' + variableName)
                     print(' ')
                     print(' ')
-                    graphworksheet.insert_chart(v*20,30,chart)
+                    graphworksheet.insert_chart(v*20,30,chartB)
 
             pathVariableName = 'y [mum]'
             for n in range(0,min(numberOfHorizontalpaths)):
@@ -2135,50 +2135,50 @@ def main(argv):
                 print(' ')
                 variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                 for v,variableName in enumerate(variableNames):
-                    chart = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    chartA = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
                     print(' ')
                     for s,subFolder in enumerate(subfoldersList):
                         dataLength = horizontalpathsDatalengths[s]
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                        chart.add_series({
+                        chartA.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
                                         'categories': [datasheetName,3,0,dataLength,0],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
                         print(' ')
-                    chart.set_title ({'name': variableName + ' vs path coordinates'})
-                    chart.set_x_axis({'name': pathVariableName})
-                    chart.set_y_axis({'name': variableName})
+                    chartA.set_title ({'name': variableName + ' vs path coordinates'})
+                    chartA.set_x_axis({'name': pathVariableName})
+                    chartA.set_y_axis({'name': variableName})
                     print('             Title: ' + variableName + ' vs path coordinates')
                     print('             x axis: ' + pathVariableName)
                     print('             y axis: ' + variableName)
                     print(' ')
                     print(' ')
-                    graphworksheet.insert_chart(v*20,0,chart)
-                    chart = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    graphworksheet.insert_chart(v*20,0,chartA)
+                    chartB = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.B')
                     print(' ')
                     for s,subFolder in enumerate(subfoldersList):
                         dataLength = horizontalpathsDatalengths[s]
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                        chart.add_series({
+                        chartB.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
                                         'categories': [datasheetName,3,1,dataLength,1],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
                         print(' ')
-                    chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
-                    chart.set_x_axis({'name': 'Norm ' + pathVariableName})
-                    chart.set_y_axis({'name': variableName})
+                    chartB.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                    chartB.set_x_axis({'name': 'Norm ' + pathVariableName})
+                    chartB.set_y_axis({'name': variableName})
                     print('             Title: ' + variableName + ' vs path coordinates')
                     print('             x axis: ' + pathVariableName)
                     print('             y axis: ' + variableName)
                     print(' ')
                     print(' ')
-                    graphworksheet.insert_chart(v*20,30,chart)
+                    graphworksheet.insert_chart(v*20,30,chartB)
 
             pathVariableName = 'x [mum]'
             for n in range(0,min(numberOfVerticalpaths)):
@@ -2189,50 +2189,50 @@ def main(argv):
                 print(' ')
                 variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                 for v,variableName in enumerate(variableNames):
-                    chart = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    chartA = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
                     print(' ')
                     for s,subFolder in enumerate(subfoldersList):
                         dataLength = verticalpathsDatalengths[s]
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                        chart.add_series({
+                        chartA.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
                                         'categories': [datasheetName,3,0,dataLength,0],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
                         print(' ')
-                    chart.set_title ({'name': variableName + ' vs path coordinates'})
-                    chart.set_x_axis({'name': pathVariableName})
-                    chart.set_y_axis({'name': variableName})
+                    chartA.set_title ({'name': variableName + ' vs path coordinates'})
+                    chartA.set_x_axis({'name': pathVariableName})
+                    chartA.set_y_axis({'name': variableName})
                     print('             Title: ' + variableName + ' vs path coordinates')
                     print('             x axis: ' + pathVariableName)
                     print('             y axis: ' + variableName)
                     print(' ')
                     print(' ')
-                    graphworksheet.insert_chart(v*20,0,chart)
-                    chart = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                    graphworksheet.insert_chart(v*20,0,chartA)
+                    chartB = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
                     print(' ')
                     for s,subFolder in enumerate(subfoldersList):
                         dataLength = verticalpathsDatalengths[s]
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                        chart.add_series({
+                        chartB.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
                                         'categories': [datasheetName,3,1,dataLength,1],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
                         print(' ')
-                    chart.set_title ({'name': variableName + ' vs normalized path coordinates'})
-                    chart.set_x_axis({'name': 'Norm ' + pathVariableName})
-                    chart.set_y_axis({'name': variableName})
+                    chartB.set_title ({'name': variableName + ' vs normalized path coordinates'})
+                    chartB.set_x_axis({'name': 'Norm ' + pathVariableName})
+                    chartB.set_y_axis({'name': variableName})
                     print('             Title: ' + variableName + ' vs path coordinates')
                     print('             x axis: ' + pathVariableName)
                     print('             y axis: ' + variableName)
                     print(' ')
                     print(' ')
-                    graphworksheet.insert_chart(v*20,30,chart)
+                    graphworksheet.insert_chart(v*20,30,chartB)
 
 
             print('    Close workbook ' + join(outdir,outputfileBasename + '-radialpathsData' + '.xlsx'))

@@ -4648,15 +4648,15 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stresses at all nodes ...',True)
-    sigmaxxNodes = getFieldOutput(odb,step,frame,'S',rveNodes)
+    sigmaxxNodes = getFieldOutput(odb,-1,-1,'S',rveNodes)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract strains at all nodes ...',True)
-    strainxxNodes = getFieldOutput(odb,step,frame,'EE',rveNodes)
+    strainxxNodes = getFieldOutput(odb,-1,-1,'EE',rveNodes)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract coordinates at all nodes ...',True)
-    coordNodes = getFieldOutput(odb,step,frame,'COORD',rveNodes)
+    coordNodes = getFieldOutput(odb,-1,-1,'COORD',rveNodes)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create dictionary {node label: stress} ...',True)

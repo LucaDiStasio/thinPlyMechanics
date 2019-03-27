@@ -4635,6 +4635,19 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
 
     #=======================================================================
+    # BEGIN - compute average COD and CSD
+    #=======================================================================
+
+    #=======================================================================
+    # END - compute average COD and CSD
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute average COD and CSD ...',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Select crack faces ...',True)
+    rveEls = odb.rootAssembly.instances['RVE-ASSEMBLY'].surfaces['']
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    #=======================================================================
     # BEGIN - compute average stress and strain and stiffness
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute average stress and strain and stiffness ...',True)

@@ -3950,7 +3950,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     elif 'second' in parameters['mesh']['elements']['order']:
         #elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
         elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
-    model.rootAssembly.setElementType(regions=(model.rootAssembly.instances['RVE-assembly'].sets['RVE']), elemTypes=(elemType2))
+    model.rootAssembly.setElementType(regions=(model.rootAssembly.instances['RVE-assembly'].sets['RVE']), elemTypes=(elemType2,))
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 

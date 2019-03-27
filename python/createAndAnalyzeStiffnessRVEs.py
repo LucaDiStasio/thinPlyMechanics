@@ -4681,7 +4681,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     integralStress = 0.0
     integralStrain = 0.0
     totalArea = 0.0
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + str(revEls),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + str(rveEls),True)
     for element in rveEls:
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Element n. ' + str(element.label),True)
         nodes = element.connectivity

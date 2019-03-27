@@ -3879,17 +3879,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     nFibersHorizontal = 1
 
-    if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
-        nFibersHorizontal += parameters['BC']['rightSide']['nFibers']
-        for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-            regionSets.append(['LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),10])
-            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),True)
+    #if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+    #    nFibersHorizontal += parameters['BC']['rightSide']['nFibers']
+    #    for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+    #        regionSets.append(['LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),10])
+    #        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),True)
 
-    if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
-        nFibersHorizontal += parameters['BC']['leftSide']['nFibers']
-        for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-            regionSets.append(['LOWERSIDE-LEFT-FIBER'+str(nFiber+1),10])
-            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-LEFT-FIBER'+str(nFiber+1),True)
+    #if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+    #    nFibersHorizontal += parameters['BC']['leftSide']['nFibers']
+    #    for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
+    #        regionSets.append(['LOWERSIDE-LEFT-FIBER'+str(nFiber+1),10])
+    #        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-LEFT-FIBER'+str(nFiber+1),True)
 
     regionSets.append(['UPPERSIDE',int(30*nFibersHorizontal)])
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- UPPERSIDE',True)

@@ -3860,7 +3860,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # assign seeds
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign seeds to edges ...',True)
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         regionSets.append(['CRACK',int(floor(2*deltatheta/0.5))])
@@ -3875,19 +3875,24 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         else:
             regionSets.append(['BONDED-INTERFACE',int(floor((90-deltatheta)/5))])
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- BONDED-INTERFACE',True)
+
     nFibersHorizontal = 1
 
     if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
         nFibersHorizontal += parameters['BC']['rightSide']['nFibers']
         for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
             regionSets.append(['LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),10])
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),True)
 
     if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
         nFibersHorizontal += parameters['BC']['leftSide']['nFibers']
         for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
             regionSets.append(['LOWERSIDE-LEFT-FIBER'+str(nFiber+1),10])
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-LEFT-FIBER'+str(nFiber+1),True)
 
-    regionSets.append(['UPPERSIDE',30*nFibersHorizontal])
+    regionSets.append(['UPPERSIDE',int(30*nFibersHorizontal)])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- UPPERSIDE',True)
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
@@ -3911,6 +3916,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         regionSets.append(['RIGHTSIDE',30])
         regionSets.append(['LEFTSIDE',30])
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RIGHTSIDE',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LEFTSIDE',True)
+
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
             regionSets.append(['INTERFACE-UPPER-FIBER-C'+str(nFiber+1),72])
@@ -3923,6 +3931,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
                     regionSets.append(['INTERFACE-UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers'])),72])
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
     for regionSet in regionSets:
         seedEdgeByNumber(model,'RVE-assembly',regionSet[0],regionSet[1],FINER,logfilepath,baselogindent + 3*logindent,True)
 

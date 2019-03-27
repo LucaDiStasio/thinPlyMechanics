@@ -4690,7 +4690,6 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         triEps = []
         for node in nodes:
             writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Node n. ' + str(node) + ' belonging to element n. ' + str(element.label),True)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + str(sigmaxxDict),True)
             sigma = sigmaxxDict[str(node)]
             eps = strainxxDict[str(node)]
             x = coordDict[str(node)][0]

@@ -3835,23 +3835,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating mesh ...',True)
 
-    nTangential = np.floor(deltapsi/delta)
-    nRadialFiber = np.floor(0.25/(delta*np.pi/180.0))
-    nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
-    nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['mesh']['size']['delta3'])
-    nTangential3 = np.floor(alpha/parameters['mesh']['size']['delta1'])
-    #nRadialFiber1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
-    if L>2*Rf:
-        nRadialMatrix = np.floor(0.25/(delta*np.pi/180.0))
-        #nRadialMatrix1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
-    else:
-        nRadialMatrix = np.floor(0.25*(L-Rf)/(delta*np.pi/180.0))
-        #nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
-
-    if nTangential<parameters['Jintegral']['numberOfContours'] or nRadialFiber<parameters['Jintegral']['numberOfContours'] or nRadialMatrix<parameters['Jintegral']['numberOfContours']:
-        parameters['Jintegral']['numberOfContours'] = int(np.floor(np.min([nTangential,nRadialFiber,nRadialMatrix])) - 1)
-        writeErrorToLogFile(logfilepath,'a','MESH SIZE','The provided element size around the crack tip is incompatible with the number of contour integral requested.\nContour integral option in ABAQUS is available only for quadrilateral and hexahedral elements.\nThe number of contour requested will be automatically adjusted to ' + str(parameters['Jintegral']['numberOfContours']),True)
-
     # assign mesh controls
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
 

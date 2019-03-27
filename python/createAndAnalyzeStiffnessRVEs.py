@@ -4682,14 +4682,14 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     integralStrain = 0.0
     totalArea = 0.0
     for element in rveEls.elements:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Element n. ' + str(element.label),True)
+        #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Element n. ' + str(element.label),True)
         nodes = [element.connectivity[0],element.connectivity[1],element.connectivity[2]]
         triCoords = []
         nodeLabels = []
         triSigmas = []
         triEps = []
         for node in nodes:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Node n. ' + str(node) + ' belonging to element n. ' + str(element.label),True)
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Node n. ' + str(node) + ' belonging to element n. ' + str(element.label),True)
             sigma = sigmaxxDict[str(node)]
             eps = strainxxDict[str(node)]
             x = coordDict[str(node)][0]
@@ -4699,7 +4699,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 nodeLabels.append(str(node))
             triSigmas.append(sigma)
             triEps.append(eps)
-            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'sigma=' + str(sigma) + ' [MPa] measured at (' + str(x) + ', ' + str(y) + ') mum',True)
+            #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'sigma=' + str(sigma) + ' [MPa] measured at (' + str(x) + ', ' + str(y) + ') mum',True)
         ABvec = [triCoords[1][0]-triCoords[0][0],triCoords[1][1]-triCoords[0][1]]
         ACvec = [triCoords[2][0]-triCoords[0][0],triCoords[2][1]-triCoords[0][1]]
         ABlen = np.sqrt(ABvec[0]*ABvec[0]+ABvec[1]*ABvec[1])

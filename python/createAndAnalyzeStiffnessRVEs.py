@@ -3817,9 +3817,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # assign seam
     model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Seam assigned',True)
-    masterSurface = model.rootAssembly.Surface(side1Edges=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'], name='MASTER')
+    masterSurface = model.rootAssembly.Surface(side1Edges=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'].edges, name='MASTER')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Master surface created',True)
-    slaveSurface = model.rootAssembly.Surface(side2Edges=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'],name='SLAVE')
+    slaveSurface = model.rootAssembly.Surface(side2Edges=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'].edges,name='SLAVE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--Slave surface created',True)
     model.SurfaceToSurfaceContactStd(name='CRACK-CONTACTINTERACTION',createStepName='Initial',master=masterSurface,slave=slaveSurface,sliding=SMALL,interactionProperty='PARTIALLYDEBONDEDFIBERS')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Contact interaction created',True)

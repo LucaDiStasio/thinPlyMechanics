@@ -3816,8 +3816,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     # assign seam
     model.rootAssembly.engineeringFeatures.assignSeam(regions=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
-    masterSurface = model.rootAssembly.Surface(side1Edges=model.rootAssembly.instances['RVE-assembly'].sets['CRACK')
-    slaveSurface = model.rootAssembly.Surface(side2Edges=model.rootAssembly.instances['RVE-assembly'].sets['CRACK')
+    masterSurface = model.rootAssembly.Surface(side1Edges=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
+    slaveSurface = model.rootAssembly.Surface(side2Edges=model.rootAssembly.instances['RVE-assembly'].sets['CRACK'])
     model.SurfaceToSurfaceContactStd(name='CRACK-CONTACTINTERACTION',createStepName='Initial',master=masterSurface,slave=slaveSurface,sliding=SMALL,interactionProperty='PARTIALLYDEBONDEDFIBERS')
 
     mdb.save()

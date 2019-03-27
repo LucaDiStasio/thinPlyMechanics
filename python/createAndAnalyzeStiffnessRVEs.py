@@ -3891,33 +3891,33 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     #        regionSets.append(['LOWERSIDE-LEFT-FIBER'+str(nFiber+1),10])
     #        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-LEFT-FIBER'+str(nFiber+1),True)
 
-    regionSets.append(['UPPERSIDE',int(30*nFibersHorizontal)])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- UPPERSIDE',True)
+    #regionSets.append(['UPPERSIDE',int(30*nFibersHorizontal)])
+    #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- UPPERSIDE',True)
 
-    if 'boundingPly' in parameters['BC']['northSide']['type']:
-        if 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
-            regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
-            regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
-        elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type'] and parameters['BC']['rightSide']['nFibers']>10 and parameters['BC']['leftSide']['nFibers']>10:
-            regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
-            regionSets.append(['LEFTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
-        else:
-            regionSets.append(['LOWER-RIGHTSIDE',30])
-            regionSets.append(['LOWER-LEFTSIDE',30])
-        regionSets.append(['UPPER-RIGHTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
-        regionSets.append(['UPPER-LEFTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
-    elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
-        regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
-        regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
-    elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type'] and parameters['BC']['rightSide']['nFibers']>10 and parameters['BC']['leftSide']['nFibers']>10:
-        regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
-        regionSets.append(['LEFTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
-    else:
-        regionSets.append(['RIGHTSIDE',30])
-        regionSets.append(['LEFTSIDE',30])
+    #if 'boundingPly' in parameters['BC']['northSide']['type']:
+    #    if 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
+    #        regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
+    #        regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
+    #    elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type'] and parameters['BC']['rightSide']['nFibers']>10 and parameters['BC']['leftSide']['nFibers']>10:
+    #        regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
+    #        regionSets.append(['LEFTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
+    #    else:
+    #        regionSets.append(['LOWER-RIGHTSIDE',30])
+    #        regionSets.append(['LOWER-LEFTSIDE',30])
+    #    regionSets.append(['UPPER-RIGHTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
+    #    regionSets.append(['UPPER-LEFTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
+    #elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
+    #    regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
+    #    regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
+    #elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type'] and parameters['BC']['rightSide']['nFibers']>10 and parameters['BC']['leftSide']['nFibers']>10:
+    #    regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
+    #    regionSets.append(['LEFTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
+    #else:
+    #    regionSets.append(['RIGHTSIDE',30])
+    #    regionSets.append(['LEFTSIDE',30])
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RIGHTSIDE',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LEFTSIDE',True)
+    #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- RIGHTSIDE',True)
+    #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LEFTSIDE',True)
 
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):

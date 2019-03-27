@@ -3862,20 +3862,20 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # assign seeds
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign seeds to edges ...',True)
 
-    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-        regionSets.append(['CRACK',int(np.floor(2*deltatheta/0.5))])
-        if 'full' in parameters['geometry']['fiber']['type']:
-            regionSets.append(['BONDED-INTERFACE',int(np.floor((360-2*deltatheta)/5))])
-        else:
-            regionSets.append(['BONDED-INTERFACE',int(np.floor((180-2*deltatheta)/5))])
-    else:
-        regionSets.append(['CRACK',int(np.floor(deltatheta/0.5))])
-        if 'half' in parameters['geometry']['fiber']['type']:
-            regionSets.append(['BONDED-INTERFACE',int(np.floor((180-deltatheta)/5))])
-        else:
-            regionSets.append(['BONDED-INTERFACE',int(np.floor((90-deltatheta)/5))])
+    #if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+    #    regionSets.append(['CRACK',int(np.floor(2*deltatheta/0.5))])
+    #    if 'full' in parameters['geometry']['fiber']['type']:
+    #        regionSets.append(['BONDED-INTERFACE',int(np.floor((360-2*deltatheta)/5))])
+    #    else:
+    #        regionSets.append(['BONDED-INTERFACE',int(np.floor((180-2*deltatheta)/5))])
+    #else:
+    #    regionSets.append(['CRACK',int(np.floor(deltatheta/0.5))])
+    #    if 'half' in parameters['geometry']['fiber']['type']:
+    #        regionSets.append(['BONDED-INTERFACE',int(np.floor((180-deltatheta)/5))])
+    #    else:
+    #        regionSets.append(['BONDED-INTERFACE',int(np.floor((90-deltatheta)/5))])
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- BONDED-INTERFACE',True)
+    #writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- BONDED-INTERFACE',True)
 
     nFibersHorizontal = 1
 
@@ -3930,6 +3930,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
                 for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
                     regionSets.append(['INTERFACE-UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers'])),72])
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
     for regionSet in regionSets:

@@ -4648,11 +4648,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stresses at all nodes ...',True)
-    sigmaxxNodes = getFieldOutput(odb,-1,-1,'S',rveNodes)
+    sigmaxxNodes = getFieldOutput(odb,-1,-1,'S',rveNodes,3)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract strains at all nodes ...',True)
-    strainxxNodes = getFieldOutput(odb,-1,-1,'EE',rveNodes)
+    strainxxNodes = getFieldOutput(odb,-1,-1,'EE',rveNodes,3)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract coordinates at all nodes ...',True)
@@ -4662,6 +4662,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create dictionary {node label: stress} ...',True)
     sigmaxxDict = {}
     for valueSet in sigmaxxNodes.values:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(valueSet),True)
         sigmaxxDict[str(valueSet.nodeLabel)] = valueSet.data[0]
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
@@ -4690,6 +4691,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         triEps = []
         for node in nodes:
             writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Node n. ' + str(node) + ' belonging to element n. ' + str(element.label),True)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + str(sigmaxxDict),True)
             sigma = sigmaxxDict[str(node)]
             eps = strainxxDict[str(node)]
             x = coordDict[str(node)][0]

@@ -90,7 +90,7 @@
 
 \begin{abstract}
 The bi-material interface arc crack has been the focus of interest in the composite community, where it is usually referred to as the fiber-matrix interface crack. In this work, we investigate the convergence properties of the Virtual Crack Closure Technique (VCCT) when applied to the evaluation of the Mode I, Mode II and total Energy Release Rate of the fiber-matrix interface crack in the context of the Finite Element Method (FEM). We first propose a synthetic vectorial formulation of the VCCT. Thanks to this formulation, we then study the convergence properties of the method, both analytically and numerically. It is found that Mode I and Mode II ERR possess a logarithmic dependency with respect to the size of the elements in the crack tip neighborhood, while the total ERR is independent of element size.
-\keywords{First keyword \and Second keyword \and More}
+\keywords{Debond \and VCCT \and FEM}
 % \PACS{PACS code1 \and PACS code2 \and more}
 % \subclass{MSC code1 \and MSC code2 \and more}
 \end{abstract}
@@ -125,11 +125,11 @@ L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}.
 
 The fiber radius $R_{f}$ is assumed to be equal to $1\ \mu m$. This choice is not dictated by physical considerations but for simplicity. It is thus useful to remark that, in a linear elastic solution as the one considered in the present work, the ERR is proportional to the geometrical dimensions of the model and, consequently, recalculation of the ERR for fibers of any size requires a simple multiplication.
 
-\begin{figure}[!h]
+\begin{figure*}[!h]
 \centering
 \includegraphics[width=\textwidth]{RUC.pdf}
 \caption{Schematic of the model with its main parameters.}\label{fig:modelschem}
-\end{figure}
+\end{figure*}
 
 As shown in Fig.~\ref{fig:modelschem}, the debond is placed symmetrically with respect to the $x$ axis and its size is characterized by the angle $\Delta\theta$ (which makes the full debond size equal to $2\Delta\theta$ and the full crack length equal to $R_{f}2{\Delta\theta}$). A region $\Delta\Phi$ of variable size appears at the crack tip for large debond sizes (at least $\geq 60^{\circ}-80^{\circ}$), in which the crack faces are in contact with each other and free to slide. Frictionless contact is thus considered between the two crack faces to allow free sliding and avoid interpenetration. Symmetry with respect to the $x$ axis is applied on the lower boundary while the upper surface is left free. Kinematic coupling on the $x$-displacement is applied along the left and right sides of the model in the form of a constant $x$-displacement $\pm\bar{\varepsilon}_{x} L$, which corresponds to transverse strain $\bar{\varepsilon}_{x}$ equal to $1\%$.
 
@@ -297,7 +297,7 @@ G_{TOT} &= \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}\underline{u}_{
 
 which shows that the total Energy Release Rate is invariant to rigid rotations and can be calculated equivalently with forces and displacements expressed in the local crack tip reference frame or the global reference frame. The analytical result is confirmed by the numerical solution of the fiber-matrix interface crack with different element orders and model fiber volume fractions, as shown in Figure~\ref{fig:gtotrotinvnum}.
 
-\begin{figure}[!h]
+\begin{figure*}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{Vf0_1-free-1st-05-invrot-GTOT.pdf}
@@ -320,7 +320,7 @@ which shows that the total Energy Release Rate is invariant to rigid rotations a
     \end{subfigure}
 
 \caption{Numerical invariance of the total Energy Release Rate: $G_{TOT}$ computed with the VCCT with rotated forces and displacements (label \emph{rotated}), with the VCCT with forces and displacements in the global reference frame (label \emph{unrotated}) and with J-integral method (label \emph{J-integral}).}\label{fig:gtotrotinvnum}
-\end{figure}
+\end{figure*}
 
 The result of Equation~\ref{eq:gtotrotinv} has also a physical implication: given that the stress and displacement fields in the vicinity of the crack tip are the same, two cracks with different crack propagation directions are energetically equivalent with respect to the total Energy Release Rate. For two such cracks, given that laws of the type $G_{TOT}\geq G_{c}$ govern crack propagation, if $G_{c}$ did not depend on mode ratio, crack orientation would not at all affect its growth.
 
@@ -399,7 +399,7 @@ Thus, asymptotically, the Mode I and Mode II Energy Release Rate behave like the
 
 Evaluations of the Mode I, Mode II and total Energy Release Rate using the VCCT applied to the FE solution of the fiber-matrix interface crack in the single fiber model of Sec.~\ref{sec:femmodel} are reported respectively in Fig.~\ref{fig:ginum}, Fig.~\ref{fig:giinum} and Fig.~\ref{fig:gtotnum}.
 
-\begin{figure}[!h]
+\begin{figure*}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{Vf0_1-free-1st-GI.pdf}
@@ -422,11 +422,11 @@ Evaluations of the Mode I, Mode II and total Energy Release Rate using the VCCT 
     \end{subfigure}
 
 \caption{Effect of the size $\delta$ of an element at the crack tip on Mode I ERR.}\label{fig:ginum}
-\end{figure}
+\end{figure*}
 
 Results for Mode I ERR in Fig.~\ref{fig:ginum} show clearly the transition from the \emph{open} crack regime, where Mode I ERR is different from zero, to the \emph{closed} crack regime of the debond, where $G_{I}=0$. Looking at Fig.~\ref{fig:ginum}, the crack is \emph{open} for $\Delta\theta\leq60^{\circ}$ and it is \emph{closed}, i.e. a contact zone is present, for $\Delta\theta\geq70^{\circ}$. As expected from the analysis of the previous section, and given that Mode I ERR is different from zero only in the \emph{open} crack regime, a significant dependence on the element size $\delta$ can be observed in  Fig.~\ref{fig:ginum} when using both $1^{st}$ and $2^{nd}$ order elements and with both an effectively infinite ($V_{f}=0.1\%$) and finite size ($V_{f}=40\%$) matrix. At first sight, it is immediate to see from Fig.~\ref{fig:ginum} that a decrease in $\delta$ leads to a decrease in $G_{I}$. However, two further effects can be observed due to the refinement of the mesh at the crack tip, i.e. the decrease of the element size $\delta$. First, the occurrence of the peak $G_{I}$ is shifted to lower angles for very low volume fractions: it occurs at $\Delta\theta=30^{\circ}$ with $\delta=1.0^{\circ}, 0.5^{\circ}$ and at $\Delta\theta=20^{\circ}$ with $\delta\leq0.25^{\circ}$ for both $1^{st}$ and $2^{nd}$ order elements and $V_{f}=0.1\%$. Second, the apperance of the contact zone, i.e. the switch to the \emph{closed} crack regime, is anticipated to smaller debonds: it occurs at  $\Delta\theta=70^{\circ}$ with $\delta\geq0.2^{\circ}$ and at $\Delta\theta=60^{\circ}$ with $\delta<0.2^{\circ}$ for both $1^{st}$ and $2^{nd}$ order elements and both $V_{f}=0.1\%$ and $V_{f}=40\%$.
 
-\begin{figure}[!h]
+\begin{figure*}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{Vf0_1-free-1st-GII.pdf}
@@ -449,11 +449,11 @@ Results for Mode I ERR in Fig.~\ref{fig:ginum} show clearly the transition from 
     \end{subfigure}
 
 \caption{Effect of the size $\delta$ of an element at the crack tip on Mode II ERR.}\label{fig:giinum}
-\end{figure}
+\end{figure*}
 
 Observing Figure~\ref{fig:giinum}, it possible to notice the existence of two distinct regimes in the behavior of $G_{II}$ with respect to the element size $\delta$. For $\Delta\theta\leq60^{\circ}$ $G_{II}$ depends on the value of $\delta$, while $\Delta\theta\geq70^{\circ}$ it is effectively independent of the element size at the crack tip for both $1^{st}$ and $2^{nd}$ order elements and both an effectively infinite ($V_{f}=0.1\%$) and finite size ($V_{f}=40\%$) matrix. Comparing the value of $\Delta\theta$ at which the change from the $\delta$-dependency regime to the $\delta$-independency regime occurs for $G_{II}$ with Mode I ERR in Fig.~\ref{fig:ginum}, it is possible to observe that the $\delta$-dependency regime change of Mode II ERR coincides with the onset of the contact zone, i.e. the transition from \emph{open} crack regime to the \emph{closed} crack regime. The result confirms the analytical considerations of the previous section: for an \emph{open} crack both Mode I and Mode II ERR depend on the element size $\delta$ at the crack tip.
 
-\begin{figure}[!h]
+\begin{figure*}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{Vf0_1-free-1st-GTOT.pdf}
@@ -476,11 +476,11 @@ Observing Figure~\ref{fig:giinum}, it possible to notice the existence of two di
     \end{subfigure}
 
 \caption{Effect of the size $\delta$ of an element at the crack tip on total ERR.}\label{fig:gtotnum}
-\end{figure}
+\end{figure*}
 
 Further observation of Figure~\ref{fig:giinum} reveals that, in the \emph{open} crack regime, decreasing the element size $\delta$ causes an increase of Mode II ERR. Similarly to Mode I ERR, a shift of the peak $G_{II}$ can also observed for $V_{f}=0.1\%$: the maximum value of $G_{II}$ occurs at $\Delta\theta=70^{\circ}$ for $\delta>0.25^{\circ}$ for $1^{st}$ order elements and for $\delta>0.5^{\circ}$ for $2^{nd}$ order elements, while it is shifted to $\Delta\theta=60^{\circ}$ for $\delta\leq0.25^{\circ}$ for $1^{st}$ order elements and for $\delta\leq0.5^{\circ}$ for $2^{nd}$ order elements.
 
-\begin{table}[!h]
+\begin{table*}[!h]
  \centering
  \caption{Summary of linear regression results and main statistical tests for Mode I ERR}\label{tab:GIinterp}
  \begin{tabular}{ccccccccc}
@@ -515,11 +515,11 @@ Further observation of Figure~\ref{fig:giinum} reveals that, in the \emph{open} 
 &&		\small50.0&	\small0.0269&\small	0.1593&\small	0.9982&\small	0.9964&\small	1.66E-08&\small	2.31E-11\\
 &&		\small60.0&	\small0.0097&\small	0.0329&\small	0.9890&\small	0.9781&\small	4.96E-06&\small	1.99E-07\\
 \end{tabular}
-\end{table}
+\end{table*}
 
 Analysis of the total ERR in Figure~\ref{fig:gtotnum} leads to an observation that was not predicted by the considerations of the previous section: $G_{TOT}$ is effectively independent of the element size $\delta$ in both the \emph{open} and the \emph{closed} crack regimes, at least for reasonably small elements ($\delta\leq1.0^{\circ}$). Given that $G_{II}=G_{TOT}$ for the \emph{closed} crack, it explains the independency of $G_{II}$ from $\delta$ after the onset of the contact zone.
 
-\begin{table}[!h]
+\begin{table*}[!h]
  \centering
  \caption{Summary of linear regression results and main statistical tests for Mode II ERR}\label{tab:GIIinterp}
  \begin{tabular}{ccccccccc}
@@ -554,7 +554,7 @@ Analysis of the total ERR in Figure~\ref{fig:gtotnum} leads to an observation th
 &\small&\small		50.0&\small	-0.0263&\small	0.7502&\small	-0.9987&\small	0.9973&\small	6.87E-09&\small	7.76E-16\\
 &\small&\small		60.0&\small	-0.0090&\small	0.7458&\small	-0.9921&\small	0.9842&\small	1.79E-06&\small	3.37E-16\\
 \end{tabular}
-\end{table}
+\end{table*}
 
 Analysis of Fig.~\ref{fig:ginum}, Fig.~\ref{fig:giinum} and Fig.~\ref{fig:gtotnum} has shown the dependency of Mode I and Mode II ERR on the element size $\delta$. Following the derivations of the previous section, we model the dependency of $G_{I}$ and $G_{II}$ with respect to $\delta$ as
 
@@ -564,7 +564,7 @@ G_{\left(\cdot\right)}=A\left(\Delta\theta\right)\ln\delta+B\left(\Delta\theta\r
 
 where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are parameters dependent on $\Delta\theta$ estimated through linear regression (with $x=\ln\delta$) of the numerical results.
 
-\begin{figure}[!h]
+\begin{figure*}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{Vf0_1-free-1st-vsDelta-GI.pdf}
@@ -587,9 +587,9 @@ where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are paramete
     \end{subfigure}
 
 \caption{Logarithmic dependence on $\delta$ of Mode I ERR: interpolation of numerical results for $V_{f}=0.1\%$.}\label{fig:giinterp01}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[!h]
+\begin{figure*}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{Vf40-free-1st-vsDelta-GI.pdf}
@@ -612,9 +612,9 @@ where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are paramete
     \end{subfigure}
 
 \caption{Logarithmic dependence on $\delta$ of Mode I ERR: interpolation of numerical results for $V_{f}=40\%$.}\label{fig:giinterp40}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[!h]
+\begin{figure*}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{Vf0_1-free-1st-vsDelta-GII.pdf}
@@ -637,9 +637,9 @@ where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are paramete
     \end{subfigure}
 
 \caption{Logarithmic dependence on $\delta$ of Mode II ERR: interpolation of numerical results for $V_{f}=0.1\%$.}\label{fig:giiinterp01}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[!h]
+\begin{figure*}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{Vf40-free-1st-vsDelta-GII.pdf}
@@ -662,7 +662,7 @@ where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are paramete
     \end{subfigure}
 
 \caption{Logarithmic dependence on $\delta$ of Mode II ERR: interpolation of numerical results for $V_{f}=40\%$.}\label{fig:giiinterp40}
-\end{figure}
+\end{figure*}
 
 As shown in Fig.~\ref{fig:giinterp01}, Fig.~\ref{fig:giinterp40}, Fig.~\ref{fig:giiinterp01} and Fig.~\ref{fig:giiinterp40} both in linear and logarithmic scales of $\delta$, the result is remarkable: both the correlation coefficient $r$ and the $r^{2}$ ratio (of explained to total variance) are always greater than $0.95$ and the $p$-values of the coefficients $A$ and $B$ are at least $<1E-6$ and often $<1E-11$ (see Table~\ref{tab:GIinterp} for $G_{I}$ and Table~\ref{tab:GIIinterp} for $G_{II}$). The results of the linear regression confirm the analytical derivations of the previous section, which showed the logarithmic behavior of Mode I and Mode II ERR. Similar conclusions were reached in~\cite{Sun1987,Manoharan1990} for a straight bi-material crack with respect to the parameter $\nicefrac{\Delta a}{a}$; however, no functional expression of $G_{\left(\cdot\right)}$ was proposed.
 
@@ -815,10 +815,10 @@ With reference to Fig.~\ref{fig:vcctlinear}, we define:
 
 The $x-y$ reference frame is the global reference frame, while the $r-\theta$ reference frame is such that the $\theta$ direction coincides with the crack propagation direction at the crack tip and $r$ the in-plane normal to the propagation direction. For an arc-crack as the present one, the $r$-direction coincides with the radial direction of the inclusion.
 
-\begin{figure}[!h]
+\begin{figure*}[!h]
 \includegraphics[width=\textwidth]{VCCT-linear.pdf}
 \caption{Schematic representation of the discretized crack tip geometry for  $1^{st}$ order quadrilateral elements.}\label{fig:vcctlinear}
-\end{figure}
+\end{figure*}
 
 The crack opening displacement $u_{r}$ and the crack shear displacement $u_{\theta}$ at the crack tip can thus be written as
 

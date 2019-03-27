@@ -4690,13 +4690,13 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         triEps = []
         for node in nodes:
             writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Node n. ' + str(node.label) + ' belonging to element n. ' + str(element.label),True)
-            sigma = sigmaxxDict[str(node.label)]
-            eps = strainxxDict[str(node.label)]
-            x = coordDict[str(node.label)][0]
-            y = coordDict[str(node.label)][1]
-            if node.label not in nodeLabels:
+            sigma = sigmaxxDict[str(node)]
+            eps = strainxxDict[str(node)]
+            x = coordDict[str(node)][0]
+            y = coordDict[str(node)][1]
+            if str(node) not in nodeLabels:
                 triCoords.append([x,y])
-                nodeLabels.append(node.label)
+                nodeLabels.append(str(node))
             triSigmas.append(sigma)
             triEps.append(eps)
             writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'sigma=' + str(sigma) + ' [MPa] measured at (' + str(x) + ', ' + str(y) + ') mum',True)

@@ -5114,24 +5114,6 @@ def main(argv):
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
 
-        #================= modify input file
-        skipLineToLogFile(logfilefullpath,'a',True)
-        writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent)',True)
-        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
-        localStart = timeit.default_timer()
-        try:
-            if RVEparams['simulation-pipeline']['modify-INP']:
-                inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
-            localElapsedTime = timeit.default_timer() - localStart
-            timedataList.append(localElapsedTime)
-            totalIterationTime += localElapsedTime
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent)',True)
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
-            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
-        except Exception, error:
-            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
-            sys.exit(2)
-
         #================= run ABAQUS simulation
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent)',True)

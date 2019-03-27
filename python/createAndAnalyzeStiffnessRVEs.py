@@ -3321,7 +3321,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     # sets of vertices
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of vertices',True)
-        defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,CornerBy,0.0,0.00001*Rf,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
+    defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,CornerBy,0.0,0.00001*Rf,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
     defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,CornerBy,0.0,0.00001*Rf,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
     defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,0.0,0.0,0.00001*Rf,'SE-CORNER',logfilepath,baselogindent + 4*logindent,True)
     defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,0.0,0.0,0.00001*Rf,'SW-CORNER',logfilepath,baselogindent + 4*logindent,True)

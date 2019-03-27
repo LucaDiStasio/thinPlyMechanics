@@ -3863,17 +3863,17 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign seeds to edges ...',True)
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-        regionSets.append(['CRACK',int(floor(2*deltatheta/0.5))])
+        regionSets.append(['CRACK',int(np.floor(2*deltatheta/0.5))])
         if 'full' in parameters['geometry']['fiber']['type']:
-            regionSets.append(['BONDED-INTERFACE',int(floor((360-2*deltatheta)/5))])
+            regionSets.append(['BONDED-INTERFACE',int(np.floor((360-2*deltatheta)/5))])
         else:
-            regionSets.append(['BONDED-INTERFACE',int(floor((180-2*deltatheta)/5))])
+            regionSets.append(['BONDED-INTERFACE',int(np.floor((180-2*deltatheta)/5))])
     else:
-        regionSets.append(['CRACK',int(floor(deltatheta/0.5))])
+        regionSets.append(['CRACK',int(np.floor(deltatheta/0.5))])
         if 'half' in parameters['geometry']['fiber']['type']:
-            regionSets.append(['BONDED-INTERFACE',int(floor((180-deltatheta)/5))])
+            regionSets.append(['BONDED-INTERFACE',int(np.floor((180-deltatheta)/5))])
         else:
-            regionSets.append(['BONDED-INTERFACE',int(floor((90-deltatheta)/5))])
+            regionSets.append(['BONDED-INTERFACE',int(np.floor((90-deltatheta)/5))])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- BONDED-INTERFACE',True)
 

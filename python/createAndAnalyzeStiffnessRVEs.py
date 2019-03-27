@@ -4149,9 +4149,6 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     rightSide = getSingleNodeSet(odb,'RVE-ASSEMBLY','RIGHTSIDE')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- RIGHTSIDE',True)
 
-    thirdCircle = getSingleNodeSet(odb,'RVE-ASSEMBLY','THIRDCIRCLE')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- THIRDCIRCLE',True)
-
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract node sets

@@ -3211,7 +3211,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA, yA), point2=(xB,yB), direction=CLOCKWISE)
             fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xB,yB), point2=(xA, yA), direction=CLOCKWISE)
         else:
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA, yA), point2=(xB,yB), direction=CLOCKWISE)
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(Rf, 0.0), direction=CLOCKWISE)
     elif 'half' in parameters['geometry']['fiber']['type']:
         if deltatheta>0.0:
             xA = Rf*np.cos(deltatheta*np.pi/180.0)

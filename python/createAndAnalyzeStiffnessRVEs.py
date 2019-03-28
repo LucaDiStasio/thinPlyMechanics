@@ -4680,7 +4680,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute average and maximum COD and CSD ...',True)
-    
+    COD = matrixsurfaceDisps[:,6] - fibersurfaceDisps[:,6]
+    CSD = matrixsurfaceDisps[:,7] - fibersurfaceDisps[:,7]
+    maxCOD = np.max(COD)
+    maxCSD = np.max(CSD)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     #=======================================================================

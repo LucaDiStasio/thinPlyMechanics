@@ -4661,6 +4661,26 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         alpha = np.arctan2(y,x) #radians
         ur = ux*np.cos(alpha) + uy*np.sin(alpha)
         ut = -ux*np.sin(alpha) + uy*np.cos(alpha)
+        fibersurfaceDisps.append([alpha,r,x,y,ux,uy,ur,ut])
+    for node in matrixsurfaceNodes:
+        undefcoords = getFieldOutput(odb,0,0,'COORD',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
+        displacements = getFieldOutput(odb,-1,-1,'U',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
+        x = undefcoords.values[0].data[0]
+        y = undefcoords.values[0].data[1]
+        ux = displacements.values[0].data[0]
+        uy = displacements.values[0].data[1]
+        alpha = np.arctan2(y,x) #radians
+        ur = ux*np.cos(alpha) + uy*np.sin(alpha)
+        ut = -ux*np.sin(alpha) + uy*np.cos(alpha)
+        matrixsurfaceDisps.append([alpha,r,x,y,ux,uy,ur,ut])
+    fibersurfaceDisps = np.array(fibersurfaceDisps)
+    fibersurfaceDisps = fibersurfaceDisps[np.argsort(fibersurfaceDisps[:,0])]
+    matrixsurfaceDisps = np.array(matrixsurfaceDisps)
+    matrixsurfaceDisps = matrixsurfaceDisps[np.argsort(matrixsurfaceDisps[:,0])]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute average and maximum COD and CSD ...',True)
+    
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     #=======================================================================

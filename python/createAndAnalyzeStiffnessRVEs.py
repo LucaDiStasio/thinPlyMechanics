@@ -4648,6 +4648,21 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     matrixsurfaceNodes = odb.rootAssembly.instances['RVE-ASSEMBLY'].surfaces['MATRIX-SURFACE'].nodes
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates and displacements of crack faces ...',True)
+    fibersurfaceDisps = []
+    matrixsurfaceDisps = []
+    for node in fibersurfaceNodes:
+        undefcoords = getFieldOutput(odb,0,0,'COORD',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
+        displacements = getFieldOutput(odb,-1,-1,'U',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
+        x = undefcoords.values[0].data[0]
+        y = undefcoords.values[0].data[1]
+        ux = displacements.values[0].data[0]
+        uy = displacements.values[0].data[1]
+        alpha = np.arctan2(y,x) #radians
+        ur = ux*np.cos(alpha) + uy*np.sin(alpha)
+        ut = -ux*np.sin(alpha) + uy*np.cos(alpha)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
     #=======================================================================
     # BEGIN - compute average stress and strain and stiffness
     #=======================================================================

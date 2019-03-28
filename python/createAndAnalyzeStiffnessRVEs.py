@@ -3149,8 +3149,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating part ...',True)
     # create sketch
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Initialize sketch to draw the external shape of the RVE ...',True)
-    RVEsketch = model.ConstrainedSketch(name='__profile__',
-        sheetSize=3*L)
+    RVEsketch = model.ConstrainedSketch(name='__profile__',sheetSize=3*L)
     RVEsketch.setPrimaryObject(option=STANDALONE)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # create rectangle

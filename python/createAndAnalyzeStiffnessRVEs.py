@@ -4689,6 +4689,21 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     avgCSD = 0.5*np.sum((CSD[1:]+CSD[:-1])*(thetas[1:]-thetas[:-1]))/np.sum(thetas)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute contact zone ...',True)
+    oz0 = thetas[np.argwhere(COD>0)[-1,0]]*180.0/np.pi
+    cz0 = 180.0 - oz0
+    ozs = [oz0]
+    czs = [cz0]
+    tols = np.arange(0.1,1.1,0.1)
+    tols.append(2.0)
+    tols.append(3.0)
+    tols.append(4.0)
+    tols.append(5.0)
+    for tol in tols:
+        ozs.append(thetas[np.argwhere(COD>(tol/100.0)*maxCOD)[-1,0]]*180.0/np.pi)
+        czs.append(180.0 - ozs[-1])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
     #=======================================================================
     # BEGIN - compute average stress and strain and stiffness
     #=======================================================================
@@ -4775,7 +4790,13 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write to file ...',True)
 
-    appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['stiffness'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,avgStrain,avgStress,E1eq,E1eq/1000.0]])
+    dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,avgStrain,avgStress,E1eq,E1eq/1000.0,avgCOD,maxCOD,avgCSD,maxCSD]
+
+    for o,oz in enumerate(ozs):
+        dataline.append(oz)
+        dataline.append(czs[o])
+
+    appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['stiffness'],[dataline])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
@@ -5144,7 +5165,7 @@ def main(argv):
     if len(RVEparams['steps'])>1:
         createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['thermalenergyreleaserate'],titleline)
 
-    createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['stiffness'],'deltatheta [deg],Rf [mum],L [mum],L/Rf [-],RVE area [mum2], avg strain [mum/mum], avg stress [MPa], E1 [MPa], E1 [GPa]')
+    createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['stiffness'],'deltatheta [deg],Rf [mum],L [mum],L/Rf [-],RVE area [mum2], avg strain [mum/mum], avg stress [MPa], E1 [MPa], E1 [GPa], avg COD [mum], max COD [mum], avg CSD [mum], max CSD [mum], OZ - tol=0.0% [deg], CZ - tol=0.0% [deg], OZ - tol=0.1% [deg], CZ - tol=0.1% [deg], OZ - tol=0.2% [deg], CZ - tol=0.2% [deg], OZ - tol=0.3% [deg], CZ - tol=0.3% [deg], OZ - tol=0.4% [deg], CZ - tol=0.4% [deg], OZ - tol=0.5% [deg], CZ - tol=0.5% [deg], OZ - tol=0.6% [deg], CZ - tol=0.6% [deg], OZ - tol=0.7% [deg], CZ - tol=0.7% [deg], OZ - tol=0.8% [deg], CZ - tol=0.8% [deg], OZ - tol=0.9% [deg], CZ - tol=0.9% [deg], OZ - tol=1.0% [deg], CZ - tol=1.0% [deg], OZ - tol=2.0% [deg], CZ - tol=2.0% [deg], OZ - tol=3.0% [deg], CZ - tol=3.0% [deg], OZ - tol=4.0% [deg], CZ - tol=4.0% [deg], OZ - tol=5.0% [deg], CZ - tol=5.0% [deg]')
 
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a','In function: main(argv)',True)

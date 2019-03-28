@@ -4644,7 +4644,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute average COD and CSD ...',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract nodes belonging to crack faces ...',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(odb.rootAssembly.instances['RVE-ASSEMBLY']),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(odb.rootAssembly.allSurfaces),True)
     fibersurfaceNodes = odb.rootAssembly.instances['RVE-ASSEMBLY'].surfaces['FIBER-SURFACE'].nodes
     matrixsurfaceNodes = odb.rootAssembly.instances['RVE-ASSEMBLY'].surfaces['MATRIX-SURFACE'].nodes
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)

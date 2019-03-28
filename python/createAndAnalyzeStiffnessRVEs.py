@@ -3203,27 +3203,39 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fiber and circular sections for mesh generation ...',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Fiber',True)
     if 'full' in parameters['geometry']['fiber']['type']:
-        xA = Rf*np.cos((theta+deltatheta)*np.pi/180.0)
-        yA = Rf*np.sin((theta+deltatheta)*np.pi/180.0)
-        xB = Rf*np.cos((theta-deltatheta)*np.pi/180.0)
-        yB = Rf*np.sin((theta-deltatheta)*np.pi/180.0)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA, yA), point2=(xB,yB), direction=CLOCKWISE)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xB,yB), point2=(xA, yA), direction=CLOCKWISE)
+        if deltatheta>0.0:
+            xA = Rf*np.cos((theta+deltatheta)*np.pi/180.0)
+            yA = Rf*np.sin((theta+deltatheta)*np.pi/180.0)
+            xB = Rf*np.cos((theta-deltatheta)*np.pi/180.0)
+            yB = Rf*np.sin((theta-deltatheta)*np.pi/180.0)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA, yA), point2=(xB,yB), direction=CLOCKWISE)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xB,yB), point2=(xA, yA), direction=CLOCKWISE)
+        else:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA, yA), point2=(xB,yB), direction=CLOCKWISE)
     elif 'half' in parameters['geometry']['fiber']['type']:
-        xA = Rf*np.cos(deltatheta*np.pi/180.0)
-        yA = Rf*np.sin(deltatheta*np.pi/180.0)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(xA,yA), direction=CLOCKWISE)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA,yA), point2=(Rf,0.0), direction=CLOCKWISE)
+        if deltatheta>0.0:
+            xA = Rf*np.cos(deltatheta*np.pi/180.0)
+            yA = Rf*np.sin(deltatheta*np.pi/180.0)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(xA,yA), direction=CLOCKWISE)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA,yA), point2=(Rf,0.0), direction=CLOCKWISE)
+        else:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(Rf,0.0), direction=CLOCKWISE)
     elif 'quarter' in parameters['geometry']['fiber']['type']:
-        xA = Rf*np.cos(deltatheta*np.pi/180.0)
-        yA = Rf*np.sin(deltatheta*np.pi/180.0)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, Rf), point2=(xA,yA), direction=CLOCKWISE)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA,yA), point2=(Rf,0.0), direction=CLOCKWISE)
+        if deltatheta>0.0:
+            xA = Rf*np.cos(deltatheta*np.pi/180.0)
+            yA = Rf*np.sin(deltatheta*np.pi/180.0)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, Rf), point2=(xA,yA), direction=CLOCKWISE)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA,yA), point2=(Rf,0.0), direction=CLOCKWISE)
+        else:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, Rf), point2=(Rf,0.0), direction=CLOCKWISE)
     else:
-        xA = Rf*np.cos(deltatheta*np.pi/180.0)
-        yA = Rf*np.sin(deltatheta*np.pi/180.0)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(xA,yA), direction=CLOCKWISE)
-        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA,yA), point2=(Rf,0.0), direction=CLOCKWISE)
+        if deltatheta>0.0:
+            xA = Rf*np.cos(deltatheta*np.pi/180.0)
+            yA = Rf*np.sin(deltatheta*np.pi/180.0)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(xA,yA), direction=CLOCKWISE)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA,yA), point2=(Rf,0.0), direction=CLOCKWISE)
+        else:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(Rf,0.0), direction=CLOCKWISE)
     listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # if bounding ply is present, draw interface line

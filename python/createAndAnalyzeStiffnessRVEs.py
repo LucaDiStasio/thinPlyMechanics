@@ -3878,13 +3878,15 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     regionSets = []
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-        regionSets.append(['CRACK',int(np.floor(2*deltatheta/0.5))])
+        if deltatheta>0.0:
+            regionSets.append(['CRACK',int(np.floor(2*deltatheta/0.5))])
         if 'full' in parameters['geometry']['fiber']['type']:
             regionSets.append(['BONDED-INTERFACE',int(np.floor((360-2*deltatheta)/5))])
         else:
             regionSets.append(['BONDED-INTERFACE',int(np.floor((180-2*deltatheta)/5))])
     else:
-        regionSets.append(['CRACK',int(np.floor(deltatheta/0.5))])
+        if deltatheta>0.0:
+            regionSets.append(['CRACK',int(np.floor(deltatheta/0.5))])
         if 'half' in parameters['geometry']['fiber']['type']:
             regionSets.append(['BONDED-INTERFACE',int(np.floor((180-deltatheta)/5))])
         else:

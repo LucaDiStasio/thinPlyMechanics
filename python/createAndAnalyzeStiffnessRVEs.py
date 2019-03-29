@@ -4229,17 +4229,6 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             started = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node section begins at line ' + str(nodeSecStart) + ' and ends at line ' + str(nodeSecStop),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify quadrilateral element section  ...',True)
-    started = False
-    for l,line in enumerate(inpfilelines):
-        if started and '*' in line:
-            elementSecStop = l-1
-            break
-        elif ('*Element, type=CPE8' in line or '*ELEMENT, type=CPE8' in line or '*Element, type=CPE4' in line or '*ELEMENT, type=CPE4' in line) and (len(inpfilelines[l+1].replace('\n','').split(','))==5 or len(inpfilelines[l+1].replace('\n','').split(','))==9):
-            elementSecStart = l
-            started = True
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Element section begins at line ' + str(elementSecStart) + ' and ends at line ' + str(elementSecStop),True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify end of assembly section  ...',True)
     for l,line in enumerate(inpfilelines):
         if '*End Assembly' in line or '*END ASSEMBLY' in line:

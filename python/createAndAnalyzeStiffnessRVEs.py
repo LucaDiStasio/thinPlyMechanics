@@ -5241,10 +5241,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write to file ...',True)
 
-    appEps = 0.0
-    for load in parameters['loads'].keys():
+    appStrain = 0.0
+    for load in parameters['loads'].values():
         if 'appliedStrain' in load['type']:
-            appEps = load['value'][0]
+            appStrain = load['value'][0]
             break
 
     dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,appStrain*100.0,avgStrain*100.0,avgStress,E1eq,E1eq/1000.0,avgStress/appStrain,avgStress/(appStrain*1000.0),avgCOD,maxCOD,avgCSD,maxCSD]

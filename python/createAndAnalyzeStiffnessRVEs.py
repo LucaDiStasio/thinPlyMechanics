@@ -5100,6 +5100,16 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract nodes belonging to crack faces ...',True)
         crack = getSingleNodeSet(odb,'RVE-ASSEMBLY','CRACK')
         fiber = getSingleNodeSet(odb,'RVE-ASSEMBLY','FIBER')
+        fiberNodes = []
+        for node in fiber.nodes:
+            fiberNodes.append(node.label)
+        fibersurfaceNodes = []
+        matrixsurfaceNodes = []
+        for node in crack.nodes:
+            if node.label in fiberNodes:
+                fibersurfaceNodes.append(node.label)
+            else:
+                matrixsurfaceNodes.append(node.label)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates and displacements of crack faces ...',True)
@@ -5115,7 +5125,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             alpha = np.arctan2(y,x) #radians
             ur = ux*np.cos(alpha) + uy*np.sin(alpha)
             ut = -ux*np.sin(alpha) + uy*np.cos(alpha)
-            fibersurfaceDisps.append([alpha,r,x,y,ux,uy,ur,ut])
+            fibersurfaceDisps.append([alpha,np.sqrt(x*x+y*y),x,y,ux,uy,ur,ut])
         for node in matrixsurfaceNodes:
             undefcoords = getFieldOutput(odb,0,0,'COORD',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
             displacements = getFieldOutput(odb,-1,-1,'U',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
@@ -5126,7 +5136,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             alpha = np.arctan2(y,x) #radians
             ur = ux*np.cos(alpha) + uy*np.sin(alpha)
             ut = -ux*np.sin(alpha) + uy*np.cos(alpha)
-            matrixsurfaceDisps.append([alpha,r,x,y,ux,uy,ur,ut])
+            matrixsurfaceDisps.append([alpha,np.sqrt(x*x+y*y),x,y,ux,uy,ur,ut])
         fibersurfaceDisps = np.array(fibersurfaceDisps)
         fibersurfaceDisps = fibersurfaceDisps[np.argsort(fibersurfaceDisps[:,0])]
         matrixsurfaceDisps = np.array(matrixsurfaceDisps)

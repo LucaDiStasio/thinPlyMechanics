@@ -5139,6 +5139,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             matrixsurfaceDisps.append([alpha,np.sqrt(x*x+y*y),x,y,ux,uy,ur,ut])
         fibersurfaceDisps = np.array(fibersurfaceDisps)
         fibersurfaceDisps = fibersurfaceDisps[np.argsort(fibersurfaceDisps[:,0])]
+        matrixsurfaceDisps.append(fibersurfaceDisps[-1,:].tolist())
         matrixsurfaceDisps = np.array(matrixsurfaceDisps)
         matrixsurfaceDisps = matrixsurfaceDisps[np.argsort(matrixsurfaceDisps[:,0])]
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)

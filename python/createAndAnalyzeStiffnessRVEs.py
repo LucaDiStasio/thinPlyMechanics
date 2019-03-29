@@ -5752,7 +5752,7 @@ def main(argv):
         localStart = timeit.default_timer()
         try:
             if RVEparams['simulation-pipeline']['analyze-ODB']:
-                analyzeRVEresults(modelData['jobname']+'.odb',RVEparams,logfilefullpath,logindent,logindent)
+                analyzeRVEresults(inputfilename.split('.')[0] + '.odb',RVEparams,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime

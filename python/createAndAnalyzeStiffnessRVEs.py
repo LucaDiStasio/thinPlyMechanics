@@ -5148,15 +5148,15 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         COD = matrixsurfaceDisps[:,6] - fibersurfaceDisps[:,6]
         CSD = matrixsurfaceDisps[:,7] - fibersurfaceDisps[:,7]
         thetas = fibersurfaceDisps[:,0]
-        maxCOD = np.max(COD)
-        maxCSD = np.max(CSD)
+        maxCOD = COD[np.argmax(np.abs(COD))]
+        maxCSD = CSD[np.argmax(np.abs(CSD))]
         avgCOD = 0.5*np.sum((COD[1:]+COD[:-1])*(thetas[1:]-thetas[:-1]))/np.sum(thetas)
         avgCSD = 0.5*np.sum((CSD[1:]+CSD[:-1])*(thetas[1:]-thetas[:-1]))/np.sum(thetas)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute contact zone ...',True)
         oz0 = thetas[np.argwhere(COD>0)[-1,0]]*180.0/np.pi
-        cz0 = 180.0 - oz0
+        cz0 = parameters['geometry']['deltatheta'] - oz0
         ozs.append(oz0)
         czs.append(cz0)
         tols = np.arange(0.1,1.1,0.1).tolist()
@@ -5166,7 +5166,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         tols.append(5.0)
         for tol in tols:
             ozs.append(thetas[np.argwhere(COD>(tol/100.0)*maxCOD)[-1,0]]*180.0/np.pi)
-            czs.append(180.0 - ozs[-1])
+            czs.append(parameters['geometry']['deltatheta'] - ozs[-1])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     #=======================================================================

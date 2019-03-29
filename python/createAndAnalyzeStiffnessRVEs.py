@@ -5250,7 +5250,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             appStrain = load['value'][0]
             break
 
-    if deltatheta>0.0:
+    if parameters['geometry']['deltatheta']>0.0:
         dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,appStrain*100.0,avgStrain*100.0,avgStress,E1eq,E1eq/1000.0,avgStress/appStrain,avgStress/(appStrain*1000.0),avgCOD,maxCOD,avgCSD,maxCSD]
     else:
         dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,appStrain*100.0,avgStrain*100.0,avgStress,E1eq,E1eq/1000.0,avgStress/appStrain,avgStress/(appStrain*1000.0),0.0,0.0,0.0,0.0]

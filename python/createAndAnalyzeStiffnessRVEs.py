@@ -4029,7 +4029,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set job name',True)
-    modelData['jobname'] = 'Job-Stiffness-' + modelname
+    modelData['jobname'] = 'Temp-Job-Stiffness-' + modelname
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job with name ' + modelData['jobname'],True)
     mdb.Job(name=modelData['jobname'], model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=parameters['solver']['cpus'], numDomains=12,numGPUs=0)
@@ -4056,6 +4056,451 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: createRVE(parameters,logfilepath,logindent)',True)
 
     return modelData
+
+def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: modifyRVE(parameters,mdbData)',True)
+    skipLineToLogFile(logfilepath,'a',True)
+    theta = parameters['geometry']['theta']
+    # odb name and path
+    #odbname = mdbData['jobname'] + '.odb'
+    #odbfullpath = join(parameters['wd'],odbname)
+    # input file name and path
+    inpname = mdbData['jobname'] + '.inp'
+    inpfullpath = join(parameters['input']['wd'],inpname)
+    # modified input file name
+    modinpname = 'Job-Stiffness-' + parameters['input']['modelname'] + '.inp'
+    modinpfullpath = join(parameters['input']['wd'],modinpname)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Working directory: ' + parameters['input']['wd'],True)
+    #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database name: ' + odbname,True)
+    #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database full path: ' + join(parameters['wd'],odbname),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Input file name: ' + inpname,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Input file full path: ' + join(parameters['input']['wd'],inpname),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Modified input file name: ' + modinpname,True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Modified input file full path: ' + join(parameters['input']['wd'],modinpname),True)
+    createABQinpfile(modinpname)
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading content of original input file ...',True)
+    with open(inpfullpath,'r') as inp:
+        inpfilelines = inp.readlines()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading nodes and saving to dictionary ...',True)
+    nodes = {}
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            nodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[2])]
+            store = False
+            break
+        elif store == True:
+            nodes[int(line.replace('\n','').split(',')[0])] = [float(line.replace('\n','').split(',')[1]),float(line.replace('\n','').split(',')[2])]
+        elif ('*Node' in line or '*NODE' in line) and len(inpfilelines[l+1].replace('\n','').split(','))==3:
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading north side node set and saving to list ...',True)
+    northSideNodeset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    northSideNodeset.append(int(index))
+            store = False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    northSideNodeset.append(int(index))
+        elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['UPPERSIDE','upperside']:
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading right side node set and saving to list ...',True)
+    rightSideNodeset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    rightSideNodeset.append(int(index))
+            store = False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    rightSideNodeset.append(int(index))
+        elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['RIGHTSIDE','rightside']:
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading left side node set and saving to list ...',True)
+    leftSideNodeset = []
+    store = False
+    for l,line in enumerate(inpfilelines):
+        if store == True and '*' in inpfilelines[l+1]:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    leftSideNodeset.append(int(index))
+            store = False
+            break
+        elif store == True:
+            for index in line.replace('\n','').split(','):
+                if index!='' and index!=' ':
+                    leftSideNodeset.append(int(index))
+        elif ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['LEFTSIDE','leftside']:
+            store = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading north-east corner node set and saving to variable ...',True)
+    for l,line in enumerate(inpfilelines):
+        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['NE-CORNER','ne-corner']:
+            northeastIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading north-west corner node set  and saving to variable ...',True)
+    for l,line in enumerate(inpfilelines):
+        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['NW-CORNER','nw-corner']:
+            northwestIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading south-east corner node set and saving to variable ...',True)
+    for l,line in enumerate(inpfilelines):
+        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['SE-CORNER','se-corner']:
+            southeastIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Reading south-west corner node set  and saving to variable ...',True)
+    for l,line in enumerate(inpfilelines):
+        if ('*Nset' in line or '*NSET' in line) and line.replace('\n','').split(',')[1].split('=')[1] in ['SW-CORNER','sw-corner']:
+            southwestIndex = int(inpfilelines[l+1].replace('\n','').split(',')[0])
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-WITHOUT-CORNERS ...',True)
+    northSideWithoutCornersNodeset = []
+    for node in northSideNodeset:
+        if not node in [northeastIndex,northwestIndex]:
+            northSideWithoutCornersNodeset.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-CENTER ...',True)
+    for node in northSideNodeset:
+        if nodes[node][0]==0.0:
+            northSideCenter = node
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node ' + str(northSideCenter) + ' is at the center of the NORTH boundary',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-POSSIDE ...',True)
+    northSidePosSide = []
+    for node in northSideNodeset:
+        if nodes[node][0]>0.0:
+            northSidePosSide.append(node)
+    northSidePosSideCoords = [nodes[i][0] for i in northSidePosSide]
+    northSidePosSide = np.array(northSidePosSide)[np.argsort(northSidePosSideCoords)].tolist()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set northSidePosSide contains ' + str(len(northSidePosSide)) + ' nodes',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set NORTH-SIDE-NEGSIDE ...',True)
+    northSideNegSide = []
+    for node in northSideNodeset:
+        if nodes[node][0]<0.0:
+            northSideNegSide.append(node)
+    northSideNegSideCoords = [nodes[i][0] for i in northSideNegSide]
+    northSideNegSide = np.array(northSideNegSide)[np.argsort(northSideNegSideCoords)].tolist()
+    northSideNegSide = northSideNegSide[::-1]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set northSideNegSide contains ' + str(len(northSideNegSide)) + ' nodes',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set RIGHT-SIDE-WITHOUT-CORNERS ...',True)
+    rightSideWithoutCornersNodeset = []
+    for node in rightSideNodeset:
+        if not node in [northeastIndex,southeastIndex]:
+            rightSideWithoutCornersNodeset.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create node set LEFT-SIDE-WITHOUT-CORNERS ...',True)
+    leftSideWithoutCornersNodeset = []
+    for node in leftSideNodeset:
+        if not node in [southwestIndex,northwestIndex]:
+            leftSideWithoutCornersNodeset.append(node)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Writing new input file  ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify node section  ...',True)
+    started = False
+    for l,line in enumerate(inpfilelines):
+        if started and '*' in line:
+            nodeSecStop = l-1
+            break
+        elif ('*Node' in line or '*NODE' in line) and len(inpfilelines[l+1].replace('\n','').split(',')) == 3:
+            nodeSecStart = l
+            started = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Node section begins at line ' + str(nodeSecStart) + ' and ends at line ' + str(nodeSecStop),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify quadrilateral element section  ...',True)
+    started = False
+    for l,line in enumerate(inpfilelines):
+        if started and '*' in line:
+            elementSecStop = l-1
+            break
+        elif ('*Element, type=CPE8' in line or '*ELEMENT, type=CPE8' in line or '*Element, type=CPE4' in line or '*ELEMENT, type=CPE4' in line) and (len(inpfilelines[l+1].replace('\n','').split(','))==5 or len(inpfilelines[l+1].replace('\n','').split(','))==9):
+            elementSecStart = l
+            started = True
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Element section begins at line ' + str(elementSecStart) + ' and ends at line ' + str(elementSecStop),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify end of assembly section  ...',True)
+    for l,line in enumerate(inpfilelines):
+        if '*End Assembly' in line or '*END ASSEMBLY' in line:
+            endAssembly = l
+            break
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if len(parameters['steps'])>1:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of thermal step section  ...',True)
+        for l,line in enumerate(inpfilelines):
+            if '*Step, name=Temp-Step' in line or '*STEP, NAME=TEMP-STEP' in line:
+                startTempStep = l
+                break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of mechanical step section  ...',True)
+        for l,line in enumerate(inpfilelines):
+            if '*Step, name=Load-Step' in line or '*STEP, NAME=LOAD-STEP' in line:
+                startLoadStep = l
+                break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    else:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Identify start of boundary conditions section  ...',True)
+        for l,line in enumerate(inpfilelines):
+            if '** BOUNDARY CONDITIONS' in line or '** Boundary Conditions' in line:
+                startBC = l
+                break
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        for line in inpfilelines[:endAssembly]:
+            inp.write(line)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write right side node sets ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=RIGHTSIDE-WITHOUT-CORNERS, INSTANCE=RVE-assembly' + '\n')
+        line = ''
+        for n,node in enumerate(rightSideWithoutCornersNodeset):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write left side node sets ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=LEFTSIDE-WITHOUT-CORNERS, INSTANCE=RVE-assembly' + '\n')
+        line = ''
+        for n,node in enumerate(leftSideWithoutCornersNodeset):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write north side node sets ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=SOUTHWEST-CORNER, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(southwestIndex) + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=SOUTHEAST-CORNER, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(southeastIndex) + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=UPPERSIDE-WITHOUT-CORNERS, INSTANCE=RVE-assembly' + '\n')
+        line = ''
+        for n,node in enumerate(northSideWithoutCornersNodeset):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=UPPERSIDE-WITHOUT-NECORNER, INSTANCE=RVE-assembly' + '\n')
+        line = ' ' + str(northwestIndex) + ','
+        for n,node in enumerate(northSideWithoutCornersNodeset):
+            if (n+1)>0 and (n+1)%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=UPPERSIDE-WITHOUT-NWCORNER, INSTANCE=RVE-assembly' + '\n')
+        line = ' ' + str(northeastIndex) + ','
+        for n,node in enumerate(northSideWithoutCornersNodeset):
+            if (n+1)>0 and (n+1)%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=NORTHWEST-CORNER, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(northwestIndex) + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=NORTHEAST-CORNER, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(northeastIndex) + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=NORTHSIDE-CENTER, INSTANCE=RVE-assembly' + '\n')
+        inp.write(' ' + str(northSideCenter) + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=NORTHSIDE-POSSIDE, INSTANCE=RVE-assembly' + '\n')
+        line = ''
+        for n,node in enumerate(northSidePosSide):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*NSET, NSET=NORTHSIDE-NEGSIDE, INSTANCE=RVE-assembly' + '\n')
+        line = ''
+        for n,node in enumerate(northSideNegSide):
+            if n>0 and n%8==0.0:
+                line += ' ' + str(node)
+                inp.write(line + '\n')
+                line = ''
+            else:
+                line += ' ' + str(node) + ','
+        if len(line)>0:
+            inp.write(line + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'ulinearCoupling' in parameters['BC']['northSide']['type'] or 'vkinCouplingmeanside' in parameters['BC']['northSide']['type']:
+        with open(modinpfullpath,'a') as inp:
+            for n,node in enumerate(northSideWithoutCornersNodeset):
+                inp.write('*NSET, NSET=NORTHSIDE-N'+ str(n+1) +', INSTANCE=RVE-assembly' + '\n')
+                inp.write(' ' + str(node) + '\n')
+    if 'antisymmetry' in parameters['BC']['northSide']['type']:
+        with open(modinpfullpath,'a') as inp:
+            for n,node in enumerate(northSidePosSide):
+                inp.write('*NSET, NSET=NORTHSIDE-POSSIDE-N'+ str(n+1) +', INSTANCE=RVE-assembly' + '\n')
+                inp.write(' ' + str(node) + '\n')
+            for n,node in enumerate(northSideNegSide):
+                inp.write('*NSET, NSET=NORTHSIDE-NEGSIDE-N'+ str(n+1) +', INSTANCE=RVE-assembly' + '\n')
+                inp.write(' ' + str(node) + '\n')
+    if 'vgeomCoupling' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: geometric coupling',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*MPC' + '\n')
+            inp.write(' SLIDER, UPPERSIDE-WITHOUT-CORNERS, NORTHWEST-CORNER, NORTHEAST-CORNER' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    elif 'vkinrightCoupling' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: kinematic coupling with north-east corner as reference node',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*KINEMATIC COUPLING, REF NODE = NORTHEAST-CORNER' + '\n')
+            inp.write(' UPPERSIDE-WITHOUT-NECORNER, 2' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    elif 'vkinleftCoupling' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: kinematic coupling with north-west corner as reference node',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*KINEMATIC COUPLING, REF NODE = NORTHWEST-CORNER' + '\n')
+            inp.write(' UPPERSIDE-WITHOUT-NWCORNER, 2' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    elif 'vkinCouplingmeancorners' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: nw and ne vertical displacements are set to be equal and all other points are set to this value',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*EQUATION' + '\n')
+            inp.write(' 2' + '\n')
+            inp.write(' NORTHWEST-CORNER, 2, 1, NORTHEAST-CORNER, 2, -1' + '\n')
+            inp.write(' 3' + '\n')
+            inp.write(' UPPERSIDE-WITHOUT-CORNERS, 2, 1, NORTHWEST-CORNER, 2, -0.5, NORTHEAST-CORNER, 2, -0.5' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    elif 'vkinCouplingmeanside' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: mean vertical displacement over all nodes is taken as reference',True)
+        with open(modinpfullpath,'a') as inp:
+            nEq = len(northSideWithoutCornersNodeset)+2
+            inp.write('*EQUATION' + '\n')
+            for n in range(0,nEq):
+                inp.write(' ' + str(int(nEq)) + '\n')
+                line = ''
+                for m in range(0,nEq):
+                    if m==n:
+                        coeff = -nEq*(1.0-1.0/nEq)
+                    else:
+                        coeff = 1.0
+                    if m==0:
+                        nodeName = 'NORTHWEST-CORNER'
+                    elif m==1:
+                        nodeName = 'NORTHEAST-CORNER'
+                    else:
+                        nodeName = 'NORTHSIDE-N'+ str(m+1-2)
+                    line += ' ' + nodeName + ', 2, ' + str(coeff) + ','
+                    if m>0 and (m+1)%4==0:
+                        line += '\n'
+                        inp.write(line)
+                        line = ''
+                if len(line)>0:
+                    line += '\n'
+                    inp.write(line)
+    elif 'antisymmetry' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: antisymmetry',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*EQUATION' + '\n')
+            for n,node in enumerate(northSidePosSide):
+                inp.write(' 3' + '\n')
+                inp.write(' NORTHSIDE-POSSIDE-N'+ str(n+1) +', 2, 1, NORTHSIDE-NEGSIDE-N'+ str(n+1) +', 2, 1, NORTHSIDE-CENTER, 2, -2' + '\n')
+                inp.write(' 2' + '\n')
+                inp.write(' NORTHSIDE-POSSIDE-N'+ str(n+1) +', 1, 1, NORTHSIDE-NEGSIDE-N'+ str(n+1) +', 1, 1' + '\n')
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'ulinearCoupling' in parameters['BC']['northSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on NORTH side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: applied linear horizontal displacement',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*EQUATION' + '\n')
+            for n,node in enumerate(northSideWithoutCornersNodeset):
+                inp.write(' 2' + '\n')
+                inp.write(' NORTHSIDE-N'+ str(n+1) +', 1, 1, NORTHEAST-CORNER, 1, ' + str(-nodes[node][0]/nodes[northeastIndex][0]) + '\n')
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'vkinCouplingmeancorners' in parameters['BC']['rightSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on RIGHT side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: ne and se horizontal displacements are set to be equal and all other points are set to this value',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*EQUATION' + '\n')
+            inp.write(' 2' + '\n')
+            inp.write(' SOUTHEAST-CORNER, 1, 1, NORTHEAST-CORNER, 1, -1' + '\n')
+            inp.write(' 3' + '\n')
+            inp.write(' RIGHTSIDE-WITHOUT-CORNERS, 1, 1, SOUTHEAST-CORNER, 1, -0.5, NORTHEAST-CORNER, 1, -0.5' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if 'vkinCouplingmeancorners' in parameters['BC']['leftSide']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions on LEFT side ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + 'Chosen boundary condition: nw and sw horizontal displacements are set to be equal and all other points are set to this value',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*EQUATION' + '\n')
+            inp.write(' 2' + '\n')
+            inp.write(' SOUTHWEST-CORNER, 1, 1, NORTHWEST-CORNER, 1, -1' + '\n')
+            inp.write(' 3' + '\n')
+            inp.write(' LEFTSIDE-WITHOUT-CORNERS, 1, 1, SOUTHWEST-CORNER, 1, -0.5, NORTHWEST-CORNER, 1, -0.5' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        for line in inpfilelines[endAssembly+1:]:
+            inp.write(line)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if  parameters['simulation-pipeline']['remove-INP']:
+        skipLineToLogFile(logfilepath,'a',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Remove .inp file from working directory... ',True)
+        try:
+            os.remove(inpfullpath)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        except Exception, error:
+            writeErrorToLogFile(logfilepath,'a',Exception,error,True)
+            sys.exc_clear()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    return modinpname
 
 def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
@@ -5273,6 +5718,24 @@ def main(argv):
             writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
             sys.exit(2)
 
+        #================= modify input file
+        skipLineToLogFile(logfilefullpath,'a',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent)',True)
+        writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer starts',True)
+        localStart = timeit.default_timer()
+        try:
+            if RVEparams['simulation-pipeline']['modify-INP']:
+                inputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
+            localElapsedTime = timeit.default_timer() - localStart
+            timedataList.append(localElapsedTime)
+            totalIterationTime += localElapsedTime
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Successfully returned from function: modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent)',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Local timer stopped',True)
+            writeLineToLogFile(logfilefullpath,'a',logindent + 'Elapsed time: ' + str(localElapsedTime) + ' [s]',True)
+        except Exception, error:
+            writeErrorToLogFile(logfilefullpath,'a',Exception,error,True)
+            sys.exit(2)
+
         #================= run ABAQUS simulation
         skipLineToLogFile(logfilefullpath,'a',True)
         writeLineToLogFile(logfilefullpath,'a',logindent + 'Calling function: runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent)',True)
@@ -5280,7 +5743,7 @@ def main(argv):
         localStart = timeit.default_timer()
         try:
             if RVEparams['simulation-pipeline']['analyze-ODB']:
-                runRVEsimulation(RVEparams['input']['wd'],modelData['jobname']+'.inp',RVEparams['solver']['cpus'],logfilefullpath,logindent,logindent)
+                runRVEsimulation(RVEparams['input']['wd'],inputfilename,RVEparams['solver']['cpus'],logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime

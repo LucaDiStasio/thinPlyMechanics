@@ -3879,14 +3879,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         if deltatheta>0.0:
-            regionSets.append(['CRACK',int(np.floor(2*deltatheta/0.5))])
+            regionSets.append(['CRACK',int(np.floor(2*deltatheta/0.25))])
         if 'full' in parameters['geometry']['fiber']['type']:
             regionSets.append(['BONDED-INTERFACE',int(np.floor((360-2*deltatheta)/5))])
         else:
             regionSets.append(['BONDED-INTERFACE',int(np.floor((180-2*deltatheta)/5))])
     else:
         if deltatheta>0.0:
-            regionSets.append(['CRACK',int(np.floor(deltatheta/0.5))])
+            regionSets.append(['CRACK',int(np.floor(deltatheta/0.25))])
         if 'half' in parameters['geometry']['fiber']['type']:
             regionSets.append(['BONDED-INTERFACE',int(np.floor((180-deltatheta)/5))])
         else:
@@ -4660,9 +4660,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     if parameters['geometry']['deltatheta']>0.0:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute average COD and CSD ...',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract nodes belonging to crack faces ...',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(odb.parts['RVE'].surfaces),True)
-        fibersurfaceNodes = odb.rootAssembly.instances['RVE-ASSEMBLY'].surfaces['FIBER-SURFACE'].nodes
-        matrixsurfaceNodes = odb.rootAssembly.instances['RVE-ASSEMBLY'].surfaces['MATRIX-SURFACE'].nodes
+        crack = getSingleNodeSet(odb,'RVE-ASSEMBLY','CRACK')
+        fiber = getSingleNodeSet(odb,'RVE-ASSEMBLY','FIBER')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates and displacements of crack faces ...',True)

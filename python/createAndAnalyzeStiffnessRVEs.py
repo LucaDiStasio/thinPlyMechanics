@@ -4656,69 +4656,70 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # END - compute average COD and CSD
     #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute average COD and CSD ...',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract nodes belonging to crack faces ...',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(odb.parts['RVE'].surfaces),True)
-    fibersurfaceNodes = odb.rootAssembly.instances['RVE-ASSEMBLY'].surfaces['FIBER-SURFACE'].nodes
-    matrixsurfaceNodes = odb.rootAssembly.instances['RVE-ASSEMBLY'].surfaces['MATRIX-SURFACE'].nodes
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if parameters['geometry']['deltatheta']>0.0:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute average COD and CSD ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract nodes belonging to crack faces ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + str(odb.parts['RVE'].surfaces),True)
+        fibersurfaceNodes = odb.rootAssembly.instances['RVE-ASSEMBLY'].surfaces['FIBER-SURFACE'].nodes
+        matrixsurfaceNodes = odb.rootAssembly.instances['RVE-ASSEMBLY'].surfaces['MATRIX-SURFACE'].nodes
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates and displacements of crack faces ...',True)
-    fibersurfaceDisps = []
-    matrixsurfaceDisps = []
-    for node in fibersurfaceNodes:
-        undefcoords = getFieldOutput(odb,0,0,'COORD',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
-        displacements = getFieldOutput(odb,-1,-1,'U',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
-        x = undefcoords.values[0].data[0]
-        y = undefcoords.values[0].data[1]
-        ux = displacements.values[0].data[0]
-        uy = displacements.values[0].data[1]
-        alpha = np.arctan2(y,x) #radians
-        ur = ux*np.cos(alpha) + uy*np.sin(alpha)
-        ut = -ux*np.sin(alpha) + uy*np.cos(alpha)
-        fibersurfaceDisps.append([alpha,r,x,y,ux,uy,ur,ut])
-    for node in matrixsurfaceNodes:
-        undefcoords = getFieldOutput(odb,0,0,'COORD',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
-        displacements = getFieldOutput(odb,-1,-1,'U',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
-        x = undefcoords.values[0].data[0]
-        y = undefcoords.values[0].data[1]
-        ux = displacements.values[0].data[0]
-        uy = displacements.values[0].data[1]
-        alpha = np.arctan2(y,x) #radians
-        ur = ux*np.cos(alpha) + uy*np.sin(alpha)
-        ut = -ux*np.sin(alpha) + uy*np.cos(alpha)
-        matrixsurfaceDisps.append([alpha,r,x,y,ux,uy,ur,ut])
-    fibersurfaceDisps = np.array(fibersurfaceDisps)
-    fibersurfaceDisps = fibersurfaceDisps[np.argsort(fibersurfaceDisps[:,0])]
-    matrixsurfaceDisps = np.array(matrixsurfaceDisps)
-    matrixsurfaceDisps = matrixsurfaceDisps[np.argsort(matrixsurfaceDisps[:,0])]
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract undeformed coordinates and displacements of crack faces ...',True)
+        fibersurfaceDisps = []
+        matrixsurfaceDisps = []
+        for node in fibersurfaceNodes:
+            undefcoords = getFieldOutput(odb,0,0,'COORD',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
+            displacements = getFieldOutput(odb,-1,-1,'U',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
+            x = undefcoords.values[0].data[0]
+            y = undefcoords.values[0].data[1]
+            ux = displacements.values[0].data[0]
+            uy = displacements.values[0].data[1]
+            alpha = np.arctan2(y,x) #radians
+            ur = ux*np.cos(alpha) + uy*np.sin(alpha)
+            ut = -ux*np.sin(alpha) + uy*np.cos(alpha)
+            fibersurfaceDisps.append([alpha,r,x,y,ux,uy,ur,ut])
+        for node in matrixsurfaceNodes:
+            undefcoords = getFieldOutput(odb,0,0,'COORD',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
+            displacements = getFieldOutput(odb,-1,-1,'U',odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(node))
+            x = undefcoords.values[0].data[0]
+            y = undefcoords.values[0].data[1]
+            ux = displacements.values[0].data[0]
+            uy = displacements.values[0].data[1]
+            alpha = np.arctan2(y,x) #radians
+            ur = ux*np.cos(alpha) + uy*np.sin(alpha)
+            ut = -ux*np.sin(alpha) + uy*np.cos(alpha)
+            matrixsurfaceDisps.append([alpha,r,x,y,ux,uy,ur,ut])
+        fibersurfaceDisps = np.array(fibersurfaceDisps)
+        fibersurfaceDisps = fibersurfaceDisps[np.argsort(fibersurfaceDisps[:,0])]
+        matrixsurfaceDisps = np.array(matrixsurfaceDisps)
+        matrixsurfaceDisps = matrixsurfaceDisps[np.argsort(matrixsurfaceDisps[:,0])]
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute average and maximum COD and CSD ...',True)
-    COD = matrixsurfaceDisps[:,6] - fibersurfaceDisps[:,6]
-    CSD = matrixsurfaceDisps[:,7] - fibersurfaceDisps[:,7]
-    thetas = fibersurfaceDisps[:,0]
-    maxCOD = np.max(COD)
-    maxCSD = np.max(CSD)
-    avgCOD = 0.5*np.sum((COD[1:]+COD[:-1])*(thetas[1:]-thetas[:-1]))/np.sum(thetas)
-    avgCSD = 0.5*np.sum((CSD[1:]+CSD[:-1])*(thetas[1:]-thetas[:-1]))/np.sum(thetas)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute average and maximum COD and CSD ...',True)
+        COD = matrixsurfaceDisps[:,6] - fibersurfaceDisps[:,6]
+        CSD = matrixsurfaceDisps[:,7] - fibersurfaceDisps[:,7]
+        thetas = fibersurfaceDisps[:,0]
+        maxCOD = np.max(COD)
+        maxCSD = np.max(CSD)
+        avgCOD = 0.5*np.sum((COD[1:]+COD[:-1])*(thetas[1:]-thetas[:-1]))/np.sum(thetas)
+        avgCSD = 0.5*np.sum((CSD[1:]+CSD[:-1])*(thetas[1:]-thetas[:-1]))/np.sum(thetas)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute contact zone ...',True)
-    oz0 = thetas[np.argwhere(COD>0)[-1,0]]*180.0/np.pi
-    cz0 = 180.0 - oz0
-    ozs = [oz0]
-    czs = [cz0]
-    tols = np.arange(0.1,1.1,0.1)
-    tols.append(2.0)
-    tols.append(3.0)
-    tols.append(4.0)
-    tols.append(5.0)
-    for tol in tols:
-        ozs.append(thetas[np.argwhere(COD>(tol/100.0)*maxCOD)[-1,0]]*180.0/np.pi)
-        czs.append(180.0 - ozs[-1])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute contact zone ...',True)
+        oz0 = thetas[np.argwhere(COD>0)[-1,0]]*180.0/np.pi
+        cz0 = 180.0 - oz0
+        ozs = [oz0]
+        czs = [cz0]
+        tols = np.arange(0.1,1.1,0.1)
+        tols.append(2.0)
+        tols.append(3.0)
+        tols.append(4.0)
+        tols.append(5.0)
+        for tol in tols:
+            ozs.append(thetas[np.argwhere(COD>(tol/100.0)*maxCOD)[-1,0]]*180.0/np.pi)
+            czs.append(180.0 - ozs[-1])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     #=======================================================================
     # BEGIN - compute average stress and strain and stiffness
@@ -4806,7 +4807,13 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write to file ...',True)
 
-    dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,avgStrain,avgStress,E1eq,E1eq/1000.0,avgCOD,maxCOD,avgCSD,maxCSD]
+    appEps = 0.0
+    for load in parameters['loads'].keys():
+        if 'appliedStrain' in load['type']:
+            appEps = load['value'][0]
+            break
+
+    dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,appStrain*100.0,avgStrain*100.0,avgStress,E1eq,E1eq/1000.0,avgStress/appStrain,avgStress/(appStrain*1000.0),avgCOD,maxCOD,avgCSD,maxCSD]
 
     for o,oz in enumerate(ozs):
         dataline.append(oz)

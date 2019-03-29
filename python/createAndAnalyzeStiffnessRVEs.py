@@ -5092,6 +5092,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # END - compute average COD and CSD
     #=======================================================================
 
+    ozs = []
+    czs = []
+
     if parameters['geometry']['deltatheta']>0.0:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute average COD and CSD ...',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract nodes belonging to crack faces ...',True)
@@ -5143,8 +5146,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute contact zone ...',True)
         oz0 = thetas[np.argwhere(COD>0)[-1,0]]*180.0/np.pi
         cz0 = 180.0 - oz0
-        ozs = [oz0]
-        czs = [cz0]
+        ozs.append(oz0)
+        czs.append(cz0)
         tols = np.arange(0.1,1.1,0.1)
         tols.append(2.0)
         tols.append(3.0)
@@ -5247,7 +5250,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             appStrain = load['value'][0]
             break
 
-    dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,appStrain*100.0,avgStrain*100.0,avgStress,E1eq,E1eq/1000.0,avgStress/appStrain,avgStress/(appStrain*1000.0),avgCOD,maxCOD,avgCSD,maxCSD]
+    if deltatheta>0.0:
+        dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,appStrain*100.0,avgStrain*100.0,avgStress,E1eq,E1eq/1000.0,avgStress/appStrain,avgStress/(appStrain*1000.0),avgCOD,maxCOD,avgCSD,maxCSD]
+    else:
+        dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,appStrain*100.0,avgStrain*100.0,avgStress,E1eq,E1eq/1000.0,avgStress/appStrain,avgStress/(appStrain*1000.0),0.0,0.0,0.0,0.0]
 
     for o,oz in enumerate(ozs):
         dataline.append(oz)

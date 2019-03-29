@@ -5159,7 +5159,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         cz0 = 180.0 - oz0
         ozs.append(oz0)
         czs.append(cz0)
-        tols = np.arange(0.1,1.1,0.1)
+        tols = np.arange(0.1,1.1,0.1).tolist()
         tols.append(2.0)
         tols.append(3.0)
         tols.append(4.0)

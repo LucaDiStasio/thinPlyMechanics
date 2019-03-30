@@ -4739,13 +4739,13 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'])
             for angleNum,pathAngle in enumerate(pathAngles):
                 if pathAngle<45.0:
-                    pathRadius = parameters['geometry']['L']/np.cos(pathAngle*np.pi/180.0)
+                    pathRadius = 0.95*parameters['geometry']['L']/np.cos(pathAngle*np.pi/180.0)
                 elif pathAngle<90.0:
-                    pathRadius = parameters['geometry']['L']/np.cos((90.0-pathAngle)*np.pi/180.0)
+                    pathRadius = 0.95*parameters['geometry']['L']/np.cos((90.0-pathAngle)*np.pi/180.0)
                 elif pathAngle<135.0:
-                    pathRadius = parameters['geometry']['L']/np.cos((pathAngle-90.0)*np.pi/180.0)
+                    pathRadius = 0.95*parameters['geometry']['L']/np.cos((pathAngle-90.0)*np.pi/180.0)
                 else:
-                    pathRadius = parameters['geometry']['L']/np.cos((180.0-pathAngle)*np.pi/180.0)
+                    pathRadius = 0.95*parameters['geometry']['L']/np.cos((180.0-pathAngle)*np.pi/180.0)
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create radial path with min radius ' + str(parameters['geometry']['Rf']) + ' [mum]',True)
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        max radius ' + str(pathRadius) + ' [mum]',True)
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        orientation ' + str(pathAngle) + ' deg',True)

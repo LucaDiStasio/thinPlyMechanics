@@ -1,0 +1,1 @@
+python C:/02_Local-folder/01_Luca/01_WD/thinPlyMechanics/python/reportData.py -w C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/LucaPC/sweepOverDeltathetaEvkL%1 -i ABQ-RVE-generation-and-analysis_csvfileslist.csv -f sweepL%1.xlsx --excel

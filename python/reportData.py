@@ -732,23 +732,15 @@ def main(argv):
                                 currentSrr.append(srr)
                                 currentStt.append(stt)
                                 currentSrt.append(srt)
-                                print('    --> Stresses in radial coordinates computed.')
-                                print(' ')
                                 i1d2 = sxx + syy
                                 i1d3 = sxx + syy + szz
                                 i2d2 = sxx*syy - sxy*sxy
                                 i2d3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
                                 i3d3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
-                                print('    --> Stress invariants computed.')
-                                print(' ')
                                 saverd2 = i1d2/2.0
                                 saverd3 = i1d3/3.0
-                                print('    --> Average stress computed.')
-                                print(' ')
                                 smises2d =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
                                 smises3d =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
-                                print('    --> Von Mises stress computed.')
-                                print(' ')
                                 s1d2 = 0.5*(sxx+syy)+np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
                                 s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
                                 try:
@@ -760,8 +752,6 @@ def main(argv):
                                     s1d3 = s1d2
                                     s2d3 = s2d2
                                     s3d3 = 0.0
-                                print('    --> Principal stresses computed.')
-                                print(' ')
                                 current3DS1.append(s1d3)
                                 current3DS2.append(s2d3)
                                 current3DS3.append(s2d3)

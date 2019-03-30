@@ -4800,7 +4800,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             sessionOdb = session.openOdb(name=odbfullpath)
             session.viewports['Viewport: 1'].setValues(displayedObject=sessionOdb)
             pathRsInt = np.linspace(parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['stepParameter'],endpoint=True)
-            pathRsExt = np.linspace(parameters['geometry']['L'],np.sqrt(2)*parameters['geometry']['L'],parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['stepParameter'],endpoint=False)[1:]
+            pathRsExt = np.linspace(parameters['geometry']['L'],0.99*np.sqrt(2)*parameters['geometry']['L'],parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['stepParameter'],endpoint=False)[1:]
             csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stressescircumferentialpaths'
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, R, angle_i [°], angle_f [°], FOLDER, FILENAME')
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'])
@@ -4838,7 +4838,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathRadius),str(0),str(180),parameters['output']['local']['directory'],'tauyz-CircPath-R' + str(pathR).replace('.','_') + '.dat']])
             writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
             for rNum,pathR in enumerate(pathRsExt):
-                angleStart1 = np.ceil(np.arccos(parameters['geometry']['L']/pathR)*180.0/np.pi)
+                angleStart1 = np.ceil(1.01*np.arccos(parameters['geometry']['L']/pathR)*180.0/np.pi)
                 angleStart2 = 90.0-angleStart1
                 angleStart3 = 90.0+angleStart1
                 angleStart4 = 180.0-angleStart1

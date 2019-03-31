@@ -720,7 +720,9 @@ def main(argv):
                             rotateBy = pathVariable*np.pi/180.0
                             cosRot = np.cos(rotateBy)
                             sinRot = np.sin(rotateBy)
-                            for s, sxx in enumerate(currentSxx):
+                            nstressPoints = np.min([len(currentSxx),len(currentSyy),len(currentSzz),len(currentSxy)])
+                            for s in range(0,nstressPoints):
+                                sxx = currentSxx[s]
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]
@@ -1061,13 +1063,12 @@ def main(argv):
                             current2DI2 = []
                             current2DSMises = []
                             current2DSaver = []
-
-                            for s, sxx in enumerate(currentSxx):
-
+                            nstressPoints = np.min([len(currentSxx),len(currentSyy),len(currentSzz),len(currentSxy)])
+                            for s in range(0,nstressPoints):
                                 rotateBy = pathCoords[-1][s]*np.pi/180.0
                                 cosRot = np.cos(rotateBy)
                                 sinRot = np.sin(rotateBy)
-
+                                sxx = currentSxx[s]
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]
@@ -1412,13 +1413,12 @@ def main(argv):
                             current2DI2 = []
                             current2DSMises = []
                             current2DSaver = []
-
-                            for s, sxx in enumerate(currentSxx):
-
+                            nstressPoints = np.min([len(currentSxx),len(currentSyy),len(currentSzz),len(currentSxy)])
+                            for s in range(0,nstressPoints):
                                 rotateBy = np.arctan2(pathVariable,pathCoords[-1][s])
                                 cosRot = np.cos(rotateBy)
                                 sinRot = np.sin(rotateBy)
-
+                                sxx = currentSxx[s]
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]
@@ -1763,13 +1763,12 @@ def main(argv):
                             current2DI2 = []
                             current2DSMises = []
                             current2DSaver = []
-
-                            for s, sxx in enumerate(currentSxx):
-
+                            nstressPoints = np.min([len(currentSxx),len(currentSyy),len(currentSzz),len(currentSxy)])
+                            for s in range(0,nstressPoints):
                                 rotateBy = np.arctan2(xData[s],pathVariable)
                                 cosRot = np.cos(rotateBy)
                                 sinRot = np.sin(rotateBy)
-
+                                sxx = currentSxx[s]
                                 syy = currentSyy[s]
                                 szz = currentSzz[s]
                                 sxy = currentSxy[s]

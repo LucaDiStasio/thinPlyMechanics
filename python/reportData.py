@@ -847,8 +847,10 @@ def main(argv):
                         worksheet.write(2,p*25+22,'I3_3D [MPa^3]',stringFormat)
                         worksheet.write(2,p*25+23,'I1_2D [MPa]',stringFormat)
                         worksheet.write(2,p*25+24,'I2_2D [MPa^2]',stringFormat)
-                        print('          number of path points = ' + str(len(pathCoords[p])))
-                        for c,coord in enumerate(pathCoords[p]):
+                        measureNum = np.min([len(Sxx[p]),len(Syy[p]),len(Szz[p]),len(Sxy[p])])
+                        print('          number of path points = ' + str(measureNum))
+                        for c in range(0,measureNum):
+                            coord = pathCoords[p][c]
                             worksheet.write(3+c,p*25,coord,radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+1,pathNormCoords[p][c],radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+2,Sxx[p][c],radialpathsnumberFormat)
@@ -1170,11 +1172,11 @@ def main(argv):
                     worksheet = circumferentialpathsWorkbook.add_worksheet(datasheetName.decode('utf-8'))
                     for p, pathVariable in enumerate(pathVariables):
                         worksheet.write(0,p*25,pathVariableName,stringFormat)
-                        worksheet.write(1,p*25,pathVariable,radialpathsnumberFormatReduced)
+                        worksheet.write(1,p*25,pathVariable,circumferentialpathsnumberFormatReduced)
                         worksheet.write(0,p*25+1,pathStartVariableName,stringFormat)
-                        worksheet.write(1,p*25+1,pathStartVariables[p],radialpathsnumberFormat)
+                        worksheet.write(1,p*25+1,pathStartVariables[p],circumferentialpathsnumberFormat)
                         worksheet.write(0,p*25+2,pathEndVariableName,stringFormat)
-                        worksheet.write(1,p*25+2,pathEndVariables[p],radialpathsnumberFormat)
+                        worksheet.write(1,p*25+2,pathEndVariables[p],circumferentialpathsnumberFormat)
                         worksheet.write(2,p*25,pathCoordinateName,stringFormat)
                         worksheet.write(2,p*25+1,'Norm ' + pathCoordinateName,stringFormat)
                         worksheet.write(2,p*25+2,'Sxx [MPa]',stringFormat)
@@ -1200,7 +1202,10 @@ def main(argv):
                         worksheet.write(2,p*25+22,'I3_3D [MPa^3]',stringFormat)
                         worksheet.write(2,p*25+23,'I1_2D [MPa]',stringFormat)
                         worksheet.write(2,p*25+24,'I2_2D [MPa^2]',stringFormat)
-                        for c,coord in enumerate(pathCoords[p]):
+                        measureNum = np.min([len(Sxx[p]),len(Syy[p]),len(Szz[p]),len(Sxy[p])])
+                        print('          number of path points = ' + str(measureNum))
+                        for c in range(0,measureNum):
+                            coord = pathCoords[p][c]
                             worksheet.write(3+c,p*25,coord,radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+1,pathNormCoords[p][c],radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+2,Sxx[p][c],radialpathsnumberFormat)
@@ -1550,7 +1555,10 @@ def main(argv):
                         worksheet.write(2,p*25+22,'I3_3D [MPa^3]',stringFormat)
                         worksheet.write(2,p*25+23,'I1_2D [MPa]',stringFormat)
                         worksheet.write(2,p*25+24,'I2_2D [MPa^2]',stringFormat)
-                        for c,coord in enumerate(pathCoords[p]):
+                        measureNum = np.min([len(Sxx[p]),len(Syy[p]),len(Szz[p]),len(Sxy[p])])
+                        print('          number of path points = ' + str(measureNum))
+                        for c in range(0,measureNum):
+                            coord = pathCoords[p][c]
                             worksheet.write(3+c,p*25,coord,radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+1,pathNormCoords[p][c],radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+2,Sxx[p][c],radialpathsnumberFormat)
@@ -1900,7 +1908,10 @@ def main(argv):
                         worksheet.write(2,p*25+22,'I3_3D [MPa^3]',stringFormat)
                         worksheet.write(2,p*25+23,'I1_2D [MPa]',stringFormat)
                         worksheet.write(2,p*25+24,'I2_2D [MPa^2]',stringFormat)
-                        for c,coord in enumerate(pathCoords[p]):
+                        measureNum = np.min([len(Sxx[p]),len(Syy[p]),len(Szz[p]),len(Sxy[p])])
+                        print('          number of path points = ' + str(measureNum))
+                        for c in range(0,measureNum):
+                            coord = pathCoords[p][c]
                             worksheet.write(3+c,p*25,coord,radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+1,pathNormCoords[p][c],radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+2,Sxx[p][c],radialpathsnumberFormat)

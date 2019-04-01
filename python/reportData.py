@@ -882,7 +882,7 @@ def main(argv):
                     print('    --> Writing worksheet')
                     print('        ' + graphsheetName)
                     print(' ')
-                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saver_3D [MPa]','Saver_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     for v,variableName in enumerate(variableNames):
                         chartA = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
@@ -893,7 +893,7 @@ def main(argv):
                                 radialpathsDatalengths.append(dataLength)
                             chartA.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
-                                            'categories': [datasheetName,3,0,dataLength,0],
+                                            'categories': [datasheetName,3,25*p,dataLength,25*p],
                                             'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
@@ -914,7 +914,7 @@ def main(argv):
                             dataLength = len(pathCoords[p])
                             chartB.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
-                                            'categories': [datasheetName,3,1,dataLength,1],
+                                            'categories': [datasheetName,3,25*p+1,dataLength,25*p+1],
                                             'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
@@ -1237,7 +1237,7 @@ def main(argv):
                     print('    --> Writing worksheet')
                     print('        ' + graphsheetName)
                     print(' ')
-                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     circumferentialpathsDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableNames):
                         chartA = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
@@ -1249,7 +1249,7 @@ def main(argv):
                                 circumferentialpathsDatalengths.append(dataLength)
                             chartA.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
-                                            'categories': [datasheetName,3,0,dataLength,0],
+                                            'categories': [datasheetName,3,25*p,dataLength,25*p],
                                             'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
@@ -1270,7 +1270,7 @@ def main(argv):
                             dataLength = len(pathCoords[p])
                             chartB.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
-                                            'categories': [datasheetName,3,1,dataLength,1],
+                                            'categories': [datasheetName,3,25*p+1,dataLength,25*p+1],
                                             'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
@@ -1590,7 +1590,7 @@ def main(argv):
                     print('    --> Writing worksheet')
                     print('        ' + graphsheetName)
                     print(' ')
-                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     horizontalpathsDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableNames):
                         chartA = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
@@ -1602,7 +1602,7 @@ def main(argv):
                                 horizontalpathsDatalengths.append(dataLength)
                             chartA.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
-                                            'categories': [datasheetName,3,0,dataLength,0],
+                                            'categories': [datasheetName,3,25*p,dataLength,25*p],
                                             'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
@@ -1623,7 +1623,7 @@ def main(argv):
                             dataLength = len(pathCoords[p])
                             chartB.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
-                                            'categories': [datasheetName,3,1,dataLength,1],
+                                            'categories': [datasheetName,3,25*p+1,dataLength,25*p+1],
                                             'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
@@ -1943,7 +1943,7 @@ def main(argv):
                     print('    --> Writing worksheet')
                     print('        ' + graphsheetName)
                     print(' ')
-                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     for v,variableName in enumerate(variableNames):
                         chartA = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
@@ -1954,7 +1954,7 @@ def main(argv):
                                 verticalpathsDatalengths.append(dataLength)
                             chartA.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
-                                            'categories': [datasheetName,3,0,dataLength,0],
+                                            'categories': [datasheetName,3,25*p,dataLength,25*p],
                                             'values':     [datasheetName,3,25*p+2+v,dataLength,25*p+2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
@@ -1975,7 +1975,7 @@ def main(argv):
                             dataLength = len(pathCoords[p])
                             chartB.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
-                                            'categories': [datasheetName,3,1,dataLength,1],
+                                            'categories': [datasheetName,3,25*p+1,dataLength,25*p+1],
                                             'values':     [datasheetName,3,2+v,dataLength,2+v],
                                              })
                             print('                  Series ' + str(p+1) + ': ' + pathVariableName + '=' + str(pathVariable))
@@ -2027,7 +2027,7 @@ def main(argv):
                 print('    --> Writing worksheet')
                 print('        ' + graphsheetName)
                 print(' ')
-                variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                 for v,variableName in enumerate(variableNames):
                     chartA = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
@@ -2036,7 +2036,7 @@ def main(argv):
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                         chartA.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
-                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'categories': [datasheetName,3,n*25,dataLength,n*25],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
@@ -2058,7 +2058,7 @@ def main(argv):
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                         chartB.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
-                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'categories': [datasheetName,3,n*25+1,dataLength,n*25+1],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
@@ -2081,7 +2081,7 @@ def main(argv):
                 print('    --> Writing worksheet')
                 print('        ' + graphsheetName)
                 print(' ')
-                variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                 for v,variableName in enumerate(variableNames):
                     chartA = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
@@ -2091,7 +2091,7 @@ def main(argv):
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                         chartA.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
-                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'categories': [datasheetName,3,n*25,dataLength,n*25],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
@@ -2113,7 +2113,7 @@ def main(argv):
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                         chartB.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
-                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'categories': [datasheetName,3,n*25+1,dataLength,n*25+1],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
@@ -2136,7 +2136,7 @@ def main(argv):
                 print('    --> Writing worksheet')
                 print('        ' + graphsheetName)
                 print(' ')
-                variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                 for v,variableName in enumerate(variableNames):
                     chartA = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
@@ -2146,7 +2146,7 @@ def main(argv):
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                         chartA.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
-                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'categories': [datasheetName,3,n*25,dataLength,n*25],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
@@ -2168,7 +2168,7 @@ def main(argv):
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                         chartB.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
-                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'categories': [datasheetName,3,n*25+1,dataLength,n*25+1],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
@@ -2191,7 +2191,7 @@ def main(argv):
                 print('    --> Writing worksheet')
                 print('        ' + graphsheetName)
                 print(' ')
-                variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                 for v,variableName in enumerate(variableNames):
                     chartA = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                     print('        Chart ' + str(v+1) + '.A')
@@ -2201,7 +2201,7 @@ def main(argv):
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                         chartA.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
-                                        'categories': [datasheetName,3,0,dataLength,0],
+                                        'categories': [datasheetName,3,n*25,dataLength,n*25],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))
@@ -2223,7 +2223,7 @@ def main(argv):
                         datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                         chartB.add_series({
                                         'name':       'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'),
-                                        'categories': [datasheetName,3,1,dataLength,1],
+                                        'categories': [datasheetName,3,n*25+1,dataLength,n*25+1],
                                         'values':     [datasheetName,3,n*25+2+v,dataLength,n*25+2+v],
                                          })
                         print('                  Series ' + str(s+1) + ': ' + 'deltatheta' + '=' + subFolder.split('deltatheta')[-1].replace('_','.'))

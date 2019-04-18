@@ -205,11 +205,11 @@
 \begin{document}
 \setbeamertemplate{caption}{\raggedright\insertcaption\par}
 
-\title[\textsc{FEM \& the Fiber-Matrix Interface Crack}]{\textsc{The Fiber-Matrix Interface Crack Problem and its Solution by the Finite Element Method}}
-\author{ \underline{L. Di Stasio}$^{1,2}$, Z. Ayadi$^{1}$, J. Varna$^{2}$}
+\title[\textsc{Scaling Laws of Debonding}]{\textsc{investigation of scaling laws of the fiber/matrix interface crack in polymer composites through finite element-based micromechanical modeling}}
+\author{ \underline{L. Di Stasio}$^{1,2}$, J. Varna$^{1}$, Z. Ayadi$^{2}$}
 %\institute{ Science et Ing\'enierie des Mat\'eriaux et M\'etallurgie (SI2M), Institut Jean Lamour, Nancy, France\\Department of Engineering Sciences and Mathematics, Division of Materials Science, Lule\aa\ University of Technology, Lule\aa, Sweden}
-\institute{$^{1}$EEIGM \& IJL, Universit\'e de Lorraine, Nancy, France\\$^{2}$Division of Materials Science, Lule\aa\ University of Technology, Lule\aa, Sweden}
-\date{Mid-Term Defence - Nancy (FR), October 24, 2017}
+\institute{$^{1}$Division of Materials Science, Lule\aa\ University of Technology, Lule\aa, Sweden\\$^{2}$EEIGM \& IJL, Universit\'e de Lorraine, Nancy, France}
+\date{10th EEIGM International Conference on Advanced Materials Research\\Moscow (RU), April 25-26, 2019}
 
 \begin{frame}[plain]
     \titlepage
@@ -247,38 +247,6 @@
 
 \section[Damage in Thin Ply FRPC]{Damage Mechanisms in Thin Ply Fiber Reinforced Polymer Laminates}
 
-\subsection{Spread Tow Technology}
-
-\begin{frame}
-\frametitle{\small Spread Tow Technology: Introduction}
-\vspace{-0.25cm}
-\centering
-\begin{itemize}[label=\ding{212}]
-	\item {\small Firstly developed for commercial use in Japan between 1995 and 1998 (Kawabe, Tomoda et al. 1997 [1], 2003 [2], 2008 [3], 2009 [4])}
-	\item {\small In the last decade its use has been spreading, from sports' equipments to mission-critical applications as in the \textit{Solar Impulse 2}}
-	\item {\small Only a few producers wolrdwide: NTPT (USA-CH) [5], Oxeon (SE) [6], Chomarat (FR), Hexcel (USA), Technomax (JP)}
-\end{itemize}
-\begin{figure}[!h]
-\centering
-\subfloat[\scriptsize By North Thin Ply Technology.\label{fig:solar_impulse}]{\includegraphics[height=0.25\textheight,width=0.45\textwidth]{ntpt_solar-impulse-1.jpg}}\quad
-\subfloat[\scriptsize By TeXtreme.\label{fig:solar_car}]{\includegraphics[height=0.25\textheight,width=0.45\textwidth]{textreme_solar_car.jpg}}
-  %\caption{Single RVE model.}
-  \label{fig:thin-ply-examples}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{\small Spread Tow Technology: Foundations}
-\vspace{-0.5cm}
-\centering
-\begin{figure}
-\centering
-\includegraphics[height=0.85\textheight]{spread-tow-tech.pdf}
-%\caption{}
-\label{fig:spread-tow-schematic}
-\end{figure}
-\end{frame}
-
 \subsection{Thin ply effect in transverse cracking}
 
 \begin{frame}
@@ -295,18 +263,6 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}
-\frametitle{\small The Thin Ply Effect}
-\vspace{-0.25cm}
-\centering
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.75\textheight]{Flaggs-Kural_InSituTransverseStrength.pdf}
-\vspace*{-0.3cm}
-\caption{\tiny Measurements of in-situ transverse strength from D. L. Flaggs \& M. H. Kural, 1982 [7].}
- \label{fig:in-situ-strength}
-\end{figure}
-\end{frame}
 
 \subsection[Characterization of Fracture in FRPC]{Characterization of Fracture in FRPC Laminates}
 
@@ -341,61 +297,6 @@ p_{i}\in\left\{\text{geometry},\text{materials},\text{boundary conditions},\text
 \begin{equation*}
 m\in\left\{I,II,III,I/II,I/III,II/III\right\}
 \end{equation*}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{\small Evaluation of Fracture Parameters}
-\vspace{-0.4cm}
-\centering
-\tiny
-\begin{columns}
-\begin{column}{0.5\textwidth}
-\begin{itemize}[label=\ding{212}]
-\item \bf{Analytical}
-\begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}
-\item Closed form
-\item Every material scale can be studied
-\end{list}
-\begin{list}{\Huge\textcolor{red}{$\mathbf{\times}$}}{}
-\item Particular configurations, often infinite in size
-\item Complex geometries cannot be studied
-\end{list}
-\end{itemize}
-\end{column}
-\begin{column}{0.5\textwidth}
-\begin{itemize}[label=\ding{212}]
-\item \bf{Numerical}
-\begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}
-\item Complex geometries can be studied
-\item Every material scale can be studied
-\end{list}
-\begin{list}{\Huge\textcolor{red}{$\mathbf{\times}$}}{}
-\item Discretization
-\item Finite domains
-\end{list}
-\end{itemize}
-\end{column}
-\end{columns}
-\vspace*{0.5cm}
-\begin{columns}
-\begin{column}{0.3\textwidth}
-\end{column}
-\begin{column}{0.5\textwidth}
-\begin{itemize}[label=\ding{212}]
-\item \bf{Experimental}
-\begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}
-\item Complex geometries can be studied
-\end{list}
-\begin{list}{\Huge\textcolor{red}{$\mathbf{\times}$}}{}
-\item Not every material scale is accessible
-\end{list}
-\end{itemize}
-\end{column}
-\begin{column}{0.2\textwidth}
-\end{column}
-\end{columns}
-
 \end{frame}
 
 \begin{frame}
@@ -551,94 +452,7 @@ Rice, 1968
 \end{columns}
 \end{frame}
 
-\subsection{Reaction Stress at the Boundary}
 
-\begin{frame}
-\frametitle{\small Reaction Stress at the Boundary}
-\vspace{-0.5cm}
-\centering
-\begin{columns}
-\begin{column}{0.55\textwidth}
-\begin{figure}
-\includegraphics[width=\columnwidth]{2017-06-23_AbqRunSummary_SingleFiberEqRfFiniteStrain_sigmaatboundary_Summary.pdf}
-\caption{\scriptsize $VF_{f}=0.001$, $\frac{L}{R_{f}}\sim 28$, $\delta = 0.4^{\circ}$, $\frac{\sigma_{max}-\sigma_{mean}}{\sigma_{mean}}=0.34\%$}
-%  \label{fig:jintegral}
-\end{figure}
-\end{column}
-\begin{column}{0.55\textwidth}
-\begin{figure}
-\includegraphics[width=\columnwidth]{2017-06-16_AbqRunSummary_SingleFiberEqRfSmallStrain-D0-4_sigmaatboundary_Summary.pdf}
-\caption{\scriptsize  $VF_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$, $\delta = 0.4^{\circ}$, $\frac{\sigma_{max}-\sigma_{mean}}{\sigma_{mean}}=0.03\%$}
-%  \label{fig:jintegral}
-\end{figure}
-\end{column}
-\end{columns}
-\end{frame}
-
-\subsection{Normalization $G_{0}$}
-
-\begin{frame}
-\frametitle{\small Normalization $G_{0}$ as a function of $\Delta\theta$}
-\vspace{-0.5cm}
-\centering
-\begin{columns}
-\begin{column}{0.55\textwidth}
-\begin{figure}
-\includegraphics[width=\columnwidth]{2017-06-23_AbqRunSummary_SingleFiberEqRfSmallFiniteStrain_G0_Summary.pdf}
-\caption{\scriptsize $VF_{f}=0.001$, $\frac{L}{R_{f}}\sim 28$, $\delta = 0.4^{\circ}$}
-%  \label{fig:jintegral}
-\end{figure}
-\end{column}
-\begin{column}{0.55\textwidth}
-\begin{figure}
-\includegraphics[width=\columnwidth]{2017-06-16_AbqRunSummary_SingleFiberEqRfSmallStrain-D0-4_G0_Summary.pdf}
-\caption{\scriptsize  $VF_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$, $\delta = 0.4^{\circ}$}
-%  \label{fig:jintegral}
-\end{figure}
-\end{column}
-\end{columns}
-\end{frame}
-
-\subsection{Energy Release Rates}
-
-\begin{frame}
-\frametitle{\small Mode I Energy Release Rate $G_{I}$ from VCCT}
-\vspace{-0.5cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GI.pdf}
-  \caption{\scriptsize $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$; fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
-  \label{fig:res1}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{\small Mode II Energy Release Rate $G_{II}$ from VCCT}
-\vspace{-0.5cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GII.pdf}
-  \caption{\scriptsize $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$; fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
-  \label{fig:res1}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{\small Total Energy Release Rate $G_{TOT}$ from VCCT}
-\vspace{-0.5cm}
-\centering
-\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-\begin{figure}[!h]
-\centering
-\includegraphics[height=0.7\textheight]{2017-07-10_AbqRunSummary_SmallStrain_M-F-VCCT_GTOT.pdf}
-  \caption{\scriptsize $Vf_{f}=0.000079$, $\frac{L}{R_{f}}\sim 100$; fading from red to blue for decreasing size of elements at the interface, VCCT from FEM results; in black BEM results.}
-  \label{fig:res1}
-\end{figure}
-\end{frame}
 
 \section[Conclusions]{Conclusions \& Outlook}
 
@@ -663,49 +477,7 @@ Rice, 1968
 \end{alertblock}
 \end{frame}
 
-\section{Appendices}
 
-\subsection{Timeline}
-
-\begin{frame}
-\frametitle{\small Timeline}
-\vspace{-0.75cm}
-\centering
-\scriptsize
-\begin{itemize}[label=\ding{212}]
-\item Oct. 2015 - Dec. 2017: research in Nancy, FR
-\item Jan. 2018 - Dec. 2019: research in Lule\aa, SE\\[20pt]
-\item May - June 2016: DocMASE Summer School 2016, Lule\aa, SE; presentation
-\item June 2016: quarter-term auto-evaluation report, Nancy, FR
-\item April 2017: International Materials Research Meeting of the Greater Region, Sarrebr\"ucken, DE; presentation
-\item May 2017: EMMA doctoral school seminar, Nancy, FR; poster
-\item July 2017: seminar day of the Research Group 304, Nancy, FR; presentation (in French)
-\item October 2017: mid-term defence, Nancy,FR
-\item September 2018: mid-term defence, Lule\aa, SE
-\item December 2019: doctoral defence, Nancy, FR - Lule\aa, FR
-\end{itemize}
-\end{frame}
-
-\subsection{Courses \& Training}
-
-\begin{frame}
-\frametitle{\small Courses \& Training}
-\vspace{-0.75cm}
-\centering
-\scriptsize
-\begin{list}{\Large\textcolor{green}{$\mathbf{\checkmark}$}}{}
-\item Scientific courses (40h or 8 ECTS credits)
-\item Transverse courses (40h or 8 ECTS credits)
-\item Seminars \& Conferences (at least 15 seminars)
-\item EMMA seminar (at least 1)
-\item Portfolio of competences (regular updates)
-\item Quarter-term assessment
-\end{list}
-\begin{itemize}[label=\ding{212}]
-\item Mid-term assessment
-\item Doctoriales
-\end{itemize}
-\end{frame}
 
 %\subsection{Appendices}
 

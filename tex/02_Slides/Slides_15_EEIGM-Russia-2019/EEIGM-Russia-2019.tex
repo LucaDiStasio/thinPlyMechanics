@@ -108,6 +108,31 @@
     }{}
 \makeatother
 
+\makeatletter
+    \newenvironment{tocframe}{
+         \setbeamertemplate{headline}{%
+\vspace{35pt}
+}
+         \setbeamertemplate{footline}{%
+\leavevmode%
+  \hbox{
+    \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.5ex,dp=0.75ex,left]{author in head/foot}%
+      \qquad\color{white}{\tiny\underline{L. Di Stasio}, J. Varna, Z. Ayadi}%
+    \end{beamercolorbox}%
+
+    \begin{beamercolorbox}[wd=.45\paperwidth,ht=2.5ex,dp=0.75ex,center]{title in head/foot}%
+      \color{white}{Moscow (RU), April 25-26, 2019}%
+    \end{beamercolorbox}%
+
+    \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.5ex,dp=0.75ex,right]{title in head/foot}%
+      \color{white}{\insertframenumber\totalframes}%
+    \end{beamercolorbox}%
+  }
+}
+        %\def\beamer@entrycode{\vspace*{-1.5\headheight}}
+    }{}
+\makeatother
+
 \newcommand{\Cross}{$\mathbin{\tikz [x=1.4ex,y=1.4ex,line width=.2ex, red] \draw (0,0) -- (1,1) (0,1) -- (1,0);}$}%
 
 \newcommand{\Checkmark}{$\color{green}\checkmark$}
@@ -212,7 +237,7 @@
 
 \end{frame}
 
-\begin{withoutheadline}
+\begin{tocframe}
 \begin{frame}
 \frametitle{Outline}
 \justifying
@@ -232,7 +257,7 @@
 % \end{frame}
 \tableofcontents[hidesubsections]
 \end{frame}
-\end{withoutheadline}
+\end{tocframe}
 
 %\note{}
 

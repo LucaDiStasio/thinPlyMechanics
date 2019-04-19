@@ -90,19 +90,33 @@
 \newcommand{\normalfooter}{%
 \leavevmode%
   \hbox{
-    \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.5ex,dp=1.125ex,left]{author in head/foot}%
-      \qquad\color{white}{\tiny\insertauthor}%
+    \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.5ex,dp=1.5ex,left]{author in head/foot}%
+      \qquad\color{white}{\tiny\underline{L. Di Stasio}, J. Varna, Z. Ayadi}%
     \end{beamercolorbox}%
 
-    \begin{beamercolorbox}[wd=.45\paperwidth,ht=2.5ex,dp=1.125ex,center]{title in head/foot}%
-      \color{white}{\insertdate}%
+    \begin{beamercolorbox}[wd=.45\paperwidth,ht=2.5ex,dp=1.5ex,center]{title in head/foot}%
+      \color{white}{Moscow (RU), April 25-26, 2019}%
     \end{beamercolorbox}%
 
-    \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.5ex,dp=1.125ex,right]{title in head/foot}%
+    \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.5ex,dp=1.5ex,right]{title in head/foot}%
       \color{white}{\insertframenumber\totalframes}%
     \end{beamercolorbox}%
   }}
-\newcommand{\firstfooter}{\normalfooter}
+\newcommand{\firstfooter}{%
+\leavevmode%
+  \hbox{
+    \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.5ex,dp=0.75ex,left]{author in head/foot}%
+      \qquad\color{white}{\tiny\underline{L. Di Stasio}, J. Varna, Z. Ayadi}%
+    \end{beamercolorbox}%
+
+    \begin{beamercolorbox}[wd=.45\paperwidth,ht=2.5ex,dp=0.75ex,center]{title in head/foot}%
+      \color{white}{Moscow (RU), April 25-26, 2019}%
+    \end{beamercolorbox}%
+
+    \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.5ex,dp=0.75ex,right]{title in head/foot}%
+      \color{white}{\insertframenumber\totalframes}%
+    \end{beamercolorbox}%
+  }}
 \newcommand{\lastfooter}{\normalfooter}
 \newcommand{\navsymb}{\setbeamertemplate{navigation symbols}{}}
 \newcommand{\usespecialtitlepagetemplate}{

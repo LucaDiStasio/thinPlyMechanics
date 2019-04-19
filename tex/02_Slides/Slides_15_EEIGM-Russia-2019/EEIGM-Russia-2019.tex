@@ -268,18 +268,47 @@
 
 \section[Transverse Cracking in FRPCs]{Initiation of Transverse Cracking in Fiber Reinforced Polymer Composites (FRPCs): Microscopic Observations \& Modeling}
 
-\subsection{Thin ply effect in transverse cracking}
+\subsection{Observations: From Macro to Micro}
 
 \begin{frame}
-\frametitle{\small Damage Onset and Propagation}
-\vspace{-0.75cm}
+\frametitle{\vspace{0.3cm}\small Observations: From Macro to Micro}
+\vspace{-0.5cm}
 \centering
 \captionsetup[subfigure]{labelfont=footnotesize}
 \begin{tikzpicture}
 
 %Tikz axis starts%
 
-\node [above right] at (0,0) {\includegraphics[width=0.3\textwidth]{0-90_2_symm}};
+\draw[->,black, line width = 5pt] (-4,0) -- (-4,3);
+\draw[->,black, line width = 5pt] (-4,0) -- (-4,-3);
+\node  at (-4,0) {\includegraphics[height=0.6\textheight]{0-90_2_symm}};
+\node[above, right]  at (-3.8,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (-4.2,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\draw[->,black, line width = 5pt] (-2,0) -- (-2,3);
+\draw[->,black, line width = 5pt] (-2,0) -- (-2,-3);
+\node  at (-2,0) {\includegraphics[height=0.6\textheight]{0-90_symm_edge}};
+\node[above, right]  at (-1.8,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (-2.2,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\draw[->,black, line width = 5pt] (1,0) -- (1,3);
+\draw[->,black, line width = 5pt] (1,0) -- (1,-3);
+\node  at (1,0) {\includegraphics[height=0.6\textheight]{0-90_symm_debondetail}};
+\node[above, right]  at (1.2,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (0.8,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\node[anchor=south west]  at (3.25,1.55) {\scriptsize\textbf{Left:}};
+\node[anchor=west]  at (3.25,1.5) {\scriptsize front view of $\left[0,90_{2}\right]_{S}$,};
+\node[anchor=north west]  at (3.25,1.5) {\scriptsize visual inspection.};
+
+\node[anchor=south west]  at (3.25,0.05) {\scriptsize\textbf{Center:}};
+\node[anchor=west]  at (3.25,0) {\scriptsize  edge view of $\left[0,90\right]_{S}$,};
+\node[anchor=north west]  at (3.25,0) {\scriptsize optical microscope.};
+
+\node[anchor=south west]  at (3.25,-1.45) {\scriptsize\textbf{Right:}};
+\node[anchor=west]  at (3.25,-1.5) {\scriptsize edge view of $\left[0,90\right]_{S}$,};
+\node[anchor=north west]  at (3.25,-1.5) {\scriptsize optical microscope.};
+
 %Tikz axis ends%
 
 

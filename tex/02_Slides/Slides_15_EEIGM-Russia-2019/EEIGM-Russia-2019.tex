@@ -496,35 +496,114 @@ J_{i}=\sum_{k=1}^{n_{segments}}\sum_{j=1}^{n_{nodes}}\left[w_{j}\left(W-n_{j}\si
 
 \end{frame}
 
-\subsection{The Fiber-Matrix Interface Crack Problem: Assumptions}
+\subsection[Assumptions]{The Fiber-Matrix Interface Crack Problem: Assumptions}
 
 \begin{frame}
-\frametitle{\small The Fiber-Matrix Interface Crack Problem: Assumptions}
-\vspace{-0.5cm}
+\frametitle{\vspace{0.3cm}\small The Fiber-Matrix Interface Crack Problem: Assumptions}
+\vspace{-1.cm}
 \centering
 \begin{columns}
-\begin{column}{0.7\textwidth}
+\begin{column}{0.6\textwidth}
 \begin{figure}
-\includegraphics[width=\columnwidth]{RUC.pdf}
+\includegraphics[width=0.95\columnwidth]{RUC.pdf}
 \end{figure}
+\vspace{-0.1cm}
+\scriptsize
+\begin{equation*}
+R_{f}=1\ \left[\mu m\right]\quad L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}
+\end{equation*}
+\vspace{-0.25cm}
+\begin{table}[htbp]
+\scriptsize
+  \centering
+    \begin{tabular}{ccc}
+    \toprule
+    \textbf{Material} & $\mathbf{E_{1}}$ &$\mathbf{\nu_{12}}$ \\
+    \midrule
+    glass fiber    & 70.0  & 0.2\\
+    epoxy    & 3.5    & 0.4\\
+    \bottomrule
+    \end{tabular}
+\end{table}
+\end{column}
+\begin{column}{0.4\textwidth}
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item Linear elastic, homogeneous and isotropic materials
+\item Plane strain
+\item Frictionless contact interaction
+\item Symmetric w.r.t. x-axis
+\item Coupling of x-displacements on left and right side (repeating unit cell)
+\item Applied uniaxial tensile strain $\bar{\varepsilon}_{x}=1\%$
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection[Solution]{The Fiber-Matrix Interface Crack Problem: Solution}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small The Fiber-Matrix Interface Crack Problem: Solution}
+\vspace{-1.cm}
+\centering
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\begin{figure}
+\includegraphics[width=0.95\columnwidth]{RUC.pdf}
+\end{figure}
+\vspace{-0.75cm}
+\begin{columns}
+\begin{column}{0.4\columnwidth}
+\tiny
+\begin{equation*}
+\begin{aligned}
+&\text{in }\Omega_{f}, \Omega_{m}:\\
+&\frac{\partial^{2}\varepsilon_{xx}}{\partial y^{2}}+\frac{\partial^{2}\varepsilon_{yy}}{\partial x^{2}}=\frac{\partial^{2}\gamma_{xy}}{\partial x\partial y}\\
+&\varepsilon_{z}=\gamma_{zx}=\gamma_{yz}=0\\
+&\frac{\partial\sigma_{xx}}{\partial x}+\frac{\partial\tau_{xy}}{\partial y} = 0\\
+&\frac{\partial\tau_{xy}}{\partial x}+\frac{\partial\sigma_{yy}}{\partial y} = 0\\
+&\sigma_{zz}=\nu\left(\sigma_{xx}+\sigma_{yy}\right)\\
+\end{aligned}
+\end{equation*}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\tiny
+\begin{equation*}
+\begin{aligned}
+&\text{for } 0^{\circ}\leq\alpha\leq\Delta\theta:\\
+&\left(\overrightarrow{u}_{m}\left(R_{f},\alpha\right)-\overrightarrow{u}_{f}\left(R_{f},\alpha\right)\right)\cdot\overrightarrow{n}_{\alpha}\geq 0\\
+&\text{for } \Delta\theta\leq\alpha\leq 180^{\circ}:\\
+&\overrightarrow{u}_{m}\left(R_{f},\alpha\right)-\overrightarrow{u}_{f}\left(R_{f},\alpha\right)=0\\
+&\sigma_{ij}=E_{ijkl}\varepsilon_{kl}\\
+&+BC
+\end{aligned}
+\end{equation*}
+\end{column}
+\end{columns}
 \end{column}
 \begin{column}{0.3\textwidth}
 \scriptsize
 \begin{itemize}[label=\ding{212}]
-\item Linear elastic homogeneous isotropic materials
-\item Plane strain
-%\item Displacement-controlled
-\item Dirichlet-type BC
-\item Linear Fracture Mechanics
-\item Contact interaction
-\item Applied uniaxial traction
-%\item Bi-linear quadrilateral elements
+\item Finite Element Method (FEM) in Abaqus\texttrademark
+\item $2^{nd}$ order shape functions
+\item 6-nodes triangles \& 8-nodes quadrilaterals
+\item regular mesh of quadrilaterals at the crack tip:
+\begin{itemize}[label=-]
+\item $AR\sim 1$
+\item $\delta=0.05^{\circ}$
 \end{itemize}
-\begin{itemize}[label=?]
-\item SIF, ERR, mode ratio, stress and displacement distribution at the interface
 \end{itemize}
 \end{column}
 \end{columns}
+\end{frame}
+
+\subsection[Normalization \& Scaling]{The Fiber-Matrix Interface Crack Problem: Normalization \& Scaling}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small The Fiber-Matrix Interface Crack Problem: Normalization \& Scaling}
+\vspace{-1.cm}
+\centering
+
 \end{frame}
 
 %\begin{frame}

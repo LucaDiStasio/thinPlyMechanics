@@ -321,32 +321,87 @@
 \frametitle{\vspace{0.3cm} \scriptsize Mathematical Modeling of Fracture: Linear Elastic Fracture Mechanics (LEFM)}
 \vspace{-0.25cm}
 \centering
-\scriptsize
+\tiny
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{alertblock}{\tiny\centering\textbf{Fracture Mode}}
+\begin{equation*}
+\tiny
+I,II,III,I/II,I/III,II/III
+\end{equation*}
+\begin{columns}
+\begin{column}{0.3\columnwidth}
+\centering
+\begin{tikzpicture}[scale=0.5]
+\node(above) at (0,2) {\tiny Mode I};
+\draw[line width=0.75pt]  (-1,-1)--(1,-1)--(1,1)--(-1,1)--(-1,-1);
+\draw[red,line width=0.75pt] (-1,0)--(0,0);
+\draw[line width=0.75pt,->] (-1,-1)--(-1,-1.5);
+\draw[line width=0.75pt,->] (-1,1)--(-1,1.5);
+\end{tikzpicture}
+\end{column}
+\begin{column}{0.3\columnwidth}
+\centering
+\begin{tikzpicture}[scale=0.5]
+\node(above) at (0,2) {\tiny Mode II};
+\draw[line width=0.75pt]  (-1,-1)--(1,-1)--(1,1)--(-1,1)--(-1,-1);
+\draw[red,line width=0.75pt] (-1,0)--(0,0);
+\draw[line width=0.75pt,->] (-1,-1.25)--(-0.5,-1.25);
+\draw[line width=0.75pt,->] (-0.5,1.25)--(-1,1.25);
+\end{tikzpicture}
+\end{column}
+\begin{column}{0.3\columnwidth}
+\centering
+\begin{tikzpicture}[scale=0.5]
+\node(above) at (0,2) {\tiny Mode III};
+\draw[line width=0.75pt]  (-1,-1)--(1,-1)--(1,1)--(-1,1)--(-1,-1);
+\draw[red,line width=0.75pt] (-1,0)--(0,0);
+\draw[fill = black] (-1,-1.3) circle (0.1);
+\draw[fill = black] (-1,1.3) circle (0.1);
+\draw[line width=0.75pt] (-1,1.3) circle (0.2);
+\end{tikzpicture}
+\end{column}
+\end{columns}
+\end{alertblock}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{alertblock}{\tiny\centering\textbf{Variables}}
+\tiny\flushleft
+geometry\\
+\textcolor{white}{geometry}materials\\
+\textcolor{white}{geometrymaterials}boundary conditions\\
+\textcolor{white}{geometrymaterialsboundaryconditions}loading mode\\
+\textcolor{white}{geometrymaterialsboundaryconditionsloadingmode}scale
+\end{alertblock}
+\end{column}
+\end{columns}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
 \begin{itemize}[label=\ding{212}]
-\item Energy Release Rate
+\item Energy Release Rate $G_{m}$
 \begin{equation*}
-G_{m}=G_{m}\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad G=\frac{\partial W}{\partial A} - \left(\frac{\partial U}{\partial A}+\frac{\partial E_{k}}{\partial A}\right)
+G=\frac{\partial W}{\partial A} - \left(\frac{\partial U}{\partial A}+\frac{\partial E_{k}}{\partial A}\right)
 \end{equation*}
-\item Stress Intensity Factor
+\item Stress Intensity Factor $K_{m}$
 \begin{equation*}
-K_{m}=K_{m}\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad \sigma_{m}\sim K_{m}\frac{\alpha}{\left(x-a\right)^{\beta}}\quad\alpha,\beta>0
+\sigma_{m}\sim K_{m}\frac{\alpha}{\left(x-a\right)^{\beta}}\quad\alpha,\beta>0
 \end{equation*}
-\item J-Integral
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{itemize}[label=\ding{212}]
+\item J-Integral $J$
 \begin{equation*}
-J=J\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{where}\quad J=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\right)n_{i}-n_{j}\sigma_{jk}\frac{\partial u_{k}\left(\Gamma,x_{i}\right)}{\partial x_{i}}\right)d\Gamma = G
+J=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\right)n_{i}-n_{j}\sigma_{jk}\frac{\partial u_{k}\left(\Gamma,x_{i}\right)}{\partial x_{i}}\right)d\Gamma
 \end{equation*}
-\item Crack Opening \& Shear Displacement
+\item Crack Opening $COD$ \& Shear Displacement $CSD_{II/III}$
 \begin{equation*}
 COD=COD\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{and}\quad CSD=CSD\left(p_{1},\dots,p_{i},\dots,p_{n}\right)
 \end{equation*}
 \end{itemize}
-\vspace{5pt}
-\begin{equation*}
-p_{i}\in\left\{\text{geometry},\text{materials},\text{boundary conditions},\text{loading mode},\text{scale}\right\}
-\end{equation*}
-\begin{equation*}
-m\in\left\{I,II,III,I/II,I/III,II/III\right\}
-\end{equation*}
+\end{column}
+\end{columns}
 \end{frame}
 
 \subsection[Numerical Characterization of Fracture]{Numerical Characterization of Fracture: VCCT \& J-Integral}

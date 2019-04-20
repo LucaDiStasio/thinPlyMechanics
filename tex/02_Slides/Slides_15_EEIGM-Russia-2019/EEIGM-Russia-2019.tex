@@ -318,21 +318,22 @@
 
 \begin{frame}
 %\vspace{-0.5cm}
-\frametitle{\vspace{0.3cm} \scriptsize Mathematical Modeling of Fracture: Linear Elastic Fracture Mechanics (LEFM)}
-\vspace{-0.25cm}
+\frametitle{\vspace{0.35cm} \scriptsize Mathematical Modeling of Fracture: Linear Elastic Fracture Mechanics (LEFM)}
+\vspace{-1.cm}
 \centering
 \tiny
-\begin{columns}
+\begin{columns}[t]
 \begin{column}{0.5\textwidth}
 \begin{alertblock}{\tiny\centering\textbf{Fracture Mode}}
 \begin{equation*}
 \tiny
 I,II,III,I/II,I/III,II/III
 \end{equation*}
+\vspace{-0.3cm}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \centering
-\begin{tikzpicture}[scale=0.5]
+\begin{tikzpicture}[scale=0.4]
 \node(above) at (0,2) {\tiny Mode I};
 \draw[line width=0.75pt]  (-1,-1)--(1,-1)--(1,1)--(-1,1)--(-1,-1);
 \draw[red,line width=0.75pt] (-1,0)--(0,0);
@@ -342,7 +343,7 @@ I,II,III,I/II,I/III,II/III
 \end{column}
 \begin{column}{0.3\columnwidth}
 \centering
-\begin{tikzpicture}[scale=0.5]
+\begin{tikzpicture}[scale=0.4]
 \node(above) at (0,2) {\tiny Mode II};
 \draw[line width=0.75pt]  (-1,-1)--(1,-1)--(1,1)--(-1,1)--(-1,-1);
 \draw[red,line width=0.75pt] (-1,0)--(0,0);
@@ -352,7 +353,7 @@ I,II,III,I/II,I/III,II/III
 \end{column}
 \begin{column}{0.3\columnwidth}
 \centering
-\begin{tikzpicture}[scale=0.5]
+\begin{tikzpicture}[scale=0.4]
 \node(above) at (0,2) {\tiny Mode III};
 \draw[line width=0.75pt]  (-1,-1)--(1,-1)--(1,1)--(-1,1)--(-1,-1);
 \draw[red,line width=0.75pt] (-1,0)--(0,0);
@@ -376,28 +377,36 @@ geometry\\
 \end{column}
 \end{columns}
 
-\begin{columns}
+\begin{columns}[c]
 \begin{column}{0.5\textwidth}
 \begin{itemize}[label=\ding{212}]
-\item Energy Release Rate $G_{m}$
+\item Energy Release Rate: $G\ \left[\frac{J}{m^{2}}=\frac{N}{m}\right]$
 \begin{equation*}
 G=\frac{\partial W}{\partial A} - \left(\frac{\partial U}{\partial A}+\frac{\partial E_{k}}{\partial A}\right)
 \end{equation*}
-\item Stress Intensity Factor $K_{m}$
+\item Stress Intensity Factor: $K\ \left[Pa\sqrt{m}\right]$
 \begin{equation*}
-\sigma_{m}\sim K_{m}\frac{\alpha}{\left(x-a\right)^{\beta}}\quad\alpha,\beta>0
+K_{I/II/III}=\lim_{r\to 0}\sqrt{2\pi r}\cdot\sigma_{I/II/III}\left(r,0\right)
 \end{equation*}
 \end{itemize}
 \end{column}
 \begin{column}{0.5\textwidth}
 \begin{itemize}[label=\ding{212}]
-\item J-Integral $J$
+\item J-Integral: $J\ \left[\frac{J}{m^{2}}=\frac{N}{m}\right]$
 \begin{equation*}
-J=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\right)n_{i}-n_{j}\sigma_{jk}\frac{\partial u_{k}\left(\Gamma,x_{i}\right)}{\partial x_{i}}\right)d\Gamma
+J=\lim_{\delta\to 0}\int_{\Gamma_{\delta}}\left(W-n_{j}\sigma_{jk}\frac{\partial u_{k}}{\partial x_{i}}\right)d\Gamma
 \end{equation*}
-\item Crack Opening $COD$ \& Shear Displacement $CSD_{II/III}$
+\item Average Crack Opening \& Shear Displacement:\\ $COD$, $CSD_{II/III}$ $\left[m\right]$
 \begin{equation*}
-COD=COD\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{and}\quad CSD=CSD\left(p_{1},\dots,p_{i},\dots,p_{n}\right)
+\begin{Bmatrix}
+COD\\
+CSD_{II}\\
+CSD_{III}
+\end{Bmatrix}=\frac{1}{S_{C}}\int_{S_{C}}\overrightarrow{\Delta u_{C}}\cdot\begin{Bmatrix}
+\overrightarrow{n_{I}}\\
+\overrightarrow{n_{II}}\\
+\overrightarrow{n_{III}}
+\end{Bmatrix}dS
 \end{equation*}
 \end{itemize}
 \end{column}
@@ -408,55 +417,64 @@ COD=COD\left(p_{1},\dots,p_{i},\dots,p_{n}\right)\quad\text{and}\quad CSD=CSD\le
 
 \begin{frame}
 \frametitle{\vspace{0.3cm} \scriptsize Numerical Characterization of Fracture: VCCT \& J-Integral}
-\vspace{-0.4cm}
+\vspace{-0.75cm}
 \centering
 \scriptsize
-\begin{columns}
+\begin{columns}[t]
 \begin{column}{0.5\textwidth}
 \centering
-\vspace*{-1.4cm}
-\begin{itemize}[label=\ding{212}]
-\item Virtual Crack Closure Technique (VCCT)
+Virtual Crack Closure Technique (VCCT)
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+J-Integral
+\end{column}
+\end{columns}
+\vspace{-0.25cm}
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\centering
 \begin{figure}
 \includegraphics[width=\columnwidth]{VCCT.pdf}
  % \caption{VCCT}
   \label{fig:vcct}
 \end{figure}
-
-\begin{equation*}
-G_{I}=\frac{Z_{C}\Delta w_{C}}{2B\Delta a}\quad G_{II}=\frac{X_{C}\Delta u_{C}}{2B\Delta a}
-\end{equation*}
-
-Krueger, 2004
-\end{itemize}
 \end{column}
 \begin{column}{0.5\textwidth}
-\centering
-\begin{itemize}[label=\ding{212}]
-\item J-Integral
-
 \begin{figure}
 \includegraphics[width=\columnwidth]{J-integral.pdf}
  % \caption{Angular discretization at fiber/matrix interface.}
   \label{fig:jintegral}
 \end{figure}
-
+\end{column}
+\end{columns}
+\vspace{-0.5cm}
+\begin{columns}[t]
+\begin{column}{0.4\textwidth}
+\centering
+\scriptsize\raggedright
 \begin{equation*}
-J_{i}=\lim_{\varepsilon\to 0}\int_{\Gamma_{\varepsilon}}\left(W\left(\Gamma\right)n_{i}-n_{j}\sigma_{jk}\frac{\partial u_{k}\left(\Gamma,x_{i}\right)}{\partial x_{i}}\right)d\Gamma
+G_{I}=\frac{Z_{C}\Delta w_{C}}{2B\Delta a}\quad G_{II}=\frac{X_{C}\Delta u_{C}}{2B\Delta a}
 \end{equation*}
-
-Rice, 1968
-\end{itemize}
+{\tiny Krueger R.; {\em\tiny Virtual crack closure technique: History, approach, and applications}. {\it\tiny Appl. Mech. Rev.} {\bf\tiny 57} (2) 109--143, 2004.}
+\end{column}
+\begin{column}{0.6\textwidth}
+\centering
+\scriptsize\raggedleft
+\begin{equation*}
+J_{i}=\sum_{k=1}^{n_{segments}}\sum_{j=1}^{n_{nodes}}\left[w_{j}\left(W-n_{j}\sigma_{jk}\frac{\partial u_{k}}{\partial x_{i}}\right)\bigg|_{\left(x_{kj},y_{kj}\right)}\right]
+\end{equation*}
+{\tiny Rice J. R.; {\em\tiny A Path Independent Integral and the Approximate Analysis of Strain Concentration by Notches and Cracks}. {\it\tiny J. Appl. Mech.} {\bf\tiny 35} (2) 379--386, 1968.}
 \end{column}
 \end{columns}
 \end{frame}
 
 \section[The Fiber-Matrix Interface Crack Problem]{The Fiber-Matrix Interface Crack Problem}
 
-\subsection{Multi-Scale Decomposition}
+\subsection[Geometry]{The Fiber-Matrix Interface Crack Problem: Geometry}
 
 \begin{frame}
-\frametitle{\small Multi-scale Decomposition of Fiber Reinforced Polymer Laminates}
+\frametitle{\small The Fiber-Matrix Interface Crack Problem: Geometry}
 \vspace{-1cm}
 \centering
 \begin{figure}

@@ -29,7 +29,7 @@
 %                Single RVE with applied constant strain, only debonded
 %----------------------------------------------------------------------------------------------%
 
-\begin{tikzpicture}[scale=2,cap=round,x=1.5cm,y=1.5cm]
+\begin{tikzpicture}[scale=1.5,cap=round,x=1.5cm,y=1.5cm]
 
 %----------------------------------------------------------------------------------------------%
 %                                                   CONSTANTS
@@ -62,10 +62,10 @@
 \node[anchor= south,text=red] at (-4,1.75) {\Huge $\mathbf{a}$};
 \draw[<->,line width=1.3mm,draw=red] (0,1.75) -- (2,1.75);
 \node[anchor= south,text=red] at (1,1.75) {\Huge $\mathbf{\Delta a}$};
-\node[anchor= north,text=red] at (1,1.7) {\Huge \bf{crack closed}};
+\node[anchor= north west,text=red] at (0.8,1.7) {\Huge \bf{crack closed}};
 \draw[<->,line width=1.3mm,draw=red] (2,1.75) -- (4,1.75);
 \node[anchor= south,text=red] at (3,1.75) {\Huge $\mathbf{\Delta a}$};
-\node[anchor= north,text=red] at (3,1.7) {\Huge \bf{crack closed}};
+%\node[anchor= north,text=red] at (3,1.7) {\Huge \bf{crack closed}};
 
 \draw[dashed,line width=1.5mm,draw=green] (-1.5,-0.25) -- (-1.5,-1.75);
 \draw[dashed,line width=1.5mm,draw=green] (-2,0.5) -- (-2,-1.75);
@@ -76,7 +76,7 @@
 \draw[dashed,line width=1.5mm,draw=green] (-1.5,-0.25) -- (-1,-0.25);
 \draw[dashed,line width=1.5mm,draw=green] (-2,0.5) -- (-1,0.5);
 \draw[<->,line width=1.5mm,draw=green] (-1,-0.25) -- (-1,0.5);
-\node[anchor= west,text=green] at (-1,-0.25+0.375) {\Huge $\mathbf{\Delta w_{C}}$};
+
 
 \draw[->,line width=1.75mm,draw=blue] (0,0) -- (0,0.5);
 \node[anchor=south east,text=blue] at (0,0.5) {\Huge $\mathbf{Z_{C}^{u}}$};
@@ -85,7 +85,7 @@
 \draw[->,line width=1.75mm,draw=blue] (0,0) -- (0.5,0);
 \node[anchor= south west,text=blue] at (0.5,0) {\Huge $\mathbf{X_{C}^{l}}$};
 \draw[->,line width=1.75mm,draw=blue] (0,0) -- (-0.5,0);
-\node[anchor= north east,text=blue] at (-0.5,0) {\Huge $\mathbf{X_{C}^{u}}$};
+\node[anchor= north,text=blue] at (-0.6,-0.1) {\Huge $\mathbf{X_{C}^{u}}$};
 
 \foreach \Point in {(4,0) , (4,1) , (2,1) , (0,1) , (-2,1.5) , (-2,0.5) , (0,0) , (2,0),(4,-1) , (2,-1) , (0,-1) , (-1.5,-1.25) ,  (-1.5,-0.25),(-2,1.5) , (-4,1.5) , (-6,1.5) , (-6,0.5) , (-4,0.5) , (-2,0.5),(-1.5,-1.25) , (-3.5,-1.25) , (-5.5,-1.25) , (-5.5,-0.25) , (-3.5,-0.25) , (-1.5,-0.25)}{
     \fill \Point  circle[radius=2pt];
@@ -96,6 +96,7 @@
 \node[anchor= east,text=red] at (-7.25,0) {};
 \node[anchor= west,text=red] at (4.75,0) {};
 
+\node[anchor= south west,text=green] at (-1,-0.25+0.375) {\Huge $\mathbf{\Delta w_{C}}$};
 
 \end{tikzpicture}
 

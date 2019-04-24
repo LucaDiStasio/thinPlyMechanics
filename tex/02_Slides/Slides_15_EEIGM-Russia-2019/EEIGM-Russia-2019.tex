@@ -698,8 +698,8 @@ k_{fT}=\frac{E_{f}}{2\left(1-\nu_{f}-2\nu_{f}^{2}\right)}\quad k_{mT}=\frac{E_{m
 \end{frame}
 
 \begin{frame}
-\frametitle{\vspace{0.3cm}\small Homogenization of Material Properties: Plane Strain Conditions}
-%\vspace{-0.75cm}
+\frametitle{\small Homogenization of Material Properties: Plane Strain Conditions}
+\vspace{-0.5cm}
 \centering
 \small
 \begin{equation*}
@@ -707,120 +707,23 @@ E_{\text{plane strain}}=\frac{E_{T}}{1-\frac{E_{T}}{E_{L}}\nu_{LT}^{2}}
 \end{equation*}
 \begin{alertblock}{\centering$E_{eq}=\frac{E_{T}}{1-\frac{E_{T}}{E_{L}}\nu_{LT}^{2}}$}
 \end{alertblock}
-
+\begin{figure}
+\includegraphics[width=\textwidth]{RUCequivalence.pdf}
+\end{figure}
 \end{frame}
 
-%\begin{frame}
-%\frametitle{\small The Fiber-Matrix Interface Crack Problem: Solution}
-%\vspace{-0.5cm}
-%\centering
-%\footnotesize
-%\begin{table}
-%\begin{tabularx}{\columnwidth}{p{0.2\textwidth}Xp{0.3\textwidth}XX}
-%{\tiny \bf{Method}}&{\tiny \bf{Domain}}&{\tiny \bf{Natural Variable}}&{\tiny \bf{Conjugate Variable}}&{\tiny \bf{Dirichlet BC}}\\
-%\toprule
-%{\tiny Analytical (complex) functions}&{\tiny 2D, continuous, infinite}&{\tiny Airy stress potential \& stress}&{\tiny Displacement \& strain}&{\tiny In stress}\\[10pt]
-%\cline{2-5}\\[-10pt]
-%&\multicolumn{4}{p{0.7\textwidth}}{\tiny M. Toya (1975), A Crack Along the Interface of a Circular Inclusion Embedded in an Infinite Solid [10].}\\
-%\bottomrule
-%{\tiny Boundary Element Method (BEM)}&{\tiny 1D, discrete, finite}&{\tiny Stress, by using Green's potentials or Betti's influence functions}&{\tiny Displacement \& strain}&{\tiny In stress}\\[10pt]
-%\cline{2-5}\\[-10pt]
-%&\multicolumn{4}{p{0.7\textwidth}}{\tiny F. Par\'is et al. (1996), The fiber-matrix interface crack - A numerical analysis using Boundary Elements [11].}\\
-%\bottomrule
-%{\tiny Finite Element Method (FEM)}&{\tiny 2D, discrete, finite}&{\tiny Displacement}&{\tiny Stress}&{\tiny In displacement}\\[10pt]
-%\bottomrule
-%\end{tabularx}
-%\end{table}
-%\end{frame}
-%
-%\section[Analysis of the Infinite RVE]{Analysis of the Infinite Reference Volume Element (RVE)}
-%
-%\subsection{The Finite Element Model}
-%
-%\begin{frame}
-%\frametitle{\small The Finite Element Model}
-%\vspace{-0.5cm}
-%\centering
-%\begin{columns}
-%\begin{column}{0.6\textwidth}
-%\begin{figure}
-%\includegraphics[width=\columnwidth]{RUC.pdf}
-% % \caption{Angular discretization at fiber/matrix interface.}
-%  \label{fig:jintegral}
-%\end{figure}
-%\end{column}
-%\begin{column}{0.4\textwidth}
-%\tiny
-%\begin{itemize}[label=\ding{212}]
-%\item $\theta\left[^{\circ}\right]=0$, angular position of debond's center\\[5pt]
-%\item $2\Delta\theta\left[^{\circ}\right]$, debond's angular size\\[5pt]
-%\item $\delta\left[^{\circ}\right]$, angle subtended by an element at the fiber/matrix interface\\[5pt]
-%\item $VF_{f}\left[-\right]$, fiber volume fraction\\[5pt]
-%\item $2L\left[\mu m\right]$, RVE's side length\\[5pt]
-%\item $R_{F}\left[\mu m\right]$, fiber radius\\[5pt]
-%\item $\frac{L}{R_{f}}=\frac{1}{2}\sqrt{\frac{\pi}{VF_{f}}}\left[-\right]$, RVE's aspect ratio\\[5pt]
-%\item $\sigma_{0}\left[MPa\right]=\frac{E_{m}}{1-\nu_{m}^{2}}\varepsilon_{xx}$, reaction stress of undamaged infinite RVE\\[5pt]
-%\item $G_{0}\left[\frac{J}{m^{2}}\right]=\pi R_{f}\sigma_{R}^{2}\frac{1+\left(3-4 nu_{m}\right)}{8 G_{m}}$, normalization $G$ following Toya [10] and Par\'is [11]\\[5pt]
-%\item Small displacement formulation
-%\end{itemize}
-%\end{column}
-%\end{columns}
-%\end{frame}
-%
-%
-%
-%\section[Conclusions]{Conclusions \& Outlook}
-%
-%\begin{frame}
-%\frametitle{\vspace*{0.5cm}\small Conclusions \& Outlook}
-%\vspace{-0.75cm}
-%\centering
-%\scriptsize
-%\begin{alertblock}{\footnotesize \bf{Conclusions}}
-%\begin{itemize}[label=\ding{212}]
-%  \item There is a limiting value of $\frac{L}{R_{f}}$ after which models are effectively infinite
-%	\item For models larger than this value, domain size and mesh refinement at the interface has a similar effect on the energy release rate
-%  \item The discrepancy in modes with the use of linear elements might be linked to the deformed shape of crack faces
-%\end{itemize}
-%\end{alertblock}
-%\begin{alertblock}{\footnotesize \bf{Outlook}}
-%\begin{itemize}[label=\ding{212}]
-%	\item Modeling extreme ply geometries, for example a ply with a single layer of fibers bounded by stiffer plies\\[9pt]
-%	\item Investigate the effect of clusters of fibers in thin plies\\[9pt]
-%	\item Analyzing the effect of complex stress and deformation states, thermal loads, different sets of boundary conditions
-%\end{itemize}
-%\end{alertblock}
-%\end{frame}
+\subsection{Shape Function Reference Configurations}
 
+\begin{frame}
+\frametitle{\small Shape Function Reference Configurations: Straight Crack}
+\vspace{-0.5cm}
+\centering
+\begin{figure}
+\includegraphics[width=\textwidth]{RUCequivalence.pdf}
+\end{figure}
+\end{frame}
 
-
-%\subsection{Appendices}
-
-%\begin{frame}[label=]
-%\frametitle{}
-%\end{frame}
-
-
-
-%\begin{frame}
-%\frametitle{\small Evaluation of $G_{0}$}
-%\vspace{-0.7cm}
-%\footnotesize
-%\centering
-%\captionsetup[figure]{font=scriptsize,labelfont=scriptsize}
-%\begin{equation}
-%G_{0}=\pi R_{f}\sigma^{2}_{0}\frac{1+k_{m}}{8G_{m}}
-%\end{equation}
-%\begin{equation}
-%k_{m}=3-4\nu_{m}
-%\end{equation}
-%\begin{equation}
-%\sigma_{0}^{undamaged}=\frac{E_{m}}{1-\nu^{2}_{m}}\varepsilon_{xx}
-%\end{equation}%
-%\end{frame}
-
-
-\subsection{References}
+\section*{References}
 
 \begin{frame}[allowframebreaks]
   \frametitle{References}

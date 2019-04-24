@@ -234,7 +234,11 @@
 \draw[line width=1.25mm] (\starteq+\l,0) -- (\starteq+\l,\l) ;
 \draw[line width=1.25mm] (\starteq-\l,0) -- (\starteq+\l,0) ;
 
-\draw [red,line width=1.25mm] plot [smooth] coordinates {(\starteq,0) (\starteq+0.2\Rf,0.3\Rf) (\starteq-0.5\Rf,0.7\Rf)};
+\filldraw[fill=blue!20,draw=blue!50!black,line width=0.75mm](\starteq,0) -- (\starteq+0.6*\costheta*\Rf,0.6*\sintheta*\Rf) arc(\thetavalue:\thetaupcz:0.6*\Rf) --  (\starteq,0);
+\draw[line width=0.75mm] (\starteq,0)--(\starteq+\costhetaupcz,\sinthetaupcz);
+\draw (\starteq+0.35*\costhetahalfup*\Rf,0.7*\sinthetahalfup*\Rf) node[blue!50!black] {\Huge$\Delta\theta$};
+\draw[draw=red,line width=2.5mm](\starteq+\costhetaupcz,\sinthetaupcz) arc(50:0:\Rf);
+
 \draw (\starteq+0.2\Rf,0.3\Rf) node[red,right] {\Huge$f\left(\Delta\theta\right)$};
 
 \draw (\starteq+1.15*\Rf,1.15*\Rf) node[black,above] {\Huge$\mathbf{\Omega_{C}}$};

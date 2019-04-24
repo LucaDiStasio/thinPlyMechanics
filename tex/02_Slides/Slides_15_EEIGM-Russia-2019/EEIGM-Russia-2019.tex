@@ -604,10 +604,6 @@ R_{f}=1\ \left[\mu m\right]\quad L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}
 \frametitle{\vspace{0.3cm}\small The Fiber-Matrix Interface Crack Problem: Normalization \& Scaling}
 \vspace{-1.cm}
 \centering
-\begin{itemize}[label=\ding{212}]
-\centering
-\item $G_{I}=G_{0}\left(V_{f},E_{f},\nu_{f},E_{m},\nu_{m},\bar{\varepsilon}_{x}\right)g_{\Delta\theta}\left(\Delta\theta,BC,microstructure\right)$
-\end{itemize}
 \begin{columns}[c]
 \begin{column}{0.5\textwidth}
 \begin{figure}
@@ -620,6 +616,98 @@ R_{f}=1\ \left[\mu m\right]\quad L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}
 \end{figure}
 \end{column}
 \end{columns}
+\centering
+\begin{itemize}[label=(?)]
+\centering
+\footnotesize
+\item $G_{I}=G_{0}\left(V_{f},E_{f},\nu_{f},E_{m},\nu_{m},\bar{\varepsilon}_{x},\Delta\theta\right)g_{I}\left(\Delta\theta,BC,microstructure,damage\right)$
+\item $G_{II}=G_{0}\left(V_{f},E_{f},\nu_{f},E_{m},\nu_{m},\bar{\varepsilon}_{x},\Delta\theta\right)g_{II}\left(\Delta\theta,BC,microstructure,damage\right)$
+\end{itemize}
+\end{frame}
+
+\section[Investigation of Scaling Laws]{Investigation of Scaling Laws of the Fiber/Matrix Interface Crack}
+
+\subsection{Dimensional Analysis}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small Dimensional Analysis}
+\vspace{-0.75cm}
+\centering
+\tiny
+\begin{itemize}[label=\ding{212}]
+\item From the definition of Energy Release Rate
+\begin{equation*}
+G=\frac{\partial W}{\partial A} - \left(\frac{\partial U}{\partial A}+\frac{\partial E_{k}}{\partial A}\right)\quad\left[\frac{J}{m^{2}}\right]
+\end{equation*}
+\begin{equation*}
+\left[\frac{J}{m^{2}}\right]\longleftrightarrow\frac{E}{L^{2}}=\frac{F\cdot L}{L^{2}}=\frac{F}{L^{2}}\frac{L}{L}\cdot L=\sigma\varepsilon L
+\end{equation*}
+\begin{equation*}
+G_{0}\sim\sigma_{\infty}\varepsilon_{\infty} L_{c}
+\end{equation*}
+\item From the assumption of linear elasticity and uniaxial loading
+\begin{equation*}
+\sigma_{\infty}=E_{eq}\varepsilon_{\infty}\qquad\varepsilon_{\infty}=\frac{\sigma_{\infty}}{E_{eq}}
+\end{equation*}
+\begin{equation*}
+G_{0}\sim E_{eq}\varepsilon^{2}_{\infty}L_{c}\qquad G_{0}\sim\frac{\sigma^{2}_{\infty}}{E_{eq}}L_{c}
+\end{equation*}
+\item From crack geometry
+\begin{equation*}
+L_{c}\sim a=R_{f}\Delta\theta\longrightarrow L_{c}\sim R_{f}f\left(\Delta\theta\right)
+\end{equation*}
+\end{itemize}
+\vspace{-0.25cm}
+\begin{alertblock}{\scriptsize\centering$G_{0}=A\cdot E_{eq}\varepsilon^{2}_{\infty}R_{f}f\left(\Delta\theta\right)$}
+%\scriptsize
+%\centering
+%\begin{equation*}
+%G_{0}=A\cdot E_{eq}\varepsilon^{2}_{\infty}R_{f}f\left(\Delta\theta\right)
+%\end{equation*}
+\end{alertblock}
+\end{frame}
+
+\subsection[Homogenization]{Homogenization of Material Properties}
+
+\begin{frame}
+\frametitle{\vspace{0.35cm}\small Homogenization of Material Properties: Concentric Cylinders Assembly with Self-Consistent Shear (CCA-SCS)}
+\vspace{-0.75cm}
+\centering
+\tiny
+\begin{equation*}
+E_{L}=V_{f}E_{f}+\left(1-V_{f}\right)E_{m}+2\lambda_{1}\left(\nu_{m}-\nu_{f}\right)^{2}V_{f}\left(1-V_{f}\right)
+\end{equation*}
+\begin{equation*}
+\nu_{LT}=V_{f}\nu_{f}+\left(1-V_{f}\right)\nu_{m}+\frac{\lambda_{1}}{2}\left(\nu_{m}-\nu_{f}\right)\left(\frac{1}{k_{fT}}-\frac{1}{k_{mT}}\right)V_{f}\left(1-V_{f}\right)
+\end{equation*}
+%\begin{equation*}
+%G_{LT}=\frac{E_{m}}{2\left(1+\nu_{m}\right)}+\frac{V_{f}}{\frac{1}{\frac{E_{f}}{2\left(1+\nu_{f}\right)}-\frac{E_{m}}{2\left(1+\nu_{m}\right)}}+\frac{1-V_{f}}{\frac{E_{m}}{1+\nu_{m}}}}
+%\end{equation*}
+\begin{equation*}
+G_{TT}=\frac{E_{m}}{2\left(1+\nu_{m}\right)}+\frac{V_{f}}{\frac{1}{\frac{E_{f}}{2\left(1+\nu_{f}\right)}-\frac{E_{m}}{2\left(1+\nu_{m}\right)}}+\frac{k_{mT}+\frac{E_{m}}{1+\nu_{m}}}{\frac{E_{m}}{1+\nu_{m}}\left(k_{mT}+\frac{E_{m}}{2\left(1+\nu_{m}\right)}\right)}\left(1-V_{f}\right)}
+\end{equation*}
+\begin{equation*}
+K_{TT}=\frac{k_{mT}\left(k_{fT}+\frac{E_{m}}{2\left(1+\nu_{m}\right)}\right)\left(1-V_{f}\right)+k_{fT}\left(k_{mT}+\frac{E_{m}}{2\left(1+\nu_{m}\right)}\right)V_{f}}{\left(k_{fT}+\frac{E_{m}}{2\left(1+\nu_{m}\right)}\right)\left(1-V_{f}\right)+\left(k_{mT}+\frac{E_{m}}{2\left(1+\nu_{m}\right)}\right)V_{f}}
+\end{equation*}
+\begin{equation*}
+E_{T}=\frac{4G_{TT}}{1+\frac{\left(1+\frac{4K_{TT}\nu_{LT}^{2}}{E_{L}}\right)G_{TT}}{K_{23}}}\qquad\nu_{TT}=\frac{E_{T}}{2G_{TT}}-1
+\end{equation*}
+\begin{equation*}
+k_{fT}=\frac{E_{f}}{2\left(1-\nu_{f}-2\nu_{f}^{2}\right)}\quad k_{mT}=\frac{E_{m}}{2\left(1-\nu_{m}-2\nu_{m}^{2}\right)}\quad\lambda_{1}=2\left(\frac{2\left(1+\nu_{m}\right)}{E_{m}}+\frac{V_{f}}{k_{mT}}+\frac{1-V_{f}}{k_{fT}}\right)^{-1}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small Homogenization of Material Properties: Plane Strain Conditions}
+%\vspace{-0.75cm}
+\centering
+\small
+\begin{equation*}
+E_{\text{plane strain}}=\frac{E_{T}}{1-\frac{E_{T}}{E_{L}}\nu_{LT}^{2}}
+\end{equation*}
+\begin{alertblock}{\centering$E_{eq}=\frac{E_{T}}{1-\frac{E_{T}}{E_{L}}\nu_{LT}^{2}}$}
+\end{alertblock}
+
 \end{frame}
 
 %\begin{frame}

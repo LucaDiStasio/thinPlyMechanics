@@ -239,7 +239,10 @@
 \draw (\starteq+0.35*\costhetahalfup*\Rf,0.7*\sinthetahalfup*\Rf) node[blue!50!black] {\Huge$\Delta\theta$};
 \draw[draw=red,line width=2.5mm](\starteq+\costhetaupcz,\sinthetaupcz) arc(50:0:\Rf);
 
-\draw (\starteq+0.2\Rf,0.3\Rf) node[red,right] {\Huge$\mathbf{f\left(\Delta\theta\right)}$};
+\draw (\starteq,-0.4) node[red,below] {\Huge$\mathbf{f_{I}=\frac{\sin{\Delta\theta}}{\Delta\theta}\left(\frac{1-\sin^{2}{\left(\frac{\Delta\theta}{2}\right)}\cos^{2}{\left(\frac{\Delta\theta}{2}\right)}}{1+\sin^{2}{\left(\frac{\Delta\theta}{2}\right)}}\cos{\left(\frac{\Delta\theta}{2}\right)}+\cos{\left(\frac{3}{2}\Delta\theta\right)}\right)^{2}}$};
+
+\draw (\starteq,-1.25) node[red,below] {\Huge$\mathbf{f_{II}=-\frac{\sin{\Delta\theta}}{\Delta\theta}\left(\frac{1-\sin^{2}{\left(\frac{\Delta\theta}{2}\right)}\cos^{2}{\left(\frac{\Delta\theta}{2}\right)}}{1+\sin^{2}{\left(\frac{\Delta\theta}{2}\right)}}\sin{\left(\frac{\Delta\theta}{2}\right)}+\sin{\left(\frac{3}{2}\Delta\theta\right)}\right)^{2}}$};
+
 
 \draw (\starteq+1.15*\Rf,1.15*\Rf) node[black,above] {\Huge$\mathbf{\Omega_{C}}$};
 

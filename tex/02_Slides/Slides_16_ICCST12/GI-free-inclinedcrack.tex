@@ -1,0 +1,271 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.pt}
+\def\linewidth{2.5pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={draw=white!80.0!black,font=\fontsize{20}{14}\selectfont,row sep=15pt},
+legend image post style={xscale=1.5,yscale=1.5},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+xmax=90.0,
+ymin=0.0,
+xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$\Delta\theta\left[^{\circ}\right]$},
+ylabel={$\nicefrac{G_{I}}{G_{0}}\left[-\right]$},
+% LEGEND ENTRIES
+legend entries={},
+]
+
+s
+% =====> FEM 0.05°
+
+%Vf=0.01%
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+table{
+10.00	0.663494498
+20.00	0.592128881
+30.00	0.519303057
+40.00	0.422125423
+50.00	0.260489938
+60.00	0.006111893
+70.00	0.000125382
+80.00	0.003229808
+90.00	0.0
+100.00	0.003166812
+110.00	0.000167027
+120.00	2.74305E-05
+130.00	3.75149E-06
+140.00	2.111E-07
+150.00	0.001137235
+};
+\addlegendentry{$V_{f}=0.01\%$}
+
+%Vf=0.1\%
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
+table{
+10.00	0.882226816
+20.00	0.775574395
+30.00	0.667037048
+40.00	0.525472128
+50.00	0.3029689
+60.00	0.006765203
+70.00	0.000610571
+80.00	0.013791992
+90.00	0.0
+100.00	0.010928723
+110.00	0.000484949
+120.00	6.70609E-05
+130.00	9.91419E-06
+140.00	7.11807E-07
+150.00	0.001564213
+
+};
+\addlegendentry{$V_{f}=0.1\%$}
+
+%Vf=20\%
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
+table{
+10.00	0.89017722
+20.00	0.674351706
+30.00	0.496964677
+40.00	0.356970069
+50.00	0.21678997
+60.00	0.032492725
+70.00	0.000129843
+80.00	0.001445612
+90.00	0.0
+100.00	0.00125538
+110.00	5.8089E-05
+120.00	9.04996E-06
+130.00	1.10086E-06
+140.00	6.0253E-08
+150.00	8.83715E-05
+};
+\addlegendentry{$V_{f}=20\%$}
+
+%Vf=30\%
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
+table{
+10.00	1.467520187
+20.00	0.9379782
+30.00	0.61371438
+40.00	0.409191741
+50.00	0.233094626
+60.00	0.031144047
+70.00	0.000222665
+80.00	0.005242322
+90.00	0.0
+100.00	0.00304078
+110.00	0.0001186
+120.00	1.53113E-05
+130.00	2.40101E-06
+140.00	2.78169E-07
+150.00	8.78876E-06
+};
+\addlegendentry{$V_{f}=30\%$}
+
+%Vf=40\%
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=triangle*]
+table{
+10.00	1.85169091
+20.00	1.005137677
+30.00	0.618808802
+40.00	0.398601445
+50.00	0.2261631
+60.00	0.031976794
+70.00	0.000195016
+80.00	0.003979881
+90.00	0.0
+100.00	0.001889736
+110.00	7.15267E-05
+120.00	9.2452E-06
+130.00	1.4401E-06
+140.00	1.5857E-07
+150.00	1.82808E-05
+};
+\addlegendentry{$V_{f}=40\%$}
+
+%Vf=50\%
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=triangle*,mark options={fill=white}]
+table{
+10.00	2.286291454
+20.00	1.133441384
+30.00	0.668352437
+40.00	0.406909438
+50.00	0.229650067
+60.00	0.035271559
+70.00	0.000171436
+80.00	0.002914762
+90.00	0.0
+100.00	0.001123358
+110.00	4.21773E-05
+120.00	5.5181E-06
+130.00	8.06372E-07
+140.00	6.713E-08
+150.00	0.000122307
+};
+\addlegendentry{$V_{f}=50\%$}
+
+%Vf=55\%
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=diamond*]
+table{
+10.00	2.467114413
+20.00	1.22287792
+30.00	0.70016207
+40.00	0.41076667
+50.00	0.231686701
+60.00	0.037661235
+70.00	0.00015566
+80.00	0.002425815
+90.00	0.0
+100.00	0.000861406
+110.00	3.22315E-05
+120.00	4.13734E-06
+130.00	5.76E-07
+140.00	3.7296E-08
+150.00	0.000200109
+};
+\addlegendentry{$V_{f}=55\%$}
+
+%Vf=60\%
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=diamond*,mark options={fill=white}]
+table{
+10.00	2.705364015
+20.00	1.363243958
+30.00	0.748799948
+40.00	0.418831309
+50.00	0.236512889
+60.00	0.041348574
+70.00	0.000142559
+80.00	0.001978974
+90.00	0.0
+100.00	0.000654527
+110.00	2.38217E-05
+120.00	2.96627E-06
+130.00	3.85504E-07
+140.00	1.64344E-08
+150.00	0.000268407
+};
+\addlegendentry{$V_{f}=60\%$}
+
+%Vf=65\%
+\addplot[line width=\linewidth,mark size=\markersize,magenta,smooth,mark=pentagon*]
+table{
+10.00	3.056905929
+20.00	1.569762726
+30.00	0.855929898
+40.00	0.452395724
+50.00	0.277517798
+60.00	0.077296626
+70.00	0.000118755
+80.00	0.001505991
+90.00	0.0
+100.00	0.000465193
+110.00	1.58193E-05
+120.00	1.8658E-06
+130.00	2.17697E-07
+140.00	1.09518E-09
+150.00	0.000303203
+};
+\addlegendentry{$V_{f}=65\%$}
+
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

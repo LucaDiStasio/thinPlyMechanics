@@ -137,26 +137,25 @@
 
 \filldraw[fill=red!20, draw=red]([shift=(0:\IM*\Rf)]0.9*\costheta*\Rf,0.9*\sintheta*\Rf) arc (0:\crackstopangle:\IM*\Rf) --  (\costhetaup,\sinthetaup) arc(\thetaup:0:\Rf);
 \draw[draw=red, line width=1.25mm]([shift=(0:\IM*\Rf)]0.9*\costheta*\Rf,0.9*\sintheta*\Rf) arc (0:\crackstopangle:\IM*\Rf);
-\draw[line width=1.25mm] (\costhetaupcz,\sinthetaupcz)arc (50:180:\Rf);
+\draw[line width=1.25mm] (\costhetaupcz,\sinthetaupcz)arc (50:90:\Rf);
 \draw[draw=red,line width=1.25mm](\costhetaupcz,\sinthetaupcz) arc(50:0:\Rf);
 
 
 \pgfmathsetmacro\ltot{\l+\tratio*\l}
 
 \foreach \x in {0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1}
-{\draw[->,line width=0.75mm] (\l, \x*\l) -- (\loadlim,\x*\l);
-\draw[->,line width=0.75mm] (-\l, \x*\l) -- (-\loadlim,\x*\l);}
+{\draw[->,line width=0.75mm] (\l, \x*\l) -- (\loadlim,\x*\l);}
 
 %\draw[line width=0.75mm] (-\loadlim,0) -- (-\loadlim,\l);
 
 %\draw[line width=0.75mm] (\loadlim,0) -- (\loadlim,\l);
 
-\draw[line width=1.25mm] (-\l,0) -- (-\l,\l);
+\draw[line width=1.25mm] (0,0) -- (0,\l);
 
-\draw[line width=1.25mm] (-\l,\l) -- (\l,\l) ;
+\draw[line width=1.25mm] (0,\l) -- (\l,\l) ;
 
 \draw[line width=1.25mm] (\l,0) -- (\l,\l) ;
-\draw[line width=1.25mm] (-\l,0) -- (\l,0) ;
+\draw[line width=1.25mm] (0,0) -- (\l,0) ;
 
 \draw[dashed,blue,line width=0.75mm] (-\l,-1.5*\symmsyml-\symmsymh) -- (\l,-1.5*\symmsyml-\symmsymh);
 \draw[dashed,blue,line width=0.75mm] (-\l,-\symmsyml-\symmsymh) -- (-\l,-2*\symmsyml-\symmsymh);
@@ -185,11 +184,7 @@
 
 \draw[line width=0.75mm] (0,0)--(\costhetaupcz,\sinthetaupcz);
 
-%bottom symmetry
-\foreach \x in {8,...,16}{
-\draw[line width=1.25mm](-3*\l+\x*2*\symmsyml,0)--(-3*\l+\x*2*\symmsyml-0.5*\symmsyml,-\symmsymh)--(-3*\l+\x*2*\symmsyml-0.5*\symmsyml+\symmsyml,-\symmsymh)--(-3*\l+\x*2*\symmsyml,0);
-\draw[line width=1.25mm] (-3*\l+\x*2*\symmsyml,-\symmsymh-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
-\draw[line width=1.25mm] (-3*\l+\x*2*\symmsyml+0.5*\symmsyml,-\symmsymh-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
+
 
 
 \end{tikzpicture}

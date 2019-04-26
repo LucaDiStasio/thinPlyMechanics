@@ -192,7 +192,11 @@
 
 \draw[line width=0.75mm] (0,0)--(\costhetaupcz,\sinthetaupcz);
 
-
+%bottom symmetry
+\foreach \x in {8,...,16}{
+\draw[line width=1.25mm](-3*\l+\x*2*\symmsyml,0)--(-3*\l+\x*2*\symmsyml-0.5*\symmsyml,-\symmsymh)--(-3*\l+\x*2*\symmsyml-0.5*\symmsyml+\symmsyml,-\symmsymh)--(-3*\l+\x*2*\symmsyml,0);
+\draw[line width=1.25mm] (-3*\l+\x*2*\symmsyml,-\symmsymh-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
+\draw[line width=1.25mm] (-3*\l+\x*2*\symmsyml+0.5*\symmsyml,-\symmsymh-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
 
 
 \end{tikzpicture}

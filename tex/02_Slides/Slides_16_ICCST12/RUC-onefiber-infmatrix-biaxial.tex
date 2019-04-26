@@ -147,6 +147,10 @@
 {\draw[->,line width=0.75mm] (\l, \x*\l) -- (\loadlim,\x*\l);
 \draw[->,line width=0.75mm] (-\l, \x*\l) -- (-\loadlim,\x*\l);}
 
+\foreach \x in {0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1}
+{\draw[->,line width=0.75mm] (\x*\l,\l ) -- (\x*\l,\loadlim);}
+\foreach \x in {0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1}
+{\draw[->,line width=0.75mm] (-\x*\l,\l ) -- (-\x*\l,\loadlim);}
 %\draw[line width=0.75mm] (-\loadlim,0) -- (-\loadlim,\l);
 
 %\draw[line width=0.75mm] (\loadlim,0) -- (\loadlim,\l);
@@ -171,8 +175,11 @@
 \draw (0.5*\l,-1.5*\symmsyml-\symmsymh) node[blue,below] {\Huge$L$};
 \draw (-0.5*\l,-1.5*\symmsyml-\symmsymh) node[blue,below] {\Huge$L$};
 
-\draw (0.5*\symmsyml+\symmsymh+\l,1.1*\l) node[black,right] {\Huge$\sigma_{\infty}/\varepsilon_{\infty}$};
-\draw (-0.5*\symmsyml-\symmsymh-\l,1.1*\l) node[black,left] {\Huge$\sigma_{\infty}/\varepsilon_{\infty}$};
+\draw (0.5*\symmsyml+\symmsymh+\l,1.1*\l) node[black,right] {\Huge$\pm\sigma_{x}/\pm\varepsilon_{x}$};
+\draw (-0.5*\symmsyml-\symmsymh-\l,1.1*\l) node[black,left] {\Huge$\pm\sigma_{x}/\pm\varepsilon_{x}$};
+
+\draw (0.5*\l,1.1*\loadlim) node[black,right] {\Huge$\pm\sigma_{y}/\pm\varepsilon_{y}$};
+\draw (-0.5*\l,1.1*\loadlim) node[black,left] {\Huge$\pm\sigma_{y}/\pm\varepsilon_{y}$};
 
 \draw (-0.45*\Rf,0.45*\Rf) node[black,above] {\Huge$\Omega_{f}$};
 \draw (1.15*\Rf,1.15*\Rf) node[black,above] {\Huge$\Omega_{m}$};

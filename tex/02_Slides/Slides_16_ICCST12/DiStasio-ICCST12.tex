@@ -268,12 +268,12 @@
 
 %\section[Transverse Cracking in FRPCs]{Initiation of Transverse Cracking in Fiber Reinforced Polymer Composites (FRPCs): Microscopic Observations \& Modeling}
 
-\section[Initiation of Transverse Cracks]{Micromechanical Modeling of Initiation of Transverse Cracks}
+\section{Initiation of Transverse Cracks in FRPCs}
 
-\subsection[Microscopic Observations]{Initiation of Transverse Cracking in FRPCs: Microscopic Observations}
+\subsection{Microscopic Observations}
 
 \begin{frame}
-\frametitle{\vspace{0.3cm}\small Initiation of Transverse Cracking in FRPCs: Microscopic Observations}
+\frametitle{\vspace{0.3cm}\small Microscopic Observations}
 \vspace{-0.5cm}
 \centering
 \captionsetup[subfigure]{labelfont=footnotesize}
@@ -322,10 +322,10 @@
 \end{tikzpicture}
 \end{frame}
 
-\subsection[Micromechanics of Initiation]{Initiation of Transverse Cracking in FRPCs: Micromechanics}
+\subsection{Micromechanics of Initiation}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Initiation of Transverse Cracking in FRPCs: Micromechanics}
+\frametitle{\vspace{0.2cm}\small Micromechanics of Initiation}
 \vspace{-0.5cm}
 \centering
 \begin{alertblock}{\centering\scriptsize\bf Stage 1: isolated debonds}
@@ -344,7 +344,7 @@
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Initiation of Transverse Cracking in FRPCs: Micromechanics}
+\frametitle{\vspace{0.2cm}\small Micromechanics of Initiation}
 \vspace{-0.5cm}
 \centering
 \begin{alertblock}{\centering\scriptsize\bf Stage 2: consecutive debonds}
@@ -363,7 +363,7 @@
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Initiation of Transverse Cracking in FRPCs: Micromechanics}
+\frametitle{\vspace{0.2cm}\small Micromechanics of Initiation}
 \vspace{-0.5cm}
 \centering
 \begin{alertblock}{\centering\scriptsize\bf Stage 3: kinking}
@@ -382,7 +382,7 @@
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Initiation of Transverse Cracking in FRPCs: Micromechanics}
+\frametitle{\vspace{0.2cm}\small Micromechanics of Initiation}
 \vspace{-0.5cm}
 \centering
 \begin{alertblock}{\centering\scriptsize\bf Stage 4: coalescence}
@@ -398,7 +398,29 @@
 {\tiny Zhang, H., Ericson, M. L., Varna, J., Berglund, L.A.; 1997. {\em\tiny Transverse single-fibre test for interfacial debonding in composites: 1. Experimental observations}. {\it\tiny Compos. Part A-Appl. S.} {\bf\tiny 28} (4) pp. 309--315.}
 \end{frame}
 
-\section[Debond Modeling]{Modeling the Fiber-Matrix Interface Crack}
+\subsection{Objective of the study}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Objective of the study}
+\vspace{-0.5cm}
+\centering
+\begin{alertblock}{\centering\scriptsize\bf Stage 2: consecutive debonds}
+\vspace{-0.25cm}
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{stage2-critdebonds.pdf}
+\end{figure}
+\end{alertblock}
+\vspace{-0.5cm}
+\begin{itemize}[label=\ding{212}]
+\scriptsize
+\item Effect of debond-fiber interaction?
+\item Effect of debond-debond interaction?
+\item Effect of relative debond position on consecutive fibers: same or opposite sides?
+\end{itemize}
+\end{frame}
+
+\section{Modeling the Fiber-Matrix Interface Crack}
 
 \subsection{Geometry}
 
@@ -623,7 +645,7 @@ R_{f}=1\ \left[\mu m\right]\quad L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}
 \end{frame}
 
 
-\section[Debond ERR]{Energy Release Rate of the Fiber-Matrix Interface Cracks}
+\section{Debond Energy Release Rate}
 
 \subsection{Strain Magnification}
 
@@ -1083,10 +1105,13 @@ R_{f}=1\ \left[\mu m\right]\quad L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}
 \vspace{-0.5cm}
 \centering
 \begin{itemize}[label=\ding{212}]
-\item $f_{\text{straight crack}}\left(\Delta\theta\right)$: \Checkmark $G_{I}$, \textcolor{red}{\Cross} $G_{II}$\\[10pt]
-$f_{\text{inclined crack}}\left(\Delta\theta\right)$: \Checkmark $G_{I}$, \Checkmark $G_{II}$, \textcolor{red}{\Cross} $\nexists\ f_{\text{inclined crack}}\left(\Delta\theta=\frac{\pi}{2}\right)$\\[10pt]
-$f_{\text{curved crack}}\left(\Delta\theta\right)$: \Checkmark $G_{I}$, \Checkmark $G_{II}$\\[20pt]
-\item scaling breaks for $\Delta\theta\leq20^{\circ}$ $\rightarrow$ microstructure is important for small debonds!
+\item Debond-debond interaction in the through-the-thickness direction is extremely localized: with only a couple of undamaged fibers in between, no effect can be seen!
+\item For debonds on consecutive vertically-aligned fibers, $G_{I}$ is higher and contact zone onset delayed if debonds are on the same side of 
+their respective fiber.
+\item No  significant  difference  in $G_{II}$ observed, except in the range $80^{\circ}-100^{\circ}$.
+\item In the range $80^{\circ}-100^{\circ}$, $G_{II}$ is higher when 
+debonds  are  located  on  opposite  sides  of  consecutive  vertically-aligned 
+fibers. 
 \end{itemize}
 \end{frame}
 

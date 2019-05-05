@@ -399,343 +399,229 @@
 \end{frame}
 
 \section[Debond Modeling]{Modeling the Fiber-Matrix Interface Crack}
-%
-%
-%\subsection[Geometry]{The Fiber-Matrix Interface Crack Problem: Geometry}
-%
-%\begin{frame}
-%\frametitle{\small The Fiber-Matrix Interface Crack Problem: Geometry}
-%\vspace{-1cm}
-%\centering
-%\begin{columns}[c]
-%\begin{column}{0.85\textwidth}
-%\begin{figure}
-%\centering
-%\includegraphics[width=\columnwidth]{laminate-section.pdf}
-%\end{figure}
-%\end{column}
-%\begin{column}{0.15\textwidth}
-%\scriptsize
-%\begin{itemize}[label=\ding{212}]
-%\item $L, W >> t$
-%\item $L, W \rightarrow \infty$
-%\item Square packing
-%\item$L_{d} >> \Delta\theta_{d}$
-%\item 2D RVE
-%\end{itemize}
-%\end{column}
-%\end{columns}
-%
-%\end{frame}
-%
-%\subsection[Assumptions]{The Fiber-Matrix Interface Crack Problem: Assumptions}
-%
-%\begin{frame}
-%\frametitle{\vspace{0.3cm}\small The Fiber-Matrix Interface Crack Problem: Assumptions}
-%\vspace{-1.cm}
-%\centering
-%\begin{columns}
-%\begin{column}{0.6\textwidth}
-%\begin{figure}
-%\includegraphics[width=0.95\columnwidth]{RUC.pdf}
-%\end{figure}
-%\vspace{-0.1cm}
-%\scriptsize
-%\begin{equation*}
-%R_{f}=1\ \left[\mu m\right]\quad L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}
-%\end{equation*}
-%\vspace{-0.25cm}
-%\begin{table}[htbp]
-%\scriptsize
-%  \centering
-%    \begin{tabular}{ccc}
-%    \toprule
-%    \textbf{Material} & $\mathbf{E}$ &$\mathbf{\nu}$ \\
-%    \midrule
-%    glass fiber    & 70.0  & 0.2\\
-%    epoxy    & 3.5    & 0.4\\
-%    \bottomrule
-%    \end{tabular}
-%\end{table}
-%\end{column}
-%\begin{column}{0.4\textwidth}
-%\scriptsize
-%\begin{itemize}[label=\ding{212}]
-%\item Linear elastic, homogeneous and isotropic materials
-%\item Plane strain
-%\item Frictionless contact interaction
-%\item Symmetric w.r.t. x-axis
-%\item Coupling of x-displacements on left and right side (repeating unit cell)
-%\item Applied uniaxial tensile strain $\bar{\varepsilon}_{x}=1\%$
-%\end{itemize}
-%\end{column}
-%\end{columns}
-%\end{frame}
-%
-%\subsection[Solution]{The Fiber-Matrix Interface Crack Problem: Solution}
-%
-%\begin{frame}
-%\frametitle{\vspace{0.4cm}\small The Fiber-Matrix Interface Crack Problem: Solution}
-%\vspace{-1.cm}
-%\centering
-%\begin{columns}
-%\begin{column}{0.6\textwidth}
-%\begin{figure}
-%\includegraphics[width=0.95\columnwidth]{RUC.pdf}
-%\end{figure}
-%\vspace{-0.75cm}
-%\begin{columns}
-%\begin{column}{0.4\columnwidth}
-%\tiny
-%\begin{equation*}
-%\begin{aligned}
-%&\text{in }\Omega_{f}, \Omega_{m}:\\
-%&\frac{\partial^{2}\varepsilon_{xx}}{\partial y^{2}}+\frac{\partial^{2}\varepsilon_{yy}}{\partial x^{2}}=\frac{\partial^{2}\gamma_{xy}}{\partial x\partial y}\\
-%&\varepsilon_{z}=\gamma_{zx}=\gamma_{yz}=0\\
-%&\frac{\partial\sigma_{xx}}{\partial x}+\frac{\partial\tau_{xy}}{\partial y} = 0\\
-%&\frac{\partial\tau_{xy}}{\partial x}+\frac{\partial\sigma_{yy}}{\partial y} = 0\\
-%&\sigma_{zz}=\nu\left(\sigma_{xx}+\sigma_{yy}\right)\\
-%\end{aligned}
-%\end{equation*}
-%\end{column}
-%\begin{column}{0.6\columnwidth}
-%\tiny
-%\begin{equation*}
-%\begin{aligned}
-%&\text{for } 0^{\circ}\leq\alpha\leq\Delta\theta:\\
-%&\left(\overrightarrow{u}_{m}\left(R_{f},\alpha\right)-\overrightarrow{u}_{f}\left(R_{f},\alpha\right)\right)\cdot\overrightarrow{n}_{\alpha}\geq 0\\
-%&\text{for } \Delta\theta\leq\alpha\leq 180^{\circ}:\\
-%&\overrightarrow{u}_{m}\left(R_{f},\alpha\right)-\overrightarrow{u}_{f}\left(R_{f},\alpha\right)=0\\
-%&\sigma_{ij}=E_{ijkl}\varepsilon_{kl}\\
-%&+BC
-%\end{aligned}
-%\end{equation*}
-%\end{column}
-%\end{columns}
-%\end{column}
-%\begin{column}{0.3\textwidth}
-%\scriptsize
-%\begin{itemize}[label=\ding{212}]
-%\item Oscillating singularity
-%\vspace{-0.25cm}
-%\begin{equation*}
-%\sigma\sim r^{-\frac{1}{2}}\sin\left(\varepsilon\log r\right),\quad V_{f}\rightarrow 0
-%\end{equation*}
-%\vspace{-0.25cm}
-%{\tiny
-%\begin{equation*}
-%\varepsilon=\frac{1}{2\pi}\log\left(\frac{1-\beta}{1+\beta}\right)
-%\end{equation*}
-%\vspace{-0.25cm}
-%\begin{equation*}
-%\beta=\frac{\mu_{2}\left(\kappa_{1}-1\right)-\mu_{1}\left(\kappa_{2}-1\right)}{\mu_{2}\left(\kappa_{1}+1\right)+\mu_{1}\left(\kappa_{2}+1\right)}
-%\end{equation*}}
-%\item Finite Element Method (FEM) in Abaqus\texttrademark
-%\item $2^{nd}$ order shape functions
-%\item 6-nodes triangles \& 8-nodes quadrilaterals
-%\item regular mesh of quadrilaterals at the crack tip:
-%\begin{itemize}[label=-]
-%\item $AR\sim 1$
-%\item $\delta=0.05^{\circ}$
-%\end{itemize}
-%\end{itemize}
-%\end{column}
-%\end{columns}
-%\end{frame}
-%
-%\subsection[Normalization \& Scaling]{The Fiber-Matrix Interface Crack Problem: Normalization \& Scaling}
-%
-%\begin{frame}
-%\frametitle{\vspace{0.3cm}\small The Fiber-Matrix Interface Crack Problem: Normalization \& Scaling}
-%\vspace{-1.cm}
-%\centering
-%\begin{columns}[c]
-%\begin{column}{0.5\textwidth}
-%\begin{figure}
-%\includegraphics[width=\columnwidth]{GI-free-dim.pdf}
-%\end{figure}
-%\end{column}
-%\begin{column}{0.5\textwidth}
-%\begin{figure}
-%\includegraphics[width=\columnwidth]{GII-free-dim.pdf}
-%\end{figure}
-%\end{column}
-%\end{columns}
-%\centering
-%\begin{itemize}[label=(?)]
-%\centering
-%\footnotesize
-%\item $G_{I}=G_{0}\left(V_{f},E_{f},\nu_{f},E_{m},\nu_{m},\bar{\varepsilon}_{x},\Delta\theta\right)g_{I}\left(\Delta\theta,BC,microstructure,damage\right)$
-%\item $G_{II}=G_{0}\left(V_{f},E_{f},\nu_{f},E_{m},\nu_{m},\bar{\varepsilon}_{x},\Delta\theta\right)g_{II}\left(\Delta\theta,BC,microstructure,damage\right)$
-%\end{itemize}
-%\end{frame}
-%
-%\section[Investigation of Scaling Laws]{Investigation of Scaling Laws of the Fiber/Matrix Interface Crack}
-%
-%\subsection{Dimensional Analysis}
-%
-%\begin{frame}
-%\frametitle{\vspace{0.3cm}\small Dimensional Analysis}
-%\vspace{-0.75cm}
-%\centering
-%\tiny
-%\begin{itemize}[label=\ding{212}]
-%\item From the definition of Energy Release Rate
-%\begin{equation*}
-%G=\frac{\partial W}{\partial A} - \left(\frac{\partial U}{\partial A}+\frac{\partial E_{k}}{\partial A}\right)\quad\left[\frac{J}{m^{2}}\right]
-%\end{equation*}
-%\begin{equation*}
-%\left[\frac{J}{m^{2}}\right]\longleftrightarrow\frac{E}{L^{2}}=\frac{F\cdot L}{L^{2}}=\frac{F}{L^{2}}\frac{L}{L}\cdot L=\sigma\varepsilon L
-%\end{equation*}
-%\begin{equation*}
-%G_{0}\sim\sigma_{\infty}\varepsilon_{\infty} L_{c}
-%\end{equation*}
-%\item From the assumption of linear elasticity and uniaxial loading
-%\begin{equation*}
-%\sigma_{\infty}=E_{eq}\varepsilon_{\infty}\qquad\varepsilon_{\infty}=\frac{\sigma_{\infty}}{E_{eq}}
-%\end{equation*}
-%\begin{equation*}
-%G_{0}\sim E_{eq}\varepsilon^{2}_{\infty}L_{c}\qquad G_{0}\sim\frac{\sigma^{2}_{\infty}}{E_{eq}}L_{c}
-%\end{equation*}
-%\item From crack geometry
-%\begin{equation*}
-%L_{c}\sim a=R_{f}\Delta\theta\longrightarrow L_{c}\sim R_{f}f\left(\Delta\theta\right)
-%\end{equation*}
-%\end{itemize}
-%\vspace{-0.25cm}
-%\begin{alertblock}{\scriptsize\centering$G_{0}=A\cdot E_{eq}\varepsilon^{2}_{\infty}R_{f}f\left(\Delta\theta\right)$}
-%%\scriptsize
-%%\centering
-%%\begin{equation*}
-%%G_{0}=A\cdot E_{eq}\varepsilon^{2}_{\infty}R_{f}f\left(\Delta\theta\right)
-%%\end{equation*}
-%\end{alertblock}
-%\end{frame}
-%
-%\subsection[Homogenization]{Homogenization of Material Properties}
-%
-%\begin{frame}
-%\frametitle{\vspace{0.35cm}\footnotesize Homogenization of Material Properties: Concentric Cylinders Assembly (CCA)}
-%\vspace{-0.75cm}
-%\centering
-%\tiny
-%\begin{equation*}
-%E_{L}=V_{f}E_{f}+\left(1-V_{f}\right)E_{m}+2\lambda_{1}\left(\nu_{m}-\nu_{f}\right)^{2}V_{f}\left(1-V_{f}\right)
-%\end{equation*}
-%\begin{equation*}
-%\nu_{LT}=V_{f}\nu_{f}+\left(1-V_{f}\right)\nu_{m}+\frac{\lambda_{1}}{2}\left(\nu_{m}-\nu_{f}\right)\left(\frac{1}{k_{fT}}-\frac{1}{k_{mT}}\right)V_{f}\left(1-V_{f}\right)
-%\end{equation*}
-%%\begin{equation*}
-%%G_{LT}=\frac{E_{m}}{2\left(1+\nu_{m}\right)}+\frac{V_{f}}{\frac{1}{\frac{E_{f}}{2\left(1+\nu_{f}\right)}-\frac{E_{m}}{2\left(1+\nu_{m}\right)}}+\frac{1-V_{f}}{\frac{E_{m}}{1+\nu_{m}}}}
-%%\end{equation*}
-%\begin{equation*}
-%G_{TT}=\frac{E_{m}}{2\left(1+\nu_{m}\right)}+\frac{V_{f}}{\frac{1}{\frac{E_{f}}{2\left(1+\nu_{f}\right)}-\frac{E_{m}}{2\left(1+\nu_{m}\right)}}+\frac{k_{mT}+\frac{E_{m}}{1+\nu_{m}}}{\frac{E_{m}}{1+\nu_{m}}\left(k_{mT}+\frac{E_{m}}{2\left(1+\nu_{m}\right)}\right)}\left(1-V_{f}\right)}
-%\end{equation*}
-%\begin{equation*}
-%K_{TT}=\frac{k_{mT}\left(k_{fT}+\frac{E_{m}}{2\left(1+\nu_{m}\right)}\right)\left(1-V_{f}\right)+k_{fT}\left(k_{mT}+\frac{E_{m}}{2\left(1+\nu_{m}\right)}\right)V_{f}}{\left(k_{fT}+\frac{E_{m}}{2\left(1+\nu_{m}\right)}\right)\left(1-V_{f}\right)+\left(k_{mT}+\frac{E_{m}}{2\left(1+\nu_{m}\right)}\right)V_{f}}
-%\end{equation*}
-%\begin{equation*}
-%E_{T}=\frac{4G_{TT}}{1+\frac{\left(1+\frac{4K_{TT}\nu_{LT}^{2}}{E_{L}}\right)G_{TT}}{K_{23}}}\qquad\nu_{TT}=\frac{E_{T}}{2G_{TT}}-1
-%\end{equation*}
-%\begin{equation*}
-%k_{fT}=\frac{E_{f}}{2\left(1-\nu_{f}-2\nu_{f}^{2}\right)}\quad k_{mT}=\frac{E_{m}}{2\left(1-\nu_{m}-2\nu_{m}^{2}\right)}\quad\lambda_{1}=2\left(\frac{2\left(1+\nu_{m}\right)}{E_{m}}+\frac{V_{f}}{k_{mT}}+\frac{1-V_{f}}{k_{fT}}\right)^{-1}
-%\end{equation*}
-%\end{frame}
-%
-%\begin{frame}
-%\frametitle{\small Homogenization of Material Properties: Plane Strain Conditions}
-%\vspace{-0.5cm}
-%\centering
-%\small
-%\begin{equation*}
-%E_{\text{plane strain}}=\frac{E_{T}}{1-\frac{E_{T}}{E_{L}}\nu_{LT}^{2}}
-%\end{equation*}
-%\begin{alertblock}{\centering$E_{eq}=\frac{E_{T}}{1-\frac{E_{T}}{E_{L}}\nu_{LT}^{2}}$}
-%\end{alertblock}
-%\begin{figure}
-%\includegraphics[width=\textwidth]{RUCequivalence.pdf}
-%\end{figure}
-%\end{frame}
-%
-%\subsection{Shape Function Reference Configurations}
-%
-%\begin{frame}
-%\frametitle{\vspace{0.4cm}\footnotesize Shape Function Reference Configurations: Straight Crack}
-%\vspace{-1.25cm}
-%\centering
-%\begin{figure}
-%\includegraphics[width=0.9\textwidth]{RUCstraightcrack.pdf}
-%\end{figure}
-%\vspace{-0.5cm}
-%\begin{columns}[c]
-%\begin{column}{0.5\textwidth}
-%\centering
-%\begin{figure}
-%\centering
-%\includegraphics[width=0.9\columnwidth]{GI-free-straightcrack.pdf}
-%\end{figure}
-%\end{column}
-%\begin{column}{0.5\textwidth}
-%\centering
-%\begin{figure}
-%\centering
-%\includegraphics[width=0.9\columnwidth]{GII-free-straightcrack.pdf}
-%\end{figure}
-%\end{column}
-%\end{columns}
-%\end{frame}
-%
-%\begin{frame}
-%\frametitle{\vspace{0.4cm}\footnotesize Shape Function Reference Configurations: Inclined Crack}
-%\vspace{-1.25cm}
-%\centering
-%\begin{figure}
-%\includegraphics[width=0.9\textwidth]{RUCinclinedcrack.pdf}
-%\end{figure}
-%\vspace{-0.5cm}
-%\begin{columns}[c]
-%\begin{column}{0.5\textwidth}
-%\centering
-%\begin{figure}
-%\centering
-%\includegraphics[width=0.9\columnwidth]{GI-free-inclinedcrack.pdf}
-%\end{figure}
-%\end{column}
-%\begin{column}{0.5\textwidth}
-%\centering
-%\begin{figure}
-%\centering
-%\includegraphics[width=0.9\columnwidth]{GII-free-inclinedcrack.pdf}
-%\end{figure}
-%\end{column}
-%\end{columns}
-%\end{frame}
-%
-%\begin{frame}
-%\frametitle{\vspace{0.4cm}\footnotesize Shape Function Reference Configurations: Circular Crack}
-%\vspace{-1.25cm}
-%\centering
-%\begin{figure}
-%\includegraphics[width=0.9\textwidth]{RUCcurvedcrack.pdf}
-%\end{figure}
-%\vspace{-0.75cm}
-%\begin{columns}[c]
-%\begin{column}{0.5\textwidth}
-%\centering
-%\begin{figure}
-%\centering
-%\includegraphics[width=0.9\columnwidth]{GI-free-curvedcrack.pdf}
-%\end{figure}
-%\end{column}
-%\begin{column}{0.5\textwidth}
-%\centering
-%\begin{figure}
-%\centering
-%\includegraphics[width=0.9\columnwidth]{GII-free-curvedcrack.pdf}
-%\end{figure}
-%\end{column}
-%\end{columns}
-%\end{frame}
+
+\subsection{Geometry}
+
+\begin{frame}
+\frametitle{\small Geometry}
+\vspace{-1cm}
+\centering
+\begin{columns}[c]
+\begin{column}{0.85\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{laminate-section.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.15\textwidth}
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item $L, W >> t$
+\item $L, W \rightarrow \infty$
+\item Square packing
+\item$L_{d} >> \Delta\theta_{d}$
+\item 2D RVE
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Representative Volume Elements}
+
+\begin{frame}
+\frametitle{\small Representative Volume Elements}
+\vspace{-1cm}
+\centering
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{coupling.pdf}
+\end{figure}
+\vspace{-0.25cm}
+\begin{equation*}
+n\times k-coupling
+\end{equation*}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{asymm.pdf}
+\end{figure}
+\vspace{-0.25cm}
+\begin{equation*}
+n\times k-asymm
+\end{equation*}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Equivalent Boundary Conditions}
+
+\begin{frame}
+\frametitle{\small Equivalent Boundary Conditions}
+\vspace{-1cm}
+\centering
+\begin{columns}[t]
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=0.75\columnwidth]{coupling.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=0.75\columnwidth]{asymm.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\begin{columns}[t]
+\begin{column}{0.45\textwidth}
+\centering
+\scriptsize
+\begin{alertblock}{\scriptsize\centering Symmetric Coupling}
+\vspace{-0.25cm}
+\begin{equation*}
+u_{z}\left(x,h\right)=u^{\nu}_{z}
+\end{equation*}
+\end{alertblock}
+\end{column}
+\begin{column}{0.55\textwidth}
+\centering
+\scriptsize
+\begin{alertblock}{\scriptsize\centering Anti-symmetric Coupling}
+\vspace{-0.5cm}
+\begin{equation*}
+\begin{aligned}
+u_{z}\left(x,h\right)-u_{z}\left(0,h\right)&=-\left(u_{z}\left(-x,h\right)-u_{z}\left(0,h\right)\right)\\
+u_{x}\left(x,h\right)&=-u_{x}\left(-x,h\right)
+\end{aligned}
+\end{equation*}
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Assumptions}
+
+\begin{frame}
+\frametitle{\small Assumptions}
+\vspace{-1.cm}
+\centering
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\begin{figure}
+\includegraphics[width=0.95\columnwidth]{RUC.pdf}
+\end{figure}
+\vspace{-0.1cm}
+\scriptsize
+\begin{equation*}
+R_{f}=1\ \left[\mu m\right]\quad L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}
+\end{equation*}
+\vspace{-0.25cm}
+\begin{table}[htbp]
+\scriptsize
+  \centering
+    \begin{tabular}{ccc}
+    \toprule
+    \textbf{Material} & $\mathbf{E}$ &$\mathbf{\nu}$ \\
+    \midrule
+    glass fiber    & 70.0  & 0.2\\
+    epoxy    & 3.5    & 0.4\\
+    \bottomrule
+    \end{tabular}
+\end{table}
+\end{column}
+\begin{column}{0.4\textwidth}
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item Linear elastic, homogeneous and isotropic materials
+\item Plane strain
+\item Frictionless contact interaction
+\item Symmetric w.r.t. x-axis
+\item Coupling of x-displacements on left and right side (repeating unit cell)
+\item Applied uniaxial tensile strain $\bar{\varepsilon}_{x}=1\%$
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Solution}
+
+\begin{frame}
+\frametitle{\small Solution}
+\vspace{-1.cm}
+\centering
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\begin{figure}
+\includegraphics[width=0.95\columnwidth]{RUC.pdf}
+\end{figure}
+\vspace{-0.75cm}
+\begin{columns}
+\begin{column}{0.3\columnwidth}
+\tiny
+\begin{equation*}
+\begin{aligned}
+&\text{in }\Omega_{f}, \Omega_{m}:\\
+&\frac{\partial^{2}\varepsilon_{xx}}{\partial z^{2}}+\frac{\partial^{2}\varepsilon_{zz}}{\partial x^{2}}=\frac{\partial^{2}\gamma_{zx}}{\partial x\partial z}\\
+&\varepsilon_{y}=\gamma_{xy}=\gamma_{yz}=0\\
+&\frac{\partial\sigma_{xx}}{\partial x}+\frac{\partial\tau_{zx}}{\partial z} = 0\\
+&\frac{\partial\tau_{zx}}{\partial x}+\frac{\partial\sigma_{zz}}{\partial z} = 0\\
+&\sigma_{yy}=\nu\left(\sigma_{xx}+\sigma_{zz}\right)\\
+\end{aligned}
+\end{equation*}
+\end{column}
+\begin{column}{0.7\columnwidth}
+\tiny
+\begin{equation*}
+\begin{aligned}
+&\text{for } 0^{\circ}\leq\alpha\leq\Delta\theta:\\
+&\left(\overrightarrow{u}_{m}\left(R_{f},\alpha\right)-\overrightarrow{u}_{f}\left(R_{f},\alpha\right)\right)\cdot\overrightarrow{n}_{\alpha}\geq 0\\
+&\text{for } \Delta\theta\leq\alpha\leq 180^{\circ}:\\
+&\overrightarrow{u}_{m}\left(R_{f},\alpha\right)-\overrightarrow{u}_{f}\left(R_{f},\alpha\right)=0\\
+&\sigma_{ij}=E_{ijkl}\varepsilon_{kl}\\
+&+BC
+\end{aligned}
+\end{equation*}
+\end{column}
+\end{columns}
+\end{column}
+\begin{column}{0.3\textwidth}
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item Oscillating singularity
+\vspace{-0.25cm}
+\begin{equation*}
+\sigma\sim r^{-\frac{1}{2}}\sin\left(\varepsilon\log r\right),\quad V_{f}\rightarrow 0
+\end{equation*}
+\vspace{-0.25cm}
+{\tiny
+\begin{equation*}
+\varepsilon=\frac{1}{2\pi}\log\left(\frac{1-\beta}{1+\beta}\right)
+\end{equation*}
+\vspace{-0.25cm}
+\begin{equation*}
+\beta=\frac{\mu_{2}\left(\kappa_{1}-1\right)-\mu_{1}\left(\kappa_{2}-1\right)}{\mu_{2}\left(\kappa_{1}+1\right)+\mu_{1}\left(\kappa_{2}+1\right)}
+\end{equation*}}
+\item Finite Element Method (FEM) in Abaqus\texttrademark
+\item $2^{nd}$ order shape functions
+\item 6-nodes triangles \& 8-nodes quadrilaterals
+\item regular mesh of quadrilaterals at the crack tip:
+\begin{itemize}[label=-]
+\item $AR\sim 1$
+\item $\delta=0.05^{\circ}$
+\end{itemize}
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
 
 \section[Debond ERR]{Energy Release Rate of the Fiber-Matrix Interface Cracks}
 

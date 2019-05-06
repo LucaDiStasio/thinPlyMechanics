@@ -206,10 +206,10 @@
 \draw[line width=1.25mm] (\l+\symmsymh+0.5*\symmsyml,\x*2*\symmsyml+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
 
 %top symmetry
-\foreach \x in {4,...,8}{
-\draw[line width=1.25mm](-3*\l+\x*2*\symmsyml,3*\l)--(-3*\l+\x*2*\symmsyml-0.5*\symmsyml,3*\l+\symmsymh)--(-3*\l+\x*2*\symmsyml-0.5*\symmsyml+\symmsyml,3*\l+\symmsymh)--(-3*\l+\x*2*\symmsyml,3*\l);
-\draw[line width=1.25mm] (-3*\l+\x*2*\symmsyml,3*\l+\symmsymh+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
-\draw[line width=1.25mm] (-3*\l+\x*2*\symmsyml+0.5*\symmsyml,3*\l+\symmsymh+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
+\foreach \x in {8,...,16}{
+\draw[line width=1.25mm](-3*\l+\x*2*\symmsyml,\l)--(-3*\l+\x*2*\symmsyml-0.5*\symmsyml,\l+\symmsymh)--(-3*\l+\x*2*\symmsyml-0.5*\symmsyml+\symmsyml,\l+\symmsymh)--(-3*\l+\x*2*\symmsyml,\l);
+\draw[line width=1.25mm] (-3*\l+\x*2*\symmsyml,\l+\symmsymh+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
+\draw[line width=1.25mm] (-3*\l+\x*2*\symmsyml+0.5*\symmsyml,\l+\symmsymh+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
 
 
 \end{tikzpicture}

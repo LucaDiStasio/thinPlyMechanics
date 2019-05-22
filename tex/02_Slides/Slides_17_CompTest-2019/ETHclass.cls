@@ -95,7 +95,7 @@
     \end{beamercolorbox}%
 
     \begin{beamercolorbox}[wd=.45\paperwidth,ht=2.5ex,dp=1.5ex,center]{title in head/foot}%
-      \color{white}{Lule\aa (SE), May 27-29, 2019}%
+      \color{white}{Lule\aa\ (SE), May 27-29, 2019}%
     \end{beamercolorbox}%
 
     \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.5ex,dp=1.5ex,right]{title in head/foot}%
@@ -110,7 +110,7 @@
     \end{beamercolorbox}%
 
     \begin{beamercolorbox}[wd=.45\paperwidth,ht=2.5ex,dp=0.75ex,center]{title in head/foot}%
-      \color{white}{Moscow (RU), April 25-26, 2019}%
+      \color{white}{Lule\aa\ (SE), May 27-29, 2019}%
     \end{beamercolorbox}%
 
     \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.5ex,dp=0.75ex,right]{title in head/foot}%

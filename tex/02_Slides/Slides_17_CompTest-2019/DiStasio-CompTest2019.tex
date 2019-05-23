@@ -197,29 +197,29 @@
 \usebeamerfont{subtitle}
 \usebeamercolor[fg]{subtitle}
 
-\vspace{-1.45cm}
+\vspace{-2cm}
 
 {\flushleft
  \usebeamerfont{title}{\inserttitle}\par
 }
 
 %\vspace{-.5cm}
-\vspace{-.45cm}
+%\vspace{-.25cm}
 {\flushright
 \setbeamercolor{author}{bg=white,fg=Red}
 \usebeamerfont{author}{\footnotesize \insertauthor} \par}
 
-\vspace{-.35cm}
+\vspace{-.25cm}
 
 {\flushright
 \usebeamerfont{institute}{\tiny \insertinstitute}\par }
 
-\vspace{.1cm}
+\vspace{0.5cm}
 
 {\centering
 \usebeamerfont{date}{\scriptsize \insertdate} \par }
 
-\vspace{0.2in}
+
 }
 
 
@@ -268,9 +268,36 @@
 
 %\section[Transverse Cracking in FRPCs]{Initiation of Transverse Cracking in Fiber Reinforced Polymer Composites (FRPCs): Microscopic Observations \& Modeling}
 
-\section{Initiation of Transverse Cracks in FRPCs}
+\section{Initiation of Transverse Cracks in Thin-plies}
 
-\subsection{Microscopic Observations}
+\subsection{The Thin-ply ``Advantage''}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small The Thin-ply ``Advantage''}
+\vspace{-1.cm}
+\centering
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{thinply-plythicknesseffect.jpg}
+\end{figure}
+\vspace{-0.5cm}
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1016/j.compscitech.2018.08.037}{Cugnoni et al., Compos. Sci. Technol. \textbf{168}, 2018, p. 467--477.}}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{bailey.png}
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1098/rspa.1979.0071}{Bailey et al., P. Roy. Soc. A-Math. Phy. \textbf{366} (1727), 1979.}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
 
 \begin{frame}
 \frametitle{\vspace{0.3cm}\small Microscopic Observations}

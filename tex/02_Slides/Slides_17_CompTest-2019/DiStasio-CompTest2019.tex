@@ -753,36 +753,24 @@ n\times k-asymm
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Assumptions}
-\vspace{-1.cm}
+\vspace{-0.75cm}
 \centering
 \begin{columns}
-\begin{column}{0.6\textwidth}
+\begin{column}{0.5\textwidth}
 \begin{figure}
-\includegraphics[width=0.95\columnwidth]{RUC.pdf}
+\includegraphics[width=\columnwidth]{RUC.pdf}
 \end{figure}
 \vspace{-0.1cm}
-\scriptsize
+\tiny
 \begin{equation*}
 R_{f}=1\ \left[\mu m\right]\quad L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}
 \end{equation*}
-\vspace{-0.25cm}
-\begin{table}[htbp]
-\scriptsize
-  \centering
-    \begin{tabular}{ccc}
-    \toprule
-    \textbf{Material} & $\mathbf{E}$ &$\mathbf{\nu}$ \\
-    \midrule
-    glass fiber    & 70.0  & 0.2\\
-    epoxy    & 3.5    & 0.4\\
-    \bottomrule
-    \end{tabular}
-\end{table}
 \end{column}
-\begin{column}{0.4\textwidth}
+\begin{column}{0.5\textwidth}
 \scriptsize
 \begin{itemize}[label=\ding{212}]
-\item Linear elastic, homogeneous and isotropic materials
+\item Linear elastic, homogeneous materials
+\item Concentric Cylinders Assembly with Self-Consistent Shear Model for UD
 \item Plane strain
 \item Frictionless contact interaction
 \item Symmetric w.r.t. x-axis
@@ -792,26 +780,38 @@ R_{f}=1\ \left[\mu m\right]\quad L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}
 \end{itemize}
 \end{column}
 \end{columns}
+\vspace{0.05cm}
+\begin{table}[htbp]
+\tiny
+\centering
+\begin{tabular}{ccccccc}
+\textbf{Material} & \textbf{$V_{f}\left[\%\right]$}\  & \textbf{$E_{L}\left[GPa\right]$}\ & \textbf{$E_{T}\left[GPa\right]$}\  & \textbf{$\mu_{LT}\left[GPa\right]$} &\textbf{$\nu_{LT}\left[-\right]$} &\textbf{$\nu_{TT}\left[-\right]$} \\
+\midrule
+Glass fiber &-   & 70.0 & 70.0  & 29.2 & 0.2  & 0.2\\
+Epoxy    &-& 3.5 & 3.5   & 1.25 &  0.4& 0.4\\
+UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
+\end{tabular}
+\end{table}
 \end{frame}
 
 \subsection{Solution}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Solution}
-\vspace{-1.cm}
+\frametitle{\vspace{0.4cm}\small Solution}
+\vspace{-1.1cm}
 \centering
 \begin{columns}
 \begin{column}{0.6\textwidth}
 \begin{figure}
-\includegraphics[width=0.95\columnwidth]{RUC.pdf}
+\includegraphics[width=0.825\columnwidth]{RUC.pdf}
 \end{figure}
-\vspace{-0.75cm}
+\vspace{-1cm}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \tiny
 \begin{equation*}
 \begin{aligned}
-&\text{in }\Omega_{f}, \Omega_{m}:\\
+&\text{in }\Omega_{f}, \Omega_{m}, \Omega_{UD}:\\
 &\frac{\partial^{2}\varepsilon_{xx}}{\partial z^{2}}+\frac{\partial^{2}\varepsilon_{zz}}{\partial x^{2}}=\frac{\partial^{2}\gamma_{zx}}{\partial x\partial z}\\
 &\varepsilon_{y}=\gamma_{xy}=\gamma_{yz}=0\\
 &\frac{\partial\sigma_{xx}}{\partial x}+\frac{\partial\tau_{zx}}{\partial z} = 0\\
@@ -835,7 +835,7 @@ R_{f}=1\ \left[\mu m\right]\quad L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}
 \end{column}
 \end{columns}
 \end{column}
-\begin{column}{0.3\textwidth}
+\begin{column}{0.35\textwidth}
 \scriptsize
 \begin{itemize}[label=\ding{212}]
 \item Oscillating singularity
@@ -843,12 +843,12 @@ R_{f}=1\ \left[\mu m\right]\quad L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}
 \begin{equation*}
 \sigma\sim r^{-\frac{1}{2}}\sin\left(\varepsilon\log r\right),\quad V_{f}\rightarrow 0
 \end{equation*}
-\vspace{-0.25cm}
+%\vspace{-0.25cm}
 {\tiny
 \begin{equation*}
 \varepsilon=\frac{1}{2\pi}\log\left(\frac{1-\beta}{1+\beta}\right)
 \end{equation*}
-\vspace{-0.25cm}
+%\vspace{-0.25cm}
 \begin{equation*}
 \beta=\frac{\mu_{2}\left(\kappa_{1}-1\right)-\mu_{1}\left(\kappa_{2}-1\right)}{\mu_{2}\left(\kappa_{1}+1\right)+\mu_{1}\left(\kappa_{2}+1\right)}
 \end{equation*}}

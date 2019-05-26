@@ -127,26 +127,14 @@
   \draw[->,line width=0.75mm] (20*\l,-3.2*\l) -- (20*\l,3.3*\l) node[above] {\Huge$z$};
 \end{scope}
 
-\foreach \z in {-1,0,1}{
-\foreach \x in {0,...,9}{
-\draw[line width=1.25mm] (\x*2*\l+\Rf,0+\z*2*\l,0)arc (0:360:\Rf);
-%\draw[line width=1.25mm] (-2*\l+\Rf,0+\x*2*\l+\z*2*\l,0)arc (0:360:\Rf);
-}
-\foreach \x in {11,...,20}{
-\draw[line width=1.25mm] (\x*2*\l+\Rf,0+\z*2*\l,0)arc (0:360:\Rf);
-%\draw[line width=1.25mm] (-2*\l+\Rf,0+\x*2*\l+\z*2*\l,0)arc (0:360:\Rf);
-}
-}
-
 \foreach \z in {-1,1}{
-\foreach \x in {-1,10,21}{
+\foreach \x in {-1,...,21}{
 \draw[line width=1.25mm] (\x*2*\l+\Rf,0+\z*2*\l,0)arc (0:360:\Rf);
-%\draw[line width=1.25mm] (-2*\l+\Rf,0+\x*2*\l+\z*2*\l,0)arc (0:360:\Rf);
 }
 }
 
 \foreach \z in {0}{
-\foreach \x in {-0.5,10.5}{
+\foreach \x in {-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,9.5,10.5}{
  %debond on the right
 \draw[line width=1.25mm] (\costhetaup+\x*4*\l,\sinthetaup+\z*4*\l)arc (\thetaup:\thetaround:\Rf);
 \draw[draw=red,line width=1.25mm](\costhetaup+\x*4*\l,\sinthetaup+\z*4*\l) arc(\thetaup:\thetabot:\Rf);
@@ -154,7 +142,7 @@
 \tkzCircumCenter(A,B,C)\tkzGetPoint{O}
 \tkzDrawArc[draw=red,line width=1.25mm](O,C)(A)
 }
-\foreach \x in {5}{
+\foreach \x in {0,1,2,3,4,5,6,7,8,9,10}{
 % debond on the left
 \draw[line width=1.25mm] (\x*4*\l-\costhetaup,-\sinthetaup+\z*4*\l)arc (-\thetaup:\thetaround:-\Rf);
 \draw[draw=red,line width=1.25mm](\x*4*\l-\costhetaup,\sinthetaup+\z*4*\l) arc(180+\thetabot:180-\thetaup:\Rf);
@@ -176,7 +164,7 @@
 \draw[->,line width=2.75mm] (-4*\l,0) -- (-5*\l,0) ;
 \draw[below] (-4.5*\l,-0.5)node{\Huge$\varepsilon_{x}=1\%$};
 
-\draw[below]  (20*\l,-3.5*\l)node{\Huge$\mathbf{21\times k-\cdots}$};
+\draw[below]  (20*\l,-3.5*\l)node{\Huge$\mathbf{1\times k-\cdots}$};
 
 \end{tikzpicture}
 

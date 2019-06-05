@@ -1,1 +1,1 @@
-cd C:/02*/01*/01*/thinPlyMechanics/windows-cmd && startRVESimPipeOnlyHdispLPC.cmd 1_144S10
+cd C:/02*/01*/01*/thinPlyMechanics/windows-cmd && startRVESimPipeMVDsymmLPC.cmd 1_144S1d10 && cd C:/02*/01*/01*/thinPlyMechanics/windows-cmd && startRVESimPipeMVDasymmLPC.cmd 1_144S1d10

@@ -4616,25 +4616,25 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
-            regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
-            regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
+            regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['geometry']['nDebonds'])+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
+            regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['geometry']['nDebonds'])+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
         elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type'] and parameters['BC']['rightSide']['nFibers']>10 and parameters['BC']['leftSide']['nFibers']>10:
-            regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
-            regionSets.append(['LEFTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
+            regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['geometry']['nDebonds'])+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
+            regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['geometry']['nDebonds'])+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
         else:
-            regionSets.append(['LOWER-RIGHTSIDE',30])
-            regionSets.append(['LOWER-LEFTSIDE',30])
+            regionSets.append(['LOWER-RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['geometry']['nDebonds']))))])
+            regionSets.append(['LOWER-LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['geometry']['nDebonds']))))])
         regionSets.append(['UPPER-RIGHTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
         regionSets.append(['UPPER-LEFTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
     elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
-        regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
-        regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
+        regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['geometry']['nDebonds'])+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
+        regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['geometry']['nDebonds'])+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
     elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type'] and parameters['BC']['rightSide']['nFibers']>10 and parameters['BC']['leftSide']['nFibers']>10:
-        regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
-        regionSets.append(['LEFTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
+        regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['geometry']['nDebonds'])+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
+        regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['geometry']['nDebonds'])+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
     else:
-        regionSets.append(['RIGHTSIDE',30])
-        regionSets.append(['LEFTSIDE',30])
+        regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['geometry']['nDebonds']))))])
+        regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['geometry']['nDebonds']))))])
 
     if 'adjacentFibers' in parameters['BC']['northSide']['type']:
         for nFiber in range(0,parameters['BC']['northSide']['nFibers']):

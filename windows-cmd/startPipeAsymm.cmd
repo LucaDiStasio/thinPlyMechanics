@@ -1,1 +1,1 @@
-cd D:/01_Luca/06_WD/thinPlyMechanics/windows-cmd && startRVESimPipeMVDasymm.cmd 1_144S1d20
+cd D:/01_Luca/06_WD/thinPlyMechanics/windows-cmd && startRVESimPipeMVDasymm.cmd 1_144S1d30 && cd D:/01_Luca/06_WD/thinPlyMechanics/windows-cmd && startRVESimPipeMVDasymm.cmd 1_144S1d40 && cd D:/01_Luca/06_WD/thinPlyMechanics/windows-cmd && startRVESimPipeMVDasymm.cmd 1_144S1d50

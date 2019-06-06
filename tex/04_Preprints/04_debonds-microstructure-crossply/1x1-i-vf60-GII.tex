@@ -81,8 +81,29 @@ table{
 };
 \addlegendentry{$1\times 1-free$};
 
-% coupling
+% H
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
+table{
+10	0.215645
+20	0.430278
+30	0.711824
+40	0.845520
+50	0.832198
+60	0.786092
+70	0.730784
+80	0.615221
+90	0.444357
+100	0.282291
+110	0.150941
+120	0.064458
+130	0.022479
+140	0.008199
+150	0.007664
+};
+\addlegendentry{$1\times 1-H$};
+
+% coupling
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=triangle*]
 table{
 10.00	0.17463251
 20.00	0.29337890
@@ -103,7 +124,7 @@ table{
 \addlegendentry{$1\times 1-coupling$};
 
 % H+V
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=diamond*]
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=triangle*,mark options={fill=white}]
 table{
 10.00	0.169221
 20.00	0.279074
@@ -121,7 +142,7 @@ table{
 140.00	0.007317
 150.00	0.006828
 };
-\addlegendentry{$1\times 1-H+V$};
+\addlegendentry{$1\times 1-coupling+H$};
 
 % i=1
 \addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
@@ -165,29 +186,29 @@ table{
 };
 \addlegendentry{$1\times 1-10\cdot t_{90^{\circ}}$};
 
-% i=50
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
-table{
-10.00	0.188989
-20.00	0.343405
-30.00	0.574908
-40.00	0.744745
-50.00	0.793165
-60.00	0.764683
-70.00	0.709109
-80.00	0.601241
-90.00	0.456569
-100.00	0.289130
-110.00	0.140621
-120.00	0.053241
-130.00	0.016764
-140.00	0.006653
-150.00	0.006254
-};
-\addlegendentry{$1\times 1-50\cdot t_{90^{\circ}}$};
+%% i=50
+%\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
+%table{
+%10.00	0.188989
+%20.00	0.343405
+%30.00	0.574908
+%40.00	0.744745
+%50.00	0.793165
+%60.00	0.764683
+%70.00	0.709109
+%80.00	0.601241
+%90.00	0.456569
+%100.00	0.289130
+%110.00	0.140621
+%120.00	0.053241
+%130.00	0.016764
+%140.00	0.006653
+%150.00	0.006254
+%};
+%\addlegendentry{$1\times 1-50\cdot t_{90^{\circ}}$};
 
 % i=100
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=diamond*]
 table{
 10.00	0.188972
 20.00	0.343298

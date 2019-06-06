@@ -179,8 +179,8 @@
 }
 
 \begin{scope}[style=axes]
-  \draw[->,line width=0.75mm] (-7.2*\l,0) -- (7.3*\l,0) node[right] {\Huge$\underline{i}, x$};
-  \draw[->,line width=0.75mm] (0,-9.2*\l) -- (0,9.3*\l) node[above] {\Huge$\underline{k}, z$};
+  \draw[->,line width=0.75mm] (-7.2*\l,0) -- (7.3*\l,0) node[right] {\Huge$x$};
+  \draw[->,line width=0.75mm] (0,-9.2*\l) -- (0,9.3*\l) node[above] {\Huge$z$};
 \end{scope}
 
 \pgfmathsetmacro\ltot{\l+\tratio*\l}
@@ -222,13 +222,13 @@
 \draw[dashed,blue, line width=1.25mm] (3*\l+\symmsymh+0.5*\symmsyml,\x*2*\symmsyml-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
 \draw[dashed,blue, line width=1.25mm] (3*\l+\symmsymh+0.5*\symmsyml,\x*2*\symmsyml+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
 
-\draw[blue,line width=1.25mm] (-3*\l,-9.25*\l) -- (3*\l,-9.25*\l) ;
-\draw[blue,line width=1.25mm] (-3*\l,-9.15*\l) -- (-3*\l,-9.35*\l) ;
-\draw[blue,line width=1.25mm] (3*\l,-9.15*\l) -- (3*\l,-9.35*\l) ;
-
-\draw[blue,line width=1.25mm] (-7.25*\l,-3*\l) -- (-7.25*\l,3*\l) ;
-\draw[blue,line width=1.25mm] (-7.15*\l,3*\l) -- (-7.35*\l,3*\l) ;
-\draw[blue,line width=1.25mm] (-7.15*\l,-3*\l) -- (-7.35*\l,-3*\l) ;
+%\draw[blue,line width=1.25mm] (-3*\l,-9.25*\l) -- (3*\l,-9.25*\l) ;
+%\draw[blue,line width=1.25mm] (-3*\l,-9.15*\l) -- (-3*\l,-9.35*\l) ;
+%\draw[blue,line width=1.25mm] (3*\l,-9.15*\l) -- (3*\l,-9.35*\l) ;
+%
+%\draw[blue,line width=1.25mm] (-7.25*\l,-3*\l) -- (-7.25*\l,3*\l) ;
+%\draw[blue,line width=1.25mm] (-7.15*\l,3*\l) -- (-7.35*\l,3*\l) ;
+%\draw[blue,line width=1.25mm] (-7.15*\l,-3*\l) -- (-7.35*\l,-3*\l) ;
 
 \draw[blue,line width=1.25mm] (8.25*\l,3*\l) -- (8.25*\l,9*\l) ;
 \draw[blue,line width=1.25mm] (8.15*\l,3*\l) -- (8.35*\l,3*\l) ;
@@ -240,15 +240,15 @@
 
 \draw[blue,line width=1.25mm] (8.25*\l,-3*\l) -- (8.25*\l,3*\l) ;
 
-\draw[->,line width=1.25mm] (5*\l,6*\l) -- (6*\l,6*\l)node[right] {\Huge$\mathbf{0^{\circ}}$};
-\draw[->,line width=1.25mm] (5*\l,-6*\l) -- (6*\l,-6*\l)node[right] {\Huge$\mathbf{0^{\circ}}$};
+\draw(6*\l,6*\l)node[right] {\Huge$\mathbf{0^{\circ}}$};
+\draw(6*\l,-6*\l)node[right] {\Huge$\mathbf{0^{\circ}}$};
 
-\draw (0,-9.35*\l) node[blue,left,below] {\Huge$\mathbf{n=3}$};
-\draw (-7.3*\l,0) node[blue,above,rotate=90] {\Huge$\mathbf{k=3}$};
+\draw (1*\l,-1*\l) node[blue] {\Huge$\mathbf{n=3}$};
+\draw (-3*\l,4*\l) node[blue,right] {\Huge$\mathbf{k=3}$};
 
-\draw (8.3*\l,6*\l) node[blue,below,rotate=90] {\Huge$\mathbf{m\cdot t_{90^{\circ}}}$};
-\draw (8.3*\l,-6*\l) node[blue,below,rotate=90] {\Huge$\mathbf{m\cdot t_{90^{\circ}}}$};
-\draw (8.3*\l,0) node[blue,below,rotate=90] {\Huge$\mathbf{k\cdot2L}$};
+\draw (8.3*\l,6*\l) node[blue,right] {\Huge$\mathbf{t_{0^{\circ}}=m\cdot t_{90^{\circ}}}$};
+\draw (8.3*\l,-6*\l) node[blue,right] {\Huge$\mathbf{t_{0^{\circ}}=m\cdot t_{90^{\circ}}}$};
+\draw (8.3*\l,0) node[blue,right] {\Huge$\mathbf{t_{90^{\circ}}=k\cdot2L}$};
 
 \end{tikzpicture}
 

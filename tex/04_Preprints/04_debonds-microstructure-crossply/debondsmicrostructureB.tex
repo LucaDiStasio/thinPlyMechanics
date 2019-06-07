@@ -2,6 +2,7 @@
 
 \usepackage{amsmath}
 \usepackage{booktabs}
+\usepackage[makeroom]{cancel}
 \usepackage{subcaption}
 \usepackage{tabularx}
 \usepackage[usenames]{xcolor}
@@ -101,7 +102,7 @@ The first stage in the appearance of transverse cracks is known to be the occurr
 
 % 2.1 Introduction and nomenclature
 
-\subsection{Introduction \& Nomenclature}\label{subsec:names}
+\subsection{Introduction \& nomenclature}\label{subsec:names}
 
 In the present work, we investigate debond development under in-plane longitudinal tension in $\left[0_{m\cdot k\cdot2L}^{\circ},90_{k\cdot2L}^{\circ},0_{m\cdot k\cdot2L}^{\circ}\right]$ laminates. The interaction between debonds in the presence of an interface with a stiff layer is studied with the use of different Repeating Unit Cells (RUCs)  (see Figures~\ref{fig:laminateModelsA} and~\ref{fig:laminateModelsB} in Sec.~\ref{subsec:rve}), in which only the central fiber is partially debonded. Repetition of the composite RUC occurs along the in-plane longitudinal direction (horizontal direction of the RUC in Figures~\ref{fig:laminateModelsA} and~\ref{fig:laminateModelsB}), thus representing a cross-ply laminate with a thin or even ultra-thin $90^{\circ}$ ply in the middle.\\
 All the RUCs present regular microstructures with fibers placed according to a square-packing configuration characterized by the repetition of the same one-fiber unit cell of size $2L\times2L$, where $L$ is a function of the fiber volume fraction $V_{f}$ and the fiber radius according to
@@ -119,7 +120,7 @@ t_{90^{\circ}}=k\cdot2L.
 
 On the other hand, the thickness of $0^{\circ}$ layers can be assigned freely as a multiple of the $90^{\circ}$ ply thickness as
 
- \begin{equation}\label{eq:t90}
+\begin{equation}\label{eq:t90}
 t_{0^{\circ}}=m\cdot t_{90^{\circ}}
 \end{equation}
 
@@ -157,13 +158,7 @@ By increasing the number $n$ of fibers in the horizontal direction in the RUC, d
 
 \subsection{Finite Element (FE) discretization}
 
-The RUCs are discretized and solved with the Finite Element Method (FEM) using the commercial FEM package Abaqus~\cite{abq12}. The total length $l$ and height $h$ of a RUC are determined by the number of fibers $n$ in the horizontal direction, the number of fiber rows $k$ across the thickness and the thickness ratio $m$ (see Sec.~\ref{subsec:rve}) according to Eq.~\ref{eq:lengthheight}:
-
-\begin{equation}\label{eq:lengthheight}
-l=n2L\qquad h=t_{90^{\circ}}+2t_{0^{\circ}}=\left(1+2m\right)k2L.
-\end{equation}
-
-In Eq.~\ref{eq:lengthheight}, $2L$ is the length of a one-fiber unit (see Fig.~\ref{fig:modelschem}), defined according to Equation~\ref{eq:LVf}.
+The RUCs are discretized and solved with the Finite Element Method (FEM) using the commercial FEM package Abaqus~\cite{abq12}. The total length and height of a RUC are determined by the number of fibers $n$ in the horizontal direction, the number of fiber rows $k$ across the thickness and the thickness ratio $m$ (see Sec.~\ref{subsec:names} and Sec.~\ref{subsec:rve}).
 
 \begin{figure}[!h]
 \centering
@@ -196,28 +191,81 @@ The FEM model is discretized using second order, 2D, plane strain triangular (CP
 
 \subsection{Effect of the proximity of the $0^{\circ}/90^{\circ}$ interface and of the thickness of the $0^{\circ}$ layer on debond ERR}\label{subsec:thickness}
 
-We first focus our attention on the model $1\times 1-m\cdot t_{90^{\circ}}$, which represents a particular case of the family $n\times 1-m\cdot t_{90^{\circ}}$. It corresponds to a cross-ply laminate in which the central $90^{\circ}$ ply is constituted by only one fiber row, in which each fiber possesses a debond appearing on alternating sides. The model thus represents an extreme idealization, in the sense that: first, the central $90^{\circ}$ layer is the thinniest that can be conceived; second, a very particular damage state is present for which every fiber is partially debonded from the sorrounding matrix. The first condition allows us to investigate the direct effect of the proximity of the $0^{\circ}/90^{\circ}$ interface on debond ERR. The second condition implies that we are analyzing the most severe damage state that can occur in the $90^{\circ}$ ply when considering debonds as the only mechanism of damage. As pointed out in a previous work~\cite{DiStasio2019}, the presence of fully bonded fibers close to the partially debonded one causes a magnification of the $x$-strain in the matrix region between the debonded fiber and the closest undamaged one. This increase in the value of the strain leads in turn to higher values of Energy Release Rate. Given that we are considering a $90^{\circ}$ ply with all fibers partially debonded, we are neglecting such magnification effect and focusing only on the presence of the $0^{\circ}/90^{\circ}$ interface and on the thickness of the $0^{\circ}$ layer, by considering the ratio $m=\frac{t_{0^{\circ}}}{t_{90^{\circ}}}$ of ply thicknessess as a free parameter. We will later analyze in Sec.~\ref{subsec:debonddebondinter} the effect of the combined presence of fully bonded fibers and the $0^{\circ}/90^{\circ}$ interface.
+We first focus our attention on the model $1\times 1-m\cdot t_{90^{\circ}}$, which represents a particular case of the family $n\times 1-m\cdot t_{90^{\circ}}$. It corresponds to a cross-ply laminate in which the central $90^{\circ}$ ply is constituted by only one fiber row, in which each fiber possesses a debond appearing on alternating sides. The model thus represents an extreme idealization, in the sense that: first, the central $90^{\circ}$ layer is the thinniest that can be conceived, which allows us to investigate the direct effect of the proximity of the $0^{\circ}/90^{\circ}$ interface on debond ERR; second, a very particular damage state is present for which every fiber is partially debonded from the sorrounding matrix, corresponding to the most severe damage state that can occur in the $90^{\circ}$ ply when considering debonds as the only mechanism of damage.
+%As pointed out in a previous work~\cite{DiStasio2019}, the presence of fully bonded fibers close to the partially debonded one causes a magnification of the $x$-strain in the matrix region between the debonded fiber and the closest undamaged one. This increase in the value of the strain leads in turn to higher values of Energy Release Rate.
+We are thus focusing on the presence of the $0^{\circ}/90^{\circ}$ interface and on the thickness of the $0^{\circ}$ layer, by considering the ratio $m=\frac{t_{0^{\circ}}}{t_{90^{\circ}}}$ of ply thicknessess as a free parameter.
+%We will later analyze in Sec.~\ref{subsec:debonddebondinter} the effect of the combined presence of fully bonded fibers and the $0^{\circ}/90^{\circ}$ interface.
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{1x1-i-vf60-GI.pdf}
-\caption{Effect of the proximity of the $0^{\circ}/90^{\circ}$ interface and of the thickness of the $0^{\circ}$ layer on Mode I ERR: models $1\times 1-free$, $1\times 1-coupling$, $1\times 1-H+V$ and $1\times 1-m\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{fig:thicknessGI}
+\caption{Effect of the proximity of the $0^{\circ}/90^{\circ}$ interface and of the thickness of the $0^{\circ}$ layer on Mode I ERR: models $1\times 1-free$, $1\times 1-H$, $1\times 1-coupling$, $1\times 1-coupling+H$ and $1\times 1-m\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{fig:thicknessGI}
 \end{figure}
 
-In Figures~\ref{fig:thicknessGI} and~\ref{fig:thicknessGII} respectively the Mode I and Mode II ERR are shown for models $1\times 1-m\cdot t_{90^{\circ}}$ with $m=1,10,50,100$ and models $1\times 1-free$, $1\times 1-coupling$ and $1\times 1-H+V$. It is worth to remind us of the laminate RVE that correspond to these last three models: model $1\times 1-free$ represents a one-fiber-row UD composite with all the fibers partially debonded; model $1\times 1-coupling$ corresponds to a UD laminate with an infinite number of fiber rows and all the fibers partially debonded; model $1\times 1-H+V$ represents a cross-ply laminate with one-fiber-row central $90^{\circ}$ ply and the $0^{\circ}$ ply replaced by boundary conditions at the interface not allowing interface bending and with an applied uniform strain not affected by fibers and debonds in the $90^{\circ}$ ply. Observing Figure~\ref{fig:thicknessGI}, it is possible to notice that the values of $G_{I}$ for the $1\times 1-free$ and the $1\times 1-coupling$ model represent respectively a lower and an upper bound for all the other RVEs. The $1\times 1-H+V$ model is as well an upper bound for the $1\times 1-m\cdot t_{90^{\circ}}$ RVEs; however its values of $G_{I}$ are lower than those of the $1\times 1-coupling$ model due to the applied uniform $x$-strain at the interface, which prevents the crack to open as much as in the $1\times 1-coupling$ case. The same observation holds for the size of the debond at contact zone onset, i.e. when $G_{I}=0$: the lower bound is provided by the $1\times 1-free$ model ($\Delta\theta\sim60^{\circ}$), while the contact zone onset for models $1\times 1-coupling$ and $1\times 1-H+V$ represents the upper bound ($\sim80^{\circ}$). All $1\times 1-m\cdot t_{90^{\circ}}$ RVEs lie in between these two bounds for any thickness of the $0^{\circ}$ ply, with contact zone onset occurring at a debond size of $\sim70^{\circ}$.
-
-%the presence of the $0^{\circ}/90^{\circ}$ $0^{\circ}/90^{\circ}$ interface translates into a modest increase in the value of $G_{I}$ with respect to the free surface. For every value of the thickness, however, the values of $G_{I}$ are lower than those computed with the $1\times 1-coupling$ and $1\times 1-H+V$ models. A more significant effect can be observed in relation to contact zone onset, which is delayed from $\Delta\theta=60^{\circ}$ in the presence of a free surface to $70^{\circ}$ in the presence of a homogenized $0^{\circ}$ layer. The maximum delay is however reached with the models with equivalent boundary conditions ($1\times 1-coupling$ and $1\times 1-H+V$), for which the contact zone onset happens at $\Delta\theta=80^{\circ}$. No effect of the thickness of the $0^{\circ}$ layer on Mode I ERR can be observed.
+In Figures~\ref{fig:thicknessGI} and~\ref{fig:thicknessGII} it is possible to observe respectively the Mode I and Mode II ERR for models $1\times 1-m\cdot t_{90^{\circ}}$ with $m=1,10,100$. Mode I ERR is practically unaffected by the $0^{\circ}$ layer thickness, only a marginal increase $\leq1\%$ can be seen when $m$ is increased from $1$ to $10$. No further observable change is present when $m$ is increased to $100$. Moreover, the contact zone onset, which corresponds to the first value of $\Delta\theta$ such that $G_{I}=0$, is always equal to $70^{\circ}$ irrespective of the value of $m$. A more remarkable, albeit small, effect of the $0^{\circ}$ layer thickness can be observed for Mode II when $m$ is increased from $1$ to values $\geq10$. For open cracks, i.e. when no contact zone is present and thus $\Delta\theta$ is smaller than $70^{\circ}$, increasing the $0^{\circ}$ layer thickness causes a reduction of Mode II ERR; while for closed cracks, when a contact zone is present and $\Delta\theta>70^{\circ}$, the increase in thickness leads to an increase in ERR.
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{1x1-i-vf60-GII.pdf}
-\caption{Effect of the proximity of the $0^{\circ}/90^{\circ}$ interface and of the thickness of the $0^{\circ}$ layer on Mode II ERR: models $1\times 1-free$, $1\times 1-coupling$, $1\times 1-H+V$ and $1\times 1-m\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{fig:thicknessGII}
+\caption{Effect of the proximity of the $0^{\circ}/90^{\circ}$ interface and of the thickness of the $0^{\circ}$ layer on Mode II ERR: models $1\times 1-free$, $1\times 1-H$, $1\times 1-coupling$, $1\times 1-coupling+H$ and $1\times 1-m\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{fig:thicknessGII}
 \end{figure}
 
-For Mode II (see Fig.~\ref{fig:thicknessGII}), the ERR for the cases with a $0^{\circ}$ layer of finite thickness always lies between the values provided by the $1\times 1-free$ and $1\times 1-H+V$ model: for open debonds ($\Delta\theta<60^{\circ}-70^{\circ}$), when $G_{I}\neq0$ and there is no contact zone, $1\times 1-free$ provides the upper bound while $1\times 1-H+V$ the lower bound; for close debonds ($\Delta\theta>60^{\circ}-70^{\circ}$), when $G_{I}=0$ and a contact zone is present, the situation is reversed. An effect of the thickness of the $0^{\circ}$ layer on Mode II ERR can be noticed in Fig.~\ref{fig:thicknessGII} when the ratio $m=\frac{t_{0^{\circ}}}{t_{90^{\circ}}}$ is increased from $1$ to $10$. The change between the two follows the same pattern described previously: when the thickness of the $0^{\circ}$ ply is increased, Mode II decreases for open debonds and increases for closed debonds, in line with the bound switch.\\
-These results help to shed light on the effect of the $0^{\circ}/90^{\circ}$ interface on debond ERR. The presence of the stiff homogenized $0^{\circ}$ layer causes the matrix placed relatively far from the fiber (close to the interface) to contract much less than it would do in the presence of a free surface due to its relatively high Poisson's ratio. Furthermore, the presence of the $0^{\circ}/90^{\circ}$ interface induces a more homogeneous $x$-displacement field all over the matrix domain. This causes a concurrent increase of $G_{I}$ and decrease of $G_{II}$ for small debonds, where the crack opening displacement component at the crack tip (responsible for Mode I) is mostly due to the global $x$-displacement field (which increases in the presence of the $0^{\circ}/90^{\circ}$  interface) while the crack sliding displacement component at the crack tip (responsible for Mode II) is for small debonds linked to the global vertical displacement field due to Poisson's effect (which is lower in the presence of a $0^{\circ}$ layer instead of a free surface thanks to the stiffness of the former). This causes also the delay in the onset of the contact zone. For large debonds instead, after the onset of the contact zone, the situation reverses: the magnitude increase of the global $x$-displacement field leads to an increase in the crack sliding displacement component at the crack tip and thus in Mode II ERR. By comparing the results for Mode II of models $1\times 1-free$, $1\times 1-H+V$ and $1\times 1-m\cdot t_{90^{\circ}}$ with $m=1,10,50,100$ (Fig.~\ref{fig:thicknessGII}), it can be argued that the effect of the $0^{\circ}$ ply thickness is related to its local bending stiffness. In the presence a free surface, the matrix in the $90^{\circ}$ ply contracts significantly more than the fibers due to the mismatch in Poisson's ratios, thus leading to higher $y$-strains in the inter-fibers regions than above the fibers. This in turn results in a very curved surface, roughly following the fibers' curvature. In the presence of a $0^{\circ}$ layer, such deformation is prevented by its bending stiffness. A relatively thin $0^{\circ}$ layer ($\frac{t_{0^{\circ}}}{t_{90^{\circ}}}=1$) possesses a lower bending stiffness and thus matrix deformation is able to bend the interface, which translates into a $G_{II}$ profile closer to the $1\times 1-free$ model. For thicker $0^{\circ}$ layers, the increased bending stiffness prevents the curvature of the interface and Mode II ERR becomes closer to the $1\times 1-H+V$ model, in which the interface is forced to remain straight by the applied boundary conditions.
+In order to understand the interaction mechanism between the $0^{\circ}/90^{\circ}$ interface and the debond, Mode I and Mode II ERR are reported respectively in Figures~\ref{fig:thicknessGI} and~\ref{fig:thicknessGII} for models $1\times 1-free$, $1\times 1-H$, $1\times 1-coupling$ and $1\times 1-coupling+H$. These RUCs all present equivalent boundary conditions and it is here useful to recall their characteristics: in model $1\times 1-free$ the upper bounday is left free; coupling conditions on the vertical displacements $u_{z}$ are applied to the upper boundary in model $1\times 1-coupling$; in model $1\times 1-H$ a linearly distributed horizontal displacement $u_{x}$ is applied to the upper boundary; in model $1\times 1-coupling+H$ coupling conditions on the vertical displacements $u_{z}$ and a linearly distributed horizontal displacement $u_{x}$ are imposed together on the upper boundary.\\
+Observing Figure~\ref{fig:thicknessGI}, it is possible to notice that the values of $G_{I}$ for the $1\times 1-free$ and the $1\times 1-coupling$ models represent respectively a lower and an upper bound for the $1\times 1-m\cdot t_{90^{\circ}}$ RVEs: this is true with respect to the value of $G_{I}$ as well as of contact zone onset ($60^{\circ}$ for  $1\times 1-free$, $70^{\circ}$ for $1\times 1-m\cdot t_{90^{\circ}}$, $80^{\circ}$ for $1\times 1-coupling$). When a linearly distributed horizontal displacement $u_{x}$ is applied to the upper boundary, providing the $1\times 1-H$ and $1\times 1-coupling+H$ models from the $1\times 1-free$ and the $1\times 1-coupling$ models, $G_{I}$ decreases with respect to the ``parent'' models while the value of $\Delta\theta$ at contact zone onset remains unchanged ($60^{\circ}$ for  $1\times 1-free$ and $1\times 1-H$, $80^{\circ}$ for $1\times 1-coupling$ and $1\times 1-coupling+H$). Moreover, it is possible to observe that the values of $G_{I}$ of $1\times 1-coupling+H$ are much closer to but always greater than those of $1\times 1-m\cdot t_{90^{\circ}}$ RVEs, thus constituting a more representative upper bound for the latter.\\
+Analogous considerations can be drawn with regard to Mode II (see Fig.~\ref{fig:thicknessGII}). For small debonds, $\Delta\theta\leq30^{\circ}$, no significant difference in $G_{II}$ can be seen between $1\times 1-free$ and $1\times 1-H$ and between $1\times 1-coupling$ and $1\times 1-coupling+H$. With respect to $1\times 1-m\cdot t_{90^{\circ}}$ RVEs, the first pair ($1\times 1-free$ and $1\times 1-H$) represents the lower bound while the second pair ($1\times 1-coupling$ and $1\times 1-coupling+H$) the upper bound. For $30^{\circ}<\Delta\theta\leq60^{\circ}$, $1\times 1-H$ and $1\times 1-coupling+H$ provide significantly lower values of $G_{II}$ than respectively $1\times 1-free$ and $1\times 1-coupling$. $G_{II}$ values of $1\times 1-H$ are very close to $1\times 1-1\cdot t_{90^{\circ}}$, even coincident for $\Delta\theta=60^{\circ}$. On the other hand, $G_{II}$ values of $1\times 1-coupling$ are very close to $1\times 1-m\cdot t_{90^{\circ}}$ with $m\geq10$ and even coincident for $\Delta\theta=50^{\circ}$. For $60^{\circ}<\Delta\theta\leq110^{\circ}$, the situation changes. $1\times 1-free$ and $1\times 1-coupling$ provides values of $G_{II}$ close to each other, even coincident for $\Delta\theta=70^{\circ}$. values of $G_{II}$ of $1\times 1-H$ and $1\times 1-coupling+H$ are significantly larger than both $1\times 1-free$ and $1\times 1-coupling$. Furthermore, $G_{II}$ values of $1\times 1-H$ coincide with those of $1\times 1-m\cdot t_{90^{\circ}}$ with $m\geq10$. Mode II ERR of $1\times 1-1\cdot t_{90^{\circ}}$ is instead close, but not coincident, to that of $1\times 1-coupling$. For $\Delta\theta>110^{\circ}$, $G_{II}$ is the same for all models and reaches $0$ at a debond size of around $130^{\circ}$, showing that no further growth is possible for such large debonds.\\
+These results help to understand the effect of the $0^{\circ}/90^{\circ}$ interface on debond ERR. The presence of the stiff homogenized $0^{\circ}$ layer causes the matrix placed relatively far from the fiber (close to the interface) to contract much less than it would do in the presence of a free surface due to its relatively high Poisson's ratio. Furthermore, the presence of the $0^{\circ}/90^{\circ}$ interface induces a more homogeneous $x$-displacement field all over the matrix domain.\\
+For small debonds ($\Delta\theta<60^{\circ}-70^{\circ}$), it causes a concurrent increase of $G_{I}$ and decrease of $G_{II}$. For small debonds in fact, the Crack Opening Displacement at the crack tip 
 
-\subsection{Effect of the proximity of the $0^{\circ}/90^{\circ}$ interface on debond-debond interaction in a single fiber row $90^{\circ}$ ply}\label{subsec:debonddebondinter}
+\begin{equation}
+COD\sim\cos{\left(\Delta\theta\right)}u_{x}+\sin{\left(\Delta\theta\right)}u_{z},
+\end{equation}
+
+which governs Mode I according to
+
+\begin{equation}
+G_{I}=\lim\limits_{\Delta a\rightarrow0}\frac{1}{a}\int_{a}^{\Delta a}\sigma_{I}\left(\xi\right)COD\left(\xi\right)d\xi,
+\end{equation}
+
+is mostly due to the global $x$-displacement field:
+
+\begin{equation}
+COD\sim\cancelto{\sim1\text{ for }\Delta\theta\rightarrow0}{\cos{\left(\Delta\theta\right)}}u_{x}+\cancelto{\sim0\text{ for }\Delta\theta\rightarrow0}{\sin{\left(\Delta\theta\right)}}u_{z},
+\end{equation}
+
+which increases in the presence of the $0^{\circ}/90^{\circ}$  interface. The Crack Sliding Displacement at the crack tip
+
+\begin{equation}
+CSD\sim-\sin{\left(\Delta\theta\right)}u_{x}+\cos{\left(\Delta\theta\right)}u_{z},
+\end{equation}
+
+which governs Mode II according to
+
+\begin{equation}
+G_{II}=\lim\limits_{\Delta a\rightarrow0}\frac{1}{a}\int_{a}^{\Delta a}\sigma_{II}\left(\xi\right)CSD\left(\xi\right)d\xi,
+\end{equation}
+
+is linked to the global vertical displacement field due to Poisson's effect:
+
+\begin{equation}
+CSD\sim\cancelto{\sim0\text{ for }\Delta\theta\rightarrow0}{-\sin{\left(\Delta\theta\right)}}u_{x}+\cancelto{\sim1\text{ for }\Delta\theta\rightarrow0}{\cos{\left(\Delta\theta\right)}}u_{z}\sim\nu u_{x},
+\end{equation}
+
+effect that is lower in the presence of a $0^{\circ}$ layer instead of a free surface thanks to the stiffness of the former. This causes also the delay in the onset of the contact zone. For large debonds ($\Delta\theta>60^{\circ}-70^{\circ}$) instead, after the onset of the contact zone, the situation reverses: 
+
+\begin{equation}
+COD\sim\cancelto{\sim0\text{ for }\Delta\theta\rightarrow1}{\cos{\left(\Delta\theta\right)}}u_{x}+\cancelto{\sim1\text{ for }\Delta\theta\rightarrow0}{\sin{\left(\Delta\theta\right)}}u_{z}\sim\nu u_{x}<0,
+\end{equation}
+
+i.e. the faces are in contact, while 
+
+\begin{equation}
+CSD\sim\cancelto{\sim1\text{ for }\Delta\theta\rightarrow0}{-\sin{\left(\Delta\theta\right)}}u_{x}+\cancelto{\sim0\text{ for }\Delta\theta\rightarrow0}{\cos{\left(\Delta\theta\right)}}u_{z}.
+\end{equation}
+
+Thus, the increase in magnitude of the global $x$-displacement field leads to an increase in the crack sliding displacement component at the crack tip and thus in Mode II ERR.\\
+The local bending stiffness of the $0^{\circ}$ ply seems also to be playing a role. In the presence of a free surface, the matrix in the $90^{\circ}$ ply contracts significantly more than the fibers due to the mismatch in Poisson's ratios, thus leading to a higher overall contraction of the composite in the inter-fibers regions than above the fibers. This results in a very curved surface, which follows roughly the fibers' curvature. For small debonds ($\Delta\theta<60^{\circ}-70^{\circ}$), this translates into higher values of the vertical displacement field and thus an increase in Mode II ERR. For large debonds ($\Delta\theta>60^{\circ}-70^{\circ}$), the curvature of the material around the fiber corresponds to lower values of the horizontal displacement and thus a reduction of $G_{II}$. In the presence of a $0^{\circ}$ layer, such deformation is prevented by the bending stiffness of the latter: Mode II ERR decreases for small debonds and increases for large ones. However, as a relatively thin $0^{\circ}$ layer such as the one in $1\times 1-1\cdot t_{90^{\circ}}$ possesses a lower bending stiffness and thus matrix deformation is able to locally bend the interface, Mode II ERR presents a profile close to $1\times 1-H$ for small debonds (curved surface but more homogeneous $x$-displacement) and to $1\times 1-free$ for large ones (locally curved surface). For thicker $0^{\circ}$ layers, the increased bending stiffness prevents the curvature of the interface and Mode II ERR becomes closer to $1\times 1-coupling$ for small debonds (reduced Poisson's effect) and to $1\times 1-H$ for large ones (increased horizontal displacement due to locally straight surface).
+
+\subsection{Effect of the proximity of the $0^{\circ}/90^{\circ}$ interface on non-interactive debonds in a single fiber row $90^{\circ}$ ply}\label{subsec:debonddebondinter}
 
 We turn now our attention to the model $n\times 1-1\cdot t_{90^{\circ}}$, which corresponds to a cross-ply laminate in which the central $90^{\circ}$ ply is constituted by only one fiber row where multiple partially debonded fibers are present, located at a distance of $n-1$ fully bonded fibers from each other, and debonds appear on alternating sides of consecutive damaged fibers (see Figure~\ref{fig:laminateModelsA}). This class of models allows to study the effect of the presence of the $0^{\circ}$ layer on debond-debond interaction and, particularly, crack shielding~\cite{Garcia2015,DiStasio2019}.
 

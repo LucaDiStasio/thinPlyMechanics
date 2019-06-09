@@ -60,27 +60,6 @@ ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
 legend entries={},
 ]
 
-%% 1x1 - free
-%\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-%table{
-%10.00	1.94957798
-%20.00	1.60401110
-%30.00	0.92917427
-%40.00	0.40903582
-%50.00	0.13646384
-%60.00	0.00987438
-%70.00	0.00000809
-%80.00	0.00000782
-%90.00	0.00000391
-%100.00	0.00000259
-%110.00	0.00000135
-%120.00	0.00000071
-%130.00	0.00000022
-%140.00	0.00000002
-%150.00	0.00033306
-%};
-%\addlegendentry{$1\times 1-free$};
-
 % 1x1 - i=1
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
 table{
@@ -165,8 +144,50 @@ table{
 %};
 %\addlegendentry{$1\times 11-free$};
 
+% 1x5 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
+table{
+10	1.963762
+20	1.836269
+30	1.434649
+40	1.012493
+50	0.607387
+60	0.222531
+70	0.010925
+80	0.000011
+90	0.000011
+100	0.000008
+110	0.000003
+120	0.000000
+130	0.005073
+140	0.019902
+150	0.017880
+};
+\addlegendentry{$1\times 5-1\cdot t_{90^{\circ}}$};
+
+% 1x7 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
+table{
+10	1.969200
+20	1.846004
+30	1.434065
+40	1.013433
+50	0.607389
+60	0.222584
+70	0.010936
+80	0.000011
+90	0.000011
+100	0.000008
+110	0.000003
+120	0.000000
+130	0.005066
+140	0.019894
+150	0.017863
+};
+\addlegendentry{$1\times 7-1\cdot t_{90^{\circ}}$};
+
 % 1x11 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*,mark options={fill=white}]
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
 table{
 10.00	2.044038
 20.00	1.850225
@@ -186,6 +207,47 @@ table{
 };
 \addlegendentry{$1\times 11-1\cdot t_{90^{\circ}}$};
 
+%% 1x1 - free
+%\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=pentagon*]
+%table{
+%10.00	1.94957798
+%20.00	1.60401110
+%30.00	0.92917427
+%40.00	0.40903582
+%50.00	0.13646384
+%60.00	0.00987438
+%70.00	0.00000809
+%80.00	0.00000782
+%90.00	0.00000391
+%100.00	0.00000259
+%110.00	0.00000135
+%120.00	0.00000071
+%130.00	0.00000022
+%140.00	0.00000002
+%150.00	0.00033306
+%};
+%\addlegendentry{$1\times 1-free$};
+%
+%% 1x3 - free
+%\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=pentagon*,,mark options={fill=white}]
+%table{
+%10.00	1.96675644
+%20.00	1.84406890
+%30.00	1.43939980
+%40.00	1.01458098
+%50.00	0.60688098
+%60.00	0.22006553
+%70.00	0.00991175
+%80.00	0.00001154
+%90.00	0.00001125
+%100.00	0.00000831
+%110.00	0.00000262
+%120.00	0.00000023
+%130.00	0.00518750
+%140.00	0.02010836
+%150.00	0.01797660
+%};
+%\addlegendentry{$1\times 3-free$};
 
 \end{axis}
 %Tikz axis ends%

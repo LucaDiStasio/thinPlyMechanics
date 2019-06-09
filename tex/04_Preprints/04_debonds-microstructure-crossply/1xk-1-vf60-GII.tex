@@ -165,8 +165,50 @@ table{
 %};
 %\addlegendentry{$1\times 11-free$};
 
+% 1x5 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
+table{
+10	0.178584
+20	0.317705
+30	0.528124
+40	0.712620
+50	0.881892
+60	0.991312
+70	0.901812
+80	0.663436
+90	0.450312
+100	0.237982
+110	0.080678
+120	0.017953
+130	0.009647
+140	0.020517
+150	0.035263
+};
+\addlegendentry{$1\times 5-1\cdot t_{90^{\circ}}$};
+
+% 1x7 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
+table{
+10	0.177732
+20	0.314935
+30	0.526712
+40	0.712975
+50	0.881668
+60	0.991275
+70	0.901732
+80	0.663398
+90	0.450285
+100	0.237976
+110	0.080686
+120	0.017961
+130	0.009646
+140	0.020501
+150	0.035266
+};
+\addlegendentry{$1\times 7-1\cdot t_{90^{\circ}}$};
+
 % 1x11 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*,mark options={fill=white}]
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
 table{
 10.00	0.165846
 20.00	0.308382
@@ -185,6 +227,7 @@ table{
 150.00	0.035154
 };
 \addlegendentry{$1\times 11-1\cdot t_{90^{\circ}}$};
+
 \end{axis}
 %Tikz axis ends%
 

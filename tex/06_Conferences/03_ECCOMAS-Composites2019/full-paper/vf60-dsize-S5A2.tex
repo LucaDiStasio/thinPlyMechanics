@@ -68,7 +68,7 @@ legend entries={},
 \def\GIcavg{3}
 \def\GIcmax{4.5}
 
-% S5, A1, GTOT
+% S5, A2, GTOT
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
 table[x=theta, y=GTOT]{
 theta    GI           GII       GTOT    
@@ -90,7 +90,7 @@ theta    GI           GII       GTOT
 };
 \addlegendentry{$G_{TOT}$}
 
-% S5, A1, GIcmin
+% S5, A2, GIcmin
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*]
 table[x=theta, y expr={\GIcmin*(1+(tan(deg((1-\lambdamin)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
 theta    GI           GII       GTOT    
@@ -111,7 +111,7 @@ theta    GI           GII       GTOT
 };
 \addlegendentry{$G_{Ic}=2\ \left[\nicefrac{J}{m^{2}}\right]$, $\lambda=2$}
 
-% S5, A1, GIcmin
+% S5, A2, GIcmin
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*,mark options={fill=white}]
 table[x=theta, y expr={\GIcmin*(1+(tan(deg((1-\lambdamax)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
 theta    GI           GII       GTOT    
@@ -132,7 +132,7 @@ theta    GI           GII       GTOT
 };
 \addlegendentry{$G_{Ic}=2\ \left[\nicefrac{J}{m^{2}}\right]$, $\lambda=3.5$}
 
-% S5, A1, GIcavg
+% S5, A2, GIcavg
 \addplot[line width=\linewidth,mark size=\markersize,cyan,smooth,mark=pentagon*]
 table[x=theta, y expr={\GIcavg*(1+(tan(deg((1-\lambdamin)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
 theta    GI           GII       GTOT    
@@ -153,7 +153,7 @@ theta    GI           GII       GTOT
 };
 \addlegendentry{$G_{Ic}=3\ \left[\nicefrac{J}{m^{2}}\right]$, $\lambda=2$}
 
-% S5, A1, GIcavg
+% S5, A2, GIcavg
 \addplot[line width=\linewidth,mark size=\markersize,cyan,smooth,mark=pentagon*,mark options={fill=white}]
 table[x=theta, y expr={\GIcavg*(1+(tan(deg((1-\lambdamax)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
 theta    GI           GII       GTOT    
@@ -174,7 +174,7 @@ theta    GI           GII       GTOT
 };
 \addlegendentry{$G_{Ic}=3\ \left[\nicefrac{J}{m^{2}}\right]$, $\lambda=3.5$}
 
-% S5, A1, GIcmax
+% S5, A2, GIcmax
 \addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=triangle*]
 table[x=theta, y expr={\GIcmax*(1+(tan(deg((1-\lambdamin)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
 theta    GI           GII       GTOT    
@@ -195,7 +195,7 @@ theta    GI           GII       GTOT
 };
 \addlegendentry{$G_{Ic}=4.5\ \left[\nicefrac{J}{m^{2}}\right]$, $\lambda=2$}
 
-% S5, A1, GIcmax
+% S5, A2, GIcmax
 \addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=triangle*,mark options={fill=white}]
 table[x=theta, y expr={\GIcmax*(1+(tan(deg((1-\lambdamax)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
 theta    GI           GII       GTOT    

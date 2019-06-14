@@ -61,10 +61,25 @@ ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
 legend entries={{$V_{f}=30\%$},{$V_{f}=50\%$},{$V_{f}=60\%$},{$V_{f}=65\%$}},
 ]
 
-\def\EL{43442}%MPa
-\def\ET{13714}
-\def\nuLT{0.273}
-\pgfmathsetmacro\Eeq{\ET/(1-\ET*\nuLT*\nuLT/\EL)}
+\def\ELthirty{43442}%MPa
+\def\ETthirty{13714}
+\def\nuLTthirty{0.273}
+\pgfmathsetmacro\Eeqthirty{\ETthirty/(1-\ETthirty*\nuLTthirty*\nuLTthirty/\ELthirty)}
+
+\def\ELfifty{43442}%MPa
+\def\ETfifty{13714}
+\def\nuLTfifty{0.273}
+\pgfmathsetmacro\Eeqfifty{\ETfifty/(1-\ETfifty*\nuLTfifty*\nuLTfifty/\ELfifty)}
+
+\def\ELsixty{43442}%MPa
+\def\ETsixty{13714}
+\def\nuLTsixty{0.273}
+\pgfmathsetmacro\Eeqsixty{\ETsixty/(1-\ETsixty*\nuLTsixty*\nuLTsixty/\ELsixty)}
+
+\def\ELsixtyfive{43442}%MPa
+\def\ETsixtyfive{13714}
+\def\nuLTsixtyfive{0.273}
+\pgfmathsetmacro\Eeqsixtyfive{\ETsixtyfive/(1-\ETsixtyfive*\nuLTsixtyfive*\nuLTsixtyfive/\ELsixtyfive)}
 
 % 30%
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]

@@ -50,40 +50,47 @@ line width=0.75mm,
 % GRID SIZE
 xmin=0.0,
 xmax=90.0,
-ymin=0.0,
-ymax=5.0,
+%ymin=0.0,
+%ymax=5.0,
 xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0},
 % CONTENT
 %title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
-ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
+ylabel={$\nicefrac{G_{I}}{G_{0}}\left[-\right]$},
 % LEGEND ENTRIES
 legend entries={{$V_{f}=30\%$},{$V_{f}=50\%$},{$V_{f}=60\%$},{$V_{f}=65\%$}},
 ]
 
-\def\ELthirty{23489}%MPa
-\def\ETthirty{6710}
+\def\epsapplied{0.01}
+\def\Rf{1}
+
+\def\ELthirty{23.489}%MPa
+\def\ETthirty{6.710}
 \def\nuLTthirty{0.333}
 \pgfmathsetmacro\Eeqthirty{\ETthirty/(1-\ETthirty*\nuLTthirty*\nuLTthirty/\ELthirty)}
 
-\def\ELfifty{36795}%MPa
-\def\ETfifty{10569}
+\def\ELfifty{36.795}%MPa
+\def\ETfifty{10.569}
 \def\nuLTfifty{0.292}
 \pgfmathsetmacro\Eeqfifty{\ETfifty/(1-\ETfifty*\nuLTfifty*\nuLTfifty/\ELfifty)}
 
-\def\ELsixty{43442}%MPa
-\def\ETsixty{13714}
+\def\ELsixty{43.442}%MPa
+\def\ETsixty{13.714}
 \def\nuLTsixty{0.273}
 \pgfmathsetmacro\Eeqsixty{\ETsixty/(1-\ETsixty*\nuLTsixty*\nuLTsixty/\ELsixty)}
 
-\def\ELsixtyfive{46765}%MPa
-\def\ETsixtyfive{15764}
+\def\ELsixtyfive{46.765}%MPa
+\def\ETsixtyfive{15.764}
 \def\nuLTsixtyfive{0.263}
 \pgfmathsetmacro\Eeqsixtyfive{\ETsixtyfive/(1-\ETsixtyfive*\nuLTsixtyfive*\nuLTsixtyfive/\ELsixtyfive)}
 
+\def\fI#1{sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(3*#1/2))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(3*#1/2))/#1}
+\def\fII#1{-sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(3*#1/2))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(3*#1/2))/#1}
+
 % 30%
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table{
+table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fI{\thisrow{theta}})}]{
+theta        GI
 10.00	0.68321882
 20.00	0.90117956
 30.00	0.75441741
@@ -101,71 +108,71 @@ table{
 150.00	0.00059589
 };
 
-% 50%
-\addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=square*,mark options={fill=white}]
-table{
-10.00	2.09951771
-20.00	2.25671958
-30.00	1.78597841
-40.00	1.15865662
-50.00	0.56110064
-60.00	0.11996629
-70.00	0.00000600
-80.00	0.00006204
-90.00	0.00005918
-100.00	0.00005347
-110.00	0.00003033
-120.00	0.00001572
-130.00	0.00000583
-140.00	0.00000106
-150.00	0.00053683
-};
-
-% 60%
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*]
-table{
-10.00	3.51819842
-20.00	3.55255801
-30.00	2.81553151
-40.00	1.85927848
-50.00	0.97844834
-60.00	0.28342697
-70.00	0.00033986
-80.00	0.00006694
-90.00	0.00007318
-100.00	0.00006981
-110.00	0.00003779
-120.00	0.00001780
-130.00	0.00000616
-140.00	0.00000105
-150.00	0.00194739
-};
-
-% 65%
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
-table{
-10.00	4.63055289
-20.00	4.68878506
-30.00	3.79793549
-40.00	2.48355230
-50.00	1.38760015
-60.00	0.47809310
-70.00	0.01199049
-80.00	0.00006013
-90.00	0.00008039
-100.00	0.00007976
-110.00	0.00004119
-120.00	0.00001854
-130.00	0.00000588
-140.00	0.00000088
-150.00	0.01237813
-100.00	0.00007976
-110.00	0.00004119
-120.00	0.00001854
-130.00	0.00000588
-140.00	0.00000088
-150.00	0.01237813
-};
+%% 50%
+%\addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=square*,mark options={fill=white}]
+%table{
+%10.00	2.09951771
+%20.00	2.25671958
+%30.00	1.78597841
+%40.00	1.15865662
+%50.00	0.56110064
+%60.00	0.11996629
+%70.00	0.00000600
+%80.00	0.00006204
+%90.00	0.00005918
+%100.00	0.00005347
+%110.00	0.00003033
+%120.00	0.00001572
+%130.00	0.00000583
+%140.00	0.00000106
+%150.00	0.00053683
+%};
+%
+%% 60%
+%\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*]
+%table{
+%10.00	3.51819842
+%20.00	3.55255801
+%30.00	2.81553151
+%40.00	1.85927848
+%50.00	0.97844834
+%60.00	0.28342697
+%70.00	0.00033986
+%80.00	0.00006694
+%90.00	0.00007318
+%100.00	0.00006981
+%110.00	0.00003779
+%120.00	0.00001780
+%130.00	0.00000616
+%140.00	0.00000105
+%150.00	0.00194739
+%};
+%
+%% 65%
+%\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
+%table{
+%10.00	4.63055289
+%20.00	4.68878506
+%30.00	3.79793549
+%40.00	2.48355230
+%50.00	1.38760015
+%60.00	0.47809310
+%70.00	0.01199049
+%80.00	0.00006013
+%90.00	0.00008039
+%100.00	0.00007976
+%110.00	0.00004119
+%120.00	0.00001854
+%130.00	0.00000588
+%140.00	0.00000088
+%150.00	0.01237813
+%100.00	0.00007976
+%110.00	0.00004119
+%120.00	0.00001854
+%130.00	0.00000588
+%140.00	0.00000088
+%150.00	0.01237813
+%};
 
 
 \end{axis}

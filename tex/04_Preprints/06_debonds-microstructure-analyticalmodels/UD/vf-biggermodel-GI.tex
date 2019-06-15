@@ -37,8 +37,8 @@ xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{
 ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
 tick align=outside,
 tick label style={font=\huge},
-legend style={draw=white!80.0!black,font=\fontsize{28}{24}\selectfont,row sep=15pt},
-legend image post style={xscale=1.5,yscale=1.5},
+legend style={at={(axis cs:60,1.25)},anchor=north west,draw=white!80.0!black,font=\fontsize{15}{24}\selectfont,row sep=7.5pt},
+legend image post style={xscale=1.1,yscale=1.1},
 legend cell align={left},
 clip mode=individual,
 % GRID STYLE
@@ -49,98 +49,136 @@ y grid style={lightgray!92.026143790849673!black},
 line width=0.75mm,
 % GRID SIZE
 xmin=0.0,
-xmax=90.0,
-ymin=0.0,
-ymax=5.0,
+xmax=60.0,
+%ymin=-0.1,
+%ymax=0.1,
 xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0},
 % CONTENT
 %title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
-ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
+ylabel={$\nicefrac{G_{I}}{G_{0}}\left[-\right]$},
 % LEGEND ENTRIES
 legend entries={{$V_{f}=30\%$},{$V_{f}=50\%$},{$V_{f}=60\%$},{$V_{f}=65\%$}},
 ]
 
+\def\pinum{3.14159265359}
+
+\def\epsapplied{0.01}
+\def\Rf{1}
+
+\def\Vthirty{0.3}
+\def\Vfifty{0.5}
+\def\Vsixty{0.6}
+\def\Vsixtyfive{0.65}
+
+\def\L#1{0.5*\Rf*sqrt(\pinum/#1)}
+
+\def\ELthirty{23.489}%MPa
+\def\ETthirty{6.710}
+\def\nuLTthirty{0.333}
+\pgfmathsetmacro\Eeqthirty{\ETthirty/(1-\ETthirty*\nuLTthirty*\nuLTthirty/\ELthirty)}
+
+\def\ELfifty{36.795}%MPa
+\def\ETfifty{10.569}
+\def\nuLTfifty{0.292}
+\pgfmathsetmacro\Eeqfifty{\ETfifty/(1-\ETfifty*\nuLTfifty*\nuLTfifty/\ELfifty)}
+
+\def\ELsixty{43.442}%MPa
+\def\ETsixty{13.714}
+\def\nuLTsixty{0.273}
+\pgfmathsetmacro\Eeqsixty{\ETsixty/(1-\ETsixty*\nuLTsixty*\nuLTsixty/\ELsixty)}
+
+\def\ELsixtyfive{46.765}%MPa
+\def\ETsixtyfive{15.764}
+\def\nuLTsixtyfive{0.263}
+\pgfmathsetmacro\Eeqsixtyfive{\ETsixtyfive/(1-\ETsixtyfive*\nuLTsixtyfive*\nuLTsixtyfive/\ELsixtyfive)}
+
+\def\fI#1{sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(3*#1/2))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(3*#1/2))/(\thisrow{theta}*\pinum/180)}
+\def\fII#1{sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(3*#1/2))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(3*#1/2))/(\thisrow{theta}*\pinum/180)}
 
 
 % 30%
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table{
+table[x=theta, y expr={\thisrow{G}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf/\fI{\thisrow{theta}})}]{
+theta        G
 10.00	0.68353011
 20.00	0.90263404
 30.00	0.75689535
 40.00	0.45568201
 50.00	0.16643223
-60.00	0.00736294
-70.00	0.00002357
-80.00	0.00004159
-90.00	0.00003593
-100.00	0.00003227
-110.00	0.00001968
-120.00	0.00001119
-130.00	0.00000418
-140.00	0.00000061
-150.00	0.00060079
+%60.00	0.00736294
+%70.00	0.00002357
+%80.00	0.00004159
+%90.00	0.00003593
+%100.00	0.00003227
+%110.00	0.00001968
+%120.00	0.00001119
+%130.00	0.00000418
+%140.00	0.00000061
+%150.00	0.00060079
 };
 
 % 50%
 \addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=square*,mark options={fill=white}]
-table{
+table[x=theta, y expr={\thisrow{G}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf/\fI{\thisrow{theta}})}]{
+theta        G
 10.00	2.07458218
 20.00	2.24346875
 30.00	1.78278796
 40.00	1.16028799
 50.00	0.56268833
-60.00	0.11969636
-70.00	0.00000540
-80.00	0.00006385
-90.00	0.00006073
-100.00	0.00005496
-110.00	0.00003140
-120.00	0.00001627
-130.00	0.00000602
-140.00	0.00000111
-150.00	0.00053426
+%60.00	0.11969636
+%70.00	0.00000540
+%80.00	0.00006385
+%90.00	0.00006073
+%100.00	0.00005496
+%110.00	0.00003140
+%120.00	0.00001627
+%130.00	0.00000602
+%140.00	0.00000111
+%150.00	0.00053426
 };
 
 % 60%
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*]
-table{
+table[x=theta, y expr={\thisrow{G}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf/\fI{\thisrow{theta}})}]{
+theta        G
 10.00	3.53079692
 20.00	3.57968267
 30.00	2.85235663
 40.00	1.89413525
 50.00	1.00169026
-60.00	0.29150430
-70.00	0.00035418
-80.00	0.00006936
-90.00	0.00007606
-100.00	0.00007286
-110.00	0.00003954
-120.00	0.00001867
-130.00	0.00000644
-140.00	0.00000112
-150.00	0.00201653
+%60.00	0.29150430
+%70.00	0.00035418
+%80.00	0.00006936
+%90.00	0.00007606
+%100.00	0.00007286
+%110.00	0.00003954
+%120.00	0.00001867
+%130.00	0.00000644
+%140.00	0.00000112
+%150.00	0.00201653
 };
 
 % 65%
 \addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
-table{
+table[x=theta, y expr={\thisrow{G}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf/\fI{\thisrow{theta}})}]{
+theta        G
 10.00	4.64976867
 20.00	4.73156712
 30.00	3.84300727
 40.00	2.52298277
 50.00	1.42756663
-60.00	0.49192030
-70.00	0.01226148
-80.00	0.00006280
-90.00	0.00008376
-100.00	0.00008337
-110.00	0.00004329
-120.00	0.00001950
-130.00	0.00000626
-140.00	0.00000095
-150.00	0.01297674
+%60.00	0.49192030
+%70.00	0.01226148
+%80.00	0.00006280
+%90.00	0.00008376
+%100.00	0.00008337
+%110.00	0.00004329
+%120.00	0.00001950
+%130.00	0.00000626
+%140.00	0.00000095
+%150.00	0.01297674
 };
 
 

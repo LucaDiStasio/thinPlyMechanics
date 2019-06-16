@@ -56,7 +56,7 @@ xtick={0.0,20.0,40.0,60.0,80.0,100.0,120.0},
 % CONTENT
 %title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
-ylabel={$\nicefrac{G_{I}}{G_{0}}\left[-\right]$},
+ylabel={$\nicefrac{G_{II}}{G_{0}}\left[-\right]$},
 % LEGEND ENTRIES
 legend entries={{$V_{f}=30\%$},{$V_{f}=50\%$},{$V_{f}=60\%$},{$V_{f}=65\%$}},
 ]
@@ -93,13 +93,13 @@ legend entries={{$V_{f}=30\%$},{$V_{f}=50\%$},{$V_{f}=60\%$},{$V_{f}=65\%$}},
 \def\nuLTsixtyfive{0.263}
 \pgfmathsetmacro\Eeqsixtyfive{\ETsixtyfive/(1-\ETsixtyfive*\nuLTsixtyfive*\nuLTsixtyfive/\ELsixtyfive)}
 
-\def\fI#1{sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(3*#1/2))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(3*#1/2))/(\thisrow{theta}*\pinum/180)}
-\def\fII#1{sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(3*#1/2))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(3*#1/2))/(\thisrow{theta}*\pinum/180)}
+\def\fI#1{sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(3*#1/2))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(3*#1/2))/(#1*\pinum/180)}
+\def\fII#1{sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(3*#1/2))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(3*#1/2))/(#1*\pinum/180)}
 
 % 30%
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
-theta        GI
+table[x=theta, y expr={\thisrow{G}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+theta        G
 10.00	0.17770710
 20.00	0.61949509
 30.00	1.17834717
@@ -119,8 +119,8 @@ theta        GI
 
 % 50%
 \addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=square*,mark options={fill=white}]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqfifty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
-theta        GI
+table[x=theta, y expr={\thisrow{G}/(1000*\Eeqfifty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+theta        G
 10.00	0.52331695
 20.00	1.30866638
 30.00	2.08478411
@@ -140,8 +140,8 @@ theta        GI
 
 % 60%
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
-theta        GI
+table[x=theta, y expr={\thisrow{G}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+theta        G
 10.00	0.72822190
 20.00	1.57183944
 30.00	2.58991862
@@ -161,8 +161,8 @@ theta        GI
 
 % 65%
 \addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqsixtyfive*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
-theta        GI
+table[x=theta, y expr={\thisrow{G}/(1000*\Eeqsixtyfive*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+theta        G
 10.00	0.57710576
 20.00	1.52774176
 30.00	2.74853376

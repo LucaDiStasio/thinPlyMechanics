@@ -27,7 +27,7 @@
 
 \paragraph{Keywords:} Fiber Reinforced Polymer (FRP), Debonding, Linear Elastic Fracture Mechanics (LEFM).
 
-\paragraph{Summary:} \textit{This document provides information and instructions for preparing the (optional) full-length paper for the COMPOSITES 2019 Conference (September 18-20, 2019 in Girona, Spain).}
+\paragraph{Summary:} \textit{Initiation and propagation of fiber/matrix interface cracks are analyzed in Representative Volume Elements (RVEs) of UD and cross-ply laminates. By studying the distribution of stresses at the fiber/matrix interface in the undamaged case, an estimate of the initial flaw size is derived. By adopting a 2-parameters energy-based criterion for propagation~\cite{Hutchinson1991}, we then proceed to the estimation of the expected average debond size in different microstructural arrangements. Finally, the results are compared with microscopic observations available in the literature~\cite{Correa2018}.}
 
 \section{INTRODUCTION}
 
@@ -119,7 +119,7 @@ It is possible to observe that:
 \item comparison of Fig.~\ref{fig:stress-c} with Fig.~\ref{fig:stress-d} shows that the out-of-plane stress $\sigma_{yy}$ has only a marginal effect on the local hydrostatic stress $\sigma_{LHS}$: the distribution remains the same, while the peak value is reduced from $270\ \left[MPa\right]$ in Fig.~\ref{fig:stress-c} to $250\ \left[MPa\right]$ in Fig.~\ref{fig:stress-d} by considering $\sigma_{yy}$;
 \item comparison of Fig.~\ref{fig:stress-e} with Fig.~\ref{fig:stress-f} shows a remarkable effect of the out-of-plane stress $\sigma_{yy}$ on the von Mises stress: if $\sigma_{yy}$ is neglected, $\sigma_{vM}$ presents a maximum of $287\ \left[MPa\right]$ at $\psi=0^{\circ}$, slightly higher than the value of $\sigma_{LHS}$ (neglecting $\sigma_{yy}$) of $270\ \left[MPa\right]$ at $\psi=0^{\circ}$; if $\sigma_{yy}$ is considered, the peak value of $\sigma_{vM}$ is shifted to $\psi\sim20^{\circ}$ and reduced to $186\ \left[MPa\right]$ while at $\psi=0^{\circ}$ $\sigma_{vM}$ is reduced to $\sim110\ \left[MPa\right]$, significantly lower than $\sigma_{LHS}=250\ \left[MPa\right]$ at $\psi=0^{\circ}$ (considering $\sigma_{yy}$);
 \item comparison of Fig.~\ref{fig:stress-g} with Fig.~\ref{fig:stress-g} shows that the Local Maximum Principal Stress is practically unaffected by the out-of-plane stress $\sigma_{yy}$;
-\item $\sigma_{rr}$, $\sigma_{LHS,2D}$, $\sigma_{LHS,3D}$, $\sigma_{vM,2D}$, $\sigma_{LMPS,2D}$ and $\sigma_{LMPS,3D}$ all reach their peak value at $0^{\circ}$ and $180^{\circ}$ and decrease to $99\%$ the peak value between $2^{\circ}$ and $8^{\circ}$, to $95\%$ the peak value between $6^{\circ}$ and $12^{\circ}$ and to $90\%$ the peak value between $8^{\circ}$ and $15^{\circ}$.
+\item $\sigma_{rr}$, $\sigma_{LHS,2D}$, $\sigma_{LHS,3D}$, $\sigma_{vM,2D}$, $\sigma_{LMPS,2D}$ and $\sigma_{LMPS,3D}$ all reach their peak value at $0^{\circ}$ and $180^{\circ}$ and decrease to $99\%$ the peak value between $2^{\circ}$ and $8^{\circ}$, to $95\%$ the peak value between $6^{\circ}$ and $12^{\circ}$ and to $90\%$ the peak value between $8^{\circ}$ and $15^{\circ}$ from the occurrence of the maximum.
 \end{enumerate}
 
 Based on the previous considerations, it is reasonable to assume that a stress-based criterion would predict, irrespectively of the specific criterion chosen, the onset of an interface crack at $0^{\circ}$ or $180^{\circ}$ with an initial size at least comprised in the range $2^{\circ}-8^{\circ}$ ($1\%$ margin) and likely in the range $6^{\circ}-12^{\circ}$ ($5\%$ margin).
@@ -149,7 +149,7 @@ where $\Psi_{G}$ is the energy-based phase angle, $G_{Ic}$ is the Mode I critica
 
 \begin{figure}[!h]
 \centering
-    \subfigure[$\lambda=0.3$]{\label{fig:GIc-a}\includegraphics[height=0.25\textheight]{vf60-GIc-model.pdf}}\  
+    \subfigure[$\lambda=0.3$]{\label{fig:GIc-a}\includegraphics[height=0.25\textheight]{vf60-GIc-model.pdf}}\quad 
     \subfigure[$11\times 11-1\cdot t_{90^{\circ}}$]{\label{fig:GIc-b}\includegraphics[height=0.25\textheight]{vf60-GIc-lambda.pdf}}
 \caption{Estimated values of $G_{Ic}$ assuming different values of initial debond size, for different RUCs and varying $\lambda$.}\label{fig:GIc}
 \end{figure}
@@ -159,14 +159,22 @@ Having estimated the values of the material properties $G_{Ic}$ and $\lambda$, w
 
 \begin{figure}[!h]
 \centering
-    \subfigure[$\lambda=0.3$]{\label{fig:GIc-a}\includegraphics[height=0.25\textheight]{vf60-GIc-model.pdf}}\  
-    \subfigure[$11\times 11-1\cdot t_{90^{\circ}}$]{\label{fig:GIc-b}\includegraphics[height=0.25\textheight]{vf60-GIc-lambda.pdf}}
-\caption{Expected maximum size of debonds, for different RUCs and varying values of $G_{Ic}$ and $\lambda$.}\label{fig:GIc}
+    \subfigure[$21\times 1-free$]{\label{fig:debondsize-a}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A0.pdf}}\   
+    \subfigure[$21\times 1-1\cdot t_{90^{\circ}}$]{\label{fig:debondsize-b}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A0T1.pdf}}\\
+    \subfigure[$21\times 3-free$]{\label{fig:debondsize-c}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A3.pdf}}\   
+    \subfigure[$21\times 3-1\cdot t_{90^{\circ}}$]{\label{fig:debondsize-d}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A3T1.pdf}}\\
+    \subfigure[$21\times 21-free$]{\label{fig:debondsize-e}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A10.pdf}}\   
+    \subfigure[$21\times 21-1\cdot t_{90^{\circ}}$]{\label{fig:debondsize-f}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A10T1.pdf}}\\
+    \subfigure[$21\times 1-coupling$]{\label{fig:debondsize-g}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A0vk.pdf}}\   
+    \subfigure[$21\times 1-asymm$]{\label{fig:debondsize-h}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A0asymm.pdf}}
+\caption{Expected maximum size of debonds, for different RUCs and varying values of $G_{Ic}$ and $\lambda$.}\label{fig:debondsize}
 \end{figure}
+
+Comparison of Fig.~\ref{fig:debondsize-a} with Fig.~\ref{fig:debondsize-b} shows that the effect of the presence of the $0^{\circ}$ layer is to reduce the maximum size of debonds, from $\sim105^{\circ}$ in $21\times 1-free$ to $\sim45^{\circ}$ in $21\times 1-1\cdot t_{90^{\circ}}$ for $G_{Ic}=2\ \left[\frac{J}{m^{2}}\right]$, $\lambda=0.35$. However, the presence of just 1 ``row'' of undamaged fibers between the debond and the free surface or the $0^{\circ}/90^{\circ}$ interface (in RVEs respectively of UD composites and cross-ply laminates) makes the estimation of the maximum debond size unaffected by the number $k$ of fiber rows (Figures~\ref{fig:debondsize-c}, \ref{fig:debondsize-d}, \ref{fig:debondsize-e} and~\ref{fig:debondsize-f}). Moreover, for any given combination of $G_{Ic}$ and $\lambda$, the estimated debond size is the same for $n\times k-free$ and $n\times k-1\cdot t_{90^{\circ}}$ for $k\geq3$. The presence of a debond on the neighboring fiber in the vertical direction (RUCs $21\times 1-coupling$ and $21\times 1-asymm$) favors instead the growth of larger debonds (Figures~\ref{fig:debondsize-g} and~\ref{fig:debondsize-h}), with the largest size achieved when debonds are on opposite sides of consecutive fibers ($\sim115^{\circ}$ in $21\times 1-asymm$ and $\sim110^{\circ}$ in $21\times 1-coupling$). Considering the different combination of $G_{Ic}$ and $\lambda$, it is possible to identify the range of maximum debond propagation: for a 1-fiber row UD composite ($21\times 1-free$), $30^{\circ}-105^{\circ}$; for a 1-fiber row $90^{\circ}$ ply in a cross-ply laminate ($21\times 1-1\cdot t_{90^{\circ}}$), $30^{\circ}-45^{\circ}$; for a $k$-fiber row UD composite and a $k$-fiber row $90^{\circ}$ ply in a cross-ply laminate with $k\geq3$ ($21\times k-free$ and $21\times k-1\cdot t_{90^{\circ}}$), $40^{\circ}-60^{\circ}$; for consecutive debonds along the vertical direction in an infinite UD composite ($21\times 1-coupling$ and $21\times 1-asymm$), $80^{\circ}-110^{\circ}$ when debonds are on the same sides and $60^{\circ}-115^{\circ}$ when on opposite sides. These theoretical predictions are in striking agreement with the microscopical observations performed in~\cite{Correa2018} on $\left[0^{\circ}_{3},90^{\circ}_{3}\right]_{S}$ carbon fiber (AS4) - epoxy (8552) specimens subjected to tensile loading (corresponding to RUCs $n\times k-1\cdot t_{90^{\circ}}$ in this article). They report debond sizes in the range $21.4^{\circ}-89.2^{\circ}$ with average value of $49.3^{\circ}$ and standard deviation of $11.7^{\circ}$, with $63\%$ of the measurements in the range $40^{\circ}-60^{\circ}$.
 
 \section{CONCLUSIONS}
 
-We are looking forward to receiving your contributions for this conference.
+Onset and growth of fiber/matrix interface cracks has been studied in Representative Volume Elements (RVEs) of UD composites and $\left[0_{m\cdot k\cdot2L}^{\circ},90_{k\cdot2L}^{\circ},0_{m\cdot k\cdot2L}^{\circ}\right]$ laminates by means of Repeating Unit Cells (RUCs). Analysis of the stress distribution at the fiber/matrix interface in the absence of damage has shown that a stress criterion for initiation would predict, irrespectively of which criterion from those proposed in the literature is chosen, the onset of a debond at $0^{\circ}$ or $180^{\circ}$ with a semi-aperture $\Delta\theta_{0}$ in the range $2^{\circ}-12^{\circ}$, corresponding to a margin of $5\%$ on the satisfaction of the criterion. Assuming a mixed-mode criterion for debond propagation and taking into account the previous considerations regarding the stress distribution, the critical Mode I ERR $G_{Ic}$ is estimated to lie in the range $2-4.5\ \left[\frac{J}{m^{2}}\right]$. Estimation of maximum debond size finally provides: for a 1-fiber row UD composite, $30^{\circ}-105^{\circ}$; for a 1-fiber row $90^{\circ}$ ply in a cross-ply laminate, $30^{\circ}-45^{\circ}$; for a multiple fiber-rows UD composite and a multiple fiber-rows $90^{\circ}$ ply in a cross-ply laminate , $40^{\circ}-60^{\circ}$; for consecutive debonds along the vertical direction in an infinite UD composite, $80^{\circ}-110^{\circ}$ when debonds are on the same sides and $60^{\circ}-115^{\circ}$ when on opposite sides. These predictions agree well with the debond size distribution estimated in~\cite{Correa2018} through microscopic observations of cross-ply specimens.
 
 \section*{ACKNOWLEDGEMENTS}
 

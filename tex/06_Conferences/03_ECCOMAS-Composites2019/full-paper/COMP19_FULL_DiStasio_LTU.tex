@@ -24,7 +24,7 @@
 \end{center}
 
 
-\paragraph{Keywords:} Modeling, Experimental validation, Industrial applications.
+\paragraph{Keywords:} Fiber Reinforced Polymer (FRP), Debonding, Linear Elastic Fracture Mechanics (LEFM).
 
 \paragraph{Summary:} \textit{This document provides information and instructions for preparing the (optional) full-length paper for the COMPOSITES 2019 Conference (September 18-20, 2019 in Girona, Spain).}
 
@@ -35,80 +35,32 @@ The Conference publication will consist of a pen drive containing papers of the 
 The deadline date for early registration date is April 30, 2019. Presenting authors must register by June 13, 2019. Papers with authors not registered by this date will be removed from the final program.
 Registration closes on September 5, 2019. Further information can be found at the conference website: \texttt{www.composites2019.udg.edu}
 
-\section{GENERAL SPECIFICATIONS}
-The full-length paper must be written in English and should have a maximum length of 12 pages.
+\section{RVE MODELS AND FE DISCRETIZATION}
 
-\section{TITLE, AUTHORS, KEY WORDS}
-The first page must contain the Title, Author(s), Affiliation(s), Key words and the Summary. The Introduction must begin immediately below, following the format of this template.
+In this contribution, we analyze debond initiation and propagation in Representative Volume Elements (RVEs) of Uni-Directional (UD) composites and $\left[0_{m\cdot k\cdot2L}^{\circ},90_{k\cdot2L}^{\circ},0_{m\cdot k\cdot2L}^{\circ}\right]$ laminates. Given a global reference frame with axis $x$, $y$ and $z$, both types of composites are modeled as plates lying in the $x-y$ plane, with the through-the-thickness direction thus aligned with the $z$ axis. The UD composite $0^{\circ}$ direction is parallel to the $y$ axis, while the cross-ply $0^{\circ}$ direction is parallel to the $x$ axis. Both composites are loaded in tension along the $x$ axis, which thus corresponds to: transverse loading of the UD specimen; axial loading of the cross-ply specimen. In both composites, damage is present only in the form of fiber/matrix interface cracks, or debonds. In cross-plies, debonds are assumed to be present only in the central ${90^{\circ}}$.
 
-\subsection{Title}
-The title should be written with all capital letters.
-\subsection{Author}
-The author's name should include first name, middle initial and surname.
-\subsection{key words}
-Please, write no more than three keywords.
+\section{STRESS-BASED ANALYSIS OF DEBOND INITIATION}
 
-\section{FIGURES}
-
-All figures are automatically numbered consecutively and captioned, and should be embedded in the Paper, see for example Figure~\ref{fig:Claustre}.
-
-\begin{figure}[!h]
- \centering\includegraphics[width=0.65\linewidth]{Claustre.pdf}
- \caption{The cloister of the convent of St. Domènec, which is the venue of this conference.}
- \label{fig:Claustre}
-\end{figure}
-
-\section{EQUATIONS}
-
-A displayed equation is automatically numbered, using Arabic numbers in parentheses.
-The following example is a single line equation:
-
-\begin{align}
- Ax = b
-\end{align}
-
-The next example is a multi-line equation:
-\begin{equation}
- \begin{aligned}
-  Ax &=b \\
-  Ax &=b
- \end{aligned}
-\end{equation}
-
-
-\section{TABLES}
-All tables are automatically numbered consecutively and captioned.
-
-\begin{table}[!h]
-\centering
-\caption{Example of the construction of a table.}
-\setlength{\arrayrulewidth}{2\arrayrulewidth}
-\begin{tabular}{ccc}
-\hline
-C11 & C12 & C13 \\
-C21 & C22 & C23 \\
-C31 & C32 & C33 \\
-C41 & C42 & C43 \\
-C51 & C52 & C53 \\
-\hline
-\end{tabular}
-\end{table}
-
-
-\section{FORMAT OF REFERENCES}
-References should be quoted in the text by numbers \cite{Barbero,Pimenta} and grouped together at the end of the Abstract in numerical order as shown in these instructions. Use the $unsrt$ style either with the $BibTeX$ or the $\backslash$$bibitem$ format.
+\section{ENERGY-BASED ANALYSIS OF DEBOND PROPAGATION}
 
 \section{CONCLUSIONS}
 
 We are looking forward to receiving your contributions for this conference.
 
+\section*{ACKNOWLEDGEMENTS}
+
+Luca Di Stasio gratefully acknowledges the support of the European School of Materials (EUSMAT) through the DocMASE Doctoral Programme and the European Commission through the Erasmus Mundus Programme.
+
 \bibliographystyle{unsrt}
-\begin{thebibliography}{10}
 
-\bibitem{Barbero} E.J. Barbero, \textit{Finite Element Analysis of Composite Materials}. CRC Press, Boca Raton, 2008.
-\bibitem{Pimenta} S. Pimenta, S.T. Pinho, The effect of recycling on the mechanical response of carbon fibres and their composites. \textit{Composite Structures}, \textbf{94}, 3669-3684, 2012.
+%\begin{thebibliography}{10}
+%
+%\bibitem{Barbero} E.J. Barbero, \textit{Finite Element Analysis of Composite Materials}. CRC Press, Boca Raton, 2008.
+%\bibitem{Pimenta} S. Pimenta, S.T. Pinho, The effect of recycling on the mechanical response of carbon fibres and their composites. \textit{Composite Structures}, \textbf{94}, 3669-3684, 2012.
+%
+%\end{thebibliography}
 
-\end{thebibliography}
+\bibliography{refs}
 
 \end{document}
 

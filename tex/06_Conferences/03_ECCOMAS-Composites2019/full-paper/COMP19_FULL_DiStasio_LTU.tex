@@ -108,7 +108,16 @@ Mode I ERR is underestimated with the Virtual Crack Closure Technique (VCCT)~\ci
 
 \section{STRESS-BASED ANALYSIS OF DEBOND INITIATION}
 
-The distribution of stresses at the fiber/matrix interface is analyzed in models $1\times k-free$ and $1\times k-1\cdot t_{90^{\circ}}$ with $k=1,3,11,201$ and $\Delta\theta=0^{\circ}$, i.e. the undamaged case. Some selected stress components are analyzed, based on their relevance in previous studies on debond initiation and growth: the radial $\sigma_{rr}$ and shear $\tau_{r\psi}$ stress~\cite{Mantic2009}, the Local Hydrostatic Stress (LHS, following the notation of~\cite{Carraro2016}) $\sigma_{LHS}$~\cite{Asp1996a,Asp1996b}, the local von Mises stress $\sigma_{vM}$~\cite{Canal2012}, the Local Maximum Principal Stress (LMPS, following the notation of~\cite{Carraro2016}) $\sigma_{LMPS}$~\cite{Carraro2014}. In plane strain conditions there exists an out-of-plane axial component of the stress ($\sigma_{yy}$ in our notation): in order to study the importance of this out-of-plane component (tri-axial stress state, see~\cite{Asp1995}), $\sigma_{LHS}$, $\sigma_{vM}$ and $\sigma_{LMPS}$ are evaluated both neglecting (index $2D$) and considering (index $3D$)  $\sigma_{yy}$.
+The distribution of stresses at the fiber/matrix interface is analyzed in models $1\times k-free$ and $1\times k-1\cdot t_{90^{\circ}}$ with $k=1,3,11,201$ and $\Delta\theta=0^{\circ}$, i.e. the undamaged case. Some selected stress components are analyzed, based on their relevance in previous studies on debond initiation and growth: the radial $\sigma_{rr}$ and shear $\tau_{r\psi}$ stress~\cite{Mantic2009} (Fig.~\cite{fig:stress-a} and Fig.~\cite{fig:stress-b}), the Local Hydrostatic Stress (LHS, following the notation of~\cite{Carraro2016}) $\sigma_{LHS}$~\cite{Asp1996a,Asp1996b} (Fig.~\cite{fig:stress-c} and Fig.~\cite{fig:stress-d}), the local von Mises stress $\sigma_{vM}$~\cite{Canal2012}  (Fig.~\cite{fig:stress-e} and Fig.~\cite{fig:stress-f}), the Local Maximum Principal Stress (LMPS, following the notation of~\cite{Carraro2016}) $\sigma_{LMPS}$~\cite{Carraro2014}  (Fig.~\cite{fig:stress-g} and Fig.~\cite{fig:stress-h}). In plane strain conditions there exists an out-of-plane axial component of the stress ($\sigma_{yy}$ in our notation): in order to study the importance of this out-of-plane component (tri-axial stress state, see~\cite{Asp1995}), $\sigma_{LHS}$, $\sigma_{vM}$ and $\sigma_{LMPS}$ are evaluated both neglecting (index $2D$) and considering (index $3D$)  $\sigma_{yy}$.\\
+It is possible to observe that:
+
+\begin{itemize}[\label={--}]
+\item for all stress components, no significant difference is present between the different RUCs for $\Delta\theta\leq10^{\circ}$;
+\item for all stress components, no difference can be observed by increasing $k$ when $k\geq3$;
+\item for all stress components, no difference can be observed between $1\times  k-free$ and $1\times  k-1\cdot t_{90^{\circ}}$ for $k\geq3$;
+\item at $\psi=0^{\circ}$ (i.e. the intersection between fiber/matrix interface and horizontal axis); the shear stress $\tau_{r\psi}$ (Fig.~\cite{fig:stress-b}) is $0$ while the radial stress $\sigma_{rr}$ (Fig.~\cite{fig:stress-a}) is at its maximum;
+\item comparison of Fig.~\cite{fig:stress-c} with Fig.~\cite{fig:stress-d} shows that the out-of-plane $\sigma_{yy}$ stress has only a marginal effect on the local hydrostatic stress $\sigma_{LHS}$
+\end{itemize}
 
 \begin{figure}[!h]
 \centering
@@ -118,8 +127,8 @@ The distribution of stresses at the fiber/matrix interface is analyzed in models
     \subfigure[$\sigma_{LHS,3D}$]{\label{fig:stress-d}\includegraphics[height=0.22\textheight]{vf60-nodamage-p3D.pdf}}
     \subfigure[$\sigma_{vM,2D}$]{\label{fig:stress-e}\includegraphics[height=0.22\textheight]{vf60-nodamage-vM2D.pdf}}\ 
     \subfigure[$\sigma_{vM,3D}$]{\label{fig:stress-f}\raisebox{0.04\textheight}{\includegraphics[height=0.18\textheight]{vf60-nodamage-vM3D.pdf}}}
-    \subfigure[$\sigma_{LMPS,2D}$]{\label{fig:stress-e}\includegraphics[height=0.22\textheight]{vf60-nodamage-sigmaI2D.pdf}}\ 
-    \subfigure[$\sigma_{LMPS,3D}$]{\label{fig:stress-f}\includegraphics[height=0.22\textheight]{vf60-nodamage-sigmaI3D.pdf}}
+    \subfigure[$\sigma_{LMPS,2D}$]{\label{fig:stress-g}\includegraphics[height=0.22\textheight]{vf60-nodamage-sigmaI2D.pdf}}\ 
+    \subfigure[$\sigma_{LMPS,3D}$]{\label{fig:stress-h}\includegraphics[height=0.22\textheight]{vf60-nodamage-sigmaI3D.pdf}}
 \caption{Stress distribution at the fiber/matrix interface in the absence of damage.}\label{fig:stress}
 \end{figure}
 

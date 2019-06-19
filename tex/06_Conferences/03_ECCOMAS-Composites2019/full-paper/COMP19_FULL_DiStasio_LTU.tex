@@ -31,10 +31,7 @@
 
 \section{INTRODUCTION}
 
-The Conference publication will consist of a pen drive containing papers of the contributions received and a printed Book of Abstracts containing a one page version of the accepted abstracts. The authors must submit a full-length paper (max. 12 pages) using the same format of this template. Submission of a full-length paper is not mandatory but authors are strongly encouraged to send it before June 27, 2019.
-
-The deadline date for early registration date is April 30, 2019. Presenting authors must register by June 13, 2019. Papers with authors not registered by this date will be removed from the final program.
-Registration closes on September 5, 2019. Further information can be found at the conference website: \texttt{www.composites2019.udg.edu}
+Characterization of initiation and growth of fiber/matrix interface cracks (or debonds) in Fiber Reinforced Polymer (FRP) composites has proven elusive, particularly the determination of initial flaw size and maximum debond extension. Different methodological approaches exist in the literature to study debond growth, namely Linear Elastic Fracture Mechanics (LEFM)~\cite{Paris2007}, Finite Fracture Mechanics (FFM)~\cite{Mantic2009}, Cohesive Zone Modeling (CSM)~\cite{Canal2012}, as well as several initiation physics-based criteria, such as tensile failure of the interface~\cite{Paris2007}, local cavitation-induced brittle matrix failure~\cite{Asp1996a,Asp1996b}, local matrix plasticization~\cite{Canal2012}, local nucleation plane~\cite{Carraro2014}. We propose here an attempt to evaluate initiation and propagation of debonds by taking into account the uncertainty in failure criteria and mechanisms evident from the literature. We thus aim to estimate a range of plausible values of initial flaw size and maximum debond size by: first, analyzing the stress distribution at the fiber/matrix interface in the absence of damage in Representative Volume Elements (RVEs) of UD and cross-ply laminates; second, determining the angular size of the regions where $\sigma\geq99\%\sigma_{max}$, $\sigma\geq95\%\sigma_{max}$ and $\sigma\geq90\%\sigma_{max}$, which provides an estimate of the initial flaw size; third, estimating the Mode I critical Energy Release Rate (ERR) of the interface, based on the values of initial flaw size and assuming a mixed-mode energy-based debond propagation criterion~\cite{Hutchinson1991}; fourth, comparing total ERR with the critical ERR provided by the propagation criterion~\cite{Hutchinson1991}. Finally, the estimated range of maximum debond size is compared with the results of microscopical observations of cross-ply specimens reported in~\cite{Correa2018}.
 
 \section{RVE MODELS AND FE DISCRETIZATION}
 
@@ -81,10 +78,10 @@ which represent conditions of anti-symmetric coupling~\cite{DiStasio2019b}.
 
 \begin{figure}[!h]
 \centering
-    \subfigure[$n\times k-free$]{\label{fig:rves-a}\raisebox{0.085\textheight}{\includegraphics[width=0.485\textwidth]{thickPlyUD.pdf}}}\quad 
-    \subfigure[$n\times k-coupling$]{\label{fig:rves-b}\includegraphics[width=0.485\textwidth]{coupling.pdf}}\\
-    \subfigure[$n\times k-asymm$]{\label{fig:rves-c}\raisebox{0.03\textheight}{\includegraphics[width=0.485\textwidth]{asymm.pdf}}}\quad
-    \subfigure[$n\times k-m\times t_{90^{\circ}}$]{\label{fig:rves-d}\includegraphics[width=0.485\textwidth]{ThickPlyCP.pdf}}
+    \subfigure[$n\times k-free$]{\label{fig:rves-a}\raisebox{0.0775\textheight}{\includegraphics[width=0.45\textwidth]{thickPlyUD.pdf}}}\quad 
+    \subfigure[$n\times k-coupling$]{\label{fig:rves-b}\includegraphics[width=0.45\textwidth]{coupling.pdf}}\\
+    \subfigure[$n\times k-asymm$]{\label{fig:rves-c}\raisebox{0.0275\textheight}{\includegraphics[width=0.45\textwidth]{asymm.pdf}}}\quad
+    \subfigure[$n\times k-m\times t_{90^{\circ}}$]{\label{fig:rves-d}\includegraphics[width=0.45\textwidth]{ThickPlyCP.pdf}}
 \caption{Composite RVEs and corresponding RUCs analyzed.}\label{fig:rves}
 \end{figure}
 
@@ -104,27 +101,9 @@ The FE solution is evaluated using Abaqus~\cite{abq12} using second order, 2D, p
 \caption{Comparison of total ERR of $11\times11-free$ evaluated respectively with VCCT and J-integral.}\label{fig:errerror}
 \end{figure}
 
-Mode I ERR is underestimated with the Virtual Crack Closure Technique (VCCT)~\cite{Krueger2004} for very small debonds (see Figure~\ref{fig:errerror}), due to the high $\frac{\delta}{\Delta\theta}$ ratio. Thus, for $\Delta\theta<10^{\circ}$, $G_{TOT}$ is evaluated using the J-integral~\cite{Rice1968}, $G_{II}$ with the VCCT and $G_{I}$ as $G_{TOT}=G_{I}+G_{II}$; for $\Delta\theta\geq10^{\circ}$ only the VCCT is used. Validation of the model is performed with respect to BEM results of~\cite{Paris2007,Sandino2016}; the order of accuracy of the results (differences $\leq5\%$ are not significant) is discussed in~\cite{DiStasio2019}.
+Mode I ERR is underestimated with the Virtual Crack Closure Technique (VCCT)~\cite{Krueger2004} for very small debonds (see Figure~\ref{fig:errerror}), due to the high $\frac{\delta}{\Delta\theta}$ ratio. Thus, for $\Delta\theta<10^{\circ}$, $G_{TOT}$ is evaluated using the J-integral~\cite{Rice1968}, $G_{II}$ with the VCCT and $G_{I}=G_{TOT}-G_{II}$; for $\Delta\theta\geq10^{\circ}$ only the VCCT is used. Validation of the model is performed with respect to BEM results of~\cite{Paris2007,Sandino2016}; the order of accuracy of the results (differences $\leq5\%$ are not significant) is discussed in~\cite{DiStasio2019}.
 
-\section{STRESS-BASED ANALYSIS OF DEBOND INITIATION}
-
-The distribution of stresses at the fiber/matrix interface is analyzed in models $1\times k-free$ and $1\times k-1\cdot t_{90^{\circ}}$ with $k=1,3,11,201$ and $\Delta\theta=0^{\circ}$, i.e. the undamaged case. Some selected stress components are analyzed, based on their relevance in previous studies on debond initiation and growth: the radial $\sigma_{rr}$ and shear $\tau_{r\psi}$ stress~\cite{Mantic2009} (Fig.~\ref{fig:stress-a} and Fig.~\ref{fig:stress-b}), the Local Hydrostatic Stress (LHS, following the notation of~\cite{Carraro2016}) $\sigma_{LHS}$~\cite{Asp1996a,Asp1996b} (Fig.~\ref{fig:stress-c} and Fig.~\ref{fig:stress-d}), the local von Mises stress $\sigma_{vM}$~\cite{Canal2012}  (Fig.~\ref{fig:stress-e} and Fig.~\ref{fig:stress-f}), the Local Maximum Principal Stress (LMPS, following the notation of~\cite{Carraro2016}) $\sigma_{LMPS}$~\cite{Carraro2014}  (Fig.~\ref{fig:stress-g} and Fig.~\ref{fig:stress-h}). In plane strain conditions there exists an out-of-plane axial component of the stress ($\sigma_{yy}$ in our notation): in order to study the importance of this out-of-plane component (tri-axial stress state, see~\cite{Asp1995}), $\sigma_{LHS}$, $\sigma_{vM}$ and $\sigma_{LMPS}$ are evaluated both neglecting (index $2D$) and considering (index $3D$)  $\sigma_{yy}$.\\
-It is possible to observe that:
-
-\begin{enumerate}
-\item for all stress components, no significant difference is present between the different RUCs for $\psi\leq10^{\circ}$;
-\item for all stress components, no difference can be observed by increasing $k$ when $k\geq3$;
-\item for all stress components, no difference can be observed between $1\times  k-free$ and $1\times  k-1\cdot t_{90^{\circ}}$ for $k\geq3$;
-\item at $\psi=0^{\circ}$ (i.e. the intersection between fiber/matrix interface and horizontal axis); the shear stress $\tau_{r\psi}$ (Fig.~\ref{fig:stress-b}) is $0$ while the radial stress $\sigma_{rr}$ (Fig.~\ref{fig:stress-a}) is at its maximum;
-\item comparison of Fig.~\ref{fig:stress-c} with Fig.~\ref{fig:stress-d} shows that the out-of-plane stress $\sigma_{yy}$ has only a marginal effect on the local hydrostatic stress $\sigma_{LHS}$: the distribution remains the same, while the peak value is reduced from $270\ \left[MPa\right]$ in Fig.~\ref{fig:stress-c} to $250\ \left[MPa\right]$ in Fig.~\ref{fig:stress-d} by considering $\sigma_{yy}$;
-\item comparison of Fig.~\ref{fig:stress-e} with Fig.~\ref{fig:stress-f} shows a remarkable effect of the out-of-plane stress $\sigma_{yy}$ on the von Mises stress: if $\sigma_{yy}$ is neglected, $\sigma_{vM}$ presents a maximum of $287\ \left[MPa\right]$ at $\psi=0^{\circ}$, slightly higher than the value of $\sigma_{LHS}$ (neglecting $\sigma_{yy}$) of $270\ \left[MPa\right]$ at $\psi=0^{\circ}$; if $\sigma_{yy}$ is considered, the peak value of $\sigma_{vM}$ is shifted to $\psi\sim20^{\circ}$ and reduced to $186\ \left[MPa\right]$ while at $\psi=0^{\circ}$ $\sigma_{vM}$ is reduced to $\sim110\ \left[MPa\right]$, significantly lower than $\sigma_{LHS}=250\ \left[MPa\right]$ at $\psi=0^{\circ}$ (considering $\sigma_{yy}$);
-\item comparison of Fig.~\ref{fig:stress-g} with Fig.~\ref{fig:stress-g} shows that the Local Maximum Principal Stress is practically unaffected by the out-of-plane stress $\sigma_{yy}$;
-\item $\sigma_{rr}$, $\sigma_{LHS,2D}$, $\sigma_{LHS,3D}$, $\sigma_{vM,2D}$, $\sigma_{LMPS,2D}$ and $\sigma_{LMPS,3D}$ all reach their peak value at $0^{\circ}$ and $180^{\circ}$ and decrease to $99\%$ the peak value between $2^{\circ}$ and $8^{\circ}$, to $95\%$ the peak value between $6^{\circ}$ and $12^{\circ}$ and to $90\%$ the peak value between $8^{\circ}$ and $15^{\circ}$ from the occurrence of the maximum.
-\end{enumerate}
-
-Based on the previous considerations, it is reasonable to assume that a stress-based criterion would predict, irrespectively of the specific criterion chosen, the onset of an interface crack at $0^{\circ}$ or $180^{\circ}$ with an initial size at least comprised in the range $2^{\circ}-8^{\circ}$ ($1\%$ margin) and likely in the range $6^{\circ}-12^{\circ}$ ($5\%$ margin).
-
-\begin{figure}[!h]
+\begin{figure}[!hp]
 \centering
     \subfigure[$\sigma_{rr}$]{\label{fig:stress-a}\includegraphics[height=0.22\textheight]{vf60-nodamage-sigmar.pdf}}\  
     \subfigure[$\tau_{r\psi}$]{\label{fig:stress-b}\raisebox{0.04\textheight}{\includegraphics[height=0.18\textheight]{vf60-nodamage-taurt.pdf}}}\\
@@ -136,6 +115,25 @@ Based on the previous considerations, it is reasonable to assume that a stress-b
     \subfigure[$\sigma_{LMPS,3D}$]{\label{fig:stress-h}\includegraphics[height=0.22\textheight]{vf60-nodamage-sigmaI3D.pdf}}
 \caption{Stress distribution at the fiber/matrix interface in the absence of damage.}\label{fig:stress}
 \end{figure}
+
+\section{STRESS-BASED ANALYSIS OF DEBOND INITIATION}
+
+The distribution of stresses at the fiber/matrix interface is analyzed in models $1\times k-free$ and $1\times k-1\cdot t_{90^{\circ}}$ with $k=1,3,11,201$ and $\Delta\theta=0^{\circ}$, i.e. the undamaged case. Some selected stress components are analyzed, based on their relevance in previous studies on debond initiation and growth: the radial $\sigma_{rr}$ and shear $\tau_{r\psi}$ stress~\cite{Mantic2009} (Fig.~\ref{fig:stress-a} and Fig.~\ref{fig:stress-b}), the Local Hydrostatic Stress (LHS, following the notation of~\cite{Carraro2016}) $\sigma_{LHS}$~\cite{Asp1996a,Asp1996b} (Fig.~\ref{fig:stress-c} and Fig.~\ref{fig:stress-d}), the local von Mises stress $\sigma_{vM}$~\cite{Canal2012}  (Fig.~\ref{fig:stress-e} and Fig.~\ref{fig:stress-f}), the Local Maximum Principal Stress (LMPS, following the notation of~\cite{Carraro2016}) $\sigma_{LMPS}$~\cite{Carraro2014}  (Fig.~\ref{fig:stress-g} and Fig.~\ref{fig:stress-h}). In plane strain conditions there exists an out-of-plane axial component of the stress ($\sigma_{yy}$ in our notation): in order to study the importance of this out-of-plane component (tri-axial stress state, see~\cite{Asp1995}), $\sigma_{LHS}$, $\sigma_{vM}$ and $\sigma_{LMPS}$ are evaluated both neglecting (index $2D$) and considering (index $3D$)  $\sigma_{yy}$.\\
+It is possible to observe that:
+\vspace{-5pt}
+\begin{enumerate}
+\itemsep-0.5pt
+\item for all stress components, no significant difference is present between the different RUCs for $\psi\leq10^{\circ}$;
+\item for all stress components, no difference can be observed by increasing $k$ when $k\geq3$;
+\item for all stress components, no difference can be observed between $1\times  k-free$ and $1\times  k-1\cdot t_{90^{\circ}}$ for $k\geq3$;
+\item at $\psi=0^{\circ}$ (i.e. the intersection between fiber/matrix interface and horizontal axis); the shear stress $\tau_{r\psi}$ (Fig.~\ref{fig:stress-b}) is $0$ while the radial stress $\sigma_{rr}$ (Fig.~\ref{fig:stress-a}) is at its maximum;
+\item comparison of Fig.~\ref{fig:stress-c} with Fig.~\ref{fig:stress-d} shows that the out-of-plane stress $\sigma_{yy}$ has only a marginal effect on the local hydrostatic stress $\sigma_{LHS}$: the distribution remains the same, while the peak value is reduced from $270\ \left[MPa\right]$ in Fig.~\ref{fig:stress-c} to $250\ \left[MPa\right]$ in Fig.~\ref{fig:stress-d} by considering $\sigma_{yy}$;
+\item comparison of Fig.~\ref{fig:stress-e} with Fig.~\ref{fig:stress-f} shows a remarkable effect of the out-of-plane stress $\sigma_{yy}$ on the von Mises stress: if $\sigma_{yy}$ is neglected, $\sigma_{vM}$ presents a maximum of $287\ \left[MPa\right]$ at $\psi=0^{\circ}$, slightly higher than the value of $\sigma_{LHS}$ (neglecting $\sigma_{yy}$) of $270\ \left[MPa\right]$ at $\psi=0^{\circ}$; if $\sigma_{yy}$ is considered, the peak value of $\sigma_{vM}$ is shifted to $\psi\sim20^{\circ}$ and reduced to $186\ \left[MPa\right]$ while at $\psi=0^{\circ}$ $\sigma_{vM}$ is reduced to $\sim110\ \left[MPa\right]$, significantly lower than $\sigma_{LHS}=250\ \left[MPa\right]$ at $\psi=0^{\circ}$ (considering $\sigma_{yy}$);
+\item comparison of Fig.~\ref{fig:stress-g} with Fig.~\ref{fig:stress-g} shows that the Local Maximum Principal Stress is practically unaffected by the out-of-plane stress $\sigma_{yy}$;
+\item $\sigma_{rr}$, $\sigma_{LHS,2D}$, $\sigma_{LHS,3D}$, $\sigma_{vM,2D}$, $\sigma_{LMPS,2D}$ and $\sigma_{LMPS,3D}$ all reach their peak value at $0^{\circ}$ and $180^{\circ}$ and decrease to $99\%$ the peak value between $2^{\circ}$ and $8^{\circ}$, to $95\%$ the peak value between $6^{\circ}$ and $12^{\circ}$ and to $90\%$ the peak value between $8^{\circ}$ and $15^{\circ}$ from the occurrence of the maximum.
+\end{enumerate}
+\vspace{-5pt}
+Based on the previous considerations, it is reasonable to assume that a stress-based criterion would predict, irrespectively of the specific criterion chosen, the onset of an interface crack at $0^{\circ}$ or $180^{\circ}$ with an initial size at least comprised in the range $2^{\circ}-8^{\circ}$ ($1\%$ margin) and likely in the range $6^{\circ}-12^{\circ}$ ($5\%$ margin).
 
 \section{ENERGY-BASED ANALYSIS OF DEBOND PROPAGATION}
 
@@ -157,7 +155,7 @@ where $\Psi_{G}$ is the energy-based phase angle, $G_{Ic}$ is the Mode I critica
 Remarkably, neither RUC configuration nor $\lambda$ affects $G_{Ic}$ significantly for small initial flaw size ($\Delta\theta_{0}<10^{\circ}$). Based on the considerations of the previous section, we can expect the initial flaw to be in the range $2^{\circ}-12^{\circ}$ ($1-5\%$ margin): comparing this with the results of Figure~\ref{fig:GIc}, we can assume $G_{Ic}$ to be in the range $2-4.5\ \left[\frac{J}{m^{2}}\right]$, while $0.2\leq\lambda\leq0.35$.\\
 Having estimated the values of the material properties $G_{Ic}$ and $\lambda$, we can now proceed to estimate the expected maximum size of debonds by evaluating $G_{TOT}$ and comparing it with the critical ERR estimated with Equation~\ref{eq:propcrit}.
 
-\begin{figure}[!h]
+\begin{figure}[!htbp]
 \centering
     \subfigure[$21\times 1-free$]{\label{fig:debondsize-a}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A0.pdf}}\   
     \subfigure[$21\times 1-1\cdot t_{90^{\circ}}$]{\label{fig:debondsize-b}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A0T1.pdf}}\\

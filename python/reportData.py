@@ -619,6 +619,10 @@ def main(argv):
                 circumferentialpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv')
                 horizontalpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stresseshorizontalpaths' + '.csv')
                 verticalpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressesverticalpaths' + '.csv')
+                radialpathsStrainSummary = join(subFolder,subFolder.split('/')[-1] + '-strainsradialpaths' + '.csv')
+                circumferentialpathsStrainSummary = join(subFolder,subFolder.split('/')[-1] + '-strainscircumferentialpaths' + '.csv')
+                horizontalpathsStrainSummary = join(subFolder,subFolder.split('/')[-1] + '-strainshorizontalpaths' + '.csv')
+                verticalpathsStrainSummary = join(subFolder,subFolder.split('/')[-1] + '-strainsverticalpaths' + '.csv')
                 if subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv' in listdir(subFolder):
                     print('----------------->')
                     print('----------------->')

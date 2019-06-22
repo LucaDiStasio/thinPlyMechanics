@@ -777,7 +777,7 @@ def main(argv):
                                 s1d2 = 0.5*(sxx+syy)+np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
                                 s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
                                 try:
-                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
+                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3*i2d3)*(i1d3*i1d3-3*i2d3)*(i1d3*i1d3-3*i2d3))))/3.0
                                     s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
                                     s2d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
                                     s3d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
@@ -1133,7 +1133,7 @@ def main(argv):
                                 s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
 
                                 try:
-                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
+                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3*i2d3)*(i1d3*i1d3-3*i2d3)*(i1d3*i1d3-3*i2d3))))/3.0
                                     s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
                                     s2d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
                                     s3d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
@@ -1486,7 +1486,7 @@ def main(argv):
                                 s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
 
                                 try:
-                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
+                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3*i2d3)*(i1d3*i1d3-3*i2d3)*(i1d3*i1d3-3*i2d3))))/3.0
                                     s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
                                     s2d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
                                     s3d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
@@ -1839,7 +1839,7 @@ def main(argv):
                                 s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
 
                                 try:
-                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
+                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3*i2d3)*(i1d3*i1d3-3*i2d3)*(i1d3*i1d3-3*i2d3))))/3.0
                                     s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
                                     s2d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
                                     s3d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
@@ -2055,31 +2055,31 @@ def main(argv):
                     print('----------------->')
                     print('    Analysis of radial paths for folder ' + subFolder)
                     print(' ')
-                    with open(radialpathsSummary,'r') as csv:
+                    with open(radialpathsStrainSummary,'r') as csv:
                         lines = csv.readlines()
-                    Sxx = []
-                    Syy = []
-                    Szz = []
-                    Sxy = []
-                    Szx = []
-                    Syz = []
-                    Srr = []
-                    Stt = []
-                    Srt = []
-                    S1D3 = []
-                    S2D3 = []
-                    S3D3 = []
-                    I1D3 = []
-                    I2D3 = []
-                    I3D3 = []
-                    SMisesD3 = []
-                    SaverD3 = []
-                    S1D2 = []
-                    S2D2 = []
-                    I1D2 = []
-                    I2D2 = []
-                    SMisesD2 = []
-                    SaverD2 = []
+                    EExx = []
+                    EEyy = []
+                    EEzz = []
+                    EExy = []
+                    EEzx = []
+                    EEyz = []
+                    EErr = []
+                    EEtt = []
+                    EErt = []
+                    EE1D3 = []
+                    EE2D3 = []
+                    EE3D3 = []
+                    EEI1D3 = []
+                    EEI2D3 = []
+                    EEI3D3 = []
+                    EEMisesD3 = []
+                    EEaverD3 = []
+                    EE1D2 = []
+                    EE2D2 = []
+                    EEI1D2 = []
+                    EEI2D2 = []
+                    EEMisesD2 = []
+                    EEaverD2 = []
                     pathVariables = []
                     pathStartVariables = []
                     pathEndVariables = []
@@ -2087,12 +2087,12 @@ def main(argv):
                     pathNormCoords = []
 
                     for line in lines[1:]:
-                        stressComp = line.replace('\n','').replace(' ','').split(',')[0]
+                        strainComp = line.replace('\n','').replace(' ','').split(',')[0]
                         pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
                         pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
                         pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
                         datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
-                        print('    Reading component ' + stressComp)
+                        print('    Reading component ' + strainComp)
                         print('            ' + 'for radial path at ' + str(pathVariable) + ' deg')
                         print('            ' + 'starting at ' + str(pathStartVariable) + ' mum')
                         print('            ' + 'ending at ' + str(pathEndVariable))
@@ -2121,111 +2121,111 @@ def main(argv):
                             yData.append(xyPair[1])
                         print('    --> Data categorized in independent and dependent variables.')
                         print(' ')
-                        if 'S11' in stressComp:
-                            Sxx.append(yData)
+                        if 'EE11' in strainComp:
+                            EExx.append(yData)
                             pathCoords.append(xData)
                             pathNormCoords.append(normxData)
                             pathVariables.append(pathVariable)
                             pathStartVariables.append(pathStartVariable)
                             pathEndVariables.append(pathEndVariable)
-                            print('    --> Stress component is S11.')
+                            print('    --> Stress component is EE11.')
                             print(' ')
-                        elif 'S22' in stressComp:
-                            Syy.append(yData)
-                            print('    --> Stress component is S22.')
+                        elif 'EE22' in strainComp:
+                            EEyy.append(yData)
+                            print('    --> Stress component is EE22.')
                             print(' ')
-                        elif 'S23' in stressComp:
-                            Syz.append(yData)
-                            print('    --> Stress component is S23.')
+                        elif 'EE23' in strainComp:
+                            EEyz.append(yData)
+                            print('    --> Stress component is EE23.')
                             print(' ')
-                        elif 'S12' in stressComp:
-                            Sxy.append(yData)
-                            print('    --> Stress component is S12.')
+                        elif 'EE12' in strainComp:
+                            EExy.append(yData)
+                            print('    --> Stress component is EE12.')
                             print(' ')
-                        elif 'S13' in stressComp:
-                            Szx.append(yData)
-                            print('    --> Stress component is S13.')
+                        elif 'EE13' in strainComp:
+                            EEzx.append(yData)
+                            print('    --> Stress component is EE13.')
                             print(' ')
-                        elif 'S33' in stressComp:
-                            Szz.append(yData)
-                            Szx.append(0.0)
-                            Syz.append(0.0)
-                            print('    --> Stress component is S33.')
+                        elif 'EE33' in strainComp:
+                            EEzz.append(yData)
+                            EEzx.append(0.0)
+                            EEyz.append(0.0)
+                            print('    --> Stress component is EE33.')
                             print(' ')
-                            currentSxx = Sxx[-1]
-                            currentSyy = Syy[-1]
-                            currentSzz = yData
-                            currentSxy = Sxy[-1]
-                            currentSzx = 0.0
-                            currentSyz = 0.0
-                            currentSrr = []
-                            currentStt = []
-                            currentSrt = []
-                            current3DS1 = []
-                            current3DS2 = []
-                            current3DS3 = []
-                            current3DI1 = []
-                            current3DI2 = []
-                            current3DI3 = []
-                            current3DSMises = []
-                            current3DSaver = []
-                            current2DS1 = []
-                            current2DS2 = []
-                            current2DI1 = []
-                            current2DI2 = []
-                            current2DSMises = []
-                            current2DSaver = []
+                            currentEExx = EExx[-1]
+                            currentEEyy = EEyy[-1]
+                            currentEEzz = yData
+                            currentEExy = EExy[-1]
+                            currentEEzx = 0.0
+                            currentEEyz = 0.0
+                            currentEErr = []
+                            currentEEtt = []
+                            currentEErt = []
+                            current3DEE1 = []
+                            current3DEE2 = []
+                            current3DEE3 = []
+                            current3DEEI1 = []
+                            current3DEEI2 = []
+                            current3DEEI3 = []
+                            current3DEEMises = []
+                            current3DEEaver = []
+                            current2DEE1 = []
+                            current2DEE2 = []
+                            current2DEEI1 = []
+                            current2DEEI2 = []
+                            current2DEEMises = []
+                            current2DEEaver = []
                             rotateBy = pathVariable*np.pi/180.0
                             cosRot = np.cos(rotateBy)
                             sinRot = np.sin(rotateBy)
-                            nstressPoints = np.min([len(currentSxx),len(currentSyy),len(currentSzz),len(currentSxy)])
-                            for s in range(0,nstressPoints):
-                                sxx = currentSxx[s]
-                                syy = currentSyy[s]
-                                szz = currentSzz[s]
-                                sxy = currentSxy[s]
-                                szx = 0.0
-                                syz = 0.0
-                                srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
-                                stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
-                                srt = -sxx*cosRot*sinRot+syy*cosRot*sinRot+sxy*(cosRot*cosRot-sinRot*sinRot)
-                                currentSrr.append(srr)
-                                currentStt.append(stt)
-                                currentSrt.append(srt)
-                                i1d2 = sxx + syy
-                                i1d3 = sxx + syy + szz
-                                i2d2 = sxx*syy - sxy*sxy
-                                i2d3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
-                                i3d3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
-                                saverd2 = i1d2/2.0
-                                saverd3 = i1d3/3.0
-                                smises2d =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
-                                smises3d =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
-                                s1d2 = 0.5*(sxx+syy)+np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
-                                s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
+                            nstrainPoints = np.min([len(currentEExx),len(currentEEyy),len(currentEEzz),len(currentEExy)])
+                            for s in range(0,nstrainPoints):
+                                eexx = currentEExx[s]
+                                eeyy = currentEEyy[s]
+                                eezz = currentEEzz[s]
+                                eexy = currentEExy[s]
+                                eezx = 0.0
+                                eeyz = 0.0
+                                eerr = eexx*cosRot*cosRot+eeyy*sinRot*sinRot+2*eexy*cosRot*sinRot
+                                eett = eexx*sinRot*sinRot+eeyy*cosRot*cosRot-2*eexy*cosRot*sinRot
+                                eert = -eexx*cosRot*sinRot+eeyy*cosRot*sinRot+eexy*(cosRot*cosRot-sinRot*sinRot)
+                                currentEErr.append(eerr)
+                                currentEEtt.append(eett)
+                                currentEErt.append(eert)
+                                eei1d2 = eexx + eeyy
+                                eei1d3 = eexx + eeyy + eezz
+                                eei2d2 = eexx*eeyy - eexy*eexy
+                                eei2d3 = eexx*eeyy + eeyy*eezz + eexx*eezz - eexy*eexy - eeyz*eeyz - eezx*eezx
+                                eei3d3 = eexx*eeyy*eezz - eexx*eeyz*eeyz - eeyy*eezx*eezx - eezz*eexy*eexy + 2*eexy*eeyz*eezx
+                                eeaverd2 = eei1d2/2.0
+                                eeaverd3 = eei1d3/3.0
+                                eemises2d =  np.sqrt(eexx*eexx + eeyy*eeyy - eexx*eeyy + 3*eexy*eexy)
+                                eemises3d =  np.sqrt(eexx*eexx + eeyy*eeyy + eezz*eezz - eexx*eeyy - eeyy*eezz - eexx*eezz + 3*(eexy*eexy + eeyz*eeyz + eezx*eezx))
+                                ee1d2 = 0.5*(eexx+eeyy)+np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
+                                ee2d2 = 0.5*(eexx+eeyy)-np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
                                 try:
-                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
-                                    s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
-                                    s2d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
-                                    s3d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
+                                    princOrient = np.arccos((2*eei1d3*eei1d3*eei1d3-9*eei1d3*eei2d3+27*eei3d3)/(2*np.sqrt((eei1d3*eei1d3-3*eei2d3)*(eei1d3*eei1d3-3*eei2d3)*(eei1d3*eei1d3-3*eei2d3))))/3.0
+                                    ee1d3 = eei1d3/3.0 + 2*np.sqrt(eei1d3*eei1d3-3*eei2d3)*np.cos(princOrient)/3.0
+                                    ee2d3 = eei1d3/3.0 + 2*np.sqrt(eei1d3*eei1d3-3*eei2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
+                                    ee3d3 = eei1d3/3.0 + 2*np.sqrt(eei1d3*eei1d3-3*eei2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
                                 except Exception:
-                                    s1d3 = s1d2
-                                    s2d3 = s2d2
-                                    s3d3 = 0.0
-                                current3DS1.append(s1d3)
-                                current3DS2.append(s2d3)
-                                current3DS3.append(s2d3)
-                                current3DI1.append(i1d3)
-                                current3DI2.append(i2d3)
-                                current3DI3.append(i3d3)
-                                current3DSMises.append(smises3d)
-                                current3DSaver.append(saverd3)
-                                current2DS1.append(s1d2)
-                                current2DS2.append(s2d2)
-                                current2DI1.append(i1d2)
-                                current2DI2.append(i2d2)
-                                current2DSMises.append(smises2d)
-                                current2DSaver.append(saverd2)
+                                    ee1d3 = ee1d2
+                                    ee2d3 = ee2d2
+                                    ee3d3 = 0.0
+                                current3DEE1.append(ee1d3)
+                                current3DEE2.append(ee2d3)
+                                current3DEE3.append(ee2d3)
+                                current3DEEI1.append(eei1d3)
+                                current3DEEI2.append(eei2d3)
+                                current3DEEI3.append(eei3d3)
+                                current3DEEMises.append(eemises3d)
+                                current3DEEaver.append(eaverd3)
+                                current2DEE1.append(ee1d2)
+                                current2DEE2.append(ee2d2)
+                                current2DEEI1.append(eei1d2)
+                                current2DEEI2.append(eei2d2)
+                                current2DEEMises.append(eemises2d)
+                                current2DEEaver.append(eeaverd2)
                             Srr.append(currentSrr)
                             Stt.append(currentStt)
                             Srt.append(currentSrt)

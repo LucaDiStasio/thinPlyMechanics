@@ -3125,7 +3125,7 @@ def main(argv):
                     pathCoords = []
                     pathNormCoords = []
 
-                if subFolder.split('/')[-1] + '-stressesverticalpaths' + '.csv' in listdir(subFolder):
+                if subFolder.split('/')[-1] + '-strainsverticalpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of vertical paths for folder ' + subFolder)
                     with open(verticalpathsSummary,'r') as csv:
                         lines = csv.readlines()

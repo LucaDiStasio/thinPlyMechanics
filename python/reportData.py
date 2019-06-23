@@ -2097,7 +2097,6 @@ def main(argv):
                     pathNormCoords = []
 
                     for line in lines[1:]:
-                        raw_input()
                         strainComp = line.replace('\n','').replace(' ','').split(',')[0]
                         pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
                         pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])

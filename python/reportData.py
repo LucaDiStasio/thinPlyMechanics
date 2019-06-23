@@ -2485,25 +2485,37 @@ def main(argv):
                             normxData.append(xyPair[0])
                             xData.append(pathStartVariable+(pathEndVariable-pathStartVariable)*xyPair[0])
                             yData.append(xyPair[1])
-                        if 'S11' in stressComp:
-                            Sxx.append(yData)
+                        if 'EE11' in strainComp:
+                            EExx.append(yData)
                             pathCoords.append(xData)
                             pathNormCoords.append(normxData)
                             pathVariables.append(pathVariable)
                             pathStartVariables.append(pathStartVariable)
                             pathEndVariables.append(pathEndVariable)
-                        elif 'S22' in stressComp:
-                            Syy.append(yData)
-                        elif 'S23' in stressComp:
-                            Syz.append(yData)
-                        elif 'S12' in stressComp:
-                            Sxy.append(yData)
-                        elif 'S13' in stressComp:
-                            Szx.append(yData)
-                        elif 'S33' in stressComp:
-                            Szz.append(yData)
-                            Szx.append(0.0)
-                            Syz.append(0.0)
+                            print('    --> Strain component is EE11.')
+                            print(' ')
+                        elif 'EE22' in strainComp:
+                            EEyy.append(yData)
+                            print('    --> Strain component is EE22.')
+                            print(' ')
+                        elif 'EE23' in strainComp:
+                            EEyz.append(yData)
+                            print('    --> Strain component is EE23.')
+                            print(' ')
+                        elif 'EE12' in strainComp:
+                            EExy.append(yData)
+                            print('    --> Strain component is EE12.')
+                            print(' ')
+                        elif 'EE13' in strainComp:
+                            EEzx.append(yData)
+                            print('    --> Strain component is EE13.')
+                            print(' ')
+                        elif 'EE33' in strainComp:
+                            EEzz.append(yData)
+                            EEzx.append(0.0)
+                            EEyz.append(0.0)
+                            print('    --> Strain component is EE33.')
+                            print(' ')
                             currentSxx = Sxx[-1]
                             currentSyy = Syy[-1]
                             currentSzz = yData
@@ -2838,25 +2850,37 @@ def main(argv):
                             normxData.append(xyPair[0])
                             xData.append(pathStartVariable+(pathEndVariable-pathStartVariable)*xyPair[0])
                             yData.append(xyPair[1])
-                        if 'S11' in stressComp:
-                            Sxx.append(yData)
+                        if 'EE11' in strainComp:
+                            EExx.append(yData)
                             pathCoords.append(xData)
                             pathNormCoords.append(normxData)
                             pathVariables.append(pathVariable)
                             pathStartVariables.append(pathStartVariable)
                             pathEndVariables.append(pathEndVariable)
-                        elif 'S22' in stressComp:
-                            Syy.append(yData)
-                        elif 'S23' in stressComp:
-                            Syz.append(yData)
-                        elif 'S12' in stressComp:
-                            Sxy.append(yData)
-                        elif 'S13' in stressComp:
-                            Szx.append(yData)
-                        elif 'S33' in stressComp:
-                            Szz.append(yData)
-                            Szx.append(0.0)
-                            Syz.append(0.0)
+                            print('    --> Strain component is EE11.')
+                            print(' ')
+                        elif 'EE22' in strainComp:
+                            EEyy.append(yData)
+                            print('    --> Strain component is EE22.')
+                            print(' ')
+                        elif 'EE23' in strainComp:
+                            EEyz.append(yData)
+                            print('    --> Strain component is EE23.')
+                            print(' ')
+                        elif 'EE12' in strainComp:
+                            EExy.append(yData)
+                            print('    --> Strain component is EE12.')
+                            print(' ')
+                        elif 'EE13' in strainComp:
+                            EEzx.append(yData)
+                            print('    --> Strain component is EE13.')
+                            print(' ')
+                        elif 'EE33' in strainComp:
+                            EEzz.append(yData)
+                            EEzx.append(0.0)
+                            EEyz.append(0.0)
+                            print('    --> Strain component is EE33.')
+                            print(' ')
                             currentSxx = Sxx[-1]
                             currentSyy = Syy[-1]
                             currentSzz = yData
@@ -3191,25 +3215,37 @@ def main(argv):
                             normxData.append(xyPair[0])
                             xData.append(pathStartVariable+(pathEndVariable-pathStartVariable)*xyPair[0])
                             yData.append(xyPair[1])
-                        if 'S11' in stressComp:
-                            Sxx.append(yData)
+                        if 'EE11' in strainComp:
+                            EExx.append(yData)
                             pathCoords.append(xData)
                             pathNormCoords.append(normxData)
                             pathVariables.append(pathVariable)
                             pathStartVariables.append(pathStartVariable)
                             pathEndVariables.append(pathEndVariable)
-                        elif 'S22' in stressComp:
-                            Syy.append(yData)
-                        elif 'S23' in stressComp:
-                            Syz.append(yData)
-                        elif 'S12' in stressComp:
-                            Sxy.append(yData)
-                        elif 'S13' in stressComp:
-                            Szx.append(yData)
-                        elif 'S33' in stressComp:
-                            Szz.append(yData)
-                            Szx.append(0.0)
-                            Syz.append(0.0)
+                            print('    --> Strain component is EE11.')
+                            print(' ')
+                        elif 'EE22' in strainComp:
+                            EEyy.append(yData)
+                            print('    --> Strain component is EE22.')
+                            print(' ')
+                        elif 'EE23' in strainComp:
+                            EEyz.append(yData)
+                            print('    --> Strain component is EE23.')
+                            print(' ')
+                        elif 'EE12' in strainComp:
+                            EExy.append(yData)
+                            print('    --> Strain component is EE12.')
+                            print(' ')
+                        elif 'EE13' in strainComp:
+                            EEzx.append(yData)
+                            print('    --> Strain component is EE13.')
+                            print(' ')
+                        elif 'EE33' in strainComp:
+                            EEzz.append(yData)
+                            EEzx.append(0.0)
+                            EEyz.append(0.0)
+                            print('    --> Strain component is EE33.')
+                            print(' ')
                             currentSxx = Sxx[-1]
                             currentSyy = Syy[-1]
                             currentSzz = yData

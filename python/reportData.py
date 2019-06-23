@@ -2671,7 +2671,7 @@ def main(argv):
                         worksheet.write(2,p*25+22,'EEI3_3D [(mum/mum)^3]',circumferentialpathsStrainstringFormat)
                         worksheet.write(2,p*25+23,'EEI1_2D [mum/mum]',circumferentialpathsStrainstringFormat)
                         worksheet.write(2,p*25+24,'EEI2_2D [(mum/mum)^2]',circumferentialpathsStrainstringFormat)
-                        measureNum = np.min([len(Sxx[p]),len(Syy[p]),len(Szz[p]),len(Sxy[p])])
+                        measureNum = np.min([len(EExx[p]),len(EEyy[p]),len(EEzz[p]),len(EExy[p])])
                         print('          number of path points = ' + str(measureNum))
                         for c in range(0,measureNum):
                             coord = pathCoords[p][c]
@@ -3027,7 +3027,7 @@ def main(argv):
                         worksheet.write(2,p*25+22,'EEI3_3D [(mum/mum)^3]',horizontalpathsStrainstringFormat)
                         worksheet.write(2,p*25+23,'EEI1_2D [mum/mum]',horizontalpathsStrainstringFormat)
                         worksheet.write(2,p*25+24,'EEI2_2D [(mum/mum)^2]',horizontalpathsStrainstringFormat)
-                        measureNum = np.min([len(Sxx[p]),len(Syy[p]),len(Szz[p]),len(Sxy[p])])
+                        measureNum = np.min([len(EExx[p]),len(EEyy[p]),len(EEzz[p]),len(EExy[p])])
                         print('          number of path points = ' + str(measureNum))
                         for c in range(0,measureNum):
                             coord = pathCoords[p][c]
@@ -3383,7 +3383,7 @@ def main(argv):
                         worksheet.write(2,p*25+22,'EEI3_3D [mum/mum^3]',verticalpathsStrainstringFormat)
                         worksheet.write(2,p*25+23,'EEI1_2D [(mum/mum)]',verticalpathsStrainstringFormat)
                         worksheet.write(2,p*25+24,'EEI2_2D [(mum/mum)^2]',verticalpathsStrainstringFormat)
-                        measureNum = np.min([len(Sxx[p]),len(Syy[p]),len(Szz[p]),len(Sxy[p])])
+                        measureNum = np.min([len(EExx[p]),len(EEyy[p]),len(EEzz[p]),len(EExy[p])])
                         print('          number of path points = ' + str(measureNum))
                         for c in range(0,measureNum):
                             coord = pathCoords[p][c]

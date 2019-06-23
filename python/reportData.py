@@ -2696,14 +2696,14 @@ def main(argv):
                             worksheet.write(3+c,p*25+24,EEI2D2[p][c],circumferentialpathsnumberFormat)
 
                     graphsheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    graphworksheet = circumferentialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                    graphworksheet = circumferentialpathsStrainWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
                     print('    --> Writing worksheet')
                     print('        ' + graphsheetName)
                     print(' ')
                     variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     circumferentialpathsDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableNames):
-                        chartA = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chartA = circumferentialpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
@@ -2726,7 +2726,7 @@ def main(argv):
                         print(' ')
                         print(' ')
                         graphworksheet.insert_chart(v*20,0,chartA)
-                        chartB = circumferentialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chartB = circumferentialpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.B')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
@@ -2748,34 +2748,36 @@ def main(argv):
                         print(' ')
                         graphworksheet.insert_chart(v*20,30,chartB)
 
-                    Sxx = []
-                    Syy = []
-                    Szz = []
-                    Sxy = []
-                    Szx = []
-                    Syz = []
-                    Srr = []
-                    Stt = []
-                    Srt = []
-                    S1D3 = []
-                    S2D3 = []
-                    S3D3 = []
-                    I1D3 = []
-                    I2D3 = []
-                    I3D3 = []
-                    SMisesD3 = []
-                    SaverD3 = []
-                    S1D2 = []
-                    S2D2 = []
-                    I1D2 = []
-                    I2D2 = []
-                    SMisesD2 = []
-                    SaverD2 = []
+                    EExx = []
+                    EEyy = []
+                    EEzz = []
+                    EExy = []
+                    EEzx = []
+                    EEyz = []
+                    EErr = []
+                    EEtt = []
+                    EErt = []
+                    EE1D3 = []
+                    EE2D3 = []
+                    EE3D3 = []
+                    EEI1D3 = []
+                    EEI2D3 = []
+                    EEI3D3 = []
+                    EEMisesD3 = []
+                    EEaverD3 = []
+                    EE1D2 = []
+                    EE2D2 = []
+                    EEI1D2 = []
+                    EEI2D2 = []
+                    EEMisesD2 = []
+                    EEaverD2 = []
                     pathVariables = []
                     pathStartVariables = []
                     pathEndVariables = []
                     pathCoords = []
                     pathNormCoords = []
+                    print('<-----------------')
+                    print('<-----------------')
 
                 if subFolder.split('/')[-1] + '-strainshorizontalpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of horizontal paths for folder ' + subFolder)
@@ -3050,14 +3052,14 @@ def main(argv):
                             worksheet.write(3+c,p*25+24,EEI2D2[p][c],horizontalpathsnumberFormat)
 
                     graphsheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    graphworksheet = horizontalpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                    graphworksheet = horizontalpathsStrainWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
                     print('    --> Writing worksheet')
                     print('        ' + graphsheetName)
                     print(' ')
                     variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     horizontalpathsDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableNames):
-                        chartA = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chartA = horizontalpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
@@ -3080,7 +3082,7 @@ def main(argv):
                         print(' ')
                         print(' ')
                         graphworksheet.insert_chart(v*20,0,chartA)
-                        chartB = horizontalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chartB = horizontalpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
@@ -3102,34 +3104,36 @@ def main(argv):
                         print(' ')
                         graphworksheet.insert_chart(v*20,30,chartB)
 
-                    Sxx = []
-                    Syy = []
-                    Szz = []
-                    Sxy = []
-                    Szx = []
-                    Syz = []
-                    Srr = []
-                    Stt = []
-                    Srt = []
-                    S1D3 = []
-                    S2D3 = []
-                    S3D3 = []
-                    I1D3 = []
-                    I2D3 = []
-                    I3D3 = []
-                    SMisesD3 = []
-                    SaverD3 = []
-                    S1D2 = []
-                    S2D2 = []
-                    I1D2 = []
-                    I2D2 = []
-                    SMisesD2 = []
-                    SaverD2 = []
+                    EExx = []
+                    EEyy = []
+                    EEzz = []
+                    EExy = []
+                    EEzx = []
+                    EEyz = []
+                    EErr = []
+                    EEtt = []
+                    EErt = []
+                    EE1D3 = []
+                    EE2D3 = []
+                    EE3D3 = []
+                    EEI1D3 = []
+                    EEI2D3 = []
+                    EEI3D3 = []
+                    EEMisesD3 = []
+                    EEaverD3 = []
+                    EE1D2 = []
+                    EE2D2 = []
+                    EEI1D2 = []
+                    EEI2D2 = []
+                    EEMisesD2 = []
+                    EEaverD2 = []
                     pathVariables = []
                     pathStartVariables = []
                     pathEndVariables = []
                     pathCoords = []
                     pathNormCoords = []
+                    print('<-----------------')
+                    print('<-----------------')
 
                 if subFolder.split('/')[-1] + '-strainsverticalpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of vertical paths for folder ' + subFolder)
@@ -3404,13 +3408,13 @@ def main(argv):
                             worksheet.write(3+c,p*25+24,EEI2D2[p][c],verticalpathsnumberFormat)
 
                     graphsheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    graphworksheet = verticalpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                    graphworksheet = verticalpathsStrainWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
                     print('    --> Writing worksheet')
                     print('        ' + graphsheetName)
                     print(' ')
                     variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
                     for v,variableName in enumerate(variableNames):
-                        chartA = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chartA = verticalpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
@@ -3433,7 +3437,7 @@ def main(argv):
                         print(' ')
                         print(' ')
                         graphworksheet.insert_chart(v*20,0,chartA)
-                        chartB = verticalpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chartB = verticalpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
@@ -3455,34 +3459,36 @@ def main(argv):
                         print(' ')
                         graphworksheet.insert_chart(v*20,30,chartB)
 
-                    Sxx = []
-                    Syy = []
-                    Szz = []
-                    Sxy = []
-                    Szx = []
-                    Syz = []
-                    Srr = []
-                    Stt = []
-                    Srt = []
-                    S1D3 = []
-                    S2D3 = []
-                    S3D3 = []
-                    I1D3 = []
-                    I2D3 = []
-                    I3D3 = []
-                    SMisesD3 = []
-                    SaverD3 = []
-                    S1D2 = []
-                    S2D2 = []
-                    I1D2 = []
-                    I2D2 = []
-                    SMisesD2 = []
-                    SaverD2 = []
+                    EExx = []
+                    EEyy = []
+                    EEzz = []
+                    EExy = []
+                    EEzx = []
+                    EEyz = []
+                    EErr = []
+                    EEtt = []
+                    EErt = []
+                    EE1D3 = []
+                    EE2D3 = []
+                    EE3D3 = []
+                    EEI1D3 = []
+                    EEI2D3 = []
+                    EEI3D3 = []
+                    EEMisesD3 = []
+                    EEaverD3 = []
+                    EE1D2 = []
+                    EE2D2 = []
+                    EEI1D2 = []
+                    EEI2D2 = []
+                    EEMisesD2 = []
+                    EEaverD2 = []
                     pathVariables = []
                     pathStartVariables = []
                     pathEndVariables = []
                     pathCoords = []
                     pathNormCoords = []
+                    print('<-----------------')
+                    print('<-----------------')
 
             pathVariableName = 'pathAngle [deg]'
             pathCoordinateName = 'R [mum]'

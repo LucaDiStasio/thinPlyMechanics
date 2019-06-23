@@ -2539,8 +2539,8 @@ def main(argv):
                             current2DEEI2 = []
                             current2DEEMises = []
                             current2DEEaver = []
-                            nstressPoints = np.min([len(currentSxx),len(currentSyy),len(currentSzz),len(currentSxy)])
-                            for s in range(0,nstressPoints):
+                            nstrainPoints = np.min([len(currentSxx),len(currentSyy),len(currentSzz),len(currentSxy)])
+                            for s in range(0,nstrainPoints):
                                 rotateBy = pathCoords[-1][s]*np.pi/180.0
                                 cosRot = np.cos(rotateBy)
                                 sinRot = np.sin(rotateBy)
@@ -2904,8 +2904,8 @@ def main(argv):
                             current2DEEI2 = []
                             current2DEEMises = []
                             current2DEEaver = []
-                            nstressPoints = np.min([len(currentSxx),len(currentSyy),len(currentSzz),len(currentSxy)])
-                            for s in range(0,nstressPoints):
+                            nstrainPoints = np.min([len(currentSxx),len(currentSyy),len(currentSzz),len(currentSxy)])
+                            for s in range(0,nstrainPoints):
                                 rotateBy = np.arctan2(pathVariable,pathCoords[-1][s])
                                 cosRot = np.cos(rotateBy)
                                 sinRot = np.sin(rotateBy)
@@ -3269,8 +3269,8 @@ def main(argv):
                             current2DEEI2 = []
                             current2DEEMises = []
                             current2DEEaver = []
-                            nstressPoints = np.min([len(currentSxx),len(currentSyy),len(currentSzz),len(currentSxy)])
-                            for s in range(0,nstressPoints):
+                            nstrainPoints = np.min([len(currentSxx),len(currentSyy),len(currentSzz),len(currentSxy)])
+                            for s in range(0,nstrainPoints):
                                 rotateBy = np.arctan2(xData[s],pathVariable)
                                 cosRot = np.cos(rotateBy)
                                 sinRot = np.sin(rotateBy)

@@ -621,7 +621,7 @@ def main(argv):
             numberOfVerticalpaths = []
             verticalpathsDatalengths = []
             verticalpathsStrainDatalengths = []
-            '''
+
             for subFolder in subfoldersList:
                 radialpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv')
                 circumferentialpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv')
@@ -2058,7 +2058,7 @@ def main(argv):
                     pathEndVariables = []
                     pathCoords = []
                     pathNormCoords = []
-
+                '''
                 if subFolder.split('/')[-1] + '-strainsradialpaths' + '.csv' in listdir(subFolder):
                     print('----------------->')
                     print('----------------->')
@@ -3494,7 +3494,7 @@ def main(argv):
                     pathNormCoords = []
                     print('<-----------------')
                     print('<-----------------')
-            '''
+                '''
             '''
             pathVariableName = 'pathAngle [deg]'
             pathCoordinateName = 'R [mum]'

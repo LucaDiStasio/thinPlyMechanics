@@ -621,7 +621,7 @@ def main(argv):
             numberOfVerticalpaths = []
             verticalpathsDatalengths = []
             verticalpathsStrainDatalengths = []
-
+'''
             for subFolder in subfoldersList:
                 radialpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv')
                 circumferentialpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressescircumferentialpaths' + '.csv')
@@ -3494,7 +3494,8 @@ def main(argv):
                     pathNormCoords = []
                     print('<-----------------')
                     print('<-----------------')
-
+'''
+'''
             pathVariableName = 'pathAngle [deg]'
             pathCoordinateName = 'R [mum]'
             for n in range(0,min(numberOfRadialpaths)):
@@ -3713,7 +3714,7 @@ def main(argv):
                     print(' ')
                     print(' ')
                     graphworksheet.insert_chart(v*20,30,chartB)
-
+'''
 
             print('    Close workbook ' + join(outdir,outputfileBasename + '-radialpathsData' + '.xlsx'))
             radialpathsWorkbook.close()

@@ -2556,23 +2556,17 @@ def main(argv):
                                 currentEErr.append(eerr)
                                 currentEEtt.append(eett)
                                 currentEErt.append(eert)
-
-                                i1d2 = sxx + syy
-                                i1d3 = sxx + syy + szz
-
-                                i2d2 = sxx*syy - sxy*sxy
-                                i2d3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
-
-                                i3d3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
-
-                                saverd2 = i1d2/2.0
-                                saverd3 = i1d3/3.0
-
-                                smises2d =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
-                                smises3d =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
-
-                                s1d2 = 0.5*(sxx+syy)+np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
-                                s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
+                                eei1d2 = eexx + eeyy
+                                eei1d3 = eexx + eeyy + eezz
+                                eei2d2 = eexx*eeyy - eexy*eexy
+                                eei2d3 = eexx*eeyy + eeyy*eezz + eexx*eezz - eexy*eexy - eeyz*eeyz - eezx*eezx
+                                eei3d3 = eexx*eeyy*eezz - eexx*eeyz*eeyz - eeyy*eezx*eezx - eezz*eexy*eexy + 2*eexy*eeyz*eezx
+                                eeaverd2 = eei1d2/2.0
+                                eeaverd3 = eei1d3/3.0
+                                eemises2d =  np.sqrt(eexx*eexx + eeyy*eeyy - eexx*eeyy + 3*eexy*eexy)
+                                eemises3d =  np.sqrt(eexx*eexx + eeyy*eeyy + eezz*eezz - eexx*eeyy - eeyy*eezz - eexx*eezz + 3*(eexy*eexy + eeyz*eeyz + eezx*eezx))
+                                ee1d2 = 0.5*(eexx+eeyy)+np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
+                                ee2d2 = 0.5*(eexx+eeyy)-np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
 
                                 try:
                                     princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
@@ -2920,23 +2914,17 @@ def main(argv):
                                 currentEErr.append(eerr)
                                 currentEEtt.append(eett)
                                 currentEErt.append(eert)
-
-                                i1d2 = sxx + syy
-                                i1d3 = sxx + syy + szz
-
-                                i2d2 = sxx*syy - sxy*sxy
-                                i2d3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
-
-                                i3d3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
-
-                                saverd2 = i1d2/2.0
-                                saverd3 = i1d3/3.0
-
-                                smises2d =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
-                                smises3d =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
-
-                                s1d2 = 0.5*(sxx+syy)+np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
-                                s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
+                                eei1d2 = eexx + eeyy
+                                eei1d3 = eexx + eeyy + eezz
+                                eei2d2 = eexx*eeyy - eexy*eexy
+                                eei2d3 = eexx*eeyy + eeyy*eezz + eexx*eezz - eexy*eexy - eeyz*eeyz - eezx*eezx
+                                eei3d3 = eexx*eeyy*eezz - eexx*eeyz*eeyz - eeyy*eezx*eezx - eezz*eexy*eexy + 2*eexy*eeyz*eezx
+                                eeaverd2 = eei1d2/2.0
+                                eeaverd3 = eei1d3/3.0
+                                eemises2d =  np.sqrt(eexx*eexx + eeyy*eeyy - eexx*eeyy + 3*eexy*eexy)
+                                eemises3d =  np.sqrt(eexx*eexx + eeyy*eeyy + eezz*eezz - eexx*eeyy - eeyy*eezz - eexx*eezz + 3*(eexy*eexy + eeyz*eeyz + eezx*eezx))
+                                ee1d2 = 0.5*(eexx+eeyy)+np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
+                                ee2d2 = 0.5*(eexx+eeyy)-np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
 
                                 try:
                                     princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
@@ -3284,23 +3272,17 @@ def main(argv):
                                 currentEErr.append(eerr)
                                 currentEEtt.append(eett)
                                 currentEErt.append(eert)
-
-                                i1d2 = sxx + syy
-                                i1d3 = sxx + syy + szz
-
-                                i2d2 = sxx*syy - sxy*sxy
-                                i2d3 = sxx*syy + syy*szz + sxx*szz - sxy*sxy - syz*syz - szx*szx
-
-                                i3d3 = sxx*syy*szz - sxx*syz*syz - syy*szx*szx - szz*sxy*sxy + 2*sxy*syz*szx
-
-                                saverd2 = i1d2/2.0
-                                saverd3 = i1d3/3.0
-
-                                smises2d =  np.sqrt(sxx*sxx + syy*syy - sxx*syy + 3*sxy*sxy)
-                                smises3d =  np.sqrt(sxx*sxx + syy*syy + szz*szz - sxx*syy - syy*szz - sxx*szz + 3*(sxy*sxy + syz*syz + szx*szx))
-
-                                s1d2 = 0.5*(sxx+syy)+np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
-                                s2d2 = 0.5*(sxx+syy)-np.sqrt((0.5*(sxx-syy))*(0.5*(sxx-syy))+sxy*sxy)
+                                eei1d2 = eexx + eeyy
+                                eei1d3 = eexx + eeyy + eezz
+                                eei2d2 = eexx*eeyy - eexy*eexy
+                                eei2d3 = eexx*eeyy + eeyy*eezz + eexx*eezz - eexy*eexy - eeyz*eeyz - eezx*eezx
+                                eei3d3 = eexx*eeyy*eezz - eexx*eeyz*eeyz - eeyy*eezx*eezx - eezz*eexy*eexy + 2*eexy*eeyz*eezx
+                                eeaverd2 = eei1d2/2.0
+                                eeaverd3 = eei1d3/3.0
+                                eemises2d =  np.sqrt(eexx*eexx + eeyy*eeyy - eexx*eeyy + 3*eexy*eexy)
+                                eemises3d =  np.sqrt(eexx*eexx + eeyy*eeyy + eezz*eezz - eexx*eeyy - eeyy*eezz - eexx*eezz + 3*(eexy*eexy + eeyz*eeyz + eezx*eezx))
+                                ee1d2 = 0.5*(eexx+eeyy)+np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
+                                ee2d2 = 0.5*(eexx+eeyy)-np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
 
                                 try:
                                     princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0

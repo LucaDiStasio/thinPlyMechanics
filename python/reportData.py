@@ -2550,13 +2550,12 @@ def main(argv):
                                 eexy = currentEExy[s]
                                 eezx = 0.0
                                 eeyz = 0.0
-
-                                srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
-                                stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
-                                srt = -sxx*cosRot*sinRot+syy*cosRot*sinRot+sxy*(cosRot*cosRot-sinRot*sinRot)
-                                currentSrr.append(srr)
-                                currentStt.append(stt)
-                                currentSrt.append(srt)
+                                eerr = eexx*cosRot*cosRot+eeyy*sinRot*sinRot+2*eexy*cosRot*sinRot
+                                eett = eexx*sinRot*sinRot+eeyy*cosRot*cosRot-2*eexy*cosRot*sinRot
+                                eert = -eexx*cosRot*sinRot+eeyy*cosRot*sinRot+eexy*(cosRot*cosRot-sinRot*sinRot)
+                                currentEErr.append(eerr)
+                                currentEEtt.append(eett)
+                                currentEErt.append(eert)
 
                                 i1d2 = sxx + syy
                                 i1d3 = sxx + syy + szz
@@ -2915,13 +2914,12 @@ def main(argv):
                                 eexy = currentEExy[s]
                                 eezx = 0.0
                                 eeyz = 0.0
-
-                                srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
-                                stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
-                                srt = -sxx*cosRot*sinRot+syy*cosRot*sinRot+sxy*(cosRot*cosRot-sinRot*sinRot)
-                                currentSrr.append(srr)
-                                currentStt.append(stt)
-                                currentSrt.append(srt)
+                                eerr = eexx*cosRot*cosRot+eeyy*sinRot*sinRot+2*eexy*cosRot*sinRot
+                                eett = eexx*sinRot*sinRot+eeyy*cosRot*cosRot-2*eexy*cosRot*sinRot
+                                eert = -eexx*cosRot*sinRot+eeyy*cosRot*sinRot+eexy*(cosRot*cosRot-sinRot*sinRot)
+                                currentEErr.append(eerr)
+                                currentEEtt.append(eett)
+                                currentEErt.append(eert)
 
                                 i1d2 = sxx + syy
                                 i1d3 = sxx + syy + szz
@@ -3280,13 +3278,12 @@ def main(argv):
                                 eexy = currentEExy[s]
                                 eezx = 0.0
                                 eeyz = 0.0
-
-                                srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
-                                stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
-                                srt = -sxx*cosRot*sinRot+syy*cosRot*sinRot+sxy*(cosRot*cosRot-sinRot*sinRot)
-                                currentSrr.append(srr)
-                                currentStt.append(stt)
-                                currentSrt.append(srt)
+                                eerr = eexx*cosRot*cosRot+eeyy*sinRot*sinRot+2*eexy*cosRot*sinRot
+                                eett = eexx*sinRot*sinRot+eeyy*cosRot*cosRot-2*eexy*cosRot*sinRot
+                                eert = -eexx*cosRot*sinRot+eeyy*cosRot*sinRot+eexy*(cosRot*cosRot-sinRot*sinRot)
+                                currentEErr.append(eerr)
+                                currentEEtt.append(eett)
+                                currentEErt.append(eert)
 
                                 i1d2 = sxx + syy
                                 i1d3 = sxx + syy + szz

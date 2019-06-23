@@ -3726,6 +3726,22 @@ def main(argv):
             verticalpathsWorkbook.close()
             print('Workbook closed.')
 
+            print('    Close workbook ' + join(outdir,outputfileBasename + '-radialpathsStrainData' + '.xlsx'))
+            radialpathsStrainWorkbook.close()
+            print('Workbook closed.')
+
+            print('    Close workbook ' + join(outdir,outputfileBasename + '-circumferentialpathsStrainData' + '.xlsx'))
+            circumferentialpathsStrainWorkbook.close()
+            print('Workbook closed.')
+
+            print('    Close workbook ' + join(outdir,outputfileBasename + '-horizontalpathsStrainData' + '.xlsx'))
+            horizontalpathsStrainWorkbook.close()
+            print('Workbook closed.')
+
+            print('    Close workbook ' + join(outdir,outputfileBasename + '-verticalpathsStrainData' + '.xlsx'))
+            verticalpathsStrainWorkbook.close()
+            print('Workbook closed.')
+
     if toLatex: # only for errts file
 
         if not os.path.exists(join(reportFolder,'pics')):

@@ -2630,9 +2630,9 @@ def main(argv):
                     pathEndVariableName = 'endAngle [deg]'
                     pathCoordinateName = 'angle [deg]'
                     datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    circumferentialpathsSheetnames.append(datasheetName)
+                    circumferentialpathsStrainSheetnames.append(datasheetName)
                     numberOfCircumferentialpaths.append(len(pathVariables))
-                    worksheet = circumferentialpathsWorkbook.add_worksheet(datasheetName.decode('utf-8'))
+                    worksheet = circumferentialpathsStrainWorkbook.add_worksheet(datasheetName.decode('utf-8'))
                     for p, pathVariable in enumerate(pathVariables):
                         worksheet.write(0,p*25,pathVariableName,circumferentialpathsstringFormat)
                         worksheet.write(1,p*25,pathVariable,circumferentialpathsnumberFormatReduced)
@@ -2984,9 +2984,9 @@ def main(argv):
                     pathEndVariableName = 'xf [mum]'
                     pathCoordinateName = 'x [mum]'
                     datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    horizontalpathsSheetnames.append(datasheetName)
+                    horizontalpathsStrainSheetnames.append(datasheetName)
                     numberOfHorizontalpaths.append(len(pathVariables))
-                    worksheet = horizontalpathsWorkbook.add_worksheet(datasheetName.decode('utf-8'))
+                    worksheet = horizontalpathsStrainWorkbook.add_worksheet(datasheetName.decode('utf-8'))
                     for p, pathVariable in enumerate(pathVariables):
                         worksheet.write(0,p*25,pathVariableName,horizontalpathsstringFormat)
                         worksheet.write(1,p*25,pathVariable,horizontalpathsnumberFormatReduced)
@@ -3338,9 +3338,9 @@ def main(argv):
                     pathEndVariableName = 'yf [mum]'
                     pathCoordinateName = 'y [mum]'
                     datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    verticalpathsSheetnames.append(datasheetName)
+                    verticalpathsStrainSheetnames.append(datasheetName)
                     numberOfVerticalpaths.append(len(pathVariables))
-                    worksheet = verticalpathsWorkbook.add_worksheet(datasheetName.decode('utf-8'))
+                    worksheet = verticalpathsStrainWorkbook.add_worksheet(datasheetName.decode('utf-8'))
                     for p, pathVariable in enumerate(pathVariables):
                         worksheet.write(0,p*25,pathVariableName,verticalpathsstringFormat)
                         worksheet.write(1,p*25,pathVariable,verticalpathsnumberFormatReduced)

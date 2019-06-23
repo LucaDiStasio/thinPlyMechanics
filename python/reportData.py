@@ -2425,31 +2425,31 @@ def main(argv):
                 if subFolder.split('/')[-1] + '-strainscircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)
                     print('    ')
-                    with open(circumferentialpathsSummary,'r') as csv:
+                    with open(circumferentialpathsStrainSummary,'r') as csv:
                         lines = csv.readlines()
-                    Sxx = []
-                    Syy = []
-                    Szz = []
-                    Sxy = []
-                    Szx = []
-                    Syz = []
-                    Srr = []
-                    Stt = []
-                    Srt = []
-                    S1D3 = []
-                    S2D3 = []
-                    S3D3 = []
-                    I1D3 = []
-                    I2D3 = []
-                    I3D3 = []
-                    SMisesD3 = []
-                    SaverD3 = []
-                    S1D2 = []
-                    S2D2 = []
-                    I1D2 = []
-                    I2D2 = []
-                    SMisesD2 = []
-                    SaverD2 = []
+                    EExx = []
+                    EEyy = []
+                    EEzz = []
+                    EExy = []
+                    EEzx = []
+                    EEyz = []
+                    EErr = []
+                    EEtt = []
+                    EErt = []
+                    EE1D3 = []
+                    EE2D3 = []
+                    EE3D3 = []
+                    EEI1D3 = []
+                    EEI2D3 = []
+                    EEI3D3 = []
+                    EEMisesD3 = []
+                    EEaverD3 = []
+                    EE1D2 = []
+                    EE2D2 = []
+                    EEI1D2 = []
+                    EEI2D2 = []
+                    EEMisesD2 = []
+                    EEaverD2 = []
                     pathVariables = []
                     pathStartVariables = []
                     pathEndVariables = []
@@ -2457,12 +2457,12 @@ def main(argv):
                     pathNormCoords = []
 
                     for line in lines[1:]:
-                        stressComp = line.replace('\n','').replace(' ','').split(',')[0]
+                        strainComp = line.replace('\n','').replace(' ','').split(',')[0]
                         pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
                         pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
                         pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
                         datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
-                        print('    Reading component ' + stressComp)
+                        print('    Reading component ' + strainComp)
                         print('            ' + 'for circumferential path at ' + str(pathVariable) + ' mum')
                         print('            ' + 'starting at ' + str(pathStartVariable) + ' deg')
                         print('            ' + 'ending at ' + str(pathEndVariable) + ' deg')
@@ -2778,31 +2778,31 @@ def main(argv):
 
                 if subFolder.split('/')[-1] + '-strainshorizontalpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of horizontal paths for folder ' + subFolder)
-                    with open(horizontalpathsSummary,'r') as csv:
+                    with open(horizontalpathsStrainSummary,'r') as csv:
                         lines = csv.readlines()
-                    Sxx = []
-                    Syy = []
-                    Szz = []
-                    Sxy = []
-                    Szx = []
-                    Syz = []
-                    Srr = []
-                    Stt = []
-                    Srt = []
-                    S1D3 = []
-                    S2D3 = []
-                    S3D3 = []
-                    I1D3 = []
-                    I2D3 = []
-                    I3D3 = []
-                    SMisesD3 = []
-                    SaverD3 = []
-                    S1D2 = []
-                    S2D2 = []
-                    I1D2 = []
-                    I2D2 = []
-                    SMisesD2 = []
-                    SaverD2 = []
+                    EExx = []
+                    EEyy = []
+                    EEzz = []
+                    EExy = []
+                    EEzx = []
+                    EEyz = []
+                    EErr = []
+                    EEtt = []
+                    EErt = []
+                    EE1D3 = []
+                    EE2D3 = []
+                    EE3D3 = []
+                    EEI1D3 = []
+                    EEI2D3 = []
+                    EEI3D3 = []
+                    EEMisesD3 = []
+                    EEaverD3 = []
+                    EE1D2 = []
+                    EE2D2 = []
+                    EEI1D2 = []
+                    EEI2D2 = []
+                    EEMisesD2 = []
+                    EEaverD2 = []
                     pathVariables = []
                     pathStartVariables = []
                     pathEndVariables = []
@@ -2810,12 +2810,12 @@ def main(argv):
                     pathNormCoords = []
 
                     for line in lines[1:]:
-                        stressComp = line.replace('\n','').replace(' ','').split(',')[0]
+                        strainComp = line.replace('\n','').replace(' ','').split(',')[0]
                         pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
                         pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
                         pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
                         datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
-                        print('    Reading component ' + stressComp)
+                        print('    Reading component ' + strainComp)
                         print('            ' + 'for horizontal path at ' + str(pathVariable) + ' [mum]')
                         print('            ' + 'starting at ' + str(pathStartVariable) + ' mum')
                         print('            ' + 'ending at ' + str(pathEndVariable) + ' mum')
@@ -3131,31 +3131,31 @@ def main(argv):
 
                 if subFolder.split('/')[-1] + '-strainsverticalpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of vertical paths for folder ' + subFolder)
-                    with open(verticalpathsSummary,'r') as csv:
+                    with open(verticalpathsStrainSummary,'r') as csv:
                         lines = csv.readlines()
-                    Sxx = []
-                    Syy = []
-                    Szz = []
-                    Sxy = []
-                    Szx = []
-                    Syz = []
-                    Srr = []
-                    Stt = []
-                    Srt = []
-                    S1D3 = []
-                    S2D3 = []
-                    S3D3 = []
-                    I1D3 = []
-                    I2D3 = []
-                    I3D3 = []
-                    SMisesD3 = []
-                    SaverD3 = []
-                    S1D2 = []
-                    S2D2 = []
-                    I1D2 = []
-                    I2D2 = []
-                    SMisesD2 = []
-                    SaverD2 = []
+                    EExx = []
+                    EEyy = []
+                    EEzz = []
+                    EExy = []
+                    EEzx = []
+                    EEyz = []
+                    EErr = []
+                    EEtt = []
+                    EErt = []
+                    EE1D3 = []
+                    EE2D3 = []
+                    EE3D3 = []
+                    EEI1D3 = []
+                    EEI2D3 = []
+                    EEI3D3 = []
+                    EEMisesD3 = []
+                    EEaverD3 = []
+                    EE1D2 = []
+                    EE2D2 = []
+                    EEI1D2 = []
+                    EEI2D2 = []
+                    EEMisesD2 = []
+                    EEaverD2 = []
                     pathVariables = []
                     pathStartVariables = []
                     pathEndVariables = []
@@ -3163,12 +3163,12 @@ def main(argv):
                     pathNormCoords = []
 
                     for line in lines[1:]:
-                        stressComp = line.replace('\n','').replace(' ','').split(',')[0]
+                        strainComp = line.replace('\n','').replace(' ','').split(',')[0]
                         pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
                         pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])
                         pathEndVariable = float(line.replace('\n','').replace(' ','').split(',')[3])
                         datfilePath = join(subFolder,line.replace('\n','').replace(' ','').split(',')[-1])
-                        print('    Reading component ' + stressComp)
+                        print('    Reading component ' + strainComp)
                         print('            ' + 'for vertical path at ' + str(pathVariable) + ' mum')
                         print('            ' + 'starting at ' + str(pathStartVariable) + ' mum')
                         print('            ' + 'ending at ' + str(pathEndVariable) + ' mum')

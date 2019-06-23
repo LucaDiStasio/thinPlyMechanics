@@ -2344,6 +2344,7 @@ def main(argv):
                             worksheet.write(3+c,p*25+23,EEI1D2[p][c],radialpathsStrainnumberFormat)
                             worksheet.write(3+c,p*25+24,EEI2D2[p][c],radialpathsStrainnumberFormat)
 
+                    '''
                     graphsheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                     graphworksheet = radialpathsStrainWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
                     print('    --> Writing worksheet')
@@ -2395,7 +2396,7 @@ def main(argv):
                         print(' ')
                         print(' ')
                         graphworksheet.insert_chart(v*20,30,chartB)
-
+                    '''
                     EExx = []
                     EEyy = []
                     EEzz = []
@@ -3495,7 +3496,7 @@ def main(argv):
                     print('<-----------------')
                     print('<-----------------')
                 '''
-            '''
+
             pathVariableName = 'pathAngle [deg]'
             pathCoordinateName = 'R [mum]'
             for n in range(0,min(numberOfRadialpaths)):
@@ -3714,7 +3715,7 @@ def main(argv):
                     print(' ')
                     print(' ')
                     graphworksheet.insert_chart(v*20,30,chartB)
-            '''
+
 
             print('    Close workbook ' + join(outdir,outputfileBasename + '-radialpathsData' + '.xlsx'))
             radialpathsWorkbook.close()

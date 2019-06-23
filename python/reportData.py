@@ -2058,7 +2058,7 @@ def main(argv):
                     pathEndVariables = []
                     pathCoords = []
                     pathNormCoords = []
-                '''
+
                 if subFolder.split('/')[-1] + '-strainsradialpaths' + '.csv' in listdir(subFolder):
                     print('----------------->')
                     print('----------------->')
@@ -2426,7 +2426,7 @@ def main(argv):
                     pathNormCoords = []
                     print('<-----------------')
                     print('<-----------------')
-
+                '''
                 if subFolder.split('/')[-1] + '-strainscircumferentialpaths' + '.csv' in listdir(subFolder):
                     print('    Analysis of circumferential paths for folder ' + subFolder)
                     print('    ')

@@ -2544,12 +2544,12 @@ def main(argv):
                                 rotateBy = pathCoords[-1][s]*np.pi/180.0
                                 cosRot = np.cos(rotateBy)
                                 sinRot = np.sin(rotateBy)
-                                sxx = currentSxx[s]
-                                syy = currentSyy[s]
-                                szz = currentSzz[s]
-                                sxy = currentSxy[s]
-                                szx = 0.0
-                                syz = 0.0
+                                eexx = currentEExx[s]
+                                eeyy = currentEEyy[s]
+                                eezz = currentEEzz[s]
+                                eexy = currentEExy[s]
+                                eezx = 0.0
+                                eeyz = 0.0
 
                                 srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
                                 stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
@@ -2909,12 +2909,12 @@ def main(argv):
                                 rotateBy = np.arctan2(pathVariable,pathCoords[-1][s])
                                 cosRot = np.cos(rotateBy)
                                 sinRot = np.sin(rotateBy)
-                                sxx = currentSxx[s]
-                                syy = currentSyy[s]
-                                szz = currentSzz[s]
-                                sxy = currentSxy[s]
-                                szx = 0.0
-                                syz = 0.0
+                                eexx = currentEExx[s]
+                                eeyy = currentEEyy[s]
+                                eezz = currentEEzz[s]
+                                eexy = currentEExy[s]
+                                eezx = 0.0
+                                eeyz = 0.0
 
                                 srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
                                 stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot
@@ -3274,12 +3274,12 @@ def main(argv):
                                 rotateBy = np.arctan2(xData[s],pathVariable)
                                 cosRot = np.cos(rotateBy)
                                 sinRot = np.sin(rotateBy)
-                                sxx = currentSxx[s]
-                                syy = currentSyy[s]
-                                szz = currentSzz[s]
-                                sxy = currentSxy[s]
-                                szx = 0.0
-                                syz = 0.0
+                                eexx = currentEExx[s]
+                                eeyy = currentEEyy[s]
+                                eezz = currentEEzz[s]
+                                eexy = currentEExy[s]
+                                eezx = 0.0
+                                eeyz = 0.0
 
                                 srr = sxx*cosRot*cosRot+syy*sinRot*sinRot+2*sxy*cosRot*sinRot
                                 stt = sxx*sinRot*sinRot+syy*cosRot*cosRot-2*sxy*cosRot*sinRot

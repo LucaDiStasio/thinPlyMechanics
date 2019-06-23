@@ -2356,7 +2356,7 @@ def main(argv):
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
                             if v==0:
-                                radialpathsDatalengths.append(dataLength)
+                                radialpathsStrainDatalengths.append(dataLength)
                             chartA.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,25*p,dataLength,25*p],
@@ -2705,7 +2705,7 @@ def main(argv):
                     print('        ' + graphsheetName)
                     print(' ')
                     variableNames = ['EExx [mum/mum]','EEyy [mum/mum]','EEzz [mum/mum]','EExy [mum/mum]','EEzx [mum/mum]','EEyz [mum/mum]','EErr [mum/mum]','EEtt [mum/mum]','EErt [mum/mum]','EE1_3D [mum/mum]','EE2_3D [mum/mum]','EE3_3D [mum/mum]','EE1_2D [mum/mum]','EE2_2D [mum/mum]','EEmises_3D [mum/mum]','EEmises_2D [mum/mum]','EEaver_3D [mum/mum]','EEaver_2D [mum/mum]','EEI1_3D [mum/mum]','EEI2_3D [(mum/mum)^2]','EEI3_3D [(mum/mum)^3]','EEI1_2D [mum/mum]','EEI2_2D [(mum/mum)^2]']
-                    circumferentialpathsDatalengths.append(len(pathCoords[p]))
+                    circumferentialpathsStrainDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableNames):
                         chartA = circumferentialpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
@@ -2713,7 +2713,7 @@ def main(argv):
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
                             if v==0:
-                                circumferentialpathsDatalengths.append(dataLength)
+                                circumferentialpathsStrainDatalengths.append(dataLength)
                             chartA.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,25*p,dataLength,25*p],
@@ -3061,7 +3061,7 @@ def main(argv):
                     print('        ' + graphsheetName)
                     print(' ')
                     variableNames = ['EExx [mum/mum]','EEyy [mum/mum]','EEzz [mum/mum]','EExy [mum/mum]','EEzx [mum/mum]','EEyz [mum/mum]','EErr [mum/mum]','EEtt [mum/mum]','EErt [mum/mum]','EE1_3D [mum/mum]','EE2_3D [mum/mum]','EE3_3D [mum/mum]','EE1_2D [mum/mum]','EE2_2D [mum/mum]','EEmises_3D [mum/mum]','EEmises_2D [mum/mum]','EEaver_3D [mum/mum]','EEaver_2D [mum/mum]','EEI1_3D [mum/mum]','EEI2_3D [(mum/mum)^2]','EEI3_3D [(mum/mum)^3]','EEI1_2D [mum/mum]','EEI2_2D [(mum/mum)^2]']
-                    horizontalpathsDatalengths.append(len(pathCoords[p]))
+                    horizontalpathsStrainDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableNames):
                         chartA = horizontalpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
@@ -3069,7 +3069,7 @@ def main(argv):
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
                             if v==0:
-                                horizontalpathsDatalengths.append(dataLength)
+                                horizontalpathsStrainDatalengths.append(dataLength)
                             chartA.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,25*p,dataLength,25*p],
@@ -3424,7 +3424,7 @@ def main(argv):
                         for p, pathVariable in enumerate(pathVariables):
                             dataLength = len(pathCoords[p])
                             if v==0:
-                                verticalpathsDatalengths.append(dataLength)
+                                verticalpathsStrainDatalengths.append(dataLength)
                             chartA.add_series({
                                             'name':       pathVariableName + '=' + str(pathVariable),
                                             'categories': [datasheetName,3,25*p,dataLength,25*p],

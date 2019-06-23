@@ -2065,7 +2065,6 @@ def main(argv):
                     print('----------------->')
                     print('    Analysis of radial paths for folder ' + subFolder)
                     print(' ')
-                    raw_input()
                     with open(radialpathsStrainSummary,'r') as csv:
                         lines = csv.readlines()
                     EExx = []
@@ -2098,6 +2097,7 @@ def main(argv):
                     pathNormCoords = []
 
                     for line in lines[1:]:
+                        raw_input()
                         strainComp = line.replace('\n','').replace(' ','').split(',')[0]
                         pathVariable = float(line.replace('\n','').replace(' ','').split(',')[1])
                         pathStartVariable = float(line.replace('\n','').replace(' ','').split(',')[2])

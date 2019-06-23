@@ -2567,17 +2567,15 @@ def main(argv):
                                 eemises3d =  np.sqrt(eexx*eexx + eeyy*eeyy + eezz*eezz - eexx*eeyy - eeyy*eezz - eexx*eezz + 3*(eexy*eexy + eeyz*eeyz + eezx*eezx))
                                 ee1d2 = 0.5*(eexx+eeyy)+np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
                                 ee2d2 = 0.5*(eexx+eeyy)-np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
-
                                 try:
-                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
-                                    s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
-                                    s2d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
-                                    s3d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
+                                    princOrient = np.arccos((2*eei1d3*eei1d3*eei1d3-9*eei1d3*eei2d3+27*eei3d3)/(2*np.sqrt((eei1d3*eei1d3-3*eei2d3)*(eei1d3*eei1d3-3*eei2d3)*(eei1d3*eei1d3-3*eei2d3))))/3.0
+                                    ee1d3 = eei1d3/3.0 + 2*np.sqrt(eei1d3*eei1d3-3*eei2d3)*np.cos(princOrient)/3.0
+                                    ee2d3 = eei1d3/3.0 + 2*np.sqrt(eei1d3*eei1d3-3*eei2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
+                                    ee3d3 = eei1d3/3.0 + 2*np.sqrt(eei1d3*eei1d3-3*eei2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
                                 except Exception:
-                                    s1d3 = s1d2
-                                    s2d3 = s2d2
-                                    s3d3 = 0.0
-
+                                    ee1d3 = ee1d2
+                                    ee2d3 = ee2d2
+                                    ee3d3 = 0.0
                                 current3DS1.append(s1d3)
                                 current3DS2.append(s2d3)
                                 current3DS3.append(s2d3)
@@ -2925,17 +2923,15 @@ def main(argv):
                                 eemises3d =  np.sqrt(eexx*eexx + eeyy*eeyy + eezz*eezz - eexx*eeyy - eeyy*eezz - eexx*eezz + 3*(eexy*eexy + eeyz*eeyz + eezx*eezx))
                                 ee1d2 = 0.5*(eexx+eeyy)+np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
                                 ee2d2 = 0.5*(eexx+eeyy)-np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
-
                                 try:
-                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
-                                    s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
-                                    s2d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
-                                    s3d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
+                                    princOrient = np.arccos((2*eei1d3*eei1d3*eei1d3-9*eei1d3*eei2d3+27*eei3d3)/(2*np.sqrt((eei1d3*eei1d3-3*eei2d3)*(eei1d3*eei1d3-3*eei2d3)*(eei1d3*eei1d3-3*eei2d3))))/3.0
+                                    ee1d3 = eei1d3/3.0 + 2*np.sqrt(eei1d3*eei1d3-3*eei2d3)*np.cos(princOrient)/3.0
+                                    ee2d3 = eei1d3/3.0 + 2*np.sqrt(eei1d3*eei1d3-3*eei2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
+                                    ee3d3 = eei1d3/3.0 + 2*np.sqrt(eei1d3*eei1d3-3*eei2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
                                 except Exception:
-                                    s1d3 = s1d2
-                                    s2d3 = s2d2
-                                    s3d3 = 0.0
-
+                                    ee1d3 = ee1d2
+                                    ee2d3 = ee2d2
+                                    ee3d3 = 0.0
                                 current3DS1.append(s1d3)
                                 current3DS2.append(s2d3)
                                 current3DS3.append(s2d3)
@@ -3283,17 +3279,15 @@ def main(argv):
                                 eemises3d =  np.sqrt(eexx*eexx + eeyy*eeyy + eezz*eezz - eexx*eeyy - eeyy*eezz - eexx*eezz + 3*(eexy*eexy + eeyz*eeyz + eezx*eezx))
                                 ee1d2 = 0.5*(eexx+eeyy)+np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
                                 ee2d2 = 0.5*(eexx+eeyy)-np.sqrt((0.5*(eexx-eeyy))*(0.5*(eexx-eeyy))+eexy*eexy)
-
                                 try:
-                                    princOrient = np.arccos((2*i1d3*i1d3*i1d3-9*i1d3*i2d3+27*i3d3)/(2*np.sqrt((i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3)*(i1d3*i1d3-3**i2d3))))/3.0
-                                    s1d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient)/3.0
-                                    s2d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
-                                    s3d3 = i1d3/3.0 + 2*np.sqrt(i1d3*i1d3-3*i2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
+                                    princOrient = np.arccos((2*eei1d3*eei1d3*eei1d3-9*eei1d3*eei2d3+27*eei3d3)/(2*np.sqrt((eei1d3*eei1d3-3*eei2d3)*(eei1d3*eei1d3-3*eei2d3)*(eei1d3*eei1d3-3*eei2d3))))/3.0
+                                    ee1d3 = eei1d3/3.0 + 2*np.sqrt(eei1d3*eei1d3-3*eei2d3)*np.cos(princOrient)/3.0
+                                    ee2d3 = eei1d3/3.0 + 2*np.sqrt(eei1d3*eei1d3-3*eei2d3)*np.cos(princOrient-2*np.pi/3.0)/3.0
+                                    ee3d3 = eei1d3/3.0 + 2*np.sqrt(eei1d3*eei1d3-3*eei2d3)*np.cos(princOrient-4*np.pi/3.0)/3.0
                                 except Exception:
-                                    s1d3 = s1d2
-                                    s2d3 = s2d2
-                                    s3d3 = 0.0
-
+                                    ee1d3 = ee1d2
+                                    ee2d3 = ee2d2
+                                    ee3d3 = 0.0
                                 current3DS1.append(s1d3)
                                 current3DS2.append(s2d3)
                                 current3DS3.append(s2d3)

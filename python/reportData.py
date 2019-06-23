@@ -605,18 +605,22 @@ def main(argv):
             radialpathsStrainSheetnames = []
             numberOfRadialpaths = []
             radialpathsDatalengths = []
+            radialpathsStrainDatalengths = []
             circumferentialpathsSheetnames = []
             circumferentialpathsStrainSheetnames = []
             numberOfCircumferentialpaths = []
             circumferentialpathsDatalengths = []
+            circumferentialpathsStrainDatalengths = []
             horizontalpathsSheetnames = []
             horizontalpathsStrainSheetnames = []
             numberOfHorizontalpaths = []
             horizontalpathsDatalengths = []
+            horizontalpathsStrainDatalengths = []
             verticalpathsSheetnames = []
             verticalpathsStrainSheetnames = []
             numberOfVerticalpaths = []
             verticalpathsDatalengths = []
+            verticalpathsStrainDatalengths = []
 
             for subFolder in subfoldersList:
                 radialpathsSummary = join(subFolder,subFolder.split('/')[-1] + '-stressesradialpaths' + '.csv')
@@ -2700,7 +2704,7 @@ def main(argv):
                     print('    --> Writing worksheet')
                     print('        ' + graphsheetName)
                     print(' ')
-                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                    variableNames = ['EExx [mum/mum]','EEyy [mum/mum]','EEzz [mum/mum]','EExy [mum/mum]','EEzx [mum/mum]','EEyz [mum/mum]','EErr [mum/mum]','EEtt [mum/mum]','EErt [mum/mum]','EE1_3D [mum/mum]','EE2_3D [mum/mum]','EE3_3D [mum/mum]','EE1_2D [mum/mum]','EE2_2D [mum/mum]','EEmises_3D [mum/mum]','EEmises_2D [mum/mum]','EEaver_3D [mum/mum]','EEaver_2D [mum/mum]','EEI1_3D [mum/mum]','EEI2_3D [(mum/mum)^2]','EEI3_3D [(mum/mum)^3]','EEI1_2D [mum/mum]','EEI2_2D [(mum/mum)^2]']
                     circumferentialpathsDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableNames):
                         chartA = circumferentialpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
@@ -3056,7 +3060,7 @@ def main(argv):
                     print('    --> Writing worksheet')
                     print('        ' + graphsheetName)
                     print(' ')
-                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                    variableNames = ['EExx [mum/mum]','EEyy [mum/mum]','EEzz [mum/mum]','EExy [mum/mum]','EEzx [mum/mum]','EEyz [mum/mum]','EErr [mum/mum]','EEtt [mum/mum]','EErt [mum/mum]','EE1_3D [mum/mum]','EE2_3D [mum/mum]','EE3_3D [mum/mum]','EE1_2D [mum/mum]','EE2_2D [mum/mum]','EEmises_3D [mum/mum]','EEmises_2D [mum/mum]','EEaver_3D [mum/mum]','EEaver_2D [mum/mum]','EEI1_3D [mum/mum]','EEI2_3D [(mum/mum)^2]','EEI3_3D [(mum/mum)^3]','EEI1_2D [mum/mum]','EEI2_2D [(mum/mum)^2]']
                     horizontalpathsDatalengths.append(len(pathCoords[p]))
                     for v,variableName in enumerate(variableNames):
                         chartA = horizontalpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
@@ -3412,7 +3416,7 @@ def main(argv):
                     print('    --> Writing worksheet')
                     print('        ' + graphsheetName)
                     print(' ')
-                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saverage_3D [MPa]','Saverage_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                    variableNames = ['EExx [mum/mum]','EEyy [mum/mum]','EEzz [mum/mum]','EExy [mum/mum]','EEzx [mum/mum]','EEyz [mum/mum]','EErr [mum/mum]','EEtt [mum/mum]','EErt [mum/mum]','EE1_3D [mum/mum]','EE2_3D [mum/mum]','EE3_3D [mum/mum]','EE1_2D [mum/mum]','EE2_2D [mum/mum]','EEmises_3D [mum/mum]','EEmises_2D [mum/mum]','EEaver_3D [mum/mum]','EEaver_2D [mum/mum]','EEI1_3D [mum/mum]','EEI2_3D [(mum/mum)^2]','EEI3_3D [(mum/mum)^3]','EEI1_2D [mum/mum]','EEI2_2D [(mum/mum)^2]']
                     for v,variableName in enumerate(variableNames):
                         chartA = verticalpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')

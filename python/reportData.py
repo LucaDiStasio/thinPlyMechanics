@@ -2132,29 +2132,29 @@ def main(argv):
                             pathVariables.append(pathVariable)
                             pathStartVariables.append(pathStartVariable)
                             pathEndVariables.append(pathEndVariable)
-                            print('    --> Stress component is EE11.')
+                            print('    --> Strain component is EE11.')
                             print(' ')
                         elif 'EE22' in strainComp:
                             EEyy.append(yData)
-                            print('    --> Stress component is EE22.')
+                            print('    --> Strain component is EE22.')
                             print(' ')
                         elif 'EE23' in strainComp:
                             EEyz.append(yData)
-                            print('    --> Stress component is EE23.')
+                            print('    --> Strain component is EE23.')
                             print(' ')
                         elif 'EE12' in strainComp:
                             EExy.append(yData)
-                            print('    --> Stress component is EE12.')
+                            print('    --> Strain component is EE12.')
                             print(' ')
                         elif 'EE13' in strainComp:
                             EEzx.append(yData)
-                            print('    --> Stress component is EE13.')
+                            print('    --> Strain component is EE13.')
                             print(' ')
                         elif 'EE33' in strainComp:
                             EEzz.append(yData)
                             EEzx.append(0.0)
                             EEyz.append(0.0)
-                            print('    --> Stress component is EE33.')
+                            print('    --> Strain component is EE33.')
                             print(' ')
                             currentEExx = EExx[-1]
                             currentEEyy = EEyy[-1]

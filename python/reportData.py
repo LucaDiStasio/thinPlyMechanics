@@ -602,15 +602,19 @@ def main(argv):
             print('<-----------------')
             print(' ')
             radialpathsSheetnames = []
+            radialpathsStrainSheetnames = []
             numberOfRadialpaths = []
             radialpathsDatalengths = []
             circumferentialpathsSheetnames = []
+            circumferentialpathsStrainSheetnames = []
             numberOfCircumferentialpaths = []
             circumferentialpathsDatalengths = []
             horizontalpathsSheetnames = []
+            horizontalpathsStrainSheetnames = []
             numberOfHorizontalpaths = []
             horizontalpathsDatalengths = []
             verticalpathsSheetnames = []
+            verticalpathsStrainSheetnames = []
             numberOfVerticalpaths = []
             verticalpathsDatalengths = []
 
@@ -2219,56 +2223,56 @@ def main(argv):
                                 current3DEEI2.append(eei2d3)
                                 current3DEEI3.append(eei3d3)
                                 current3DEEMises.append(eemises3d)
-                                current3DEEaver.append(eaverd3)
+                                current3DEEaver.append(eeaverd3)
                                 current2DEE1.append(ee1d2)
                                 current2DEE2.append(ee2d2)
                                 current2DEEI1.append(eei1d2)
                                 current2DEEI2.append(eei2d2)
                                 current2DEEMises.append(eemises2d)
                                 current2DEEaver.append(eeaverd2)
-                            Srr.append(currentSrr)
-                            Stt.append(currentStt)
-                            Srt.append(currentSrt)
-                            S1D3.append(current3DS1)
-                            S2D3.append(current3DS2)
-                            S3D3.append(current3DS3)
-                            S1D2.append(current2DS1)
-                            S2D2.append(current2DS2)
-                            I1D3.append(current3DI1)
-                            I2D3.append(current3DI2)
-                            I3D3.append(current3DI3)
-                            I1D2.append(current2DI1)
-                            I2D2.append(current2DI2)
-                            SMisesD3.append(current3DSMises)
-                            SaverD3.append(current3DSaver)
-                            SMisesD2.append(current2DSMises)
-                            SaverD2.append(current2DSaver)
-                            currentSrr = []
-                            currentStt = []
-                            currentSrt = []
-                            current3DS1 = []
-                            current3DS2 = []
-                            current3DS3 = []
-                            current3DI1 = []
-                            current3DI2 = []
-                            current3DI3 = []
-                            current3DSMises = []
-                            current3DSaver = []
-                            current2DS1 = []
-                            current2DS2 = []
-                            current2DI1 = []
-                            current2DI2 = []
-                            current2DSMises = []
-                            current2DSaver = []
+                            EErr.append(currentEErr)
+                            EEtt.append(currentEEtt)
+                            EErt.append(currentEErt)
+                            EE1D3.append(current3DEE1)
+                            EE2D3.append(current3DEE2)
+                            EE3D3.append(current3DEE3)
+                            EE1D2.append(current2DEE1)
+                            EE2D2.append(current2DEE2)
+                            EEI1D3.append(current3DEEI1)
+                            EEI2D3.append(current3DEEI2)
+                            EEI3D3.append(current3DEEI3)
+                            EEI1D2.append(current2DEEI1)
+                            EEI2D2.append(current2DEEI2)
+                            EEMisesD3.append(current3DEEMises)
+                            EEaverD3.append(current3DEEaver)
+                            EEMisesD2.append(current2DEEMises)
+                            EEaverD2.append(current2DEEaver)
+                            currentEErr = []
+                            currentEEtt = []
+                            currentEErt = []
+                            current3DEE1 = []
+                            current3DEE2 = []
+                            current3DEE3 = []
+                            current3DEEI1 = []
+                            current3DEEI2 = []
+                            current3DEEI3 = []
+                            current3DEEMises = []
+                            current3DEEaver = []
+                            current2DEE1 = []
+                            current2DEE2 = []
+                            current2DEEI1 = []
+                            current2DEEI2 = []
+                            current2DEEMises = []
+                            current2DEEaver = []
 
                     pathVariableName = 'pathAngle [deg]'
                     pathStartVariableName = 'Ri [mum]'
                     pathEndVariableName = 'Rf [mum]'
                     pathCoordinateName = 'R [mum]'
                     datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    radialpathsSheetnames.append(datasheetName)
+                    radialpathsStrainSheetnames.append(datasheetName)
                     numberOfRadialpaths.append(len(pathVariables))
-                    worksheet = radialpathsWorkbook.add_worksheet(datasheetName.decode('utf-8'))
+                    worksheet = radialpathsStrainWorkbook.add_worksheet(datasheetName.decode('utf-8'))
                     print('    --> Writing worksheet')
                     print('        ' + datasheetName)
                     print(' ')
@@ -2282,67 +2286,67 @@ def main(argv):
                         worksheet.write(1,p*25+2,pathEndVariables[p],radialpathsnumberFormat)
                         worksheet.write(2,p*25,pathCoordinateName,radialpathsstringFormat)
                         worksheet.write(2,p*25+1,'Norm ' + pathCoordinateName,radialpathsstringFormat)
-                        worksheet.write(2,p*25+2,'Sxx [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+3,'Syy [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+4,'Szz [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+5,'Sxy [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+6,'Szx [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+7,'Syz [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+8,'Srr [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+9,'Stt [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+10,'Srt [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+11,'S1_3D [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+12,'S2_3D [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+13,'S3_3D [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+14,'S1_2D [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+15,'S2_2D [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+16,'Smises_3D [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+17,'Smises_2D [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+18,'Saverage_3D [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+19,'Saverage_2D [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+20,'I1_3D [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+21,'I2_3D [MPa^2]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+22,'I3_3D [MPa^3]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+23,'I1_2D [MPa]',radialpathsstringFormat)
-                        worksheet.write(2,p*25+24,'I2_2D [MPa^2]',radialpathsstringFormat)
-                        measureNum = np.min([len(Sxx[p]),len(Syy[p]),len(Szz[p]),len(Sxy[p])])
+                        worksheet.write(2,p*25+2,'EExx [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+3,'EEyy [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+4,'EEzz [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+5,'EExy [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+6,'EEzx [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+7,'EEyz [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+8,'EErr [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+9,'EEtt [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+10,'EErt [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+11,'EE1_3D [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+12,'EE2_3D [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+13,'EE3_3D [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+14,'EE1_2D [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+15,'EE2_2D [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+16,'EEmises_3D [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+17,'EEmises_2D [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+18,'EEaverage_3D [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+19,'EEaverage_2D [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+20,'EEI1_3D [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+21,'EEI2_3D [(mum/mum)^2]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+22,'EEI3_3D [(mum/mum)^3]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+23,'EEI1_2D [mum/mum]',radialpathsstringFormat)
+                        worksheet.write(2,p*25+24,'EEI2_2D [(mum/mum)^2]',radialpathsstringFormat)
+                        measureNum = np.min([len(EExx[p]),len(EEyy[p]),len(EEzz[p]),len(EExy[p])])
                         print('          number of path points = ' + str(measureNum))
                         for c in range(0,measureNum):
                             coord = pathCoords[p][c]
                             worksheet.write(3+c,p*25,coord,radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+1,pathNormCoords[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+2,Sxx[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+3,Syy[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+4,Szz[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+5,Sxy[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+2,EExx[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+3,EEyy[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+4,EEzz[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+5,EExy[p][c],radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+6,0.0,radialpathsnumberFormat)
                             worksheet.write(3+c,p*25+7,0.0,radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+8,Srr[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+9,Stt[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+10,Srt[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+11,S1D3[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+12,S2D3[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+13,S3D3[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+14,S1D2[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+15,S2D2[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+16,SMisesD3[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+17,SMisesD2[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+18,SaverD3[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+19,SaverD2[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+20,I1D3[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+21,I2D3[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+22,I3D3[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+23,I1D2[p][c],radialpathsnumberFormat)
-                            worksheet.write(3+c,p*25+24,I2D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+8,EErr[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+9,EEtt[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+10,EErt[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+11,EE1D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+12,EE2D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+13,EE3D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+14,EE1D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+15,EE2D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+16,EEMisesD3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+17,EEMisesD2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+18,EEaverD3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+19,EEaverD2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+20,EEI1D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+21,EEI2D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+22,EEI3D3[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+23,EEI1D2[p][c],radialpathsnumberFormat)
+                            worksheet.write(3+c,p*25+24,EEI2D2[p][c],radialpathsnumberFormat)
 
                     graphsheetName = 'Graphs, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
-                    graphworksheet = radialpathsWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
+                    graphworksheet = radialpathsStrainWorkbook.add_worksheet(graphsheetName.decode('utf-8'))
                     print('    --> Writing worksheet')
                     print('        ' + graphsheetName)
                     print(' ')
-                    variableNames = ['Sxx [MPa]','Syy [MPa]','Szz [MPa]','Sxy [MPa]','Szx [MPa]','Syz [MPa]','Srr [MPa]','Stt [MPa]','Srt [MPa]','S1_3D [MPa]','S2_3D [MPa]','S3_3D [MPa]','S1_2D [MPa]','S2_2D [MPa]','Smises_3D [MPa]','Smises_2D [MPa]','Saver_3D [MPa]','Saver_2D [MPa]','I1_3D [MPa]','I2_3D [MPa^2]','I3_3D [MPa^3]','I1_2D [MPa]','I2_2D [MPa^2]']
+                    variableNames = ['EExx [mum/mum]','EEyy [mum/mum]','EEzz [mum/mum]','EExy [mum/mum]','EEzx [mum/mum]','EEyz [mum/mum]','EErr [mum/mum]','EEtt [mum/mum]','EErt [mum/mum]','EE1_3D [mum/mum]','EE2_3D [mum/mum]','EE3_3D [mum/mum]','EE1_2D [mum/mum]','EE2_2D [mum/mum]','EEmises_3D [mum/mum]','EEmises_2D [mum/mum]','EEaver_3D [mum/mum]','EEaver_2D [mum/mum]','EEI1_3D [mum/mum]','EEI2_3D [(mum/mum)^2]','EEI3_3D [(mum/mum)^3]','EEI1_2D [mum/mum]','EEI2_2D [(mum/mum)^2]']
                     for v,variableName in enumerate(variableNames):
-                        chartA = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chartA = radialpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.A')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
@@ -2365,7 +2369,7 @@ def main(argv):
                         print(' ')
                         print(' ')
                         graphworksheet.insert_chart(v*20,0,chartA)
-                        chartB = radialpathsWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
+                        chartB = radialpathsStrainWorkbook.add_chart({'type': 'scatter','subtype': 'straight_with_markers'})
                         print('        Chart ' + str(v+1) + '.B')
                         print(' ')
                         for p, pathVariable in enumerate(pathVariables):
@@ -2387,29 +2391,29 @@ def main(argv):
                         print(' ')
                         graphworksheet.insert_chart(v*20,30,chartB)
 
-                    Sxx = []
-                    Syy = []
-                    Szz = []
-                    Sxy = []
-                    Szx = []
-                    Syz = []
-                    Srr = []
-                    Stt = []
-                    Srt = []
-                    S1D3 = []
-                    S2D3 = []
-                    S3D3 = []
-                    I1D3 = []
-                    I2D3 = []
-                    I3D3 = []
-                    SMisesD3 = []
-                    SaverD3 = []
-                    S1D2 = []
-                    S2D2 = []
-                    I1D2 = []
-                    I2D2 = []
-                    SMisesD2 = []
-                    SaverD2 = []
+                    EExx = []
+                    EEyy = []
+                    EEzz = []
+                    EExy = []
+                    EEzx = []
+                    EEyz = []
+                    EErr = []
+                    EEtt = []
+                    EErt = []
+                    EE1D3 = []
+                    EE2D3 = []
+                    EE3D3 = []
+                    EEI1D3 = []
+                    EEI2D3 = []
+                    EEI3D3 = []
+                    EEMisesD3 = []
+                    EEaverD3 = []
+                    EE1D2 = []
+                    EE2D2 = []
+                    EEI1D2 = []
+                    EEI2D2 = []
+                    EEMisesD2 = []
+                    EEaverD2 = []
                     pathVariables = []
                     pathStartVariables = []
                     pathEndVariables = []

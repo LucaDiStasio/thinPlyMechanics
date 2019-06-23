@@ -604,6 +604,7 @@ def main(argv):
             radialpathsSheetnames = []
             radialpathsStrainSheetnames = []
             numberOfRadialpaths = []
+            numberOfRadialpathsStrain = []
             radialpathsDatalengths = []
             radialpathsStrainDatalengths = []
             circumferentialpathsSheetnames = []
@@ -2064,6 +2065,7 @@ def main(argv):
                     print('----------------->')
                     print('    Analysis of radial paths for folder ' + subFolder)
                     print(' ')
+                    raw_input()
                     with open(radialpathsStrainSummary,'r') as csv:
                         lines = csv.readlines()
                     EExx = []
@@ -2276,7 +2278,7 @@ def main(argv):
                     pathCoordinateName = 'R [mum]'
                     datasheetName = 'Values, deltatheta=' + subFolder.split('deltatheta')[-1].replace('_','.')
                     radialpathsStrainSheetnames.append(datasheetName)
-                    numberOfRadialpaths.append(len(pathVariables))
+                    numberOfRadialpathsStrain.append(len(pathVariables))
                     worksheet = radialpathsStrainWorkbook.add_worksheet(datasheetName.decode('utf-8'))
                     print('    --> Writing worksheet')
                     print('        ' + datasheetName)

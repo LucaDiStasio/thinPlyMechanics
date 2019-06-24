@@ -23,6 +23,7 @@
 %\usepackage[authoryear,longnamesfirst]{natbib}
 %\usepackage[authoryear]{natbib}
 \usepackage[numbers]{natbib}
+\usepackage{nicefrac}
 
 %%%Author definitions
 \def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
@@ -127,7 +128,7 @@ contain the abstract and keywords respectively.
 %\end{highlights}
 
 \begin{keywords}
-Fiber Reinforced Polymer Composite (FRPC) \sep Debonding \sep Similarity \sep Dimensional analysis \sep Linear Elastic Fracture Mechanics (LEFM)
+Fiber Reinforced Polymer Composite (FRPC) \sep Debonding \sep Similarity \sep Dimensional analysis
 \end{keywords}
 
 
@@ -135,13 +136,17 @@ Fiber Reinforced Polymer Composite (FRPC) \sep Debonding \sep Similarity \sep Di
 
 \section{Introduction}
 
-One of the most promising developments in Fiber Reinforced Polymer Composites (FRPCs) for advanced structural applications is currently represented by \emph{thin-ply} laminates~\cite{Kopp2017}. Constituted by extremely thin plies, with $t_{90^{\circ}}$ as small as just $\sim4-5$ fiber diameters, this family of laminates is characterized by its damage tolerance, in particular the capability of delaying to higher strains and even suppressing the onset and propagation of transverse cracks~\cite{Cugnoni2018}. The recent experimental assessment of transverse cracks suppression in \emph{thin-ply} laminates~\cite{Sasayama2003,Saito2012,Amacher2014} validates the existence of a \emph{ply-thickness} effect~\cite{Amacher2014} at scales $10x$ smaller than those at which it was originally observed at the end of the 1970's~\cite{Bailey1979}.
+One of the most promising developments in Fiber Reinforced Polymer Composites (FRPCs) for advanced structural applications is currently represented by \emph{thin-ply} laminates~\cite{Kopp2017}. Constituted by extremely thin plies, with $t_{90^{\circ}}$ as small as just $\sim4-5$ fiber diameters, this family of laminates is characterized by its damage tolerance, in particular the capability of delaying to higher strains and even suppressing the onset and propagation of transverse cracks~\cite{Cugnoni2018}. The recent experimental assessment of transverse cracks suppression in \emph{thin-ply} laminates~\cite{Sasayama2003,Saito2012,Amacher2014} validates the existence of a \emph{ply-thickness} effect~\cite{Amacher2014} at scales $10x$ smaller than those at which it was originally observed at the end of the 1970's~\cite{Bailey1979}.\\
+Onset of transverse cracks coincides at the microscopic level with the formation of fiber/matrix interface cracks~\cite{Bailey1981}, or debonds. After the inter-fiber stress~\cite{Asp1996} and strain concentration~\cite{Kies1962} causes the matrix to fail at or close the fiber interface, debonds grow along the fiber arc direction until a maximum or critical size is reached. If the applied load is increased, debonds move into the matrix or ``kink'' out of the fiber/matrix interface~\cite{Zhang1997,Paris2007}. Coalescence of debonds then occurs, which corresponds macroscopically to through-the-thickness transverse crack propagation~\cite{Zhang1997,Zhuang2018}. Finally, propagation through the specimen width occurs~\cite{Zhang1997}.\\
+Given that \emph{thin-plies}, as previously noted, can reach nowadays thicknesses of just $\sim4-5$ fiber diameters, the characteristic size of the ply, i.e. the thickness $t_{90^{\circ}}$, is now comparable in magnitude to the characteristic size of debonds, i.e. the fiber diameter $2R_{f}$, such that $\nicefrac{t_{90^{\circ}}}{\left(2R_{f}\right)}\sim\mathcal{O}\left(1\right)$. This has motivated in recent years a renewed interest in debond growth modeling~\cite{Zhuang2018,Sandino2016,Varna2017,Sandino2018}. Since the elastic solution to the interface crack implies an oscillating solution at the crack tip~\cite{Comninou1977} in the \emph{open} case (crack faces not in contact), Stress Intensify Factors (SIFs) are not defined and debond growth characterization has focused on the determination of Mode I, Mode II and total Energy Release Rate (ERR).
+
+\section{Dimensional analysis}
 
 \section{Representative Volume Elements (RVEs)}
 
 
 
-\section{Dimensional analysis}
+
 
 
 \section{Similarity laws}

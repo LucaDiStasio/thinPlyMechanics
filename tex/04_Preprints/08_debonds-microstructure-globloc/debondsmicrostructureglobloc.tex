@@ -1,6 +1,7 @@
 \documentclass[review]{elsarticle}
 
 \usepackage{amsmath}
+\usepackage{cancel}
 \usepackage{lineno,hyperref}
 \modulolinenumbers[5]
 
@@ -79,6 +80,14 @@ Fiber Reinforced Polymer Composite (FRPC) \sep Debonding \sep Finite element ana
 \section{Introduction}
 
 \section{Derivation of constitutive relations}
+
+\begin{equation}
+\beta_{ij}=\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{i}n_{j}+u_{j}n_{i}\right)dS
+\end{equation}
+
+\begin{equation}
+\beta_{11}=\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{1}n_{1}+u_{1}n_{1}\right)dS=\frac{1}{V_{k}}\int_{S_{C}}\cancelto{0}{u_{1}}n_{1}dS=0
+\end{equation}
 
 
 \end{document}

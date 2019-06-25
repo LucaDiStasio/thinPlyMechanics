@@ -148,4 +148,27 @@ CSD\left(\theta\right)&=CSD_{avg}+\delta CSD\left(\theta\right)=CSD_{avg}+CSD_{m
 \int_{0}^{\Delta\theta}f\left(\theta\right)=0\quad\int_{0}^{\Delta\theta}g\left(\theta\right)=0
 \end{equation}
 
+\begin{equation}
+\begin{aligned}
+\beta_{22}=&\frac{1}{2}\frac{1}{L}\frac{R_{f}}{t_{90^{\circ}}}COD_{avg}\int_{0}^{\Delta\theta}\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta+\\
+&+\frac{1}{2}\frac{1}{L}\frac{R_{f}}{t_{90^{\circ}}}COD_{max}\int_{0}^{\Delta\theta}f\left(\theta\right)\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta+\\
+&-\frac{1}{2}\frac{1}{L}\frac{R_{f}}{t_{90^{\circ}}}CSD_{avg}\int_{0}^{\Delta\theta}\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta+\\
+&-\frac{1}{2}\frac{1}{L}\frac{R_{f}}{t_{90^{\circ}}}CSD_{max}\int_{0}^{\Delta\theta}g\left(\theta\right)\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta\\
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\int_{0}^{\Delta\theta}\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta&=\left[\theta-\frac{1}{2}\cos\left(2\theta\right)-\frac{1}{2}\sin\left(2\theta\right)\right]_{0}^{\Delta\theta}=\\
+&=\Delta\theta+\frac{1}{2}\left(1-\cos\left(2\Delta\theta\right)\right)-\frac{1}{2}\sin\left(2\Delta\theta\right)=\\
+&=\Delta\theta-\frac{1}{2}\left(\sqrt{2}\sin\left(2\Delta\theta+\frac{\pi}{4}\right)-1\right)
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\int_{0}^{\Delta\theta}f\left(\theta\right)&\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta=\\&=\cancelto{0}{\int_{0}^{\Delta\theta}f\left(\theta\right)d\theta}-\sqrt{2}\int_{0}^{\Delta\theta}f\left(\theta\right)\sin\left(\frac{\pi}{4}-2\Delta\theta\right)d\theta
+\end{aligned}
+\end{equation}
+
 \end{document}

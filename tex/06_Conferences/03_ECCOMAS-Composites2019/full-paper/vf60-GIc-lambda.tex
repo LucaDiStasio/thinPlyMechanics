@@ -62,10 +62,11 @@ legend pos = {south east},
 legend entries={},
 ]
 
+\def\scale{0.4}
 
 % S5, A5, T1, lambda = 0.2
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table[x=theta, y expr={\thisrow{GTOT}/(1+(tan(deg((1-0.2)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
+table[x=theta, y expr={(\scale*\thisrow{GTOT})/(1+(tan(deg((1-0.2)*rad(atan(sqrt((\scale*\thisrow{GII})/(\scale*\thisrow{GI})))))))^(2))}]{
 theta    GI           GII       GTOT    
 3	1.900974	0.120026	2.021000
 4	2.323526	0.232474	2.556000
@@ -84,7 +85,7 @@ theta    GI           GII       GTOT
 
 % S5, A5, T1, lambda = 0.25
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
-table[x=theta, y expr={\thisrow{GTOT}/(1+(tan(deg((1-0.25)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
+table[x=theta, y expr={(\scale*\thisrow{GTOT})/(1+(tan(deg((1-0.25)*rad(atan(sqrt((\scale*\thisrow{GII})/(\scale*\thisrow{GI})))))))^(2))}]{
 theta    GI           GII       GTOT    
 3	1.900974	0.120026	2.021000
 4	2.323526	0.232474	2.556000
@@ -103,7 +104,7 @@ theta    GI           GII       GTOT
 
 % S5, A5, T1, lambda = 0.3
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*]
-table[x=theta, y expr={\thisrow{GTOT}/(1+(tan(deg((1-0.3)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
+table[x=theta, y expr={(\scale*\thisrow{GTOT})/(1+(tan(deg((1-0.3)*rad(atan(sqrt((\scale*\thisrow{GII})/(\scale*\thisrow{GI})))))))^(2))}]{
 theta    GI           GII       GTOT    
 3	1.900974	0.120026	2.021000
 4	2.323526	0.232474	2.556000
@@ -122,7 +123,7 @@ theta    GI           GII       GTOT
 
 % S5, A5, T1, lambda = 0.35
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*,mark options={fill=white}]
-table[x=theta, y expr={\thisrow{GTOT}/(1+(tan(deg((1-0.35)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
+table[x=theta, y expr={(\scale*\thisrow{GTOT})/(1+(tan(deg((1-0.35)*rad(atan(sqrt((\scale*\thisrow{GII})/(\scale*\thisrow{GI})))))))^(2))}]{
 theta    GI           GII       GTOT    
 3	1.900974	0.120026	2.021000
 4	2.323526	0.232474	2.556000

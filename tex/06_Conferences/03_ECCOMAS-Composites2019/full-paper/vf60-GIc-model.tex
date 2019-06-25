@@ -62,10 +62,11 @@ legend entries={},
 ]
 
 \def\lambda{0.3}
+\def\scale{0.4}
 
 % S5, A0
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table[x=theta, y expr={\thisrow{GTOT}/(1+(tan(deg((1-\lambda)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
+table[x=theta, y expr={(\scale*\thisrow{GTOT})/(1+(tan(deg((1-\lambda)*rad(atan(sqrt((\scale*\thisrow{GII})/(\scale*\thisrow{GI})))))))^(2))}]{
 theta    GI           GII       GTOT    
 3	1.928642	0.126358	2.055000
 4	2.371243	0.248757	2.620000
@@ -84,7 +85,7 @@ theta    GI           GII       GTOT
 
 % S5, A5
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
-table[x=theta, y expr={\thisrow{GTOT}/(1+(tan(deg((1-\lambda)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
+table[x=theta, y expr={(\scale*\thisrow{GTOT})/(1+(tan(deg((1-\lambda)*rad(atan(sqrt((\scale*\thisrow{GII})/(\scale*\thisrow{GI})))))))^(2))}]{
 theta    GI           GII       GTOT    
 3	1.900965	0.120035	2.021000
 4	2.324500	0.232500	2.557000
@@ -103,7 +104,7 @@ theta    GI           GII       GTOT
 
 % S5, A0, T1
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*]
-table[x=theta, y expr={\thisrow{GTOT}/(1+(tan(deg((1-\lambda)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
+table[x=theta, y expr={(\scale*\thisrow{GTOT})/(1+(tan(deg((1-\lambda)*rad(atan(sqrt((\scale*\thisrow{GII})/(\scale*\thisrow{GI})))))))^(2))}]{
 theta    GI           GII       GTOT    
 3	1.900548	0.121452	2.022000
 4	2.315022	0.234978	2.550000
@@ -122,7 +123,7 @@ theta    GI           GII       GTOT
 
 % S5, A5, T1
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*,mark options={fill=white}]
-table[x=theta, y expr={\thisrow{GTOT}/(1+(tan(deg((1-\lambda)*rad(atan(sqrt(\thisrow{GII}/\thisrow{GI}))))))^(2))}]{
+table[x=theta, y expr={(\scale*\thisrow{GTOT})/(1+(tan(deg((1-\lambda)*rad(atan(sqrt((\scale*\thisrow{GII})/(\scale*\thisrow{GI})))))))^(2))}]{
 theta    GI           GII       GTOT    
 3	1.900974	0.120026	2.021000
 4	2.323526	0.232474	2.556000

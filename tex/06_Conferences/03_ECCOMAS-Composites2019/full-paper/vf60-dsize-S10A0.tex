@@ -64,13 +64,13 @@ legend entries={},
 
 \def\lambdamax{0.35}
 \def\lambdamin{0.2}
-\def\GIcmin{2}
-\def\GIcavg{3}
-\def\GIcmax{4.5}
+\def\GIcmin{2}%2
+\def\GIcavg{3}%3
+\def\GIcmax{4.5}%4.5
 
 % S10, A0, GTOT
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table[x=theta, y=GTOT]{
+table[x=theta, y expr=1*\thisrow{GTOT}]{
 theta    GI           GII       GTOT    
 10	3.861040	0.907161	4.768201
 20	4.231512	2.556262	6.787774

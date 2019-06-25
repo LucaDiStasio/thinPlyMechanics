@@ -105,27 +105,27 @@ Total ERR is underestimated, due to the high $\frac{\delta}{\Delta\theta}$ ratio
 
 \begin{figure}[!hp]
 \centering
-    \subfigure[$\sigma_{rr}$]{\label{fig:stress-a}\includegraphics[height=0.22\textheight]{vf60-nodamage-sigmar.pdf}}\  
-    \subfigure[$\tau_{r\psi}$]{\label{fig:stress-b}\raisebox{0.04\textheight}{\includegraphics[height=0.18\textheight]{vf60-nodamage-taurt.pdf}}}\\
-    \subfigure[$\sigma_{LHS,2D}$]{\label{fig:stress-c}\includegraphics[height=0.22\textheight]{vf60-nodamage-p2D.pdf}}\ 
-    \subfigure[$\sigma_{LHS,3D}$]{\label{fig:stress-d}\includegraphics[height=0.22\textheight]{vf60-nodamage-p3D.pdf}}
-    \subfigure[$\sigma_{vM,2D}$]{\label{fig:stress-e}\includegraphics[height=0.22\textheight]{vf60-nodamage-vM2D.pdf}}\ 
-    \subfigure[$\sigma_{vM,3D}$]{\label{fig:stress-f}\raisebox{0.04\textheight}{\includegraphics[height=0.18\textheight]{vf60-nodamage-vM3D.pdf}}}
-    \subfigure[$\sigma_{LMPS,2D}$]{\label{fig:stress-g}\includegraphics[height=0.22\textheight]{vf60-nodamage-sigmaI2D.pdf}}\ 
-    \subfigure[$\sigma_{LMPS,3D}$]{\label{fig:stress-h}\includegraphics[height=0.22\textheight]{vf60-nodamage-sigmaI3D.pdf}}
-\caption{Stress distribution at the fiber/matrix interface in the absence of damage.}\label{fig:stress}
+    \subfigure[Radial stress $\sigma_{rr}$]{\label{fig:stress-a}\includegraphics[height=0.2\textheight]{vf60-nodamage-sigmar.pdf}}\  
+    \subfigure[Shear stress $\tau_{r\psi}$]{\label{fig:stress-b}\raisebox{0.04\textheight}{\includegraphics[height=0.16\textheight]{vf60-nodamage-taurt.pdf}}}\\
+    \subfigure[Local Hydrostatic Stress (LHS), neglecting $\sigma_{yy}$, $\sigma_{LHS,2D}$.]{\label{fig:stress-c}\includegraphics[height=0.2\textheight]{vf60-nodamage-p2D.pdf}}\ 
+    \subfigure[Local Hydrostatic Stress (LHS), considering $\sigma_{yy}$, $\sigma_{LHS,3D}$.]{\label{fig:stress-d}\includegraphics[height=0.2\textheight]{vf60-nodamage-p3D.pdf}}
+    \subfigure[Local von Mises stress, neglecting $\sigma_{yy}$, $\sigma_{vM,2D}$.]{\label{fig:stress-e}\includegraphics[height=0.2\textheight]{vf60-nodamage-vM2D.pdf}}\ 
+    \subfigure[Local von Mises stress, considering $\sigma_{yy}$, $\sigma_{vM,3D}$.]{\label{fig:stress-f}\raisebox{0.04\textheight}{\includegraphics[height=0.16\textheight]{vf60-nodamage-vM3D.pdf}}}
+    \subfigure[Local Maximum Principal Stress (LMPS), neglecting $\sigma_{yy}$, $\sigma_{LMPS,2D}$.]{\label{fig:stress-g}\includegraphics[height=0.2\textheight]{vf60-nodamage-sigmaI2D.pdf}}\ 
+    \subfigure[Local Maximum Principal Stress (LMPS), considering $\sigma_{yy}$, $\sigma_{LMPS,3D}$.]{\label{fig:stress-h}\includegraphics[height=0.2\textheight]{vf60-nodamage-sigmaI3D.pdf}}
+\caption{Stress distribution at the fiber/matrix interface in the absence of damage with respect to angular coordinate $\psi$.}\label{fig:stress}
 \end{figure}
 
-\section{STRESS-BASED ANALYSIS OF DEBOND INITIATION}
+\section{STRESS-BASED ANALYSIS OF DEBOND INITIATION ($\Delta\theta=0^{\circ}$)}
 
-The distribution of stresses at the fiber/matrix interface is analyzed in models $1\times k-free$ and $1\times k-1\cdot t_{90^{\circ}}$ with $k=1,3,11,201$ and $\Delta\theta=0^{\circ}$, i.e. the undamaged case. Some selected stress components are analyzed, based on their relevance in previous studies on debond initiation and growth: the radial $\sigma_{rr}$ and shear $\tau_{r\psi}$ stress~\cite{Mantic2009} (Fig.~\ref{fig:stress-a} and Fig.~\ref{fig:stress-b}), the Local Hydrostatic Stress (LHS, following the notation of~\cite{Carraro2016}) $\sigma_{LHS}$~\cite{Asp1996a,Asp1996b} (Fig.~\ref{fig:stress-c} and Fig.~\ref{fig:stress-d}), the local von Mises stress $\sigma_{vM}$~\cite{Canal2012}  (Fig.~\ref{fig:stress-e} and Fig.~\ref{fig:stress-f}), the Local Maximum Principal Stress (LMPS, following the notation of~\cite{Carraro2016}) $\sigma_{LMPS}$~\cite{Carraro2014}  (Fig.~\ref{fig:stress-g} and Fig.~\ref{fig:stress-h}). In plane strain conditions there exists an out-of-plane axial component of the stress ($\sigma_{yy}$ in our notation): in order to study the importance of this out-of-plane component (tri-axial stress state, see~\cite{Asp1995}), $\sigma_{LHS}$, $\sigma_{vM}$ and $\sigma_{LMPS}$ are evaluated both neglecting (index $2D$) and considering (index $3D$)  $\sigma_{yy}$.\\
+The distribution of stresses at the fiber/matrix interface is analyzed in models $1\times k-free$ and $1\times k-1\cdot t_{90^{\circ}}$ with $k=1,3,11,201$ and $\Delta\theta=0^{\circ}$, i.e. the undamaged case. Some selected stress components are analyzed, based on their relevance in previous studies on debond initiation and growth: the radial $\sigma_{rr}$ and shear $\tau_{r\psi}$ stress~\cite{Mantic2009} (Fig.~\ref{fig:stress-a} and Fig.~\ref{fig:stress-b}), the Local Hydrostatic Stress (LHS, following the notation of~\cite{Carraro2016}) $\sigma_{LHS}$~\cite{Asp1996a,Asp1996b} (Fig.~\ref{fig:stress-c} and Fig.~\ref{fig:stress-d}), the local von Mises stress $\sigma_{vM}$~\cite{Canal2012}  (Fig.~\ref{fig:stress-e} and Fig.~\ref{fig:stress-f}), the Local Maximum Principal Stress (LMPS, following the notation of~\cite{Carraro2016}) $\sigma_{LMPS}$~\cite{Carraro2014}  (Fig.~\ref{fig:stress-g} and Fig.~\ref{fig:stress-h}). In plane strain conditions imply that there exists an out-of-plane axial component of the stress ($\sigma_{yy}$ in our notation): in order to study the importance of this out-of-plane component (tri-axial stress state, see~\cite{Asp1995}), $\sigma_{LHS}$, $\sigma_{vM}$ and $\sigma_{LMPS}$ are evaluated both neglecting (index $2D$) and considering it (index $3D$).\\
 It is possible to observe that:
 \vspace{-5pt}
 \begin{enumerate}
 \itemsep-0.5pt
-\item for all stress components, no significant difference is present between the different RUCs for $\psi\leq10^{\circ}$;
-\item for all stress components, no difference can be observed by increasing $k$ when $k\geq3$;
-\item for all stress components, no difference can be observed between $1\times  k-free$ and $1\times  k-1\cdot t_{90^{\circ}}$ for $k\geq3$;
+\item for all stresses reported in Fig.~\ref{fig:stress}, no significant difference is present between the different RUCs for $\psi\leq10^{\circ}$;
+\item for all stresses reported in Fig.~\ref{fig:stress}, no difference can be observed by increasing $k$ when $k\geq3$;
+\item for all stresses reported in Fig.~\ref{fig:stress}, no difference can be observed between $1\times  k-free$ and $1\times  k-1\cdot t_{90^{\circ}}$ for $k\geq3$;
 \item at $\psi=0^{\circ}$ (i.e. the intersection between fiber/matrix interface and horizontal axis); the shear stress $\tau_{r\psi}$ (Fig.~\ref{fig:stress-b}) is $0$ while the radial stress $\sigma_{rr}$ (Fig.~\ref{fig:stress-a}) is at its maximum;
 \item comparison of Fig.~\ref{fig:stress-c} with Fig.~\ref{fig:stress-d} shows that the out-of-plane stress $\sigma_{yy}$ has only a marginal effect on the local hydrostatic stress $\sigma_{LHS}$: the distribution remains the same, while the peak value is reduced from $270\ \left[MPa\right]$ in Fig.~\ref{fig:stress-c} to $250\ \left[MPa\right]$ in Fig.~\ref{fig:stress-d} by considering $\sigma_{yy}$;
 \item comparison of Fig.~\ref{fig:stress-e} with Fig.~\ref{fig:stress-f} shows a remarkable effect of the out-of-plane stress $\sigma_{yy}$ on the von Mises stress: if $\sigma_{yy}$ is neglected, $\sigma_{vM}$ presents a maximum of $287\ \left[MPa\right]$ at $\psi=0^{\circ}$, slightly higher than the value of $\sigma_{LHS}$ (neglecting $\sigma_{yy}$) of $270\ \left[MPa\right]$ at $\psi=0^{\circ}$; if $\sigma_{yy}$ is considered, the peak value of $\sigma_{vM}$ is shifted to $\psi\sim20^{\circ}$ and reduced to $186\ \left[MPa\right]$ while at $\psi=0^{\circ}$ $\sigma_{vM}$ is reduced to $\sim110\ \left[MPa\right]$, significantly lower than $\sigma_{LHS}=250\ \left[MPa\right]$ at $\psi=0^{\circ}$ (considering $\sigma_{yy}$);

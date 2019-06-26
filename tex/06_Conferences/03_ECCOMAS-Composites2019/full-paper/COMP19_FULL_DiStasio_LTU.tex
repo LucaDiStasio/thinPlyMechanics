@@ -89,7 +89,7 @@ Every RUC is symmetric with respect to the horizontal ($x$) direction, thus only
 
 \begin{figure}[!h]
 \centering
-        \includegraphics[height=0.25\textheight]{RUC.pdf}
+        \includegraphics[height=0.2\textheight]{RUC.pdf}
 \caption{One-fiber unit cell and main parameters characterizing the debonding process.}\label{fig:ruc}
 \end{figure}
 
@@ -97,7 +97,7 @@ The FE solution is obtained using Abaqus~\cite{abq12} using second order, 2D, pl
 
 \begin{figure}[!h]
 \centering
-        \includegraphics[height=0.3\textheight]{vf60-G-methodsaccuracy.pdf}
+        \includegraphics[height=0.25\textheight]{vf60-G-methodsaccuracy.pdf}
 \caption{Total ERR of $11\times11-free$ evaluated respectively with the VCCT and the J-integral.}\label{fig:errerror}
 \end{figure}
 
@@ -118,7 +118,7 @@ Total ERR is underestimated, due to the high $\frac{\delta}{\Delta\theta}$ ratio
 
 \section{STRESS-BASED ANALYSIS OF DEBOND INITIATION ($\Delta\theta=0^{\circ}$)}
 
-The distribution of stresses at the fiber/matrix interface is analyzed in models $1\times k-free$ and $1\times k-1\cdot t_{90^{\circ}}$ with $k=1,3,11,201$, $\Delta\theta=0^{\circ}$ (i.e. the undamaged case) and $\bar{\varepsilon}_{x}=1\%$. Some selected stress components are analyzed, based on their relevance in previous studies on debond initiation and growth: the radial $\sigma_{rr}$ and shear $\tau_{r\psi}$ stress~\cite{Mantic2009} (Fig.~\ref{fig:stress-a} and Fig.~\ref{fig:stress-b}), the Local Hydrostatic Stress (LHS, following the notation of~\cite{Carraro2016}) $\sigma_{LHS}$~\cite{Asp1996a,Asp1996b} (Fig.~\ref{fig:stress-c} and Fig.~\ref{fig:stress-d}), the local von Mises stress $\sigma_{vM}$~\cite{Canal2012}  (Fig.~\ref{fig:stress-e} and Fig.~\ref{fig:stress-f}), the Local Maximum Principal Stress (LMPS, following the notation of~\cite{Carraro2016}) $\sigma_{LMPS}$~\cite{Carraro2014}  (Fig.~\ref{fig:stress-g} and Fig.~\ref{fig:stress-h}). In plane strain conditions imply that there exists an out-of-plane axial component of the stress ($\sigma_{yy}$ in our notation): in order to study the importance of this out-of-plane component (tri-axial stress state, see~\cite{Asp1995}), $\sigma_{LHS}$, $\sigma_{vM}$ and $\sigma_{LMPS}$ are evaluated both neglecting (index $2D$) and considering it (index $3D$).\\
+In this section, we assume stress-based debond initiation at the undamaged fiber/matrix interface. Thus, we analyze the distribution of stresses at the fiber/matrix interface in models $1\times k-free$ and $1\times k-1\cdot t_{90^{\circ}}$ with $k=1,3,11,201$, $\Delta\theta=0^{\circ}$ (i.e. the undamaged case) and $\bar{\varepsilon}_{x}=1\%$. Some selected stress components are presented, based on their relevance in previous studies on debond initiation and growth: the radial $\sigma_{rr}$ and shear $\tau_{r\psi}$ stress~\cite{Mantic2009} (Fig.~\ref{fig:stress-a} and Fig.~\ref{fig:stress-b}), the Local Hydrostatic Stress (LHS, following the notation of~\cite{Carraro2016}) $\sigma_{LHS}$~\cite{Asp1996a,Asp1996b} (Fig.~\ref{fig:stress-c} and Fig.~\ref{fig:stress-d}), the local von Mises stress $\sigma_{vM}$~\cite{Canal2012}  (Fig.~\ref{fig:stress-e} and Fig.~\ref{fig:stress-f}), the Local Maximum Principal Stress (LMPS, following the notation of~\cite{Carraro2016}) $\sigma_{LMPS}$~\cite{Carraro2014}  (Fig.~\ref{fig:stress-g} and Fig.~\ref{fig:stress-h}). In plane strain conditions imply that there exists an out-of-plane axial component of the stress ($\sigma_{yy}$ in our notation): in order to study the importance of this out-of-plane component (tri-axial stress state, see~\cite{Asp1995}), $\sigma_{LHS}$, $\sigma_{vM}$ and $\sigma_{LMPS}$ are evaluated both neglecting (index $2D$) and considering it (index $3D$).\\
 It is possible to observe that:
 \vspace{-5pt}
 \begin{enumerate}
@@ -137,13 +137,13 @@ Based on the previous considerations, it is reasonable to assume that a stress-b
 
 \section{ENERGY-BASED ANALYSIS OF DEBOND PROPAGATION}
 
-We assume an expression for the critical Energy Release Rate $G_{c}$ at the interface of the form~\cite{Hutchinson1991,Mantic2009}:
+In the previous section, we assumed stress-based debond initiation. We now assume that, once an initial debond is formed of a size in the range predicted in the previous section ($\Delta\theta_{0}\sim2^{\circ}-12^{\circ}$), the debond will grow unstably~\cite{Correa2016} according to an energy-based criterion of the form~\cite{Hutchinson1991,Mantic2009}:
 
 \begin{equation}\label{eq:propcrit}
-G_{c}=G_{Ic}\left(1+\tan^{2}\left(\left(1-\lambda\right)\Psi_{G}\right)\right),\quad\Psi_{G}=tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right),
+G_{TOT}\geq G_{c}=G_{Ic}\left(1+\tan^{2}\left(\left(1-\lambda\right)\Psi_{G}\right)\right),\quad\Psi_{G}=tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right),
 \end{equation}
 
-where $\Psi_{G}$ is the energy-based phase angle, $G_{Ic}$ is the Mode I critical ERR (material property) and $\lambda$ the mode mixity sensitivity parameter (material property, usually $0.2\leq\lambda\leq0.35$)\footnote{$\lambda$ governs the influence of mode ratio $\frac{G_{II}}{G_{I}}$ on $G_{c}$ such that: for $\lambda=1$, $G_{c}=G_{Ic}$; for $\lambda=0$, $G_{c}=G_{Ic}\left(1+\frac{G_{II}}{G_{I}}\right)$.}. By calculating Mode I, Mode II and total ERR and equating the expression of $G_{c}$ in Eq.~\ref{eq:propcrit} to $G_{TOT}$, it is possible to estimate the value of $G_{Ic}$ for different values of the assumed initial debond size $\Delta\theta_{0}$ and of the parameter $\lambda$ (Figure~\ref{fig:GIc}). The estimation is performed using a restricted set of RUCs: $11\times 1-free$, $11\times 11-free$, $11\times 1-1\cdot t_{90^{\circ}}$ and $11\times 11-1\cdot t_{90^{\circ}}$.
+where $\Psi_{G}$ is the energy-based phase angle, $G_{TOT}$ is the total ERR, $G_{c}$ is the critical ERR, $G_{Ic}$ is the Mode I critical ERR (material property) and $\lambda$ the mode mixity sensitivity parameter (material property, usually $0.2\leq\lambda\leq0.35$)\footnote{$\lambda$ governs the influence of mode ratio $\frac{G_{II}}{G_{I}}$ on $G_{c}$ such that: for $\lambda=1$, $G_{c}=G_{Ic}$; for $\lambda=0$, $G_{c}=G_{Ic}\left(1+\frac{G_{II}}{G_{I}}\right)$.}. Given that debond propagation starts as soon as an initial debond is formed (in our model), the propagation criterion in Eq.~\ref{eq:propcrit} is satisfied for the initial debond size $\Delta\theta_{0}$. Thus, by calculating $G_{I}$, $G_{II}$ and $G_{TOT}$ and equating $G_{c}$ to $G_{TOT}$ in Eq.~\ref{eq:propcrit}, it is possible to estimate $G_{Ic}$ for different values of the initial debond size $\Delta\theta_{0}$ and of the parameter $\lambda$ (Figure~\ref{fig:GIc}). The estimation is performed using a restricted set of RUCs: $11\times 1-free$, $11\times 11-free$, $11\times 1-1\cdot t_{90^{\circ}}$ and $11\times 11-1\cdot t_{90^{\circ}}$, with $\bar{\varepsilon}_{x}=1\%$.
 
 \begin{figure}[!h]
 \centering
@@ -152,7 +152,7 @@ where $\Psi_{G}$ is the energy-based phase angle, $G_{Ic}$ is the Mode I critica
 \caption{Estimated values of $G_{Ic}$ assuming different values of initial debond size, for different RUCs and varying $\lambda$.}\label{fig:GIc}
 \end{figure}
 
-Remarkably, neither RUC configuration nor $\lambda$ affects $G_{Ic}$ significantly for small initial flaw size ($\Delta\theta_{0}<10^{\circ}$). Based on the considerations of the previous section, we can expect the initial flaw to be in the range $2^{\circ}-12^{\circ}$ ($1-5\%$ margin): comparing this with the results of Figure~\ref{fig:GIc}, we can assume $G_{Ic}$ to be in the range $2-4.5\ \left[\frac{J}{m^{2}}\right]$, while $0.2\leq\lambda\leq0.35$.\\
+Neither RUC configuration nor $\lambda$ affects $G_{Ic}$ significantly for small initial debond size ($\Delta\theta_{0}<10^{\circ}$), which corresponds. Based on the considerations of the previous section, we can expect the initial flaw to be in the range $2^{\circ}-12^{\circ}$ ($1-5\%$ margin): comparing this with the results of Figure~\ref{fig:GIc}, we can assume $G_{Ic}$ to be in the range $2-4.5\ \left[\frac{J}{m^{2}}\right]$, while $0.2\leq\lambda\leq0.35$.\\
 Having estimated the values of the material properties $G_{Ic}$ and $\lambda$, we can now proceed to estimate the expected maximum size of debonds by evaluating $G_{TOT}$ and comparing it with the critical ERR estimated with Equation~\ref{eq:propcrit}.
 
 \begin{figure}[!htbp]

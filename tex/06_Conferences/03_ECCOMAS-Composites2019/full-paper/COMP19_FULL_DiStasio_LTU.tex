@@ -78,10 +78,10 @@ which represent conditions of anti-symmetric coupling~\cite{DiStasio2019b}.
 
 \begin{figure}[!h]
 \centering
-    \subfigure[$n\times k-free$]{\label{fig:rves-a}\raisebox{0.0775\textheight}{\includegraphics[width=0.45\textwidth]{thickPlyUD.pdf}}}\quad 
-    \subfigure[$n\times k-coupling$]{\label{fig:rves-b}\includegraphics[width=0.45\textwidth]{coupling.pdf}}\\
-    \subfigure[$n\times k-asymm$]{\label{fig:rves-c}\raisebox{0.0275\textheight}{\includegraphics[width=0.45\textwidth]{asymm.pdf}}}\quad
-    \subfigure[$n\times k-m\times t_{90^{\circ}}$]{\label{fig:rves-d}\includegraphics[width=0.45\textwidth]{ThickPlyCP.pdf}}
+    \subfigure[$n\times k-free$]{\label{fig:rves-a}\raisebox{0.07\textheight}{\includegraphics[width=0.4\textwidth]{thickPlyUD.pdf}}}\quad 
+    \subfigure[$n\times k-coupling$]{\label{fig:rves-b}\includegraphics[width=0.4\textwidth]{coupling.pdf}}\\
+    \subfigure[$n\times k-asymm$]{\label{fig:rves-c}\raisebox{0.0275\textheight}{\includegraphics[width=0.4\textwidth]{asymm.pdf}}}\quad
+    \subfigure[$n\times k-m\times t_{90^{\circ}}$]{\label{fig:rves-d}\includegraphics[width=0.4\textwidth]{ThickPlyCP.pdf}}
 \caption{Composite RVEs and corresponding RUCs analyzed.}\label{fig:rves}
 \end{figure}
 
@@ -89,7 +89,7 @@ Every RUC is symmetric with respect to the horizontal ($x$) direction, thus only
 
 \begin{figure}[!h]
 \centering
-        \includegraphics[height=0.2\textheight]{RUC.pdf}
+        \includegraphics[height=0.15\textheight]{RUC.pdf}
 \caption{One-fiber unit cell and main parameters characterizing the debonding process.}\label{fig:ruc}
 \end{figure}
 
@@ -97,7 +97,7 @@ The FE solution is obtained using Abaqus~\cite{abq12} using second order, 2D, pl
 
 \begin{figure}[!h]
 \centering
-        \includegraphics[height=0.25\textheight]{vf60-G-methodsaccuracy.pdf}
+        \includegraphics[height=0.2\textheight]{vf60-G-methodsaccuracy.pdf}
 \caption{Total ERR of $11\times11-free$ evaluated respectively with the VCCT and the J-integral.}\label{fig:errerror}
 \end{figure}
 
@@ -116,7 +116,7 @@ Total ERR is underestimated, due to the high $\frac{\delta}{\Delta\theta}$ ratio
 \caption{Stress distribution at the fiber/matrix interface in the absence of damage with respect to angular coordinate $\psi$; applied strain $\bar{\varepsilon}_{x}=1\%$.}\label{fig:stress}
 \end{figure}
 
-\section{STRESS-BASED ANALYSIS OF DEBOND INITIATION ($\Delta\theta=0^{\circ}$)}
+\section{STRESS-BASED ANALYSIS OF DEBOND INITIATION ($\Delta\theta=0^{\circ}$)}\label{sec:stress}
 
 In this section, we assume stress-based debond initiation at the undamaged fiber/matrix interface. Thus, we analyze the distribution of stresses at the fiber/matrix interface in models $1\times k-free$ and $1\times k-1\cdot t_{90^{\circ}}$ with $k=1,3,11,201$, $\Delta\theta=0^{\circ}$ (i.e. the undamaged case) and $\bar{\varepsilon}_{x}=1\%$. Some selected stress components are presented, based on their relevance in previous studies on debond initiation and growth: the radial $\sigma_{rr}$ and shear $\tau_{r\psi}$ stress~\cite{Mantic2009} (Fig.~\ref{fig:stress-a} and Fig.~\ref{fig:stress-b}), the Local Hydrostatic Stress (LHS, following the notation of~\cite{Carraro2016}) $\sigma_{LHS}$~\cite{Asp1996a,Asp1996b} (Fig.~\ref{fig:stress-c} and Fig.~\ref{fig:stress-d}), the local von Mises stress $\sigma_{vM}$~\cite{Canal2012}  (Fig.~\ref{fig:stress-e} and Fig.~\ref{fig:stress-f}), the Local Maximum Principal Stress (LMPS, following the notation of~\cite{Carraro2016}) $\sigma_{LMPS}$~\cite{Carraro2014}  (Fig.~\ref{fig:stress-g} and Fig.~\ref{fig:stress-h}). In plane strain conditions imply that there exists an out-of-plane axial component of the stress ($\sigma_{yy}$ in our notation): in order to study the importance of this out-of-plane component (tri-axial stress state, see~\cite{Asp1995}), $\sigma_{LHS}$, $\sigma_{vM}$ and $\sigma_{LMPS}$ are evaluated both neglecting (index $2D$) and considering it (index $3D$).\\
 It is possible to observe that:
@@ -152,8 +152,13 @@ where $\Psi_{G}$ is the energy-based phase angle, $G_{TOT}$ is the total ERR, $G
 \caption{Estimated values of $G_{Ic}$ assuming different values of initial debond size, for different RUCs and varying $\lambda$.}\label{fig:GIc}
 \end{figure}
 
-Neither RUC configuration nor $\lambda$ affects $G_{Ic}$ significantly for small initial debond size ($\Delta\theta_{0}<10^{\circ}$), which corresponds. Based on the considerations of the previous section, we can expect the initial flaw to be in the range $2^{\circ}-12^{\circ}$ ($1-5\%$ margin): comparing this with the results of Figure~\ref{fig:GIc}, we can assume $G_{Ic}$ to be in the range $2-4.5\ \left[\frac{J}{m^{2}}\right]$, while $0.2\leq\lambda\leq0.35$.\\
-Having estimated the values of the material properties $G_{Ic}$ and $\lambda$, we can now proceed to estimate the expected maximum size of debonds by evaluating $G_{TOT}$ and comparing it with the critical ERR estimated with Equation~\ref{eq:propcrit}.
+Neither RUC configuration nor $\lambda$ affects $G_{Ic}$ significantly for small initial debond size, i.e $\Delta\theta_{0}<10^{\circ}$ (Figure~\ref{fig:GIc}), corresponding to the range of initial debond size determined in Section~\ref{sec:stress}. Observing Figure~\ref{fig:GIc}, we can assume a value of $G_{Ic}$ in the range $2-4.5\ \left[\frac{J}{m^{2}}\right]$, with $0.2\leq\lambda\leq0.35$. Notice that this estimate is based on calculations with $\bar{\varepsilon}_{x}=1\%$ and the value of $G_{Ic}$ will scale with $\bar{\varepsilon}_{x}$ according to $\frac{G_{Ic,\bar{\varepsilon}_{x,1}}}{G_{Ic,\bar{\varepsilon}_{x,2}}}=\left(\frac{\bar{\varepsilon}_{x,1}}{\bar{\varepsilon}_{x,2}}\right)^{2}$. Given that no dependence of $G_{Ic}$ on RUC type is observed for $\Delta\theta_{0}<10^{\circ}$, we can use $G_{Ic}\sim2-4.5\ \left[\frac{J}{m^{2}}\right]$ to estimate the expected maximum size of debonds in several other RUCs (Figure~\ref{fig:debondsize}), by evaluating $G_{c}$ according to Equation~\ref{eq:propcrit}. The expected maximum debond size $\Delta\theta_{max}$ is the value of $\Delta\theta$ such that 
+
+\begin{equation}\label{eq:debmax}
+G_{TOT}\left(\Delta\theta\geq\Delta\theta_{max}\right)\leq G_{c}\left(\Delta\theta\geq\Delta\theta_{max}\right).
+\end{equation}
+
+Notice that, although evaluated using $G_{I}$, $G_{II}$ and $G_{TOT}$ computed with $\bar{\varepsilon}_{x}=1\%$, the values of $\Delta\theta_{max}$ do not depend on $\bar{\varepsilon}_{x}$ as both sides in Equation~\ref{eq:debmax} scale with the applied strain by a factor $\left(\frac{\bar{\varepsilon}_{x,1}}{\bar{\varepsilon}_{x,2}}\right)^{2}$. If the procedure described in this section is applied using values of $G_{I}$, $G_{II}$ and $G_{TOT}$ computed with a different value of $\bar{\varepsilon}_{x}$, the estimated values of $\Delta\theta_{max}$ will be the same.
 
 \begin{figure}[!htbp]
 \centering
@@ -172,7 +177,7 @@ Comparison of Fig.~\ref{fig:debondsize-a} with Fig.~\ref{fig:debondsize-b} shows
 
 \section{CONCLUSIONS}
 
-Onset and growth of fiber/matrix interface cracks has been studied in Representative Volume Elements (RVEs) of UD composites and $\left[0_{m\cdot k\cdot2L}^{\circ},90_{k\cdot2L}^{\circ},0_{m\cdot k\cdot2L}^{\circ}\right]$ laminates by means of Repeating Unit Cells (RUCs). Analysis of the stress distribution at the fiber/matrix interface in the absence of damage has shown that a stress criterion for initiation would predict, irrespectively of which criterion from those proposed in the literature is chosen, the onset of a debond at $0^{\circ}$ or $180^{\circ}$ with a semi-aperture $\Delta\theta_{0}$ in the range $2^{\circ}-12^{\circ}$, corresponding to a margin of $5\%$ on the satisfaction of the criterion. Assuming a mixed-mode criterion for debond propagation and taking into account the previous considerations regarding the stress distribution, the critical Mode I ERR $G_{Ic}$ is estimated to lie in the range $2-4.5\ \left[\frac{J}{m^{2}}\right]$. Estimation of maximum debond size finally provides: for a 1-fiber row UD composite, $30^{\circ}-105^{\circ}$; for a 1-fiber row $90^{\circ}$ ply in a cross-ply laminate, $30^{\circ}-45^{\circ}$; for a multiple fiber-rows UD composite and a multiple fiber-rows $90^{\circ}$ ply in a cross-ply laminate , $40^{\circ}-60^{\circ}$; for consecutive debonds along the vertical direction in an infinite UD composite, $80^{\circ}-110^{\circ}$ when debonds are on the same sides and $60^{\circ}-115^{\circ}$ when on opposite sides. These predictions agree well with the debond size distribution estimated in~\cite{Correa2018} through microscopic observations of cross-ply specimens.
+Onset and propagation of fiber/matrix interface cracks has been studied in Representative Volume Elements (RVEs) of UD composites and $\left[0_{m\cdot k\cdot2L}^{\circ},90_{k\cdot2L}^{\circ},0_{m\cdot k\cdot2L}^{\circ}\right]$ laminates by means of Repeating Unit Cells (RUCs). Analysis of the stress distribution at the fiber/matrix interface in the absence of damage has shown that a stress criterion for initiation would predict, irrespectively of which criterion from those proposed in the literature is chosen, the onset of a debond at $0^{\circ}$ or $180^{\circ}$ with a semi-aperture $\Delta\theta_{0}$ in the range $2^{\circ}-12^{\circ}$, corresponding to a margin of $5\%$ on the satisfaction of the criterion. Assuming a mixed-mode criterion for debond propagation and taking into account the previous considerations regarding the stress distribution, the critical Mode I ERR $G_{Ic}$ is estimated to lie in the range $2-4.5\ \left[\frac{J}{m^{2}}\right]$. Estimation of maximum debond size finally provides: for a 1-fiber row UD composite, $30^{\circ}-105^{\circ}$; for a 1-fiber row $90^{\circ}$ ply in a cross-ply laminate, $30^{\circ}-45^{\circ}$; for a multiple fiber-rows UD composite and a multiple fiber-rows $90^{\circ}$ ply in a cross-ply laminate , $40^{\circ}-60^{\circ}$; for consecutive debonds along the vertical direction in an infinite UD composite, $80^{\circ}-110^{\circ}$ when debonds are on the same sides and $60^{\circ}-115^{\circ}$ when on opposite sides. These predictions agree well with the debond size distribution estimated in~\cite{Correa2018} through microscopic observations of cross-ply specimens.
 
 \section*{ACKNOWLEDGEMENTS}
 

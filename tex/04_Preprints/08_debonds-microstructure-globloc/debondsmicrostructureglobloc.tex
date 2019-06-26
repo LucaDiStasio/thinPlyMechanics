@@ -39,6 +39,8 @@
 \bibliographystyle{elsarticle-num}
 %%%%%%%%%%%%%%%%%%%%%%%
 
+\newdefinition{prn}{Principle}
+
 \begin{document}
 
 \begin{frontmatter}
@@ -81,50 +83,101 @@ Fiber Reinforced Polymer Composite (FRPC) \sep Debonding \sep Finite element ana
 
 \section{Derivation of constitutive relations}
 
+\subsection{Crack density}
+
+\begin{prn}
+Normalized volume of cracks $V_{an}$ is the ratio of cracked volume $V_{a}$ to material volume $V$
+
+\begin{equation}
+V_{an}=\frac{V_{a}}{V}
+\end{equation}
+
+$V_{a}$ is equal to the product of total crack surface $S_{C}$ and average crack opening $u_{a}$
+
+\begin{equation}
+V_{an}=\frac{S_{C}u_{a}}{V}=\frac{S_{C}}{V}u_{a}=\rho_{C}u_{a}
+\end{equation}
+
+The ratio $\frac{S_{C}}{V}$ has a size of $\frac{1}{length}$ and correspond to the crack density $\rho_{C}$. It means: product of crack density and average crack opening is equal to normalized volume of cracks.
+\end{prn}
+
+Applying the previous Principle to debonds, we have:
+
+\begin{equation}
+\begin{aligned}
+\rho_{D}=\frac{\text{total area of debonds}}{\text{total layer volume}}=&\frac{n_{D}wR_{f}\Delta\theta}{L_{lam}wt_{90^{\circ}}}=\frac{n_{D}\cancel{w}}{L_{lam}\cancel{w}t_{90^{\circ}}}R_{f}\Delta\theta=\frac{1}{n2L}\frac{1}{k2L}R_{f}\Delta\theta=\\=&\frac{1}{nk4L^{2}}R_{f}\Delta\theta=\frac{V_{f}}{nk\pi R_{f}^{2}}R_{f}\Delta\theta=\frac{V_{f}}{nkR_{f}}\frac{\Delta\theta}{\pi}
+\end{aligned}
+\end{equation}
+
+\subsection{Vakulenko-Kachanov tensor}
+
+Definition of Vakulenko-Kachanov tensor:
+
 \begin{equation}
 \beta_{ij}=\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{i}n_{j}+u_{j}n_{i}\right)dS
 \end{equation}
 
-\begin{equation}
-\beta_{11}=\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{1}n_{1}+u_{1}n_{1}\right)dS=\frac{1}{V_{k}}\int_{S_{C}}\cancelto{0}{u_{1}}n_{1}dS=0
-\end{equation}
-
-\begin{equation}
-\beta_{22}=\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{2}n_{2}+u_{2}n_{2}\right)dS=\frac{1}{V_{k}}\int_{S_{C}}u_{2}n_{2}dS
-\end{equation}
+Expand the expression for each component and simplify based on the fact that $u_{1}=0$:
 
 \begin{equation}
 \begin{aligned}
-\beta_{22}=&\frac{1}{V_{k}}\int_{S_{C}}u_{2}n_{2}dS=\frac{1}{V_{k}}\left[\int_{S_{C}^{m}}u_{2}^{m}n_{2}^{m}dS+\int_{S_{C}^{f}}u_{2}^{f}n_{2}^{f}dS\right]=\\
-=&\frac{1}{V_{k}}\left[\int_{S_{C}^{m}}u_{2}^{m}n_{2}^{m}dS+\int_{S_{C}^{f}}u_{2}^{f}\left(-n_{2}^{m}\right)dS\right]
+\beta_{11}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{1}n_{1}+u_{1}n_{1}\right)dS=\frac{1}{V_{k}}\int_{S_{C}}\cancelto{0}{u_{1}}n_{1}dS=0\\
+\beta_{22}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{2}n_{2}+u_{2}n_{2}\right)dS=\frac{1}{V_{k}}\int_{S_{C}}u_{2}n_{2}dS\\
+\beta_{33}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{3}n_{3}+u_{3}n_{3}\right)dS=\frac{1}{V_{k}}\int_{S_{C}}u_{3}n_{3}dS\\
+\beta_{12}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(\cancelto{0}{u_{1}}n_{2}+u_{2}n_{1}\right)dS=\frac{1}{2}\frac{1}{V_{k}}\int_{S_{C}}u_{2}n_{1}dS\\
+\beta_{13}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(\cancelto{0}{u_{1}}n_{3}+u_{3}n_{1}\right)dS=\frac{1}{2}\frac{1}{V_{k}}\int_{S_{C}}u_{3}n_{1}dS\\
+\beta_{23}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{2}n_{3}+u_{3}n_{2}\right)dS\\
+\beta_{21}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{2}n_{1}+\cancelto{0}{u_{1}}n_{2}\right)dS=\beta_{12}\\
+\beta_{31}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{3}n_{1}+\cancelto{0}{u_{1}}n_{3}\right)dS=\beta_{13}\\
+\beta_{32}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{3}n_{2}+u_{2}n_{3}\right)dS=\beta_{23}\\
 \end{aligned}
 \end{equation}
 
-\begin{equation}
-S_{C}^{m}=S_{C}^{f}=R_{f}\Delta\theta
+Split total crack surface $S_{C}$ into total matrix crack surface $S_{C}^{m}$ and total fiber crack surface $S_{C}^{f}$ and remember that $n_{i}^{f}=-n_{i}^{m}$ for $i=2,3$
+
+\begin{equation}\label{eq:betagensurf}
+\begin{aligned}
+\beta_{22}=&\frac{1}{V_{k}}\int_{S_{C}}u_{2}n_{2}dS=\frac{1}{V_{k}}\left[\int_{S_{C}^{m}}u_{2}^{m}n_{2}^{m}dS+\int_{S_{C}^{f}}u_{2}^{f}n_{2}^{f}dS\right]=\\
+=&\frac{1}{V_{k}}\left[\int_{S_{C}^{m}}u_{2}^{m}n_{2}^{m}dS+\int_{S_{C}^{f}}u_{2}^{f}\left(-n_{2}^{m}\right)dS\right]\\
+\beta_{33}=&\frac{1}{V_{k}}\int_{S_{C}}u_{3}n_{3}dS=\frac{1}{V_{k}}\left[\int_{S_{C}^{m}}u_{3}^{m}n_{3}^{m}dS+\int_{S_{C}^{f}}u_{3}^{f}n_{3}^{f}dS\right]=\\
+=&\frac{1}{V_{k}}\left[\int_{S_{C}^{m}}u_{3}^{m}n_{3}^{m}dS+\int_{S_{C}^{f}}u_{3}^{f}\left(-n_{3}^{m}\right)dS\right]\\
+\beta_{23}=&\frac{1}{V_{k}}\int_{S_{C}}\left(u_{2}n_{3}+u_{3}n_{2}\right)dS=\\
+=&\frac{1}{V_{k}}\left[\int_{S_{C}^{m}}\left(u_{2}^{m}n_{3}^{m}+u_{3}^{m}n_{2}^{m}\right)dS+\int_{S_{C}^{f}}\left(u_{2}^{f}n_{3}^{f}+u_{3}^{f}n_{2}^{f}\right)dS\right]=\\
+=&\frac{1}{V_{k}}\left[\int_{S_{C}^{m}}u_{2}^{m}n_{3}^{m}dS+\int_{S_{C}^{f}}u_{2}^{f}\left(-n_{3}^{m}\right)dS+\int_{S_{C}^{m}}u_{3}^{m}n_{2}^{m}dS+\int_{S_{C}^{f}}u_{3}^{f}\left(-n_{2}^{m}\right)dS\right]\\
+\end{aligned}
 \end{equation}
+
+The total matrix debonded surface $S_{C}^{m}$ is equal to the total fiber debonded surface $S_{C}^{f}$ and equal to:
+
+\begin{equation}\label{eq:cracksurfaces}
+S_{C}^{m}=S_{C}^{f}=n_{D}R_{f}\Delta\theta
+\end{equation}
+
+With Eq.~\ref{eq:cracksurfaces}, we can recast Eq.~\ref{eq:betagensurf} as
 
 \begin{equation}
 \begin{aligned}
 \beta_{22}=&\frac{1}{V_{k}}\left[n_{D}R_{f}w\int_{0}^{\Delta\theta}\left(u_{2}^{m}-u_{2}^{f}\right)n_{2}^{m}d\theta\right]=\\
-=&\frac{1}{Lwt_{90^{\circ}}}\left[n_{D}R_{f}w\int_{0}^{\Delta\theta}\left(u_{2}^{m}-u_{2}^{f}\right)n_{2}^{m}d\theta\right]=\\
-=&\frac{1}{L}\frac{n_{D}R_{f}}{t_{90^{\circ}}}\left[\int_{0}^{\Delta\theta}\left(u_{2}^{m}-u_{2}^{f}\right)n_{2}^{m}d\theta\right]\\
+=&\frac{1}{L_{lam}wt_{90^{\circ}}}\left[n_{D}R_{f}w\int_{0}^{\Delta\theta}\left(u_{2}^{m}-u_{2}^{f}\right)n_{2}^{m}d\theta\right]=\\
+=&\frac{1}{L_{lam}}\frac{n_{D}R_{f}}{t_{90^{\circ}}}\left[\int_{0}^{\Delta\theta}\left(u_{2}^{m}-u_{2}^{f}\right)n_{2}^{m}d\theta\right]=\\
+=&\rho_{D}\left[\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(u_{2}^{m}-u_{2}^{f}\right)n_{2}^{m}d\theta\right]\\
+\beta_{33}=&\rho_{D}\left[\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(u_{3}^{m}-u_{3}^{f}\right)n_{3}^{m}d\theta\right]\\
+\beta_{23}=&\rho_{D}\left[\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(u_{2}^{m}-u_{2}^{f}\right)n_{3}^{m}d\theta+\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(u_{3}^{m}-u_{3}^{f}\right)n_{2}^{m}d\theta\right]
 \end{aligned}
 \end{equation}
 
-\begin{equation}
+We can express the displacement jumps at the interface as a function of the local Crack Opening Displacement (COD) and Crack Sliding Displacement (CSD) as
+
+\begin{equation}\label{eq:betarho}
 \begin{aligned}
 u_{2}^{m}-u_{2}^{f}=&\left(u_{r}^{m}-u_{r}^{f}\right)\cos{\left(\theta\right)}-\left(u_{\theta}^{m}-u_{\theta}^{f}\right)\sin{\left(\theta\right)}=\\
 =&COD\left(\theta\right)\cos{\left(\theta\right)}-CSD\left(\theta\right)\sin{\left(\theta\right)}\\
-\end{aligned}
-\end{equation}
-
-\begin{equation}
-\begin{aligned}
 u_{3}^{m}-u_{3}^{f}=&\left(u_{r}^{m}-u_{r}^{f}\right)\sin{\left(\theta\right)}+\left(u_{\theta}^{m}-u_{\theta}^{f}\right)\cos{\left(\theta\right)}=\\
 =&COD\left(\theta\right)\sin{\left(\theta\right)}+CSD\left(\theta\right)\cos{\left(\theta\right)}\\
 \end{aligned}
 \end{equation}
+
+where $\theta$ is the local angular coordinate at the interface. We can similarly express $n_{2}^{m}$ and $n_{3}^{m}$ as a function of $\theta$:
 
 \begin{equation}
 \begin{aligned}
@@ -133,9 +186,13 @@ n_{3}^{m}&=\sin{\left(\theta\right)}+\cos{\left(\theta\right)}
 \end{aligned}
 \end{equation}
 
+Thus, Eq.~\ref{eq:betarho} becomes
+
 \begin{equation}
-\beta_{22}=\frac{1}{L}\frac{R_{f}}{t_{90^{\circ}}}\left[\int_{0}^{\Delta\theta}\left(COD\left(\theta\right)\left(\sin{\left(\theta\right)}\cos{\left(\theta\right)}-\sin^{2}{\left(\theta\right)}\right)+CSD\left(\theta\right)\left(\cos^{2}{\left(\theta\right)}-\cos{\left(\theta\right)}\sin{\left(\theta\right)}\right)\right)d\theta\right]\\
+\beta_{22}=\rho_{D}\left[\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(COD\left(\theta\right)\left(\sin{\left(\theta\right)}\cos{\left(\theta\right)}-\sin^{2}{\left(\theta\right)}\right)+CSD\left(\theta\right)\left(\cos^{2}{\left(\theta\right)}-\cos{\left(\theta\right)}\sin{\left(\theta\right)}\right)\right)d\theta\right]\\
 \end{equation}
+
+\subsection{Modeling $COD\left(\theta\right)$ and $CSD\left(\theta\right)$}
 
 \begin{equation}
 \begin{aligned}
@@ -145,7 +202,25 @@ CSD\left(\theta\right)&=CSD_{avg}+\delta CSD\left(\theta\right)=CSD_{avg}+CSD_{m
 \end{equation}
 
 \begin{equation}
-\int_{0}^{\Delta\theta}f\left(\theta\right)=0\quad\int_{0}^{\Delta\theta}g\left(\theta\right)=0
+\int_{0}^{\Delta\theta}f\left(\theta\right)d\theta=0\quad\int_{0}^{\Delta\theta}g\left(\theta\right)d\theta=0
+\end{equation}
+
+\begin{equation}
+f\left(\theta\right)=a_{0}+\sum_{k=0}^{n}a_{2k+1}\theta^{2k+1}\quad g\left(\theta\right)=b_{0}+\sum_{k=0}^{n}b_{2k+1}\theta^{2k+1}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+COD\left(\Delta\Phi\right)&=COD_{avg}+COD_{max}\left(a_{0}+\sum_{k=0}^{n}a_{2k+1}\Delta\Phi^{2k+1}\right)=0\\
+CSD\left(\Delta\Theta\right)&=CSD_{avg}+CSD_{max}\left(b_{0}+\sum_{k=0}^{n}b_{2k+1}\Delta\Theta^{2k+1}\right)=0
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+a_{0}&=-\left(\frac{COD_{avg}}{COD_{max}}+\sum_{k=0}^{n}a_{2k+1}\Delta\Phi^{2k+1}\right)\\
+b_{0}&=-\left(\frac{CSD_{avg}}{CSD_{max}}+\sum_{k=0}^{n}b_{2k+1}\Delta\Theta^{2k+1}\right)
+\end{aligned}
 \end{equation}
 
 \begin{equation}

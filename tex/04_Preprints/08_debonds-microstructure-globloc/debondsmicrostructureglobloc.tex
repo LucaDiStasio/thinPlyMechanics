@@ -81,7 +81,16 @@ Fiber Reinforced Polymer Composite (FRPC) \sep Debonding \sep Finite element ana
 
 \section{Introduction}
 
+Main ref~\cite{Varna2018}
+
 \section{Derivation of constitutive relations}
+
+\subsection{Reference frames}
+
+\begin{description}
+\item[Local reference frame of $k$-th layer: ] index $1$ is the in-plane longitudinal or fiber or $0^{\circ}$-direction; index $2$ is the in-plane transverse or $90^{\circ}$-direction; index $3$ is the out-of-plane or through-the-thickness direction.
+\item[Global reference frame of laminate: ] index $x$ is the in-plane longitudinal or laminate $0^{\circ}$direction; index $y$ is the in-plane transverse direction; index $z$ is the out-of-plane or through-the-thickness direction.
+\end{description}
 
 \subsection{Crack density}
 
@@ -111,6 +120,18 @@ Applying the previous Principle to debonds, we have:
 
 \subsection{Vakulenko-Kachanov tensor}
 
+In the local reference frame of $k$-th layer, the outer normal at crack faces has components:
+
+\begin{equation}
+n_{1}=0\quad n_{2}\neq0\quad n_{3}\neq0
+\end{equation}
+
+while crack face displacement has components:
+
+\begin{equation}
+u_{1}=0\quad u_{2}\neq0\quad u_{3}\neq0
+\end{equation}
+
 Definition of Vakulenko-Kachanov tensor:
 
 \begin{equation}
@@ -124,15 +145,16 @@ Expand the expression for each component and simplify based on the fact that $u_
 \beta_{11}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{1}n_{1}+u_{1}n_{1}\right)dS=\frac{1}{V_{k}}\int_{S_{C}}\cancelto{0}{u_{1}}n_{1}dS=0\\
 \beta_{22}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{2}n_{2}+u_{2}n_{2}\right)dS=\frac{1}{V_{k}}\int_{S_{C}}u_{2}n_{2}dS\\
 \beta_{33}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{3}n_{3}+u_{3}n_{3}\right)dS=\frac{1}{V_{k}}\int_{S_{C}}u_{3}n_{3}dS\\
-\beta_{12}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(\cancelto{0}{u_{1}}n_{2}+u_{2}n_{1}\right)dS=\frac{1}{2}\frac{1}{V_{k}}\int_{S_{C}}u_{2}n_{1}dS\\
-\beta_{13}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(\cancelto{0}{u_{1}}n_{3}+u_{3}n_{1}\right)dS=\frac{1}{2}\frac{1}{V_{k}}\int_{S_{C}}u_{3}n_{1}dS\\
+\beta_{12}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(\cancelto{0}{u_{1}}n_{2}+u_{2}\cancelto{0}{n_{1}}\right)dS=0\\
+\beta_{13}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(\cancelto{0}{u_{1}}n_{3}+u_{3}\cancelto{0}{n_{1}}\right)dS=0\\
 \beta_{23}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{2}n_{3}+u_{3}n_{2}\right)dS\\
-\beta_{21}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{2}n_{1}+\cancelto{0}{u_{1}}n_{2}\right)dS=\beta_{12}\\
-\beta_{31}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{3}n_{1}+\cancelto{0}{u_{1}}n_{3}\right)dS=\beta_{13}\\
+\beta_{21}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{2}\cancelto{0}{n_{1}}+\cancelto{0}{u_{1}}n_{2}\right)dS=0\\
+\beta_{31}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{3}\cancelto{0}{n_{1}}+\cancelto{0}{u_{1}}n_{3}\right)dS=0\\
 \beta_{32}=&\frac{1}{V_{k}}\int_{S_{C}}\frac{1}{2}\left(u_{3}n_{2}+u_{2}n_{3}\right)dS=\beta_{23}\\
 \end{aligned}
 \end{equation}
 
+Only 3 independent components of the tensor $\beta_{ij}$ remain: $\beta_{22}$, $\beta_{33}$ and $\beta_{23}$.\\
 Split total crack surface $S_{C}$ into total matrix crack surface $S_{C}^{m}$ and total fiber crack surface $S_{C}^{f}$ and remember that $n_{i}^{f}=-n_{i}^{m}$ for $i=2,3$
 
 \begin{equation}\label{eq:betagensurf}
@@ -278,5 +300,7 @@ b_{0}&=-\left(\frac{CSD_{avg}}{CSD_{max}}+\sum_{k=0}^{n-1}b_{2k+1}\Delta\Theta^{
 -\sqrt{2}&\sum_{i=0}^{n}\left(\left(a_{0}COD_{max}-b_{0}CSD_{max}\right)\left(1-H\left(i-1\right)\right)+\sum_{k=0}^{n-1}\left(a_{2k+1}COD_{max}-b_{2k+1}CSD_{max}\right)\Delta\theta^{2k+1-i}\right)\times\\&\qquad\qquad\qquad\times\frac{1}{2}\left(-1\right)^{i}\sin\left(\left(1-\frac{1}{2}\bmod\left(\frac{i+1}{2}\right)\right)\pi-\left(\frac{\pi}{4}-2\Delta\theta\right)\right)
 \end{aligned}
 \end{equation}
+
+\bibliography{refs}
 
 \end{document}

@@ -155,7 +155,7 @@ S_{C}^{m}=S_{C}^{f}=n_{D}R_{f}\Delta\theta
 
 With Eq.~\ref{eq:cracksurfaces}, we can recast Eq.~\ref{eq:betagensurf} as
 
-\begin{equation}
+\begin{equation}\label{eq:betarho}
 \begin{aligned}
 \beta_{22}=&\frac{1}{V_{k}}\left[n_{D}R_{f}w\int_{0}^{\Delta\theta}\left(u_{2}^{m}-u_{2}^{f}\right)n_{2}^{m}d\theta\right]=\\
 =&\frac{1}{L_{lam}wt_{90^{\circ}}}\left[n_{D}R_{f}w\int_{0}^{\Delta\theta}\left(u_{2}^{m}-u_{2}^{f}\right)n_{2}^{m}d\theta\right]=\\
@@ -168,7 +168,7 @@ With Eq.~\ref{eq:cracksurfaces}, we can recast Eq.~\ref{eq:betagensurf} as
 
 We can express the displacement jumps at the interface as a function of the local Crack Opening Displacement (COD) and Crack Sliding Displacement (CSD) as
 
-\begin{equation}\label{eq:betarho}
+\begin{equation}
 \begin{aligned}
 u_{2}^{m}-u_{2}^{f}=&\left(u_{r}^{m}-u_{r}^{f}\right)\cos{\left(\theta\right)}-\left(u_{\theta}^{m}-u_{\theta}^{f}\right)\sin{\left(\theta\right)}=\\
 =&COD\left(\theta\right)\cos{\left(\theta\right)}-CSD\left(\theta\right)\sin{\left(\theta\right)}\\
@@ -189,10 +189,22 @@ n_{3}^{m}&=\sin{\left(\theta\right)}+\cos{\left(\theta\right)}
 Thus, Eq.~\ref{eq:betarho} becomes
 
 \begin{equation}
-\beta_{22}=\rho_{D}\left[\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(COD\left(\theta\right)\left(\sin{\left(\theta\right)}\cos{\left(\theta\right)}-\sin^{2}{\left(\theta\right)}\right)+CSD\left(\theta\right)\left(\cos^{2}{\left(\theta\right)}-\cos{\left(\theta\right)}\sin{\left(\theta\right)}\right)\right)d\theta\right]\\
+\begin{aligned}
+&\beta_{22}=\\=\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left[COD\left(\theta\right)\left(\sin{\left(\theta\right)}\cos{\left(\theta\right)}-\sin^{2}{\left(\theta\right)}\right)+CSD\left(\theta\right)\left(\cos^{2}{\left(\theta\right)}-\cos{\left(\theta\right)}\sin{\left(\theta\right)}\right)\right]d\theta=\\
+\\=\rho_{D}&\frac{1}{2\Delta\theta}\int_{0}^{\Delta\theta}\left(COD\left(\theta\right)-CSD\left(\theta\right)\right)\left(-1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta=\\
+\\=\rho_{D}&\frac{1}{2\Delta\theta}\int_{0}^{\Delta\theta}\left(COD\left(\theta\right)-CSD\left(\theta\right)\right)\left(\sqrt{2}\sin\left(2\theta-\frac{\pi}{4}\right)-1\right)d\theta\\
+&\beta_{33}=\\
+=\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left[COD\left(\theta\right)\left(\sin{\left(\theta\right)}\cos{\left(\theta\right)}+\sin^{2}{\left(\theta\right)}\right)+CSD\left(\theta\right)\left(\cos^{2}{\left(\theta\right)}+\cos{\left(\theta\right)}\sin{\left(\theta\right)}\right)\right]d\theta=\\
+=\rho_{D}&\frac{1}{2\Delta\theta}\int_{0}^{\Delta\theta}\left[COD\left(\theta\right)\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)+CSD\left(\theta\right)\left(1+\sin\left(2\theta\right)+\cos\left(2\theta\right)\right)\right]d\theta=\\
+=\rho_{D}&\frac{1}{2\Delta\theta}\int_{0}^{\Delta\theta}\left[\left(COD\left(\theta\right)+CSD\left(\theta\right)\right)\left(1+\sin\left(2\theta\right)\right)-\left(COD\left(\theta\right)-CSD\left(\theta\right)\right)\cos\left(2\theta\right)\right]d\theta\\
+&\beta_{23}=\\
+&=\rho_{D}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}COD\left(\theta\right)\left(2\sin{\left(\theta\right)}\cos{\left(\theta\right)}+\cos^{2}{\left(\theta\right)}-\sin^{2}\left(\theta\right)\right)+\\
+&\qquad-\rho_{D}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}CSD\left(\theta\right)\left(\sin^{2}{\left(\theta\right)}-\cos^{2}{\left(\theta\right)}+2\cos{\left(\theta\right)}\sin{\left(\theta\right)}\right)d\theta=\\
+=\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left[\left(COD\left(\theta\right)-CSD\left(\theta\right)\right)\sin\left(2\theta\right)+\left(COD\left(\theta\right)+CSD\left(\theta\right)\right)\cos\left(2\theta\right)\right]d\theta\\
+\end{aligned}
 \end{equation}
 
-\subsection{Modeling $COD\left(\theta\right)$ and $CSD\left(\theta\right)$}
+\subsection{Analytical modeling of $COD\left(\theta\right)$ and $CSD\left(\theta\right)$}
 
 \begin{equation}
 \begin{aligned}
@@ -206,29 +218,29 @@ CSD\left(\theta\right)&=CSD_{avg}+\delta CSD\left(\theta\right)=CSD_{avg}+CSD_{m
 \end{equation}
 
 \begin{equation}
-f\left(\theta\right)=a_{0}+\sum_{k=0}^{n}a_{2k+1}\theta^{2k+1}\quad g\left(\theta\right)=b_{0}+\sum_{k=0}^{n}b_{2k+1}\theta^{2k+1}
+f\left(\theta\right)=a_{0}+\sum_{k=0}^{n-1}a_{2k+1}\theta^{2k+1}\quad g\left(\theta\right)=b_{0}+\sum_{k=0}^{n-1}b_{2k+1}\theta^{2k+1}
 \end{equation}
 
 \begin{equation}
 \begin{aligned}
-COD\left(\Delta\Phi\right)&=COD_{avg}+COD_{max}\left(a_{0}+\sum_{k=0}^{n}a_{2k+1}\Delta\Phi^{2k+1}\right)=0\\
-CSD\left(\Delta\Theta\right)&=CSD_{avg}+CSD_{max}\left(b_{0}+\sum_{k=0}^{n}b_{2k+1}\Delta\Theta^{2k+1}\right)=0
+COD\left(\Delta\Phi\right)&=COD_{avg}+COD_{max}\left(a_{0}+\sum_{k=0}^{n-1}a_{2k+1}\Delta\Phi^{2k+1}\right)=0\\
+CSD\left(\Delta\Theta\right)&=CSD_{avg}+CSD_{max}\left(b_{0}+\sum_{k=0}^{n-1}b_{2k+1}\Delta\Theta^{2k+1}\right)=0
 \end{aligned}
 \end{equation}
 
 \begin{equation}
 \begin{aligned}
-a_{0}&=-\left(\frac{COD_{avg}}{COD_{max}}+\sum_{k=0}^{n}a_{2k+1}\Delta\Phi^{2k+1}\right)\\
-b_{0}&=-\left(\frac{CSD_{avg}}{CSD_{max}}+\sum_{k=0}^{n}b_{2k+1}\Delta\Theta^{2k+1}\right)
+a_{0}&=-\left(\frac{COD_{avg}}{COD_{max}}+\sum_{k=0}^{n-1}a_{2k+1}\Delta\Phi^{2k+1}\right)\\
+b_{0}&=-\left(\frac{CSD_{avg}}{CSD_{max}}+\sum_{k=0}^{n-1}b_{2k+1}\Delta\Theta^{2k+1}\right)
 \end{aligned}
 \end{equation}
 
 \begin{equation}
 \begin{aligned}
-\beta_{22}=&\frac{1}{2}\frac{1}{L}\frac{R_{f}}{t_{90^{\circ}}}COD_{avg}\int_{0}^{\Delta\theta}\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta+\\
-&+\frac{1}{2}\frac{1}{L}\frac{R_{f}}{t_{90^{\circ}}}COD_{max}\int_{0}^{\Delta\theta}f\left(\theta\right)\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta+\\
-&-\frac{1}{2}\frac{1}{L}\frac{R_{f}}{t_{90^{\circ}}}CSD_{avg}\int_{0}^{\Delta\theta}\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta+\\
-&-\frac{1}{2}\frac{1}{L}\frac{R_{f}}{t_{90^{\circ}}}CSD_{max}\int_{0}^{\Delta\theta}g\left(\theta\right)\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta\\
+\beta_{22}=&\rho_{D}COD_{avg}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta+\\
+&+\rho_{D}COD_{max}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}f\left(\theta\right)\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta+\\
+&-\rho_{D}CSD_{avg}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta+\\
+&-\rho_{D}CSD_{max}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}g\left(\theta\right)\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta\\
 \end{aligned}
 \end{equation}
 
@@ -242,13 +254,28 @@ b_{0}&=-\left(\frac{CSD_{avg}}{CSD_{max}}+\sum_{k=0}^{n}b_{2k+1}\Delta\Theta^{2k
 
 \begin{equation}
 \begin{aligned}
-\int_{0}^{\Delta\theta}f\left(\theta\right)&\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta=\\&=\cancelto{0}{\int_{0}^{\Delta\theta}f\left(\theta\right)d\theta}-\sqrt{2}\int_{0}^{\Delta\theta}f\left(\theta\right)\sin\left(\frac{\pi}{4}-2\Delta\theta\right)d\theta
+\int_{0}^{\Delta\theta}f\left(\theta\right)&\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta=\\&=\cancelto{0}{\int_{0}^{\Delta\theta}f\left(\theta\right)d\theta}-\sqrt{2}\int_{0}^{\Delta\theta}f\left(\theta\right)\sin\left(\frac{\pi}{4}-2\theta\right)d\theta\\
+\int_{0}^{\Delta\theta}g\left(\theta\right)&\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta=\\&=\cancelto{0}{\int_{0}^{\Delta\theta}g\left(\theta\right)d\theta}-\sqrt{2}\int_{0}^{\Delta\theta}g\left(\theta\right)\sin\left(\frac{\pi}{4}-2\theta\right)d\theta\\
 \end{aligned}
 \end{equation}
 
 \begin{equation}
 \begin{aligned}
-\int_{0}^{\Delta\theta}f\left(\theta\right)\sin\left(\frac{\pi}{4}-2\Delta\theta\right)d\theta=\left[\sum_{k=1}^{n}\left(-1\right)^{k}\sin\left(\frac{k}{2}\pi+\left(k-1\right)\pi-\left(\frac{\pi}{4}-2\Delta\theta\right)\right)\right]_{0}^{\Delta\theta}
+&\int_{0}^{\Delta\theta}f\left(\theta\right)\sin\left(\frac{\pi}{4}-2\theta\right)d\theta=\\=&\left[\sum_{i=0}^{n}\left[\left(a_{0}\left(1-H\left(i-1\right)\right)+\sum_{k=0}^{n-1}a_{2k+1}\theta^{2k+1-i}\right)\frac{1}{2}\left(-1\right)^{i}\sin\left(\left(1-\frac{1}{2}\bmod\left(\frac{i+1}{2}\right)\right)\pi-\left(\frac{\pi}{4}-2\theta\right)\right)\right]\right]_{0}^{\Delta\theta}=\\
+=&\sum_{i=0}^{n}\left[\left(a_{0}\left(1-H\left(i-1\right)\right)+\sum_{k=0}^{n-1}a_{2k+1}\Delta\theta^{2k+1-i}\right)\frac{1}{2}\left(-1\right)^{i}\sin\left(\left(1-\frac{1}{2}\bmod\left(\frac{i+1}{2}\right)\right)\pi-\left(\frac{\pi}{4}-2\Delta\theta\right)\right)\right]+\\
++&\frac{\sqrt{2}}{4}a_{0}\\[10pt]
+&\int_{0}^{\Delta\theta}g\left(\theta\right)\sin\left(\frac{\pi}{4}-2\theta\right)d\theta=\\
+=&\left[\sum_{i=0}^{n}\left[\left(b_{0}\left(1-H\left(i-1\right)\right)+\sum_{k=0}^{n-1}b_{2k+1}\theta^{2k+1-i}\right)\frac{1}{2}\left(-1\right)^{i}\sin\left(\left(1-\frac{1}{2}\bmod\left(\frac{i+1}{2}\right)\right)\pi-\left(\frac{\pi}{4}-2\theta\right)\right)\right]\right]_{0}^{\Delta\theta}=\\
+=&\sum_{i=0}^{n}\left[\left(b_{0}\left(1-H\left(i-1\right)\right)+\sum_{k=0}^{n-1}b_{2k+1}\Delta\theta^{2k+1-i}\right)\frac{1}{2}\left(-1\right)^{i}\sin\left(\left(1-\frac{1}{2}\bmod\left(\frac{i+1}{2}\right)\right)\pi-\left(\frac{\pi}{4}-2\Delta\theta\right)\right)\right]+\\
++&\frac{\sqrt{2}}{4}b_{0}\\
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\beta_{22}=&\rho_{D}\left[1-\frac{1}{2\Delta\theta}\left(\sqrt{2}\sin\left(2\Delta\theta+\frac{\pi}{4}\right)-1\right)\right]\left(COD_{avg}-CSD_{avg}\right)+\\
+&-\frac{1}{2}\rho_{D}\left(a_{0}COD_{max}-b_{0}CSD_{max}\right)+\\
+-\sqrt{2}&\sum_{i=0}^{n}\left(\left(a_{0}COD_{max}-b_{0}CSD_{max}\right)\left(1-H\left(i-1\right)\right)+\sum_{k=0}^{n-1}\left(a_{2k+1}COD_{max}-b_{2k+1}CSD_{max}\right)\Delta\theta^{2k+1-i}\right)\times\\&\qquad\qquad\qquad\times\frac{1}{2}\left(-1\right)^{i}\sin\left(\left(1-\frac{1}{2}\bmod\left(\frac{i+1}{2}\right)\right)\pi-\left(\frac{\pi}{4}-2\Delta\theta\right)\right)
 \end{aligned}
 \end{equation}
 

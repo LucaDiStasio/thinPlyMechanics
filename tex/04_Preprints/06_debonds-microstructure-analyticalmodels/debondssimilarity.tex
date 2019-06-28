@@ -222,18 +222,45 @@ respectively for plane strain and plane stress conditions under applied strain $
 
 \section{Similarity and geometry correction factor}
 
-In agreement with the classic Fracture Mechanics (FM) treatment of Stress Intensity Factor (SIF) $K$ and Energy Release Rate (ERR)~\cite{Tada2000}, we can recognize in the function $f\left(\Delta\theta\right)$ in Eq.~\ref{eq:Gexpandedstraincontrol} and Eq.~\ref{eq:Gexpandedstresscontrol} the geometry correction factor ($f\left(a\right)$ or $Y$) that establishes the relation of similarity~\cite{Barenblatt2006}
+In agreement with the classic Fracture Mechanics (FM) treatment~\cite{Tada2000}, we can recognize in the function $f\left(\Delta\theta\right)$ of Eq.~\ref{eq:Gexpandedstraincontrol} and Eq.~\ref{eq:Gexpandedstresscontrol} the geometry correction factor ($f\left(a\right)$ or $Y$) that establishes the relation of similarity~\cite{Barenblatt2006}
 
 \begin{equation}\label{eq:Gsim}
 K=f\left(a\right)\sigma\sqrt{\pi a}\quad\text{or}\quad G=f^{2}\left(a\right)\frac{\sigma^{2}}{E}\pi a
 \end{equation}
 
-with the solution for a Center Crack (CC) in an infinite plate
+between the Stress Intensity Factor (SIF) $K$ and Energy Release Rate (ERR) $G$ of a generic configuration of structural and crack geometry and the solution for a Center Crack (CC) in an infinite plate
 
 \begin{equation}\label{eq:Gsim}
 K_{CC}=\sigma\sqrt{\pi a}\quad\text{or}\quad G_{CC}=\frac{\sigma^{2}}{E}\pi a.
 \end{equation}
 
+It thus seems reasonable to look for a functional form of $f\left(\Delta\theta\right)$ in Eq.~\ref{eq:Gexpandedstraincontrol} and Eq.~\ref{eq:Gexpandedstresscontrol} among known analytical solutions of SIFs and ERRs and such that a physically-meaningful similarity between the two configurations could be established.
+
+\begin{itemize}
+\item \textbf{Straight central crack in an infinite plate under far-field transverse tension~\cite{Tada2000}.}
+
+\begin{equation}\label{eq:straightcrack}
+f_{I}\left(\Delta\theta\right)=\sin\left(\Delta\theta\right)\quad f_{II}\left(\Delta\theta\right)=0
+\end{equation}
+
+
+\item \textbf{Inclined central crack in an infinite plate under far-field tension~\cite{Tada2000}.}
+
+\begin{equation}\label{eq:inclinedcrack}
+\begin{aligned}
+f_{I}\left(\Delta\theta\right)=&\sin\left(\Delta\theta\right)\sin^{4}\left(\frac{\pi}{2}-\Delta\theta\right)\\ f_{II}\left(\Delta\theta\right)=&\sin\left(\Delta\theta\right)\sin^{2}\left(\frac{\pi}{2}-\Delta\theta\right)\cos^{2}\left(\frac{\pi}{2}-\Delta\theta\right)
+\end{aligned}
+\end{equation}
+
+\item \textbf{Circular crack in an infinite plate under far-field tension transverse to crack's chord~\cite{Ioakmidis1977}.}
+\end{itemize}
+
+\begin{equation}\label{eq:inclinedcrack}
+\begin{aligned}
+f_{I}&\left(\Delta\theta\right)=\sin\left(\Delta\theta\right)\times\\\times&\left(\frac{1-\sin^{2}\left(\frac{\Delta\theta}{2}\right)\cos^{2}\left(\frac{\Delta\theta}{2}\right)}{1+\sin^{2}\left(\frac{\Delta\theta}{2}\right)}\cos\left(\frac{\Delta\theta}{2}\right)+\cos\left(\frac{3}{2}\Delta\theta\right)\right)^{2}\\
+ f_{II}&\left(\Delta\theta\right)=\sin\left(\Delta\theta\right)\times\\\times&\left(\frac{1-\sin^{2}\left(\frac{\Delta\theta}{2}\right)\cos^{2}\left(\frac{\Delta\theta}{2}\right)}{1+\sin^{2}\left(\frac{\Delta\theta}{2}\right)}\sin\left(\frac{\Delta\theta}{2}\right)+\sin\left(\frac{3}{2}\Delta\theta\right)\right)^{2}
+\end{aligned}
+\end{equation}
 
 \section{Representative Volume Elements (RVEs)}
 

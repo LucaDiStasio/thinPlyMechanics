@@ -160,10 +160,10 @@ where $F$ stands for unit of force. We recognize that, in Equation~\ref{eq:errun
 \frac{F}{L^{2}}=\left[\sigma\right]\qquad\frac{L}{L}=\left[\varepsilon\right],
 \end{equation}
 
-where $\sigma$ and $\varepsilon$ are respectively stress and strain. The Energy Release Rate is thus dimensionally equivalent to a reference stress $\sigma_{ref}$ times a reference strain $\varepsilon_{ref}$ times a refence length $l_{ref}$ and we can write
+where $\sigma$ and $\varepsilon$ are respectively stress and strain. The reference Energy Release Rate is thus dimensionally equivalent to a reference stress $\sigma_{ref}$ times a reference strain $\varepsilon_{ref}$ times a refence length $l_{ref}$ and we can write
 
 \begin{equation}\label{eq:G}
-G\sim\sigma_{ref}\varepsilon_{ref}l_{ref}.
+G_{0}\sim\sigma_{ref}\varepsilon_{ref}l_{ref}.
 \end{equation}
 
 \section{Linear Elastic Fracture Mechanics (LEFM) considerations}
@@ -190,16 +190,50 @@ E_{homo}=f\left(\Delta\theta\right)E_{homo}^{0},
 where $0<f\left(\Delta\theta\right)<1$ is a function of the damage state in the material, in this case represented by the debond half-size $\Delta\theta$ (debond size is $2\Delta\theta$). By substituting Eq.~\ref{eq:elasticresponse}, Eq.~\ref{eq:Ehomo} and Eq.~\ref{eq:Edamage} in Eq.~\ref{eq:G}, we have
 
 \begin{equation}\label{eq:Gexpandedstraincontrol}
-G\sim f\left(\Delta\theta\right)\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}l_{ref}\quad G\sim f\left(\Delta\theta\right)E_{2}\varepsilon_{0}^{2}l_{ref},
+G_{0}\sim f\left(\Delta\theta\right)\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}l_{ref}\quad G_{0}\sim f\left(\Delta\theta\right)E_{2}\varepsilon_{0}^{2}l_{ref},
 \end{equation}
 
 respectively for plane strain and plane stress conditions under applied strain $\varepsilon_{0}$, and
 
 \begin{equation}\label{eq:Gexpandedstresscontrol}
-G\sim f\left(\Delta\theta\right)\frac{1-\nu_{12}\nu_{21}}{E_{2}}\sigma_{0}^{2}l_{ref}\quad G\sim f\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}l_{ref},
+G_{0}\sim f\left(\Delta\theta\right)\frac{1-\nu_{12}\nu_{21}}{E_{2}}\sigma_{0}^{2}l_{ref}\quad G_{0}\sim f\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}l_{ref},
 \end{equation}
 
-respectively for plane strain and plane stress conditions under applied strain $\sigma_{0}$. Notice that, incidentally: the plane strain expression in Eq.~\ref{eq:Gexpandedstresscontrol} is the same as the ERR expression used for \textit{in-situ} strenght modeling in~\cite{Camanho2006} and derived in~\cite{Laws1983} by considering the fiber-reinforced polymer as a 3-phase composite with one phase constituted by sharp voids (cracks); the plane stress expression in Eq.~\ref{eq:Gexpandedstresscontrol} is the same as the Mode I ERR in~\cite{Varna2018}, derived from the definition of ERR and problem geometry.
+respectively for plane strain and plane stress conditions under applied strain $\sigma_{0}$. Notice that, incidentally: the plane strain expression in Eq.~\ref{eq:Gexpandedstresscontrol} is the same as the ERR expression used for \textit{in-situ} strenght modeling in~\cite{Camanho2006} and derived in~\cite{Laws1983} by considering the fiber-reinforced polymer as a 3-phase composite with one phase constituted by sharp voids (cracks); the plane stress expression in Eq.~\ref{eq:Gexpandedstresscontrol} is the same as the Mode I ERR in~\cite{Varna2018}, derived from the definition of ERR and problem geometry.\\
+In accord with the classic Linear Elastic Fracture Mechanics (LEFM), the Energy Release Rate is directly proportional to the crack size $a$~\cite{Tada2000}. Given that $a=R_{f}2\Delta\theta$ for debonds, where $R_{f}$ is the fiber radius, it is reasonable to assume $R_{f}$ as the reference length:
+
+\begin{equation}\label{eq:lref}
+l_{ref}=R_{f}.
+\end{equation}
+
+The reference Energy Release Rate thus becomes
+
+\begin{equation}\label{eq:Gexpandedstraincontrol}
+G_{0}\sim f\left(\Delta\theta\right)\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}\quad G_{0}\sim f\left(\Delta\theta\right)E_{2}\varepsilon_{0}^{2}R_{f},
+\end{equation}
+
+respectively for plane strain and plane stress conditions under applied strain $\varepsilon_{0}$, and
+
+\begin{equation}\label{eq:Gexpandedstresscontrol}
+G_{0}\sim f\left(\Delta\theta\right)\frac{1-\nu_{12}\nu_{21}}{E_{2}}\sigma_{0}^{2}R_{f}\quad G_{0}\sim f\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}R_{f},
+\end{equation}
+
+respectively for plane strain and plane stress conditions under applied strain $\sigma_{0}$.
+
+\section{Similarity and geometry correction factor}
+
+In agreement with the classic Fracture Mechanics (FM) treatment of Stress Intensity Factor (SIF) $K$ and Energy Release Rate (ERR)~\cite{Tada2000}, we can recognize in the function $f\left(\Delta\theta\right)$ in Eq.~\ref{eq:Gexpandedstraincontrol} and Eq.~\ref{eq:Gexpandedstresscontrol} the geometry correction factor ($f\left(a\right)$ or $Y$) that establishes the relation of similarity~\cite{Barenblatt2006}
+
+\begin{equation}\label{eq:Gsim}
+K=f\left(a\right)\sigma\sqrt{\pi a}\quad\text{or}\quad G=f^{2}\left(a\right)\frac{\sigma^{2}}{E}\pi a
+\end{equation}
+
+with the solution for a Center Crack (CC) in an infinite plate
+
+\begin{equation}\label{eq:Gsim}
+K_{CC}=\sigma\sqrt{\pi a}\quad\text{or}\quad G_{CC}=\frac{\sigma^{2}}{E}\pi a.
+\end{equation}
+
 
 \section{Representative Volume Elements (RVEs)}
 
@@ -208,7 +242,7 @@ respectively for plane strain and plane stress conditions under applied strain $
 
 
 
-\section{Similarity laws}
+
 
 
 

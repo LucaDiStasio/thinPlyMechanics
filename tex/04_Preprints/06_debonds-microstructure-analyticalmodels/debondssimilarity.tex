@@ -137,7 +137,7 @@ Fiber Reinforced Polymer Composite (FRPC) \sep Debonding \sep Similarity \sep Di
 \section{Introduction}
 
 One of the most promising developments in Fiber Reinforced Polymer Composites (FRPCs) for advanced structural applications is currently represented by \emph{thin-ply} laminates~\cite{Kopp2017}. Constituted by extremely thin plies, with $t_{90^{\circ}}$ as small as just $\sim4-5$ fiber diameters, this family of laminates is characterized by its damage tolerance, in particular the capability of delaying to higher strains and even suppressing the onset and propagation of transverse cracks~\cite{Cugnoni2018}. The recent experimental assessment of transverse cracks suppression in \emph{thin-ply} laminates~\cite{Sasayama2003,Saito2012,Amacher2014} validates the existence of a \emph{ply-thickness} effect~\cite{Amacher2014} at scales $10x$ smaller than those at which it was originally observed at the end of the 1970's~\cite{Bailey1979}.\\
-Onset of transverse cracks coincides at the microscopic level with the formation of fiber/matrix interface cracks~\cite{Bailey1981}, or debonds. After the inter-fiber stress~\cite{Asp1996} and strain concentration~\cite{Kies1962} causes the matrix to fail at or close the fiber interface, debonds grow along the fiber arc direction until a maximum or critical size is reached. If the applied load is increased, debonds move into the matrix or ``kink'' out of the fiber/matrix interface~\cite{Zhang1997,Paris2007}. Coalescence of debonds then occurs, which corresponds macroscopically to through-the-thickness transverse crack propagation~\cite{Zhang1997,Zhuang2018b}. Finally, propagation through the specimen width occurs~\cite{Zhang1997}.\\
+Onset of transverse cracks coincides at the microscopic level with the formation of fiber/matrix interface cracks~\cite{Bailey1981}, or debonds. After the inter-fiber stress~\cite{Asp1996} and strain concentration~\cite{Kies1962} causes the matrix to fail at or close to the fiber interface, debonds grow along the fiber arc direction until a maximum or critical size is reached. If the applied load is increased, debonds move into the matrix or ``kink'' out of the fiber/matrix interface~\cite{Zhang1997,Paris2007}. Coalescence of debonds then occurs, which corresponds macroscopically to through-the-thickness transverse crack propagation~\cite{Zhang1997,Zhuang2018b}. Finally, propagation through the specimen width occurs~\cite{Zhang1997}.\\
 Given that \emph{thin-plies}, as previously noted, can reach nowadays thicknesses of just $\sim4-5$ fiber diameters, the characteristic size of the ply, i.e. the thickness $t_{90^{\circ}}$, is now comparable in magnitude to the characteristic size of debonds, i.e. the fiber diameter $2R_{f}$, such that $\nicefrac{t_{90^{\circ}}}{\left(2R_{f}\right)}\sim\mathcal{O}\left(1\right)$. This has motivated in recent years a renewed interest in debond growth modeling~\cite{Zhuang2018,Sandino2016,Varna2017,Sandino2018}. Since the elastic solution to the interface crack problem implies an oscillating solution at the crack tip~\cite{Comninou1977} in the \emph{open} case (crack faces not in contact), Stress Intensify Factors (SIFs) are not defined and debond growth characterization has focused on the determination of Mode I, Mode II and total Energy Release Rate (ERR). Many authors have reported their results in normalized form~\cite{Paris2007,Toya1974,Paris1996}, by defining a reference ERR $G_{0}$. The definition of such reference ERR would be useful to establish similarity laws and thus to allow comparisons between different material systems, scales, loads and microstructural arrangement. However, no agreement can be found in the literature on the very definition of $G_{0}$ and expressions vary between authors. Furthermore, no clear derivation of $G_{0}$ has been proposed. In this brief contribution, we provide a derivation of $G_{0}$ based on arguments of dimensional analysis, material homogenization and fracture mechanics; we then apply the derived expression of reference ERR to the analysis of debond growth in Representative Volume Elements (RVEs) of UD composites and cross-ply laminates. 
 
 \section{Dimensional analysis}
@@ -225,16 +225,16 @@ respectively for plane strain and plane stress conditions under applied strain $
 In agreement with the classic Fracture Mechanics (FM) treatment~\cite{Tada2000}, we can recognize in the function $f\left(\Delta\theta\right)$ of Eq.~\ref{eq:Gexpandedstraincontrol} and Eq.~\ref{eq:Gexpandedstresscontrol} the geometry correction factor ($f\left(a\right)$ or $Y$) that establishes the relation of similarity~\cite{Barenblatt2006}
 
 \begin{equation}\label{eq:Gsim}
-K=f\left(a\right)\sigma\sqrt{\pi a}\quad\text{or}\quad G=f^{2}\left(a\right)\frac{\sigma^{2}}{E}\pi a
+K=f\left(a\right)\sigma\sqrt{a}\quad\text{or}\quad G=f^{2}\left(a\right)\frac{\sigma^{2}}{E}a
 \end{equation}
 
 between the Stress Intensity Factor (SIF) $K$ and Energy Release Rate (ERR) $G$ of a generic configuration of structural and crack geometry and the solution for a Center Crack (CC) in an infinite plate
 
 \begin{equation}\label{eq:Gsim}
-K_{CC}=\sigma\sqrt{\pi a}\quad\text{or}\quad G_{CC}=\frac{\sigma^{2}}{E}\pi a.
+K_{CC}=\sigma\sqrt{a}\quad\text{or}\quad G_{CC}=\frac{\sigma^{2}}{E}a,
 \end{equation}
 
-It thus seems reasonable to look for a functional form of $f\left(\Delta\theta\right)$ in Eq.~\ref{eq:Gexpandedstraincontrol} and Eq.~\ref{eq:Gexpandedstresscontrol} among known analytical solutions of SIFs and ERRs and such that a physically-meaningful similarity between the two configurations could be established.
+where the crack size is $2a$. It thus seems reasonable to look for a functional form of $f\left(\Delta\theta\right)$ in Eq.~\ref{eq:Gexpandedstraincontrol} and Eq.~\ref{eq:Gexpandedstresscontrol} among known analytical solutions of SIFs and ERRs and such that a physically-meaningful similarity between the two configurations could be established.
 
 \begin{itemize}
 \item \textbf{Straight central crack in an infinite isotropic plate under far-field transverse tension~\cite{Tada2000}.}
@@ -243,6 +243,7 @@ It thus seems reasonable to look for a functional form of $f\left(\Delta\theta\r
 f_{I}\left(\Delta\theta\right)=\sin\left(\Delta\theta\right)\quad f_{II}\left(\Delta\theta\right)=0
 \end{equation}
 
+It is the simplest choice, based on considering the debond chord $2R_{f}\sin{\Delta\theta}$ as its representative size. However, as apparent in Eq.~\ref{eq:straightcrack}, there is no Mode II geometry correction factor available (a straight crack in transverse tension propagates only in Mode I) and it is thus not suited to establish a relation of similarity with debond ERR, which is Mode II dominated for large $\Delta\theta$.
 
 \item \textbf{Inclined central crack in an infinite isotropic plate under far-field tension~\cite{Tada2000}.}
 
@@ -252,8 +253,9 @@ f_{I}\left(\Delta\theta\right)=&\sin\left(\Delta\theta\right)\sin^{4}\left(\frac
 \end{aligned}
 \end{equation}
 
+A first attempt to amend the shortcomings of Eq.~\ref{eq:straightcrack} is to consider the geometry correction factor of the inclined crack subjected to transverse load. However, $f_{II}\left(90^{\circ}\right)=0$ in Eq.~\ref{eq:inclinedcrack}, which makes also this choice not a good choice to establish a similarity relation with debond ERR (Mode II ERR is well-defined and different from $0$ at $\Delta\theta=90^{\circ}$ for debonds).
+
 \item \textbf{Circular crack in an infinite isotropic plate under far-field tension transverse to crack's chord~\cite{Ioakmidis1977}.}
-\end{itemize}
 
 \begin{equation}\label{eq:circularcrack}
 \begin{aligned}
@@ -262,9 +264,13 @@ f_{I}&\left(\Delta\theta\right)=\frac{1}{2}\sin\left(\Delta\theta\right)\times\\
 \end{aligned}
 \end{equation}
 
+The geometry correction factors of Eq.~\ref{eq:circularcrack} (shown in Fig.~\ref{fig:curvedcrackgeomcorr}) present a solution to the issues characterising Eq.~\ref{eq:straightcrack} and Eq.~\ref{eq:inclinedcrack}: Mode II is defined and both modes are defined and continuous for $\Delta\theta=0^{\circ}-180^{\circ}$. This configuration establishes also a physically-meaningful relation of similarity, as the ratios $\frac{G_{I}}{G_{I0}}=g_{I}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ and $\frac{G_{II}}{G_{II0}}=g_{II}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ measure the effect of: the mismatch in elastic properties between phases (in Eq.~\ref{eq:circularcrack} the medium is isotropic); the finite size of the geometry (in Eq.~\ref{eq:circularcrack} the medium is infinite); the interaction with neighboring undamaged and partially debonded fibers, a free surface (in UD composites) or the $0^{\circ},90^{\circ}$ interface (in cross-ply laminates).
+
+\end{itemize}
+
 \begin{figure}
 \includegraphics[width=\columnwidth]{curvedcracks.pdf}
-\caption{}\label{}
+\caption{Mode I ($f_{I}$) and Mode II ($f_{II}$) geometry correction functions for a circular crack in infinite isotropic medium. The chord of the crack is normal to the loading direction and the crack size is $a=2\Delta\theta$.}\label{fig:curvedcrackgeomcorr}
 \end{figure}
 
 \section{Representative Volume Elements (RVEs)}

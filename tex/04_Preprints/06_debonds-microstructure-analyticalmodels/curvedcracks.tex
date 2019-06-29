@@ -93,8 +93,8 @@ legend entries={{$f_{I}$},{$f_{II}$}},
 \def\nuLTsixtyfive{0.263}
 \pgfmathsetmacro\Eeqsixtyfive{\ETsixtyfive/(1-\ETsixtyfive*\nuLTsixtyfive*\nuLTsixtyfive/\ELsixtyfive)}
 
-\def\fI#1{sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(1.5*#1))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(1.5*#1))}
-\def\fII#1{sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(1.5*#1))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(1.5*#1))}
+\def\fI#1{0.5*sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(1.5*#1))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(1.5*#1))}
+\def\fII#1{0.5*sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(1.5*#1))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(1.5*#1))}
 
 %1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf
 

@@ -94,12 +94,12 @@ legend entries={{$5\times 5-free$},{$11\times 5-free$},{$21\times 5-free$},{$101
 \def\nuLTsixtyfive{0.263}
 \pgfmathsetmacro\Eeqsixtyfive{\ETsixtyfive/(1-\ETsixtyfive*\nuLTsixtyfive*\nuLTsixtyfive/\ELsixtyfive)}
 
-\def\fI#1{sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(3*#1/2))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(3*#1/2))/(#1*\pinum/180)}
-\def\fII#1{sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(3*#1/2))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(3*#1/2))/(#1*\pinum/180)}
+\def\fI#1{0.5*sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(3*#1/2))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(3*#1/2))}
+\def\fII#1{0.5*sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(3*#1/2))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(3*#1/2))}
 
 % SF2, AF2
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
 theta        GI
 10.00	0.71666394
 20.00	1.50007363
@@ -120,7 +120,7 @@ theta        GI
 
 % SF5, AF2
 \addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=square*,mark options={fill=white}]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
 theta        GI
 10.00	0.73000542
 20.00	1.57931289
@@ -141,7 +141,7 @@ theta        GI
 
 % SF10, AF2
 \addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=*]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
 theta        GI
 10.00	0.73025895
 20.00	1.59723307
@@ -162,7 +162,7 @@ theta        GI
 
 % SF50, AF2
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*,mark options={fill=white}]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
 theta        GI
 10.00	0.73533903
 20.00	1.60928568
@@ -183,7 +183,7 @@ theta        GI
 
 % SF100, AF2
 \addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=triangle*]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
 theta        GI
 10.00	0.73585276
 20.00	1.61092880

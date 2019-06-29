@@ -37,7 +37,7 @@ xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{
 ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
 tick align=outside,
 tick label style={font=\huge},
-legend style={at={(axis cs:125,7.25)},anchor=north west,draw=white!80.0!black,font=\fontsize{15}{24}\selectfont,row sep=7.5pt},
+legend style={draw=white!80.0!black,font=\fontsize{15}{24}\selectfont,row sep=7.5pt},
 legend image post style={xscale=1.1,yscale=1.1},
 legend cell align={left},
 clip mode=individual,
@@ -99,8 +99,8 @@ legend entries={{$5\times 5-free$},{$11\times 5-free$},{$21\times 5-free$},{$101
 
 % SF2, AF2
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
-theta        GI
+table[x=theta, y expr={\thisrow{GII}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+theta        GII
 10.00	0.71666394
 20.00	1.50007363
 30.00	2.39628382
@@ -120,8 +120,8 @@ theta        GI
 
 % SF5, AF2
 \addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=square*,mark options={fill=white}]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
-theta        GI
+table[x=theta, y expr={\thisrow{GII}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+theta        GII
 10.00	0.73000542
 20.00	1.57931289
 30.00	2.60926700
@@ -141,8 +141,8 @@ theta        GI
 
 % SF10, AF2
 \addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=*]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
-theta        GI
+table[x=theta, y expr={\thisrow{GII}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+theta        GII
 10.00	0.73025895
 20.00	1.59723307
 30.00	2.65606980
@@ -162,8 +162,8 @@ theta        GI
 
 % SF50, AF2
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*,mark options={fill=white}]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
-theta        GI
+table[x=theta, y expr={\thisrow{GII}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+theta        GII
 10.00	0.73533903
 20.00	1.60928568
 30.00	2.69554750
@@ -183,8 +183,8 @@ theta        GI
 
 % SF100, AF2
 \addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=triangle*]
-table[x=theta, y expr={\thisrow{GI}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
-theta        GI
+table[x=theta, y expr={\thisrow{GII}/(1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+theta        GII
 10.00	0.73585276
 20.00	1.61092880
 30.00	2.70075125

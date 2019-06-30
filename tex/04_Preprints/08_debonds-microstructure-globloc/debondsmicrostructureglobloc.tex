@@ -212,17 +212,17 @@ Thus, Eq.~\ref{eq:betarho} becomes
 
 \begin{equation}
 \begin{aligned}
-&\beta_{22}=\\=\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left[COD\left(\theta\right)\left(\sin{\left(\theta\right)}\cos{\left(\theta\right)}-\sin^{2}{\left(\theta\right)}\right)+CSD\left(\theta\right)\left(\cos^{2}{\left(\theta\right)}-\cos{\left(\theta\right)}\sin{\left(\theta\right)}\right)\right]d\theta=\\
-\\=\rho_{D}&\frac{1}{2\Delta\theta}\int_{0}^{\Delta\theta}\left(COD\left(\theta\right)-CSD\left(\theta\right)\right)\left(-1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta=\\
-\\=\rho_{D}&\frac{1}{2\Delta\theta}\int_{0}^{\Delta\theta}\left(COD\left(\theta\right)-CSD\left(\theta\right)\right)\left(\sqrt{2}\sin\left(2\theta-\frac{\pi}{4}\right)-1\right)d\theta\\
+&\beta_{22}=\\=\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left[COD\left(\theta\right)\left(\cos^{2}{\left(\theta\right)}-\cos{\left(\theta\right)}\sin{\left(\theta\right)}\right)-CSD\left(\theta\right)\left(\sin{\left(\theta\right)}\cos{\left(\theta\right)}-\sin^{2}{\left(\theta\right)}\right)\right]d\theta=\\
+\\=\rho_{D}&\frac{1}{2\Delta\theta}\int_{0}^{\Delta\theta}\left[COD\left(\theta\right)\left(1+\cos\left(2\theta\right)-\sin\left(2\theta\right)\right)+CSD\left(\theta\right)\left(1-\cos\left(2\theta\right)-\sin\left(2\theta\right)\right)\right]d\theta=\\
+\\=\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left[\frac{COD\left(\theta\right)+CSD\left(\theta\right)}{2}\left(1-\sin\left(2\theta\right)\right)+\frac{COD\left(\theta\right)-CSD\left(\theta\right)}{2}\cos\left(2\theta\right)\right]d\theta\\
 &\beta_{33}=\\
 =\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left[COD\left(\theta\right)\left(\sin{\left(\theta\right)}\cos{\left(\theta\right)}+\sin^{2}{\left(\theta\right)}\right)+CSD\left(\theta\right)\left(\cos^{2}{\left(\theta\right)}+\cos{\left(\theta\right)}\sin{\left(\theta\right)}\right)\right]d\theta=\\
 =\rho_{D}&\frac{1}{2\Delta\theta}\int_{0}^{\Delta\theta}\left[COD\left(\theta\right)\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)+CSD\left(\theta\right)\left(1+\sin\left(2\theta\right)+\cos\left(2\theta\right)\right)\right]d\theta=\\
-=\rho_{D}&\frac{1}{2\Delta\theta}\int_{0}^{\Delta\theta}\left[\left(COD\left(\theta\right)+CSD\left(\theta\right)\right)\left(1+\sin\left(2\theta\right)\right)-\left(COD\left(\theta\right)-CSD\left(\theta\right)\right)\cos\left(2\theta\right)\right]d\theta\\
+=\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left[\frac{COD\left(\theta\right)+CSD\left(\theta\right)}{2}\left(1+\sin\left(2\theta\right)\right)-\frac{COD\left(\theta\right)-CSD\left(\theta\right)}{2}\cos\left(2\theta\right)\right]d\theta\\
 &\beta_{23}=\\
 &=\rho_{D}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}COD\left(\theta\right)\left(2\sin{\left(\theta\right)}\cos{\left(\theta\right)}+\cos^{2}{\left(\theta\right)}-\sin^{2}\left(\theta\right)\right)+\\
 &\qquad-\rho_{D}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}CSD\left(\theta\right)\left(\sin^{2}{\left(\theta\right)}-\cos^{2}{\left(\theta\right)}+2\cos{\left(\theta\right)}\sin{\left(\theta\right)}\right)d\theta=\\
-=\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left[\left(COD\left(\theta\right)-CSD\left(\theta\right)\right)\sin\left(2\theta\right)+\left(COD\left(\theta\right)+CSD\left(\theta\right)\right)\cos\left(2\theta\right)\right]d\theta\\
+=\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}2\left[\frac{COD\left(\theta\right)+CSD\left(\theta\right)}{2}\cos\left(2\theta\right)+\frac{COD\left(\theta\right)-CSD\left(\theta\right)}{2}\sin\left(2\theta\right)\right]d\theta\\
 \end{aligned}
 \end{equation}
 
@@ -259,10 +259,12 @@ b_{0}&=-\left(\frac{CSD_{avg}}{CSD_{max}}+\sum_{k=0}^{n-1}b_{2k+1}\Delta\Theta^{
 
 \begin{equation}
 \begin{aligned}
-\beta_{22}=&\rho_{D}COD_{avg}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta+\\
-&+\rho_{D}COD_{max}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}f\left(\theta\right)\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta+\\
-&-\rho_{D}CSD_{avg}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta+\\
-&-\rho_{D}CSD_{max}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}g\left(\theta\right)\left(1+\sin\left(2\theta\right)-\cos\left(2\theta\right)\right)d\theta\\
+&\beta_{22}=\\
+\\=\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left[\frac{COD\left(\theta\right)+CSD\left(\theta\right)}{2}\left(1-\sin\left(2\theta\right)\right)+\frac{COD\left(\theta\right)-CSD\left(\theta\right)}{2}\cos\left(2\theta\right)\right]d\theta\\
+&\beta_{33}=\\
+=\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left[\frac{COD\left(\theta\right)+CSD\left(\theta\right)}{2}\left(1+\sin\left(2\theta\right)\right)-\frac{COD\left(\theta\right)-CSD\left(\theta\right)}{2}\cos\left(2\theta\right)\right]d\theta\\
+&\beta_{23}=\\
+=\rho_{D}&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}2\left[\frac{COD\left(\theta\right)+CSD\left(\theta\right)}{2}\cos\left(2\theta\right)+\frac{COD\left(\theta\right)-CSD\left(\theta\right)}{2}\sin\left(2\theta\right)\right]d\theta\\
 \end{aligned}
 \end{equation}
 

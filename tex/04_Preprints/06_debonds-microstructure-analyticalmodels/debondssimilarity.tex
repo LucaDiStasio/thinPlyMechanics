@@ -199,7 +199,7 @@ respectively for plane strain and plane stress conditions under applied strain $
 G_{0}\sim f\left(\Delta\theta\right)\frac{1-\nu_{12}\nu_{21}}{E_{2}}\sigma_{0}^{2}l_{ref}\quad G_{0}\sim f\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}l_{ref},
 \end{equation}
 
-respectively for plane strain and plane stress conditions under applied strain $\sigma_{0}$. Notice that, incidentally: the plane strain expression in Eq.~\ref{eq:Gexpandedstresscontrol} is the same as the ERR expression used for \textit{in-situ} strenght modeling in~\cite{Camanho2006} and derived in~\cite{Laws1983} by considering the fiber-reinforced polymer as a 3-phase composite with one phase constituted by sharp voids (cracks); the plane stress expression in Eq.~\ref{eq:Gexpandedstresscontrol} is the same as the Mode I ERR in~\cite{Varna2018}, derived from the definition of ERR and problem geometry.\\
+respectively for plane strain and plane stress conditions under applied strain $\sigma_{0}$. Notice that, incidentally: the plane strain expression in Eq.~\ref{eq:Gexpandedstresscontrol} is the same as the ERR expression used for \textit{in-situ} strenght modeling in~\cite{Camanho2006} and derived in~\cite{Laws1983} by considering the fiber-reinforced polymer as a 3-phase composite with one phase constituted by sharp voids (cracks)\footnote{Often expressed as $\Lambda_{22}^{0}=2\left(\frac{1}{E_{2}}-\frac{\nu_{12}^{2}}{E_{1}}\right)$, which can be shown to be equivalent to $\Lambda_{22}^{0}=2\frac{1-\nu_{12}\nu_{21}}{E_{2}}$ by recalling that $\nu_{21}=\frac{E_{2}}{E_{1}}\nu_{12}$.}; the plane stress expression in Eq.~\ref{eq:Gexpandedstresscontrol} is the same as the Mode I ERR in~\cite{Varna2018}, derived from the definition of ERR and problem geometry.\\
 In accord with the classic Linear Elastic Fracture Mechanics (LEFM), the Energy Release Rate is directly proportional to the crack size $a$~\cite{Tada2000}. Given that $a=R_{f}2\Delta\theta$ for debonds, where $R_{f}$ is the fiber radius, it is reasonable to assume $R_{f}$ as the reference length:
 
 \begin{equation}\label{eq:lref}
@@ -208,13 +208,13 @@ l_{ref}=R_{f}.
 
 The reference Energy Release Rate thus becomes
 
-\begin{equation}\label{eq:Gexpandedstraincontrol}
+\begin{equation}\label{eq:Gfinalstraincontrol}
 G_{0}\sim f\left(\Delta\theta\right)\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}\quad G_{0}\sim f\left(\Delta\theta\right)E_{2}\varepsilon_{0}^{2}R_{f},
 \end{equation}
 
 respectively for plane strain and plane stress conditions under applied strain $\varepsilon_{0}$, and
 
-\begin{equation}\label{eq:Gexpandedstresscontrol}
+\begin{equation}\label{eq:Gfinalstresscontrol}
 G_{0}\sim f\left(\Delta\theta\right)\frac{1-\nu_{12}\nu_{21}}{E_{2}}\sigma_{0}^{2}R_{f}\quad G_{0}\sim f\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}R_{f},
 \end{equation}
 
@@ -222,7 +222,7 @@ respectively for plane strain and plane stress conditions under applied strain $
 
 \section{Similarity and geometry correction factor}
 
-In agreement with the classic Fracture Mechanics (FM) treatment~\cite{Tada2000}, we can recognize in the function $f\left(\Delta\theta\right)$ of Eq.~\ref{eq:Gexpandedstraincontrol} and Eq.~\ref{eq:Gexpandedstresscontrol} the geometry correction factor ($f\left(a\right)$ or $Y$) that establishes the relation of similarity~\cite{Barenblatt2006}
+In agreement with the classic Fracture Mechanics (FM) treatment~\cite{Tada2000}, we can recognize in the function $f\left(\Delta\theta\right)$ of Eq.~\ref{eq:Gfinalstraincontrol} and Eq.~\ref{eq:Gfinalstresscontrol} the geometry correction factor ($f\left(a\right)$ or $Y$) that establishes the relation of similarity~\cite{Barenblatt2006}
 
 \begin{equation}\label{eq:Gsim}
 K=f\left(a\right)\sigma\sqrt{a}\quad\text{or}\quad G=f^{2}\left(a\right)\frac{\sigma^{2}}{E}a
@@ -234,7 +234,7 @@ between the Stress Intensity Factor (SIF) $K$ and Energy Release Rate (ERR) $G$ 
 K_{CC}=\sigma\sqrt{a}\quad\text{or}\quad G_{CC}=\frac{\sigma^{2}}{E}a,
 \end{equation}
 
-where the crack size is $2a$. It thus seems reasonable to look for a functional form of $f\left(\Delta\theta\right)$ in Eq.~\ref{eq:Gexpandedstraincontrol} and Eq.~\ref{eq:Gexpandedstresscontrol} among known analytical solutions of SIFs and ERRs and such that a physically-meaningful similarity between the two configurations could be established.
+where the crack size is $2a$. It thus seems reasonable to look for a functional form of $f\left(\Delta\theta\right)$ in Eq.~\ref{eq:Gfinalstraincontrol} and Eq.~\ref{eq:Gfinalstresscontrol} among known analytical solutions of SIFs and ERRs and such that a physically-meaningful similarity between the two configurations could be established.
 
 \begin{itemize}
 \item \textbf{Straight central crack in an infinite isotropic plate under far-field transverse tension~\cite{Tada2000}.}
@@ -259,12 +259,12 @@ A first attempt to amend the shortcomings of Eq.~\ref{eq:straightcrack} is to co
 
 \begin{equation}\label{eq:circularcrack}
 \begin{aligned}
-f_{I}&\left(\Delta\theta\right)=\frac{1}{2}\sin\left(\Delta\theta\right)\times\\\times&\left(\frac{1-\sin^{2}\left(\frac{\Delta\theta}{2}\right)\cos^{2}\left(\frac{\Delta\theta}{2}\right)}{1+\sin^{2}\left(\frac{\Delta\theta}{2}\right)}\cos\left(\frac{\Delta\theta}{2}\right)+\cos\left(\frac{3}{2}\Delta\theta\right)\right)^{2}\\
- f_{II}&\left(\Delta\theta\right)=\frac{1}{2}\sin\left(\Delta\theta\right)\times\\\times&\left(\frac{1-\sin^{2}\left(\frac{\Delta\theta}{2}\right)\cos^{2}\left(\frac{\Delta\theta}{2}\right)}{1+\sin^{2}\left(\frac{\Delta\theta}{2}\right)}\sin\left(\frac{\Delta\theta}{2}\right)+\sin\left(\frac{3}{2}\Delta\theta\right)\right)^{2}
+f_{I}&\left(\Delta\theta\right)=\frac{G_{I}}{\sigma_{ref}\varepsilon_{ref}R}=\frac{1}{2}\sin\left(\Delta\theta\right)\times\\\times&\left(\frac{1-\sin^{2}\left(\frac{\Delta\theta}{2}\right)\cos^{2}\left(\frac{\Delta\theta}{2}\right)}{1+\sin^{2}\left(\frac{\Delta\theta}{2}\right)}\cos\left(\frac{\Delta\theta}{2}\right)+\cos\left(\frac{3}{2}\Delta\theta\right)\right)^{2}\\
+ f_{II}&\left(\Delta\theta\right)=\frac{G_{II}}{\sigma_{ref}\varepsilon_{ref}R}=\frac{1}{2}\sin\left(\Delta\theta\right)\times\\\times&\left(\frac{1-\sin^{2}\left(\frac{\Delta\theta}{2}\right)\cos^{2}\left(\frac{\Delta\theta}{2}\right)}{1+\sin^{2}\left(\frac{\Delta\theta}{2}\right)}\sin\left(\frac{\Delta\theta}{2}\right)+\sin\left(\frac{3}{2}\Delta\theta\right)\right)^{2}
 \end{aligned}
 \end{equation}
 
-The geometry correction factors of Eq.~\ref{eq:circularcrack} (shown in Fig.~\ref{fig:curvedcrackgeomcorr}) present a solution to the issues characterising Eq.~\ref{eq:straightcrack} and Eq.~\ref{eq:inclinedcrack}: Mode II is defined and both modes are defined and continuous for $\Delta\theta=0^{\circ}-180^{\circ}$. This configuration establishes also a physically-meaningful relation of similarity, as the ratios $\frac{G_{I}}{G_{I0}}=g_{I}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ and $\frac{G_{II}}{G_{II0}}=g_{II}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ measure the effect of: the mismatch in elastic properties between phases (in Eq.~\ref{eq:circularcrack} the medium is isotropic); the finite size of the geometry (in Eq.~\ref{eq:circularcrack} the medium is infinite); the interaction with neighboring undamaged and partially debonded fibers, a free surface (in UD composites) or the $0^{\circ},90^{\circ}$ interface (in cross-ply laminates).
+The geometry correction factors of Eq.~\ref{eq:circularcrack} (shown in Fig.~\ref{fig:curvedcrackgeomcorr}) present a solution to the issues characterising Eq.~\ref{eq:straightcrack} and Eq.~\ref{eq:inclinedcrack}: Mode II is defined and both modes are defined and continuous for $\Delta\theta=0^{\circ}-180^{\circ}$. This configuration establishes also a physically-meaningful relation of similarity, as the ratios $\frac{G_{I}}{G_{I0}}=g_{I}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ and $\frac{G_{II}}{G_{II0}}=g_{II}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ measure the effect of: the mismatch in elastic properties between phases (in Eq.~\ref{eq:circularcrack} the medium is isotropic); the finite size of the geometry (in Eq.~\ref{eq:circularcrack} the medium is infinite); the interaction with neighboring undamaged and partially debonded fibers, a free surface (in UD composites) or the $0^{\circ}/90^{\circ}$ interface (in cross-ply laminates).
 \end{itemize}
 
 \begin{figure}

@@ -209,7 +209,32 @@ f_{I}&\left(\Delta\theta\right)=\frac{G_{I}}{\sigma_{ref}\varepsilon_{ref}R}=\fr
 \end{aligned}
 \end{equation}
 
-The geometry correction factors of Eq.~\ref{eq:circularcrack} (shown in Fig.~\ref{fig:curvedcrackgeomcorr}) present a solution to the issues characterising Eq.~\ref{eq:straightcrack} and Eq.~\ref{eq:inclinedcrack}: Mode II is defined and both modes are defined and continuous for $\Delta\theta=0^{\circ}-180^{\circ}$. This configuration establishes also a physically-meaningful relation of similarity, as the ratios $\frac{G_{I}}{G_{I0}}=g_{I}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ and $\frac{G_{II}}{G_{II0}}=g_{II}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ measure the effect of: the mismatch in elastic properties between phases (in Eq.~\ref{eq:circularcrack} the medium is isotropic); the finite size of the geometry (in Eq.~\ref{eq:circularcrack} the medium is infinite); the interaction with neighboring undamaged and partially debonded fibers, a free surface (in UD composites) or the $0^{\circ}/90^{\circ}$ interface (in cross-ply laminates).
+The geometry correction factors of Eq.~\ref{eq:circularcrack} (shown in Fig.~\ref{fig:curvedcrackgeomcorr}) present a solution to the issues characterising Eq.~\ref{eq:straightcrack} and Eq.~\ref{eq:inclinedcrack}: Mode II is defined and both modes are defined and continuous for $\Delta\theta=0^{\circ}-180^{\circ}$. By evaluating the elastic properties $E_{2}$, $\nu_{12}$ and $\nu_{21}$ at the value of $V_{f}$ of the composite under consideration, and substituting Eq.~\ref{eq:circularcrack} in Eq.~\ref{eq:Gfinalstresscontrol} and Eq.~\ref{eq:Gfinalstraincontrol}, we obtain the following expressions of reference ERR:
+
+\begin{enumerate}
+
+\item Mode I $G_{I0}$ and Mode II $G_{II0}$ ERR of a circular crack of size $a=2\Delta\theta$ in an infinite isotropic medium
+
+\begin{equation}\label{eq:Gcircularcrack1}
+\begin{aligned}
+G_{I0}&=f_{I}\left(\Delta\theta\right)\frac{E_{2}\left(V_{f}\right)}{1-\nu_{12}\left(V_{f}\right)\nu_{21}\left(V_{f}\right)}\varepsilon_{0}^{2}R_{f}\\G_{II0}&=f_{II}\left(\Delta\theta\right)\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}
+\end{aligned}
+\end{equation}
+
+\item \begin{equation}\label{eq:Gcircularcrack2}
+G_{I0}=f_{I}\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}R_{f}\quad G_{II0}=f_{II}\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}R_{f}
+\end{equation}
+
+\item \begin{equation}\label{eq:Gcircularcrack3}
+G_{I0}=f_{I}\left(\Delta\theta\right)\frac{1-\nu_{12}\nu_{21}}{E_{2}}\sigma_{0}^{2}R_{f}\quad G_{II0}=f_{II}\left(\Delta\theta\right)\frac{1-\nu_{12}\nu_{21}}{E_{2}}\sigma_{0}^{2}R_{f}
+\end{equation}
+
+\item \begin{equation}\label{eq:Gcircularcrack4}
+G_{I0}=f_{I}\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}R_{f}\quad G_{II0}=f_{II}\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}R_{f}
+\end{equation}
+\end{enumerate}
+
+This configuration establishes also a physically-meaningful relation of similarity, as the ratios $\frac{G_{I}}{G_{I0}}=g_{I}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ and $\frac{G_{II}}{G_{II0}}=g_{II}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ measure the effect of: the mismatch in elastic properties between phases (in Eq.~\ref{eq:circularcrack} the medium is isotropic); the finite size of the geometry (in Eq.~\ref{eq:circularcrack} the medium is infinite); the interaction with neighboring undamaged and partially debonded fibers, a free surface (in UD composites) or the $0^{\circ}/90^{\circ}$ interface (in cross-ply laminates).
 \end{itemize}
 
 \begin{figure}
@@ -221,20 +246,47 @@ The geometry correction factors of Eq.~\ref{eq:circularcrack} (shown in Fig.~\re
 
 \begin{figure}[!h]
 \centering
-    \begin{subfigure}[b]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{comparescaling-Vf01.pdf}
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[height=0.225\textheight]{comparescaling-Vf01.pdf}
         \caption{Dimensional ERR.}\label{subfig:comparescalingVf01}
-    \end{subfigure} ~
-    \begin{subfigure}[b]{0.45\textwidth}
-        \includegraphics[width=\textwidth]{comparescaling-Vf01-normalized.pdf}
+    \end{subfigure} \quad
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[height=0.225\textheight]{comparescaling-Vf01-normalized.pdf}
         \caption{Normalized ERR.}\label{subfig:comparescalingVf01normalized}
     \end{subfigure}
 
-\caption{\textit{Left}: Mode I and Mode II ERR for the circular crack in an infinite isotropic medium ($G_{I0}$ and $G_{II0}$) and for a single partially debonded fiber in an infinite matrix ($1\times 1-free$, $V_{f}=0.1\%$). In both cases, a transverse load is applied in the form of transverse strain $\varepsilon_{x}$ of $1\%$.}\label{fig:comparescalingVf01}
+\caption{\textit{Left}: Mode I and Mode II ERR for the circular crack in an infinite isotropic medium ($G_{I0}$ and $G_{II0}$) and for a single partially debonded fiber in an infinite matrix ($1\times 1-free$, $V_{f}=0.1\%$). In $G_{I0}$ and $G_{II0}$, $E_{2}$, $\nu_{12}$ and $\nu_{21}$ are evaluated using the Concentric Cylinders Assembly~\cite{Hashin1983} with Self-Consistent Shear~\cite{Christensen1979} (CCA-SCS) model for $V_{f}=0.1\%$. In both cases, a transverse load is applied in the form of transverse strain $\varepsilon_{x}$ of $1\%$. \textit{Right}: Mode I and Mode II ERR of single partially debonded fiber in an infinite matrix ($1\times 1-free$, $V_{f}=0.1\%$) normalized by Mode I and Mode II ERR of the circular crack in an infinite isotropic medium ($G_{I0}$ and $G_{II0}$).}\label{fig:comparescalingVf01}
 \end{figure}
 
 \section{Effect of fiber volume fraction}
 
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[height=0.225\textheight]{comparescaling-Vf30.pdf}
+        \caption{Dimensional ERR.}\label{subfig:comparescalingVf30}
+    \end{subfigure} \quad
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[height=0.225\textheight]{comparescaling-Vf30-normalized.pdf}
+        \caption{Normalized ERR.}\label{subfig:comparescalingVf30normalized}
+    \end{subfigure}
+
+\caption{\textit{Left}: Mode I and Mode II ERR for the circular crack in an infinite isotropic medium ($G_{I0}$ and $G_{II0}$) and for a single partially debonded fiber in an infinite matrix ($1\times 1-free$, $V_{f}=30\%$). In $G_{I0}$ and $G_{II0}$, $E_{2}$, $\nu_{12}$ and $\nu_{21}$ are evaluated using the Concentric Cylinders Assembly~\cite{Hashin1983} with Self-Consistent Shear~\cite{Christensen1979} (CCA-SCS) model for $V_{f}=30\%$. In both cases, a transverse load is applied in the form of transverse strain $\varepsilon_{x}$ of $1\%$. \textit{Right}: Mode I and Mode II ERR of single partially debonded fiber in an infinite matrix ($1\times 1-free$, $V_{f}=30\%$) normalized by Mode I and Mode II ERR of the circular crack in an infinite isotropic medium ($G_{I0}$ and $G_{II0}$).}\label{fig:comparescalingVf30}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[height=0.225\textheight]{comparescaling-Vf60.pdf}
+        \caption{Dimensional ERR.}\label{subfig:comparescalingVf60}
+    \end{subfigure} \quad
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[height=0.225\textheight]{comparescaling-Vf60-normalized.pdf}
+        \caption{Normalized ERR.}\label{subfig:comparescalingVf60normalized}
+    \end{subfigure}
+
+\caption{\textit{Left}: Mode I and Mode II ERR for the circular crack in an infinite isotropic medium ($G_{I0}$ and $G_{II0}$) and for a single partially debonded fiber in an infinite matrix ($1\times 1-free$, $V_{f}=60\%$). In $G_{I0}$ and $G_{II0}$, $E_{2}$, $\nu_{12}$ and $\nu_{21}$ are evaluated using the Concentric Cylinders Assembly~\cite{Hashin1983} with Self-Consistent Shear~\cite{Christensen1979} (CCA-SCS) model for $V_{f}=60\%$. In both cases, a transverse load is applied in the form of transverse strain $\varepsilon_{x}$ of $1\%$. \textit{Right}: Mode I and Mode II ERR of single partially debonded fiber in an infinite matrix ($1\times 1-free$, $V_{f}=60\%$) normalized by Mode I and Mode II ERR of the circular crack in an infinite isotropic medium ($G_{I0}$ and $G_{II0}$).}\label{fig:comparescalingVf60}
+\end{figure}
 \section{Effect of neighboring fibers}
 
 

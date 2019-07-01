@@ -1,6 +1,7 @@
 \documentclass[review]{elsarticle}
 
 \usepackage{amsmath}
+\usepackage{booktabs}
 \usepackage{nicefrac}
 \usepackage{subcaption}
 \usepackage[usenames]{xcolor}
@@ -84,6 +85,68 @@ Fiber Reinforced Polymer Composite (FRPC) \sep Debonding \sep Similarity \sep Di
 One of the most promising developments in Fiber Reinforced Polymer Composites (FRPCs) for advanced structural applications is currently represented by \emph{thin-ply} laminates~\cite{Kopp2017}. Constituted by extremely thin plies, with $t_{90^{\circ}}$ as small as just $\sim4-5$ fiber diameters, this family of laminates is characterized by its damage tolerance, in particular the capability of delaying to higher strains and even suppressing the onset and propagation of transverse cracks~\cite{Cugnoni2018}. The recent experimental assessment of transverse cracks suppression in \emph{thin-ply} laminates~\cite{Sasayama2003,Saito2012,Amacher2014} validates the existence of a \emph{ply-thickness} effect~\cite{Amacher2014} at scales $10x$ smaller than those at which it was originally observed at the end of the 1970's~\cite{Bailey1979}.\\
 Onset of transverse cracks coincides at the microscopic level with the formation of fiber/matrix interface cracks~\cite{Bailey1981}, or debonds. After the inter-fiber stress~\cite{Asp1996} and strain concentration~\cite{Kies1962} causes the matrix to fail at or close to the fiber interface, debonds grow along the fiber arc direction until a maximum or critical size is reached. If the applied load is increased, debonds move into the matrix or ``kink'' out of the fiber/matrix interface~\cite{Zhang1997,Paris2007}. Coalescence of debonds then occurs, which corresponds macroscopically to through-the-thickness transverse crack propagation~\cite{Zhang1997,Zhuang2018b}. Finally, propagation through the specimen width occurs~\cite{Zhang1997}.\\
 Given that \emph{thin-plies}, as previously noted, can reach nowadays thicknesses of just $\sim4-5$ fiber diameters, the characteristic size of the ply, i.e. the thickness $t_{90^{\circ}}$, is now comparable in magnitude to the characteristic size of debonds, i.e. the fiber diameter $2R_{f}$, such that $\nicefrac{t_{90^{\circ}}}{\left(2R_{f}\right)}\sim\mathcal{O}\left(1\right)$. This has motivated in recent years a renewed interest in debond growth modeling~\cite{Zhuang2018,Sandino2016,Varna2017,Sandino2018}. Since the elastic solution to the interface crack problem implies an oscillating solution at the crack tip~\cite{Comninou1977} in the \emph{open} case (crack faces not in contact), Stress Intensify Factors (SIFs) are not defined and debond growth characterization has focused on the determination of Mode I, Mode II and total Energy Release Rate (ERR). Many authors have reported their results in normalized form~\cite{Paris2007,Toya1974,Paris1996}, by defining a reference ERR $G_{0}$. The definition of such reference ERR would be useful to establish similarity laws and thus to allow comparisons between different material systems, scales, loads and microstructural arrangement. However, no agreement can be found in the literature on the very definition of $G_{0}$ and expressions vary between authors. Furthermore, no clear derivation of $G_{0}$ has been proposed. In this brief contribution, we provide a derivation of $G_{0}$ based on arguments of dimensional analysis, material homogenization and fracture mechanics; we then apply the derived expression of reference ERR to the analysis of debond growth in Representative Volume Elements (RVEs) of UD composites and cross-ply laminates. 
+
+\section{Representative Volume Elements (RVEs) and Finite Element (FE) discretization}
+
+In this contribution, we analyze debond initiation and propagation in Representative Volume Elements (RVEs) of Uni-Directional (UD) composites and $\left[0_{m\cdot k\cdot2L}^{\circ},90_{k\cdot2L}^{\circ},0_{m\cdot k\cdot2L}^{\circ}\right]$ laminates. Given a global reference frame with axis $x$, $y$ and $z$, both types of composites are modeled as plates lying in the $x-y$ plane, with the through-the-thickness direction thus aligned with the $z$ axis. The UD composite $0^{\circ}$ direction is parallel to the $y$ axis, while the cross-ply $0^{\circ}$ direction is parallel to the $x$ axis. Both composites are loaded in tension along the $x$ axis, which thus corresponds to: transverse loading of the UD specimen; axial loading of the cross-ply specimen. In both composites, damage is present only in the form of fiber/matrix interface cracks, or debonds. In cross-plies, debonds are assumed to be present only in the central ${90^{\circ}}$ ply. Given that: first, in the presence of a load in the $x$-direction, in both lay-ups the $y$-strain due to Poisson's effect is very small; second, debond size is assumed to be considerably larger in the fiber than in the arc direction~\cite{Zhang1997}; third, we are interested in studying debond growth along the arc direction; we can consider $2D$ models under plane strain conditions defined in the $x-z$ plane. Although generalized plane strain conditions would represent a more appropriate modeling choice, it would limit the ability to compare with previous results. Simple plane strain conditions are thus preferred. UD composites and $90^{\circ}$ plies are characterized by a regular microstructure following a square-packing configuration of fibers, built through the repetition of a one-fiber unit cell along the horizontal and the vertical direction. This unit cell is a square with the center occupied by one fiber of radius $R_{f}=1\ \mu m$ and the rest of the element constituted by matrix. The size of the one-fiber unit cell is $2L\times 2L$, such that:
+
+\begin{equation}\label{eq:LVf}
+L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}},
+\end{equation}
+
+where $V_{f}$ is the fiber volume fraction, here assumed to be $60\%$. It is worth to specify at this point that the choice $R_{f}=1\ \mu m$ is arbitrary and stems from the fact that ERR, in the contest of a linear elastic solution as the one considered in this article, is proportional to the geometrical dimensions of the model. Simplicity is thus the main reason for this choice. Also, $V_{f}$ is always the same in the one-fiber unit cell and the entire RVE, i.e. no fiber clustering is analyzed in this work. In the case of cross-ply laminates, the $0^{\circ}$ layer is homogenized with properties evaluated according to the Concentric Cylinders Assembly with Self-Consistent Shear (CCA-SCS) model~\cite{Hashin1983,Christensen1979}. A glass fiber-epoxy system is considered for both UDs and cross-ply laminates. Material properties are reported in Table~\ref{tab:phaseprop}.
+
+\begin{table}[!htbp]
+ \centering
+ \caption{Summary of mechanical properties of fiber, matrix and UD layer.}%$E$ stands for Young's modulus, $\mu$ for shear modulus and $\nu$ for Poisson's ratio. Indexes $L$ and $T$ stand respectively for \emph{longitudinal} and \emph{transverse}.}
+ \begin{tabular}{ccccccc}
+\textbf{Material} & \textbf{$V_{f}\left[\%\right]$}\  & \textbf{$E_{L}\left[GPa\right]$}\ & \textbf{$E_{T}\left[GPa\right]$}\  & \textbf{$G_{LT}\left[GPa\right]$} &\textbf{$\nu_{LT}\left[-\right]$} & \textbf{$\nu_{TT}\left[-\right]$} \\
+\midrule
+Glass fiber &-   & 70.0 & 70.0  & 29.2 & 0.2  & 0.2\\
+Epoxy    &-& 3.5 & 3.5   & 1.25 &  0.4& 0.4\\
+UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
+\end{tabular}
+\label{tab:phaseprop}
+\end{table}
+
+The use of coupling conditions allows the study of a Repeating Unit Cells (RUC) of reduced size with respect to the corresponding RVE, which translates in a gain in terms of computational time and memory usage during the evaluation of Finite Element (FE) solution. The RVEs studied in this article are reported in Figure~\ref{fig:rves} with the corresponding RUC highlighted by dashed line (in blue in the online color version) and with symmetry and coupling conditions represented by rollers (\includegraphics[scale=0.5]{roller.pdf}). Details about the central one-fiber unit cell are shown in Figure~\ref{fig:ruc}. Notice that the analysis, in terms of stresses and Energy Release Rate (ERR), is conducted on this central one-fiber unit cell, both in the case of an undamaged and of a partially debonded fiber.\\
+Nomenclature and main features of the RVEs studied are described in the following.
+
+\begin{description}
+\item [$\mathbf{n\times k-free}$, Figure~\ref{fig:rves-a}: ]UD composite with thickness $t_{UD}=k\cdot2L$, where $k$ is the number of fiber ``rows'' in the vertical (through-the-thickness) direction and $2L$ the side length of the one-fiber unit cell as defined in Equation~\ref{eq:LVf}. Debonds appear only in the central fiber ``row'' with $n-1$ fully bonded fibers in between, where $n$ is the number of fibers present in the RUC along the horizontal direction.
+\item [$\mathbf{n\times k-coupling}$, Figure~\ref{fig:rves-b}: ]UD composite with multiple fiber ``rows'' containing debonds with $n-1$ fully bonded fibers in between, where $n$ is the number of fibers present in the RUC along the horizontal direction. Fiber ``rows'' containing debonds are separated along the vertical (through-the-thickness) direction by $k-1$ ``rows'' of fully bonded fibers, where $k$ is the number of fiber ``rows'' present in the RUC along the vertical direction. Debonds that are vertically aligned are placed on the same side of their respective fiber. To model this configuration, conditions of coupling of the vertical displacement are applied on the top side.
+\item [$\mathbf{n\times k-asymm}$, Figure~\ref{fig:rves-c}: ]same as in $n\times k-coupling$, but debonds that are vertically aligned are placed on opposite sides of their respective fiber. To model this configuration, the following set of conditions is applied to the upper boundary:
+
+\begin{equation}\label{eq:asymm}
+\begin{aligned}
+u_{z}\left(x,kL\right)-u_{z}\left(0,kL\right)&=-\left(u_{z}\left(-x,kL\right)-u_{z}\left(0,kL\right)\right)\\
+u_{x}\left(x,kL\right)&=-u_{x}\left(-x,kL\right)
+\end{aligned}
+\end{equation}
+
+which represent conditions of anti-symmetric coupling~\cite{DiStasio2019b}.
+
+\item [$\mathbf{n\times k-m\times t_{90^{\circ}}}$, Figure~\ref{fig:rves-d}: ]Cross-ply laminate with $90^{\circ}$ layer thickness $t_{90^{\circ}}=k\cdot2L$ and $0^{\circ}$ layer thickness $t_{0^{\circ}}=m\cdot t_{90^{\circ}}$. $k$ is the number of fiber ``rows'' in the vertical (through-the-thickness) direction of the $90^{\circ}$ layer and $2L$ the side length of the one-fiber unit cell as defined in Equation~\ref{eq:LVf}. Debonds are present only in the central fiber ``row'' of the $90^{\circ}$ layer with $n-1$ fully bonded fibers in between, where $n$ is the number of fibers present in the RUC along the horizontal direction.
+\end{description}
+
+%\begin{figure}[!h]
+%\centering
+%    \subfigure[$n\times k-free$]{\label{fig:rves-a}\raisebox{0.07\textheight}{\includegraphics[width=0.4\textwidth]{thickPlyUD.pdf}}}\quad 
+%    \subfigure[$n\times k-coupling$]{\label{fig:rves-b}\includegraphics[width=0.4\textwidth]{coupling.pdf}}\\
+%    \subfigure[$n\times k-asymm$]{\label{fig:rves-c}\raisebox{0.0275\textheight}{\includegraphics[width=0.4\textwidth]{asymm.pdf}}}\quad
+%    \subfigure[$n\times k-m\times t_{90^{\circ}}$]{\label{fig:rves-d}\includegraphics[width=0.4\textwidth]{ThickPlyCP.pdf}}
+%\caption{Composite RVEs and corresponding RUCs analyzed.}\label{fig:rves}
+%\end{figure}
+
+Every RUC is symmetric with respect to the horizontal ($x$) direction, thus only half of it is modeled in the FE solution through the use of symmetry boundary conditions on the bottom side. Conditions of coupling of the horizontal displacement are applied on the left and right side, to model the repetition of the RUC along the horizontal direction. A tensile load is applied on the right and left side in the form of displacement $\bar{u}_{x}=\pm\bar{\varepsilon}_{x}nL$ with $\bar{\varepsilon}_{x}=1\%$. The debond has a size of $2\Delta\theta$ (see Figure~\ref{fig:ruc}), with $\Delta\theta\geq0$ ($\Delta\theta=0$ is the case of no damage at all). For large debonds ($\Delta\theta\geq 60^{\circ}-80^{\circ}$), a region called \emph{contact zone}, of size $\Delta\Phi$ to be determined by the solution itself, appears at the crack tip. Correct resolution of this behavior requires the imposition of conditions of non-interpenetration of the crack faces. Crack face contact is assumed to be frictionless.
+
+\begin{figure}[!h]
+\centering
+        \includegraphics[height=0.15\textheight]{RUC.pdf}
+\caption{One-fiber unit cell and main parameters characterizing the debonding process.}\label{fig:ruc}
+\end{figure}
+
+The FE solution is obtained using Abaqus~\cite{abq12} using second order, 2D, plane strain triangular (CPE6) and rectangular (CPE8) elements. To accurately resolve the singularity at the crack tip, a regular mesh of only rectangular elements is used with almost unitary aspect ratio and angular size $\delta=0.05^{\circ}$. The crack faces are represented as element-based surfaces with frictionless small-sliding contact pair interaction.
 
 \section{Dimensional analysis}
 

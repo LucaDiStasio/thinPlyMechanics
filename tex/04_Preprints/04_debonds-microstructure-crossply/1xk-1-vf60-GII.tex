@@ -81,26 +81,7 @@ legend entries={},
 %};
 %\addlegendentry{$1\times 1-free$};
 
-% 1x1 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table{
-10.00	0.201871
-20.00	0.383567
-30.00	0.640271
-40.00	0.809040
-50.00	0.855902
-60.00	0.796061
-70.00	0.655639
-80.00	0.486442
-90.00	0.337286
-100.00	0.207704
-110.00	0.107822
-120.00	0.044845
-130.00	0.014779
-140.00	0.004784
-150.00	0.003770
-};
-\addlegendentry{$1\times 1-1\cdot t_{90^{\circ}}$};
+
 
 %% 1x3 - free
 %\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
@@ -123,26 +104,6 @@ table{
 %};
 %\addlegendentry{$1\times 3-free$};
 
-% 1x3 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
-table{
-10.00	0.180265
-20.00	0.317178
-30.00	0.526968
-40.00	0.710966
-50.00	0.880012
-60.00	0.990657
-70.00	0.903122
-80.00	0.665550
-90.00	0.452343
-100.00	0.238867
-110.00	0.080806
-120.00	0.017942
-130.00	0.009648
-140.00	0.020564
-150.00	0.035397
-};
-\addlegendentry{$1\times 3-1\cdot t_{90^{\circ}}$};
 
 %% 1x11 - free
 %\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
@@ -165,26 +126,26 @@ table{
 %};
 %\addlegendentry{$1\times 11-free$};
 
-% 1x5 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
+% 1x11 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
 table{
-10	0.178584
-20	0.317705
-30	0.528124
-40	0.712620
-50	0.881892
-60	0.991312
-70	0.901812
-80	0.663436
-90	0.450312
-100	0.237982
-110	0.080678
-120	0.017953
-130	0.009647
-140	0.020517
-150	0.035263
+10.00	0.165846
+20.00	0.308382
+30.00	0.521964
+40.00	0.714442
+50.00	0.881059
+60.00	0.991457
+70.00	0.902115
+80.00	0.663473
+90.00	0.450344
+100.00	0.237982
+110.00	0.080680
+120.00	0.017954
+130.00	0.009639
+140.00	0.020467
+150.00	0.035154
 };
-\addlegendentry{$1\times 5-1\cdot t_{90^{\circ}}$};
+\addlegendentry{$1\times 11-1\cdot t_{90^{\circ}}$};
 
 % 1x7 - i=1
 \addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
@@ -207,26 +168,68 @@ table{
 };
 \addlegendentry{$1\times 7-1\cdot t_{90^{\circ}}$};
 
-% 1x11 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
+% 1x5 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
 table{
-10.00	0.165846
-20.00	0.308382
-30.00	0.521964
-40.00	0.714442
-50.00	0.881059
-60.00	0.991457
-70.00	0.902115
-80.00	0.663473
-90.00	0.450344
-100.00	0.237982
-110.00	0.080680
-120.00	0.017954
-130.00	0.009639
-140.00	0.020467
-150.00	0.035154
+10	0.178584
+20	0.317705
+30	0.528124
+40	0.712620
+50	0.881892
+60	0.991312
+70	0.901812
+80	0.663436
+90	0.450312
+100	0.237982
+110	0.080678
+120	0.017953
+130	0.009647
+140	0.020517
+150	0.035263
 };
-\addlegendentry{$1\times 11-1\cdot t_{90^{\circ}}$};
+\addlegendentry{$1\times 5-1\cdot t_{90^{\circ}}$};
+
+% 1x3 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
+table{
+10.00	0.180265
+20.00	0.317178
+30.00	0.526968
+40.00	0.710966
+50.00	0.880012
+60.00	0.990657
+70.00	0.903122
+80.00	0.665550
+90.00	0.452343
+100.00	0.238867
+110.00	0.080806
+120.00	0.017942
+130.00	0.009648
+140.00	0.020564
+150.00	0.035397
+};
+\addlegendentry{$1\times 3-1\cdot t_{90^{\circ}}$};
+
+% 1x1 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+table{
+10.00	0.201871
+20.00	0.383567
+30.00	0.640271
+40.00	0.809040
+50.00	0.855902
+60.00	0.796061
+70.00	0.655639
+80.00	0.486442
+90.00	0.337286
+100.00	0.207704
+110.00	0.107822
+120.00	0.044845
+130.00	0.014779
+140.00	0.004784
+150.00	0.003770
+};
+\addlegendentry{$1\times 1-1\cdot t_{90^{\circ}}$};
 
 \end{axis}
 %Tikz axis ends%

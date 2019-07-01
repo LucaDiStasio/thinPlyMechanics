@@ -49,14 +49,14 @@ y grid style={lightgray!92.026143790849673!black},
 line width=0.75mm,
 % GRID SIZE
 xmin=0.0,
-%xmax=60.0,
+xmax=120.0,
 ymin=0,
 %ymax=0.1,
-%xtick={0.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0},
+xtick={0.0,20.0,40.0,60.0,80.0,100.0,120.0},
 % CONTENT
 %title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
 xlabel={$\Delta\theta\left[^{\circ}\right]$},
-ylabel={$G\left[\nicefrac{J}{m^{2}}\right]$},
+ylabel={$\nicefrac{G}{G_{0}}\left[-\right]$},
 % LEGEND ENTRIES
 ]
 
@@ -97,97 +97,102 @@ ylabel={$G\left[\nicefrac{J}{m^{2}}\right]$},
 
 %1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf
 
-%fI
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*]
-table[x=theta, y expr={1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fI{\thisrow{theta}}}]{
-theta        G
-10.00	0.68353011
-20.00	0.90263404
-30.00	0.75689535
-40.00	0.45568201
-50.00	0.16643223
-60.00	0.00736294
-70.00	0.00002357
-80.00	0.00004159
-90.00	0.00003593
-100.00	0.00003227
-110.00	0.00001968
-120.00	0.00001119
-130.00	0.00000418
-140.00	0.00000061
-150.00	0.00060079
-160 0
-170 0
-180 0
-};
-\addlegendentry{$G_{I0}=f_{I}\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}$};
+%%fI
+%\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*]
+%table[x=theta, y expr={1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fI{\thisrow{theta}}}]{
+%theta        G
+%10.00	0.68353011
+%20.00	0.90263404
+%30.00	0.75689535
+%40.00	0.45568201
+%50.00	0.16643223
+%60.00	0.00736294
+%70.00	0.00002357
+%80.00	0.00004159
+%90.00	0.00003593
+%100.00	0.00003227
+%110.00	0.00001968
+%120.00	0.00001119
+%130.00	0.00000418
+%140.00	0.00000061
+%150.00	0.00060079
+%160 0
+%170 0
+%180 0
+%};
+%\addlegendentry{$f_{I}\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}$};
 
-% fII
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*,mark options={fill=white}]
-table[x=theta, y expr={1000*\Eeqsixty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}}}]{
-theta        G
-10.00	0.68353011
-20.00	0.90263404
-30.00	0.75689535
-40.00	0.45568201
-50.00	0.16643223
-60.00	0.00736294
-70.00	0.00002357
-80.00	0.00004159
-90.00	0.00003593
-100.00	0.00003227
-110.00	0.00001968
-120.00	0.00001119
-130.00	0.00000418
-140.00	0.00000061
-150.00	0.00060079
-160 0
-170 0
-180 0
-};
-\addlegendentry{$G_{II0}=f_{II}\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}$};
+%% fII
+%\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*,mark options={fill=white}]
+%table[x=theta, y expr={1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}}}]{
+%theta        G
+%10.00	0.68353011
+%20.00	0.90263404
+%30.00	0.75689535
+%40.00	0.45568201
+%50.00	0.16643223
+%60.00	0.00736294
+%70.00	0.00002357
+%80.00	0.00004159
+%90.00	0.00003593
+%100.00	0.00003227
+%110.00	0.00001968
+%120.00	0.00001119
+%130.00	0.00000418
+%140.00	0.00000061
+%150.00	0.00060079
+%160 0
+%170 0
+%180 0
+%};
+%\addlegendentry{$f_{II}\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}$};
 
-% vf60 - 1x1-free - GI
+% vf30 - 1x1-free - GI
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*]
-table{
-10.00	1.94957798
-20.00	1.60401110
-30.00	0.92917427
-40.00	0.40903582
-50.00	0.13646384
-60.00	0.00987438
-70.00	0.00000809
-80.00	0.00000782
-90.00	0.00000391
-100.00	0.00000259
-110.00	0.00000135
-120.00	0.00000071
-130.00	0.00000022
-140.00	0.00000002
-150.00	0.00033306
+table[x=theta, y expr={\thisrow{G}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fI{\thisrow{theta}})}]{
+theta        G
+10.00	0.52182519
+20.00	0.54456858
+30.00	0.37577139
+40.00	0.19718556
+50.00	0.06636225
+60.00	0.00366987
+70.00	0.00000623
+80.00	0.00001022
+90.00	0.00000753
+100.00	0.00000593
+110.00	0.00000332
+120.00	0.00000180
+130.00	0.00000068
+140.00	0.00000013
+150.00	0.00000538
 };
-\addlegendentry{$G_{I}$, $1\times 1-free$, $V_{f}=60\%$};
+\addlegendentry{$G_{I}$, $1\times 1-free$, $V_{f}=30\%$};
 
-% vf60 - 1x1-free - GII
+% vf30 - 1x1-free - GII
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*,mark options={fill=white}]
-table{
-10.00	0.22493561
-20.00	0.46559425
-30.00	0.78835457
-40.00	0.95424493
-50.00	0.95882376
-60.00	0.82936266
-70.00	0.58405695
-80.00	0.36701521
-90.00	0.21924939
-100.00	0.12643620
-110.00	0.06722239
-120.00	0.03161872
-130.00	0.01203413
-140.00	0.00394958
-150.00	0.00259956
+table[x=theta, y expr={\thisrow{G}/(1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+theta        G
+10.00	0.14587977
+20.00	0.39524864
+30.00	0.60148060
+40.00	0.73910758
+50.00	0.79728878
+60.00	0.76314777
+70.00	0.64885763
+80.00	0.51171991
+90.00	0.36383777
+100.00	0.23266526
+110.00	0.13326340
+120.00	0.06705800
+130.00	0.02912838
+140.00	0.01102509
+150.00	0.00413851
 };
-\addlegendentry{$G_{II}$, $1\times 1-free$, $V_{f}=60\%$};
+\addlegendentry{$G_{II}$, $1\times 1-free$, $V_{f}=30\%$};
+
+\draw[line width=\linewidth,black, loosely dashed](axis cs:-10,1)--(axis cs:120,1);
+\draw[black,anchor=east] (axis cs:-10,1) node{\Huge$1$};
 
 %% SF1
 %\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=square*]

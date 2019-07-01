@@ -37,7 +37,7 @@ xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{
 ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
 tick align=outside,
 tick label style={font=\huge},
-legend style={at={(axis cs:100,0.9)},anchor=west,draw=white!80.0!black,font=\fontsize{15}{24}\selectfont,row sep=7.5pt},
+legend style={at={(axis cs:90,0.7)},anchor=west,draw=white!80.0!black,font=\fontsize{15}{24}\selectfont,row sep=7.5pt},
 legend image post style={xscale=1.1,yscale=1.1},
 legend cell align={left},
 clip mode=individual,
@@ -50,7 +50,7 @@ line width=0.75mm,
 % GRID SIZE
 xmin=0.0,
 %xmax=60.0,
-%ymin=-0.1,
+ymin=0,
 %ymax=0.1,
 %xtick={0.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0},
 % CONTENT
@@ -98,7 +98,7 @@ ylabel={$G\left[\nicefrac{J}{m^{2}}\right]$},
 %1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf
 
 %fI
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*]
 table[x=theta, y expr={1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fI{\thisrow{theta}}}]{
 theta        G
 10.00	0.68353011
@@ -120,10 +120,10 @@ theta        G
 170 0
 180 0
 };
-\addlegendentry{$f_{I}\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}$};
+\addlegendentry{$G_{I0}=f_{I}\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}$};
 
 % fII
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*,mark options={fill=white}]
 table[x=theta, y expr={1000*\Eeqthirty*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}}}]{
 theta        G
 10.00	0.68353011
@@ -145,10 +145,10 @@ theta        G
 170 0
 180 0
 };
-\addlegendentry{$f_{II}\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}$};
+\addlegendentry{$G_{II0}=f_{II}\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}$};
 
 % vf30 - 1x1-free - GI
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*]
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*]
 table{
 10.00	0.52182519
 20.00	0.54456858
@@ -169,7 +169,7 @@ table{
 \addlegendentry{$G_{I}$, $1\times 1-free$, $V_{f}=30\%$};
 
 % vf30 - 1x1-free - GII
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*,mark options={fill=white}]
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*,mark options={fill=white}]
 table{
 10.00	0.14587977
 20.00	0.39524864

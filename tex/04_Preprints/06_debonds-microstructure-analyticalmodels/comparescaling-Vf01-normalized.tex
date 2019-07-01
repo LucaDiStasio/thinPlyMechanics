@@ -37,7 +37,7 @@ xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{
 ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
 tick align=outside,
 tick label style={font=\huge},
-legend style={at={(axis cs:100,0.7)},anchor=west,draw=white!80.0!black,font=\fontsize{15}{14}\selectfont,row sep=7.5pt},
+legend style={draw=white!80.0!black,font=\fontsize{15}{14}\selectfont,row sep=7.5pt},
 legend image post style={xscale=1.1,yscale=1.1},
 legend cell align={left},
 clip mode=individual,
@@ -49,7 +49,7 @@ y grid style={lightgray!92.026143790849673!black},
 line width=0.75mm,
 % GRID SIZE
 xmin=0.0,
-%xmax=60.0,
+xmax=120.0,
 %ymin=-0.1,
 %ymax=0.1,
 %xtick={0.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0},
@@ -100,60 +100,61 @@ ylabel={$G\left[\nicefrac{J}{m^{2}}\right]$},
 \def\fI#1{0.5*sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(1.5*#1))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*cos(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+cos(1.5*#1))}
 \def\fII#1{0.5*sin(#1)*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(1.5*#1))*((1-sin(0.5*#1)*sin(0.5*#1)*cos(0.5*#1)*cos(0.5*#1))*sin(0.5*#1)/(1+sin(0.5*#1)*sin(0.5*#1))+sin(1.5*#1))}
 
-%fI
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*]
-table[x=theta, y expr={1000*\Eeqzeroone*\epsapplied*\epsapplied*\Rf*\fI{\thisrow{theta}}}]{
-theta        G
-10.00	0.68353011
-20.00	0.90263404
-30.00	0.75689535
-40.00	0.45568201
-50.00	0.16643223
-60.00	0.00736294
-70.00	0.00002357
-80.00	0.00004159
-90.00	0.00003593
-100.00	0.00003227
-110.00	0.00001968
-120.00	0.00001119
-130.00	0.00000418
-140.00	0.00000061
-150.00	0.00060079
-160 0
-170 0
-180 0
-};
-\addlegendentry{$G_{I0}=f_{I}\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}$};
-
-% fII
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*,mark options={fill=white}]
-table[x=theta, y expr={1000*\Eeqzeroone*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}}}]{
-theta        G
-10.00	0.68353011
-20.00	0.90263404
-30.00	0.75689535
-40.00	0.45568201
-50.00	0.16643223
-60.00	0.00736294
-70.00	0.00002357
-80.00	0.00004159
-90.00	0.00003593
-100.00	0.00003227
-110.00	0.00001968
-120.00	0.00001119
-130.00	0.00000418
-140.00	0.00000061
-150.00	0.00060079
-160 0
-170 0
-180 0
-};
-\addlegendentry{$G_{II0}=f_{II}\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}$};
+%%fI
+%\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+%table[x=theta, y expr={1000*\Eeqzeroone*\epsapplied*\epsapplied*\Rf*\fI{\thisrow{theta}}}]{
+%theta        G
+%10.00	0.68353011
+%20.00	0.90263404
+%30.00	0.75689535
+%40.00	0.45568201
+%50.00	0.16643223
+%60.00	0.00736294
+%70.00	0.00002357
+%80.00	0.00004159
+%90.00	0.00003593
+%100.00	0.00003227
+%110.00	0.00001968
+%120.00	0.00001119
+%130.00	0.00000418
+%140.00	0.00000061
+%150.00	0.00060079
+%160 0
+%170 0
+%180 0
+%};
+%\addlegendentry{$G_{I0}=f_{I}\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}$};
+%
+%% fII
+%\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
+%table[x=theta, y expr={1000*\Eeqzeroone*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}}}]{
+%theta        G
+%10.00	0.68353011
+%20.00	0.90263404
+%30.00	0.75689535
+%40.00	0.45568201
+%50.00	0.16643223
+%60.00	0.00736294
+%70.00	0.00002357
+%80.00	0.00004159
+%90.00	0.00003593
+%100.00	0.00003227
+%110.00	0.00001968
+%120.00	0.00001119
+%130.00	0.00000418
+%140.00	0.00000061
+%150.00	0.00060079
+%160 0
+%170 0
+%180 0
+%};
+%\addlegendentry{$G_{II0}=f_{II}\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}$};
 
 
 % vf0.1 - 1x1-free - GI
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*]
-table{
+table[x=theta, y expr={\thisrow{G}/(1000*\Eeqzeroone*\epsapplied*\epsapplied*\Rf*\fI{\thisrow{theta}})}]{
+theta        G
 10.00	0.18890619
 20.00	0.27114917
 30.00	0.24594181
@@ -174,7 +175,8 @@ table{
 
 % vf0.1 - 1x1-free - GII
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*,mark options={fill=white}]
-table{
+table[x=theta, y expr={\thisrow{G}/(1000*\Eeqzeroone*\epsapplied*\epsapplied*\Rf*\fII{\thisrow{theta}})}]{
+theta        G
 10.00	0.04408260
 20.00	0.17468847
 30.00	0.37918796

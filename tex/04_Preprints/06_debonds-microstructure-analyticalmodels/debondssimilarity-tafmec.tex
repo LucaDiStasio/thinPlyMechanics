@@ -209,38 +209,52 @@ f_{I}&\left(\Delta\theta\right)=\frac{G_{I}}{\sigma_{ref}\varepsilon_{ref}R}=\fr
 \end{aligned}
 \end{equation}
 
-The geometry correction factors of Eq.~\ref{eq:circularcrack} (shown in Fig.~\ref{fig:curvedcrackgeomcorr}) present a solution to the issues characterising Eq.~\ref{eq:straightcrack} and Eq.~\ref{eq:inclinedcrack}: Mode II is defined and both modes are defined and continuous for $\Delta\theta=0^{\circ}-180^{\circ}$. By evaluating the elastic properties $E_{2}$, $\nu_{12}$ and $\nu_{21}$ at the value of $V_{f}$ of the composite under consideration, and substituting Eq.~\ref{eq:circularcrack} in Eq.~\ref{eq:Gfinalstresscontrol} and Eq.~\ref{eq:Gfinalstraincontrol}, we obtain the following expressions of reference ERR:
+The geometry correction factors of Eq.~\ref{eq:circularcrack} (shown in Fig.~\ref{fig:curvedcrackgeomcorr}) present a solution to the issues characterising Eq.~\ref{eq:straightcrack} and Eq.~\ref{eq:inclinedcrack}: Mode II is defined and both modes are defined and continuous for $\Delta\theta=0^{\circ}-180^{\circ}$. By evaluating the elastic properties $E_{2}$, $\nu_{12}$ and $\nu_{21}$ at the value of $V_{f}$ of the composite under consideration and substituting Eq.~\ref{eq:circularcrack} in Eq.~\ref{eq:Gfinalstresscontrol} and Eq.~\ref{eq:Gfinalstraincontrol}, we obtain the Mode I $G_{I0}$ and Mode II $G_{II0}$ ERR of a circular crack of size $a=2\Delta\theta$ in an infinite isotropic medium, which has properties equivalent to the elastic properties of a UD composite of fiber volume fraction $V_{f}$ in its plane of transverse isotropy, obtained by application of the Concentric Cylinders Assembly~\cite{Hashin1983} with Self-Consistent Shear~\cite{Christensen1979} (CCA-SCS) model. The following expressions are derived,
 
 \begin{enumerate}
 
-\item Mode I $G_{I0}$ and Mode II $G_{II0}$ ERR of a circular crack of size $a=2\Delta\theta$ in an infinite isotropic medium
+\item under plane strain conditions and applied far-field transverse strain:
 
 \begin{equation}\label{eq:Gcircularcrack1}
 \begin{aligned}
-G_{I0}&=f_{I}\left(\Delta\theta\right)\frac{E_{2}\left(V_{f}\right)}{1-\nu_{12}\left(V_{f}\right)\nu_{21}\left(V_{f}\right)}\varepsilon_{0}^{2}R_{f}\\G_{II0}&=f_{II}\left(\Delta\theta\right)\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f}
+G_{I0}&=f_{I}\left(\Delta\theta\right)\frac{E_{2}\left(V_{f}\right)}{1-\nu_{12}\left(V_{f}\right)\nu_{21}\left(V_{f}\right)}\varepsilon_{0}^{2}R_{f}\\G_{II0}&=f_{II}\left(\Delta\theta\right)\frac{E_{2}}{1-\nu_{12}\nu_{21}}\varepsilon_{0}^{2}R_{f};
 \end{aligned}
 \end{equation}
 
-\item \begin{equation}\label{eq:Gcircularcrack2}
-G_{I0}=f_{I}\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}R_{f}\quad G_{II0}=f_{II}\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}R_{f}
+\item under plane strain conditions and applied far-field transverse stress:
+
+\begin{equation}\label{eq:Gcircularcrack2}
+\begin{aligned}
+G_{I0}&=f_{I}\left(\Delta\theta\right)\frac{1-\nu_{12}\left(V_{f}\right)\nu_{21}\left(V_{f}\right)}{E_{2}\left(V_{f}\right)}\sigma_{0}^{2}R_{f}\\G_{II0}&=f_{II}\left(\Delta\theta\right)\frac{1-\nu_{12}\left(V_{f}\right)\nu_{21}\left(V_{f}\right)}{E_{2}\left(V_{f}\right)}\sigma_{0}^{2}R_{f}
+\end{aligned}
 \end{equation}
 
-\item \begin{equation}\label{eq:Gcircularcrack3}
-G_{I0}=f_{I}\left(\Delta\theta\right)\frac{1-\nu_{12}\nu_{21}}{E_{2}}\sigma_{0}^{2}R_{f}\quad G_{II0}=f_{II}\left(\Delta\theta\right)\frac{1-\nu_{12}\nu_{21}}{E_{2}}\sigma_{0}^{2}R_{f}
+\item under plane stress conditions and applied far-field transverse strain:
+
+\begin{equation}\label{eq:Gcircularcrack3}
+\begin{aligned}
+G_{I0}&=f_{I}\left(\Delta\theta\right)E_{2}\left(V_{f}\right)\varepsilon_{0}^{2}R_{f}\\G_{II0}&=f_{II}\left(\Delta\theta\right)E_{2}\left(V_{f}\right)\varepsilon_{0}^{2}R_{f}
+\end{aligned}
 \end{equation}
 
-\item \begin{equation}\label{eq:Gcircularcrack4}
-G_{I0}=f_{I}\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}R_{f}\quad G_{II0}=f_{II}\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}}R_{f}
+\item under plane stress conditions and applied far-field transverse stress:
+
+\begin{equation}\label{eq:Gcircularcrack4}
+\begin{aligned}
+G_{I0}&=f_{I}\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}\left(V_{f}\right)}R_{f}\\G_{II0}&=f_{II}\left(\Delta\theta\right)\frac{\sigma_{0}^{2}}{E_{2}\left(V_{f}\right)}R_{f}
+\end{aligned}
 \end{equation}
 \end{enumerate}
 
-This configuration establishes also a physically-meaningful relation of similarity, as the ratios $\frac{G_{I}}{G_{I0}}=g_{I}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ and $\frac{G_{II}}{G_{II0}}=g_{II}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ measure the effect of: the mismatch in elastic properties between phases (in Eq.~\ref{eq:circularcrack} the medium is isotropic); the finite size of the geometry (in Eq.~\ref{eq:circularcrack} the medium is infinite); the interaction with neighboring undamaged and partially debonded fibers, a free surface (in UD composites) or the $0^{\circ}/90^{\circ}$ interface (in cross-ply laminates).
+This configuration thus establishes a physically-meaningful relation of similarity, as the ratios $\frac{G_{I}}{G_{I0}}=g_{I}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ and $\frac{G_{II}}{G_{II0}}=g_{II}\left(\Delta\theta,V_{f}\right)\ \left[-\right]$ measure the effect of: the mismatch in elastic properties between phases (in Eq.~\ref{eq:circularcrack} the medium is isotropic); the finite size of the geometry (in Eq.~\ref{eq:circularcrack} the medium is infinite); the interaction with neighboring undamaged and partially debonded fibers, a free surface (in UD composites) or the $0^{\circ}/90^{\circ}$ interface (in cross-ply laminates).
 \end{itemize}
 
 \begin{figure}
 \includegraphics[width=\textwidth]{curvedcracks.pdf}
 \caption{Mode I ($f_{I}$) and Mode II ($f_{II}$) geometry correction functions for a circular crack in infinite isotropic medium. The chord of the crack is normal to the loading direction and the crack size is $a=2\Delta\theta$.}\label{fig:curvedcrackgeomcorr}
 \end{figure}
+
+Given that debond ERR for RVEs presented in Section~\ref{} is evaluated under conditions of plane strain and applied transverse strain, the expressions of $G_{I0}$ and $G_{II0}$ in Eq.~\ref{eq:Gcircularcrack1} are adopted in the following.
 
 \section{Effect of elastic properties mismatch}
 

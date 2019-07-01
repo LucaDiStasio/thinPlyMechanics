@@ -291,89 +291,26 @@ legend entries={},
 %};
 %\addlegendentry{$21\times 3-free$};
 
-% 21x1 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+% 21x21 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
 table{
-10	0.734056
-20	1.539958
-30	2.411276
-40	2.951368
-50	3.036616
-60	2.824274
-70	2.513724
-80	2.258387
-90	2.033666
-100	1.624900
-110	1.061928
-120	0.527769
-130	0.170906
-140	0.018466
-150	0.003352
+10	0.724701
+20	1.583081
+30	2.622960
+40	3.514962
+50	4.162684
+60	4.506663
+70	4.323154
+80	3.814723
+90	3.178777
+100	2.215110
+110	1.203179
+120	0.546744
+130	0.223626
+140	0.071087
+150	0.012294
 };
-\addlegendentry{$21\times 1-1\cdot t_{90^{\circ}}$};
-
-% 21x3 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
-table{
-10.00	0.726127
-20.00	1.577461
-30.00	2.601696
-40.00	3.474276
-50.00	4.100736
-60.00	4.426409
-70.00	4.238109
-80.00	3.742235
-90.00	3.117729
-100.00	2.164768
-110.00	1.168233
-120.00	0.526406
-130.00	0.212644
-140.00	0.065770
-150.00	0.010303
-};
-\addlegendentry{$21\times 3-1\cdot t_{90^{\circ}}$};
-
-% 21x5 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
-table{
-10	0.728183
-20	1.583050
-30	2.620006
-40	3.509119
-50	4.153156
-60	4.493097
-70	4.307204
-80	3.800313
-90	3.165838
-100	2.204411
-110	1.196017
-120	0.542653
-130	0.221409
-140	0.069972
-150	0.011841
-};
-\addlegendentry{$21\times 5-1\cdot t_{90^{\circ}}$};
-
-% 21x7 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
-table{
-10	0.729227
-20	1.583400
-30	2.622046
-40	3.513678
-50	4.160737
-60	4.503796
-70	4.319727
-80	3.811761
-90	3.176035
-100	2.212838
-110	1.201609
-120	0.545798
-130	0.223083
-140	0.070803
-150	0.012174
-};
-\addlegendentry{$21\times 7-1\cdot t_{90^{\circ}}$};
+\addlegendentry{$21\times 21-1\cdot t_{90^{\circ}}$};
 
 % 21x11 - i=1
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
@@ -396,26 +333,89 @@ table{
 };
 \addlegendentry{$21\times 11-1\cdot t_{90^{\circ}}$};
 
-% 21x21 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
+% 21x7 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
 table{
-10	0.724701
-20	1.583081
-30	2.622960
-40	3.514962
-50	4.162684
-60	4.506663
-70	4.323154
-80	3.814723
-90	3.178777
-100	2.215110
-110	1.203179
-120	0.546744
-130	0.223626
-140	0.071087
-150	0.012294
+10	0.729227
+20	1.583400
+30	2.622046
+40	3.513678
+50	4.160737
+60	4.503796
+70	4.319727
+80	3.811761
+90	3.176035
+100	2.212838
+110	1.201609
+120	0.545798
+130	0.223083
+140	0.070803
+150	0.012174
 };
-\addlegendentry{$21\times 21-1\cdot t_{90^{\circ}}$};
+\addlegendentry{$21\times 7-1\cdot t_{90^{\circ}}$};
+
+% 21x5 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
+table{
+10	0.728183
+20	1.583050
+30	2.620006
+40	3.509119
+50	4.153156
+60	4.493097
+70	4.307204
+80	3.800313
+90	3.165838
+100	2.204411
+110	1.196017
+120	0.542653
+130	0.221409
+140	0.069972
+150	0.011841
+};
+\addlegendentry{$21\times 5-1\cdot t_{90^{\circ}}$};
+
+% 21x3 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
+table{
+10.00	0.726127
+20.00	1.577461
+30.00	2.601696
+40.00	3.474276
+50.00	4.100736
+60.00	4.426409
+70.00	4.238109
+80.00	3.742235
+90.00	3.117729
+100.00	2.164768
+110.00	1.168233
+120.00	0.526406
+130.00	0.212644
+140.00	0.065770
+150.00	0.010303
+};
+\addlegendentry{$21\times 3-1\cdot t_{90^{\circ}}$};
+
+% 21x1 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+table{
+10	0.734056
+20	1.539958
+30	2.411276
+40	2.951368
+50	3.036616
+60	2.824274
+70	2.513724
+80	2.258387
+90	2.033666
+100	1.624900
+110	1.061928
+120	0.527769
+130	0.170906
+140	0.018466
+150	0.003352
+};
+\addlegendentry{$21\times 1-1\cdot t_{90^{\circ}}$};
 
 \end{axis}
 %Tikz axis ends%

@@ -291,89 +291,27 @@ legend entries={},
 %};
 %\addlegendentry{$21\times 3-free$};
 %
-% 21x1 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table{
-10	3.418566
-20	3.191822
-30	2.217364
-40	1.168627
-50	0.444123
-60	0.090694
-70	0.000050
-80	0.000035
-90	0.000044
-100	0.000052
-110	0.000038
-120	0.000023
-130	0.000008
-140	0.000001
-150	0.004035
-};
-\addlegendentry{$21\times 1-1\cdot t_{90^{\circ}}$};
 
-% 21x3 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
+% 21x21 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
 table{
-10.00	3.520615
-20.00	3.561285
-30.00	2.827488
-40.00	1.869524
-50.00	0.983664
-60.00	0.283888
-70.00	0.000305
-80.00	0.000068
-90.00	0.000075
-100.00	0.000072
-110.00	0.000039
-120.00	0.000018
-130.00	0.000006
-140.00	0.000001
-150.00	0.001999
-};
-\addlegendentry{$21\times 3-1\cdot t_{90^{\circ}}$};
-
-% 21x5 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
-table{
-10	3.526424
-20	3.575548
-30	2.847313
-40	1.889333
-50	0.998274
-60	0.290201
-70	0.000353
-80	0.000069
-90	0.000076
-100	0.000072
-110	0.000039
-120	0.000019
-130	0.000006
-140	0.000001
-150	0.001988
-};
-\addlegendentry{$21\times 5-1\cdot t_{90^{\circ}}$};
-
-% 21x7 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
-table{
-10	3.527800
-20	3.578173
-30	2.850873
-40	1.893239
-50	1.001658
-60	0.292035
-70	0.000372
+10	3.530360
+20	3.579459
+30	2.852107
+40	1.894365
+50	1.002791
+60	0.292685
+70	0.000380
 80	0.000069
 90	0.000076
 100	0.000073
 110	0.000039
 120	0.000019
-130	0.000007
+130	0.000006
 140	0.000001
-150	0.001989
+150	0.001991
 };
-\addlegendentry{$21\times 7-1\cdot t_{90^{\circ}}$};
+\addlegendentry{$21\times 21-1\cdot t_{90^{\circ}}$};
 
 % 21x11 - i=1
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
@@ -396,26 +334,89 @@ table{
 };
 \addlegendentry{$21\times 11-1\cdot t_{90^{\circ}}$};
 
-% 21x21 - i=1
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
+% 21x7 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
 table{
-10	3.530360
-20	3.579459
-30	2.852107
-40	1.894365
-50	1.002791
-60	0.292685
-70	0.000380
+10	3.527800
+20	3.578173
+30	2.850873
+40	1.893239
+50	1.001658
+60	0.292035
+70	0.000372
 80	0.000069
 90	0.000076
 100	0.000073
 110	0.000039
 120	0.000019
+130	0.000007
+140	0.000001
+150	0.001989
+};
+\addlegendentry{$21\times 7-1\cdot t_{90^{\circ}}$};
+
+% 21x5 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
+table{
+10	3.526424
+20	3.575548
+30	2.847313
+40	1.889333
+50	0.998274
+60	0.290201
+70	0.000353
+80	0.000069
+90	0.000076
+100	0.000072
+110	0.000039
+120	0.000019
 130	0.000006
 140	0.000001
-150	0.001991
+150	0.001988
 };
-\addlegendentry{$21\times 21-1\cdot t_{90^{\circ}}$};
+\addlegendentry{$21\times 5-1\cdot t_{90^{\circ}}$};
+
+% 21x3 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
+table{
+10.00	3.520615
+20.00	3.561285
+30.00	2.827488
+40.00	1.869524
+50.00	0.983664
+60.00	0.283888
+70.00	0.000305
+80.00	0.000068
+90.00	0.000075
+100.00	0.000072
+110.00	0.000039
+120.00	0.000018
+130.00	0.000006
+140.00	0.000001
+150.00	0.001999
+};
+\addlegendentry{$21\times 3-1\cdot t_{90^{\circ}}$};
+
+% 21x1 - i=1
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+table{
+10	3.418566
+20	3.191822
+30	2.217364
+40	1.168627
+50	0.444123
+60	0.090694
+70	0.000050
+80	0.000035
+90	0.000044
+100	0.000052
+110	0.000038
+120	0.000023
+130	0.000008
+140	0.000001
+150	0.004035
+};
+\addlegendentry{$21\times 1-1\cdot t_{90^{\circ}}$};
 
 \end{axis}
 %Tikz axis ends%

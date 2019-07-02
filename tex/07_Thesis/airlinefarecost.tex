@@ -29,7 +29,7 @@
 
 %Tikz axis starts%
 
-\begin{semilogyaxis}[width=30cm,
+\begin{axis}[width=30cm,
 % SCALE
 scale=0.5,
 % STYLE
@@ -38,7 +38,7 @@ xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{
 ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
 tick align=outside,
 tick label style={font=\huge},
-legend style={at={(axis cs:1970,500000)},anchor=north west,draw=white!80.0!black,font=\fontsize{15}{14}\selectfont,row sep=7.5pt},
+legend style={at={(axis cs:1994,555)},anchor=west,draw=white!80.0!black,font=\fontsize{15}{14}\selectfont,row sep=7.5pt},
 legend image post style={xscale=1.1,yscale=1.1},
 legend cell align={left},
 clip mode=individual,
@@ -56,67 +56,58 @@ xtick={1950,1960,1970,1980,1990,2000,2010,2020},
 % CONTENT
 %title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
 xlabel={Year},
-ylabel={Unit cost $\left[\nicefrac{\$}{kg}, 2018\ \$\right]$, log scale},
+ylabel={Fare price $\left[2018\ \$\right]$},
 % LEGEND ENTRIES
 legend entries={},
 ]
 
 \addplot[mark size=\markersize,black,only marks,mark=*]
-table[x=Y,y expr=1000*\thisrow{C}]{
-Y      C
-1957 894.7
-1960 167.8
-1961 111.8
-1962 31.0
-1964 28.0
-1965 4.1
-1966 17.3
-1966 7.6
-1967 12.4
-1967 8.0
-1968 5.2
-1971 7.7
-1974 10
-1974 11.2
-1975 28.0
-1981 61.7
-1984 6.3
-1985 4.4
-1988 17.9
-1989 15.3
-1989 24.7
-1989 20.4
-1990 43.5
-1991 19.8
-1993 16.7
-1994 26.4
-1994 10.4
-1995 31.7
-1995 16.6
-1996 13.1
-1998 11.7
-1999 4.9
-1999 7.6
-2010 2.7
-2012 10.0
-2018 1.4
+table{
+1990 554.14
+1991 532.56
+1992 507.49
+1993 515.74
+1994 462.05
+1995 459.47
+1996 458.07
+1997 452.28
+1998 456.32
+1999 451.38
+2000 459.86
+2001 414.15
+2002 382.20
+2003 377.78
+2004 357.41
+2005 353.30
+2006 372.71
+2007 360.81
+2008 372.08
+2009 336.02
+2010 363.85
+2011 383.89
+2012 388.91
+2013 392.14
+2014 400.00
+2015 385.72
+2016 360.13
+2017 348.14
+2018 340.28
 };
-\addlegendentry{Data, different sources};
+\addlegendentry{Data, U.S. DOT Passenger Airline Origin and Destination Survey};
+
+%Airfare data comes from the U.S. DOT Passenger Airline Origin and Destination Survey, a 10 percent sample of airline tickets from reporting carriers. The bag fee and change fee data comes from the U.S. DOT Form 41 Survey of U.S. Airlines.
 
 \addplot[black, loosely dashed]
-table[x=Y,y expr=(10^4.55)*exp(-0.032*(\thisrow{Y}-1955))]{
+table[x=Y,y expr=-6.1747*(\thisrow{Y}-1990)+500.2]{
 Y      C
-1957 894.7
+1990 894.7
 2018 0
 };
-\addlegendentry{$\ln\left(\nicefrac{\$}{kg}\right)\sim -0.032\left(Y-1955\right)$, $R^{2}=0.1675$};
+\addlegendentry{$500.2\$-6.1747\$\left(Y-1990\right)$, $R^{2}=0.7327$};
 
-\draw[black, anchor=west] (axis cs:1958,894700) node{\huge Vanguard, 1957};
-\draw[black, anchor=south west] (axis cs:1981,61700) node{\huge Space Shuttle, 1981};
-\draw[black, anchor=east] (axis cs:2017,1400) node{\huge Falcon Heavy, 2018};
-%\draw[black, anchor=west] (axis cs:2018,5000) node{\huge $\ln\left(\nicefrac{\$}{kg}\right)\sim -0.032\left(Y-1955\right)$};
 
-\end{semilogyaxis}
+
+\end{axis}
 %Tikz axis ends%
 
 

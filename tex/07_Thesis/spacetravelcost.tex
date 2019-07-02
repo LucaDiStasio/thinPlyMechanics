@@ -56,13 +56,14 @@ xtick={1950,1960,1970,1980,1990,2000,2010,2020},
 % CONTENT
 %title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
 xlabel={Year},
-ylabel={Unit cost $\left[\nicefrac{10^{3}\$}{kg}\right]$},
+ylabel={Unit cost $\left[\nicefrac{\$}{kg}, 2018\ \$\right]$, log scale},
 % LEGEND ENTRIES
 legend entries={},
 ]
 
 \addplot[mark size=\markersize,black,only marks,mark=*]
-table{
+table[x=Y,y expr=1000*\thisrow{C}]{
+Y      C
 1957 894.7
 1960 167.8
 1961 111.8
@@ -100,8 +101,20 @@ table{
 2012 10.0
 2018 1.4
 };
-%\addlegendentry{};
+\addlegendentry{Data, different sources};
 
+\addplot[black, loosely dashed]
+table[x=Y,y expr=(10^4.55)*exp(-0.032*(\thisrow{Y}-1955))]{
+Y      C
+1957 894.7
+2018 0
+};
+\addlegendentry{$\ln\left(\nicefrac{\$}{kg}\right)\sim -0.032\left(Y-1955\right)$};
+
+\draw[black, anchor=west] (axis cs:1958,894700) node{\huge Vanguard, 1957};
+\draw[black, anchor=south west] (axis cs:1981,61700) node{\huge Space Shuttle, 1981};
+\draw[black, anchor=east] (axis cs:2017,1400) node{\huge Falcon Heavy, 2018};
+%\draw[black, anchor=west] (axis cs:2018,5000) node{\huge $\ln\left(\nicefrac{\$}{kg}\right)\sim -0.032\left(Y-1955\right)$};
 
 \end{semilogyaxis}
 %Tikz axis ends%

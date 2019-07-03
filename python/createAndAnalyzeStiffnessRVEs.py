@@ -5512,8 +5512,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         thetas = fibersurfaceDisps[:,0]
         maxCOD = COD[np.argmax(np.abs(COD))]
         maxCSD = CSD[np.argmax(np.abs(CSD))]
-        avgCOD = 0.5*np.sum((COD[1:]+COD[:-1])*(thetas[1:]-thetas[:-1]))/np.sum(thetas)
-        avgCSD = 0.5*np.sum((CSD[1:]+CSD[:-1])*(thetas[1:]-thetas[:-1]))/np.sum(thetas)
+        avgCOD = 0.5*np.sum((COD[1:]+COD[:-1])*(thetas[1:]-thetas[:-1]))/np.sum((thetas[1:]-thetas[:-1]))
+        avgCSD = 0.5*np.sum((CSD[1:]+CSD[:-1])*(thetas[1:]-thetas[:-1]))/np.sum((thetas[1:]-thetas[:-1]))
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute contact zone ...',True)
@@ -5533,6 +5533,27 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     #=======================================================================
     # END - compute average COD and CSD
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - compute Vakulenko-Kachanov tensor components
+    #=======================================================================
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute Vakulenko-Kachanov tensor components ...',True)
+    beta22 = 0.0
+    beta33 = 0.0
+    beta23 = 0.0
+    halfsumRight = 0.5*(COD[1:]+CSD[1:])
+    halfsumLeft = 0.5*(COD[:-1]+CSD[:-1])
+    halfdiffRight = 0.5*(COD[1:]-CSD[1:])
+    halfdiffLeft = 0.5*(COD[:-1]-CSD[:-1])
+    b22 = 0.5*np.sum(((halfsumRight*(1-np.sin(thetas[1:]))+halfdiffRight*np.cos(thetas[1:]))+(halfsumLeft*(1-np.sin(thetas[:-1]))+halfdiffLeft*np.cos(thetas[:-1])))*(thetas[1:]-thetas[:-1]))/np.sum((thetas[1:]-thetas[:-1]))
+    b33 = 0.5*np.sum(((halfsumRight*(1+np.sin(thetas[1:]))-halfdiffRight*np.cos(thetas[1:]))+(halfsumLeft*(1+np.sin(thetas[:-1]))-halfdiffLeft*np.cos(thetas[:-1])))*(thetas[1:]-thetas[:-1]))/np.sum((thetas[1:]-thetas[:-1]))
+    b23 = np.sum(((halfsumRight*np.cos(thetas[1:])+halfdiffRight*np.sin(thetas[1:]))+(halfsumLeft*np.cos(thetas[:-1])+halfdiffLeft*np.sin(thetas[:-1])))*(thetas[1:]-thetas[:-1]))/np.sum((thetas[1:]-thetas[:-1]))
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    #=======================================================================
+    # END - compute Vakulenko-Kachanov tensor components
     #=======================================================================
 
     #=======================================================================

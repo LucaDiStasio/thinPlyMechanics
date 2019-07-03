@@ -5111,8 +5111,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, angle [°], Ri, Rf, FOLDER, FILENAME')
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-strainsradialpaths']['nSegsOnPath'])
-            offsetX = parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['offset']['X']
-            offsetY = parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['offset']['Y']
+            offsetX = parameters['simulation-pipeline']['analysis']['report-strainsradialpaths']['offset']['X']
+            offsetY = parameters['simulation-pipeline']['analysis']['report-strainsradialpaths']['offset']['Y']
             for angleNum,pathAngle in enumerate(pathAngles):
                 if pathAngle<45.0:
                     pathRadius = parameters['geometry']['L']/np.cos(pathAngle*np.pi/180.0)
@@ -5126,7 +5126,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        max radius ' + str(pathRadius) + ' [mum]',True)
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        orientation ' + str(pathAngle) + ' deg',True)
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        number of segments ' + str(nSegsOnPath),True)
-                session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
+                session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((offsetX, offsetY, 0), (0, 0, 1), (offsetX+pathRadius,offsetY, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
                 radpath = session.paths['RadPath-Ang' + str(pathAngle)]
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract strain components...',True)
                 # epsxx
@@ -5180,6 +5180,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-strainscircumferentialpaths'
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, R, angle_i [°], angle_f [°], FOLDER, FILENAME')
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-strainscircumferentialpaths']['nSegsOnPath'])
+            offsetX = parameters['simulation-pipeline']['analysis']['report-strainscircumferentialpaths']['offset']['X']
+            offsetY = parameters['simulation-pipeline']['analysis']['report-strainscircumferentialpaths']['offset']['Y']
             for rNum,pathR in enumerate(pathRsInt):
                 session.Path(name='CircPath-R' + str(pathR).replace('.','_'), type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=0, endAngle=180, radius=CIRCLE_RADIUS)
                 circpath = session.paths['CircPath-R' + str(pathR).replace('.','_')]

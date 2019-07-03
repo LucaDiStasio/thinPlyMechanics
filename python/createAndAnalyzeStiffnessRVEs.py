@@ -5308,8 +5308,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             for yNum,pathY in enumerate(pathYsLow):
                 xEast = np.sqrt(parameters['geometry']['Rf']*parameters['geometry']['Rf']-pathY*pathY)
                 xWest = -xEast
-                session.Path(name='HPath-Y' + str(pathY) + 'East', type=POINT_LIST, expression=((xEast,pathY,0.0),(parameters['geometry']['L'],pathY,0.0)))
-                session.Path(name='HPath-Y' + str(pathY) + 'West', type=POINT_LIST, expression=((-parameters['geometry']['L'],pathY,0.0),(xWest,pathY,0.0)))
+                session.Path(name='HPath-Y' + str(pathY) + 'East', type=POINT_LIST, expression=((offsetX+xEast,offsetY+pathY,0.0),(offsetX+parameters['geometry']['L'],offsetY+pathY,0.0)))
+                session.Path(name='HPath-Y' + str(pathY) + 'West', type=POINT_LIST, expression=((offsetX-parameters['geometry']['L'],offsetY+pathY,0.0),(offsetX+xWest,offsetY+pathY,0.0)))
                 hpath = session.paths['HPath-Y' + str(pathY) + 'East']
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract strain components...',True)
                 # epsxx
@@ -5372,7 +5372,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'gammayz-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=gammayz,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'gammayz-HPath-Y' + str(pathY) + 'West' + '.dat']])
             for yNum,pathY in enumerate(pathYsUp):
-                session.Path(name='HPath-Y' + str(pathY), type=POINT_LIST, expression=((-parameters['geometry']['L'],pathY,0.0),(parameters['geometry']['L'],pathY,0.0)))
+                session.Path(name='HPath-Y' + str(pathY), type=POINT_LIST, expression=((offsetX-parameters['geometry']['L'],offsetY+pathY,0.0),(offsetX+parameters['geometry']['L'],offsetY+pathY,0.0)))
                 hpath = session.paths['HPath-Y' + str(pathY)]
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract strain components...',True)
                 # epsxx
@@ -5422,12 +5422,14 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-strainsverticalpaths'
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, x, yi, yf, FOLDER, FILENAME')
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-strainsverticalpaths']['nSegsOnPath'])
+            offsetX = parameters['simulation-pipeline']['analysis']['report-strainsverticalpaths']['offset']['X']
+            offsetY = parameters['simulation-pipeline']['analysis']['report-strainsverticalpaths']['offset']['Y']
             for xNum,pathX in enumerate(pathXs):
                 if pathX>-parameters['geometry']['Rf'] and pathX<parameters['geometry']['Rf']:
                     startY = np.sqrt(parameters['geometry']['Rf']*parameters['geometry']['Rf']-pathX*pathX)
                 else:
                     startY = 0.0
-                session.Path(name='VPath-X' + str(pathX), type=POINT_LIST, expression=((pathX,startY,0.0),(pathX,parameters['geometry']['L'],0.0)))
+                session.Path(name='VPath-X' + str(pathX), type=POINT_LIST, expression=((offsetX+pathX,offsetY+startY,0.0),(offsetX+pathX,offsetY+parameters['geometry']['L'],0.0)))
                 vpath = session.paths['VPath-X' + str(pathX)]
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract strain components...',True)
                 # epsxx

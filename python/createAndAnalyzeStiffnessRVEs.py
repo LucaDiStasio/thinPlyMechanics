@@ -5183,7 +5183,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             offsetX = parameters['simulation-pipeline']['analysis']['report-strainscircumferentialpaths']['offset']['X']
             offsetY = parameters['simulation-pipeline']['analysis']['report-strainscircumferentialpaths']['offset']['Y']
             for rNum,pathR in enumerate(pathRsInt):
-                session.Path(name='CircPath-R' + str(pathR).replace('.','_'), type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=0, endAngle=180, radius=CIRCLE_RADIUS)
+                session.Path(name='CircPath-R' + str(pathR).replace('.','_'), type=CIRCUMFERENTIAL, expression=((offsetX, offsetY, 0), (0, 0, 1), (offsetX+pathR, offsetY, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=0, endAngle=180, radius=CIRCLE_RADIUS)
                 circpath = session.paths['CircPath-R' + str(pathR).replace('.','_')]
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract strain components...',True)
                 # epsxx
@@ -5220,8 +5220,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 angleStart2 = 90.0-angleStart1
                 angleStart3 = 90.0+angleStart1
                 angleStart4 = 180.0-angleStart1
-                session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'East' , type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=angleStart1, endAngle=angleStart2, radius=CIRCLE_RADIUS)
-                session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'West' , type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=angleStart3, endAngle=angleStart4, radius=CIRCLE_RADIUS)
+                session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'East' , type=CIRCUMFERENTIAL, expression=((offsetX, offsetY, 0), (0, 0, 1), (offsetX+pathR, offsetY, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=angleStart1, endAngle=angleStart2, radius=CIRCLE_RADIUS)
+                session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'West' , type=CIRCUMFERENTIAL, expression=((offsetX, offsetY, 0), (0, 0, 1), (offsetX+pathR, offsetY, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=angleStart3, endAngle=angleStart4, radius=CIRCLE_RADIUS)
                 circpath = session.paths['CircPath-R' + str(pathR).replace('.','_') + 'East']
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract strain components...',True)
                 # epsxx
@@ -5303,6 +5303,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-strainshorizontalpaths'
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, y, xi, xf, FOLDER, FILENAME')
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-strainshorizontalpaths']['nSegsOnPath'])
+            offsetX = parameters['simulation-pipeline']['analysis']['report-strainshorizontalpaths']['offset']['X']
+            offsetY = parameters['simulation-pipeline']['analysis']['report-strainshorizontalpaths']['offset']['Y']
             for yNum,pathY in enumerate(pathYsLow):
                 xEast = np.sqrt(parameters['geometry']['Rf']*parameters['geometry']['Rf']-pathY*pathY)
                 xWest = -xEast

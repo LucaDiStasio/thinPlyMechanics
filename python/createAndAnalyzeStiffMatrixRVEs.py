@@ -4491,7 +4491,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             sys.exc_clear()
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     return modinpname
-#https://xizou.github.io/2016/04/07/how-to-export-stiffness-matrix-from-abaqus/
+    
 def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent)',True)

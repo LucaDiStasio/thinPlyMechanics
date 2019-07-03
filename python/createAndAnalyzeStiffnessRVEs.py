@@ -4737,6 +4737,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, angle [°], Ri, Rf, FOLDER, FILENAME')
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['nSegsOnPath'])
+            offsetX = parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['offset']['X']
+            offsetY = parameters['simulation-pipeline']['analysis']['report-stressesradialpaths']['offset']['Y']
             for angleNum,pathAngle in enumerate(pathAngles):
                 if pathAngle<45.0:
                     pathRadius = parameters['geometry']['L']/np.cos(pathAngle*np.pi/180.0)
@@ -4750,7 +4752,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        max radius ' + str(pathRadius) + ' [mum]',True)
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        orientation ' + str(pathAngle) + ' deg',True)
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '                        number of segments ' + str(nSegsOnPath),True)
-                session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((0, 0, 0), (0, 0, 1), (pathRadius,0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
+                session.Path(name='RadPath-Ang' + str(pathAngle), type=RADIAL, expression=((offsetX, offsetY, 0), (0, 0, 1), (offsetX+pathRadius,offsetY, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, radialAngle=pathAngle, startRadius=parameters['geometry']['Rf'], endRadius=CIRCLE_RADIUS)
                 radpath = session.paths['RadPath-Ang' + str(pathAngle)]
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
@@ -4804,8 +4806,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stressescircumferentialpaths'
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, R, angle_i [°], angle_f [°], FOLDER, FILENAME')
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['nSegsOnPath'])
+            offsetX = parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['offset']['X']
+            offsetY = parameters['simulation-pipeline']['analysis']['report-stressescircumferentialpaths']['offset']['Y']
             for rNum,pathR in enumerate(pathRsInt):
-                session.Path(name='CircPath-R' + str(pathR).replace('.','_'), type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=0, endAngle=180, radius=CIRCLE_RADIUS)
+                session.Path(name='CircPath-R' + str(pathR).replace('.','_'), type=CIRCUMFERENTIAL, expression=((offsetX, offsetY, 0), (0, 0, 1), (offsetX+pathR, offsetY, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=0, endAngle=180, radius=CIRCLE_RADIUS)
                 circpath = session.paths['CircPath-R' + str(pathR).replace('.','_')]
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
@@ -4842,8 +4846,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 angleStart2 = 90.0-angleStart1
                 angleStart3 = 90.0+angleStart1
                 angleStart4 = 180.0-angleStart1
-                session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'East' , type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=angleStart1, endAngle=angleStart2, radius=CIRCLE_RADIUS)
-                session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'West' , type=CIRCUMFERENTIAL, expression=((0, 0, 0), (0, 0, 1), (pathR, 0, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=angleStart3, endAngle=angleStart4, radius=CIRCLE_RADIUS)
+                session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'East' , type=CIRCUMFERENTIAL, expression=((offsetX, offsetY, 0), (0, 0, 1), (offsetX+pathR, offsetY, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=angleStart1, endAngle=angleStart2, radius=CIRCLE_RADIUS)
+                session.Path(name='CircPath-R' + str(pathR).replace('.','_') + 'West' , type=CIRCUMFERENTIAL, expression=((offsetX, offsetY, 0), (0, 0, 1), (offsetX+pathR, offsetY, 0)), circleDefinition=ORIGIN_AXIS, numSegments=nSegsOnPath, startAngle=angleStart3, endAngle=angleStart4, radius=CIRCLE_RADIUS)
                 circpath = session.paths['CircPath-R' + str(pathR).replace('.','_') + 'East']
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
@@ -4925,11 +4929,13 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stresseshorizontalpaths'
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, y, xi, xf, FOLDER, FILENAME')
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['nSegsOnPath'])
+            offsetX = parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['offset']['X']
+            offsetY = parameters['simulation-pipeline']['analysis']['report-stresseshorizontalpaths']['offset']['Y']
             for yNum,pathY in enumerate(pathYsLow):
                 xEast = np.sqrt(parameters['geometry']['Rf']*parameters['geometry']['Rf']-pathY*pathY)
                 xWest = -xEast
-                session.Path(name='HPath-Y' + str(pathY) + 'East', type=POINT_LIST, expression=((xEast,pathY,0.0),(parameters['geometry']['L'],pathY,0.0)))
-                session.Path(name='HPath-Y' + str(pathY) + 'West', type=POINT_LIST, expression=((-parameters['geometry']['L'],pathY,0.0),(xWest,pathY,0.0)))
+                session.Path(name='HPath-Y' + str(pathY) + 'East', type=POINT_LIST, expression=((offsetX+xEast,offsetY+pathY,0.0),(offsetX+parameters['geometry']['L'],offsetY+pathY,0.0)))
+                session.Path(name='HPath-Y' + str(pathY) + 'West', type=POINT_LIST, expression=((offsetX-parameters['geometry']['L'],offsetY+pathY,0.0),(offsetX+xWest,offsetY+pathY,0.0)))
                 hpath = session.paths['HPath-Y' + str(pathY) + 'East']
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
@@ -4992,7 +4998,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
                 #session.writeXYReport(fileName=join(parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + 'West' + '.dat'),xyData=tauyz,appendMode=OFF)
                 #appendCSVfile(parameters['output']['local']['directory'],csvFilename,[['S23 [MPa]',str(pathY),str(-parameters['geometry']['L']),str(xWest),parameters['output']['local']['directory'],'tauyz-HPath-Y' + str(pathY) + 'West' + '.dat']])
             for yNum,pathY in enumerate(pathYsUp):
-                session.Path(name='HPath-Y' + str(pathY), type=POINT_LIST, expression=((-parameters['geometry']['L'],pathY,0.0),(parameters['geometry']['L'],pathY,0.0)))
+                session.Path(name='HPath-Y' + str(pathY), type=POINT_LIST, expression=((offsetX-parameters['geometry']['L'],offsetY+pathY,0.0),(offsetX+parameters['geometry']['L'],offsetY+pathY,0.0)))
                 hpath = session.paths['HPath-Y' + str(pathY)]
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
@@ -5042,12 +5048,14 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             csvFilename = parameters['output']['local']['directory'].replace('\\','/').split('/')[-1] + '-stressesverticalpaths'
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, x, yi, yf, FOLDER, FILENAME')
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['nSegsOnPath'])
+            offsetX = parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['offset']['X']
+            offsetY = parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['offset']['Y']
             for xNum,pathX in enumerate(pathXs):
                 if pathX>-parameters['geometry']['Rf'] and pathX<parameters['geometry']['Rf']:
                     startY = np.sqrt(parameters['geometry']['Rf']*parameters['geometry']['Rf']-pathX*pathX)
                 else:
                     startY = 0.0
-                session.Path(name='VPath-X' + str(pathX), type=POINT_LIST, expression=((pathX,startY,0.0),(pathX,parameters['geometry']['L'],0.0)))
+                session.Path(name='VPath-X' + str(pathX), type=POINT_LIST, expression=((offsetX+pathX,offsetY+startY,0.0),(offsetX+pathX,offsetY+parameters['geometry']['L'],0.0)))
                 vpath = session.paths['VPath-X' + str(pathX)]
                 writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract stress components...',True)
                 # sigmaxx
@@ -5103,6 +5111,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             createCSVfile(parameters['output']['local']['directory'],csvFilename,'VARIABLE, angle [°], Ri, Rf, FOLDER, FILENAME')
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
             nSegsOnPath = int(parameters['simulation-pipeline']['analysis']['report-strainsradialpaths']['nSegsOnPath'])
+            offsetX = parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['offset']['X']
+            offsetY = parameters['simulation-pipeline']['analysis']['report-stressesverticalpaths']['offset']['Y']
             for angleNum,pathAngle in enumerate(pathAngles):
                 if pathAngle<45.0:
                     pathRadius = parameters['geometry']['L']/np.cos(pathAngle*np.pi/180.0)

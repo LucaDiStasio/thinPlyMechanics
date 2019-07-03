@@ -5649,9 +5649,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             break
 
     if parameters['geometry']['deltatheta']>0.0:
-        dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,appStrain*100.0,avgStrain*100.0,avgStress,E1eq,E1eq/1000.0,avgStress/appStrain,avgStress/(appStrain*1000.0),avgCOD,maxCOD,avgCSD,maxCSD]
+        dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,appStrain*100.0,avgStrain*100.0,avgStress,E1eq,E1eq/1000.0,avgStress/appStrain,avgStress/(appStrain*1000.0),avgCOD,maxCOD,avgCSD,maxCSD,beta22,beta33,beta23]
     else:
-        dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,appStrain*100.0,avgStrain*100.0,avgStress,E1eq,E1eq/1000.0,avgStress/appStrain,avgStress/(appStrain*1000.0),0.0,0.0,0.0,0.0]
+        dataline = [parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],totalArea,appStrain*100.0,avgStrain*100.0,avgStress,E1eq,E1eq/1000.0,avgStress/appStrain,avgStress/(appStrain*1000.0),0.0,0.0,0.0,0.0,0.0,0.0,0.0]
 
     for o,oz in enumerate(ozs):
         dataline.append(oz)
@@ -6026,7 +6026,7 @@ def main(argv):
     if len(RVEparams['steps'])>1:
         createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['thermalenergyreleaserate'],titleline)
 
-    createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['stiffness'],'deltatheta [deg], Rf [mum], L [mum], L/Rf [-], RVE area [mum2], app strain [%], avg strain [%], avg stress [MPa], E1 (avg stress/avg strain) [MPa], E1 (avg stress/avg strain) [GPa], E1 (avg stress/app strain) [MPa], E1 (avg stress/app strain) [GPa], avg COD [mum], max COD [mum], avg CSD [mum], max CSD [mum], OZ - tol=0.0% [deg], CZ - tol=0.0% [deg], OZ - tol=0.1% [deg], CZ - tol=0.1% [deg], OZ - tol=0.2% [deg], CZ - tol=0.2% [deg], OZ - tol=0.3% [deg], CZ - tol=0.3% [deg], OZ - tol=0.4% [deg], CZ - tol=0.4% [deg], OZ - tol=0.5% [deg], CZ - tol=0.5% [deg], OZ - tol=0.6% [deg], CZ - tol=0.6% [deg], OZ - tol=0.7% [deg], CZ - tol=0.7% [deg], OZ - tol=0.8% [deg], CZ - tol=0.8% [deg], OZ - tol=0.9% [deg], CZ - tol=0.9% [deg], OZ - tol=1.0% [deg], CZ - tol=1.0% [deg], OZ - tol=2.0% [deg], CZ - tol=2.0% [deg], OZ - tol=3.0% [deg], CZ - tol=3.0% [deg], OZ - tol=4.0% [deg], CZ - tol=4.0% [deg], OZ - tol=5.0% [deg], CZ - tol=5.0% [deg]')
+    createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['stiffness'],'deltatheta [deg], Rf [mum], L [mum], L/Rf [-], RVE area [mum2], app strain [%], avg strain [%], avg stress [MPa], E1 (avg stress/avg strain) [MPa], E1 (avg stress/avg strain) [GPa], E1 (avg stress/app strain) [MPa], E1 (avg stress/app strain) [GPa], avg COD [mum], max COD [mum], avg CSD [mum], max CSD [mum], beta22/rhoD [mum], beta33/rhoD [mum], beta23/rhoD [mum], OZ - tol=0.0% [deg], CZ - tol=0.0% [deg], OZ - tol=0.1% [deg], CZ - tol=0.1% [deg], OZ - tol=0.2% [deg], CZ - tol=0.2% [deg], OZ - tol=0.3% [deg], CZ - tol=0.3% [deg], OZ - tol=0.4% [deg], CZ - tol=0.4% [deg], OZ - tol=0.5% [deg], CZ - tol=0.5% [deg], OZ - tol=0.6% [deg], CZ - tol=0.6% [deg], OZ - tol=0.7% [deg], CZ - tol=0.7% [deg], OZ - tol=0.8% [deg], CZ - tol=0.8% [deg], OZ - tol=0.9% [deg], CZ - tol=0.9% [deg], OZ - tol=1.0% [deg], CZ - tol=1.0% [deg], OZ - tol=2.0% [deg], CZ - tol=2.0% [deg], OZ - tol=3.0% [deg], CZ - tol=3.0% [deg], OZ - tol=4.0% [deg], CZ - tol=4.0% [deg], OZ - tol=5.0% [deg], CZ - tol=5.0% [deg]')
 
     skipLineToLogFile(logfilefullpath,'a',True)
     writeLineToLogFile(logfilefullpath,'a','In function: main(argv)',True)

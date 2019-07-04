@@ -5783,10 +5783,6 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     wd = parameters['input']['wd']
 
-    if len(parameters['steps'])>1:
-        initialStep = -2
-    else:
-        initialStep = -1
     #=======================================================================
     # BEGIN - extract stiffness matrix
     #=======================================================================
@@ -5815,6 +5811,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # END - extract stiffness matrix
     #=======================================================================
 
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalstiffnessmatrix'],'ROW INDEX, ROW DOF, COLUMN INDEX, COLUMN DOF, VALUE')
+    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalstiffnessmatrix'],lines[2:])
+
+
     #=======================================================================
     # BEGIN - open ODB
     #=======================================================================
@@ -5832,6 +5832,12 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # BEGIN - extract node sets
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting node sets ...',True)
+
+    rve = getSingleNodeSet(odb,'RVE-ASSEMBLY','RVE')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- RVE',True)
+
+    matrixCrackfaceNodes = getSingleNodeSet(odb,None,'MATRIX-CRACKFACE-NODES')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKFACE-NODES',True)
 
     matrixCrackfaceNodes = getSingleNodeSet(odb,None,'MATRIX-CRACKFACE-NODES')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKFACE-NODES',True)

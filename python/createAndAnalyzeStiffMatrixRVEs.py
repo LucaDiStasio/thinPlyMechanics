@@ -6074,7 +6074,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     Kstruct2ct = np.array(Kstruct2ct)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CDabq',True)
-    CDabq = np.array([Uabq[,0]])
+    CDabq = [Uabq[2*(matrixcracktipdispmeasIndex-1),0]-Uabq[2*(fibercracktipdispmeasIndex-1),0],Uabq[2*(matrixcracktipdispmeasIndex-1)+1,0]-Uabq[2*(fibercracktipdispmeasIndex-1)+1,0]]
+    if 'second' in parameters['mesh']['elements']['order']:
+        CDabq.append(Uabq[2*(matrixfirstboundispmeasIndex-1),0]-Uabq[2*(fiberfirstboundispmeasIndex-1),0])
+        CDabq.append(Uabq[2*(matrixfirstboundispmeasIndex-1)+1,0]-Uabq[2*(fiberfirstboundispmeasIndex-1)+1,0])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Ustructabq',True)
 

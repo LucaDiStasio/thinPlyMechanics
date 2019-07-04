@@ -6052,10 +6052,26 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kstruct2ct',True)
     allcolKstruct2ct = [K[2*(cracktipIndex-1)+1,:],K[2*(cracktipIndex-1)+1,:]]
+    allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)+1] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)+1] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)+1]
+    allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)+2] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)+2] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)+2]
     if 'second' in parameters['mesh']['elements']['order']:
         allcolKstruct2ct.append(K[2*(fiberfirstBounded-1)+1,:])
         allcolKstruct2ct.append(K[2*(fiberfirstBounded-1)+2,:])
+        allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)+1] = allcolKstruct2ct[0,2*(matrixfirstboundispmeasIndex-1)+1] + allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)+1]
+        allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)+2] = allcolKstruct2ct[0,2*(matrixfirstboundispmeasIndex-1)+2] + allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)+2]
     allcolKstruct2ct = np.array(allcolKstruct2ct)
+    toSkip = [2*(matrixcracktipdispmeasIndex-1)+1,2*(matrixcracktipdispmeasIndex-1)+1]
+    if 'second' in parameters['mesh']['elements']['order']:
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)+1)
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)+2)
+    Kstruct2ct = []
+    for i in range(0,2*m-1):
+        row = []
+        for element,e in enumerate(allcolKstruct2ct[i,:]):
+            if e not in toSkip:
+                row.append(element)
+        Kstruct2ct.append(row)
+    Kstruct2ct = np.array(Kstruct2ct)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CDabq',True)
 

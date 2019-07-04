@@ -5787,7 +5787,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # BEGIN - extract stiffness matrix
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract stiffness matrix...',True)
-    with open(join(wd,odbname.split('.')[0]+'_'+'STIF1'+'.mtx'),'r') as mtx:
+    with open(join(wd,odbname.split('.')[0]+'_'+'STIF2'+'.mtx'),'r') as mtx:
         lines = mtx.readlines()
     globalMatrix = {}
     for line in lines[2:]:
@@ -5811,9 +5811,44 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # END - extract stiffness matrix
     #=======================================================================
 
+    #=======================================================================
+    # BEGIN - Copy stiffness matrix to csv file
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Copy stiffness matrix to csv file...',True)
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalstiffnessmatrix'],'ROW INDEX, ROW DOF, COLUMN INDEX, COLUMN DOF, VALUE')
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalstiffnessmatrix'],lines[2:])
+    #=======================================================================
+    # END - Copy stiffness matrix to csv file
+    #=======================================================================
 
+    #=======================================================================
+    # BEGIN - extract load vector
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract load vector...',True)
+    with open(join(wd,odbname.split('.')[0]+'_'+'LOAD2'+'.mtx'),'r') as mtx:
+        lines = mtx.readlines()
+    globalVector = {}
+    for line in lines[2:]:
+        values = line.split(',')
+        rowIndex = int(values[0])
+        rowDOF = int(values[1])
+        if rowIndex not in globalVector:
+            globalVector[rowIndex] = {}
+        globalVector[rowIndex][rowDOF] = int(values[-1])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - extract load vector
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - Copy load vector to csv file
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Copy load vector to csv file...',True)
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalloadvector'],'ROW INDEX, ROW DOF, VALUE')
+    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalloadvector'],lines[2:])
+    #=======================================================================
+    # END - Copy load vector to csv file
+    #=======================================================================
 
     #=======================================================================
     # BEGIN - open ODB

@@ -4570,17 +4570,44 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     else:
         initialStep = -1
     #=======================================================================
-    # BEGIN - extract performances
+    # BEGIN - extract stiffness matrix
     #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract performances...',True)
-    try:
-        appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['performances'],[getPerfs(wd,[odbname.split('.')[0]],logfilepath,baselogindent + 2*logindent,logindent)[1]])
-    except Exception,e:
-        writeErrorToLogFile(logfilepath,'a',Exception,e,True)
-        sys.exc_clear()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract stiffness matrix...',True)
+    with open(join(wd,odbname.split('.')[0]+'_'+'STIF1'+'.mtx'),'r') as mtx:
+        lines = mtx.readlines()
+    globalMatrix = {}
+    for line in lines[2:]:
+        values = line.split(',')
+        rowIndex = int(values[0])
+        columnIndex = int(values[2])
+        rowDOF = int(values[1])
+        columnDOF = int(values[3])
+        if rowIndex not in globalMatrix:
+            globalMatrix[rowIndex] = {}
+            globalMatrix[rowIndex][rowDOF] = {}
+            globalMatrix[rowIndex][rowDOF][columnIndex] = {}
+        elif rowDOF not in globalMatrix[rowIndex]:
+            globalMatrix[rowIndex][rowDOF] = {}
+            globalMatrix[rowIndex][rowDOF][columnIndex] = {}
+        elif columnIndex not in globalMatrix[rowIndex][rowDOF]:
+            globalMatrix[rowIndex][rowDOF][columnIndex] = {}
+        globalMatrix[rowIndex][rowDOF][columnIndex][columnDOF] = int(values[-1])
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
-    # END - extract performances
+    # END - extract stiffness matrix
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - open ODB
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Opening ODB database ' + odbname + ' in directory ' + wd + ' ...',True)
+    if '.odb' not in odbname:
+        odbname += '.odb'
+    odbfullpath = join(wd,odbname)
+    odb = openOdb(path=odbfullpath, readOnly=True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - open ODB
     #=======================================================================
 
 

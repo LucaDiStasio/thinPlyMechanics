@@ -4475,6 +4475,14 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(' 3' + '\n')
             inp.write(' LEFTSIDE-WITHOUT-CORNERS, 1, 1, SOUTHWEST-CORNER, 1, -0.5, NORTHWEST-CORNER, 1, -0.5' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write STIFFNESS MATRIX generation step ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('** LINEAR PERTURBATION STEP: OUTPUT GLOBAL STIFFNESS MATRIX' + '\n')
+        inp.write('*STEP, NAME=GlobalStiffnessMatrix' + '\n')
+        inp.write('*MATRIX GENERATE, STIFFNESS' + '\n')
+        inp.write('*MATRIX OUTPUT, STIFFNESS, FORMAT=MATRIX INPUT' + '\n')
+        inp.write('*END STEP' + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
     with open(modinpfullpath,'a') as inp:
         for line in inpfilelines[endAssembly:]:
@@ -4491,7 +4499,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             sys.exc_clear()
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     return modinpname
-    
+
 def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent)',True)

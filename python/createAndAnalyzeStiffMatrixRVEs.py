@@ -41,6 +41,7 @@ Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 '''
 import sys, os
 import numpy as np
+from scipy import sparse
 import math
 import subprocess
 from os.path import isfile, join, exists
@@ -5906,6 +5907,107 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # END - extract node sets
     #=======================================================================
+
+    #=======================================================================
+    # BEGIN - extract displacements of all nodes
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract displacements of all nodes...',True)
+    rveDisps = getFieldOutput(odb,-2,-1,'U',rve)
+    globalDisps = {}
+    for valueset in globalDisps.values:
+        rowIndex = int(valueset.nodeLabel)
+        globalVector[rowIndex] = {}
+        globalVector[rowIndex][1] = valueset.data[0]
+        globalVector[rowIndex][2] = valueset.data[1]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - extract displacements of all nodes
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - extract displacements of all nodes
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract displacements of all nodes...',True)
+    rveDisps = getFieldOutput(odb,-2,-1,'U',rve)
+    globalDisps = {}
+    for valueset in globalDisps.values:
+        rowIndex = int(valueset.nodeLabel)
+        globalVector[rowIndex] = {}
+        globalVector[rowIndex][1] = valueset.data[0]
+        globalVector[rowIndex][2] = valueset.data[1]
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - extract displacements of all nodes
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - compute crack tip reference frame transformation
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute crack tip reference frame transformation ...',True)
+
+    undefCracktipCoords = getFieldOutput(odb,0,0,'COORD',fiberCracktip)
+    phi = np.arctan2(undefCracktipCoords.values[0].data[1],undefCracktipCoords.values[0].data[0])
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - compute crack tip reference frame transformation
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - compute mesh size reference frame transformation
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute mesh size reference frame transformation ...',True)
+
+    delta = parameters['mesh']['size']['delta']*np.pi/180.0
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - compute mesh size reference frame transformation
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - build matrices
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Build matrices...',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- R',True)
+    R = np.matrix([[np.cos(phi),np.sin(phi)],[-np.sin(phi),np.cos(phi)]])
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- inv R',True)
+    invR = np.matrix([[np.cos(phi),-np.sin(phi)],[np.sin(phi),np.cos(phi)]])
+
+    shapeFuncOrder = {}
+    shapeFuncOrder['first'] = 1
+    shapeFuncOrder['second'] = 2
+    shapeFuncOrder['third'] = 3
+    shapeFuncOrder['fourth'] = 4
+    m = shapeFuncOrder[parameters['mesh']['element']['order']]
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- P (m=' + str(m) + ')',True)
+    P = []
+    for p in range(1,m+2):
+        P.append(np.matrix([[np.cos((1+(1-p)/m)*delta),np.sin((1+(1-p)/m)*delta)],[-np.sin((1+(1-p)/m)*delta),np.cos((1+(1-p)/m)*delta)]]))
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- inv P (m=' + str(m) + ')',True)
+    invP = []
+    for p in range(1,m+2):
+        invP.append(np.matrix([[np.cos((1+(1-p)/m)*delta),-np.sin((1+(1-p)/m)*delta)],[np.sin((1+(1-p)/m)*delta),np.cos((1+(1-p)/m)*delta)]]))
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Q (m=' + str(m) + ')',True)
+    Q = []
+    for q in range(1,m+2):
+        Q.append(np.matrix([[np.cos(((q-1)/m)*delta),np.sin(((q-1)/m)*delta)],[-np.sin(((q-1)/m)*delta),np.cos(((q-1)/m)*delta)]]))
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- inv Q (m=' + str(m) + ')',True)
+    invQ = []
+    for q in range(1,m+2):
+        invQ.append(np.matrix([[np.cos(((q-1)/m)*delta),-np.sin(((q-1)/m)*delta)],[np.sin(((q-1)/m)*delta),np.cos(((q-1)/m)*delta)]]))
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - build matrices
+    #=======================================================================
+
 
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: analyzeRVEresults(wd,odbname,parameters)',True)

@@ -6114,14 +6114,49 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # BEGIN - compute global displacement vector
     #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute global displacement vector...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute displacement vectors...',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- U',True)
     invK = sparse.linalg.inv(K)
     U = invK.dot(F)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CD',True)
+    CD = [U[2*(matrixcracktipdispmeasIndex-1),0]-U[2*(fibercracktipdispmeasIndex-1),0],U[2*(matrixcracktipdispmeasIndex-1)+1,0]-U[2*(fibercracktipdispmeasIndex-1)+1,0]]
+    if 'second' in parameters['mesh']['elements']['order']:
+        CD.append(U[2*(matrixfirstboundispmeasIndex-1),0]-U[2*(fiberfirstboundispmeasIndex-1),0])
+        CD.append(U[2*(matrixfirstboundispmeasIndex-1)+1,0]-U[2*(fiberfirstboundispmeasIndex-1)+1,0])
+    CD = np.array(CD)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Ustruct',True)
+    toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
+    if 'second' in parameters['mesh']['elements']['order']:
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
+    Ustruct = []
+    for element,e in enumerate(Ustruct[:,1]):
+        if e not in toSkip:
+            Ustruct.append(element)
+    Ustruct = np.array(Ustruct)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - compute global displacement vector
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - compute ERR matrix
+    #=======================================================================
+
+    #=======================================================================
+    # END - compute ERR matrix
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - diagonalize ERR matrix
+    #=======================================================================
+
+    #=======================================================================
+    # END - diagonalize ERR matrix
     #=======================================================================
 
 

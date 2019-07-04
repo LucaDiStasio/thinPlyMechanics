@@ -5914,23 +5914,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract displacements of all nodes...',True)
     rveDisps = getFieldOutput(odb,-2,-1,'U',rve)
     globalDisps = {}
-    for valueset in globalDisps.values:
-        rowIndex = int(valueset.nodeLabel)
-        globalVector[rowIndex] = {}
-        globalVector[rowIndex][1] = valueset.data[0]
-        globalVector[rowIndex][2] = valueset.data[1]
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    #=======================================================================
-    # END - extract displacements of all nodes
-    #=======================================================================
-
-    #=======================================================================
-    # BEGIN - extract displacements of all nodes
-    #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract displacements of all nodes...',True)
-    rveDisps = getFieldOutput(odb,-2,-1,'U',rve)
-    globalDisps = {}
-    for valueset in globalDisps.values:
+    for valueset in rveDisps.values:
         rowIndex = int(valueset.nodeLabel)
         globalDisps[rowIndex] = {}
         globalDisps[rowIndex][1] = valueset.data[0]
@@ -6025,16 +6009,15 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     rowIndeces = []
     columnIndeces = []
     values = []
-    for key in globalDisps.keys():
-        rowIndeces.append(2*(key-1))
-        rowIndeces.append(2*(key-1)+1)
-        columnIndeces.append(0)
-        columnIndeces.append(0)
-        values.append(globalDisps[key][1])
-        values.append(globalDisps[key][2])
-    NNodes = np.max(globalDisps.keys())
-    globalDisps = {}
-    Uabq = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, 1))
+    for rowKey in globalMatrix.keys():
+        for dofKey in globalMatrix[rowKey].keys():
+            for columnKey in globalMatrix[rowKey][dofKey].keys():
+                for cdofKey in globalMatrix[rowKey][dofKey][columnKey].keys():
+                    rowIndeces.append(2*(rowKey-1)+dofKey)
+                    columnIndeces.append(2*(columnKey-1)+cdofKey)
+                    values.append(globalMatrix[rowKey][dofKey][columnKey][cdofKey])
+    globalMatrix = {}
+    K = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, NNodes))
     rowIndeces = []
     columnIndeces = []
     values = []

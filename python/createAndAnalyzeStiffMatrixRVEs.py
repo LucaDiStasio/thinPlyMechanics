@@ -5932,9 +5932,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     globalDisps = {}
     for valueset in globalDisps.values:
         rowIndex = int(valueset.nodeLabel)
-        globalVector[rowIndex] = {}
-        globalVector[rowIndex][1] = valueset.data[0]
-        globalVector[rowIndex][2] = valueset.data[1]
+        globalDisps[rowIndex] = {}
+        globalDisps[rowIndex][1] = valueset.data[0]
+        globalDisps[rowIndex][2] = valueset.data[1]
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract displacements of all nodes
@@ -6002,6 +6002,61 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     invQ = []
     for q in range(1,m+2):
         invQ.append(np.matrix([[np.cos(((q-1)/m)*delta),-np.sin(((q-1)/m)*delta)],[np.sin(((q-1)/m)*delta),np.cos(((q-1)/m)*delta)]]))
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- U (ABAQUS solution)',True)
+    rowIndeces = []
+    columnIndeces = []
+    values = []
+    for key in globalDisps.keys():
+        rowIndeces.append(2*(key-1))
+        rowIndeces.append(2*(key-1)+1)
+        columnIndeces.append(0)
+        columnIndeces.append(0)
+        values.append(globalDisps[key][1])
+        values.append(globalDisps[key][2])
+    NNodes = np.max(globalDisps.keys())
+    globalDisps = {}
+    Uabq = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, 1))
+    rowIndeces = []
+    columnIndeces = []
+    values = []
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- K',True)
+    rowIndeces = []
+    columnIndeces = []
+    values = []
+    for key in globalDisps.keys():
+        rowIndeces.append(2*(key-1))
+        rowIndeces.append(2*(key-1)+1)
+        columnIndeces.append(0)
+        columnIndeces.append(0)
+        values.append(globalDisps[key][1])
+        values.append(globalDisps[key][2])
+    NNodes = np.max(globalDisps.keys())
+    globalDisps = {}
+    Uabq = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, 1))
+    rowIndeces = []
+    columnIndeces = []
+    values = []
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- F',True)
+    rowIndeces = []
+    columnIndeces = []
+    values = []
+    for key in globalDisps.keys():
+        rowIndeces.append(2*(key-1))
+        rowIndeces.append(2*(key-1)+1)
+        columnIndeces.append(0)
+        columnIndeces.append(0)
+        values.append(globalDisps[key][1])
+        values.append(globalDisps[key][2])
+    NNodes = np.max(globalDisps.keys())
+    globalDisps = {}
+    Uabq = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, 1))
+    rowIndeces = []
+    columnIndeces = []
+    values = []
+
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

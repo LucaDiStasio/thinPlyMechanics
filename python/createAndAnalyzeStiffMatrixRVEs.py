@@ -6060,7 +6060,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)-1+1] = allcolKstruct2ct[0,2*(matrixfirstboundispmeasIndex-1)-1+1] + allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)-1+1]
         allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)-1+2] = allcolKstruct2ct[0,2*(matrixfirstboundispmeasIndex-1)-1+2] + allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)-1+2]
     allcolKstruct2ct = np.array(allcolKstruct2ct)
-    toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+1]
+    toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
     if 'second' in parameters['mesh']['elements']['order']:
         toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
         toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
@@ -6078,8 +6078,18 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     if 'second' in parameters['mesh']['elements']['order']:
         CDabq.append(Uabq[2*(matrixfirstboundispmeasIndex-1),0]-Uabq[2*(fiberfirstboundispmeasIndex-1),0])
         CDabq.append(Uabq[2*(matrixfirstboundispmeasIndex-1)+1,0]-Uabq[2*(fiberfirstboundispmeasIndex-1)+1,0])
+    CDabq = np.array(CDabq)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Ustructabq',True)
+    toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
+    if 'second' in parameters['mesh']['elements']['order']:
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
+    Ustructabq = []
+    for element,e in enumerate(Ustructabq[:,1]):
+        if e not in toSkip:
+            Ustructabq.append(element)
+    Ustructabq = np.array(Ustructabq)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- F',True)
     rowIndeces = []

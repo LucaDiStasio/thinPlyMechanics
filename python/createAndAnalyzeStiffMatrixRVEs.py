@@ -6005,6 +6005,11 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     columnIndeces = []
     values = []
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kct',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kstruct2ct',True)
+
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- K',True)
     rowIndeces = []
     columnIndeces = []
@@ -6026,24 +6031,33 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     rowIndeces = []
     columnIndeces = []
     values = []
-    for key in globalDisps.keys():
-        rowIndeces.append(2*(key-1))
-        rowIndeces.append(2*(key-1)+1)
-        columnIndeces.append(0)
-        columnIndeces.append(0)
-        values.append(globalDisps[key][1])
-        values.append(globalDisps[key][2])
-    NNodes = np.max(globalDisps.keys())
-    globalDisps = {}
-    Uabq = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, 1))
+    for key in globalVector.keys():
+        for dof in globalVector[key].keys():
+            rowIndeces.append(2*(key-1)+dof)
+            columnIndeces.append(0)
+            values.append(globalDisps[key][dof])
+    globalVector = {}
+    F = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, 1))
     rowIndeces = []
     columnIndeces = []
     values = []
 
-
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - build matrices
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - compute global displacement vector
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute global displacement vector...',True)
+
+    invK = sparse.linalg.inv(K)
+    U = invK.dot(F)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - compute global displacement vector
     #=======================================================================
 
 

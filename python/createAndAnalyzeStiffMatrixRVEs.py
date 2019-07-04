@@ -6051,6 +6051,15 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     Kct = np.array(Kct)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kstruct2ct',True)
+    allcolKstruct2ct = [K[2*(cracktipIndex-1)+1,:],K[2*(cracktipIndex-1)+1,:]]
+    if 'second' in parameters['mesh']['elements']['order']:
+        allcolKstruct2ct.append(K[2*(fiberfirstBounded-1)+1,:])
+        allcolKstruct2ct.append(K[2*(fiberfirstBounded-1)+2,:])
+    allcolKstruct2ct = np.array(allcolKstruct2ct)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CDabq',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Ustructabq',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- F',True)
     rowIndeces = []

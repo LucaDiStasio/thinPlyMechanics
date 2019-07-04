@@ -5656,160 +5656,66 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(' ' + str(parameters['surface']['friction']['static']) + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 5*logindent + 'Static friction coefficient = ' + str(parameters['surface']['friction']['static']) + '[-]',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    if len(parameters['steps'])>1:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[endAssembly+1:startTempStep+2]:
-                inp.write(line)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            inp.write('** BOUNDARY CONDITIONS' + '\n')
-            inp.write('**' + '\n')
-            inp.write('*BOUNDARY, OP=MOD' + '\n')
-            if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-                inp.write(' CRACKTIPUP-DUMMY-NODE, ENCASTRE' + '\n')
-                inp.write(' CRACKTIPLOW-DUMMY-NODE, ENCASTRE' + '\n')
-                if 'second' in parameters['mesh']['elements']['order']:
-                    inp.write(' FIRSTBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
-                    inp.write(' FIRSTBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
-                    if 'inverseSquareRoot' in parameters['singularity']['type']:
-                        inp.write(' SECONDBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
-                        inp.write(' SECONDBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
-            else:
-                inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
-                if 'second' in parameters['mesh']['elements']['order']:
-                    inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
-                    if 'inverseSquareRoot' in parameters['singularity']['type']:
-                        inp.write(' SECONDBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
-            inp.write('**' + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[startTempStep+2:startTempCI]:
-                inp.write(line)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
-        crackName = inpfilelines[startTempCI].replace('\n','').split(',')[1].split('=')[1]
-        nContours = inpfilelines[startTempCI].replace('\n','').split(',')[2].split('=')[1]
-        qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
-        qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
-        with open(modinpfullpath,'a') as inp:
-            inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
-            inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[startTempCI+2:startLoadStep+2]:
-                inp.write(line)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write loads  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            inp.write('** LOADS' + '\n')
-            inp.write('**' + '\n')
-            for load in parameters['loads'].values():
-                if 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
-                    inp.write('*DSLOAD, OP=MOD' + '\n')
-                    inp.write(' ' + load['set'] + ', P, ' + str(load['value']) + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            inp.write('** BOUNDARY CONDITIONS' + '\n')
-            inp.write('**' + '\n')
-            inp.write('*BOUNDARY, OP=MOD' + '\n')
-            if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-                inp.write(' CRACKTIPUP-DUMMY-NODE, ENCASTRE' + '\n')
-                inp.write(' CRACKTIPLOW-DUMMY-NODE, ENCASTRE' + '\n')
-                if 'second' in parameters['mesh']['elements']['order']:
-                    inp.write(' FIRSTBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
-                    inp.write(' FIRSTBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
-                    if 'inverseSquareRoot' in parameters['singularity']['type']:
-                        inp.write(' SECONDBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
-                        inp.write(' SECONDBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
-            else:
-                inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
-                if 'second' in parameters['mesh']['elements']['order']:
-                    inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
-                    if 'inverseSquareRoot' in parameters['singularity']['type']:
-                        inp.write(' SECONDBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
-            inp.write('**' + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[startLoadStep+2:startLoadCI]:
-                inp.write(line)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
-        crackName = inpfilelines[startLoadCI].replace('\n','').split(',')[1].split('=')[1]
-        nContours = inpfilelines[startLoadCI].replace('\n','').split(',')[2].split('=')[1]
-        qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
-        qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
-        with open(modinpfullpath,'a') as inp:
-            inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
-            inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[startLoadCI+2:]:
-                inp.write(line)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    else:
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[endAssembly+1:startBC]:
-                inp.write(line)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write loads  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            inp.write('** LOADS' + '\n')
-            inp.write('**' + '\n')
-            for load in parameters['loads'].values():
-                if 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
-                    inp.write('*DSLOAD, OP=MOD' + '\n')
-                    inp.write(' ' + load['set'] + ', P, ' + str(load['value']) + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            inp.write('** BOUNDARY CONDITIONS' + '\n')
-            inp.write('**' + '\n')
-            inp.write('*BOUNDARY, OP=MOD' + '\n')
-            if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-                inp.write(' CRACKTIPUP-DUMMY-NODE, ENCASTRE' + '\n')
-                inp.write(' CRACKTIPLOW-DUMMY-NODE, ENCASTRE' + '\n')
-                if 'second' in parameters['mesh']['elements']['order']:
-                    inp.write(' FIRSTBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
-                    inp.write(' FIRSTBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
-                    if 'inverseSquareRoot' in parameters['singularity']['type']:
-                        inp.write(' SECONDBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
-                        inp.write(' SECONDBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
-            else:
-                inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
-                if 'second' in parameters['mesh']['elements']['order']:
-                    inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
-                    if 'inverseSquareRoot' in parameters['singularity']['type']:
-                        inp.write(' SECONDBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
-            inp.write('**' + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write STIFFNESS MATRIX generation step ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('** LINEAR PERTURBATION STEP: OUTPUT GLOBAL STIFFNESS MATRIX' + '\n')
+        inp.write('*STEP, NAME=GlobalStiffnessMatrix' + '\n')
+        inp.write('*MATRIX GENERATE, STIFFNESS, LOAD' + '\n')
+        inp.write('*MATRIX OUTPUT, STIFFNESS, LOAD, FORMAT=MATRIX INPUT' + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write loads  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('** LOADS' + '\n')
+        inp.write('**' + '\n')
+        for load in parameters['loads'].values():
+            if 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
+                inp.write('*DSLOAD, OP=MOD' + '\n')
+                inp.write(' ' + load['set'] + ', P, ' + str(load['value']) + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('** BOUNDARY CONDITIONS' + '\n')
+        inp.write('**' + '\n')
+        inp.write('*BOUNDARY, OP=MOD' + '\n')
+        if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+            inp.write(' CRACKTIPUP-DUMMY-NODE, ENCASTRE' + '\n')
+            inp.write(' CRACKTIPLOW-DUMMY-NODE, ENCASTRE' + '\n')
+            if 'second' in parameters['mesh']['elements']['order']:
+                inp.write(' FIRSTBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
+                inp.write(' FIRSTBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
+                if 'inverseSquareRoot' in parameters['singularity']['type']:
+                    inp.write(' SECONDBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
+                    inp.write(' SECONDBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
+        else:
+            inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
+            if 'second' in parameters['mesh']['elements']['order']:
+                inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+                if 'inverseSquareRoot' in parameters['singularity']['type']:
+                    inp.write(' SECONDBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+        inp.write('**' + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'End STIFFNESS MATRIX generation step ...',True)
+    with open(modinpfullpath,'a') as inp:
+        inp.write('*END STEP' + '\n')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        for line in inpfilelines[endAssembly+1:startBC]:
+            inp.write(line)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[startBC+1:startCI]:
-                inp.write(line)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
-        crackName = inpfilelines[startCI].replace('\n','').split(',')[1].split('=')[1]
-        nContours = inpfilelines[startCI].replace('\n','').split(',')[2].split('=')[1]
-        qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
-        qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
-        with open(modinpfullpath,'a') as inp:
-            inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
-            inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-        with open(modinpfullpath,'a') as inp:
-            for line in inpfilelines[endCI+1:]:
-                inp.write(line)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        for line in inpfilelines[startBC+1:startCI]:
+            inp.write(line)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    with open(modinpfullpath,'a') as inp:
+        for line in inpfilelines[endCI+1:]:
+            inp.write(line)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if  parameters['simulation-pipeline']['remove-INP']:
         skipLineToLogFile(logfilepath,'a',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Remove .inp file from working directory... ',True)
@@ -5821,15 +5727,6 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             sys.exc_clear()
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     return modinpname
-
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write STIFFNESS MATRIX generation step ...',True)
-with open(modinpfullpath,'a') as inp:
-    inp.write('** LINEAR PERTURBATION STEP: OUTPUT GLOBAL STIFFNESS MATRIX' + '\n')
-    inp.write('*STEP, NAME=GlobalStiffnessMatrix' + '\n')
-    inp.write('*MATRIX GENERATE, STIFFNESS' + '\n')
-    inp.write('*MATRIX OUTPUT, STIFFNESS, FORMAT=MATRIX INPUT' + '\n')
-    inp.write('*END STEP' + '\n')
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
 def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)

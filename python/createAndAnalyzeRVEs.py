@@ -4512,12 +4512,42 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # select element type
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Selecting and assigning element types ...',True)
 
-    if 'first' in parameters['mesh']['elements']['order']:
-        elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
-        elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
-    elif 'second' in parameters['mesh']['elements']['order']:
-        elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
-        elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
+    if 'structuralModel' in parameters['mesh']['elements'].keys():
+        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+            if 'first' in parameters['mesh']['elements']['order']:
+                elemType1 = mesh.ElemType(elemCode=CPEG4, elemLibrary=STANDARD)
+                elemType2 = mesh.ElemType(elemCode=CPEG3, elemLibrary=STANDARD)
+            elif 'second' in parameters['mesh']['elements']['order']:
+                elemType1 = mesh.ElemType(elemCode=CPEG8, elemLibrary=STANDARD)
+                elemType2 = mesh.ElemType(elemCode=CPEG6, elemLibrary=STANDARD)
+        #elif 'generalizedPlaneStress' in parameters['mesh']['elements']['structuralModel']:
+        #    if 'first' in parameters['mesh']['elements']['order']:
+        #        elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
+        #        elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
+        #    elif 'second' in parameters['mesh']['elements']['order']:
+        #        elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
+        #        elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
+        elif 'planeStrain' in parameters['mesh']['elements']['structuralModel']:
+            if 'first' in parameters['mesh']['elements']['order']:
+                elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
+                elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
+            elif 'second' in parameters['mesh']['elements']['order']:
+                elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
+                elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
+        elif 'planeStress' in parameters['mesh']['elements']['structuralModel']:
+            if 'first' in parameters['mesh']['elements']['order']:
+                elemType1 = mesh.ElemType(elemCode=CPS4, elemLibrary=STANDARD)
+                elemType2 = mesh.ElemType(elemCode=CPS3, elemLibrary=STANDARD)
+            elif 'second' in parameters['mesh']['elements']['order']:
+                elemType1 = mesh.ElemType(elemCode=CPS8, elemLibrary=STANDARD)
+                elemType2 = mesh.ElemType(elemCode=CPS6, elemLibrary=STANDARD)
+    else:
+        if 'first' in parameters['mesh']['elements']['order']:
+            elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
+            elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
+        elif 'second' in parameters['mesh']['elements']['order']:
+            elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
+            elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
     model.rootAssembly.setElementType(regions=(model.rootAssembly.instances['RVE-assembly'].sets['RVE']), elemTypes=(elemType1, elemType2))
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)

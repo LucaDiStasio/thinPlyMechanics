@@ -5894,6 +5894,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKTIP-DISPMEAS',True)
 
     if 'second' in parameters['mesh']['elements']['order']:
+        firstboundedFiber = getSingleNodeSet(odb,None,'FIBER-NODE-FIRSTBOUNDED')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-NODE-FIRSTBOUNDED',True)
+
         firstboundedDummyNode = getSingleNodeSet(odb,None,'FIRSTBOUNDED-DUMMY-NODE')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIRSTBOUNDED-DUMMY-NODE',True)
 
@@ -6005,11 +6008,6 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     columnIndeces = []
     values = []
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kct',True)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kstruct2ct',True)
-
-
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- K',True)
     rowIndeces = []
     columnIndeces = []
@@ -6026,6 +6024,33 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     rowIndeces = []
     columnIndeces = []
     values = []
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kct',True)
+    #undefCracktipCoords = getFieldOutput(odb,initialStep,0,'COORD',fiberCracktip)
+    cracktipIndex = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',fiberCracktip).values[0].nodeLabel)
+    fibercracktipdispmeasIndex = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',fiberCracktipDispMeas).values[0].nodeLabel)
+    matrixcracktipdispmeasIndex = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',matrixCracktipDispMeas).values[0].nodeLabel)
+    if 'second' in parameters['mesh']['elements']['order']:
+        fiberfirstBounded = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',firstboundedFiber).values[0].nodeLabel)
+        fiberfirstboundispmeasIndex = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',fiberFirstboundedDispMeas).values[0].nodeLabel)
+        matrixfirstboundispmeasIndex = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',matrixFirstboundedDispMeas).values[0].nodeLabel)
+    Kct = []
+    rowCTx = [K[2*(cracktipIndex-1)+1,2*(matrixcracktipdispmeasIndex-1)+1],K[2*(cracktipIndex-1)+1,2*(matrixcracktipdispmeasIndex-1)+2]]
+    rowCTy = [K[2*(cracktipIndex-1)+2,2*(matrixcracktipdispmeasIndex-1)+1],K[2*(cracktipIndex-1)+2,2*(matrixcracktipdispmeasIndex-1)+2]]
+    if 'second' in parameters['mesh']['elements']['order']:
+        rowCTx.append(K[2*(cracktipIndex-1)+1,2*(matrixfirstboundispmeasIndex-1)+1])
+        rowCTx.append(K[2*(cracktipIndex-1)+1,2*(matrixfirstboundispmeasIndex-1)+2])
+        rowCTy.append(K[2*(cracktipIndex-1)+2,2*(matrixfirstboundispmeasIndex-1)+1])
+        rowCTy.append(K[2*(cracktipIndex-1)+2,2*(matrixfirstboundispmeasIndex-1)+2])
+        rowFBx = [K[2*(fiberfirstBounded-1)+1,2*(matrixcracktipdispmeasIndex-1)+1],K[2*(fiberfirstBounded-1)+1,2*(matrixcracktipdispmeasIndex-1)+2],K[2*(fiberfirstBounded-1)+1,2*(matrixfirstboundispmeasIndex-1)+1],K[2*(fiberfirstBounded-1)+1,2*(matrixfirstboundispmeasIndex-1)+2]]
+        rowFBy = [K[2*(fiberfirstBounded-1)+2,2*(matrixcracktipdispmeasIndex-1)+1],K[2*(fiberfirstBounded-1)+2,2*(matrixcracktipdispmeasIndex-1)+2],K[2*(fiberfirstBounded-1)+2,2*(matrixfirstboundispmeasIndex-1)+1],K[2*(fiberfirstBounded-1)+2,2*(matrixfirstboundispmeasIndex-1)+2]]
+        Kct.append(rowFBx)
+        Kct.append(rowFBy)
+    Kct.insert(0,rowCTy)
+    Kct.insert(0,rowCTx)
+    Kct = np.array(Kct)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kstruct2ct',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- F',True)
     rowIndeces = []

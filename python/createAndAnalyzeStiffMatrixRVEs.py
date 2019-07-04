@@ -5790,6 +5790,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                         inp.write(' SECONDBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
             inp.write('**' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
         with open(modinpfullpath,'a') as inp:
             for line in inpfilelines[startBC+1:startCI]:

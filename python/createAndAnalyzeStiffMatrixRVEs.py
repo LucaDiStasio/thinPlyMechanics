@@ -6016,8 +6016,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         for dofKey in globalMatrix[rowKey].keys():
             for columnKey in globalMatrix[rowKey][dofKey].keys():
                 for cdofKey in globalMatrix[rowKey][dofKey][columnKey].keys():
-                    rowIndeces.append(2*(rowKey-1)+dofKey)
-                    columnIndeces.append(2*(columnKey-1)+cdofKey)
+                    rowIndeces.append(2*(rowKey-1)+dofKey-1)
+                    columnIndeces.append(2*(columnKey-1)+cdofKey-1)
                     values.append(globalMatrix[rowKey][dofKey][columnKey][cdofKey])
     globalMatrix = {}
     K = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, NNodes))
@@ -6035,15 +6035,15 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         fiberfirstboundispmeasIndex = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',fiberFirstboundedDispMeas).values[0].nodeLabel)
         matrixfirstboundispmeasIndex = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',matrixFirstboundedDispMeas).values[0].nodeLabel)
     Kct = []
-    rowCTx = [K[2*(cracktipIndex-1)+1,2*(matrixcracktipdispmeasIndex-1)+1],K[2*(cracktipIndex-1)+1,2*(matrixcracktipdispmeasIndex-1)+2]]
-    rowCTy = [K[2*(cracktipIndex-1)+2,2*(matrixcracktipdispmeasIndex-1)+1],K[2*(cracktipIndex-1)+2,2*(matrixcracktipdispmeasIndex-1)+2]]
+    rowCTx = [K[2*(cracktipIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(cracktipIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]]
+    rowCTy = [K[2*(cracktipIndex-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(cracktipIndex-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+2]]
     if 'second' in parameters['mesh']['elements']['order']:
-        rowCTx.append(K[2*(cracktipIndex-1)+1,2*(matrixfirstboundispmeasIndex-1)+1])
-        rowCTx.append(K[2*(cracktipIndex-1)+1,2*(matrixfirstboundispmeasIndex-1)+2])
-        rowCTy.append(K[2*(cracktipIndex-1)+2,2*(matrixfirstboundispmeasIndex-1)+1])
-        rowCTy.append(K[2*(cracktipIndex-1)+2,2*(matrixfirstboundispmeasIndex-1)+2])
-        rowFBx = [K[2*(fiberfirstBounded-1)+1,2*(matrixcracktipdispmeasIndex-1)+1],K[2*(fiberfirstBounded-1)+1,2*(matrixcracktipdispmeasIndex-1)+2],K[2*(fiberfirstBounded-1)+1,2*(matrixfirstboundispmeasIndex-1)+1],K[2*(fiberfirstBounded-1)+1,2*(matrixfirstboundispmeasIndex-1)+2]]
-        rowFBy = [K[2*(fiberfirstBounded-1)+2,2*(matrixcracktipdispmeasIndex-1)+1],K[2*(fiberfirstBounded-1)+2,2*(matrixcracktipdispmeasIndex-1)+2],K[2*(fiberfirstBounded-1)+2,2*(matrixfirstboundispmeasIndex-1)+1],K[2*(fiberfirstBounded-1)+2,2*(matrixfirstboundispmeasIndex-1)+2]]
+        rowCTx.append(K[2*(cracktipIndex-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+1])
+        rowCTx.append(K[2*(cracktipIndex-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+2])
+        rowCTy.append(K[2*(cracktipIndex-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+1])
+        rowCTy.append(K[2*(cracktipIndex-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+2])
+        rowFBx = [K[2*(fiberfirstBounded-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2],K[2*(fiberfirstBounded-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+2]]
+        rowFBy = [K[2*(fiberfirstBounded-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+2],K[2*(fiberfirstBounded-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+2]]
         Kct.append(rowFBx)
         Kct.append(rowFBy)
     Kct.insert(0,rowCTy)
@@ -6051,19 +6051,19 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     Kct = np.array(Kct)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kstruct2ct',True)
-    allcolKstruct2ct = [K[2*(cracktipIndex-1)+1,:],K[2*(cracktipIndex-1)+1,:]]
-    allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)+1] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)+1] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)+1]
-    allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)+2] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)+2] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)+2]
+    allcolKstruct2ct = [K[2*(cracktipIndex-1)-1+1,:],K[2*(cracktipIndex-1)-1+1,:]]
+    allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+1] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)-1+1] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+1]
+    allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+2] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)-1+2] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+2]
     if 'second' in parameters['mesh']['elements']['order']:
-        allcolKstruct2ct.append(K[2*(fiberfirstBounded-1)+1,:])
-        allcolKstruct2ct.append(K[2*(fiberfirstBounded-1)+2,:])
-        allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)+1] = allcolKstruct2ct[0,2*(matrixfirstboundispmeasIndex-1)+1] + allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)+1]
-        allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)+2] = allcolKstruct2ct[0,2*(matrixfirstboundispmeasIndex-1)+2] + allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)+2]
+        allcolKstruct2ct.append(K[2*(fiberfirstBounded-1)-1+1,:])
+        allcolKstruct2ct.append(K[2*(fiberfirstBounded-1)-1+2,:])
+        allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)-1+1] = allcolKstruct2ct[0,2*(matrixfirstboundispmeasIndex-1)-1+1] + allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)-1+1]
+        allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)-1+2] = allcolKstruct2ct[0,2*(matrixfirstboundispmeasIndex-1)-1+2] + allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)-1+2]
     allcolKstruct2ct = np.array(allcolKstruct2ct)
-    toSkip = [2*(matrixcracktipdispmeasIndex-1)+1,2*(matrixcracktipdispmeasIndex-1)+1]
+    toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+1]
     if 'second' in parameters['mesh']['elements']['order']:
-        toSkip.append(2*(matrixfirstboundispmeasIndex-1)+1)
-        toSkip.append(2*(matrixfirstboundispmeasIndex-1)+2)
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
     Kstruct2ct = []
     for i in range(0,2*m-1):
         row = []
@@ -6074,6 +6074,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     Kstruct2ct = np.array(Kstruct2ct)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CDabq',True)
+    CDabq = np.array([Uabq[,0]])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Ustructabq',True)
 

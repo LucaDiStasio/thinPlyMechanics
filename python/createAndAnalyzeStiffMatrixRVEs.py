@@ -4610,6 +4610,41 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # END - open ODB
     #=======================================================================
 
+    #=======================================================================
+    # BEGIN - extract node sets
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting node sets ...',True)
+
+    matrixCrackfaceNodes = getSingleNodeSet(odb,None,'MATRIX-CRACKFACE-NODES')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKFACE-NODES',True)
+
+    fiberCracktip = getSingleNodeSet(odb,None,'FIBER-CRACKTIP')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKTIP',True)
+
+    cracktipDummyNode = getSingleNodeSet(odb,None,'CRACKTIP-DUMMY-NODE')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CRACKTIP-DUMMY-NODE',True)
+
+    fiberCracktipDispMeas = getSingleNodeSet(odb,None,'FIBER-CRACKTIP-DISPMEAS')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-CRACKTIP-DISPMEAS',True)
+
+    matrixCracktipDispMeas = getSingleNodeSet(odb,None,'MATRIX-CRACKTIP-DISPMEAS')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-CRACKTIP-DISPMEAS',True)
+
+    if 'second' in parameters['mesh']['elements']['order']:
+        firstboundedDummyNode = getSingleNodeSet(odb,None,'FIRSTBOUNDED-DUMMY-NODE')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIRSTBOUNDED-DUMMY-NODE',True)
+
+        fiberFirstboundedDispMeas = getSingleNodeSet(odb,None,'FIBER-FIRSTBOUNDED-DISPMEAS')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- FIBER-FIRSTBOUNDED-DISPMEAS',True)
+
+        matrixFirstboundedDispMeas = getSingleNodeSet(odb,None,'MATRIX-FIRSTBOUNDED-DISPMEAS')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- MATRIX-FIRSTBOUNDED-DISPMEAS',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - extract node sets
+    #=======================================================================
+
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: analyzeRVEresults(wd,odbname,parameters)',True)
 

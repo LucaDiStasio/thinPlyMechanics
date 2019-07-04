@@ -1466,10 +1466,10 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: assemble2DRVE(parameters,logfilepath,baselogindent,logindent)',True)
 
-#===============================================================================#
-#                          Model database creation
-#===============================================================================#
-# if CAE database exists, open it; otherwise create new one
+    #===============================================================================#
+    #                          Model database creation
+    #===============================================================================#
+    # if CAE database exists, open it; otherwise create new one
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating CAE database and model ...',True)
     caefullpath = join(parameters['input']['wd'],parameters['input']['caefilename'])
@@ -1490,9 +1490,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3**logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                            Create RVE region
-#===============================================================================#
+    #===============================================================================#
+    #                            Create RVE region
+    #===============================================================================#
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating RVE region',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Calling function: create2DRVEregion(currentmodel,type,L,logfilepath,baselogindent,logindent)',True)
@@ -1502,9 +1502,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     mdb.save()
 
-#===============================================================================#
-#                         Create fibers and debonds
-#===============================================================================#
+    #===============================================================================#
+    #                         Create fibers and debonds
+    #===============================================================================#
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating fibers and debonds ...',True)
 
@@ -1570,9 +1570,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                 Sets creation
-#===============================================================================#
+    #===============================================================================#
+    #                                 Sets creation
+    #===============================================================================#
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create sets ...',True)
 
@@ -2479,9 +2479,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Materials creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Materials creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating materials ...',True)
@@ -2494,9 +2494,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Sections creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Sections creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating sections ...',True)
@@ -2510,9 +2510,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Sections assignment
-#===============================================================================#
+    #===============================================================================#
+    #                             Sections assignment
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Making section assignments ...',True)
@@ -2524,9 +2524,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Instance creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Instance creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating instance ...',True)
@@ -2538,9 +2538,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Step creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Step creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating step ...',True)
@@ -2552,9 +2552,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Boundary conditions
-#===============================================================================#
+    #===============================================================================#
+    #                             Boundary conditions
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assigning boundary conditions ...',True)
@@ -2568,9 +2568,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                Applied load
-#===============================================================================#
+    #===============================================================================#
+    #                                Applied load
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',2*logindent + 'Assigning loads ...',True)
@@ -2584,9 +2584,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                   Crack
-#===============================================================================#
+    #===============================================================================#
+    #                                   Crack
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating cracks ...',True)
@@ -2617,9 +2617,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                   Mesh
-#===============================================================================#
+    #===============================================================================#
+    #                                   Mesh
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating mesh ...',True)
@@ -2797,9 +2797,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                   Output
-#===============================================================================#
+    #===============================================================================#
+    #                                   Output
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating output requests ...',True)
@@ -2833,9 +2833,9 @@ def assemble2DRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                Job creation
-#===============================================================================#
+    #===============================================================================#
+    #                                Job creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
@@ -2963,9 +2963,9 @@ def listGeomElements(logfilepath,baselogindent,logindent,fiberGeometry,fiberVert
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'fiberVertices[' + str(key) + '] = ' + str(fiberVertices[key]),True)
 
 def createRVE(parameters,logfilepath,baselogindent,logindent):
-#===============================================================================#
-#                               Parameters
-#===============================================================================#
+    #===============================================================================#
+    #                               Parameters
+    #===============================================================================#
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: createRVE(parameters,logfilepath,logindent)',True)
     # assign most used parameters to variables
@@ -3122,10 +3122,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'delta: ' + str(delta),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'minElnum: ' + str(minElNum),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
-#===============================================================================#
-#                          Model database creation
-#===============================================================================#
-# if CAE database exists, open it; otherwise create new one
+    #===============================================================================#
+    #                          Model database creation
+    #===============================================================================#
+    # if CAE database exists, open it; otherwise create new one
     caefullpath = join(wd,caefilename)
     if isfile(caefullpath):
         skipLineToLogFile(logfilepath,'a',True)
@@ -3142,9 +3142,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     mdb.Model(name=modelname)
     model = mdb.models[modelname]
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
-#===============================================================================#
-#                             Parts creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Parts creation
+    #===============================================================================#
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating part ...',True)
     # create sketch
@@ -4008,9 +4008,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Material Orientation
-#===============================================================================#
+    #===============================================================================#
+    #                             Material Orientation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating reference system for material orientation ...',True)
@@ -4041,9 +4041,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
 
-#===============================================================================#
-#                             Materials creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Materials creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating materials ...',True)
@@ -4137,9 +4137,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Sections creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Sections creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating sections ...',True)
@@ -4153,9 +4153,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Sections assignment
-#===============================================================================#
+    #===============================================================================#
+    #                             Sections assignment
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Making section assignments ...',True)
@@ -4171,9 +4171,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Instance creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Instance creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating instance ...',True)
@@ -4185,9 +4185,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Step creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Step creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating step ...',True)
@@ -4199,9 +4199,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Boundary conditions
-#===============================================================================#
+    #===============================================================================#
+    #                             Boundary conditions
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assigning boundary conditions ...',True)
@@ -4237,9 +4237,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                Applied load
-#===============================================================================#
+    #===============================================================================#
+    #                                Applied load
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',2*logindent + 'Assigning loads ...',True)
@@ -4265,9 +4265,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                   Crack
-#===============================================================================#
+    #===============================================================================#
+    #                                   Crack
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating cracks ...',True)
@@ -4303,9 +4303,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                   Mesh
-#===============================================================================#
+    #===============================================================================#
+    #                                   Mesh
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating mesh ...',True)
@@ -4551,9 +4551,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                   Output
-#===============================================================================#
+    #===============================================================================#
+    #                                   Output
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating output requests ...',True)
@@ -4582,9 +4582,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                Job creation
-#===============================================================================#
+    #===============================================================================#
+    #                                Job creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)

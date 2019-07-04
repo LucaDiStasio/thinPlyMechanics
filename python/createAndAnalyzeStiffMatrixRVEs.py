@@ -5656,12 +5656,10 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(' ' + str(parameters['surface']['friction']['static']) + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 5*logindent + 'Static friction coefficient = ' + str(parameters['surface']['friction']['static']) + '[-]',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write STIFFNESS MATRIX generation step ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
     with open(modinpfullpath,'a') as inp:
-        inp.write('** LINEAR PERTURBATION STEP: OUTPUT GLOBAL STIFFNESS MATRIX' + '\n')
-        inp.write('*STEP, NAME=GlobalStiffnessMatrix' + '\n')
-        inp.write('*MATRIX GENERATE, STIFFNESS, LOAD' + '\n')
-        inp.write('*MATRIX OUTPUT, STIFFNESS, LOAD, FORMAT=MATRIX INPUT' + '\n')
+        for line in inpfilelines[endAssembly+1:startBC]:
+            inp.write(line)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write loads  ...',True)
     with open(modinpfullpath,'a') as inp:
@@ -5694,27 +5692,19 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                     inp.write(' SECONDBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
         inp.write('**' + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'End STIFFNESS MATRIX generation step ...',True)
-    with open(modinpfullpath,'a') as inp:
-        inp.write('*END STEP' + '\n')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-    with open(modinpfullpath,'a') as inp:
-        for line in inpfilelines[endAssembly+1:startBC]:
-            inp.write(line)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-
-
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
     with open(modinpfullpath,'a') as inp:
         for line in inpfilelines[startBC+1:startCI]:
             inp.write(line)
+        inp.write('*END STEP' + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write STIFFNESS MATRIX generation step ...',True)
     with open(modinpfullpath,'a') as inp:
-        for line in inpfilelines[endCI+1:]:
-            inp.write(line)
+        inp.write('** LINEAR PERTURBATION STEP: OUTPUT GLOBAL STIFFNESS MATRIX' + '\n')
+        inp.write('*STEP, NAME=GlobalStiffnessMatrix' + '\n')
+        inp.write('*MATRIX GENERATE, STIFFNESS, LOAD' + '\n')
+        inp.write('*MATRIX OUTPUT, STIFFNESS, LOAD, FORMAT=MATRIX INPUT' + '\n')
+        inp.write('*END STEP' + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if  parameters['simulation-pipeline']['remove-INP']:
         skipLineToLogFile(logfilepath,'a',True)

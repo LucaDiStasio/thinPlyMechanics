@@ -5777,6 +5777,20 @@ def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: runRVEsimulation(wd,inpfile,ncpus,baselogindent,logindent)',True)
 
+def Tpq(elType,elOrder,p,q):
+    tpq = 0.0
+    order = {}
+    order['first'] = 1
+    order['second'] = 2
+    order['third'] = 3
+    order['fourth'] = 4
+    if 'quad' in elType:
+        if p==q and p<(order[elType]+1):
+            tpq = 1.0
+        else:
+            tpq = 0.0
+    return tpq
+
 def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
     skipLineToLogFile(logfilepath,'a',True)
@@ -6044,34 +6058,38 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         rowCTy.append(K[2*(cracktipIndex-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+2])
         rowFBx = [K[2*(fiberfirstBounded-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2],K[2*(fiberfirstBounded-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+2]]
         rowFBy = [K[2*(fiberfirstBounded-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+2],K[2*(fiberfirstBounded-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+2]]
-        Kct.append(rowFBx)
-        Kct.append(rowFBy)
-    Kct.insert(0,rowCTy)
-    Kct.insert(0,rowCTx)
-    Kct = np.array(Kct)
+        Kct.append(np.array([rowFBx,rowFBy]))
+    Kct.insert(0,np.array([rowCTx,rowCTy]))
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kstruct2ct',True)
-    allcolKstruct2ct = [K[2*(cracktipIndex-1)-1+1,:],K[2*(cracktipIndex-1)-1+1,:]]
+    allcolKstruct2ct = np.array([K[2*(cracktipIndex-1)-1+1,:],K[2*(cracktipIndex-1)-1+1,:]])
     allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+1] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)-1+1] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+1]
     allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+2] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)-1+2] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+2]
     if 'second' in parameters['mesh']['elements']['order']:
-        allcolKstruct2ct.append(K[2*(fiberfirstBounded-1)-1+1,:])
-        allcolKstruct2ct.append(K[2*(fiberfirstBounded-1)-1+2,:])
-        allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)-1+1] = allcolKstruct2ct[0,2*(matrixfirstboundispmeasIndex-1)-1+1] + allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)-1+1]
-        allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)-1+2] = allcolKstruct2ct[0,2*(matrixfirstboundispmeasIndex-1)-1+2] + allcolKstruct2ct[0,2*(fiberfirstboundispmeasIndex-1)-1+2]
-    allcolKstruct2ct = np.array(allcolKstruct2ct)
+        allcolKstruct2ct2 = np.array([K[2*(fiberfirstBounded-1)-1+1,:],K[2*(fiberfirstBounded-1)-1+2,:]])
+        allcolKstruct2ct2[0,2*(fiberfirstboundispmeasIndex-1)-1+1] = allcolKstruct2ct2[0,2*(matrixfirstboundispmeasIndex-1)-1+1] + allcolKstruct2ct2[0,2*(fiberfirstboundispmeasIndex-1)-1+1]
+        allcolKstruct2ct2[0,2*(fiberfirstboundispmeasIndex-1)-1+2] = allcolKstruct2ct2[0,2*(matrixfirstboundispmeasIndex-1)-1+2] + allcolKstruct2ct2[0,2*(fiberfirstboundispmeasIndex-1)-1+2]
     toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
     if 'second' in parameters['mesh']['elements']['order']:
         toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
         toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
-    Kstruct2ct = []
+    Kstruct2ct1 = []
+    Kstruct2ct2 = []
     for i in range(0,2*m-1):
-        row = []
+        row1 = []
+        row2 = []
         for element,e in enumerate(allcolKstruct2ct[i,:]):
             if e not in toSkip:
-                row.append(element)
-        Kstruct2ct.append(row)
-    Kstruct2ct = np.array(Kstruct2ct)
+                row1.append(element)
+                if 'second' in parameters['mesh']['elements']['order']:
+                    row2.append(allcolKstruct2ct2[i,e])
+        Kstruct2ct.append(row1)
+        Kstruct2ct2.append(row2)
+    Kstruct2ct = sparse.coo_matrix(np.array(Kstruct2ct))
+    Kstruct2ct2 = sparse.coo_matrix(np.array(Kstruct2ct2))
+    Kstruct2ctList = [Kstruct2ct,Kstruct2ct2]
+    allcolKstruct2ct = []
+    allcolKstruct2ct2 = []
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CDabq',True)
     CDabq = [Uabq[2*(matrixcracktipdispmeasIndex-1),0]-Uabq[2*(fibercracktipdispmeasIndex-1),0],Uabq[2*(matrixcracktipdispmeasIndex-1)+1,0]-Uabq[2*(fibercracktipdispmeasIndex-1)+1,0]]
@@ -6146,7 +6164,16 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # BEGIN - compute ERR matrix
     #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute ERR matrix...',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- ABAQUS solution',True)
+    for Pmat, pi in enumerate(P):
+        for Qmat, qi in enumerate(Q):
+            Kct.dot() Kstruct2ct.dot()
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Recalculated solution',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - compute ERR matrix
     #=======================================================================

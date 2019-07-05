@@ -6195,7 +6195,37 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     # BEGIN - diagonalize ERR matrix
     #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Diagonalize ERR matrix...',True)
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- ABAQUS solution',True)
+    G11 = matGabq[0,0]
+    G12 = matGabq[0,1]
+    G21 = matGabq[1,0]
+    G22 = matGabq[1,1]
+    eigG1abq = 0.5*(-(G11+G22)+np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
+    eigG2abq = 0.5*(-(G11+G22)-np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
+    eigvecG1abq = [1/np.sqrt(1+G21*G21/((G22-eigG1abq)*(G22-eigG1abq))),-G21/((G22-eigG1abq)*np.sqrt(1+G21*G21/((G22-eigG1abq)*(G22-eigG1abq))))]
+    eigvecG2abq = [1/np.sqrt(1+G21*G21/((G22-eigG2abq)*(G22-eigG2abq))),-G21/((G22-eigG2abq)*np.sqrt(1+G21*G21/((G22-eigG2abq)*(G22-eigG2abq))))]
+    cospsi1 = 1/np.sqrt(1+G21*G21/((G22-eigG1abq)*(G22-eigG1abq)))
+    cospsi2 = 1/np.sqrt(1+G21*G21/((G22-eigG2abq)*(G22-eigG2abq)))
+    psi1abq = np.arctan2(np.sqrt(1-cospsi1*cospsi1),cospsi1)
+    psi2abq = np.arctan2(np.sqrt(1-cospsi2*cospsi2),cospsi2)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Recalculated solution',True)
+    G11 = matG[0,0]
+    G12 = matG[0,1]
+    G21 = matG[1,0]
+    G22 = matG[1,1]
+    eigG1 = 0.5*(-(G11+G22)+np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
+    eigG2 = 0.5*(-(G11+G22)-np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
+    eigvecG1 = [1/np.sqrt(1+G21*G21/((G22-eigG1)*(G22-eigG1))),-G21/((G22-eigG1)*np.sqrt(1+G21*G21/((G22-eigG1)*(G22-eigG1))))]
+    eigvecG2 = [1/np.sqrt(1+G21*G21/((G22-eigG2)*(G22-eigG2))),-G21/((G22-eigG2)*np.sqrt(1+G21*G21/((G22-eigG2)*(G22-eigG2))))]
+    cospsi1 = 1/np.sqrt(1+G21*G21/((G22-eigG1)*(G22-eigG1)))
+    cospsi2 = 1/np.sqrt(1+G21*G21/((G22-eigG2)*(G22-eigG2)))
+    psi1 = np.arctan2(np.sqrt(1-cospsi1*cospsi1),cospsi1)
+    psi2 = np.arctan2(np.sqrt(1-cospsi2*cospsi2),cospsi2)
+    
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - diagonalize ERR matrix
     #=======================================================================

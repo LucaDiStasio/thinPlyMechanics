@@ -1370,6 +1370,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             CornerAx = -L
     theta = parameters['geometry']['theta'] # in degrees !!!
     deltatheta = parameters['geometry']['deltatheta'] # in degrees !!!
+    LD = parameters['geometry']['LD']['ratio']*W
     if np.abs(theta)>0.0:
         if theta-deltatheta<=0.0:
             skipLineToLogFile(logfilepath,'a',True)

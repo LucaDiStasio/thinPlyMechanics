@@ -1371,6 +1371,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     theta = parameters['geometry']['theta'] # in degrees !!!
     deltatheta = parameters['geometry']['deltatheta'] # in degrees !!!
     LD = parameters['geometry']['LD']['ratio']*W
+    RD = parameters['geometry']['RD']['ratio']*np.min([Rf*deltatheta*np.pi/180.0,LD])
     if np.abs(theta)>0.0:
         if theta-deltatheta<=0.0:
             skipLineToLogFile(logfilepath,'a',True)

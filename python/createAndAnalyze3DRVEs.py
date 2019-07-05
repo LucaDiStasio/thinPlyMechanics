@@ -1265,6 +1265,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     caefilename = parameters['input']['caefilename'].split('.')[0] + '.cae'
     modelname = parameters['input']['modelname']
     L = parameters['geometry']['L']
+    W = parameters['geometry']['W']
     Rf = parameters['geometry']['Rf']
     if 'full' in parameters['geometry']['fiber']['type']:
         CornerAy = -L

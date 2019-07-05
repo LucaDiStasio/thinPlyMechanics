@@ -5790,56 +5790,167 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(' ' + str(parameters['surface']['friction']['static']) + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 5*logindent + 'Static friction coefficient = ' + str(parameters['surface']['friction']['static']) + '[-]',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-    with open(modinpfullpath,'a') as inp:
-        for line in inpfilelines[endAssembly+1:startBC]:
-            inp.write(line)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write loads  ...',True)
-    with open(modinpfullpath,'a') as inp:
-        inp.write('** LOADS' + '\n')
-        inp.write('**' + '\n')
-        for load in parameters['loads'].values():
-            if 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
-                inp.write('*DSLOAD, OP=MOD' + '\n')
-                inp.write(' ' + load['set'] + ', P, ' + str(load['value']) + '\n')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
-    with open(modinpfullpath,'a') as inp:
-        inp.write('** BOUNDARY CONDITIONS' + '\n')
-        inp.write('**' + '\n')
-        inp.write('*BOUNDARY, OP=MOD' + '\n')
-        if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-            inp.write(' CRACKTIPUP-DUMMY-NODE, ENCASTRE' + '\n')
-            inp.write(' CRACKTIPLOW-DUMMY-NODE, ENCASTRE' + '\n')
-            if 'second' in parameters['mesh']['elements']['order']:
-                inp.write(' FIRSTBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
-                inp.write(' FIRSTBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
-                if 'inverseSquareRoot' in parameters['singularity']['type']:
-                    inp.write(' SECONDBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
-                    inp.write(' SECONDBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
-        else:
-            inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
-            if 'second' in parameters['mesh']['elements']['order']:
-                inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
-                if 'inverseSquareRoot' in parameters['singularity']['type']:
-                    inp.write(' SECONDBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
-        inp.write('**' + '\n')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-    with open(modinpfullpath,'a') as inp:
-        for line in inpfilelines[startBC+1:startCI]:
-            inp.write(line)
-        inp.write('*END STEP' + '\n')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write STIFFNESS MATRIX generation step ...',True)
-    with open(modinpfullpath,'a') as inp:
-        inp.write('** LINEAR PERTURBATION STEP: OUTPUT GLOBAL STIFFNESS MATRIX' + '\n')
-        inp.write('*STEP, NAME=GlobalStiffnessMatrix' + '\n')
-        inp.write('*MATRIX GENERATE, STIFFNESS, LOAD' + '\n')
-        inp.write('*MATRIX OUTPUT, STIFFNESS, LOAD, FORMAT=MATRIX INPUT' + '\n')
-        inp.write('*END STEP' + '\n')
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if len(parameters['steps'])>1:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[endAssembly+1:startTempStep+2]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('** BOUNDARY CONDITIONS' + '\n')
+            inp.write('**' + '\n')
+            inp.write('*BOUNDARY, OP=MOD' + '\n')
+            if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+                inp.write(' CRACKTIPUP-DUMMY-NODE, ENCASTRE' + '\n')
+                inp.write(' CRACKTIPLOW-DUMMY-NODE, ENCASTRE' + '\n')
+                if 'second' in parameters['mesh']['elements']['order']:
+                    inp.write(' FIRSTBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
+                    inp.write(' FIRSTBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
+                    if 'inverseSquareRoot' in parameters['singularity']['type']:
+                        inp.write(' SECONDBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
+                        inp.write(' SECONDBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
+            else:
+                inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
+                if 'second' in parameters['mesh']['elements']['order']:
+                    inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+                    if 'inverseSquareRoot' in parameters['singularity']['type']:
+                        inp.write(' SECONDBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+            inp.write('**' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[startTempStep+2:startTempCI]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
+        crackName = inpfilelines[startTempCI].replace('\n','').split(',')[1].split('=')[1]
+        nContours = inpfilelines[startTempCI].replace('\n','').split(',')[2].split('=')[1]
+        qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
+        qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
+            inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[startTempCI+2:startLoadStep+2]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write loads  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('** LOADS' + '\n')
+            inp.write('**' + '\n')
+            for load in parameters['loads'].values():
+                if 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
+                    inp.write('*DSLOAD, OP=MOD' + '\n')
+                    inp.write(' ' + load['set'] + ', P, ' + str(load['value']) + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('** BOUNDARY CONDITIONS' + '\n')
+            inp.write('**' + '\n')
+            inp.write('*BOUNDARY, OP=MOD' + '\n')
+            if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+                inp.write(' CRACKTIPUP-DUMMY-NODE, ENCASTRE' + '\n')
+                inp.write(' CRACKTIPLOW-DUMMY-NODE, ENCASTRE' + '\n')
+                if 'second' in parameters['mesh']['elements']['order']:
+                    inp.write(' FIRSTBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
+                    inp.write(' FIRSTBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
+                    if 'inverseSquareRoot' in parameters['singularity']['type']:
+                        inp.write(' SECONDBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
+                        inp.write(' SECONDBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
+            else:
+                inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
+                if 'second' in parameters['mesh']['elements']['order']:
+                    inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+                    if 'inverseSquareRoot' in parameters['singularity']['type']:
+                        inp.write(' SECONDBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+            inp.write('**' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[startLoadStep+2:startLoadCI]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
+        crackName = inpfilelines[startLoadCI].replace('\n','').split(',')[1].split('=')[1]
+        nContours = inpfilelines[startLoadCI].replace('\n','').split(',')[2].split('=')[1]
+        qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
+        qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
+            inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[startLoadCI+2:]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    else:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[endAssembly+1:startBC]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write loads  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('** LOADS' + '\n')
+            inp.write('**' + '\n')
+            for load in parameters['loads'].values():
+                if 'appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']:
+                    inp.write('*DSLOAD, OP=MOD' + '\n')
+                    inp.write(' ' + load['set'] + ', P, ' + str(load['value']) + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write boundary conditions for VCCT  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('** BOUNDARY CONDITIONS' + '\n')
+            inp.write('**' + '\n')
+            inp.write('*BOUNDARY, OP=MOD' + '\n')
+            if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+                inp.write(' CRACKTIPUP-DUMMY-NODE, ENCASTRE' + '\n')
+                inp.write(' CRACKTIPLOW-DUMMY-NODE, ENCASTRE' + '\n')
+                if 'second' in parameters['mesh']['elements']['order']:
+                    inp.write(' FIRSTBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
+                    inp.write(' FIRSTBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
+                    if 'inverseSquareRoot' in parameters['singularity']['type']:
+                        inp.write(' SECONDBOUNDEDUP-DUMMY-NODE, ENCASTRE' + '\n')
+                        inp.write(' SECONDBOUNDEDLOW-DUMMY-NODE, ENCASTRE' + '\n')
+            else:
+                inp.write(' CRACKTIP-DUMMY-NODE, ENCASTRE' + '\n')
+                if 'second' in parameters['mesh']['elements']['order']:
+                    inp.write(' FIRSTBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+                    if 'inverseSquareRoot' in parameters['singularity']['type']:
+                        inp.write(' SECONDBOUNDED-DUMMY-NODE, ENCASTRE' + '\n')
+            inp.write('**' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[startBC+1:startCI]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
+        crackName = inpfilelines[startCI].replace('\n','').split(',')[1].split('=')[1]
+        nContours = inpfilelines[startCI].replace('\n','').split(',')[2].split('=')[1]
+        qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
+        qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
+            inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[endCI+1:]:
+                inp.write(line)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write STIFFNESS MATRIX generation step ...',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('** LINEAR PERTURBATION STEP: OUTPUT GLOBAL STIFFNESS MATRIX' + '\n')
+            inp.write('*STEP, NAME=GlobalStiffnessMatrix' + '\n')
+            inp.write('*MATRIX GENERATE, STIFFNESS, LOAD' + '\n')
+            inp.write('*MATRIX OUTPUT, STIFFNESS, LOAD, FORMAT=MATRIX INPUT' + '\n')
+            inp.write('*END STEP' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if  parameters['simulation-pipeline']['remove-INP']:
         skipLineToLogFile(logfilepath,'a',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Remove .inp file from working directory... ',True)
@@ -5851,6 +5962,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             sys.exc_clear()
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     return modinpname
+
+
 
 def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
     skipLineToLogFile(logfilepath,'a',True)
@@ -5996,6 +6109,57 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalloadvector'],lines[2:])
     #=======================================================================
     # END - Copy load vector to csv file
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - extract J-integral results
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting J-integral results ...',True)
+
+    if parameters['simulation-pipeline']['analysis']['report-energyreleaserates']:
+        if len(parameters['steps'])>1:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
+            try:
+                Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'],1)
+            except Exception,e:
+                writeErrorToLogFile(logfilepath,'a',Exception,e,True)
+                sys.exc_clear()
+            JintegralsWithDistance = []
+            for v,value in enumerate(Jintegrals):
+                JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
+            createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalJintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['thermalJintegral'],JintegralsWithDistance)
+            del JintegralsWithDistance
+            thermalJintegrals = Jintegrals
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> MECHANICAL STEP <--',True)
+            try:
+                Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'],2)
+            except Exception,e:
+                writeErrorToLogFile(logfilepath,'a',Exception,e,True)
+                sys.exc_clear()
+            JintegralsWithDistance = []
+            for v,value in enumerate(Jintegrals):
+                JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
+            createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
+            del JintegralsWithDistance
+        else:
+            try:
+                Jintegrals = getJintegrals(wd,odbname.split('.')[0],parameters['Jintegral']['numberOfContours'],1)
+            except Exception,e:
+                writeErrorToLogFile(logfilepath,'a',Exception,e,True)
+                sys.exc_clear()
+            JintegralsWithDistance = []
+            for v,value in enumerate(Jintegrals):
+                JintegralsWithDistance.append([v+1,(v+1)*parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0,value])
+            createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
+            appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
+            del JintegralsWithDistance
+    else:
+        createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - extract J-integral results
     #=======================================================================
 
     #=======================================================================
@@ -6363,7 +6527,246 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # END - diagonalize ERR matrix
     #=======================================================================
 
+    #=======================================================================
+    # BEGIN - compute VCCT
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute VCCT ...',True)
 
+    if parameters['simulation-pipeline']['analysis']['report-energyreleaserates']:
+        if len(parameters['steps'])>1:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Check if crack faces are pressure-loaded in this step ...',True)
+            isPressureLoadedCrack = False
+            for load in parameters['loads'].values():
+                if ('appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']) and 'Temp-Step' in load['stepName'] and ('FiberSurface' in load['set'] or 'MatrixSurface' in load['set']):
+                    isPressureLoadedCrack = True
+                    uniformP = load['value']
+                    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pressure loaded crack faces are present, corrected VCCT will be used.',True)
+                    break
+            if not isPressureLoadedCrack:
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pressure loaded crack faces are not present.',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract forces and displacements ...',True)
+
+            RFcracktip = getFieldOutput(odb,-2,-1,'RF',cracktipDummyNode)
+            if 'second' in parameters['mesh']['elements']['order']:
+                RFfirstbounded = getFieldOutput(odb,-2,-1,'RF',firstboundedDummyNode)
+            fiberCracktipDisplacement = getFieldOutput(odb,-2,-1,'U',fiberCracktipDispMeas)
+            matrixCracktipDisplacement = getFieldOutput(odb,-2,-1,'U',matrixCracktipDispMeas)
+            if 'second' in parameters['mesh']['elements']['order']:
+                fiberFirstboundedDisplacement = getFieldOutput(odb,-2,-1,'U',fiberFirstboundedDispMeas)
+                matrixFirstboundedDisplacement = getFieldOutput(odb,-2,-1,'U',matrixFirstboundedDispMeas)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate forces and displacements ...',True)
+
+            xRFcracktip = RFcracktip.values[0].data[0]
+            yRFcracktip = RFcracktip.values[0].data[1]
+            rRFcracktip = np.cos(phi)*xRFcracktip + np.sin(phi)*yRFcracktip
+            thetaRFcracktip = -np.sin(phi)*xRFcracktip + np.cos(phi)*yRFcracktip
+            if 'second' in parameters['mesh']['elements']['order']:
+                xRFfirstbounded = RFfirstbounded.values[0].data[0]
+                yRFfirstbounded = RFfirstbounded.values[0].data[1]
+                rRFfirstbounded = np.cos(phi)*xRFfirstbounded + np.sin(phi)*yRFfirstbounded
+                thetaRFfirstbounded = -np.sin(phi)*xRFfirstbounded + np.cos(phi)*yRFfirstbounded
+                if isPressureLoadedCrack:
+                    rRFcracktip -= uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/6
+                    rRFfirstbounded -= 2*uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/3
+            else:
+                if isPressureLoadedCrack:
+                    rRFcracktip -= uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/2
+
+            xfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[0]
+            yfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[1]
+            rfiberCracktipDisplacement = np.cos(phi)*xfiberCracktipDisplacement + np.sin(phi)*yfiberCracktipDisplacement
+            thetafiberCracktipDisplacement = -np.sin(phi)*xfiberCracktipDisplacement + np.cos(phi)*yfiberCracktipDisplacement
+            xmatrixCracktipDisplacement = matrixCracktipDisplacement.values[0].data[0]
+            ymatrixCracktipDisplacement = matrixCracktipDisplacement.values[0].data[1]
+            rmatrixCracktipDisplacement = np.cos(phi)*xmatrixCracktipDisplacement + np.sin(phi)*ymatrixCracktipDisplacement
+            thetamatrixCracktipDisplacement = -np.sin(phi)*xmatrixCracktipDisplacement + np.cos(phi)*ymatrixCracktipDisplacement
+            if 'second' in parameters['mesh']['elements']['order']:
+                xfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[0]
+                yfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[1]
+                rfiberFirstboundedDisplacement = np.cos(phi)*xfiberFirstboundedDisplacement + np.sin(phi)*yfiberFirstboundedDisplacement
+                thetafiberFirstboundedDisplacement = -np.sin(phi)*xfiberFirstboundedDisplacement + np.cos(phi)*yfiberFirstboundedDisplacement
+                xmatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[0]
+                ymatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[1]
+                rmatrixFirstboundedDisplacement = np.cos(phi)*xmatrixFirstboundedDisplacement + np.sin(phi)*ymatrixFirstboundedDisplacement
+                thetamatrixFirstboundedDisplacement = -np.sin(phi)*xmatrixFirstboundedDisplacement + np.cos(phi)*ymatrixFirstboundedDisplacement
+
+            xcracktipDisplacement = xmatrixCracktipDisplacement - xfiberCracktipDisplacement
+            ycracktipDisplacement = ymatrixCracktipDisplacement - yfiberCracktipDisplacement
+            rcracktipDisplacement = rmatrixCracktipDisplacement - rfiberCracktipDisplacement
+            thetacracktipDisplacement = thetamatrixCracktipDisplacement - thetafiberCracktipDisplacement
+            if 'second' in parameters['mesh']['elements']['order']:
+                xfirstboundedDisplacement = xmatrixFirstboundedDisplacement - xfiberFirstboundedDisplacement
+                yfirstboundedDisplacement = ymatrixFirstboundedDisplacement - yfiberFirstboundedDisplacement
+                rfirstboundedDisplacement = rmatrixFirstboundedDisplacement - rfiberFirstboundedDisplacement
+                thetafirstboundedDisplacement = thetamatrixFirstboundedDisplacement - thetafiberFirstboundedDisplacement
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GTOT=GI+GII ...',True)
+
+            if 'second' in parameters['mesh']['elements']['order']:
+                GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+                GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+                GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement+xRFfirstbounded*xfirstboundedDisplacement+yRFfirstbounded*yfirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+            else:
+                GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+                GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+                GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+
+            GTOT = GI + GII
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GI=GTOT-GII ...',True)
+
+            if 'second' in parameters['mesh']['elements']['order']:
+                GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+            else:
+                GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+
+            GTOTv2 = thermalJintegrals[-1]
+
+            GIv2 = GTOTv2 - GIIv2
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
+            if 'second' in parameters['mesh']['elements']['order']:
+                appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['thermalenergyreleaserate'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZthermal*180.0/np.pi,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uRthermal),np.max(uRthermal),np.mean(uRthermal),np.min(uThetathermal),np.max(uThetathermal),np.mean(uThetathermal),phiSZthermal*180.0/np.pi,xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement]])
+            else:
+                appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['thermalenergyreleaserate'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZthermal*180.0/np.pi,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uRthermal),np.max(uRthermal),np.mean(uRthermal),np.min(uThetathermal),np.max(uThetathermal),np.mean(uThetathermal),phiSZthermal*180.0/np.pi,xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement]])
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> MECHANICAL STEP <--',True)
+
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Check if crack faces are pressure-loaded in this step ...',True)
+        isPressureLoadedCrack = False
+        for load in parameters['loads'].values():
+            if ('appliedUniformPressure' in load['type'] or 'applieduniformpressure' in load['type'] or 'applied Uniform Pressure' in load['type'] or 'applied uniform pressure' in load['type']) and 'Load-Step' in load['stepName'] and ('FiberSurface' in load['set'] or 'MatrixSurface' in load['set']):
+                isPressureLoadedCrack = True
+                uniformP = load['value']
+                writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pressure loaded crack faces are present, corrected VCCT will be used.',True)
+                break
+        if not isPressureLoadedCrack:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Pressure loaded crack faces are not present.',True)
+
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extract forces and displacements ...',True)
+
+        RFcracktip = getFieldOutput(odb,-1,-1,'RF',cracktipDummyNode)
+        if 'second' in parameters['mesh']['elements']['order']:
+            RFfirstbounded = getFieldOutput(odb,-1,-1,'RF',firstboundedDummyNode)
+        fiberCracktipDisplacement = getFieldOutput(odb,-1,-1,'U',fiberCracktipDispMeas)
+        matrixCracktipDisplacement = getFieldOutput(odb,-1,-1,'U',matrixCracktipDispMeas)
+        if 'second' in parameters['mesh']['elements']['order']:
+            fiberFirstboundedDisplacement = getFieldOutput(odb,-1,-1,'U',fiberFirstboundedDispMeas)
+            matrixFirstboundedDisplacement = getFieldOutput(odb,-1,-1,'U',matrixFirstboundedDispMeas)
+
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Rotate forces and displacements ...',True)
+
+        xRFcracktip = RFcracktip.values[0].data[0]
+        yRFcracktip = RFcracktip.values[0].data[1]
+        rRFcracktip = np.cos(phi)*xRFcracktip + np.sin(phi)*yRFcracktip
+        thetaRFcracktip = -np.sin(phi)*xRFcracktip + np.cos(phi)*yRFcracktip
+        if 'second' in parameters['mesh']['elements']['order']:
+            xRFfirstbounded = RFfirstbounded.values[0].data[0]
+            yRFfirstbounded = RFfirstbounded.values[0].data[1]
+            rRFfirstbounded = np.cos(phi)*xRFfirstbounded + np.sin(phi)*yRFfirstbounded
+            thetaRFfirstbounded = -np.sin(phi)*xRFfirstbounded + np.cos(phi)*yRFfirstbounded
+            if isPressureLoadedCrack:
+                rRFcracktip -= uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/6
+                rRFfirstbounded -= 2*uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/3
+        else:
+            if isPressureLoadedCrack:
+                rRFcracktip -= uniformP*(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0)/2
+
+
+        xfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[0]
+        yfiberCracktipDisplacement = fiberCracktipDisplacement.values[0].data[1]
+        rfiberCracktipDisplacement = np.cos(phi)*xfiberCracktipDisplacement + np.sin(phi)*yfiberCracktipDisplacement
+        thetafiberCracktipDisplacement = -np.sin(phi)*xfiberCracktipDisplacement + np.cos(phi)*yfiberCracktipDisplacement
+        xmatrixCracktipDisplacement = matrixCracktipDisplacement.values[0].data[0]
+        ymatrixCracktipDisplacement = matrixCracktipDisplacement.values[0].data[1]
+        rmatrixCracktipDisplacement = np.cos(phi)*xmatrixCracktipDisplacement + np.sin(phi)*ymatrixCracktipDisplacement
+        thetamatrixCracktipDisplacement = -np.sin(phi)*xmatrixCracktipDisplacement + np.cos(phi)*ymatrixCracktipDisplacement
+        if 'second' in parameters['mesh']['elements']['order']:
+            xfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[0]
+            yfiberFirstboundedDisplacement = fiberFirstboundedDisplacement.values[0].data[1]
+            rfiberFirstboundedDisplacement = np.cos(phi)*xfiberFirstboundedDisplacement + np.sin(phi)*yfiberFirstboundedDisplacement
+            thetafiberFirstboundedDisplacement = -np.sin(phi)*xfiberFirstboundedDisplacement + np.cos(phi)*yfiberFirstboundedDisplacement
+            xmatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[0]
+            ymatrixFirstboundedDisplacement = matrixFirstboundedDisplacement.values[0].data[1]
+            rmatrixFirstboundedDisplacement = np.cos(phi)*xmatrixFirstboundedDisplacement + np.sin(phi)*ymatrixFirstboundedDisplacement
+            thetamatrixFirstboundedDisplacement = -np.sin(phi)*xmatrixFirstboundedDisplacement + np.cos(phi)*ymatrixFirstboundedDisplacement
+
+        xcracktipDisplacement = xmatrixCracktipDisplacement - xfiberCracktipDisplacement
+        ycracktipDisplacement = ymatrixCracktipDisplacement - yfiberCracktipDisplacement
+        rcracktipDisplacement = rmatrixCracktipDisplacement - rfiberCracktipDisplacement
+        thetacracktipDisplacement = thetamatrixCracktipDisplacement - thetafiberCracktipDisplacement
+        if 'second' in parameters['mesh']['elements']['order']:
+            xfirstboundedDisplacement = xmatrixFirstboundedDisplacement - xfiberFirstboundedDisplacement
+            yfirstboundedDisplacement = ymatrixFirstboundedDisplacement - yfiberFirstboundedDisplacement
+            rfirstboundedDisplacement = rmatrixFirstboundedDisplacement - rfiberFirstboundedDisplacement
+            thetafirstboundedDisplacement = thetamatrixFirstboundedDisplacement - thetafiberFirstboundedDisplacement
+
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GTOT=GI+GII ...',True)
+
+        if 'second' in parameters['mesh']['elements']['order']:
+            GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement+rRFfirstbounded*rfirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+            GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+            GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement+xRFfirstbounded*xfirstboundedDisplacement+yRFfirstbounded*yfirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+        else:
+            GI = np.abs(0.5*(rRFcracktip*rcracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+            GII = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+            GTOTequiv = np.abs(0.5*(xRFcracktip*xcracktipDisplacement+yRFcracktip*ycracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+
+        GTOT = GI + GII
+
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute VCCT with GI=GTOT-GII ...',True)
+
+        if 'second' in parameters['mesh']['elements']['order']:
+            GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement+thetaRFfirstbounded*thetafirstboundedDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+        else:
+            GIIv2 = np.abs(0.5*(thetaRFcracktip*thetacracktipDisplacement)/(parameters['geometry']['Rf']*parameters['mesh']['size']['delta']*np.pi/180.0))
+
+        GTOTv2 = Jintegrals[-1]
+
+        GIv2 = GTOTv2 - GIIv2
+
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
+        if 'second' in parameters['mesh']['elements']['order']:
+            appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZ*180.0/np.pi,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ*180.0/np.pi,xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement]])
+        else:
+            appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZ*180.0/np.pi,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ*180.0/np.pi,xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement]])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - compute VCCT
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - close ODB
+    #=======================================================================
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Closing ODB database ...',True)
+    odb.close()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - close ODB
+    #=======================================================================
 
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Exiting function: analyzeRVEresults(wd,odbname,parameters)',True)
 

@@ -6092,22 +6092,26 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     allcolKstruct2ct2 = []
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CDabq',True)
-    CDabq = [Uabq[2*(matrixcracktipdispmeasIndex-1),0]-Uabq[2*(fibercracktipdispmeasIndex-1),0],Uabq[2*(matrixcracktipdispmeasIndex-1)+1,0]-Uabq[2*(fibercracktipdispmeasIndex-1)+1,0]]
+    CDabq1 = np.array([Uabq[2*(matrixcracktipdispmeasIndex-1),0]-Uabq[2*(fibercracktipdispmeasIndex-1),0],Uabq[2*(matrixcracktipdispmeasIndex-1)+1,0]-Uabq[2*(fibercracktipdispmeasIndex-1)+1,0]])
     if 'second' in parameters['mesh']['elements']['order']:
-        CDabq.append(Uabq[2*(matrixfirstboundispmeasIndex-1),0]-Uabq[2*(fiberfirstboundispmeasIndex-1),0])
-        CDabq.append(Uabq[2*(matrixfirstboundispmeasIndex-1)+1,0]-Uabq[2*(fiberfirstboundispmeasIndex-1)+1,0])
-    CDabq = np.array(CDabq)
+        CDabq2 = np.array(Uabq[2*(matrixfirstboundispmeasIndex-1),0]-Uabq[2*(fiberfirstboundispmeasIndex-1),0],Uabq[2*(matrixfirstboundispmeasIndex-1)+1,0]-Uabq[2*(fiberfirstboundispmeasIndex-1)+1,0])
+    CDabq =[CDabq1,CDabq2]
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Ustructabq',True)
     toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
     if 'second' in parameters['mesh']['elements']['order']:
         toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
         toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
-    Ustructabq = []
-    for element,e in enumerate(Ustructabq[:,1]):
+    Ustructabq1 = []
+    Ustructabq2 = []
+    for element,e in enumerate(Uabq[:,1]):
         if e not in toSkip:
-            Ustructabq.append(element)
-    Ustructabq = np.array(Ustructabq)
+            Ustructabq1.append(element)
+            if 'second' in parameters['mesh']['elements']['order']:
+                Ustructabq2.append(Uabq[e,1])
+    Ustructabq1 = np.array(Ustructabq1)
+    Ustructabq2 = np.array(Ustructabq2)
+    Ustructabq = [Ustructabq1,Ustructabq2]
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- F',True)
     rowIndeces = []
@@ -6139,22 +6143,26 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     U = invK.dot(F)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CD',True)
-    CD = [U[2*(matrixcracktipdispmeasIndex-1),0]-U[2*(fibercracktipdispmeasIndex-1),0],U[2*(matrixcracktipdispmeasIndex-1)+1,0]-U[2*(fibercracktipdispmeasIndex-1)+1,0]]
+    CD1 = np.array([U[2*(matrixcracktipdispmeasIndex-1),0]-U[2*(fibercracktipdispmeasIndex-1),0],U[2*(matrixcracktipdispmeasIndex-1)+1,0]-U[2*(fibercracktipdispmeasIndex-1)+1,0]])
     if 'second' in parameters['mesh']['elements']['order']:
-        CD.append(U[2*(matrixfirstboundispmeasIndex-1),0]-U[2*(fiberfirstboundispmeasIndex-1),0])
-        CD.append(U[2*(matrixfirstboundispmeasIndex-1)+1,0]-U[2*(fiberfirstboundispmeasIndex-1)+1,0])
-    CD = np.array(CD)
+        CD2 = np.array(U[2*(matrixfirstboundispmeasIndex-1),0]-U[2*(fiberfirstboundispmeasIndex-1),0],U[2*(matrixfirstboundispmeasIndex-1)+1,0]-U[2*(fiberfirstboundispmeasIndex-1)+1,0])
+    CD =[CD1,CD2]
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Ustruct',True)
     toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
     if 'second' in parameters['mesh']['elements']['order']:
         toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
         toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
-    Ustruct = []
-    for element,e in enumerate(Ustruct[:,1]):
+    Ustruct1 = []
+    Ustruct2 = []
+    for element,e in enumerate(U[:,1]):
         if e not in toSkip:
-            Ustruct.append(element)
-    Ustruct = np.array(Ustruct)
+            Ustruct1.append(element)
+            if 'second' in parameters['mesh']['elements']['order']:
+                Ustruct2.append(U[e,1])
+    Ustruct1 = np.array(Ustruct1)
+    Ustruct2 = np.array(Ustruct2)
+    Ustruct = [Ustruct1,Ustruct2]
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
@@ -6167,11 +6175,17 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute ERR matrix...',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- ABAQUS solution',True)
+    matGabq = 0
     for Pmat, pi in enumerate(P):
         for Qmat, qi in enumerate(Q):
-            Kct.dot() Kstruct2ct.dot()
+            matGabq += Q[qi].dot(R.dot(np.outer((Kct[qi].dot(CDabq[qi])+Kstruct2ct[qi].dot(Ustructabq[qi])),CDabq[pi]).dot(invR.dot(invP[pi].dot(Tpq('quad',parameters['mesh']['elements']['order'],pi,qi))))))
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Recalculated solution',True)
+    matG = 0
+    for Pmat, pi in enumerate(P):
+        for Qmat, qi in enumerate(Q):
+            matG += Q[qi].dot(R.dot(np.outer((Kct[qi].dot(CD[qi])+Kstruct2ct[qi].dot(Ustruct[qi])),CD[pi]).dot(invR.dot(invP[pi].dot(Tpq('quad',parameters['mesh']['elements']['order'],pi,qi))))))
+
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

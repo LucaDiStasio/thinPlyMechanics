@@ -5731,7 +5731,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         if started and '*' in line:
             elementSecStop = l-1
             break
-        elif ('*Element, type=CPE8' in line or '*ELEMENT, type=CPE8' in line or '*Element, type=CPE4' in line or '*ELEMENT, type=CPE4' in line) and (len(inpfilelines[l+1].replace('\n','').split(','))==5 or len(inpfilelines[l+1].replace('\n','').split(','))==9):
+        elif ('*Element, type=CPE8' in line or '*ELEMENT, type=CPE8' in line or '*Element, type=CPE4' in line or '*ELEMENT, type=CPE4' in line or '*Element, type=CPEG8' in line or '*ELEMENT, type=CPEG8' in line or '*Element, type=CPEG4' in line or '*ELEMENT, type=CPEG4' in line or '*Element, type=CPS8' in line or '*ELEMENT, type=CPS8' in line or '*Element, type=CPS4' in line or '*ELEMENT, type=CPS4' in line) and (len(inpfilelines[l+1].replace('\n','').split(','))==5 or len(inpfilelines[l+1].replace('\n','').split(','))==9):
             elementSecStart = l
             started = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Element section begins at line ' + str(elementSecStart) + ' and ends at line ' + str(elementSecStop),True)

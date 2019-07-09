@@ -4184,11 +4184,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     model.rootAssembly.DatumCsysByDefault(CARTESIAN)
     model.rootAssembly.Instance(name='RVE-assembly', part=RVEpart, dependent=OFF)
 
-    if 'structuralModel' in parameters['mesh']['elements'].keys():
-        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign kinematic coupling for generalized plane strain',True)
-            mdb.models[modelname].Coupling(name='GPE-KinematicCoupling', controlPoint=mdb.models[modelname].rootAssembly.instances['RVE-assembly'].sets['SE-CORNER'], surface=mdb.models[modelname].rootAssembly.instances['RVE-assembly'].sets['RVE'], influenceRadius=WHOLE_SURFACE, couplingType=KINEMATIC, localCsys=None, u1=OFF, u2=OFF, u3=OFF, ur1=ON, ur2=ON, ur3=ON)
-
     mdb.save()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -5822,9 +5817,23 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-    with open(modinpfullpath,'a') as inp:
-        for line in inpfilelines[elementSecStop+1:endAssembly]:
-            inp.write(line)
+    if 'structuralModel' in parameters['mesh']['elements'].keys():
+        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign reference node to generalized plane strain elements',True)
+            with open(modinpfullpath,'a') as inp:
+                for line in inpfilelines[elementSecStop+1:endAssembly]:
+                    if '*Solid Section' in line or '*SOLID SECTION' in line:
+                        inp.write(line.replace('\n','') + ', REF NODE=SE-CORNER' + '\n')
+                    else:
+                        inp.write(line)
+        else:
+            with open(modinpfullpath,'a') as inp:
+                for line in inpfilelines[elementSecStop+1:endAssembly]:
+                    inp.write(line)
+    else:
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[elementSecStop+1:endAssembly]:
+                inp.write(line)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write crack faces node and element sets ...',True)
     with open(modinpfullpath,'a') as inp:

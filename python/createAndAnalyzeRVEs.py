@@ -4145,9 +4145,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating sections ...',True)
 
     for section in parameters['sections'].values():
+        if 'structuralModel' in parameters['mesh']['elements'].keys():
+            if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+                mdb.models[modelname].PEGSection(name=section['name'],material=section['material'], thickness=section['thickness'], wedgeAngle1=0.0,
+        wedgeAngle2=0.0)
         if 'HomogeneousSolidSection' in section['type'] or 'Homogeneous Solid Section' in section['type'] or 'homogeneoussolidsection' in section['type'] or 'homogeneous solid section' in section['type'] or 'Homogeneous solid section' in section['type']:
-            mdb.models[modelname].HomogeneousSolidSection(name=section['name'],
-            material=section['material'], thickness=section['thickness'])
+            mdb.models[modelname].HomogeneousSolidSection(name=section['name'],material=section['material'], thickness=section['thickness'])
 
     mdb.save()
 

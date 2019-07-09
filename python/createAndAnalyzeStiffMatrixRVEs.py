@@ -2964,9 +2964,9 @@ def listGeomElements(logfilepath,baselogindent,logindent,fiberGeometry,fiberVert
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'fiberVertices[' + str(key) + '] = ' + str(fiberVertices[key]),True)
 
 def createRVE(parameters,logfilepath,baselogindent,logindent):
-#===============================================================================#
-#                               Parameters
-#===============================================================================#
+    #===============================================================================#
+    #                               Parameters
+    #===============================================================================#
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'In function: createRVE(parameters,logfilepath,logindent)',True)
     # assign most used parameters to variables
@@ -3123,10 +3123,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'delta: ' + str(delta),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'minElnum: ' + str(minElNum),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
-#===============================================================================#
-#                          Model database creation
-#===============================================================================#
-# if CAE database exists, open it; otherwise create new one
+    #===============================================================================#
+    #                          Model database creation
+    #===============================================================================#
+    # if CAE database exists, open it; otherwise create new one
     caefullpath = join(wd,caefilename)
     if isfile(caefullpath):
         skipLineToLogFile(logfilepath,'a',True)
@@ -3143,9 +3143,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     mdb.Model(name=modelname)
     model = mdb.models[modelname]
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
-#===============================================================================#
-#                             Parts creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Parts creation
+    #===============================================================================#
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating part ...',True)
     # create sketch
@@ -3560,9 +3560,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Material Orientation
-#===============================================================================#
+    #===============================================================================#
+    #                             Material Orientation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating reference system for material orientation ...',True)
@@ -3593,9 +3593,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         writeLineToLogFile(logfilepath,'a',baselogindent + logindent + '... done.',True)
 
 
-#===============================================================================#
-#                             Materials creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Materials creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating materials ...',True)
@@ -3689,9 +3689,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Sections creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Sections creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating sections ...',True)
@@ -3705,9 +3705,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Sections assignment
-#===============================================================================#
+    #===============================================================================#
+    #                             Sections assignment
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Making section assignments ...',True)
@@ -3723,9 +3723,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Instance creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Instance creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating instance ...',True)
@@ -3737,9 +3737,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Step creation
-#===============================================================================#
+    #===============================================================================#
+    #                             Step creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating step ...',True)
@@ -3751,9 +3751,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                             Boundary conditions
-#===============================================================================#
+    #===============================================================================#
+    #                             Boundary conditions
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assigning boundary conditions ...',True)
@@ -3789,9 +3789,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                Applied load
-#===============================================================================#
+    #===============================================================================#
+    #                                Applied load
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',2*logindent + 'Assigning loads ...',True)
@@ -3817,9 +3817,9 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                   Crack
-#===============================================================================#
+    #===============================================================================#
+    #                                   Crack
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating cracks ...',True)
@@ -3855,287 +3855,287 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                   Mesh
-#===============================================================================#
+    #===============================================================================#
+    #                                   Mesh
+    #===============================================================================#
 
-skipLineToLogFile(logfilepath,'a',True)
-writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating mesh ...',True)
+    skipLineToLogFile(logfilepath,'a',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating mesh ...',True)
 
-nTangential = np.floor(deltapsi/delta)
-nRadialFiber = np.floor(0.25/(delta*np.pi/180.0))
-nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
-nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['mesh']['size']['delta3'])
-nTangential3 = np.floor(alpha/parameters['mesh']['size']['delta1'])
-#nRadialFiber1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
-if L>2*Rf:
-    nRadialMatrix = np.floor(0.25/(delta*np.pi/180.0))
-    #nRadialMatrix1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
-else:
-    nRadialMatrix = np.floor(0.25*(L-Rf)/(delta*np.pi/180.0))
-    #nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
+    nTangential = np.floor(deltapsi/delta)
+    nRadialFiber = np.floor(0.25/(delta*np.pi/180.0))
+    nTangential1 = np.floor(deltaphi/parameters['mesh']['size']['delta2'])
+    nTangential2 = np.floor((180-(theta+deltatheta+deltapsi+deltaphi))/parameters['mesh']['size']['delta3'])
+    nTangential3 = np.floor(alpha/parameters['mesh']['size']['delta1'])
+    #nRadialFiber1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
+    if L>2*Rf:
+        nRadialMatrix = np.floor(0.25/(delta*np.pi/180.0))
+        #nRadialMatrix1 = np.floor(0.25/parameters['mesh']['size']['delta3'])
+    else:
+        nRadialMatrix = np.floor(0.25*(L-Rf)/(delta*np.pi/180.0))
+        #nRadialMatrix1 = np.floor(0.25*(L-Rf)/(Rf*parameters['mesh']['size']['delta3']))
 
-if nTangential<parameters['Jintegral']['numberOfContours'] or nRadialFiber<parameters['Jintegral']['numberOfContours'] or nRadialMatrix<parameters['Jintegral']['numberOfContours']:
-    parameters['Jintegral']['numberOfContours'] = int(np.floor(np.min([nTangential,nRadialFiber,nRadialMatrix])) - 1)
-    writeErrorToLogFile(logfilepath,'a','MESH SIZE','The provided element size around the crack tip is incompatible with the number of contour integral requested.\nContour integral option in ABAQUS is available only for quadrilateral and hexahedral elements.\nThe number of contour requested will be automatically adjusted to ' + str(parameters['Jintegral']['numberOfContours']),True)
+    if nTangential<parameters['Jintegral']['numberOfContours'] or nRadialFiber<parameters['Jintegral']['numberOfContours'] or nRadialMatrix<parameters['Jintegral']['numberOfContours']:
+        parameters['Jintegral']['numberOfContours'] = int(np.floor(np.min([nTangential,nRadialFiber,nRadialMatrix])) - 1)
+        writeErrorToLogFile(logfilepath,'a','MESH SIZE','The provided element size around the crack tip is incompatible with the number of contour integral requested.\nContour integral option in ABAQUS is available only for quadrilateral and hexahedral elements.\nThe number of contour requested will be automatically adjusted to ' + str(parameters['Jintegral']['numberOfContours']),True)
 
-# assign mesh controls
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
+    # assign mesh controls
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assigning mesh controls ...',True)
 
-regionSets = [['FIBER-CENTER',QUAD_DOMINATED,FREE],
-              ['FIBER-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
-              ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD_DOMINATED,FREE],
-              ['MATRIX-INTANNULUS-RESTBOUNDED',TRI,FREE],
-              ['MATRIX-INTERMEDIATEANNULUS',TRI,FREE],
-              ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
-if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-    regionSets.append(['FIBER-EXTANNULUS-CRACK',QUAD_DOMINATED,FREE])
-    regionSets.append(['FIBER-EXTANNULUS-UPPERCRACK-CTUP',QUAD,STRUCTURED])
-    regionSets.append(['FIBER-EXTANNULUS-FIRSTBOUNDED-CTUP',QUAD,STRUCTURED])
-    regionSets.append(['FIBER-EXTANNULUS-SECONDBOUNDED-CTUP',QUAD_DOMINATED,FREE])
-    regionSets.append(['FIBER-EXTANNULUS-UPPERCRACK-CTLOW',QUAD,STRUCTURED])
-    regionSets.append(['FIBER-EXTANNULUS-FIRSTBOUNDED-CTLOW',QUAD,STRUCTURED])
-    regionSets.append(['FIBER-EXTANNULUS-SECONDBOUNDED-CTLOW',QUAD_DOMINATED,FREE])
-    regionSets.append(['MATRIX-INTANNULUS-CRACK',QUAD_DOMINATED,FREE])
-    regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK-CTUP',QUAD,STRUCTURED])
-    regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED-CTUP',QUAD,STRUCTURED])
-    regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED-CTUP',TRI,FREE])
-    regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK-CTLOW',QUAD,STRUCTURED])
-    regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED-CTLOW',QUAD,STRUCTURED])
-    regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED-CTLOW',TRI,FREE])
-else:
-    regionSets.append(['FIBER-EXTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE])
-    regionSets.append(['FIBER-EXTANNULUS-UPPERCRACK',QUAD,STRUCTURED])
-    regionSets.append(['FIBER-EXTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED])
-    regionSets.append(['FIBER-EXTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE])
-    regionSets.append(['MATRIX-INTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE])
-    regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK',QUAD,STRUCTURED])
-    regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED])
-    regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED',TRI,FREE])
+    regionSets = [['FIBER-CENTER',QUAD_DOMINATED,FREE],
+                  ['FIBER-INTERMEDIATEANNULUS',QUAD_DOMINATED,FREE],
+                  ['FIBER-EXTANNULUS-RESTBOUNDED',QUAD_DOMINATED,FREE],
+                  ['MATRIX-INTANNULUS-RESTBOUNDED',TRI,FREE],
+                  ['MATRIX-INTERMEDIATEANNULUS',TRI,FREE],
+                  ['MATRIX-BODY',QUAD_DOMINATED,FREE]]
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        regionSets.append(['FIBER-EXTANNULUS-CRACK',QUAD_DOMINATED,FREE])
+        regionSets.append(['FIBER-EXTANNULUS-UPPERCRACK-CTUP',QUAD,STRUCTURED])
+        regionSets.append(['FIBER-EXTANNULUS-FIRSTBOUNDED-CTUP',QUAD,STRUCTURED])
+        regionSets.append(['FIBER-EXTANNULUS-SECONDBOUNDED-CTUP',QUAD_DOMINATED,FREE])
+        regionSets.append(['FIBER-EXTANNULUS-UPPERCRACK-CTLOW',QUAD,STRUCTURED])
+        regionSets.append(['FIBER-EXTANNULUS-FIRSTBOUNDED-CTLOW',QUAD,STRUCTURED])
+        regionSets.append(['FIBER-EXTANNULUS-SECONDBOUNDED-CTLOW',QUAD_DOMINATED,FREE])
+        regionSets.append(['MATRIX-INTANNULUS-CRACK',QUAD_DOMINATED,FREE])
+        regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK-CTUP',QUAD,STRUCTURED])
+        regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED-CTUP',QUAD,STRUCTURED])
+        regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED-CTUP',TRI,FREE])
+        regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK-CTLOW',QUAD,STRUCTURED])
+        regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED-CTLOW',QUAD,STRUCTURED])
+        regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED-CTLOW',TRI,FREE])
+    else:
+        regionSets.append(['FIBER-EXTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE])
+        regionSets.append(['FIBER-EXTANNULUS-UPPERCRACK',QUAD,STRUCTURED])
+        regionSets.append(['FIBER-EXTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED])
+        regionSets.append(['FIBER-EXTANNULUS-SECONDBOUNDED',QUAD_DOMINATED,FREE])
+        regionSets.append(['MATRIX-INTANNULUS-LOWERCRACK',QUAD_DOMINATED,FREE])
+        regionSets.append(['MATRIX-INTANNULUS-UPPERCRACK',QUAD,STRUCTURED])
+        regionSets.append(['MATRIX-INTANNULUS-FIRSTBOUNDED',QUAD,STRUCTURED])
+        regionSets.append(['MATRIX-INTANNULUS-SECONDBOUNDED',TRI,FREE])
 
-if 'boundingPly' in parameters['BC']['northSide']['type']:
-    regionSets.append(['BOUNDING-PLY',QUAD_DOMINATED,FREE])
-if 'boundingPly' in parameters['BC']['rightSide']['type']:
-    regionSets.append(['RIGHT-HOMOGENIZED-CROSSPLY',QUAD_DOMINATED,FREE])
-if 'boundingPly' in parameters['BC']['leftSide']['type']:
-    regionSets.append(['LEFT-HOMOGENIZED-CROSSPLY',QUAD_DOMINATED,FREE])
-if 'adjacentFibers' in parameters['BC']['northSide']['type']:
-    regionSets.append(['UPPER-FIBERS',QUAD_DOMINATED,FREE])
-if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
-    regionSets.append(['RIGHT-FIBERS',QUAD_DOMINATED,FREE])
-if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
-    regionSets.append(['LEFT-FIBERS',QUAD_DOMINATED,FREE])
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        regionSets.append(['BOUNDING-PLY',QUAD_DOMINATED,FREE])
+    if 'boundingPly' in parameters['BC']['rightSide']['type']:
+        regionSets.append(['RIGHT-HOMOGENIZED-CROSSPLY',QUAD_DOMINATED,FREE])
+    if 'boundingPly' in parameters['BC']['leftSide']['type']:
+        regionSets.append(['LEFT-HOMOGENIZED-CROSSPLY',QUAD_DOMINATED,FREE])
+    if 'adjacentFibers' in parameters['BC']['northSide']['type']:
+        regionSets.append(['UPPER-FIBERS',QUAD_DOMINATED,FREE])
+    if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+        regionSets.append(['RIGHT-FIBERS',QUAD_DOMINATED,FREE])
+    if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+        regionSets.append(['LEFT-FIBERS',QUAD_DOMINATED,FREE])
 
-for regionSet in regionSets:
-    assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
+    for regionSet in regionSets:
+        assignMeshControls(model,'RVE-assembly',regionSet[0],regionSet[1],regionSet[2],logfilepath,baselogindent + 3*logindent,True)
 
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-# assign seeds
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
+    # assign seeds
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Seeding edges ...',True)
 
-regionSets = [['FIRSTCIRCLE',18],
-              ['FIFTHCIRCLE',90]]
-if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-    regionSets.append(['SECONDCIRCLE-UPPERCRACK-CTUP',nTangential])
-    regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
-    regionSets.append(['THIRDCIRCLE-UPPERCRACK-CTUP',nTangential])
-    regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
-    regionSets.append(['FOURTHCIRCLE-UPPERCRACK-CTUP',nTangential])
-    regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
-    regionSets.append(['SECONDCIRCLE-UPPERCRACK-CTLOW',nTangential])
-    regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
-    regionSets.append(['THIRDCIRCLE-UPPERCRACK-CTLOW',nTangential])
-    regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
-    regionSets.append(['FOURTHCIRCLE-UPPERCRACK-CTLOW',nTangential])
-    regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
-    regionSets.append(['TRANSVERSALCUT-FIRSTFIBER-CTUP',nRadialFiber])
-    regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX-CTUP',nRadialMatrix])
-    regionSets.append(['TRANSVERSALCUT-SECONDFIBER-CTUP',nRadialFiber])
-    regionSets.append(['TRANSVERSALCUT-SECONDMATRIX-CTUP',nRadialMatrix])
-    regionSets.append(['TRANSVERSALCUT-THIRDFIBER-CTUP',nRadialFiber])
-    regionSets.append(['TRANSVERSALCUT-THIRDMATRIX-CTUP',nRadialMatrix])
-    regionSets.append(['TRANSVERSALCUT-FIRSTFIBER-CTLOW',nRadialFiber])
-    regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX-CTLOW',nRadialMatrix])
-    regionSets.append(['TRANSVERSALCUT-SECONDFIBER-CTLOW',nRadialFiber])
-    regionSets.append(['TRANSVERSALCUT-SECONDMATRIX-CTLOW',nRadialMatrix])
-    regionSets.append(['TRANSVERSALCUT-THIRDFIBER-CTLOW',nRadialFiber])
-    regionSets.append(['TRANSVERSALCUT-THIRDMATRIX-CTLOW',nRadialMatrix])
-    regionSets.append(['SECONDCIRCLE-SECONDBOUNDED-CTUP',nTangential1])
-    regionSets.append(['SECONDCIRCLE-SECONDBOUNDED-CTLOW',nTangential1])
-    regionSets.append(['SECONDCIRCLE-RESTBOUNDED',nTangential2])
-    regionSets.append(['THIRDCIRCLE-SECONDBOUNDED-CTUP',nTangential1])
-    regionSets.append(['THIRDCIRCLE-SECONDBOUNDED-CTLOW',nTangential1])
-    regionSets.append(['THIRDCIRCLE-RESTBOUNDED',nTangential2])
-    regionSets.append(['FOURTHCIRCLE-SECONDBOUNDED-CTUP',nTangential1])
-    regionSets.append(['FOURTHCIRCLE-SECONDBOUNDED-CTLOW',nTangential1])
-    regionSets.append(['FOURTHCIRCLE-RESTBOUNDED',nTangential2])
-    regionSets.append(['TRANSVERSALCUT-FOURTHFIBER-CTUP',nRadialFiber])
-    regionSets.append(['TRANSVERSALCUT-FOURTHMATRIX-CTUP',nRadialMatrix])
-    regionSets.append(['TRANSVERSALCUT-FOURTHFIBER-CTLOW',nRadialFiber])
-    regionSets.append(['TRANSVERSALCUT-FOURTHMATRIX-CTLOW',nRadialMatrix])
-    regionSets.append(['SECONDCIRCLE-CRACK',nTangential3])
-    regionSets.append(['THIRDCIRCLE-CRACK',nTangential3])
-    regionSets.append(['FOURTHCIRCLE-CRACK',nTangential3])
-    if 'full' not in parameters['geometry']['fiber']['type']:
-        regionSets.append(['LOWERSIDE-CENTER',6])
+    regionSets = [['FIRSTCIRCLE',18],
+                  ['FIFTHCIRCLE',90]]
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        regionSets.append(['SECONDCIRCLE-UPPERCRACK-CTUP',nTangential])
+        regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
+        regionSets.append(['THIRDCIRCLE-UPPERCRACK-CTUP',nTangential])
+        regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
+        regionSets.append(['FOURTHCIRCLE-UPPERCRACK-CTUP',nTangential])
+        regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED-CTUP',nTangential])
+        regionSets.append(['SECONDCIRCLE-UPPERCRACK-CTLOW',nTangential])
+        regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
+        regionSets.append(['THIRDCIRCLE-UPPERCRACK-CTLOW',nTangential])
+        regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
+        regionSets.append(['FOURTHCIRCLE-UPPERCRACK-CTLOW',nTangential])
+        regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED-CTLOW',nTangential])
+        regionSets.append(['TRANSVERSALCUT-FIRSTFIBER-CTUP',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX-CTUP',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-SECONDFIBER-CTUP',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-SECONDMATRIX-CTUP',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-THIRDFIBER-CTUP',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-THIRDMATRIX-CTUP',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-FIRSTFIBER-CTLOW',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX-CTLOW',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-SECONDFIBER-CTLOW',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-SECONDMATRIX-CTLOW',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-THIRDFIBER-CTLOW',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-THIRDMATRIX-CTLOW',nRadialMatrix])
+        regionSets.append(['SECONDCIRCLE-SECONDBOUNDED-CTUP',nTangential1])
+        regionSets.append(['SECONDCIRCLE-SECONDBOUNDED-CTLOW',nTangential1])
+        regionSets.append(['SECONDCIRCLE-RESTBOUNDED',nTangential2])
+        regionSets.append(['THIRDCIRCLE-SECONDBOUNDED-CTUP',nTangential1])
+        regionSets.append(['THIRDCIRCLE-SECONDBOUNDED-CTLOW',nTangential1])
+        regionSets.append(['THIRDCIRCLE-RESTBOUNDED',nTangential2])
+        regionSets.append(['FOURTHCIRCLE-SECONDBOUNDED-CTUP',nTangential1])
+        regionSets.append(['FOURTHCIRCLE-SECONDBOUNDED-CTLOW',nTangential1])
+        regionSets.append(['FOURTHCIRCLE-RESTBOUNDED',nTangential2])
+        regionSets.append(['TRANSVERSALCUT-FOURTHFIBER-CTUP',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-FOURTHMATRIX-CTUP',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-FOURTHFIBER-CTLOW',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-FOURTHMATRIX-CTLOW',nRadialMatrix])
+        regionSets.append(['SECONDCIRCLE-CRACK',nTangential3])
+        regionSets.append(['THIRDCIRCLE-CRACK',nTangential3])
+        regionSets.append(['FOURTHCIRCLE-CRACK',nTangential3])
+        if 'full' not in parameters['geometry']['fiber']['type']:
+            regionSets.append(['LOWERSIDE-CENTER',6])
+            regionSets.append(['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber])
+            regionSets.append(['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix])
+    else:
+        regionSets.append(['SECONDCIRCLE-UPPERCRACK',nTangential])
+        regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED',nTangential])
+        regionSets.append(['THIRDCIRCLE-UPPERCRACK',nTangential])
+        regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED',nTangential])
+        regionSets.append(['FOURTHCIRCLE-UPPERCRACK',nTangential])
+        regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED',nTangential])
+        regionSets.append(['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-SECONDFIBER',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix])
+        regionSets.append(['TRANSVERSALCUT-THIRDFIBER',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix])
         regionSets.append(['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber])
         regionSets.append(['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix])
-else:
-    regionSets.append(['SECONDCIRCLE-UPPERCRACK',nTangential])
-    regionSets.append(['SECONDCIRCLE-FIRSTBOUNDED',nTangential])
-    regionSets.append(['THIRDCIRCLE-UPPERCRACK',nTangential])
-    regionSets.append(['THIRDCIRCLE-FIRSTBOUNDED',nTangential])
-    regionSets.append(['FOURTHCIRCLE-UPPERCRACK',nTangential])
-    regionSets.append(['FOURTHCIRCLE-FIRSTBOUNDED',nTangential])
-    regionSets.append(['TRANSVERSALCUT-FIRSTFIBER',nRadialFiber])
-    regionSets.append(['TRANSVERSALCUT-FIRSTMATRIX',nRadialMatrix])
-    regionSets.append(['TRANSVERSALCUT-SECONDFIBER',nRadialFiber])
-    regionSets.append(['TRANSVERSALCUT-SECONDMATRIX',nRadialMatrix])
-    regionSets.append(['TRANSVERSALCUT-THIRDFIBER',nRadialFiber])
-    regionSets.append(['TRANSVERSALCUT-THIRDMATRIX',nRadialMatrix])
-    regionSets.append(['LOWERSIDE-SECONDRING-RIGHT',nRadialFiber])
-    regionSets.append(['LOWERSIDE-THIRDRING-RIGHT',nRadialMatrix])
-    regionSets.append(['SECONDCIRCLE-SECONDBOUNDED',nTangential1])
-    regionSets.append(['SECONDCIRCLE-RESTBOUNDED',nTangential2])
-    regionSets.append(['THIRDCIRCLE-SECONDBOUNDED',nTangential1])
-    regionSets.append(['THIRDCIRCLE-RESTBOUNDED',nTangential2])
-    regionSets.append(['FOURTHCIRCLE-SECONDBOUNDED',nTangential1])
-    regionSets.append(['FOURTHCIRCLE-RESTBOUNDED',nTangential2])
-    regionSets.append(['TRANSVERSALCUT-FOURTHFIBER',nRadialFiber])
-    regionSets.append(['TRANSVERSALCUT-FOURTHMATRIX',nRadialMatrix])
-    regionSets.append(['SECONDCIRCLE-LOWERCRACK',nTangential3])
-    regionSets.append(['THIRDCIRCLE-LOWERCRACK',nTangential3])
-    regionSets.append(['FOURTHCIRCLE-LOWERCRACK',nTangential3])
+        regionSets.append(['SECONDCIRCLE-SECONDBOUNDED',nTangential1])
+        regionSets.append(['SECONDCIRCLE-RESTBOUNDED',nTangential2])
+        regionSets.append(['THIRDCIRCLE-SECONDBOUNDED',nTangential1])
+        regionSets.append(['THIRDCIRCLE-RESTBOUNDED',nTangential2])
+        regionSets.append(['FOURTHCIRCLE-SECONDBOUNDED',nTangential1])
+        regionSets.append(['FOURTHCIRCLE-RESTBOUNDED',nTangential2])
+        regionSets.append(['TRANSVERSALCUT-FOURTHFIBER',nRadialFiber])
+        regionSets.append(['TRANSVERSALCUT-FOURTHMATRIX',nRadialMatrix])
+        regionSets.append(['SECONDCIRCLE-LOWERCRACK',nTangential3])
+        regionSets.append(['THIRDCIRCLE-LOWERCRACK',nTangential3])
+        regionSets.append(['FOURTHCIRCLE-LOWERCRACK',nTangential3])
 
-nFibersHorizontal = 1
+    nFibersHorizontal = 1
 
-if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
-    nFibersHorizontal += parameters['BC']['rightSide']['nFibers']
-    for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-        regionSets.append(['LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),10])
+    if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+        nFibersHorizontal += parameters['BC']['rightSide']['nFibers']
+        for nFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+            regionSets.append(['LOWERSIDE-RIGHT-FIBER'+str(nFiber+1),10])
 
-if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
-    nFibersHorizontal += parameters['BC']['leftSide']['nFibers']
-    for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-        regionSets.append(['LOWERSIDE-LEFT-FIBER'+str(nFiber+1),10])
+    if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+        nFibersHorizontal += parameters['BC']['leftSide']['nFibers']
+        for nFiber in range(0,parameters['BC']['leftSide']['nFibers']):
+            regionSets.append(['LOWERSIDE-LEFT-FIBER'+str(nFiber+1),10])
 
-regionSets.append(['UPPERSIDE',30*nFibersHorizontal])
+    regionSets.append(['UPPERSIDE',30*nFibersHorizontal])
 
-if 'boundingPly' in parameters['BC']['northSide']['type']:
-    if 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
+    if 'boundingPly' in parameters['BC']['northSide']['type']:
+        if 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
+            regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
+            regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
+        elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type'] and parameters['BC']['rightSide']['nFibers']>10 and parameters['BC']['leftSide']['nFibers']>10:
+            regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
+            regionSets.append(['LEFTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
+        else:
+            regionSets.append(['LOWER-RIGHTSIDE',30])
+            regionSets.append(['LOWER-LEFTSIDE',30])
+        regionSets.append(['UPPER-RIGHTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
+        regionSets.append(['UPPER-LEFTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
+    elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
         regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
         regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
     elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type'] and parameters['BC']['rightSide']['nFibers']>10 and parameters['BC']['leftSide']['nFibers']>10:
         regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
         regionSets.append(['LEFTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
     else:
-        regionSets.append(['LOWER-RIGHTSIDE',30])
-        regionSets.append(['LOWER-LEFTSIDE',30])
-    regionSets.append(['UPPER-RIGHTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
-    regionSets.append(['UPPER-LEFTSIDE',int(np.floor(30*(1+math.log10(tRatio))))])
-elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and parameters['BC']['northSide']['nFibers']>10:
-    regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
-    regionSets.append(['LEFTSIDE',int(np.floor(30*(1+10*math.log10(parameters['BC']['northSide']['nFibers']))))])
-elif 'adjacentFibers' in parameters['BC']['northSide']['type'] and 'adjacentFibers' in parameters['BC']['rightSide']['type'] and 'adjacentFibers' in parameters['BC']['leftSide']['type'] and parameters['BC']['rightSide']['nFibers']>10 and parameters['BC']['leftSide']['nFibers']>10:
-    regionSets.append(['RIGHTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
-    regionSets.append(['LEFTSIDE',int(np.floor(30*(1+5*math.log10(parameters['BC']['northSide']['nFibers']))))])
-else:
-    regionSets.append(['RIGHTSIDE',30])
-    regionSets.append(['LEFTSIDE',30])
+        regionSets.append(['RIGHTSIDE',30])
+        regionSets.append(['LEFTSIDE',30])
 
-if 'adjacentFibers' in parameters['BC']['northSide']['type']:
-    for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-        regionSets.append(['INTERFACE-UPPER-FIBER-C'+str(nFiber+1),72])
-    if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
-        for mFiber in range(0,parameters['BC']['rightSide']['nFibers']):
-            for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                regionSets.append(['INTERFACE-UPPER-FIBER-R'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers'])),72])
-    if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
-        for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
-            for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
-                regionSets.append(['INTERFACE-UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers'])),72])
+    if 'adjacentFibers' in parameters['BC']['northSide']['type']:
+        for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
+            regionSets.append(['INTERFACE-UPPER-FIBER-C'+str(nFiber+1),72])
+        if 'adjacentFibers' in parameters['BC']['rightSide']['type']:
+            for mFiber in range(0,parameters['BC']['rightSide']['nFibers']):
+                for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
+                    regionSets.append(['INTERFACE-UPPER-FIBER-R'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers'])),72])
+        if 'adjacentFibers' in parameters['BC']['leftSide']['type']:
+            for mFiber in range(0,parameters['BC']['leftSide']['nFibers']):
+                for nFiber in range(0,parameters['BC']['northSide']['nFibers']):
+                    regionSets.append(['INTERFACE-UPPER-FIBER-L'+str(int(nFiber+1+mFiber*parameters['BC']['northSide']['nFibers'])),72])
 
-for regionSet in regionSets:
-    seedEdgeByNumber(model,'RVE-assembly',regionSet[0],regionSet[1],FINER,logfilepath,baselogindent + 3*logindent,True)
+    for regionSet in regionSets:
+        seedEdgeByNumber(model,'RVE-assembly',regionSet[0],regionSet[1],FINER,logfilepath,baselogindent + 3*logindent,True)
 
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-# select element type
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Selecting and assigning element types ...',True)
+    # select element type
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Selecting and assigning element types ...',True)
 
-if 'structuralModel' in parameters['mesh']['elements'].keys():
-    if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
-        if 'first' in parameters['mesh']['elements']['order']:
-            elemType1 = mesh.ElemType(elemCode=CPEG4, elemLibrary=STANDARD)
-            elemType2 = mesh.ElemType(elemCode=CPEG3, elemLibrary=STANDARD)
-        elif 'second' in parameters['mesh']['elements']['order']:
-            elemType1 = mesh.ElemType(elemCode=CPEG8, elemLibrary=STANDARD)
-            elemType2 = mesh.ElemType(elemCode=CPEG6, elemLibrary=STANDARD)
-    #elif 'generalizedPlaneStress' in parameters['mesh']['elements']['structuralModel']:
-    #    if 'first' in parameters['mesh']['elements']['order']:
-    #        elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
-    #        elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
-    #    elif 'second' in parameters['mesh']['elements']['order']:
-    #        elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
-    #        elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
-    elif 'planeStrain' in parameters['mesh']['elements']['structuralModel']:
+    if 'structuralModel' in parameters['mesh']['elements'].keys():
+        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+            if 'first' in parameters['mesh']['elements']['order']:
+                elemType1 = mesh.ElemType(elemCode=CPEG4, elemLibrary=STANDARD)
+                elemType2 = mesh.ElemType(elemCode=CPEG3, elemLibrary=STANDARD)
+            elif 'second' in parameters['mesh']['elements']['order']:
+                elemType1 = mesh.ElemType(elemCode=CPEG8, elemLibrary=STANDARD)
+                elemType2 = mesh.ElemType(elemCode=CPEG6, elemLibrary=STANDARD)
+        #elif 'generalizedPlaneStress' in parameters['mesh']['elements']['structuralModel']:
+        #    if 'first' in parameters['mesh']['elements']['order']:
+        #        elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
+        #        elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
+        #    elif 'second' in parameters['mesh']['elements']['order']:
+        #        elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
+        #        elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
+        elif 'planeStrain' in parameters['mesh']['elements']['structuralModel']:
+            if 'first' in parameters['mesh']['elements']['order']:
+                elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
+                elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
+            elif 'second' in parameters['mesh']['elements']['order']:
+                elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
+                elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
+        elif 'planeStress' in parameters['mesh']['elements']['structuralModel']:
+            if 'first' in parameters['mesh']['elements']['order']:
+                elemType1 = mesh.ElemType(elemCode=CPS4, elemLibrary=STANDARD)
+                elemType2 = mesh.ElemType(elemCode=CPS3, elemLibrary=STANDARD)
+            elif 'second' in parameters['mesh']['elements']['order']:
+                elemType1 = mesh.ElemType(elemCode=CPS8, elemLibrary=STANDARD)
+                elemType2 = mesh.ElemType(elemCode=CPS6, elemLibrary=STANDARD)
+    else:
         if 'first' in parameters['mesh']['elements']['order']:
             elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
             elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
         elif 'second' in parameters['mesh']['elements']['order']:
             elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
             elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
-    elif 'planeStress' in parameters['mesh']['elements']['structuralModel']:
-        if 'first' in parameters['mesh']['elements']['order']:
-            elemType1 = mesh.ElemType(elemCode=CPS4, elemLibrary=STANDARD)
-            elemType2 = mesh.ElemType(elemCode=CPS3, elemLibrary=STANDARD)
-        elif 'second' in parameters['mesh']['elements']['order']:
-            elemType1 = mesh.ElemType(elemCode=CPS8, elemLibrary=STANDARD)
-            elemType2 = mesh.ElemType(elemCode=CPS6, elemLibrary=STANDARD)
-else:
-    if 'first' in parameters['mesh']['elements']['order']:
-        elemType1 = mesh.ElemType(elemCode=CPE4, elemLibrary=STANDARD)
-        elemType2 = mesh.ElemType(elemCode=CPE3, elemLibrary=STANDARD)
-    elif 'second' in parameters['mesh']['elements']['order']:
-        elemType1 = mesh.ElemType(elemCode=CPE8, elemLibrary=STANDARD)
-        elemType2 = mesh.ElemType(elemCode=CPE6, elemLibrary=STANDARD)
-model.rootAssembly.setElementType(regions=(model.rootAssembly.instances['RVE-assembly'].sets['RVE']), elemTypes=(elemType1, elemType2))
+    model.rootAssembly.setElementType(regions=(model.rootAssembly.instances['RVE-assembly'].sets['RVE']), elemTypes=(elemType1, elemType2))
 
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-# mesh part
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Meshing part ...',True)
-localStart = timeit.default_timer()
+    # mesh part
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Meshing part ...',True)
+    localStart = timeit.default_timer()
 
-model.rootAssembly.generateMesh(regions=(model.rootAssembly.instances['RVE-assembly'],))
+    model.rootAssembly.generateMesh(regions=(model.rootAssembly.instances['RVE-assembly'],))
 
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Mesh creation time: ' + str(timeit.default_timer() - localStart) + ' [s]',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Mesh creation time: ' + str(timeit.default_timer() - localStart) + ' [s]',True)
 
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-mdb.save()
+    mdb.save()
 
-# extract mesh statistics
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extracting mesh statistics ...',True)
+    # extract mesh statistics
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Extracting mesh statistics ...',True)
 
-meshStats = model.rootAssembly.getMeshStats(regions=(model.rootAssembly.instances['RVE-assembly'],))
+    meshStats = model.rootAssembly.getMeshStats(regions=(model.rootAssembly.instances['RVE-assembly'],))
 
-modelData = {}
-modelData['numNodes'] =  meshStats.numNodes
-modelData['numQuads'] =  meshStats.numQuadElems
-modelData['numTris'] =  meshStats.numTriElems
-modelData['numEls'] =  meshStats.numQuadElems + meshStats.numTriElems
+    modelData = {}
+    modelData['numNodes'] =  meshStats.numNodes
+    modelData['numQuads'] =  meshStats.numQuadElems
+    modelData['numTris'] =  meshStats.numTriElems
+    modelData['numEls'] =  meshStats.numQuadElems + meshStats.numTriElems
 
-writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
-mdb.save()
+    mdb.save()
 
-writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                   Output
-#===============================================================================#
+    #===============================================================================#
+    #                                   Output
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating output requests ...',True)
@@ -4156,9 +4156,9 @@ writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',Tru
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
 
-#===============================================================================#
-#                                Job creation
-#===============================================================================#
+    #===============================================================================#
+    #                                Job creation
+    #===============================================================================#
 
     skipLineToLogFile(logfilepath,'a',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)

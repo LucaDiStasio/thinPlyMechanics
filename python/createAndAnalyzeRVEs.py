@@ -4681,6 +4681,8 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     if 'structuralModel' in parameters['mesh']['elements'].keys():
         if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
             isGPE = True
+        else:
+            isGPE = False
     else:
         isGPE = False
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Working directory: ' + parameters['input']['wd'],True)
@@ -6673,6 +6675,8 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     if 'structuralModel' in parameters['mesh']['elements'].keys():
         if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
             isGPE = True
+        else:
+            isGPE = False
     else:
         isGPE = False
     #=======================================================================

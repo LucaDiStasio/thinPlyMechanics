@@ -42,7 +42,6 @@ Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 import sys, os
 import math
 import numpy as np
-from scipy import sparse
 import subprocess
 from os.path import isfile, join, exists
 from platform import platform,system

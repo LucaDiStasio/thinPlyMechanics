@@ -4147,8 +4147,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for section in parameters['sections'].values():
         if 'structuralModel' in parameters['mesh']['elements'].keys():
             if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
-                mdb.models[modelname].PEGSection(name=section['name'],material=section['material'], thickness=section['thickness'], wedgeAngle1=0.0,
-        wedgeAngle2=0.0)
+                mdb.models[modelname].PEGSection(name=section['name'],material=section['material'], thickness=section['thickness'], wedgeAngle1=0.0, wedgeAngle2=0.0)
         if 'HomogeneousSolidSection' in section['type'] or 'Homogeneous Solid Section' in section['type'] or 'homogeneoussolidsection' in section['type'] or 'homogeneous solid section' in section['type'] or 'Homogeneous solid section' in section['type']:
             mdb.models[modelname].HomogeneousSolidSection(name=section['name'],material=section['material'], thickness=section['thickness'])
 
@@ -4165,6 +4164,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     for sectionRegion in parameters['sectionRegions'].values():
         RVEpart.SectionAssignment(region=RVEpart.sets[sectionRegion['set']], sectionName=sectionRegion['name'], offset=sectionRegion['offsetValue'],offsetType=sectionRegion['offsetType'], offsetField=sectionRegion['offsetField'],thicknessAssignment=sectionRegion['thicknessAssignment'])
+
+    if 'structuralModel' in parameters['mesh']['elements'].keys():
+        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+            mdb.models[modelname].Coupling(name='GPE-KinematicCoupling', controlPoint=mdb.models[modelname].rootAssembly.instances['RVE-assembly'].sets['SE-CORNER'], surface=mdb.models[modelname].rootAssembly.instances['RVE-assembly'].sets['RVE'], influenceRadius=WHOLE_SURFACE, couplingType=KINEMATIC, localCsys=None, u1=OFF, u2=OFF, u3=OFF, ur1=ON, ur2=ON, ur3=ON)
 
     # p.SectionAssignment(region=region, sectionName='MatrixSection', offset=0.0,
     #     offsetType=MIDDLE_SURFACE, offsetField='',

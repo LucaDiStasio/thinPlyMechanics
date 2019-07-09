@@ -75,6 +75,8 @@ from odbMaterial import *
 from odbSection import *
 #sys.path.append('C:/Anaconda2/lib/site-packages')
 sys.path.insert(0,'C:/Anaconda2/lib/site-packages')
+import pkg_resources
+pkg_resources.require("numpy==1.14.0")
 import numpy as np
 from scipy import sparse
 

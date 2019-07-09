@@ -4163,11 +4163,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Making section assignments ...',True)
 
     for sectionRegion in parameters['sectionRegions'].values():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- ' + sectionRegion['name'],True)
         RVEpart.SectionAssignment(region=RVEpart.sets[sectionRegion['set']], sectionName=sectionRegion['name'], offset=sectionRegion['offsetValue'],offsetType=sectionRegion['offsetType'], offsetField=sectionRegion['offsetField'],thicknessAssignment=sectionRegion['thicknessAssignment'])
-
-    if 'structuralModel' in parameters['mesh']['elements'].keys():
-        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
-            mdb.models[modelname].Coupling(name='GPE-KinematicCoupling', controlPoint=mdb.models[modelname].rootAssembly.instances['RVE-assembly'].sets['SE-CORNER'], surface=mdb.models[modelname].rootAssembly.instances['RVE-assembly'].sets['RVE'], influenceRadius=WHOLE_SURFACE, couplingType=KINEMATIC, localCsys=None, u1=OFF, u2=OFF, u3=OFF, ur1=ON, ur2=ON, ur3=ON)
 
     # p.SectionAssignment(region=region, sectionName='MatrixSection', offset=0.0,
     #     offsetType=MIDDLE_SURFACE, offsetField='',
@@ -4186,6 +4183,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     model.rootAssembly.DatumCsysByDefault(CARTESIAN)
     model.rootAssembly.Instance(name='RVE-assembly', part=RVEpart, dependent=OFF)
+
+    if 'structuralModel' in parameters['mesh']['elements'].keys():
+        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign kinematic coupling for generalized plane strain',True)
+            mdb.models[modelname].Coupling(name='GPE-KinematicCoupling', controlPoint=mdb.models[modelname].rootAssembly.instances['RVE-assembly'].sets['SE-CORNER'], surface=mdb.models[modelname].rootAssembly.instances['RVE-assembly'].sets['RVE'], influenceRadius=WHOLE_SURFACE, couplingType=KINEMATIC, localCsys=None, u1=OFF, u2=OFF, u3=OFF, ur1=ON, ur2=ON, ur3=ON)
 
     mdb.save()
 

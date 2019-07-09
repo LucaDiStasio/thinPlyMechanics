@@ -4704,7 +4704,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             quads[quadIndex] = []
             for node in line.replace('\n','').split(',')[1:]:
                 quads[quadIndex].append(int(node))
-        elif ('*Element, type=CPE8' in line or '*ELEMENT, type=CPE8' in line or '*Element, type=CPE4' in line or '*ELEMENT, type=CPE4' in line) and (len(inpfilelines[l+1].replace('\n','').split(','))==5 or len(inpfilelines[l+1].replace('\n','').split(','))==9):
+        elif ('*Element, type=CPE8' in line or '*ELEMENT, type=CPE8' in line or '*Element, type=CPE4' in line or '*ELEMENT, type=CPE4' in line or '*Element, type=CPEG8' in line or '*ELEMENT, type=CPEG8' in line or '*Element, type=CPEG4' in line or '*ELEMENT, type=CPEG4' in line or '*Element, type=CPS8' in line or '*ELEMENT, type=CPS8' in line or '*Element, type=CPS4' in line or '*ELEMENT, type=CPS4' in line) and (len(inpfilelines[l+1].replace('\n','').split(','))==5 or len(inpfilelines[l+1].replace('\n','').split(','))==9):
             store = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:

@@ -40,9 +40,7 @@ Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 
 '''
 import sys, os
-sys.path.append('C:/Anaconda2/lib/site-packages')
 import numpy as np
-from scipy import sparse
 import math
 import subprocess
 from os.path import isfile, join, exists
@@ -76,7 +74,8 @@ import connectorBehavior
 from odbAccess import *
 from odbMaterial import *
 from odbSection import *
-#import __main__
+sys.path.append('C:/Anaconda2/lib/site-packages')
+from scipy import sparse
 
 #===============================================================================#
 #===============================================================================#

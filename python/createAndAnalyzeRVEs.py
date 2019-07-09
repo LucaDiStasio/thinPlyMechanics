@@ -3529,11 +3529,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                 fiberSketch.ArcByCenterEnds(center=(-(nFiber+1)*2*L, 0.0), point1=(-(nFiber+1)*2*L-Rf, 0.0), point2=(-(nFiber+1)*2*L+Rf,0.0), direction=CLOCKWISE)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    if 'structuralModel' in parameters['mesh']['elements'].keys():
-        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw reference node for generalized plane strain ...',True)
-            fiberSketch.Spot(point=(0.0, -50.0))
-            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)
     pickedFaces = RVEfaces.findAt(coordinates=(0.0, 0.5*L, 0))
     RVEpart.PartitionFaceBySketch(faces=pickedFaces, sketch=fiberSketch)
@@ -4244,10 +4239,6 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     else:
         for step in parameters['steps'].values():
             model.YsymmBC(name='SymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
-
-    if 'structuralModel' in parameters['mesh']['elements'].keys():
-        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
-            mdb.models[modelname].DisplacementBC(name='GPE-BCCoupling', createStepName=step['name'], region=mdb.models[modelname].rootAssembly.instances['RVE-assembly'].sets['SE-CORNER'], localCsys=None, ur2=0)
 
     mdb.save()
 
@@ -5276,7 +5267,7 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
         if not node in [southwestIndex,northwestIndex]:
             leftSideWithoutCornersNodeset.append(node)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Get mesh statistics ...',True)
     numNodes = mdbData['numNodes']
     numEls = mdbData['numEls']
     numQuads = mdbData['numQuads']
@@ -5285,6 +5276,13 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Total number of elements = ' + str(numEls),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Total number of quadrilateral elements = ' + str(numQuads),True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Total number of triangular elements = ' + str(numTris),True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    if isGPE:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create plane strain reference node ...',True)
+        gpeRefNodeIndex = numNodes + 5000
+        nodes[gpeRefNodeIndex] = [0.0,-50.0]
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Insert new coincident node(s) at the crack tip and create dummy node(s) ...',True)
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Index of current crack tip nodes: ' + str(cracktipUPIndex) + ', ' + str(cracktipLOWIndex),True)
         matrixCracktipUPIndex = numNodes + 1000
@@ -5832,6 +5830,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
                 line += ', ' + str(node)
             inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if isGPE:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Create plane strain reference node set ...',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*NSET, NSET=GPE-REF' + '\n')
+            inp.write(' ' + str(gpeRefNodeIndex) + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
     if isGPE:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign reference node to generalized plane strain elements',True)
@@ -6263,6 +6267,12 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     with open(modinpfullpath,'a') as inp:
         inp.write('*End Assembly' + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    if isGPE:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Constrain plane strain reference node set ...',True)
+        with open(modinpfullpath,'a') as inp:
+            inp.write('*BOUNDARY' + '\n')
+            inp.write(' ' + 'RVE-assembly.GPE-REF, 4, 6' + '\n')
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write contact interaction ...',True)
     with open(modinpfullpath,'a') as inp:
         inp.write('*CONTACT PAIR, INTERACTION=CrackFacesContact, SMALL SLIDING' + '\n')

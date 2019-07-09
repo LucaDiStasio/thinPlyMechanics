@@ -4239,6 +4239,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         for step in parameters['steps'].values():
             model.YsymmBC(name='SymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
 
+    if 'structuralModel' in parameters['mesh']['elements'].keys():
+        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+            mdb.models[modelname].DisplacementBC(name='GPE-BCCoupling', createStepName=step['name'], region=mdb.models[modelname].rootAssembly.instances['RVE-assembly'].sets['SE-CORNER'], localCsys=None, ur2=0)
+
     mdb.save()
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)

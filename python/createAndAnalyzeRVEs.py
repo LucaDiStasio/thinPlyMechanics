@@ -3529,6 +3529,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
                 fiberSketch.ArcByCenterEnds(center=(-(nFiber+1)*2*L, 0.0), point1=(-(nFiber+1)*2*L-Rf, 0.0), point2=(-(nFiber+1)*2*L+Rf,0.0), direction=CLOCKWISE)
         listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    if 'structuralModel' in parameters['mesh']['elements'].keys():
+        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw reference node for generalized plane strain ...',True)
+            fiberSketch.Spot(point=(0.0, -50.0))
+            writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Assign partition sketch to part ...',True)
     pickedFaces = RVEfaces.findAt(coordinates=(0.0, 0.5*L, 0))
     RVEpart.PartitionFaceBySketch(faces=pickedFaces, sketch=fiberSketch)
@@ -3586,6 +3591,10 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         defineSetOfVerticesByBoundingSphere(RVEpart,L,L,0.0,0.00001*Rf,'RIGHTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
         defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.00001*Rf,'LEFTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
+
+    if 'structuralModel' in parameters['mesh']['elements'].keys():
+        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+            defineSetOfVerticesByBoundingSphere(RVEpart,0.0,-50.0,0.0,0.00001,'GPE-REF',logfilepath,baselogindent + 4*logindent,True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
@@ -4669,6 +4678,9 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
     # modified input file name
     modinpname = 'Job-VCCTandJintegral-' + parameters['input']['modelname'] + '.inp'
     modinpfullpath = join(parameters['input']['wd'],modinpname)
+    if 'structuralModel' in parameters['mesh']['elements'].keys():
+        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+            isGPE = True
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Working directory: ' + parameters['input']['wd'],True)
     #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database name: ' + odbname,True)
     #writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'ODB database full path: ' + join(parameters['wd'],odbname),True)
@@ -5817,18 +5829,13 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             inp.write(line + '\n')
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
-    if 'structuralModel' in parameters['mesh']['elements'].keys():
-        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
-            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign reference node to generalized plane strain elements',True)
-            with open(modinpfullpath,'a') as inp:
-                for line in inpfilelines[elementSecStop+1:endAssembly]:
-                    if '*Solid Section' in line or '*SOLID SECTION' in line:
-                        inp.write(line.replace('\n','') + ', REF NODE=SE-CORNER' + '\n')
-                    else:
-                        inp.write(line)
-        else:
-            with open(modinpfullpath,'a') as inp:
-                for line in inpfilelines[elementSecStop+1:endAssembly]:
+    if isGPE:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Assign reference node to generalized plane strain elements',True)
+        with open(modinpfullpath,'a') as inp:
+            for line in inpfilelines[elementSecStop+1:endAssembly]:
+                if '*Solid Section' in line or '*SOLID SECTION' in line:
+                    inp.write(line.replace('\n','') + ', REF NODE=GPE-REF' + '\n')
+                else:
                     inp.write(line)
     else:
         with open(modinpfullpath,'a') as inp:
@@ -6302,15 +6309,16 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             for line in inpfilelines[startTempStep+2:startTempCI]:
                 inp.write(line)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
-        crackName = inpfilelines[startTempCI].replace('\n','').split(',')[1].split('=')[1]
-        nContours = inpfilelines[startTempCI].replace('\n','').split(',')[2].split('=')[1]
-        qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
-        qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
-        with open(modinpfullpath,'a') as inp:
-            inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
-            inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        if not isGPE:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
+            crackName = inpfilelines[startTempCI].replace('\n','').split(',')[1].split('=')[1]
+            nContours = inpfilelines[startTempCI].replace('\n','').split(',')[2].split('=')[1]
+            qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
+            qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
+            with open(modinpfullpath,'a') as inp:
+                inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
+                inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
         with open(modinpfullpath,'a') as inp:
             for line in inpfilelines[startTempCI+2:startLoadStep+2]:
@@ -6408,15 +6416,16 @@ def modifyRVEinputfile(parameters,mdbData,logfilepath,baselogindent,logindent):
             for line in inpfilelines[startBC+1:startCI]:
                 inp.write(line)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
-        crackName = inpfilelines[startCI].replace('\n','').split(',')[1].split('=')[1]
-        nContours = inpfilelines[startCI].replace('\n','').split(',')[2].split('=')[1]
-        qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
-        qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
-        with open(modinpfullpath,'a') as inp:
-            inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
-            inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
-        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        if not isGPE:
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write J-integral over reduced contours  ...',True)
+            crackName = inpfilelines[startCI].replace('\n','').split(',')[1].split('=')[1]
+            nContours = inpfilelines[startCI].replace('\n','').split(',')[2].split('=')[1]
+            qx = -np.sin(parameters['geometry']['deltatheta']*np.pi/180.0)
+            qy = np.cos(parameters['geometry']['deltatheta']*np.pi/180.0)
+            with open(modinpfullpath,'a') as inp:
+                inp.write('*CONTOUR INTEGRAL, CRACK NAME=' + crackName + ', CONTOURS=' + nContours + '\n')
+                inp.write(' ' + 'CRACKTIP-CONTOURINTEGRAL, ' + str(qx) + ', ' + str(qy) + ', 0.0' + '\n')
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Write from original input file  ...',True)
         with open(modinpfullpath,'a') as inp:
             for line in inpfilelines[endCI+1:]:
@@ -6658,6 +6667,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         initialStep = -2
     else:
         initialStep = -1
+
+    if 'structuralModel' in parameters['mesh']['elements'].keys():
+        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+            isGPE = True
     #=======================================================================
     # BEGIN - extract performances
     #=======================================================================
@@ -6677,7 +6690,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extracting J-integral results ...',True)
 
-    if parameters['simulation-pipeline']['analysis']['report-energyreleaserates']:
+    if parameters['simulation-pipeline']['analysis']['report-energyreleaserates'] and not isGPE:
         if len(parameters['steps'])>1:
             writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '--> THERMAL STEP <--',True)
             try:
@@ -6717,6 +6730,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
             appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],JintegralsWithDistance)
             del JintegralsWithDistance
     else:
+        if len(parameters['steps'])>1:
+            thermalJintegrals = [0.0,0.0]
+        Jintegrals = [0.0,0.0]
         createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['Jintegral'],'CONTOUR, AVERAGE DISTANCE, GTOT')
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

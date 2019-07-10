@@ -6767,7 +6767,7 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     # BEGIN - extract load vector
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract load vector...',True)
-    with open(join(wd,odbname.split('.')[0]+'_'+'LOAD2'+'.mtx'),'r') as mtx:
+    with open(join(wd,odbname.replace('VCCTandJintegral','Perturbation').split('.')[0]+'_'+'LOAD2'+'.mtx'),'r') as mtx:
         lines = mtx.readlines()
     globalVector = {}
     for line in lines[2:]:

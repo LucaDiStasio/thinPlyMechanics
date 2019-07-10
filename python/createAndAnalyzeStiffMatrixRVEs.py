@@ -4539,23 +4539,6 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract stiffness matrix...',True)
     with open(join(wd,odbname.split('.')[0]+'_'+'STIF2'+'.mtx'),'r') as mtx:
         lines = mtx.readlines()
-    globalMatrix = {}
-    for line in lines[2:]:
-        values = line.split(',')
-        rowIndex = int(values[0])
-        columnIndex = int(values[2])
-        rowDOF = int(values[1])
-        columnDOF = int(values[3])
-        if rowIndex not in globalMatrix:
-            globalMatrix[rowIndex] = {}
-            globalMatrix[rowIndex][rowDOF] = {}
-            globalMatrix[rowIndex][rowDOF][columnIndex] = {}
-        elif rowDOF not in globalMatrix[rowIndex]:
-            globalMatrix[rowIndex][rowDOF] = {}
-            globalMatrix[rowIndex][rowDOF][columnIndex] = {}
-        elif columnIndex not in globalMatrix[rowIndex][rowDOF]:
-            globalMatrix[rowIndex][rowDOF][columnIndex] = {}
-        globalMatrix[rowIndex][rowDOF][columnIndex][columnDOF] = int(values[-1])
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
     # END - extract stiffness matrix

@@ -145,9 +145,27 @@ def discreteVCCT(parameters):
     #=======================================================================
     # BEGIN - Read stiffness matrix from csv file
     #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Copy stiffness matrix to csv file...',True)
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalstiffnessmatrix'],'ROW INDEX, ROW DOF, COLUMN INDEX, COLUMN DOF, VALUE')
-    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalstiffnessmatrix'],lines[2:])
+    print('Read stiffness matrix from csv file...')
+    with open(join(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalstiffnessmatrix'].split('.')[0]+'.csv'),'r') as csv:
+        lines = csv.readlines()
+    globalMatrix = {}
+    for line in lines[2:]:
+        values = line.split(',')
+        rowIndex = int(values[0])
+        columnIndex = int(values[2])
+        rowDOF = int(values[1])
+        columnDOF = int(values[3])
+        if rowIndex not in globalMatrix:
+            globalMatrix[rowIndex] = {}
+            globalMatrix[rowIndex][rowDOF] = {}
+            globalMatrix[rowIndex][rowDOF][columnIndex] = {}
+        elif rowDOF not in globalMatrix[rowIndex]:
+            globalMatrix[rowIndex][rowDOF] = {}
+            globalMatrix[rowIndex][rowDOF][columnIndex] = {}
+        elif columnIndex not in globalMatrix[rowIndex][rowDOF]:
+            globalMatrix[rowIndex][rowDOF][columnIndex] = {}
+        globalMatrix[rowIndex][rowDOF][columnIndex][columnDOF] = int(values[-1])
+
     #=======================================================================
     # END - Read stiffness matrix from csv file
     #=======================================================================

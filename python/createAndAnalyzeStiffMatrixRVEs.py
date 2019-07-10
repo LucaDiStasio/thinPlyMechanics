@@ -4738,80 +4738,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
 
     #=======================================================================
-    # BEGIN - build matrices
+    # BEGIN - save indeces to build matrices
     #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Build matrices...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Save indeces to build matrices...',True)
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- R',True)
-    R = np.matrix([[np.cos(phi),np.sin(phi)],[-np.sin(phi),np.cos(phi)]])
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- inv R',True)
-    invR = np.matrix([[np.cos(phi),-np.sin(phi)],[np.sin(phi),np.cos(phi)]])
-
-    shapeFuncOrder = {}
-    shapeFuncOrder['first'] = 1
-    shapeFuncOrder['second'] = 2
-    shapeFuncOrder['third'] = 3
-    shapeFuncOrder['fourth'] = 4
-    m = shapeFuncOrder[parameters['mesh']['element']['order']]
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- P (m=' + str(m) + ')',True)
-    P = []
-    for p in range(1,m+2):
-        P.append(np.matrix([[np.cos((1+(1-p)/m)*delta),np.sin((1+(1-p)/m)*delta)],[-np.sin((1+(1-p)/m)*delta),np.cos((1+(1-p)/m)*delta)]]))
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- inv P (m=' + str(m) + ')',True)
-    invP = []
-    for p in range(1,m+2):
-        invP.append(np.matrix([[np.cos((1+(1-p)/m)*delta),-np.sin((1+(1-p)/m)*delta)],[np.sin((1+(1-p)/m)*delta),np.cos((1+(1-p)/m)*delta)]]))
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Q (m=' + str(m) + ')',True)
-    Q = []
-    for q in range(1,m+2):
-        Q.append(np.matrix([[np.cos(((q-1)/m)*delta),np.sin(((q-1)/m)*delta)],[-np.sin(((q-1)/m)*delta),np.cos(((q-1)/m)*delta)]]))
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- inv Q (m=' + str(m) + ')',True)
-    invQ = []
-    for q in range(1,m+2):
-        invQ.append(np.matrix([[np.cos(((q-1)/m)*delta),-np.sin(((q-1)/m)*delta)],[np.sin(((q-1)/m)*delta),np.cos(((q-1)/m)*delta)]]))
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- U (ABAQUS solution)',True)
-    rowIndeces = []
-    columnIndeces = []
-    values = []
-    for key in globalDisps.keys():
-        rowIndeces.append(2*(key-1))
-        rowIndeces.append(2*(key-1)+1)
-        columnIndeces.append(0)
-        columnIndeces.append(0)
-        values.append(globalDisps[key][1])
-        values.append(globalDisps[key][2])
-    NNodes = np.max(globalDisps.keys())
-    globalDisps = {}
-    Uabq = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, 1))
-    rowIndeces = []
-    columnIndeces = []
-    values = []
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- K',True)
-    rowIndeces = []
-    columnIndeces = []
-    values = []
-    for rowKey in globalMatrix.keys():
-        for dofKey in globalMatrix[rowKey].keys():
-            for columnKey in globalMatrix[rowKey][dofKey].keys():
-                for cdofKey in globalMatrix[rowKey][dofKey][columnKey].keys():
-                    rowIndeces.append(2*(rowKey-1)+dofKey-1)
-                    columnIndeces.append(2*(columnKey-1)+cdofKey-1)
-                    values.append(globalMatrix[rowKey][dofKey][columnKey][cdofKey])
-    globalMatrix = {}
-    K = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, NNodes))
-    rowIndeces = []
-    columnIndeces = []
-    values = []
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kct',True)
-    #undefCracktipCoords = getFieldOutput(odb,initialStep,0,'COORD',fiberCracktip)
     cracktipIndex = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',fiberCracktip).values[0].nodeLabel)
     fibercracktipdispmeasIndex = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',fiberCracktipDispMeas).values[0].nodeLabel)
     matrixcracktipdispmeasIndex = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',matrixCracktipDispMeas).values[0].nodeLabel)
@@ -4819,85 +4749,14 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         fiberfirstBounded = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',firstboundedFiber).values[0].nodeLabel)
         fiberfirstboundispmeasIndex = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',fiberFirstboundedDispMeas).values[0].nodeLabel)
         matrixfirstboundispmeasIndex = odb.rootAssembly.instances['RVE-ASSEMBLY'].getNodeFromLabel(getFieldOutput(odb,0,0,'COORD',matrixFirstboundedDispMeas).values[0].nodeLabel)
-    Kct = []
-    rowCTx = [K[2*(cracktipIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(cracktipIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]]
-    rowCTy = [K[2*(cracktipIndex-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(cracktipIndex-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+2]]
-    if 'second' in parameters['mesh']['elements']['order']:
-        rowCTx.append(K[2*(cracktipIndex-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+1])
-        rowCTx.append(K[2*(cracktipIndex-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+2])
-        rowCTy.append(K[2*(cracktipIndex-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+1])
-        rowCTy.append(K[2*(cracktipIndex-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+2])
-        rowFBx = [K[2*(fiberfirstBounded-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2],K[2*(fiberfirstBounded-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+2]]
-        rowFBy = [K[2*(fiberfirstBounded-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+2],K[2*(fiberfirstBounded-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+2]]
-        Kct.append(np.array([rowFBx,rowFBy]))
-    Kct.insert(0,np.array([rowCTx,rowCTy]))
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kstruct2ct',True)
-    allcolKstruct2ct = np.array([K[2*(cracktipIndex-1)-1+1,:],K[2*(cracktipIndex-1)-1+1,:]])
-    allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+1] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)-1+1] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+1]
-    allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+2] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)-1+2] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+2]
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['matrixindeces'],'cracktipIndex,fibercracktipdispmeasIndex,matrixcracktipdispmeasIndex,fiberfirstBounded,fiberfirstboundispmeasIndex,matrixfirstboundispmeasIndex')
+    data = [cracktipIndex,fibercracktipdispmeasIndex,matrixcracktipdispmeasIndex]
     if 'second' in parameters['mesh']['elements']['order']:
-        allcolKstruct2ct2 = np.array([K[2*(fiberfirstBounded-1)-1+1,:],K[2*(fiberfirstBounded-1)-1+2,:]])
-        allcolKstruct2ct2[0,2*(fiberfirstboundispmeasIndex-1)-1+1] = allcolKstruct2ct2[0,2*(matrixfirstboundispmeasIndex-1)-1+1] + allcolKstruct2ct2[0,2*(fiberfirstboundispmeasIndex-1)-1+1]
-        allcolKstruct2ct2[0,2*(fiberfirstboundispmeasIndex-1)-1+2] = allcolKstruct2ct2[0,2*(matrixfirstboundispmeasIndex-1)-1+2] + allcolKstruct2ct2[0,2*(fiberfirstboundispmeasIndex-1)-1+2]
-    toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
-    if 'second' in parameters['mesh']['elements']['order']:
-        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
-        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
-    Kstruct2ct1 = []
-    Kstruct2ct2 = []
-    for i in range(0,2*m-1):
-        row1 = []
-        row2 = []
-        for element,e in enumerate(allcolKstruct2ct[i,:]):
-            if e not in toSkip:
-                row1.append(element)
-                if 'second' in parameters['mesh']['elements']['order']:
-                    row2.append(allcolKstruct2ct2[i,e])
-        Kstruct2ct.append(row1)
-        Kstruct2ct2.append(row2)
-    Kstruct2ct = sparse.coo_matrix(np.array(Kstruct2ct))
-    Kstruct2ct2 = sparse.coo_matrix(np.array(Kstruct2ct2))
-    Kstruct2ctList = [Kstruct2ct,Kstruct2ct2]
-    allcolKstruct2ct = []
-    allcolKstruct2ct2 = []
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CDabq',True)
-    CDabq1 = np.array([Uabq[2*(matrixcracktipdispmeasIndex-1),0]-Uabq[2*(fibercracktipdispmeasIndex-1),0],Uabq[2*(matrixcracktipdispmeasIndex-1)+1,0]-Uabq[2*(fibercracktipdispmeasIndex-1)+1,0]])
-    if 'second' in parameters['mesh']['elements']['order']:
-        CDabq2 = np.array(Uabq[2*(matrixfirstboundispmeasIndex-1),0]-Uabq[2*(fiberfirstboundispmeasIndex-1),0],Uabq[2*(matrixfirstboundispmeasIndex-1)+1,0]-Uabq[2*(fiberfirstboundispmeasIndex-1)+1,0])
-    CDabq =[CDabq1,CDabq2]
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Ustructabq',True)
-    toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
-    if 'second' in parameters['mesh']['elements']['order']:
-        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
-        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
-    Ustructabq1 = []
-    Ustructabq2 = []
-    for element,e in enumerate(Uabq[:,1]):
-        if e not in toSkip:
-            Ustructabq1.append(element)
-            if 'second' in parameters['mesh']['elements']['order']:
-                Ustructabq2.append(Uabq[e,1])
-    Ustructabq1 = np.array(Ustructabq1)
-    Ustructabq2 = np.array(Ustructabq2)
-    Ustructabq = [Ustructabq1,Ustructabq2]
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- F',True)
-    rowIndeces = []
-    columnIndeces = []
-    values = []
-    for key in globalVector.keys():
-        for dof in globalVector[key].keys():
-            rowIndeces.append(2*(key-1)+dof)
-            columnIndeces.append(0)
-            values.append(globalDisps[key][dof])
-    globalVector = {}
-    F = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, 1))
-    rowIndeces = []
-    columnIndeces = []
-    values = []
+        data.append(fiberfirstBounded)
+        data.append(fiberfirstboundispmeasIndex)
+        data.append(matrixfirstboundispmeasIndex)
+    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['matrixindeces'],[data])
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================

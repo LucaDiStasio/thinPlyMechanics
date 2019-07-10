@@ -233,6 +233,175 @@ def discreteVCCT(parameters):
     # END - Read displacements of all nodes from csv file
     #=======================================================================
 
+    #=======================================================================
+    # BEGIN - build matrices
+    #=======================================================================
+    print('Build matrices...')
+
+    print('    -- R')
+    R = np.matrix([[np.cos(phi),np.sin(phi)],[-np.sin(phi),np.cos(phi)]])
+
+    print('    -- inv R')
+    invR = np.matrix([[np.cos(phi),-np.sin(phi)],[np.sin(phi),np.cos(phi)]])
+
+    shapeFuncOrder = {}
+    shapeFuncOrder['first'] = 1
+    shapeFuncOrder['second'] = 2
+    shapeFuncOrder['third'] = 3
+    shapeFuncOrder['fourth'] = 4
+    m = shapeFuncOrder[parameters['mesh']['element']['order']]
+
+    print('    -- P (m=' + str(m) + ')')
+    P = []
+    for p in range(1,m+2):
+        P.append(np.matrix([[np.cos((1+(1-p)/m)*delta),np.sin((1+(1-p)/m)*delta)],[-np.sin((1+(1-p)/m)*delta),np.cos((1+(1-p)/m)*delta)]]))
+
+    print('-- inv P (m=' + str(m) + ')',True)
+    invP = []
+    for p in range(1,m+2):
+        invP.append(np.matrix([[np.cos((1+(1-p)/m)*delta),-np.sin((1+(1-p)/m)*delta)],[np.sin((1+(1-p)/m)*delta),np.cos((1+(1-p)/m)*delta)]]))
+
+    print('    -- Q (m=' + str(m) + ')')
+    Q = []
+    for q in range(1,m+2):
+        Q.append(np.matrix([[np.cos(((q-1)/m)*delta),np.sin(((q-1)/m)*delta)],[-np.sin(((q-1)/m)*delta),np.cos(((q-1)/m)*delta)]]))
+
+    print('    -- inv Q (m=' + str(m) + ')')
+    invQ = []
+    for q in range(1,m+2):
+        invQ.append(np.matrix([[np.cos(((q-1)/m)*delta),-np.sin(((q-1)/m)*delta)],[np.sin(((q-1)/m)*delta),np.cos(((q-1)/m)*delta)]]))
+
+    print('    -- U (ABAQUS solution)')
+    rowIndeces = []
+    columnIndeces = []
+    values = []
+    for key in globalDisps.keys():
+        rowIndeces.append(2*(key-1))
+        rowIndeces.append(2*(key-1)+1)
+        columnIndeces.append(0)
+        columnIndeces.append(0)
+        values.append(globalDisps[key][1])
+        values.append(globalDisps[key][2])
+    NNodes = np.max(globalDisps.keys())
+    globalDisps = {}
+    Uabq = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, 1))
+    rowIndeces = []
+    columnIndeces = []
+    values = []
+
+    print('    -- K')
+    rowIndeces = []
+    columnIndeces = []
+    values = []
+    for rowKey in globalMatrix.keys():
+        for dofKey in globalMatrix[rowKey].keys():
+            for columnKey in globalMatrix[rowKey][dofKey].keys():
+                for cdofKey in globalMatrix[rowKey][dofKey][columnKey].keys():
+                    rowIndeces.append(2*(rowKey-1)+dofKey-1)
+                    columnIndeces.append(2*(columnKey-1)+cdofKey-1)
+                    values.append(globalMatrix[rowKey][dofKey][columnKey][cdofKey])
+    globalMatrix = {}
+    K = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, NNodes))
+    rowIndeces = []
+    columnIndeces = []
+    values = []
+
+    print('    -- Kct',True)
+    with open(join(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['matrixindeces'].split('.')[0]+'.csv'),'r') as csv:
+        lines = csv.readlines()
+    cracktipIndex = int(lines[0].split(',')[0])
+    fibercracktipdispmeasIndex = int(lines[0].split(',')[1])
+    matrixcracktipdispmeasIndex = int(lines[0].split(',')[2])
+    if 'second' in parameters['mesh']['elements']['order']:
+        fiberfirstBounded = int(lines[0].split(',')[3])
+        fiberfirstboundispmeasIndex = int(lines[0].split(',')[4])
+        matrixfirstboundispmeasIndex = int(lines[0].split(',')[5])
+    Kct = []
+    rowCTx = [K[2*(cracktipIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(cracktipIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]]
+    rowCTy = [K[2*(cracktipIndex-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(cracktipIndex-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+2]]
+    if 'second' in parameters['mesh']['elements']['order']:
+        rowCTx.append(K[2*(cracktipIndex-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+1])
+        rowCTx.append(K[2*(cracktipIndex-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+2])
+        rowCTy.append(K[2*(cracktipIndex-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+1])
+        rowCTy.append(K[2*(cracktipIndex-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+2])
+        rowFBx = [K[2*(fiberfirstBounded-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2],K[2*(fiberfirstBounded-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+1,2*(matrixfirstboundispmeasIndex-1)-1+2]]
+        rowFBy = [K[2*(fiberfirstBounded-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+2,2*(matrixcracktipdispmeasIndex-1)-1+2],K[2*(fiberfirstBounded-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+1],K[2*(fiberfirstBounded-1)-1+2,2*(matrixfirstboundispmeasIndex-1)-1+2]]
+        Kct.append(np.array([rowFBx,rowFBy]))
+    Kct.insert(0,np.array([rowCTx,rowCTy]))
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kstruct2ct',True)
+    allcolKstruct2ct = np.array([K[2*(cracktipIndex-1)-1+1,:],K[2*(cracktipIndex-1)-1+1,:]])
+    allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+1] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)-1+1] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+1]
+    allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+2] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)-1+2] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+2]
+    if 'second' in parameters['mesh']['elements']['order']:
+        allcolKstruct2ct2 = np.array([K[2*(fiberfirstBounded-1)-1+1,:],K[2*(fiberfirstBounded-1)-1+2,:]])
+        allcolKstruct2ct2[0,2*(fiberfirstboundispmeasIndex-1)-1+1] = allcolKstruct2ct2[0,2*(matrixfirstboundispmeasIndex-1)-1+1] + allcolKstruct2ct2[0,2*(fiberfirstboundispmeasIndex-1)-1+1]
+        allcolKstruct2ct2[0,2*(fiberfirstboundispmeasIndex-1)-1+2] = allcolKstruct2ct2[0,2*(matrixfirstboundispmeasIndex-1)-1+2] + allcolKstruct2ct2[0,2*(fiberfirstboundispmeasIndex-1)-1+2]
+    toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
+    if 'second' in parameters['mesh']['elements']['order']:
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
+    Kstruct2ct1 = []
+    Kstruct2ct2 = []
+    for i in range(0,2*m-1):
+        row1 = []
+        row2 = []
+        for element,e in enumerate(allcolKstruct2ct[i,:]):
+            if e not in toSkip:
+                row1.append(element)
+                if 'second' in parameters['mesh']['elements']['order']:
+                    row2.append(allcolKstruct2ct2[i,e])
+        Kstruct2ct.append(row1)
+        Kstruct2ct2.append(row2)
+    Kstruct2ct = sparse.coo_matrix(np.array(Kstruct2ct))
+    Kstruct2ct2 = sparse.coo_matrix(np.array(Kstruct2ct2))
+    Kstruct2ctList = [Kstruct2ct,Kstruct2ct2]
+    allcolKstruct2ct = []
+    allcolKstruct2ct2 = []
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CDabq',True)
+    CDabq1 = np.array([Uabq[2*(matrixcracktipdispmeasIndex-1),0]-Uabq[2*(fibercracktipdispmeasIndex-1),0],Uabq[2*(matrixcracktipdispmeasIndex-1)+1,0]-Uabq[2*(fibercracktipdispmeasIndex-1)+1,0]])
+    if 'second' in parameters['mesh']['elements']['order']:
+        CDabq2 = np.array(Uabq[2*(matrixfirstboundispmeasIndex-1),0]-Uabq[2*(fiberfirstboundispmeasIndex-1),0],Uabq[2*(matrixfirstboundispmeasIndex-1)+1,0]-Uabq[2*(fiberfirstboundispmeasIndex-1)+1,0])
+    CDabq =[CDabq1,CDabq2]
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Ustructabq',True)
+    toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
+    if 'second' in parameters['mesh']['elements']['order']:
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
+    Ustructabq1 = []
+    Ustructabq2 = []
+    for element,e in enumerate(Uabq[:,1]):
+        if e not in toSkip:
+            Ustructabq1.append(element)
+            if 'second' in parameters['mesh']['elements']['order']:
+                Ustructabq2.append(Uabq[e,1])
+    Ustructabq1 = np.array(Ustructabq1)
+    Ustructabq2 = np.array(Ustructabq2)
+    Ustructabq = [Ustructabq1,Ustructabq2]
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- F',True)
+    rowIndeces = []
+    columnIndeces = []
+    values = []
+    for key in globalVector.keys():
+        for dof in globalVector[key].keys():
+            rowIndeces.append(2*(key-1)+dof)
+            columnIndeces.append(0)
+            values.append(globalDisps[key][dof])
+    globalVector = {}
+    F = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, 1))
+    rowIndeces = []
+    columnIndeces = []
+    values = []
+
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    #=======================================================================
+    # END - build matrices
+    #=======================================================================
+
+
 
 #===============================================================================#
 #===============================================================================#

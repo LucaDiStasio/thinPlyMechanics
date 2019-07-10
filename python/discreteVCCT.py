@@ -116,14 +116,23 @@ def Tpq(elType,elOrder,p,q):
             tpq = 0.0
     return tpq
 
-def discreteVCCT(parameters):
+def discreteVCCT(iteration,parameters):
 
     #=======================================================================
     # BEGIN - Read content of global ERR file
     #=======================================================================
     print('Read content of global ERR file...')
-    with open(join(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalstiffnessmatrix'].split('.')[0]+'.csv'),'r') as csv:
+    with open(join(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'].split('.')[0]+'.csv'),'r') as csv:
         lines = csv.readlines()
+    errTitleLine = lines[0]
+    errData = []
+    for line in lines[1:]:
+        row = []
+        data = line.replace('\n','').split(',')
+        for datum in data:
+            row.append(float(datum))
+        errData.append(row)
+    errData = np.array(errData)
     print('...done.')
     #=======================================================================
     # END - Read content of global ERR file
@@ -306,7 +315,7 @@ def discreteVCCT(parameters):
     columnIndeces = []
     values = []
 
-    print('    -- Kct',True)
+    print('    -- Kct')
     with open(join(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['matrixindeces'].split('.')[0]+'.csv'),'r') as csv:
         lines = csv.readlines()
     cracktipIndex = int(lines[0].split(',')[0])
@@ -329,7 +338,7 @@ def discreteVCCT(parameters):
         Kct.append(np.array([rowFBx,rowFBy]))
     Kct.insert(0,np.array([rowCTx,rowCTy]))
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Kstruct2ct',True)
+    print('    -- Kstruct2ct')
     allcolKstruct2ct = np.array([K[2*(cracktipIndex-1)-1+1,:],K[2*(cracktipIndex-1)-1+1,:]])
     allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+1] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)-1+1] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+1]
     allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+2] = allcolKstruct2ct[0,2*(matrixcracktipdispmeasIndex-1)-1+2] + allcolKstruct2ct[0,2*(fibercracktipdispmeasIndex-1)-1+2]
@@ -359,13 +368,13 @@ def discreteVCCT(parameters):
     allcolKstruct2ct = []
     allcolKstruct2ct2 = []
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CDabq',True)
+    print('    -- CDabq')
     CDabq1 = np.array([Uabq[2*(matrixcracktipdispmeasIndex-1),0]-Uabq[2*(fibercracktipdispmeasIndex-1),0],Uabq[2*(matrixcracktipdispmeasIndex-1)+1,0]-Uabq[2*(fibercracktipdispmeasIndex-1)+1,0]])
     if 'second' in parameters['mesh']['elements']['order']:
         CDabq2 = np.array(Uabq[2*(matrixfirstboundispmeasIndex-1),0]-Uabq[2*(fiberfirstboundispmeasIndex-1),0],Uabq[2*(matrixfirstboundispmeasIndex-1)+1,0]-Uabq[2*(fiberfirstboundispmeasIndex-1)+1,0])
     CDabq =[CDabq1,CDabq2]
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Ustructabq',True)
+    print('   -- Ustructabq')
     toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
     if 'second' in parameters['mesh']['elements']['order']:
         toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
@@ -381,7 +390,7 @@ def discreteVCCT(parameters):
     Ustructabq2 = np.array(Ustructabq2)
     Ustructabq = [Ustructabq1,Ustructabq2]
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- F',True)
+    print('    -- F')
     rowIndeces = []
     columnIndeces = []
     values = []
@@ -396,9 +405,131 @@ def discreteVCCT(parameters):
     columnIndeces = []
     values = []
 
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    print('... done.')
     #=======================================================================
     # END - build matrices
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - compute global displacement vector
+    #=======================================================================
+    print('Compute displacement vectors...')
+
+    print('    -- U')
+    invK = sparse.linalg.inv(K)
+    U = invK.dot(F)
+
+    print('    -- CD')
+    CD1 = np.array([U[2*(matrixcracktipdispmeasIndex-1),0]-U[2*(fibercracktipdispmeasIndex-1),0],U[2*(matrixcracktipdispmeasIndex-1)+1,0]-U[2*(fibercracktipdispmeasIndex-1)+1,0]])
+    if 'second' in parameters['mesh']['elements']['order']:
+        CD2 = np.array(U[2*(matrixfirstboundispmeasIndex-1),0]-U[2*(fiberfirstboundispmeasIndex-1),0],U[2*(matrixfirstboundispmeasIndex-1)+1,0]-U[2*(fiberfirstboundispmeasIndex-1)+1,0])
+    CD =[CD1,CD2]
+
+    print('    -- Ustruct')
+    toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
+    if 'second' in parameters['mesh']['elements']['order']:
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
+        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
+    Ustruct1 = []
+    Ustruct2 = []
+    for element,e in enumerate(U[:,1]):
+        if e not in toSkip:
+            Ustruct1.append(element)
+            if 'second' in parameters['mesh']['elements']['order']:
+                Ustruct2.append(U[e,1])
+    Ustruct1 = np.array(Ustruct1)
+    Ustruct2 = np.array(Ustruct2)
+    Ustruct = [Ustruct1,Ustruct2]
+
+    print('... done.')
+    #=======================================================================
+    # END - compute global displacement vector
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - compute ERR matrix
+    #=======================================================================
+    print('Compute ERR matrix...')
+
+    print('    -- ABAQUS solution')
+    matGabq = 0
+    for Pmat, pi in enumerate(P):
+        for Qmat, qi in enumerate(Q):
+            matGabq += Q[qi].dot(R.dot(np.outer((Kct[qi].dot(CDabq[qi])+Kstruct2ct[qi].dot(Ustructabq[qi])),CDabq[pi]).dot(invR.dot(invP[pi].dot(Tpq('quad',parameters['mesh']['elements']['order'],pi,qi))))))
+
+    print('    -- Recalculated solution')
+    matG = 0
+    for Pmat, pi in enumerate(P):
+        for Qmat, qi in enumerate(Q):
+            matG += Q[qi].dot(R.dot(np.outer((Kct[qi].dot(CD[qi])+Kstruct2ct[qi].dot(Ustruct[qi])),CD[pi]).dot(invR.dot(invP[pi].dot(Tpq('quad',parameters['mesh']['elements']['order'],pi,qi))))))
+
+
+    print('... done.')
+    #=======================================================================
+    # END - compute ERR matrix
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - diagonalize ERR matrix
+    #=======================================================================
+    print('Diagonalize ERR matrix...')
+
+    print('    -- ABAQUS solution')
+    G11 = matGabq[0,0]
+    G12 = matGabq[0,1]
+    G21 = matGabq[1,0]
+    G22 = matGabq[1,1]
+    eigG1abq = 0.5*(-(G11+G22)+np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
+    eigG2abq = 0.5*(-(G11+G22)-np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
+    eigvecG1abq = [1/np.sqrt(1+G21*G21/((G22-eigG1abq)*(G22-eigG1abq))),-G21/((G22-eigG1abq)*np.sqrt(1+G21*G21/((G22-eigG1abq)*(G22-eigG1abq))))]
+    eigvecG2abq = [1/np.sqrt(1+G21*G21/((G22-eigG2abq)*(G22-eigG2abq))),-G21/((G22-eigG2abq)*np.sqrt(1+G21*G21/((G22-eigG2abq)*(G22-eigG2abq))))]
+    cospsi1 = 1/np.sqrt(1+G21*G21/((G22-eigG1abq)*(G22-eigG1abq)))
+    cospsi2 = 1/np.sqrt(1+G21*G21/((G22-eigG2abq)*(G22-eigG2abq)))
+    psi1abq = np.arctan2(np.sqrt(1-cospsi1*cospsi1),cospsi1)
+    psi2abq = np.arctan2(np.sqrt(1-cospsi2*cospsi2),cospsi2)
+
+    print('    -- Recalculated solution')
+    G11 = matG[0,0]
+    G12 = matG[0,1]
+    G21 = matG[1,0]
+    G22 = matG[1,1]
+    eigG1 = 0.5*(-(G11+G22)+np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
+    eigG2 = 0.5*(-(G11+G22)-np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
+    eigvecG1 = [1/np.sqrt(1+G21*G21/((G22-eigG1)*(G22-eigG1))),-G21/((G22-eigG1)*np.sqrt(1+G21*G21/((G22-eigG1)*(G22-eigG1))))]
+    eigvecG2 = [1/np.sqrt(1+G21*G21/((G22-eigG2)*(G22-eigG2))),-G21/((G22-eigG2)*np.sqrt(1+G21*G21/((G22-eigG2)*(G22-eigG2))))]
+    cospsi1 = 1/np.sqrt(1+G21*G21/((G22-eigG1)*(G22-eigG1)))
+    cospsi2 = 1/np.sqrt(1+G21*G21/((G22-eigG2)*(G22-eigG2)))
+    psi1 = np.arctan2(np.sqrt(1-cospsi1*cospsi1),cospsi1)
+    psi2 = np.arctan2(np.sqrt(1-cospsi2*cospsi2),cospsi2)
+
+    print('... done.')
+    #=======================================================================
+    # END - diagonalize ERR matrix
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - Update content of global ERR file
+    #=======================================================================
+    print('Update content of global ERR file...')
+
+    rowUpdate = [matGabq[0,0],matGabq[0,1],matGabq[1,0],matGabq[1,1],matG[0,0],matG[0,1],matG[1,0],matG[1,1],eigG1abq,eigG2abq,eigG1,eigG2,eigvecG1abq[0],eigvecG1abq[1],eigvecG1[0],eigvecG1[1],psi1abq*180.0/np.pi,psi2abq*180.0/np.pi,psi1*180.0/np.pi,psi2*180.0/np.pi,psi1abq*180.0/np.pi+90.0,psi2abq*180.0/np.pi+90.0,psi1*180.0/np.pi+90.0,psi2*180.0/np.pi+90.0]
+
+
+    with open(join(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'].split('.')[0]+'.csv'),'r') as csv:
+        lines = csv.readlines()
+
+    errTitleLine = lines[0]
+    errData = []
+    for line in lines[1:]:
+        row = []
+        data = line.replace('\n','').split(',')
+        for datum in data:
+            row.append(float(datum))
+        errData.append(row)
+    errData = np.array(errData)
+    print('...done.')
+    #=======================================================================
+    # END - Update content of global ERR file
     #=======================================================================
 
 

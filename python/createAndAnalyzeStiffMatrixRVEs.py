@@ -4764,103 +4764,6 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
 
     #=======================================================================
-    # BEGIN - compute global displacement vector
-    #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute displacement vectors...',True)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- U',True)
-    invK = sparse.linalg.inv(K)
-    U = invK.dot(F)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- CD',True)
-    CD1 = np.array([U[2*(matrixcracktipdispmeasIndex-1),0]-U[2*(fibercracktipdispmeasIndex-1),0],U[2*(matrixcracktipdispmeasIndex-1)+1,0]-U[2*(fibercracktipdispmeasIndex-1)+1,0]])
-    if 'second' in parameters['mesh']['elements']['order']:
-        CD2 = np.array(U[2*(matrixfirstboundispmeasIndex-1),0]-U[2*(fiberfirstboundispmeasIndex-1),0],U[2*(matrixfirstboundispmeasIndex-1)+1,0]-U[2*(fiberfirstboundispmeasIndex-1)+1,0])
-    CD =[CD1,CD2]
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Ustruct',True)
-    toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
-    if 'second' in parameters['mesh']['elements']['order']:
-        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
-        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
-    Ustruct1 = []
-    Ustruct2 = []
-    for element,e in enumerate(U[:,1]):
-        if e not in toSkip:
-            Ustruct1.append(element)
-            if 'second' in parameters['mesh']['elements']['order']:
-                Ustruct2.append(U[e,1])
-    Ustruct1 = np.array(Ustruct1)
-    Ustruct2 = np.array(Ustruct2)
-    Ustruct = [Ustruct1,Ustruct2]
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    #=======================================================================
-    # END - compute global displacement vector
-    #=======================================================================
-
-    #=======================================================================
-    # BEGIN - compute ERR matrix
-    #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute ERR matrix...',True)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- ABAQUS solution',True)
-    matGabq = 0
-    for Pmat, pi in enumerate(P):
-        for Qmat, qi in enumerate(Q):
-            matGabq += Q[qi].dot(R.dot(np.outer((Kct[qi].dot(CDabq[qi])+Kstruct2ct[qi].dot(Ustructabq[qi])),CDabq[pi]).dot(invR.dot(invP[pi].dot(Tpq('quad',parameters['mesh']['elements']['order'],pi,qi))))))
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Recalculated solution',True)
-    matG = 0
-    for Pmat, pi in enumerate(P):
-        for Qmat, qi in enumerate(Q):
-            matG += Q[qi].dot(R.dot(np.outer((Kct[qi].dot(CD[qi])+Kstruct2ct[qi].dot(Ustruct[qi])),CD[pi]).dot(invR.dot(invP[pi].dot(Tpq('quad',parameters['mesh']['elements']['order'],pi,qi))))))
-
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    #=======================================================================
-    # END - compute ERR matrix
-    #=======================================================================
-
-    #=======================================================================
-    # BEGIN - diagonalize ERR matrix
-    #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Diagonalize ERR matrix...',True)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- ABAQUS solution',True)
-    G11 = matGabq[0,0]
-    G12 = matGabq[0,1]
-    G21 = matGabq[1,0]
-    G22 = matGabq[1,1]
-    eigG1abq = 0.5*(-(G11+G22)+np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
-    eigG2abq = 0.5*(-(G11+G22)-np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
-    eigvecG1abq = [1/np.sqrt(1+G21*G21/((G22-eigG1abq)*(G22-eigG1abq))),-G21/((G22-eigG1abq)*np.sqrt(1+G21*G21/((G22-eigG1abq)*(G22-eigG1abq))))]
-    eigvecG2abq = [1/np.sqrt(1+G21*G21/((G22-eigG2abq)*(G22-eigG2abq))),-G21/((G22-eigG2abq)*np.sqrt(1+G21*G21/((G22-eigG2abq)*(G22-eigG2abq))))]
-    cospsi1 = 1/np.sqrt(1+G21*G21/((G22-eigG1abq)*(G22-eigG1abq)))
-    cospsi2 = 1/np.sqrt(1+G21*G21/((G22-eigG2abq)*(G22-eigG2abq)))
-    psi1abq = np.arctan2(np.sqrt(1-cospsi1*cospsi1),cospsi1)
-    psi2abq = np.arctan2(np.sqrt(1-cospsi2*cospsi2),cospsi2)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- Recalculated solution',True)
-    G11 = matG[0,0]
-    G12 = matG[0,1]
-    G21 = matG[1,0]
-    G22 = matG[1,1]
-    eigG1 = 0.5*(-(G11+G22)+np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
-    eigG2 = 0.5*(-(G11+G22)-np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
-    eigvecG1 = [1/np.sqrt(1+G21*G21/((G22-eigG1)*(G22-eigG1))),-G21/((G22-eigG1)*np.sqrt(1+G21*G21/((G22-eigG1)*(G22-eigG1))))]
-    eigvecG2 = [1/np.sqrt(1+G21*G21/((G22-eigG2)*(G22-eigG2))),-G21/((G22-eigG2)*np.sqrt(1+G21*G21/((G22-eigG2)*(G22-eigG2))))]
-    cospsi1 = 1/np.sqrt(1+G21*G21/((G22-eigG1)*(G22-eigG1)))
-    cospsi2 = 1/np.sqrt(1+G21*G21/((G22-eigG2)*(G22-eigG2)))
-    psi1 = np.arctan2(np.sqrt(1-cospsi1*cospsi1),cospsi1)
-    psi2 = np.arctan2(np.sqrt(1-cospsi2*cospsi2),cospsi2)
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    #=======================================================================
-    # END - diagonalize ERR matrix
-    #=======================================================================
-
-    #=======================================================================
     # BEGIN - compute VCCT
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute VCCT ...',True)
@@ -5081,9 +4984,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
 
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Save to file ...',True)
         if 'second' in parameters['mesh']['elements']['order']:
-            appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZ*180.0/np.pi,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ*180.0/np.pi,matGabq[0,0],matGabq[0,1],matGabq[1,0],matGabq[1,1],matG[0,0],matG[0,1],matG[1,0],matG[1,1],eigG1abq,eigG2abq,eigG1,eigG2,eigvecG1abq[0],eigvecG1abq[1],eigvecG1[0],eigvecG1[1],psi1abq*180.0/np.pi,psi2abq*180.0/np.pi,psi1*180.0/np.pi,psi2*180.0/np.pi,psi1abq*180.0/np.pi+90.0,psi2abq*180.0/np.pi+90.0,psi1*180.0/np.pi+90.0,psi2*180.0/np.pi+90.0, xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement]])
+            appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZ*180.0/np.pi,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ*180.0/np.pi,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24, xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement]])
         else:
-            appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZ*180.0/np.pi,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ*180.0/np.pi,matGabq[0,0],matGabq[0,1],matGabq[1,0],matGabq[1,1],matG[0,0],matG[0,1],matG[1,0],matG[1,1],eigG1abq,eigG2abq,eigG1,eigG2,eigvecG1abq[0],eigvecG1abq[1],eigvecG1[0],eigvecG1[1],psi1abq*180.0/np.pi,psi2abq*180.0/np.pi,psi1*180.0/np.pi,psi2*180.0/np.pi,psi1abq*180.0/np.pi+90.0,psi2abq*180.0/np.pi+90.0,psi1*180.0/np.pi+90.0,psi2*180.0/np.pi+90.0,xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement]])
+            appendCSVfile(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'],[[parameters['geometry']['deltatheta'],parameters['geometry']['Rf'],parameters['geometry']['L'],parameters['geometry']['L']/parameters['geometry']['Rf'],phiCZ*180.0/np.pi,G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ*180.0/np.pi,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement]])
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
@@ -5491,6 +5394,7 @@ def main(argv):
         RVEparams['output']['local']['filenames']['globalstiffnessmatrix'] = RVEparams['input']['modelname'] + '-globalstiffnessmatrix'
         RVEparams['output']['local']['filenames']['globalloadvector'] = RVEparams['input']['modelname'] + '-globalloadvector'
         RVEparams['output']['local']['filenames']['globaldispvector'] = RVEparams['input']['modelname'] + '-globaldispvector'
+        RVEparams['output']['local']['filenames']['matrixindeces'] = RVEparams['input']['modelname'] + '-matrixindeces'
 
         RVEparams['output']['report']['local']['directory'].append(join(RVEparams['output']['global']['directory'],RVEparams['input']['modelname']))
         RVEparams['output']['report']['local']['filenames']['Jintegral'].append(RVEparams['input']['modelname'] + '-Jintegral')

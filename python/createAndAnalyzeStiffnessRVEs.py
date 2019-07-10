@@ -5564,9 +5564,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         halfsumLeft = 0.5*(COD[:-1]+CSD[:-1])
         halfdiffRight = 0.5*(COD[1:]-CSD[1:])
         halfdiffLeft = 0.5*(COD[:-1]-CSD[:-1])
-        b22 = 0.5*np.sum(((halfsumRight*(1-np.sin(thetas[1:]))+halfdiffRight*np.cos(thetas[1:]))+(halfsumLeft*(1-np.sin(thetas[:-1]))+halfdiffLeft*np.cos(thetas[:-1])))*(thetas[1:]-thetas[:-1]))/np.sum((thetas[1:]-thetas[:-1]))
-        b33 = 0.5*np.sum(((halfsumRight*(1+np.sin(thetas[1:]))-halfdiffRight*np.cos(thetas[1:]))+(halfsumLeft*(1+np.sin(thetas[:-1]))-halfdiffLeft*np.cos(thetas[:-1])))*(thetas[1:]-thetas[:-1]))/np.sum((thetas[1:]-thetas[:-1]))
-        b23 = np.sum(((halfsumRight*np.cos(thetas[1:])+halfdiffRight*np.sin(thetas[1:]))+(halfsumLeft*np.cos(thetas[:-1])+halfdiffLeft*np.sin(thetas[:-1])))*(thetas[1:]-thetas[:-1]))/np.sum((thetas[1:]-thetas[:-1]))
+        beta22 = 0.5*np.sum(((halfsumRight*(1-np.sin(thetas[1:]))+halfdiffRight*np.cos(thetas[1:]))+(halfsumLeft*(1-np.sin(thetas[:-1]))+halfdiffLeft*np.cos(thetas[:-1])))*(thetas[1:]-thetas[:-1]))/np.sum((thetas[1:]-thetas[:-1]))
+        beta33 = 0.5*np.sum(((halfsumRight*(1+np.sin(thetas[1:]))-halfdiffRight*np.cos(thetas[1:]))+(halfsumLeft*(1+np.sin(thetas[:-1]))-halfdiffLeft*np.cos(thetas[:-1])))*(thetas[1:]-thetas[:-1]))/np.sum((thetas[1:]-thetas[:-1]))
+        beta23 = np.sum(((halfsumRight*np.cos(thetas[1:])+halfdiffRight*np.sin(thetas[1:]))+(halfsumLeft*np.cos(thetas[:-1])+halfdiffLeft*np.sin(thetas[:-1])))*(thetas[1:]-thetas[:-1]))/np.sum((thetas[1:]-thetas[:-1]))
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     #=======================================================================

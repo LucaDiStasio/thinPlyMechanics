@@ -119,13 +119,22 @@ def Tpq(elType,elOrder,p,q):
 def discreteVCCT(parameters):
 
     #=======================================================================
+    # BEGIN - Read content of global ERR file
+    #=======================================================================
+    print('Read content of global ERR file...')
+    with open(join(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalstiffnessmatrix'].split('.')[0]+'.csv'),'r') as csv:
+        lines = csv.readlines()
+    print('...done.')
+    #=======================================================================
+    # END - Read content of global ERR file
+    #=======================================================================
+
+    #=======================================================================
     # BEGIN - compute crack tip reference frame transformation
     #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute crack tip reference frame transformation ...',True)
-
+    print('Compute crack tip reference frame transformation ...')
     phi = parameters['geometry']['deltatheta']*np.pi/180.0
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    print('...done.')
     #=======================================================================
     # END - compute crack tip reference frame transformation
     #=======================================================================
@@ -133,11 +142,9 @@ def discreteVCCT(parameters):
     #=======================================================================
     # BEGIN - compute mesh size reference frame transformation
     #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Compute mesh size reference frame transformation ...',True)
-
+    print('Compute mesh size reference frame transformation ...')
     delta = parameters['mesh']['size']['delta']*np.pi/180.0
-
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    print('...done.')
     #=======================================================================
     # END - compute mesh size reference frame transformation
     #=======================================================================
@@ -165,9 +172,65 @@ def discreteVCCT(parameters):
         elif columnIndex not in globalMatrix[rowIndex][rowDOF]:
             globalMatrix[rowIndex][rowDOF][columnIndex] = {}
         globalMatrix[rowIndex][rowDOF][columnIndex][columnDOF] = int(values[-1])
-
+    print('...done.')
     #=======================================================================
     # END - Read stiffness matrix from csv file
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - Read load vector from csv file
+    #=======================================================================
+    print('Read load vector from csv file...')
+    with open(join(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalloadvector'].split('.')[0]+'.csv'),'r') as csv:
+        lines = csv.readlines()
+    globalVector = {}
+    for line in lines[2:]:
+        values = line.split(',')
+        rowIndex = int(values[0])
+        rowDOF = int(values[1])
+        if rowIndex not in globalVector:
+            globalVector[rowIndex] = {}
+        globalVector[rowIndex][rowDOF] = int(values[-1])
+    print('...done.')
+    #=======================================================================
+    # END - Read stiffness matrix from csv file
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - Read load vector from csv file
+    #=======================================================================
+    print('Read load vector from csv file...')
+    with open(join(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalloadvector'].split('.')[0]+'.csv'),'r') as csv:
+        lines = csv.readlines()
+    globalVector = {}
+    for line in lines[2:]:
+        values = line.split(',')
+        rowIndex = int(values[0])
+        rowDOF = int(values[1])
+        if rowIndex not in globalVector:
+            globalVector[rowIndex] = {}
+        globalVector[rowIndex][rowDOF] = int(values[-1])
+    print('...done.')
+    #=======================================================================
+    # END - Read stiffness matrix from csv file
+    #=======================================================================
+
+    #=======================================================================
+    # BEGIN - Read displacements of all nodes from csv file
+    #=======================================================================
+    print('Read displacements of all nodes from csv file...')
+    with open(join(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globaldispvector'].split('.')[0]+'.csv'),'r') as csv:
+        lines = csv.readlines()
+    globalDisps = {}
+    for line in lines[2:]:
+        values = line.split(',')
+        rowIndex = int(values[0])
+        globalDisps[rowIndex] = {}
+        globalDisps[rowIndex][1] = float(values[1])
+        globalDisps[rowIndex][2] = float(values[2])
+    print('...done.')
+    #=======================================================================
+    # END - Read displacements of all nodes from csv file
     #=======================================================================
 
 

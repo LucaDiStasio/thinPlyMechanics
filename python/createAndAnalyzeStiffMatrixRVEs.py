@@ -1655,7 +1655,8 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + logindent + 'Creating part ...',True)
     # create sketch
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Initialize sketch to draw the external shape of the RVE ...',True)
-    RVEsketch = model.ConstrainedSketch(name='__profile__',sheetSize=3*L)
+    RVEsketch = model.ConstrainedSketch(name='__profile__',
+        sheetSize=3*L)
     RVEsketch.setPrimaryObject(option=STANDALONE)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # create rectangle
@@ -1709,41 +1710,272 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw fiber and circular sections for mesh generation ...',True)
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Fiber',True)
     if 'full' in parameters['geometry']['fiber']['type']:
-        if deltatheta>0.0:
-            xA = Rf*np.cos((theta+deltatheta)*np.pi/180.0)
-            yA = Rf*np.sin((theta+deltatheta)*np.pi/180.0)
-            xB = Rf*np.cos((theta-deltatheta)*np.pi/180.0)
-            yB = Rf*np.sin((theta-deltatheta)*np.pi/180.0)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA, yA), point2=(xB,yB), direction=CLOCKWISE)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xB,yB), point2=(xA, yA), direction=CLOCKWISE)
+        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-Rf, 0.0))
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.75*Rf',True)
+        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-0.75*Rf, 0.0)) # fiberGeometry[7]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.5*Rf',True)
+        fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-0.5*Rf, 0.0)) # fiberGeometry[8]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
+        if L>2*Rf:
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-1.25*Rf, 0.0)) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-1.5*Rf, 0.0)) # fiberGeometry[10]
         else:
-            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(Rf, 0.0), direction=CLOCKWISE)
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-(Rf+0.25*(L-Rf)), 0.0)) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.CircleByCenterPerimeter(center=(0.0, 0.0), point1=(-(Rf+0.5*(L-Rf)), 0.0)) # fiberGeometry[10]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     elif 'half' in parameters['geometry']['fiber']['type']:
-        if deltatheta>0.0:
-            xA = Rf*np.cos(deltatheta*np.pi/180.0)
-            yA = Rf*np.sin(deltatheta*np.pi/180.0)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(xA,yA), direction=CLOCKWISE)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA,yA), point2=(Rf,0.0), direction=CLOCKWISE)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(Rf,0.0), direction=CLOCKWISE) # fiberGeometry[6]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.75*Rf',True)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-0.75*Rf, 0.0), point2=(0.75*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[7]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.5*Rf',True)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-0.5*Rf, 0.0), point2=(0.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[8]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
+        if L>2*Rf:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.25*Rf, 0.0), point2=(1.25*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.5*Rf, 0.0), point2=(1.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[10]
         else:
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(Rf,0.0), direction=CLOCKWISE)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.25*(L-Rf)), 0.0), point2=((Rf+0.25*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.5*(L-Rf)), 0.0), point2=((Rf+0.5*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     elif 'quarter' in parameters['geometry']['fiber']['type']:
-        if deltatheta>0.0:
-            xA = Rf*np.cos(deltatheta*np.pi/180.0)
-            yA = Rf*np.sin(deltatheta*np.pi/180.0)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, Rf), point2=(xA,yA), direction=CLOCKWISE)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA,yA), point2=(Rf,0.0), direction=CLOCKWISE)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+Rf), point2=(Rf,0.0), direction=CLOCKWISE) # fiberGeometry[6]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.75*Rf',True)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+0.75*Rf), point2=(0.75*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[7]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.5*Rf',True)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+0.5*Rf), point2=(0.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[8]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
+        if L>2*Rf:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+1.25*Rf), point2=(1.25*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+1.5*Rf), point2=(1.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[10]
         else:
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, Rf), point2=(Rf,0.0), direction=CLOCKWISE)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+(Rf+0.25*(L-Rf))), point2=((Rf+0.25*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(0.0, 0.0+(Rf+0.5*(L-Rf))), point2=((Rf+0.5*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     else:
-        if deltatheta>0.0:
-            xA = Rf*np.cos(deltatheta*np.pi/180.0)
-            yA = Rf*np.sin(deltatheta*np.pi/180.0)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(xA,yA), direction=CLOCKWISE)
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(xA,yA), point2=(Rf,0.0), direction=CLOCKWISE)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(Rf,0.0), direction=CLOCKWISE) # fiberGeometry[6]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.75*Rf',True)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-0.75*Rf, 0.0), point2=(0.75*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[7]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 0.5*Rf',True)
+        fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-0.5*Rf, 0.0), point2=(0.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[8]
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.25*Rf',True)
+        if L>2*Rf:
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.25*Rf, 0.0), point2=(1.25*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-1.5*Rf, 0.0), point2=(1.5*Rf,0.0), direction=CLOCKWISE) # fiberGeometry[10]
         else:
-            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-Rf, 0.0), point2=(Rf,0.0), direction=CLOCKWISE)
-    listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.25*(L-Rf)), 0.0), point2=((Rf+0.25*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[9]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+            writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Arc at 1.5*Rf',True)
+            fiberSketch.ArcByCenterEnds(center=(0.0, 0.0), point1=(-(Rf+0.5*(L-Rf)), 0.0), point2=((Rf+0.5*(L-Rf)),0.0), direction=CLOCKWISE) # fiberGeometry[10]
+            listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # calculate angles for construction lines
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calculate angles for construction lines ...',True)
+    alpha = theta + deltatheta - deltapsi
+    beta = theta + deltatheta + deltapsi
+    gamma = theta + deltatheta + deltapsi + deltaphi
+    listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+    #raw_input()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # draw construction lines
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction lines ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(theta+deltatheta) + ' deg',True)
+    fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=(theta+deltatheta)) # fiberGeometry[11]
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[11],addUndoState=False)
+    listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+    #raw_input()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(alpha) + ' deg',True)
+    fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=alpha) # fiberGeometry[12]
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[12],addUndoState=False)
+    listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+    #raw_input()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(beta) + ' deg',True)
+    fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=beta) # fiberGeometry[13]
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[13],addUndoState=False)
+    listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+    #raw_input()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(gamma) + ' deg',True)
+    fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=gamma) # fiberGeometry[14]
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[14],addUndoState=False)
+    listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+    #raw_input()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # draw angular sections to identify the crack and for mesh generation
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'draw angular sections to identify the crack and for mesh generation ...',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute internal and external radii ...',True)
+    Rint = 0.75*Rf
+    if L>2*Rf:
+        Rext = 1.25*Rf
+    else:
+        Rext = Rf+0.25*(L-Rf)
+    listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+    #raw_input()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create first circular section ...',True)
+    Ax = Rint*np.cos(alpha*np.pi/180.0)
+    Ay = 0.0+Rint*np.sin(alpha*np.pi/180.0)
+    Bx = Rext*np.cos(alpha*np.pi/180.0)
+    By = 0.0+Rext*np.sin(alpha*np.pi/180.0)
+    fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[15]
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[15],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[15], entity2=fiberGeometry[7],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[16], entity2=fiberGeometry[9],addUndoState=False)
+    listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+    #raw_input()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create second circular section ...',True)
+    Ax = Rint*np.cos((theta+deltatheta)*np.pi/180.0)
+    Ay = 0.0+Rint*np.sin((theta+deltatheta)*np.pi/180.0)
+    Bx = Rext*np.cos((theta+deltatheta)*np.pi/180.0)
+    By = 0.0+Rext*np.sin((theta+deltatheta)*np.pi/180.0)
+    fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[16]
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[16],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[17], entity2=fiberGeometry[7],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[18], entity2=fiberGeometry[9],addUndoState=False)
+    listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+    #raw_input()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create third circular section ...',True)
+    Ax = Rint*np.cos(beta*np.pi/180.0)
+    Ay = 0.0+Rint*np.sin(beta*np.pi/180.0)
+    Bx = Rext*np.cos(beta*np.pi/180.0)
+    By = 0.0+Rext*np.sin(beta*np.pi/180.0)
+    fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[17]
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[17],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[19], entity2=fiberGeometry[7],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[20], entity2=fiberGeometry[9],addUndoState=False)
+    listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+    #raw_input()
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create fourth circular section ...',True)
+    Ax = Rint*np.cos(gamma*np.pi/180.0)
+    Ay = 0.0+Rint*np.sin(gamma*np.pi/180.0)
+    Bx = Rext*np.cos(gamma*np.pi/180.0)
+    By = 0.0+Rext*np.sin(gamma*np.pi/180.0)
+    fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[18]
+    fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[18],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[21], entity2=fiberGeometry[7],addUndoState=False)
+    fiberSketch.CoincidentConstraint(entity1=fiberVertices[22], entity2=fiberGeometry[9],addUndoState=False)
+    listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+    # if theta != 0, construct second crack tip
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Construct second crack tip ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Calculate angles for construction lines ...',True)
+        alpha = theta - deltatheta + deltapsi
+        beta = theta - deltatheta - deltapsi
+        gamma = theta - deltatheta - deltapsi - deltaphi
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        # draw construction lines
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw construction lines ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(theta+deltatheta) + ' deg',True)
+        fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=(theta-deltatheta)) # fiberGeometry[19]
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[19],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(alpha) + ' deg',True)
+        fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=alpha) # fiberGeometry[20]
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[20],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(beta) + ' deg',True)
+        fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=beta) # fiberGeometry[21]
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[21],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Construction line at ' + str(gamma) + ' deg',True)
+        fiberSketch.ConstructionLine(point1=(0.0, 0.0), angle=gamma) # fiberGeometry[22]
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[6], entity2=fiberGeometry[22],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
+        # draw angular sections to identify the crack and for mesh generation
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'draw angular sections to identify the crack and for mesh generation ...',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Compute internal and external radii ...',True)
+        Rint = 0.75*Rf
+        if L>2*Rf:
+            Rext = 1.25*Rf
+        else:
+            Rext = Rf+0.25*(L-Rf)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create first circular section ...',True)
+        Ax = Rint*np.cos(alpha*np.pi/180.0)
+        Ay = 0.0+Rint*np.sin(alpha*np.pi/180.0)
+        Bx = Rext*np.cos(alpha*np.pi/180.0)
+        By = 0.0+Rext*np.sin(alpha*np.pi/180.0)
+        fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[23]
+        fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[23],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[-2], entity2=fiberGeometry[7],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[-1], entity2=fiberGeometry[9],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create second circular section ...',True)
+        Ax = Rint*np.cos((theta+deltatheta)*np.pi/180.0)
+        Ay = 0.0+Rint*np.sin((theta+deltatheta)*np.pi/180.0)
+        Bx = Rext*np.cos((theta+deltatheta)*np.pi/180.0)
+        By = 0.0+Rext*np.sin((theta+deltatheta)*np.pi/180.0)
+        fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[24]
+        fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[24],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[-2], entity2=fiberGeometry[7],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[-1], entity2=fiberGeometry[9],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create third circular section ...',True)
+        Ax = Rint*np.cos(beta*np.pi/180.0)
+        Ay = 0.0+Rint*np.sin(beta*np.pi/180.0)
+        Bx = Rext*np.cos(beta*np.pi/180.0)
+        By = 0.0+Rext*np.sin(beta*np.pi/180.0)
+        fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[25]
+        fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[25],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[-2], entity2=fiberGeometry[7],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[-1], entity2=fiberGeometry[9],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        #raw_input()
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create fourth circular section ...',True)
+        Ax = Rint*np.cos(gamma*np.pi/180.0)
+        Ay = 0.0+Rint*np.sin(gamma*np.pi/180.0)
+        Bx = Rext*np.cos(gamma*np.pi/180.0)
+        By = 0.0+Rext*np.sin(gamma*np.pi/180.0)
+        fiberSketch.Line(point1=(Ax,Ay),point2=(Bx,By)) # fiberGeometry[26]
+        fiberSketch.PerpendicularConstraint(entity1=fiberGeometry[7], entity2=fiberGeometry[26],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[-2], entity2=fiberGeometry[7],addUndoState=False)
+        fiberSketch.CoincidentConstraint(entity1=fiberVertices[-1], entity2=fiberGeometry[9],addUndoState=False)
+        listGeomElements(logfilepath,baselogindent+2*logindent,logindent,fiberGeometry,fiberVertices)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
+        writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     # if bounding ply is present, draw interface line
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Draw upper ply interface line ...',True)
@@ -1838,6 +2070,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
 
     # sets of vertices
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of vertices',True)
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.0001*Rf,'CRACKTIPUP',logfilepath,baselogindent + 4*logindent,True)
+        defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta-deltatheta)*np.pi/180),Rf*np.sin((theta-deltatheta)*np.pi/180),0.0,0.0001*Rf,'CRACKTIPLOW',logfilepath,baselogindent + 4*logindent,True)
+    else:
+        defineSetOfVerticesByBoundingSphere(RVEpart,Rf*np.cos((theta+deltatheta)*np.pi/180),Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.0001*Rf,'CRACKTIP',logfilepath,baselogindent + 4*logindent,True)
+
     defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,CornerBy,0.0,0.00001*Rf,'NE-CORNER',logfilepath,baselogindent + 4*logindent,True)
     defineSetOfVerticesByBoundingSphere(RVEpart,CornerAx,CornerBy,0.0,0.00001*Rf,'NW-CORNER',logfilepath,baselogindent + 4*logindent,True)
     defineSetOfVerticesByBoundingSphere(RVEpart,CornerBx,0.0,0.0,0.00001*Rf,'SE-CORNER',logfilepath,baselogindent + 4*logindent,True)
@@ -1855,26 +2093,40 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     if 'boundingPly' in parameters['BC']['leftSide']['type']:
         defineSetOfVerticesByBoundingSphere(RVEpart,-L,L,0.0,0.00001*Rf,'LEFTPLYINTERFACE-N-CORNER',logfilepath,baselogindent + 4*logindent,True)
 
+    if 'structuralModel' in parameters['mesh']['elements'].keys():
+        if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+            defineSetOfVerticesByBoundingSphere(RVEpart,0.0,-50.0,0.0,0.00001,'GPE-REF',logfilepath,baselogindent + 4*logindent,True)
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     # sets of edges
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of edges',True)
 
-    setsOfEdgesData = []
-    if deltatheta>0.0:
-        if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
-            setsOfEdgesData.append([0.99*Rf*np.cos(theta*np.pi/180),0.99*Rf*np.sin(theta*np.pi/180),0.0,1.01*Rf*np.cos(theta*np.pi/180),1.01*Rf*np.sin(theta*np.pi/180),0.0,'CRACK'])
-        else:
-            setsOfEdgesData.append([0.99*Rf*np.cos(0.5*deltatheta*np.pi/180),0.99*Rf*np.sin(0.5*deltatheta*np.pi/180),0.0,1.01*Rf*np.cos(0.5*deltatheta*np.pi/180),1.01*Rf*np.sin(0.5*deltatheta*np.pi/180),0.0,'CRACK'])
-    setsOfEdgesData.append([0.99*Rf*np.cos((theta+1.05*deltatheta)*np.pi/180),0.99*Rf*np.sin((theta+1.05*deltatheta)*np.pi/180),0.0,1.01*Rf*np.cos((theta+1.05*deltatheta)*np.pi/180),1.01*Rf*np.sin((theta+1.05*deltatheta)*np.pi/180),0.0,'BONDED-INTERFACE'])
-    for setOfEdgesData in setsOfEdgesData:
-        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        alphaup = theta + deltatheta - deltapsi
+        betaup = theta + deltatheta + deltapsi
+        gammaup = theta + deltatheta + deltapsi + deltaphi
+        alphalow = theta - deltatheta + deltapsi
+        betalow = theta - deltatheta - deltapsi
+        gammalow = theta - deltatheta - deltapsi + deltaphi
+        setsOfEdgesData = [[0.99*Rf*np.cos(theta*np.pi/180),0.99*Rf*np.sin(theta*np.pi/180),0.0,1.01*Rf*np.cos(theta*np.pi/180),1.01*Rf*np.sin(theta*np.pi/180),0.0,'CRACK-CENTER'],   [0.99*Rf*np.cos((alphalow-0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alphalow-0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alphalow-0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alphalow-0.5*deltapsi)*np.pi/180),0.0,'CRACK-LOWER'], [0.99*Rf*np.cos((alphaup+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alphaup+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alphaup+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alphaup+0.5*deltapsi)*np.pi/180),0.0,'CRACK-UPPER']]
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-CENTER'],RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
+    else:
+        alpha = theta + deltatheta - deltapsi
+        beta = theta + deltatheta + deltapsi
+        gamma = theta + deltatheta + deltapsi + deltaphi
+        setsOfEdgesData = [[0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0,1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'CRACK-LOWER'], [0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'CRACK-UPPER']]
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        RVEpart.SetByBoolean(name='CRACK', sets=[RVEpart.sets['CRACK-LOWER'],RVEpart.sets['CRACK-UPPER']])
 
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- CRACK',True)
 
     if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
         lowerSideSets = []
-        if np.abs(theta)>0.0 and not 'full' in parameters['geometry']['fiber']['type']:
-            setsOfEdgesData = [[0.001*Rf,0.001,0.0,0.001*Rf,0.001,0.0,'LOWERSIDE-CENTER-FIBER']]
+        setsOfEdgesData = [[0.001*Rf,-L+0.001,0.0,0.001*Rf,-L-0.001,0.0,'LOWERSIDE-CENTER']]
         if 'boundingPly' in parameters['BC']['rightSide']['type']:
             setsOfEdgesData.append([0.99*CornerBx,0.001,0.0,0.99*CornerBx,-0.001,0.0,'LOWERSIDE-RIGHT-HOMOGENIZED-PLY'])
         if 'boundingPly' in parameters['BC']['leftSide']['type']:
@@ -1885,14 +2137,62 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
         RVEpart.SetByBoolean(name='LOWERSIDE', sets=lowerSideSets)
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE',True)
     else:
-        setsOfEdgesData = [[0.001*Rf,0.001,0.0,0.001*Rf,-0.001,0.0,'LOWERSIDE-CENTER-FIBER']]
+        setsOfEdgesData = [[0.001*Rf,0.001,0.0,0.001*Rf,-0.001,0.0,'LOWERSIDE-CENTER'],
+                           [0.65*Rf,0.001,0.0,0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-RIGHT'],
+                           [0.99*L,0.001,0.0,0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-RIGHT']]
+        if 'half' in parameters['geometry']['fiber']['type']:
+            setsOfEdgesData.append([-0.65*Rf,0.001,0.0,-0.65*Rf,-0.001,0.0,'LOWERSIDE-FIRSTRING-LEFT'])
+            setsOfEdgesData.append([-0.99*L,0.001,0.0,-0.99*L,-0.001,0.0,'LOWERSIDE-MATRIXBULK-LEFT'])
         for setOfEdgesData in setsOfEdgesData:
             defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
-        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-CENTER-FIBER',True)
-        lowerSideSets = [RVEpart.sets['LOWERSIDE-CENTER-FIBER']]
+        if 'half' in parameters['geometry']['fiber']['type']:
+            RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT'],RVEpart.sets['LOWERSIDE-FIRSTRING-LEFT']])
+        else:
+            RVEpart.SetByBoolean(name='LOWERSIDE-FIRSTRING', sets=[RVEpart.sets['LOWERSIDE-FIRSTRING-RIGHT']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FIRSTRING',True)
+
+        setsOfEdgesData = [[0.85*Rf,0.001,0.0,0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-RIGHT']]
+        if 'half' in parameters['geometry']['fiber']['type']:
+            setsOfEdgesData.append([-0.85*Rf,0.001,0.0,-0.85*Rf,-0.001,0.0,'LOWERSIDE-SECONDRING-LEFT'])
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        if 'half' in parameters['geometry']['fiber']['type']:
+            RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT'],RVEpart.sets['LOWERSIDE-SECONDRING-LEFT']])
+        else:
+            RVEpart.SetByBoolean(name='LOWERSIDE-SECONDRING', sets=[RVEpart.sets['LOWERSIDE-SECONDRING-RIGHT']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-SECONDRING',True)
+
+        if L>2*Rf:
+            R1 = (1+0.5*0.25)*Rf
+            R2 = (1.25+0.5*0.25)*Rf
+        else:
+            R1 = Rf+0.5*0.25*(L-Rf)
+            R2 = Rf+1.5*0.25*(L-Rf)
+
+        setsOfEdgesData = [[R1,0.001,0.0,R1,-0.001,0.0,'LOWERSIDE-THIRDRING-RIGHT']]
+        if 'half' in parameters['geometry']['fiber']['type']:
+            setsOfEdgesData.append([-R1,0.001,0.0,-R1,-0.001,0.0,'LOWERSIDE-THIRDRING-LEFT'])
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        if 'half' in parameters['geometry']['fiber']['type']:
+            RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT'],RVEpart.sets['LOWERSIDE-THIRDRING-LEFT']])
+        else:
+            RVEpart.SetByBoolean(name='LOWERSIDE-THIRDRING', sets=[RVEpart.sets['LOWERSIDE-THIRDRING-RIGHT']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-THIRDRING',True)
+
+        setsOfEdgesData = [[R2,0.001,0.0,R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-RIGHT']]
+        if 'half' in parameters['geometry']['fiber']['type']:
+            setsOfEdgesData.append([-R2,0.001,0.0,-R2,-0.001,0.0,'LOWERSIDE-FOURTHRING-LEFT'])
+        for setOfEdgesData in setsOfEdgesData:
+            defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+        if 'half' in parameters['geometry']['fiber']['type']:
+            RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT'],RVEpart.sets['LOWERSIDE-FOURTHRING-LEFT']])
+        else:
+            RVEpart.SetByBoolean(name='LOWERSIDE-FOURTHRING', sets=[RVEpart.sets['LOWERSIDE-FOURTHRING-RIGHT']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE-FOURTHRING',True)
+
+        lowerSideSets = [RVEpart.sets['LOWERSIDE-CENTER'],RVEpart.sets['LOWERSIDE-FIRSTRING'],RVEpart.sets['LOWERSIDE-SECONDRING'],RVEpart.sets['LOWERSIDE-THIRDRING'],RVEpart.sets['LOWERSIDE-FOURTHRING'],RVEpart.sets['LOWERSIDE-MATRIXBULK-RIGHT'],RVEpart.sets['LOWERSIDE-MATRIXBULK-LEFT']]
         setsOfEdgesData = []
-        setsOfEdgesData.append([1.05*Rf,0.001,0.0,1.05*Rf,-0.001,0.0,'LOWERSIDE-MATRIXBULK-RIGHT'])
-        setsOfEdgesData.append([-1.05*Rf,0.001,0.0,-1.05*Rf,-0.001,0.0,'LOWERSIDE-MATRIXBULK-LEFT'])
         if 'boundingPly' in parameters['BC']['rightSide']['type']:
             setsOfEdgesData.append([0.99*CornerBx,0.001,0.0,0.99*CornerBx,-0.001,0.0,'LOWERSIDE-RIGHT-HOMOGENIZED-PLY'])
         if 'boundingPly' in parameters['BC']['leftSide']['type']:
@@ -1910,6 +2210,91 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             lowerSideSets.append(RVEpart.sets[setOfEdgesData[-1]])
         RVEpart.SetByBoolean(name='LOWERSIDE', sets=lowerSideSets)
         writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- LOWERSIDE',True)
+
+    setsOfEdgesData = [[0.49*Rf*np.cos((theta+deltatheta)*np.pi/180),0.49*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,0.51*Rf*np.cos((theta+deltatheta)*np.pi/180),0.51*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,'FIRSTCIRCLE']]
+    if L>2*Rf:
+        setsOfEdgesData.append([1.49*Rf*np.cos((theta+deltatheta)*np.pi/180),1.49*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,1.51*Rf*np.cos((theta+deltatheta)*np.pi/180),1.51*Rf*np.sin((theta+deltatheta)*np.pi/180),0.0,'FIFTHCIRCLE'])
+    else:
+        setsOfEdgesData.append([(Rf+0.49*(L-Rf))*np.cos((theta+deltatheta)*np.pi/180),(Rf+0.49*(L-Rf))*np.sin((theta+deltatheta)*np.pi/180),0.0,(Rf+0.51*(L-Rf))*np.cos((theta+deltatheta)*np.pi/180),(Rf+0.51*(L-Rf))*np.sin((theta+deltatheta)*np.pi/180),0.0,'FIFTHCIRCLE'])
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        ctNames = ['CTUP','CTLOW']
+        circleNames = ['SECOND','THIRD','FOURTH']
+        alphas = [theta + deltatheta - deltapsi,theta - deltatheta + deltapsi]
+        ctAngles = [theta + deltatheta,theta - deltatheta]
+        betas = [theta + deltatheta + deltapsi,theta - deltatheta - deltapsi]
+        gammas = [theta + deltatheta + deltapsi + deltaphi,theta - deltatheta - deltapsi - deltaphi]
+        incs = [1.0,-1.0]
+        if L>2*Rf:
+            R4 = 1.25*Rf
+        else:
+            R4 = Rf+0.25*(L-Rf)
+        radiuses = [0.75*Rf,Rf,R4]
+        for rIndex,rValue in enumerate(radiuses):
+            for aIndex,aValue in enumerate(alphas):
+                setsOfEdgesData.append([0.99*rValue*np.cos((alphas[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((alphas[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((alphas[aIndex]+incs[aIndex])*np.pi/180),1.01*rValue*np.sin((alphas[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-UPPERCRACK-'+ctNames[aIndex]])
+                setsOfEdgesData.append([0.99*rValue*np.cos((ctAngles[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((ctAngles[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((ctAngles[aIndex]+incs[aIndex])*np.pi/180),1.01*rValue*np.sin((ctAngles[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-FIRSTBOUNDED-'+ctNames[aIndex]])
+                setsOfEdgesData.append([0.99*rValue*np.cos((betas[aIndex]+incs[aIndex])*np.pi/180),0.99*rValue*np.sin((betas[aIndex]+incs[aIndex])*np.pi/180),0.0,1.01*rValue*np.cos((betas[aIndex]+incs[aIndex])*np.pi/180),1.01*rValue*np.sin((betas[aIndex]+incs[aIndex])*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-SECONDBOUNDED-'+ctNames[aIndex]])
+            setsOfEdgesData.append([0.99*rValue*np.cos(theta*np.pi/180),0.99*rValue*np.sin(theta*np.pi/180),0.0,1.01*rValue*np.cos(theta*np.pi/180),1.01*rValue*np.sin(theta*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-CENTERCRACK'])
+            setsOfEdgesData.append([0.99*rValue*np.cos(1.025*gammas[0]*np.pi/180),0.99*rValue*np.sin(1.025*gammas[0]*np.pi/180),0.0,1.01*rValue*np.cos(1.025*gammas[0]*np.pi/180),1.01*rValue*np.sin(1.025*gammas[0]*np.pi/180),0.0,circleNames[rIndex]+'CIRCLE-RESTBOUNDED'])
+        for aIndex,aValue in enumerate(alphas):
+            setsOfEdgesData.append([0.85*Rf*np.cos(0.99*alphas[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*alphas[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*alphas[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*alphas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FIRSTFIBER-'+ctNames[aIndex]])
+            setsOfEdgesData.append([1.05*Rf*np.cos(0.99*alphas[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*alphas[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*alphas[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*alphas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FIRSTMATRIX-'+ctNames[aIndex]])
+            setsOfEdgesData.append([0.85*Rf*np.cos(0.99*ctAngles[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*ctAngles[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*ctAngles[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*ctAngles[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-SECONDFIBER-'+ctNames[aIndex]])
+            setsOfEdgesData.append([1.05*Rf*np.cos(0.99*ctAngles[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*ctAngles[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*ctAngles[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*ctAngles[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-SECONDMATRIX-'+ctNames[aIndex]])
+            setsOfEdgesData.append([0.85*Rf*np.cos(0.99*betas[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*betas[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*betas[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*betas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-THIRDFIBER-'+ctNames[aIndex]])
+            setsOfEdgesData.append([1.05*Rf*np.cos(0.99*betas[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*betas[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*betas[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*betas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-THIRDMATRIX-'+ctNames[aIndex]])
+            setsOfEdgesData.append([0.85*Rf*np.cos(0.99*gammas[aIndex]*np.pi/180),0.85*Rf*np.sin(0.99*gammas[aIndex]*np.pi/180),0.0,0.85*Rf*np.cos(1.01*gammas[aIndex]*np.pi/180),0.85*Rf*np.sin(1.01*gammas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHFIBER-'+ctNames[aIndex]])
+            setsOfEdgesData.append([1.05*Rf*np.cos(0.99*gammas[aIndex]*np.pi/180),1.05*Rf*np.sin(0.99*gammas[aIndex]*np.pi/180),0.0,1.05*Rf*np.cos(1.01*gammas[aIndex]*np.pi/180),1.05*Rf*np.sin(1.01*gammas[aIndex]*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHMATRIX-'+ctNames[aIndex]])
+    else:
+        alpha = theta + deltatheta - deltapsi
+        beta = theta + deltatheta + deltapsi
+        gamma = theta + deltatheta + deltapsi + deltaphi
+        setsOfEdgesData.append([0.74*Rf*np.cos(0.5*alpha*np.pi/180),0.74*Rf*np.sin(0.5*alpha*np.pi/180),0.0,0.76*Rf*np.cos(0.5*alpha*np.pi/180),0.76*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'SECONDCIRCLE-LOWERCRACK'])
+        setsOfEdgesData.append([0.74*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-UPPERCRACK'])
+        setsOfEdgesData.append([0.74*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.74*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,0.76*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.76*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'SECONDCIRCLE-FIRSTBOUNDED'])
+        setsOfEdgesData.append([0.74*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.74*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,0.76*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.76*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'SECONDCIRCLE-SECONDBOUNDED'])
+        setsOfEdgesData.append([0.74*Rf*np.cos(1.025*gamma*np.pi/180),0.74*Rf*np.sin(1.025*gamma*np.pi/180),0.0,0.76*Rf*np.cos(1.025*gamma*np.pi/180),0.76*Rf*np.sin(1.025*gamma*np.pi/180),0.0,'SECONDCIRCLE-RESTBOUNDED'])
+        setsOfEdgesData.append([0.99*Rf*np.cos(0.5*alpha*np.pi/180),0.99*Rf*np.sin(0.5*alpha*np.pi/180),0.0,1.01*Rf*np.cos(0.5*alpha*np.pi/180),1.01*Rf*np.sin(0.5*alpha*np.pi/180),0.0,'THIRDCIRCLE-LOWERCRACK'])
+        setsOfEdgesData.append([0.99*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-UPPERCRACK'])
+        setsOfEdgesData.append([0.99*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'THIRDCIRCLE-FIRSTBOUNDED'])
+        setsOfEdgesData.append([0.99*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,1.01*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'THIRDCIRCLE-SECONDBOUNDED'])
+        setsOfEdgesData.append([0.99*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.99*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,1.01*Rf*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),1.01*Rf*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'THIRDCIRCLE-RESTBOUNDED'])
+        if L>2*Rf:
+            R4 = 1.25*Rf
+        else:
+            R4 = Rf+0.25*(L-Rf)
+        setsOfEdgesData.append([0.99*R4*np.cos(0.5*alpha*np.pi/180),0.99*R4*np.sin(0.5*alpha*np.pi/180),0.0,1.01*R4*np.cos(0.5*alpha*np.pi/180),1.01*R4*np.sin(0.5*alpha*np.pi/180),0.0,'FOURTHCIRCLE-LOWERCRACK'])
+        setsOfEdgesData.append([0.99*R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),0.99*R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,1.01*R4*np.cos((alpha+0.5*deltapsi)*np.pi/180),1.01*R4*np.sin((alpha+0.5*deltapsi)*np.pi/180),0.0,'FOURTHCIRCLE-UPPERCRACK'])
+        setsOfEdgesData.append([0.99*R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.99*R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,1.01*R4*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180),1.01*R4*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180),0.0,'FOURTHCIRCLE-FIRSTBOUNDED'])
+        setsOfEdgesData.append([0.99*R4*np.cos((beta+0.5*deltaphi)*np.pi/180),0.99*R4*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,1.01*R4*np.cos((beta+0.5*deltaphi)*np.pi/180),1.01*R4*np.sin((beta+0.5*deltaphi)*np.pi/180),0.0,'FOURTHCIRCLE-SECONDBOUNDED'])
+        setsOfEdgesData.append([0.99*R4*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),0.99*R4*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,1.01*R4*np.cos((gamma+0.5*(180.0-gamma))*np.pi/180),1.01*R4*np.sin((gamma+0.5*(180.0-gamma))*np.pi/180),0.0,'FOURTHCIRCLE-RESTBOUNDED'])
+        setsOfEdgesData.append([0.85*Rf*np.cos(0.99*alpha*np.pi/180),0.85*Rf*np.sin(0.99*alpha*np.pi/180),0.0,0.85*Rf*np.cos(1.01*alpha*np.pi/180),0.85*Rf*np.sin(1.01*alpha*np.pi/180),0.0,'TRANSVERSALCUT-FIRSTFIBER'])
+        setsOfEdgesData.append([1.05*Rf*np.cos(0.99*alpha*np.pi/180),1.05*Rf*np.sin(0.99*alpha*np.pi/180),0.0,1.05*Rf*np.cos(1.01*alpha*np.pi/180),1.05*Rf*np.sin(1.01*alpha*np.pi/180),0.0,'TRANSVERSALCUT-FIRSTMATRIX'])
+        setsOfEdgesData.append([0.85*Rf*np.cos(0.99*(theta+deltatheta)*np.pi/180),0.85*Rf*np.sin(0.99*(theta+deltatheta)*np.pi/180),0.0,0.85*Rf*np.cos(1.01*(theta+deltatheta)*np.pi/180),0.85*Rf*np.sin(1.01*(theta+deltatheta)*np.pi/180),0.0,'TRANSVERSALCUT-SECONDFIBER'])
+        setsOfEdgesData.append([1.05*Rf*np.cos(0.99*(theta+deltatheta)*np.pi/180),1.05*Rf*np.sin(0.99*(theta+deltatheta)*np.pi/180),0.0,1.05*Rf*np.cos(1.01*(theta+deltatheta)*np.pi/180),1.05*Rf*np.sin(1.01*(theta+deltatheta)*np.pi/180),0.0,'TRANSVERSALCUT-SECONDMATRIX'])
+        setsOfEdgesData.append([0.85*Rf*np.cos(0.99*beta*np.pi/180),0.85*Rf*np.sin(0.99*beta*np.pi/180),0.0,0.85*Rf*np.cos(1.01*beta*np.pi/180),0.85*Rf*np.sin(1.01*beta*np.pi/180),0.0,'TRANSVERSALCUT-THIRDFIBER'])
+        setsOfEdgesData.append([1.05*Rf*np.cos(0.99*beta*np.pi/180),1.05*Rf*np.sin(0.99*beta*np.pi/180),0.0,1.05*Rf*np.cos(1.01*beta*np.pi/180),1.05*Rf*np.sin(1.01*beta*np.pi/180),0.0,'TRANSVERSALCUT-THIRDMATRIX'])
+        setsOfEdgesData.append([0.85*Rf*np.cos(0.99*gamma*np.pi/180),0.85*Rf*np.sin(0.99*gamma*np.pi/180),0.0,0.85*Rf*np.cos(1.01*gamma*np.pi/180),0.85*Rf*np.sin(1.01*gamma*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHFIBER'])
+        setsOfEdgesData.append([1.05*Rf*np.cos(0.99*gamma*np.pi/180),1.05*Rf*np.sin(0.99*gamma*np.pi/180),0.0,1.05*Rf*np.cos(1.01*gamma*np.pi/180),1.05*Rf*np.sin(1.01*gamma*np.pi/180),0.0,'TRANSVERSALCUT-FOURTHMATRIX'])
+
+    for setOfEdgesData in setsOfEdgesData:
+        defineSetOfEdgesByClosestPoints(RVEpart,setOfEdgesData[0],setOfEdgesData[1],setOfEdgesData[2],setOfEdgesData[3],setOfEdgesData[4],setOfEdgesData[5],setOfEdgesData[-1],logfilepath,baselogindent + 4*logindent,True)
+    setsOfEdgesData = []
+
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-CENTERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK-CTUP'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED-CTUP'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED-CTUP'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK-CTLOW'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED-CTLOW'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED-CTLOW'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE',True)
+        RVEpart.SetByBoolean(name='THIRDCIRCLE', sets=[RVEpart.sets['THIRDCIRCLE-CENTERCRACK'],RVEpart.sets['THIRDCIRCLE-UPPERCRACK-CTUP'],RVEpart.sets['THIRDCIRCLE-FIRSTBOUNDED-CTUP'],RVEpart.sets['THIRDCIRCLE-SECONDBOUNDED-CTUP'],RVEpart.sets['THIRDCIRCLE-UPPERCRACK-CTLOW'],RVEpart.sets['THIRDCIRCLE-FIRSTBOUNDED-CTLOW'],RVEpart.sets['THIRDCIRCLE-SECONDBOUNDED-CTLOW'],RVEpart.sets['THIRDCIRCLE-RESTBOUNDED']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE',True)
+        RVEpart.SetByBoolean(name='FOURTHCIRCLE', sets=[RVEpart.sets['FOURTHCIRCLE-CENTERCRACK'],RVEpart.sets['FOURTHCIRCLE-UPPERCRACK-CTUP'],RVEpart.sets['FOURTHCIRCLE-FIRSTBOUNDED-CTUP'],RVEpart.sets['FOURTHCIRCLE-SECONDBOUNDED-CTUP'],RVEpart.sets['FOURTHCIRCLE-UPPERCRACK-CTLOW'],RVEpart.sets['FOURTHCIRCLE-FIRSTBOUNDED-CTLOW'],RVEpart.sets['FOURTHCIRCLE-SECONDBOUNDED-CTLOW'],RVEpart.sets['FOURTHCIRCLE-RESTBOUNDED']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FOURTHCIRCLE',True)
+    else:
+        RVEpart.SetByBoolean(name='SECONDCIRCLE', sets=[RVEpart.sets['SECONDCIRCLE-LOWERCRACK'],RVEpart.sets['SECONDCIRCLE-UPPERCRACK'],RVEpart.sets['SECONDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['SECONDCIRCLE-SECONDBOUNDED'],RVEpart.sets['SECONDCIRCLE-RESTBOUNDED']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- SECONDCIRCLE',True)
+        RVEpart.SetByBoolean(name='THIRDCIRCLE', sets=[RVEpart.sets['THIRDCIRCLE-LOWERCRACK'],RVEpart.sets['THIRDCIRCLE-UPPERCRACK'],RVEpart.sets['THIRDCIRCLE-FIRSTBOUNDED'],RVEpart.sets['THIRDCIRCLE-SECONDBOUNDED'],RVEpart.sets['THIRDCIRCLE-RESTBOUNDED']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- THIRDCIRCLE',True)
+        RVEpart.SetByBoolean(name='FOURTHCIRCLE', sets=[RVEpart.sets['FOURTHCIRCLE-LOWERCRACK'],RVEpart.sets['FOURTHCIRCLE-UPPERCRACK'],RVEpart.sets['FOURTHCIRCLE-FIRSTBOUNDED'],RVEpart.sets['FOURTHCIRCLE-SECONDBOUNDED'],RVEpart.sets['FOURTHCIRCLE-RESTBOUNDED']])
+        writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FOURTHCIRCLE',True)
 
     if ('boundingPly' in parameters['BC']['rightSide']['type'] or 'boundingPly' in parameters['BC']['leftSide']['type']) and not 'boundingPly' in parameters['BC']['northSide']['type']:
         setsOfEdgesData.append([0.0,0.99999*CornerBy,0.0,0.0,1.00001*CornerBy,0.0,'CENTER-RUC-UPPERSIDE'])
@@ -1970,13 +2355,81 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # sets of faces
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Sets of faces',True)
 
-    setsOfFacesData = [[0.01*Rf, 0.25*Rf, 0,'FIBER']]
+    setsOfFacesData = [[0.01*Rf, 0.25*Rf, 0,'FIBER-CENTER'],
+                       [0.0, 0.65*Rf, 0,'FIBER-INTERMEDIATEANNULUS']]
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        setsOfFacesData.append([0.85*Rf*np.cos(theta*np.pi/180), 0.85*Rf*np.sin(theta*np.pi/180), 0,'FIBER-EXTANNULUS-CENTERCRACK'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta+deltatheta-0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta-0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-UPPERCRACK-CTUP'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-FIRSTBOUNDED-CTUP'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta+deltatheta+deltapsi+0.5*deltaphi)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta+deltapsi+0.5*deltaphi)*np.pi/180), 0,'FIBER-EXTANNULUS-SECONDBOUNDED-CTUP'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta-deltatheta+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta-deltatheta+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-UPPERCRACK-CTLOW'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta-deltatheta-0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta-deltatheta-0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-FIRSTBOUNDED-CTLOW'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta-deltatheta-deltapsi-0.5*deltaphi)*np.pi/180), 0.85*Rf*np.sin((theta-deltatheta-deltapsi-0.5*deltaphi)*np.pi/180), 0,'FIBER-EXTANNULUS-SECONDBOUNDED-CTLOW'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta+deltatheta+deltapsi+deltaphi+1.0)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta+deltapsi+deltaphi+1.0)*np.pi/180), 0,'FIBER-EXTANNULUS-RESTBOUNDED'])
+    else:
+        alpha = theta + deltatheta - deltapsi
+        beta = theta + deltatheta + deltapsi
+        gamma = theta + deltatheta + deltapsi + deltaphi
+        setsOfFacesData.append([0.85*Rf*np.cos(0.5*alpha*np.pi/180), 0.85*Rf*np.sin(0.5*alpha*np.pi/180), 0,'FIBER-EXTANNULUS-LOWERCRACK'])
+        setsOfFacesData.append([0.85*Rf*np.cos((alpha+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((alpha+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-UPPERCRACK'])
+        setsOfFacesData.append([0.85*Rf*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0.85*Rf*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0,'FIBER-EXTANNULUS-FIRSTBOUNDED'])
+        setsOfFacesData.append([0.85*Rf*np.cos((beta+0.5*deltaphi)*np.pi/180), 0.85*Rf*np.sin((beta+0.5*deltaphi)*np.pi/180), 0,'FIBER-EXTANNULUS-SECONDBOUNDED'])
+        setsOfFacesData.append([0.85*Rf*np.cos((gamma+0.5*(180-gamma))*np.pi/180), 0.85*Rf*np.sin((gamma+0.5*(180-gamma))*np.pi/180), 0,'FIBER-EXTANNULUS-RESTBOUNDED'])
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
 
-    setsOfFacesData = [[0.975*L, 0.975*L, 0,'MATRIX']]
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        RVEpart.SetByBoolean(name='FIBER-EXTANNULUS', sets=[RVEpart.sets['FIBER-EXTANNULUS-CENTERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-UPPERCRACK-CTUP'],RVEpart.sets['FIBER-EXTANNULUS-FIRSTBOUNDED-CTUP'],RVEpart.sets['FIBER-EXTANNULUS-SECONDBOUNDED-CTUP'],RVEpart.sets['FIBER-EXTANNULUS-UPPERCRACK-CTLOW'],RVEpart.sets['FIBER-EXTANNULUS-FIRSTBOUNDED-CTLOW'],RVEpart.sets['FIBER-EXTANNULUS-SECONDBOUNDED-CTLOW'],RVEpart.sets['FIBER-EXTANNULUS-RESTBOUNDED']])
+    else:
+        RVEpart.SetByBoolean(name='FIBER-EXTANNULUS', sets=[RVEpart.sets['FIBER-EXTANNULUS-LOWERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-UPPERCRACK'],RVEpart.sets['FIBER-EXTANNULUS-FIRSTBOUNDED'],RVEpart.sets['FIBER-EXTANNULUS-SECONDBOUNDED'],RVEpart.sets['FIBER-EXTANNULUS-RESTBOUNDED']])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FIBER-EXTANNULUS',True)
+    RVEpart.SetByBoolean(name='FIBER', sets=[RVEpart.sets['FIBER-CENTER'],RVEpart.sets['FIBER-INTERMEDIATEANNULUS'],RVEpart.sets['FIBER-EXTANNULUS']])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- FIBER',True)
+
+    if L>2*Rf:
+        R1 = (1+0.5*0.25)*Rf
+        R2 = (1.25+0.5*0.25)*Rf
+    else:
+        R1 = Rf+0.5*0.25*(L-Rf)
+        R2 = Rf+1.5*0.25*(L-Rf)
+
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        setsOfFacesData = []
+        setsOfFacesData.append([0.85*R1*np.cos(theta*np.pi/180), 0.85*R1*np.sin(theta*np.pi/180), 0,'MATRIX-EXTANNULUS-CENTERCRACK'])
+        setsOfFacesData.append([0.85*R1*np.cos((theta+deltatheta-0.5*deltapsi)*np.pi/180), 0.85*R1*np.sin((theta+deltatheta-0.5*deltapsi)*np.pi/180), 0,'MATRIX-EXTANNULUS-UPPERCRACK-CTUP'])
+        setsOfFacesData.append([0.85*R1*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0.85*R1*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0,'MATRIX-EXTANNULUS-FIRSTBOUNDED-CTUP'])
+        setsOfFacesData.append([0.85*R1*np.cos((theta+deltatheta+deltapsi+0.5*deltaphi)*np.pi/180), 0.85*R1*np.sin((theta+deltatheta+deltapsi+0.5*deltaphi)*np.pi/180), 0,'MATRIX-EXTANNULUS-SECONDBOUNDED-CTUP'])
+        setsOfFacesData.append([0.85*R1*np.cos((theta-deltatheta+0.5*deltapsi)*np.pi/180), 0.85*R1*np.sin((theta-deltatheta+0.5*deltapsi)*np.pi/180), 0,'MATRIX-EXTANNULUS-UPPERCRACK-CTLOW'])
+        setsOfFacesData.append([0.85*R1*np.cos((theta-deltatheta-0.5*deltapsi)*np.pi/180), 0.85*R1*np.sin((theta-deltatheta-0.5*deltapsi)*np.pi/180), 0,'MATRIX-EXTANNULUS-FIRSTBOUNDED-CTLOW'])
+        setsOfFacesData.append([0.85*R1*np.cos((theta-deltatheta-deltapsi-0.5*deltaphi)*np.pi/180), 0.85*R1*np.sin((theta-deltatheta-deltapsi-0.5*deltaphi)*np.pi/180), 0,'MATRIX-EXTANNULUS-SECONDBOUNDED-CTLOW'])
+        setsOfFacesData.append([0.85*R1*np.cos((theta+deltatheta+deltapsi+deltaphi+1.0)*np.pi/180), 0.85*R1*np.sin((theta+deltatheta+deltapsi+deltaphi+1.0)*np.pi/180), 0,'MATRIX-EXTANNULUS-RESTBOUNDED'])
+    else:
+        alpha = theta + deltatheta - deltapsi
+        beta = theta + deltatheta + deltapsi
+        gamma = theta + deltatheta + deltapsi + deltaphi
+        setsOfFacesData = [[R1*np.cos(0.5*alpha*np.pi/180), R1*np.sin(0.5*alpha*np.pi/180), 0,'MATRIX-INTANNULUS-LOWERCRACK'],
+                           [R1*np.cos((alpha+0.5*deltapsi)*np.pi/180), R1*np.sin((alpha+0.5*deltapsi)*np.pi/180), 0,'MATRIX-INTANNULUS-UPPERCRACK'],
+                           [R1*np.cos((theta+deltatheta+0.5*deltapsi)*np.pi/180), R1*np.sin((theta+deltatheta+0.5*deltapsi)*np.pi/180), 0,'MATRIX-INTANNULUS-FIRSTBOUNDED'],
+                           [R1*np.cos((beta+0.5*deltaphi)*np.pi/180), R1*np.sin((beta+0.5*deltaphi)*np.pi/180), 0,'MATRIX-INTANNULUS-SECONDBOUNDED'],
+                           [R1*np.cos((gamma+0.5*(180-gamma))*np.pi/180), R1*np.sin((gamma+0.5*(180-gamma))*np.pi/180), 0,'MATRIX-INTANNULUS-RESTBOUNDED']]
+
     for setOfFacesData in setsOfFacesData:
         defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
+
+    if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+        RVEpart.SetByBoolean(name='MATRIX-EXTANNULUS', sets=[RVEpart.sets['MATRIX-EXTANNULUS-CENTERCRACK'],RVEpart.sets['MATRIX-EXTANNULUS-UPPERCRACK-CTUP'],RVEpart.sets['MATRIX-EXTANNULUS-FIRSTBOUNDED-CTUP'],RVEpart.sets['MATRIX-EXTANNULUS-SECONDBOUNDED-CTUP'],RVEpart.sets['MATRIX-EXTANNULUS-UPPERCRACK-CTLOW'],RVEpart.sets['MATRIX-EXTANNULUS-FIRSTBOUNDED-CTLOW'],RVEpart.sets['MATRIX-EXTANNULUS-SECONDBOUNDED-CTLOW'],RVEpart.sets['MATRIX-EXTANNULUS-RESTBOUNDED']])
+    else:
+        RVEpart.SetByBoolean(name='MATRIX-INTANNULUS', sets=[RVEpart.sets['MATRIX-INTANNULUS-LOWERCRACK'],RVEpart.sets['MATRIX-INTANNULUS-UPPERCRACK'],RVEpart.sets['MATRIX-INTANNULUS-FIRSTBOUNDED'],RVEpart.sets['MATRIX-INTANNULUS-SECONDBOUNDED'],RVEpart.sets['MATRIX-INTANNULUS-RESTBOUNDED']])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MATRIX-INTANNULUS',True)
+
+    setsOfFacesData = [[0.0, R2, 0,'MATRIX-INTERMEDIATEANNULUS'],
+                       [0.975*L, 0.975*L, 0,'MATRIX-BODY']]
+
+    for setOfFacesData in setsOfFacesData:
+        defineSetOfFacesByFindAt(RVEpart,setOfFacesData[0],setOfFacesData[1],setOfFacesData[2],setOfFacesData[-1],logfilepath,baselogindent + 4*logindent,True)
+
+    RVEpart.SetByBoolean(name='MATRIX', sets=[RVEpart.sets['MATRIX-BODY'],RVEpart.sets['MATRIX-INTERMEDIATEANNULUS'],RVEpart.sets['MATRIX-INTANNULUS']])
+    writeLineToLogFile(logfilepath,'a',baselogindent + 4*logindent + '-- MATRIX',True)
 
     if 'boundingPly' in parameters['BC']['northSide']['type']:
         if 'adjacentFibers' in parameters['BC']['northSide']['type']:
@@ -2202,9 +2655,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating sections ...',True)
 
     for section in parameters['sections'].values():
+        if 'structuralModel' in parameters['mesh']['elements'].keys():
+            if 'generalizedPlaneStrain' in parameters['mesh']['elements']['structuralModel']:
+                mdb.models[modelname].PEGSection(name=section['name'],material=section['material'], thickness=section['thickness'], wedgeAngle1=0.0, wedgeAngle2=0.0)
         if 'HomogeneousSolidSection' in section['type'] or 'Homogeneous Solid Section' in section['type'] or 'homogeneoussolidsection' in section['type'] or 'homogeneous solid section' in section['type'] or 'Homogeneous solid section' in section['type']:
-            mdb.models[modelname].HomogeneousSolidSection(name=section['name'],
-            material=section['material'], thickness=section['thickness'])
+            mdb.models[modelname].HomogeneousSolidSection(name=section['name'],material=section['material'], thickness=section['thickness'])
 
     mdb.save()
 
@@ -2218,6 +2673,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Making section assignments ...',True)
 
     for sectionRegion in parameters['sectionRegions'].values():
+        writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '-- ' + sectionRegion['name'],True)
         RVEpart.SectionAssignment(region=RVEpart.sets[sectionRegion['set']], sectionName=sectionRegion['name'], offset=sectionRegion['offsetValue'],offsetType=sectionRegion['offsetType'], offsetField=sectionRegion['offsetField'],thicknessAssignment=sectionRegion['thicknessAssignment'])
 
     # p.SectionAssignment(region=region, sectionName='MatrixSection', offset=0.0,
@@ -2655,6 +3111,14 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     # history output
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'History output ...',True)
 
+    for step in parameters['steps'].values():
+        model.HistoryOutputRequest(name='H-Output-1',createStepName=step['name'])
+        if np.abs(theta)>0.0 or 'full' in parameters['geometry']['fiber']['type']:
+            model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='DebondUp',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+            model.historyOutputRequests['H-Output-2'].setValues(contourIntegral='DebondLow',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+        else:
+            model.historyOutputRequests['H-Output-1'].setValues(contourIntegral='Debond',sectionPoints=DEFAULT,rebar=EXCLUDE,numberOfContours=parameters['Jintegral']['numberOfContours'])
+
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
 
     mdb.save()
@@ -2669,7 +3133,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Set job name',True)
-    modelData['jobname'] = 'Temp-Job-Stiffness-' + modelname
+    modelData['jobname'] = 'Job-Jintegral-' + modelname
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job with name ' + modelData['jobname'],True)
     mdb.Job(name=modelData['jobname'], model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=parameters['solver']['cpus'], numDomains=12,numGPUs=0)

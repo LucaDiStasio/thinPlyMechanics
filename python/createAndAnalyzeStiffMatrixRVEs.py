@@ -6661,7 +6661,7 @@ def modifyRVEinputfilePerturbationStep(parameters,mdbData,logfilepath,baselogind
         with open(modinpfullpath,'a') as inp:
             inp.write('** LINEAR PERTURBATION STEP: OUTPUT GLOBAL STIFFNESS MATRIX' + '\n')
             inp.write('*STEP, NAME=GlobalStiffnessMatrix' + '\n')
-            inp.write('*MATRIX GENERATE, LOAD' + '\n')
+            inp.write('*MATRIX GENERATE, STIFFNESS' + '\n')
             inp.write('*MATRIX GENERATE, LOAD' + '\n')
             inp.write('*MATRIX OUTPUT, STIFFNESS, FORMAT=MATRIX INPUT' + '\n')
             inp.write('*MATRIX OUTPUT, LOAD, FORMAT=MATRIX INPUT' + '\n')

@@ -5646,6 +5646,9 @@ def main(argv):
         RVEparams['output']['local']['filenames']['stressesatbondedinterface'] = RVEparams['input']['modelname'] + '-stressesatbondedinterface'
         RVEparams['output']['local']['filenames']['crackdisplacements'] = RVEparams['input']['modelname'] + '-crackdisplacements'
         RVEparams['output']['local']['filenames']['contactzonetolerance'] = RVEparams['input']['modelname'] + '-contactzonetol'
+        RVEparams['output']['local']['filenames']['globalstiffnessmatrix'] = RVEparams['input']['modelname'] + '-globalstiffnessmatrix'
+        RVEparams['output']['local']['filenames']['globalloadvector'] = RVEparams['input']['modelname'] + '-globalloadvector'
+        RVEparams['output']['local']['filenames']['globaldispvector'] = RVEparams['input']['modelname'] + '-globaldispvector'
 
         RVEparams['output']['report']['local']['directory'].append(join(RVEparams['output']['global']['directory'],RVEparams['input']['modelname']))
         RVEparams['output']['report']['local']['filenames']['Jintegral'].append(RVEparams['input']['modelname'] + '-Jintegral')

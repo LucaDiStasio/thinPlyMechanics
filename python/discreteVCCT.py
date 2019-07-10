@@ -39,12 +39,23 @@ from time import strftime
 import numpy as np
 from scipy import sparse
 
+#===============================================================================#
+#===============================================================================#
+#                              I/O functions
+#===============================================================================#
+#===============================================================================#
+
+#===============================================================================#
+#                                  SHELL
+#===============================================================================#
+
 def printHelp():
     print(' ')
     print(' ')
     print('*****************************************************************************************************')
     print(' ')
-    print('                                        DISCRETE VCCT\n')
+    print('                                        DISCRETE VCCT')
+    print(' ')
     print(' ')
     print('                                              by')
     print(' ')
@@ -54,18 +65,36 @@ def printHelp():
     print('*****************************************************************************************************')
     print(' ')
     print('Program syntax:')
-    print('discreteVCCT.py -w <working directory>')
+    print(' ')
+    print('discreteVCCT.py -- -dir/-directory <input file directory> -data <RVE base data> -iterables <parameters for iterations> -plot <parameters for plotting> -debug')
+    print(' ')
     print(' ')
     print('Mandatory arguments:')
-    print('-w <working directory>')
+    print(' ')
+    print('-dir/-directory <input file directory>                     ===> full/path/to/folder/without/closing/slash')
+    print('-data <RVE base data>                                      ===> full/path/to/file/without/closing/slash')
+    print('-iterables <parameters for iterations>                     ===> full/path/to/file/without/extension')
+    print('-plot <parameters for plotting>                            ===> full/path/to/file/without/extension')
+    print(' ')
     print(' ')
     print('Optional arguments:')
     print(' ')
-    print('Default values:')
-    print(' ')
+    print('-debug                                                     ===> debug mode active')
     print(' ')
     print(' ')
     sys.exit()
+
+#===============================================================================#
+#                                  DECK file
+#===============================================================================#
+
+def fillDataDictionary(dataDict,inputKeywords,inputValue):
+    if len(inputKeywords)>1:
+        branchDict = dataDict.setdefault(inputKeywords[0],{})
+        fillDataDictionary(branchDict,inputKeywords[1:],inputValue)
+    else:
+        dataDict[inputKeywords[0]] = inputValue
+
 
 def Tpq(elType,elOrder,p,q):
     tpq = 0.0

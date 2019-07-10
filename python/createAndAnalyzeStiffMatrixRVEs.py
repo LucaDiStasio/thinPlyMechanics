@@ -4712,9 +4712,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     #=======================================================================
 
     #=======================================================================
-    # BEGIN - extract displacements of all nodes
+    # BEGIN - extract displacements of all nodes and copy to csv file
     #=======================================================================
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract displacements of all nodes...',True)
+    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globaldispvector'],'NODE LABEL, Ux, Uy')
     rveDisps = getFieldOutput(odb,-2,-1,'U',rve)
     globalDisps = {}
     for valueset in rveDisps.values:
@@ -4722,19 +4723,10 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
         globalDisps[rowIndex] = {}
         globalDisps[rowIndex][1] = valueset.data[0]
         globalDisps[rowIndex][2] = valueset.data[1]
+        appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globaldispvector'],[[rowIndex,valueset.data[0],valueset.data[1]]])
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
     #=======================================================================
-    # END - extract displacements of all nodes
-    #=======================================================================
-
-    #=======================================================================
-    # BEGIN - Copy displacements of all nodes to csv file
-    #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Copy load vector to csv file...',True)
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globaldispvector'],'NODE LABEL, Ux, Uy')
-    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globaldispvector'],lines[2:])
-    #=======================================================================
-    # END - Copy displacements of all nodes to csv file
+    # END - extract displacements of all nodes and copy to csv file
     #=======================================================================
 
     #=======================================================================

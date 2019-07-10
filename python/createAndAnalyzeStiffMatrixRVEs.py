@@ -7675,7 +7675,7 @@ def main(argv):
         localStart = timeit.default_timer()
         try:
             if RVEparams['simulation-pipeline']['modify-INP']:
-                perturbationinputfilename = modifyRVEinputfile(RVEparams,modelData,logfilefullpath,logindent,logindent)
+                perturbationinputfilename = modifyRVEinputfilePerturbationStep(RVEparams,modelData,logfilefullpath,logindent,logindent)
             localElapsedTime = timeit.default_timer() - localStart
             timedataList.append(localElapsedTime)
             totalIterationTime += localElapsedTime

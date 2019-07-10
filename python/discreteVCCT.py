@@ -513,20 +513,17 @@ def discreteVCCT(iteration,parameters):
     print('Update content of global ERR file...')
 
     rowUpdate = [matGabq[0,0],matGabq[0,1],matGabq[1,0],matGabq[1,1],matG[0,0],matG[0,1],matG[1,0],matG[1,1],eigG1abq,eigG2abq,eigG1,eigG2,eigvecG1abq[0],eigvecG1abq[1],eigvecG1[0],eigvecG1[1],psi1abq*180.0/np.pi,psi2abq*180.0/np.pi,psi1*180.0/np.pi,psi2*180.0/np.pi,psi1abq*180.0/np.pi+90.0,psi2abq*180.0/np.pi+90.0,psi1*180.0/np.pi+90.0,psi2*180.0/np.pi+90.0]
+    errData[iteration,27:27+24] = rowUpdate
 
-
-    with open(join(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'].split('.')[0]+'.csv'),'r') as csv:
-        lines = csv.readlines()
-
-    errTitleLine = lines[0]
-    errData = []
-    for line in lines[1:]:
-        row = []
-        data = line.replace('\n','').split(',')
-        for datum in data:
-            row.append(float(datum))
-        errData.append(row)
-    errData = np.array(errData)
+    with open(join(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'].split('.')[0]+'.csv'),'w') as csv:
+        csv.write(errTitleLine)
+        for row in errData:
+            line = ''
+            for e,el in enumerate(row):
+                if e>0:
+                    line += ','
+                line += str(el)
+            csv.write(line+'\n')
     print('...done.')
     #=======================================================================
     # END - Update content of global ERR file
@@ -846,7 +843,7 @@ def main(argv):
 
     RVEparams['output']['global']['filenames']['energyreleaserate'] = basename + '_ERRTS'
 
-    for iterationSet in iterationsSets:
+    for i,iterationSet in enumerate(iterationsSets):
 
         timedataList = []
         totalIterationTime = 0.0
@@ -863,6 +860,7 @@ def main(argv):
         RVEparams['output']['local']['filenames']['globalloadvector'] = RVEparams['input']['modelname'] + '-globalloadvector'
         RVEparams['output']['local']['filenames']['globaldispvector'] = RVEparams['input']['modelname'] + '-globaldispvector'
 
+        discreteVCCT(i,RVEparams)
 
 
 

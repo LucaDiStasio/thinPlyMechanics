@@ -187,44 +187,6 @@ def discreteVCCT(iteration,parameters):
     #=======================================================================
 
     #=======================================================================
-    # BEGIN - Read load vector from csv file
-    #=======================================================================
-    print('Read load vector from csv file...')
-    with open(join(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalloadvector'].split('.')[0]+'.csv'),'r') as csv:
-        lines = csv.readlines()
-    globalVector = {}
-    for line in lines[2:]:
-        values = line.split(',')
-        rowIndex = int(values[0])
-        rowDOF = int(values[1])
-        if rowIndex not in globalVector:
-            globalVector[rowIndex] = {}
-        globalVector[rowIndex][rowDOF] = int(values[-1])
-    print('...done.')
-    #=======================================================================
-    # END - Read stiffness matrix from csv file
-    #=======================================================================
-
-    #=======================================================================
-    # BEGIN - Read load vector from csv file
-    #=======================================================================
-    print('Read load vector from csv file...')
-    with open(join(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalloadvector'].split('.')[0]+'.csv'),'r') as csv:
-        lines = csv.readlines()
-    globalVector = {}
-    for line in lines[2:]:
-        values = line.split(',')
-        rowIndex = int(values[0])
-        rowDOF = int(values[1])
-        if rowIndex not in globalVector:
-            globalVector[rowIndex] = {}
-        globalVector[rowIndex][rowDOF] = int(values[-1])
-    print('...done.')
-    #=======================================================================
-    # END - Read stiffness matrix from csv file
-    #=======================================================================
-
-    #=======================================================================
     # BEGIN - Read displacements of all nodes from csv file
     #=======================================================================
     print('Read displacements of all nodes from csv file...')
@@ -390,60 +352,9 @@ def discreteVCCT(iteration,parameters):
     Ustructabq2 = np.array(Ustructabq2)
     Ustructabq = [Ustructabq1,Ustructabq2]
 
-    print('    -- F')
-    rowIndeces = []
-    columnIndeces = []
-    values = []
-    for key in globalVector.keys():
-        for dof in globalVector[key].keys():
-            rowIndeces.append(2*(key-1)+dof)
-            columnIndeces.append(0)
-            values.append(globalDisps[key][dof])
-    globalVector = {}
-    F = sparse.coo_matrix((np.array(values), (np.array(rowIndeces), np.array(columnIndeces))), shape=(NNodes, 1))
-    rowIndeces = []
-    columnIndeces = []
-    values = []
-
     print('... done.')
     #=======================================================================
     # END - build matrices
-    #=======================================================================
-
-    #=======================================================================
-    # BEGIN - compute global displacement vector
-    #=======================================================================
-    print('Compute displacement vectors...')
-
-    print('    -- U')
-    invK = sparse.linalg.inv(K)
-    U = invK.dot(F)
-
-    print('    -- CD')
-    CD1 = np.array([U[2*(matrixcracktipdispmeasIndex-1),0]-U[2*(fibercracktipdispmeasIndex-1),0],U[2*(matrixcracktipdispmeasIndex-1)+1,0]-U[2*(fibercracktipdispmeasIndex-1)+1,0]])
-    if 'second' in parameters['mesh']['elements']['order']:
-        CD2 = np.array(U[2*(matrixfirstboundispmeasIndex-1),0]-U[2*(fiberfirstboundispmeasIndex-1),0],U[2*(matrixfirstboundispmeasIndex-1)+1,0]-U[2*(fiberfirstboundispmeasIndex-1)+1,0])
-    CD =[CD1,CD2]
-
-    print('    -- Ustruct')
-    toSkip = [2*(matrixcracktipdispmeasIndex-1)-1+1,2*(matrixcracktipdispmeasIndex-1)-1+2]
-    if 'second' in parameters['mesh']['elements']['order']:
-        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+1)
-        toSkip.append(2*(matrixfirstboundispmeasIndex-1)-1+2)
-    Ustruct1 = []
-    Ustruct2 = []
-    for element,e in enumerate(U[:,1]):
-        if e not in toSkip:
-            Ustruct1.append(element)
-            if 'second' in parameters['mesh']['elements']['order']:
-                Ustruct2.append(U[e,1])
-    Ustruct1 = np.array(Ustruct1)
-    Ustruct2 = np.array(Ustruct2)
-    Ustruct = [Ustruct1,Ustruct2]
-
-    print('... done.')
-    #=======================================================================
-    # END - compute global displacement vector
     #=======================================================================
 
     #=======================================================================
@@ -456,13 +367,6 @@ def discreteVCCT(iteration,parameters):
     for Pmat, pi in enumerate(P):
         for Qmat, qi in enumerate(Q):
             matGabq += Q[qi].dot(R.dot(np.outer((Kct[qi].dot(CDabq[qi])+Kstruct2ct[qi].dot(Ustructabq[qi])),CDabq[pi]).dot(invR.dot(invP[pi].dot(Tpq('quad',parameters['mesh']['elements']['order'],pi,qi))))))
-
-    print('    -- Recalculated solution')
-    matG = 0
-    for Pmat, pi in enumerate(P):
-        for Qmat, qi in enumerate(Q):
-            matG += Q[qi].dot(R.dot(np.outer((Kct[qi].dot(CD[qi])+Kstruct2ct[qi].dot(Ustruct[qi])),CD[pi]).dot(invR.dot(invP[pi].dot(Tpq('quad',parameters['mesh']['elements']['order'],pi,qi))))))
-
 
     print('... done.')
     #=======================================================================
@@ -488,20 +392,6 @@ def discreteVCCT(iteration,parameters):
     psi1abq = np.arctan2(np.sqrt(1-cospsi1*cospsi1),cospsi1)
     psi2abq = np.arctan2(np.sqrt(1-cospsi2*cospsi2),cospsi2)
 
-    print('    -- Recalculated solution')
-    G11 = matG[0,0]
-    G12 = matG[0,1]
-    G21 = matG[1,0]
-    G22 = matG[1,1]
-    eigG1 = 0.5*(-(G11+G22)+np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
-    eigG2 = 0.5*(-(G11+G22)-np.sqrt((G11+G22)*(G11+G22)-4*(G11*G22-G12*G21)))
-    eigvecG1 = [1/np.sqrt(1+G21*G21/((G22-eigG1)*(G22-eigG1))),-G21/((G22-eigG1)*np.sqrt(1+G21*G21/((G22-eigG1)*(G22-eigG1))))]
-    eigvecG2 = [1/np.sqrt(1+G21*G21/((G22-eigG2)*(G22-eigG2))),-G21/((G22-eigG2)*np.sqrt(1+G21*G21/((G22-eigG2)*(G22-eigG2))))]
-    cospsi1 = 1/np.sqrt(1+G21*G21/((G22-eigG1)*(G22-eigG1)))
-    cospsi2 = 1/np.sqrt(1+G21*G21/((G22-eigG2)*(G22-eigG2)))
-    psi1 = np.arctan2(np.sqrt(1-cospsi1*cospsi1),cospsi1)
-    psi2 = np.arctan2(np.sqrt(1-cospsi2*cospsi2),cospsi2)
-
     print('... done.')
     #=======================================================================
     # END - diagonalize ERR matrix
@@ -512,7 +402,7 @@ def discreteVCCT(iteration,parameters):
     #=======================================================================
     print('Update content of global ERR file...')
 
-    rowUpdate = [matGabq[0,0],matGabq[0,1],matGabq[1,0],matGabq[1,1],matG[0,0],matG[0,1],matG[1,0],matG[1,1],eigG1abq,eigG2abq,eigG1,eigG2,eigvecG1abq[0],eigvecG1abq[1],eigvecG1[0],eigvecG1[1],psi1abq*180.0/np.pi,psi2abq*180.0/np.pi,psi1*180.0/np.pi,psi2*180.0/np.pi,psi1abq*180.0/np.pi+90.0,psi2abq*180.0/np.pi+90.0,psi1*180.0/np.pi+90.0,psi2*180.0/np.pi+90.0]
+    rowUpdate = [matGabq[0,0],matGabq[0,1],matGabq[1,0],matGabq[1,1],eigG1abq,eigG2abq,eigvecG1abq[0],eigvecG1abq[1],psi1abq*180.0/np.pi,psi2abq*180.0/np.pi,psi1abq*180.0/np.pi+90.0,psi2abq*180.0/np.pi+90.0]
     errData[iteration,27:27+24] = rowUpdate
 
     with open(join(parameters['output']['global']['directory'],parameters['output']['global']['filenames']['energyreleaserate'].split('.')[0]+'.csv'),'w') as csv:

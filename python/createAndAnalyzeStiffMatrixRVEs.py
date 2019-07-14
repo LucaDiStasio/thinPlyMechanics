@@ -6661,8 +6661,8 @@ def modifyRVEinputfilePerturbationStep(parameters,mdbData,logfilepath,baselogind
         with open(modinpfullpath,'a') as inp:
             inp.write('** LINEAR PERTURBATION STEP: OUTPUT GLOBAL STIFFNESS MATRIX' + '\n')
             inp.write('*STEP, NAME=GlobalStiffnessMatrix' + '\n')
-            inp.write('*MATRIX GENERATE, STIFFNESS, LOAD' + '\n')
-            inp.write('*MATRIX OUTPUT, STIFFNESS, LOAD, FORMAT=MATRIX INPUT' + '\n')
+            inp.write('*MATRIX GENERATE, STIFFNESS' + '\n')
+            inp.write('*MATRIX OUTPUT, STIFFNESS, FORMAT=MATRIX INPUT' + '\n')
             inp.write('*END STEP' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if  parameters['simulation-pipeline']['remove-INP']:
@@ -6761,35 +6761,6 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalstiffnessmatrix'],lines[2:])
     #=======================================================================
     # END - Copy stiffness matrix to csv file
-    #=======================================================================
-
-    #=======================================================================
-    # BEGIN - extract load vector
-    #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract load vector...',True)
-    with open(join(wd,odbname.replace('VCCTandJintegral','Perturbation').split('.')[0]+'_'+'LOAD2'+'.mtx'),'r') as mtx:
-        lines = mtx.readlines()
-    globalVector = {}
-    for line in lines[2:]:
-        values = line.split(',')
-        rowIndex = int(values[0])
-        rowDOF = int(values[1])
-        if rowIndex not in globalVector:
-            globalVector[rowIndex] = {}
-        globalVector[rowIndex][rowDOF] = int(values[-1])
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + '... done.',True)
-    #=======================================================================
-    # END - extract load vector
-    #=======================================================================
-
-    #=======================================================================
-    # BEGIN - Copy load vector to csv file
-    #=======================================================================
-    writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Copy load vector to csv file...',True)
-    createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalloadvector'],'ROW INDEX, ROW DOF, VALUE')
-    appendCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalloadvector'],lines[2:])
-    #=======================================================================
-    # END - Copy load vector to csv file
     #=======================================================================
 
     #=======================================================================
@@ -7553,9 +7524,9 @@ def main(argv):
 
     titleline = ''
     if 'second' in RVEparams['mesh']['elements']['order']:
-        titleline = 'deltatheta [deg],Rf,L,L/Rf,phiCZ [deg],G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ [deg],matGabq[0,0],matGabq[0,1],matGabq[1,0],matGabq[1,1],matG[0,0],matG[0,1],matG[1,0],matG[1,1],eigG1abq,eigG2abq,eigG1,eigG2,eigvecG1abq[0],eigvecG1abq[1],eigvecG1[0],eigvecG1[1],psi1abq,psi2abq,psi1,psi2,psi1abq+90.0,psi2abq+90.0,psi1+90.0,psi2+90.0,xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement'
+        titleline = 'deltatheta [deg],Rf,L,L/Rf,phiCZ [deg],G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ [deg],matGabq[0,0],matGabq[0,1],matGabq[1,0],matGabq[1,1],eigG1abq,eigG2abq,eigvecG1abq[0],eigvecG1abq[1],psi1abq,psi2abq,psi1abq+90.0,psi2abq+90.0,xRFcracktip,yRFcracktip,xRFfirstbounded,yRFfirstbounded,rRFcracktip,thetaRFcracktip,rRFfirstbounded,thetaRFfirstbounded,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfirstboundedDisplacement,yfirstboundedDisplacement,rfirstboundedDisplacement,thetafirstboundedDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xfiberFirstboundedDisplacement,yfiberFirstboundedDisplacement,rfiberFirstboundedDisplacement,thetafiberFirstboundedDisplacement,xmatrixracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement,xmatrixFirstboundedDisplacement,ymatrixFirstboundedDisplacement,rmatrixFirstboundedDisplacement,thetamatrixFirstboundedDisplacement'
     else:
-        titleline = 'deltatheta [deg],Rf,L,L/Rf,phiCZ [deg],G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ [deg],matGabq[0,0],matGabq[0,1],matGabq[1,0],matGabq[1,1],matG[0,0],matG[0,1],matG[1,0],matG[1,1],eigG1abq,eigG2abq,eigG1,eigG2,eigvecG1abq[0],eigvecG1abq[1],eigvecG1[0],eigvecG1[1],psi1abq,psi2abq,psi1,psi2,psi1abq+90.0,psi2abq+90.0,psi1+90.0,psi2+90.0,xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement'
+        titleline = 'deltatheta [deg],Rf,L,L/Rf,phiCZ [deg],G0,GI/G0,GII/G0,GTOT/G0,GIv2/G0,GIIv2/G0,GTOTv2/G0,GTOTequiv/G0,GI,GII,GTOT,GIv2,GIIv2,GTOTv2,GTOTequiv,np.min(uR),np.max(uR),np.mean(uR),np.min(uTheta),np.max(uTheta),np.mean(uTheta),phiSZ [deg],matGabq[0,0],matGabq[0,1],matGabq[1,0],matGabq[1,1],,eigG1abq,eigG2abq,eigvecG1abq[0],eigvecG1abq[1],psi1abq,psi2abq,psi1abq+90.0,psi2abq+90.0,xRFcracktip,yRFcracktip,rRFcracktip,thetaRFcracktip,xcracktipDisplacement,ycracktipDisplacement,rcracktipDisplacement,thetacracktipDisplacement,xfiberCracktipDisplacement,yfiberCracktipDisplacement,rfiberCracktipDisplacement,thetafiberCracktipDisplacement,xmatrixCracktipDisplacement,ymatrixCracktipDisplacement,rmatrixCracktipDisplacement,thetamatrixCracktipDisplacement'
     createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['energyreleaserate'],titleline)
     if len(RVEparams['steps'])>1:
         createCSVfile(RVEparams['output']['global']['directory'],RVEparams['output']['global']['filenames']['thermalenergyreleaserate'],titleline)

@@ -166,7 +166,7 @@ def discreteVCCT(iteration,parameters):
     with open(join(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globalstiffnessmatrix'].split('.')[0]+'.csv'),'r') as csv:
         lines = csv.readlines()
     globalMatrix = {}
-    for line in lines[2:]:
+    for l,line in enumerate(lines[2:]):
         values = line.split(',')
         try:
             rowIndex = int(values[0])
@@ -186,7 +186,12 @@ def discreteVCCT(iteration,parameters):
         except Exception, error:
             print(str(Exception))
             print(str(error))
+            print('line n = ' + str(l))
             print('rowIndex = ' + str(values[0]))
+            print('columnIndex = ' + str(values[2]))
+            print('rowDOF = ' + str(values[1]))
+            print('columnDOF = ' + str(values[3]))
+            print('value = ' + str(values[-1]))
             sys.exit(2)
     print('...done.')
     #=======================================================================

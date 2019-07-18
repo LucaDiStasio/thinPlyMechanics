@@ -168,20 +168,26 @@ def discreteVCCT(iteration,parameters):
     globalMatrix = {}
     for line in lines[2:]:
         values = line.split(',')
-        rowIndex = int(values[0])
-        columnIndex = int(values[2])
-        rowDOF = int(values[1])
-        columnDOF = int(values[3])
-        if rowIndex not in globalMatrix:
-            globalMatrix[rowIndex] = {}
-            globalMatrix[rowIndex][rowDOF] = {}
-            globalMatrix[rowIndex][rowDOF][columnIndex] = {}
-        elif rowDOF not in globalMatrix[rowIndex]:
-            globalMatrix[rowIndex][rowDOF] = {}
-            globalMatrix[rowIndex][rowDOF][columnIndex] = {}
-        elif columnIndex not in globalMatrix[rowIndex][rowDOF]:
-            globalMatrix[rowIndex][rowDOF][columnIndex] = {}
-        globalMatrix[rowIndex][rowDOF][columnIndex][columnDOF] = int(values[-1])
+        try:
+            rowIndex = int(values[0])
+            columnIndex = int(values[2])
+            rowDOF = int(values[1])
+            columnDOF = int(values[3])
+            if rowIndex not in globalMatrix:
+                globalMatrix[rowIndex] = {}
+                globalMatrix[rowIndex][rowDOF] = {}
+                globalMatrix[rowIndex][rowDOF][columnIndex] = {}
+            elif rowDOF not in globalMatrix[rowIndex]:
+                globalMatrix[rowIndex][rowDOF] = {}
+                globalMatrix[rowIndex][rowDOF][columnIndex] = {}
+            elif columnIndex not in globalMatrix[rowIndex][rowDOF]:
+                globalMatrix[rowIndex][rowDOF][columnIndex] = {}
+            globalMatrix[rowIndex][rowDOF][columnIndex][columnDOF] = int(values[-1])
+        except Exception, error:
+            print(str(Exception))
+            print(str(error))
+            print('rowIndex = ' + str(values[0]))
+            sys.exit(2)
     print('...done.')
     #=======================================================================
     # END - Read stiffness matrix from csv file

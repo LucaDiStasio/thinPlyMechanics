@@ -123,7 +123,7 @@ def main():
                         lines = inp.readlines()
                     with open(join(outDir,itbaseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'w') as out:
                         for line in lines:
-                            if if 'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a) in line:
+                            if 'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a) in line:
                                 out.write(line.replace('L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a),'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'))
                             else:
                                 out.write(line)

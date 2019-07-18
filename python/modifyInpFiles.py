@@ -119,19 +119,14 @@ def main():
                     with open(join(outDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'+elType+'-LPC'+ext),'w') as out:
                         for line in newlines:
                             out.write(line)
-                #with open(join(inpDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'r') as inp:
-                with open(join(inpDir,itbaseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'r') as inp:
-                    lines = inp.readlines()
-                #with open(join(outDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'w') as out:
-                with open(join(outDir,itbaseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'w') as out:
-                    for line in lines:
-                        #if 'basename' in line:
-                            #newline = line.replace('sf'+str(nFib),'sf'+str(nFib+1))
-                        if '1_618' in line:
-                            newline = line.replace('1_618',L)
-                            out.write(newline)
-                        else:
-                            out.write(line)
+                    with open(join(inpDir,itbaseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+elType+'-LPC'+ext),'r') as inp:
+                        lines = inp.readlines()
+                    with open(join(outDir,itbaseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'w') as out:
+                        for line in lines:
+                            if if 'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a) in line:
+                                out.write(line.replace('L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a),'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'))
+                            else:
+                                out.write(line)
 
 
 if __name__ == '__main__':

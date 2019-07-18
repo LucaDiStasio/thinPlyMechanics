@@ -186,13 +186,7 @@ def discreteVCCT(iteration,parameters):
         except Exception, error:
             print(str(Exception))
             print(str(error))
-            print('line n = ' + str(l))
-            print('rowIndex = ' + str(values[0]))
-            print('columnIndex = ' + str(values[2]))
-            print('rowDOF = ' + str(values[1]))
-            print('columnDOF = ' + str(values[3]))
-            print('value = ' + str(values[-1]))
-            sys.exit(2)
+            sys.exc_clear()
     print('...done.')
     #=======================================================================
     # END - Read stiffness matrix from csv file

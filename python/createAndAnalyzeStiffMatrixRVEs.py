@@ -6880,7 +6880,9 @@ def analyzeRVEresults(odbname,parameters,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Extract displacements of all nodes...',True)
     createCSVfile(parameters['output']['local']['directory'],parameters['output']['local']['filenames']['globaldispvector'],'NODE LABEL, Ux, Uy')
     rveDisps = getFieldOutput(odb,-2,-1,'U',rve)
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Displacements extracted',True)
     globalDisps = {}
+    writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Dictionary initialized',True)
     for valueset in rveDisps.values:
         rowIndex = int(valueset.nodeLabel)
         globalDisps[rowIndex] = {}

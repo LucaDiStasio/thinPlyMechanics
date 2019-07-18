@@ -73,6 +73,10 @@ def main():
                 #with open(join(inpDir,baseName+'L'+L+'S'+'FHOMO'+s+ext),'r') as inp:
                     with open(join(inpDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+elType+'-LPC'+ext),'r') as inp:
                         lines = inp.readlines()
+                    newlines = []
+                    for line in lines:
+                        if 'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a) in line:
+                            newlines.append(line.replace('L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a),'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'))
                 #with open(join(outDir,baseName+'L'+L+'S'+'FHOMO'+s+ext),'w') as out:
                 with open(join(outDir,baseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'w') as out:
                     for line in lines:

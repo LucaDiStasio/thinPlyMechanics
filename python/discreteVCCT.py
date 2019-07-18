@@ -36,6 +36,7 @@ import os
 from os.path import isfile, join, exists
 from datetime import datetime
 from time import strftime
+import ast
 import numpy as np
 from scipy import sparse
 

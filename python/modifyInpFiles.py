@@ -77,6 +77,13 @@ def main():
                     for line in lines:
                         if 'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a) in line:
                             newlines.append(line.replace('L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a),'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'))
+                        elif 'materials, 2, elastic, values' in line:
+                            newlines.append(line)
+                            newlines.append('materials, 3, name            @UD $string' + '\n')
+                            newlines.append('materials, 3, elastic, type   @ENGINEERING_CONSTANTS $ABAQUS keyword' + '\n')
+                            newlines.append('materials, 3, elastic, values @[43442,13714,13714,0.273,0.273,0.465,4315,4315,4681] $list of float' + '\n')
+                        else:
+                            newlines.append(line)
                 #with open(join(outDir,baseName+'L'+L+'S'+'FHOMO'+s+ext),'w') as out:
                 with open(join(outDir,baseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'w') as out:
                     for line in lines:

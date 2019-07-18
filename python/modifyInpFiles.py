@@ -4,7 +4,7 @@
 '''
 =====================================================================================
 
-Copyright (c) 2016-2018 Université de Lorraine & Luleå tekniska universitet
+Copyright (c) 2016-2019 Université de Lorraine & Luleå tekniska universitet
 Author: Luca Di Stasio <luca.distasio@gmail.com>
                        <luca.distasio@ingpec.eu>
 
@@ -42,15 +42,17 @@ from time import strftime
 def main():
     #inpDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
     #outDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
-    inpDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
-    outDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
+    inpDir = 'C:/Abaqus_WD/ElType'
+    outDir = 'C:/Abaqus_WD/ElType/modified'
+    #inpDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
+    #outDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
     baseName = 'inputRVEdata'
     itbaseName = 'inputRVEiterables'
     ext = '.deck'
-    Ls = ['1_25','1_144','1_0992']
-    homogSize = ['1','2','3','5']
-    nFibsA = [1,2,3,5,10,50,100]
-    nFibs = [10,50,100]
+    Ls = [1.144]
+    elTypes = ['PS','GPE']
+    nFibsA = [0,1,5,10]
+    nFibS = [0,5,10]
 
     #fileListSide = []
     #fileListAbove = []
@@ -65,43 +67,44 @@ def main():
         os.mkdir(outDir)
 
     for L in Ls:
-        #for s in homogSize:
-        for n in nFibs:
-            #with open(join(inpDir,baseName+'L'+L+'S'+'FHOMO'+s+ext),'r') as inp:
-            with open(join(inpDir,baseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'r') as inp:
-                lines = inp.readlines()
-            #with open(join(outDir,baseName+'L'+L+'S'+'FHOMO'+s+ext),'w') as out:
-            with open(join(outDir,baseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'w') as out:
-                for line in lines:
-                    #if 'BC' in line and 'rightSide' in line and 'nFibers' in line:
-                        #nFib = int(line.split('$')[0].split('@')[1])
-                        #newline = 'BC, rightSide, nFibers @' + str(nFib+1) + '     $int' + '\n'
-                        #out.write(newline)
-                    #elif 'BC' in line and 'leftSide' in line and 'nFibers' in line:
-                        #nFib = int(line.split('$')[0].split('@')[1])
-                        #newline = 'BC, leftSide, nFibers @' + str(nFib+1) + '     $int' + '\n'
-                        #out.write(newline)
-                    if '1_618' in line:
-                        newline = line.replace('1_618',L)
-                        out.write(newline)
-                    elif '1.618' in line:
-                        newline = line.replace('1.618',L.replace('_','.'))
-                        out.write(newline)
-                    else:
-                        out.write(line)
-            #with open(join(inpDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'r') as inp:
-            with open(join(inpDir,itbaseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'r') as inp:
-                lines = inp.readlines()
-            #with open(join(outDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'w') as out:
-            with open(join(outDir,itbaseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'w') as out:
-                for line in lines:
-                    #if 'basename' in line:
-                        #newline = line.replace('sf'+str(nFib),'sf'+str(nFib+1))
-                    if '1_618' in line:
-                        newline = line.replace('1_618',L)
-                        out.write(newline)
-                    else:
-                        out.write(line)
+        for elType in elTypes:
+            for s in nFibS:
+                for a in nFibA:
+                #with open(join(inpDir,baseName+'L'+L+'S'+'FHOMO'+s+ext),'r') as inp:
+                    with open(join(inpDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+elType+'-LPC'+ext),'r') as inp:
+                        lines = inp.readlines()
+                #with open(join(outDir,baseName+'L'+L+'S'+'FHOMO'+s+ext),'w') as out:
+                with open(join(outDir,baseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'w') as out:
+                    for line in lines:
+                        #if 'BC' in line and 'rightSide' in line and 'nFibers' in line:
+                            #nFib = int(line.split('$')[0].split('@')[1])
+                            #newline = 'BC, rightSide, nFibers @' + str(nFib+1) + '     $int' + '\n'
+                            #out.write(newline)
+                        #elif 'BC' in line and 'leftSide' in line and 'nFibers' in line:
+                            #nFib = int(line.split('$')[0].split('@')[1])
+                            #newline = 'BC, leftSide, nFibers @' + str(nFib+1) + '     $int' + '\n'
+                            #out.write(newline)
+                        if '1_618' in line:
+                            newline = line.replace('1_618',L)
+                            out.write(newline)
+                        elif '1.618' in line:
+                            newline = line.replace('1.618',L.replace('_','.'))
+                            out.write(newline)
+                        else:
+                            out.write(line)
+                #with open(join(inpDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'r') as inp:
+                with open(join(inpDir,itbaseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'r') as inp:
+                    lines = inp.readlines()
+                #with open(join(outDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'w') as out:
+                with open(join(outDir,itbaseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'w') as out:
+                    for line in lines:
+                        #if 'basename' in line:
+                            #newline = line.replace('sf'+str(nFib),'sf'+str(nFib+1))
+                        if '1_618' in line:
+                            newline = line.replace('1_618',L)
+                            out.write(newline)
+                        else:
+                            out.write(line)
 
     for L in Ls:
         #for s in homogSize:

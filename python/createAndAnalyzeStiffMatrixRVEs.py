@@ -38,6 +38,8 @@ DESCRIPTION
 
 Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
 
+abaqus CAE noGUI=C:/02_Local-folder/01_Luca/01_WD/thinPlyMechanics/python/createAndAnalyzeStiffMatrixRVEs.py -- -dir C:/Users/lucad/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/StiffMatrix -data inputRVEdataEfreeL%1-LPC.deck -iterables inputRVEiterablesEfreeL%1-LPC.deck -plot inputRVEplot &&
+
 '''
 import sys, os
 import math

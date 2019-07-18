@@ -38,6 +38,18 @@ from os.path import isfile, join, exists
 from datetime import datetime
 from time import strftime
 
+def getMaxSectionNumber(S,A):
+    if S>0:
+        if A>0:
+            N = 5
+        else:
+            N = 4
+    else:
+        if A>0:
+            N = 3
+        else:
+            N = 2
+    return N
 
 def main():
     #inpDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
@@ -70,7 +82,6 @@ def main():
         for elType in elTypes:
             for s in nFibS:
                 for a in nFibA:
-                #with open(join(inpDir,baseName+'L'+L+'S'+'FHOMO'+s+ext),'r') as inp:
                     with open(join(inpDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+elType+'-LPC'+ext),'r') as inp:
                         lines = inp.readlines()
                     newlines = []
@@ -82,26 +93,31 @@ def main():
                             newlines.append('materials, 3, name            @UD $string' + '\n')
                             newlines.append('materials, 3, elastic, type   @ENGINEERING_CONSTANTS $ABAQUS keyword' + '\n')
                             newlines.append('materials, 3, elastic, values @[43442,13714,13714,0.273,0.273,0.465,4315,4315,4681] $list of float' + '\n')
+                        elif 'sections, 2, thickness' in line:
+                            newlines.append(line)
+                            newlines.append('sections, 3, name      @udSection $string' + '\n')
+                            newlines.append('sections, 3, type      @HomogeneousSolidSection $string' + '\n')
+                            newlines.append('sections, 3, material  @UD $string' + '\n')
+                            newlines.append('sections, 3, thickness @1.0 $float' + '\n')
+                        elif 'sectionRegions, ' + str(getMaxSectionNumber(s,a)) + ', offsetValue' in line:
+                            newlines.append(line)
+                            newlines.append('sectionRegions, ' + str(getMaxSectionNumber(s,a)+1) + ', name                 @udSection $string' + '\n')
+                            newlines.append('sectionRegions, ' + str(getMaxSectionNumber(s,a)+1) + ', set                  @BOUNDING-PLY $string' + '\n')
+                            newlines.append('sectionRegions, ' + str(getMaxSectionNumber(s,a)+1) + ', offsetType           @MIDDLE_SURFACE $ABAQUS keyword' + '\n')
+                            newlines.append('sectionRegions, ' + str(getMaxSectionNumber(s,a)+1) + ', offsetField          @  $string' + '\n')
+                            newlines.append('sectionRegions, ' + str(getMaxSectionNumber(s,a)+1) + ', thicknessAssignment  @FROM_SECTION $ABAQUS keyword' + '\n')
+                            newlines.append('sectionRegions, ' + str(getMaxSectionNumber(s,a)+1) + ', offsetValue          @0.0 $float' + '\n')
+                        elif 'BC, northSide, type' in line:
+                            if a>0:
+                                newlines.append('BC, northSide, type     @adjacentFibersboundingPly $string' + '\n')
+                            else:
+                                newlines.append('BC, northSide, type     @boundingPly $string' + '\n')
+                        elif 'BC, northSide, tRatio' in line:
+                            newlines.append('BC, northSide, tRatio   @1.0 $float' + '\n')
                         else:
                             newlines.append(line)
-                #with open(join(outDir,baseName+'L'+L+'S'+'FHOMO'+s+ext),'w') as out:
-                with open(join(outDir,baseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'w') as out:
-                    for line in lines:
-                        #if 'BC' in line and 'rightSide' in line and 'nFibers' in line:
-                            #nFib = int(line.split('$')[0].split('@')[1])
-                            #newline = 'BC, rightSide, nFibers @' + str(nFib+1) + '     $int' + '\n'
-                            #out.write(newline)
-                        #elif 'BC' in line and 'leftSide' in line and 'nFibers' in line:
-                            #nFib = int(line.split('$')[0].split('@')[1])
-                            #newline = 'BC, leftSide, nFibers @' + str(nFib+1) + '     $int' + '\n'
-                            #out.write(newline)
-                        if '1_618' in line:
-                            newline = line.replace('1_618',L)
-                            out.write(newline)
-                        elif '1.618' in line:
-                            newline = line.replace('1.618',L.replace('_','.'))
-                            out.write(newline)
-                        else:
+                    with open(join(outDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'+elType+'-LPC'+ext),'w') as out:
+                        for line in newlines:
                             out.write(line)
                 #with open(join(inpDir,itbaseName+'L'+L+'S'+'FHOMO'+s+ext),'r') as inp:
                 with open(join(inpDir,itbaseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'r') as inp:

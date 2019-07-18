@@ -64,7 +64,7 @@ def main():
     Ls = [1.144]
     elTypes = ['PS','GPE']
     nFibsA = [0,1,5,10]
-    nFibS = [0,5,10]
+    nFibsS = [0,5,10]
 
     #fileListSide = []
     #fileListAbove = []
@@ -80,8 +80,8 @@ def main():
 
     for L in Ls:
         for elType in elTypes:
-            for s in nFibS:
-                for a in nFibA:
+            for s in nFibsS:
+                for a in nFibsA:
                     with open(join(inpDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+elType+'-LPC'+ext),'r') as inp:
                         lines = inp.readlines()
                     newlines = []
@@ -121,7 +121,7 @@ def main():
                             out.write(line)
                     with open(join(inpDir,itbaseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+elType+'-LPC'+ext),'r') as inp:
                         lines = inp.readlines()
-                    with open(join(outDir,itbaseName+'L'+L+'S'+str(n)+'FCOARED'+ext),'w') as out:
+                    with open(join(outDir,itbaseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'+elType+'-LPC'+ext),'w') as out:
                         for line in lines:
                             if 'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a) in line:
                                 out.write(line.replace('L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a),'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'))

@@ -1,24 +1,36 @@
-\begin{longtable}{ccccXcX}
-\bf{N.}&\bf{Status}&\bf{Reviewer}&\bf{Line(s)}&\bf{Observation}&\bf{Action}&\bf{Comments}\\
-&\textcolor{red}{\xmark}\textrightarrow To-Do&&&&&\\
-&\textcolor{orange}{$\blacksquare$}\textrightarrow In Progress&&&&&\\
-&\textcolor{green}{\cmark}\textrightarrow Reviewed&&&&&\\
+\begin{longtable}{ccccXc}
+\bf{N.}&\bf{Status}&\bf{Reviewer}&\bf{Line(s)}&\bf{Observation}&\bf{Action}\\
+&\textcolor{red}{\xmark}\textrightarrow To-Do&&&&\\
+&\textcolor{orange}{$\blacksquare$}\textrightarrow In Progress&&&&\\
+&\textcolor{green}{\cmark}\textrightarrow Reviewed&&&&\\
 \toprule
 \bottomrule
-1&\textcolor{green}{\cmark}&1&title&The title should be changed: terms \textit{debond-debond} and \textit{debond-free} are not mentioned in the text, only in the title.&\textit{Changed}&The expressions \textit{debond-debond} and \textit{debond-free boundary} are in effect mentioned only in the title. They were meant to be synthetic expressions to summarize the two main points of discussion of the paper. In order to avoid confusion and clarify the message of the article, the expressions \textit{debond-debond and debond-free boundary interactions} have been changed to \textit{effect of the fiber volume fraction and of the distance to the free surface and to non-adjacent debonds}.\\
+1&\textcolor{red}{\xmark}&1&introduction&The issues related to mesh dependency of the modal contributions to the energy release rate in bi-material interface crack problems are long known in the literature. In this respect, some additional references could be usefully added in the Introduction: 
+1) I.S. Raju, J.H. Crews Jr., M.A. Aminpour, Convergence of strain energy release rate components for Edge-Delaminated composite laminates, Engineering Fracture Mechanics 30 (3) (1988) 383-396. doi: 10.1016/0013-7944(88)90196-8.
+2) A. Agrawal, A.M. Karlsson, Obtaining mode mixity for a bimaterial interface crack using the virtual crack closure technique, International Journal of Fracture 141 (1-2) (2006) 75-98. doi:10.1007/s10704-006-0069-4.
+3)  R. Krueger, K. Shivakumar, I.S. Raju, Fracture mechanics analyses for interface crack problems - A review, in: Proceedings of the 54th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics, and Materials Conference, 2013. doi:10.2514/6.2013-1476.\\
 \midrule
-2&\textcolor{green}{\cmark}&1&78&The authors used \textit{square packing of fibers} (Line 78). This should be commented since other patterns are also used - the authors themselves refer to results for \textit{a hexagonal cluster} (Line 71).&\textit{Added}&Added comment motivating the choice of a square-packing configuration.\\
+2&\textcolor{red}{\xmark}&1&section 3& To help understanding, it would be useful to add a figure of the mesh in the neighbourhood of the crack tip showing the delta-sized elements (e.g., in two cases with m = 1 and m = 2) with the indices p and q.\\
 \midrule
-3&\textcolor{green}{\cmark}&1&177-178&Lines 177-178: \textit{Due to its appearance, frictionless contact is considered between the two crack faces to allow free sliding and avoid interpenetration.} The strength of this assumption and its effect on the obtained results should be discussed.&\textit{Added}&Added discussion on the limits of the assumption of frictionless contact.\\
+3&\textcolor{red}{\xmark}&1&section 3& If I correctly understand, the permutation matrix is denoted as $P_{\pi}$ in Eq. (7) and as D in Eq. (8). Please, check and unify notation.\\
 \midrule
-4&\textcolor{green}{\cmark}&1&196-197&Lines 196-197: \textit{…it is assumed that their response lies always in the linear elastic domain.} The level of maximum local strains for cases with high volume fractions of fibers could justify (or not) this assumption.&\textit{Added}&A discussion of the strength of this assumption is proposed based on previous works available in the literature.\\
+4&\textcolor{red}{\xmark}&1&section 3&The comparison between Eq. (11) and a similar one in the paper by Valvo (2012) is useful, but should be revised:
+a - the two relations are different because of an additional term in the submitted manuscript. Indeed, Eq. (11) relates the forces at the crack-tip node with the relative displacements at adjacent nodes (on the same mesh). Instead, Valvo (2012) relates forces and displacements at the same crack-tip node (on two different meshes);
+b - the linear relationship between forces and displacements is not "assumed a priori" in the cited paper, but is an immediate consequence of the linear elastic model;
+c - also according to Valvo (2012), the crack-tip stiffness matrix is not diagonal in general because of Poisson's effect, as well as material mismatch and geometric asymmetry. The matrix is diagonalised to obtain the mode I and mode II contributions to the energy release rate;
+d - lastly, consider also the following development:
+P.S. Valvo, A further step towards a physically consistent virtual crack closure technique, International Journal of Fracture 192 (2) (2015) 235-244. doi:10.1007/s10704-015-0007-4.\\
 \midrule
-5&\textcolor{green}{\cmark}&1&359&Line 359: \textit{101st} and \textit{201st} instead of \textit{101th} and \textit{201th}.&\textit{Changed}&\\
+5&\textcolor{red}{\xmark}&1&section 3&In Eq. (12), an operator called Tr appears for the first time, but is not defined. I presume it is the Trace of the matrix, but for clarity it would be better to specify in the manuscript. In Eq. (12), also check the order of the arguments, which maybe have to be rearranged to yield a 2x2 matrix (as in the following equations).\\
 \midrule
-6&\textcolor{green}{\cmark}&1&487&Line 487: \textit{The fiber volume fraction is the same everywhere…} is misleading since a range of this parameter was studied.”&\textit{Changed}&The authors agree on the misleading meaning of the sentence as it was formulated. It has been changed to \textit{In each RUC, the fiber volume fraction is spatially homogeneous (no fiber clustering is considered)} in order to emphasize that the subject is the homogeneity of the fiber volume fraction in each RUC.\\
+6&\textcolor{red}{\xmark}&1&conclusions& In the Conclusions, the comments about the cited part of the Abaqus User's Manual should be revised. The Manual gives suggestions on how to improve the accuracy of stress and strain calculations in the neighbourhood of the crack tip, as well as of the J-integral (total energy release rate). At least from the cited part, there is no direct reference to VCCT computation of mode I and mode II contributions to energy release rate, which are known to be mesh dependent quantities.\\
 \midrule
-7&\textcolor{green}{\cmark}&1&491-494&Conclusion 1 (Lines 491-494) should also provide some idea on the magnitude of this \textit{characteristic distance between debonds which defines the transition to a non-interactive solution}, mentioning also that it was \textit{outside the range studied} (Line 384).&\textit{Added}&Completed the paragraph with $3$ representative examples showing the expected critical distance of the interactive/non-interactive transition for different combinations of thickness and fiber volume fraction.\\
+7&\textcolor{red}{\xmark}&1&appendix A&In Appendix A, there is an attemp to cover at the same time both two-dimensional (d = 2) and three-dimensional (d = 3) problems. However, to achieve fully this goal, also matrices in Eqs. (A.1), (A.2), ..., (A.11) should have optional additional columns and rows. This would only add up to confusion. For the sake of clarity, it would be better to focus on the two-dimensional problem only (as concerns equations) and simply state that extension to three-dimensional problems is straightforward.\\
+\midrule
+8&\textcolor{red}{\xmark}&1&appendix A&Again in Appendix A, correct:
+- "$u_{r,M}, u_{r,F}$ the x-displacement" --> "$u_{theta,M}, u_{theta,F}$ the r-displacement";
+- "$u_{theta,M}, u_{theta,F}$ the y-displacement" --> "$u_{theta,M}, u_{theta,F}$ the theta-displacement".\\
 \midrule
 \midrule
-8&\textcolor{green}{\cmark}&2&199-215&although in Section 2.4 the authors present a successful model validation, it would be useful for the reader to mention the amount of degrees of freedom the developed model requires.&\textit{Added}&Added comments about the number of degrees of freedom per node, number of nodes per element and total number of elements in Section 2.3, where it seems more appropriate as all the details related to the technical implementation are reported here.\\
+9&\textcolor{red}{\xmark}&2&introduction/conclusions&In particular, it seems that the paper fails to establish the proper connection with the state of the art literature on VCCT applied to bimaterial cracks. [...] In conclusion, the reviewer suggests to broaden the focus so to consider the relevant contributions from the existing literature such as those provided by Kruger (2014), and to point out the main novelties of their approach wrt the existing ones. A further aspects is that GI and GII computed via VCCT for bimaterial interface cracks are strongly dependent on the assumed crack extension length. Hence, it would be advisable that the Authors puts into evidence this aspect.  Another possible extension could be to compare the GI/GII calculations with those computed by means of techniques other than the VCCT, perhaps starting from the horizontal crack case so to have reference results. Finally, the authors could suggest a modified VCCT overcoming the drawbacks of existing revised VCCT such as Valvo (2012) or  S. Wang et al. (2013).\\
 \end{longtable}

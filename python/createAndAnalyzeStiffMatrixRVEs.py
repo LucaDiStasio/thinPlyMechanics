@@ -6664,7 +6664,7 @@ def modifyRVEinputfilePerturbationStep(parameters,mdbData,logfilepath,baselogind
             inp.write('** LINEAR PERTURBATION STEP: OUTPUT GLOBAL STIFFNESS MATRIX' + '\n')
             inp.write('*STEP, NAME=GlobalStiffnessMatrix' + '\n')
             inp.write('*MATRIX GENERATE, STIFFNESS' + '\n')
-            inp.write('*MATRIX OUTPUT, STIFFNESS, FORMAT=MATRIX INPUT' + '\n')
+            inp.write('*MATRIX OUTPUT, STIFFNESS, FORMAT=LABELS' + '\n')
             inp.write('*END STEP' + '\n')
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
     if  parameters['simulation-pipeline']['remove-INP']:

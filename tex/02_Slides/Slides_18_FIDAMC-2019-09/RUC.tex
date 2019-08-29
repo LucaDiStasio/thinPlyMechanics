@@ -1,0 +1,216 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+
+\usetikzlibrary{arrows}
+
+%----------------------------------------------------------------------------------------------%
+%                                          INPUT PARAMETERS
+%----------------------------------------------------------------------------------------------%
+
+\def\Rf{1}
+\def\Vff{0.3}
+\def\tratio{0.75}
+\def\meshfacone{0.2}
+\def\meshfactwo{0.75}
+\def\meshfacthree{0.5}
+\def\thetavalue{0}
+\def\deltatheta{25}
+
+%----------------------------------------------------------------------------------------------%
+%                               Definition of dependent parameters
+%----------------------------------------------------------------------------------------------%
+
+\def\pivalue{3.141592653589793238462643383279502884197169399375105820974944592307816406286}
+
+\newcommand{\half}[1]{
+       0.5*#1
+       }
+
+\pgfmathsetmacro\l{0.5*\Rf*sqrt(\pivalue/\Vff)}
+
+\pgfmathsetmacro\sqrtthree{sqrt(3)}
+
+\pgfmathsetmacro\equitriheight{0.5*sqrt(3)}
+
+\pgfmathsetmacro\l{0.5*\Rf*sqrt(\pivalue/\Vff)}
+
+\pgfmathsetmacro\symmsyml{\l/8}
+
+\pgfmathsetmacro\symmsymh{\symmsyml*\equitriheight}
+
+\def\domlim{1.28*\l}
+\def\loadlim{1.2*\l}
+\def\loadlabel{0.5*\l}
+\def\cornerlabel{1.077*\l}
+
+\def\thetabot{\thetavalue-\deltatheta}
+\def\thetaup{\thetavalue+\deltatheta}
+
+\def\thetabotcz{-50}
+\def\thetaupcz{50}
+
+\def\thetabotsymm{180-\deltatheta}
+\def\thetaupsymm{180+\deltatheta}
+
+\def\thetahalfbot{\thetavalue-0.5*\deltatheta}
+\def\thetahalfup{\thetavalue+0.5*\deltatheta}
+
+\def\thetaround{360+\thetavalue-\deltatheta}
+\def\thetadraw{0.25*\thetavalue}
+
+\def\xM{0.9*\costheta*\Rf}
+\def\yM{0.9*\sintheta*\Rf}
+
+\pgfmathsetmacro\cosfourtyfive{cos(45)}
+\pgfmathsetmacro\sinfourtyfive{sin(45)}
+
+\pgfmathsetmacro\costheta{cos(\thetavalue)}
+\pgfmathsetmacro\sintheta{sin(\thetavalue)}
+
+\pgfmathsetmacro\costhetabot{cos(\thetabot)}
+\pgfmathsetmacro\sinthetabot{sin(\thetabot)}
+
+\pgfmathsetmacro\costhetaup{cos(\thetaup)}
+\pgfmathsetmacro\sinthetaup{sin(\thetaup)}
+
+\pgfmathsetmacro\costhetabotcz{cos(\thetabotcz)}
+\pgfmathsetmacro\sinthetabotcz{sin(\thetabotcz)}
+
+\pgfmathsetmacro\costhetaupcz{cos(\thetaupcz)}
+\pgfmathsetmacro\sinthetaupcz{sin(\thetaupcz)}
+
+\pgfmathsetmacro\costhetahalfbot{cos(\thetahalfbot)}
+\pgfmathsetmacro\sinthetahalfbot{sin(\thetahalfbot)}
+
+\pgfmathsetmacro\costhetahalfup{cos(\thetahalfup)}
+\pgfmathsetmacro\sinthetahalfup{sin(\thetahalfup)}
+
+\pgfmathsetmacro\yloadarrowone{\l+(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowtwo{\l+2*(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowthree{\l+3*(\loadlim-\l)*0.2}
+\pgfmathsetmacro\yloadarrowfour{\l+4*(\loadlim-\l)*0.2}
+
+\pgfmathsetmacro\ILsquared{(\costhetabot-\costhetaup)*(\costhetabot-\costhetaup)+(\sinthetabot-\sinthetaup)*(\sinthetabot-\sinthetaup))}
+\pgfmathsetmacro\IMsquared{(\costhetabot-0.9*\costheta)*(\costhetabot-0.9*\costheta)+(\sinthetabot-0.9*\sintheta)*(\sinthetabot-0.9*\sintheta)}
+\pgfmathsetmacro\IL{sqrt(\ILsquared)}
+\pgfmathsetmacro\IM{sqrt(\IMsquared)}
+\pgfmathsetmacro\angleM{asin(0.5*\IL/\IM)}
+
+\def\crackstartangle{\thetavalue-\angleM}
+\def\crackstopangle{\thetavalue+\angleM}
+
+\pgfmathsetmacro\meshradiusone{\meshfactwo*\Rf}
+\pgfmathsetmacro\meshradiustwo{\Rf+\meshfacthree*(\l-\Rf)}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+\begin{document}
+
+\begin{tikzpicture}[scale=4,cap=round,x=1cm,y=1cm]
+
+\tikzstyle{axes}=[]
+
+\begin{scope}[style=axes]
+  \draw[->,line width=0.75mm] (-0.5*\symmsyml-\symmsymh-1.05*\loadlim,0) -- (0.5*\symmsyml+\symmsymh+1.15*\loadlim,0) node[right] {\Huge$x$};
+  \draw[->,line width=0.75mm] (0,-0.75*\symmsyml-\symmsymh) -- (0,1.3*\l) node[above] {\Huge$z$};
+\end{scope}
+
+\draw[draw=green!50!black,line width=0.75mm] (1.25*\costhetaupcz,1.25*\sinthetaupcz)arc (50:\thetaup:1.25*\Rf);
+\draw[draw=green!50!black,dashed,line width=0.75mm] (\costhetaupcz,\sinthetaupcz) -- (1.25*\costhetaupcz,1.25*\sinthetaupcz);
+\draw[draw=green!50!black,dashed,line width=0.75mm] (\costhetaup,\sinthetaup) -- (1.25*\costhetaup,1.25*\sinthetaup);
+
+\filldraw[fill=blue!20,draw=blue!50!black,line width=0.75mm](0,0) -- (0.6*\costheta*\Rf,0.6*\sintheta*\Rf) arc(\thetavalue:\thetaupcz:0.6*\Rf) --  (0,0);
+\draw (0.35*\costhetahalfup*\Rf,0.7*\sinthetahalfup*\Rf) node[blue!50!black] {\Huge$\Delta\theta$};
+
+\filldraw[fill=red!20, draw=red]([shift=(0:\IM*\Rf)]0.9*\costheta*\Rf,0.9*\sintheta*\Rf) arc (0:\crackstopangle:\IM*\Rf) --  (\costhetaup,\sinthetaup) arc(\thetaup:0:\Rf);
+\draw[draw=red, line width=1.25mm]([shift=(0:\IM*\Rf)]0.9*\costheta*\Rf,0.9*\sintheta*\Rf) arc (0:\crackstopangle:\IM*\Rf);
+\draw[line width=1.25mm] (\costhetaupcz,\sinthetaupcz)arc (50:180:\Rf);
+\draw[draw=red,line width=1.25mm](\costhetaupcz,\sinthetaupcz) arc(50:0:\Rf);
+
+
+\pgfmathsetmacro\ltot{\l+\tratio*\l}
+
+\foreach \x in {0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2}{
+\draw[->,line width=0.75mm] (0.5*\symmsyml+\symmsymh+\l, \x*\l) -- (0.5*\symmsyml+\symmsymh+\loadlim,\x*\l);
+\draw[->,line width=0.75mm] (-0.5*\symmsyml-\symmsymh-\l, \x*\l) -- (-0.5*\symmsyml-\symmsymh-\loadlim,\x*\l);
+}
+
+\draw[line width=0.75mm] (-0.5*\symmsyml-\symmsymh-\l,0) -- (-0.5*\symmsyml-\symmsymh-\l,2*\l);
+\draw[line width=0.75mm] (-0.5*\symmsyml-\symmsymh-\loadlim,0) -- (-0.5*\symmsyml-\symmsymh-\loadlim,2*\l);
+
+\draw[line width=0.75mm] (0.5*\symmsyml+\symmsymh+\l,0) -- (0.5*\symmsyml+\symmsymh+\l,2*\l);
+\draw[line width=0.75mm] (0.5*\symmsyml+\symmsymh+\loadlim,0) -- (+0.5*\symmsyml+\symmsymh+\loadlim,2*\l);
+
+\draw[line width=1.25mm] (-\l,0) -- (-\l,2*\l);
+
+\draw[line width=1.25mm] (-\l,\l) -- (\l,\l) ;
+\draw[line width=1.25mm] (-\l,2*\l) -- (\l,2*\l) ;
+
+\draw[line width=1.25mm] (\l,0) -- (\l,2*\l) ;
+\draw[line width=1.25mm] (-\l,0) -- (\l,0) ;
+
+\draw[dashed,blue,line width=0.75mm] (-\l,-1.5*\symmsyml-\symmsymh) -- (\l,-1.5*\symmsyml-\symmsymh);
+\draw[dashed,blue,line width=0.75mm] (-\l,-\symmsyml-\symmsymh) -- (-\l,-2*\symmsyml-\symmsymh);
+\draw[dashed,blue,line width=0.75mm] (\l,-\symmsyml-\symmsymh) -- (\l,-2*\symmsyml-\symmsymh);
+\draw[dashed,blue,line width=0.75mm] (0,-\symmsyml-\symmsymh) -- (0,-2*\symmsyml-\symmsymh);
+
+\draw[dashed,blue,line width=0.75mm] (-0.5*\symmsyml-\symmsymh-1.15*\loadlim,0) -- (-0.5*\symmsyml-\symmsymh-1.15*\loadlim,\l);
+\draw[dashed,blue,line width=0.75mm] (-\symmsymh-1.15*\loadlim,0) -- (-\symmsyml-\symmsymh-1.15*\loadlim,0);
+\draw[dashed,blue,line width=0.75mm] (-\symmsymh-1.15*\loadlim,\l) -- (-\symmsyml-\symmsymh-1.15*\loadlim,\l);
+
+\draw (-0.5*\symmsyml-\symmsymh-1.15*\loadlim,0.5*\l) node[blue,left] {\Huge$L$};
+\draw (0.5*\l,-1.5*\symmsyml-\symmsymh) node[blue,below] {\Huge$L$};
+\draw (-0.5*\l,-1.5*\symmsyml-\symmsymh) node[blue,below] {\Huge$L$};
+
+\draw (0.5*\symmsyml+\symmsymh+\l,2.1*\l) node[black,right] {\Huge$\bar{u}_{x}=\bar{\varepsilon}_{x}L$};
+\draw (-0.5*\symmsyml-\symmsymh-\l,2.1*\l) node[black,left] {\Huge$\bar{u}_{x}=-\bar{\varepsilon}_{x}L$};
+
+\draw (-0.45*\Rf,0.45*\Rf) node[black,above] {\Huge$\Omega_{f}$};
+\draw (1.15*\Rf,1.15*\Rf) node[black,above] {\Huge$\Omega_{m}$};
+\draw (-\Rf,1.25*\l) node[black,above] {\Huge$\Omega_{UD}$};
+
+\draw (0.325*\Rf*\cosfourtyfive,0.55*\Rf*\cosfourtyfive) node[black,above] {\Huge$R_{f}$};
+\draw (-0.1,0.0) node[black,left,above] {\Huge$O$};
+
+\draw (1.15*\costhetaup*\Rf,1.8*\sinthetaup*\Rf) node[green!50!black,right] {\Huge$\Delta\Phi$};
+
+\draw[->,line width=1.25mm] (0.5*\Rf,1.75*\l) -- (1.2*\Rf,1.75*\l)node[right] {\Huge$\mathbf{0^{\circ}}$};
+
+\draw[line width=0.75mm] (0,0)--(\costhetaupcz,\sinthetaupcz);
+
+%bottom symmetry
+\foreach \x in {8,...,16}{
+\draw[line width=1.25mm](-3*\l+\x*2*\symmsyml,0)--(-3*\l+\x*2*\symmsyml-0.5*\symmsyml,-\symmsymh)--(-3*\l+\x*2*\symmsyml-0.5*\symmsyml+\symmsyml,-\symmsymh)--(-3*\l+\x*2*\symmsyml,0);
+\draw[line width=1.25mm] (-3*\l+\x*2*\symmsyml,-\symmsymh-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
+\draw[line width=1.25mm] (-3*\l+\x*2*\symmsyml+0.5*\symmsyml,-\symmsymh-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
+
+%left symmetry
+\foreach \x in {0,...,8}{
+\draw[line width=1.25mm](-\l,\x*2*\symmsyml)--(-\l-\symmsymh,\x*2*\symmsyml-0.5*\symmsyml)--(-\l-\symmsymh,\x*2*\symmsyml+0.5*\symmsyml)--(-\l,\x*2*\symmsyml);
+\draw[line width=1.25mm] (-\l-\symmsymh,\x*2*\symmsyml-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
+\draw[line width=1.25mm] (-\l-\symmsymh,\x*2*\symmsyml+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
+
+%right symmetry
+\foreach \x in {0,...,8}{
+\draw[line width=1.25mm](\l,\x*2*\symmsyml)--(\l+\symmsymh,\x*2*\symmsyml-0.5*\symmsyml)--(\l+\symmsymh,\x*2*\symmsyml+0.5*\symmsyml)--(\l,\x*2*\symmsyml);
+\draw[line width=1.25mm] (\l+\symmsymh+0.5*\symmsyml,\x*2*\symmsyml-0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);
+\draw[line width=1.25mm] (\l+\symmsymh+0.5*\symmsyml,\x*2*\symmsyml+0.25*\symmsyml,0)arc (0:360:0.25*\symmsyml);}
+
+
+
+\end{tikzpicture}
+
+\end{document}

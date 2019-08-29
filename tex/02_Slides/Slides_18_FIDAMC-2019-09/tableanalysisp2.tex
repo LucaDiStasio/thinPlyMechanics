@@ -1,0 +1,32 @@
+\begin{table}[h!]
+\scriptsize
+  \centering
+  %\caption{Analysis methods summary.}
+    \begin{tabularx}{\textwidth}{X}
+    \toprule
+    \midrule
+    \textbf{Method}\\
+    ABAQUS/STD static analysis + CZM.\\
+    \midrule
+    \textbf{Type}\\
+    Static, i.e. no inertial effects. Relaxation until equilibrium.\\
+    \midrule
+    \textbf{Elements}\\
+    CPE4/CPE8 + COH2D4\\
+    \midrule
+    \textbf{Interface}\\
+    Cohesive elements.\\
+    \midrule
+   \textbf{Input variables}\\
+    $R_{f}$, $V_{f}$, material properties.\\
+    \midrule
+    \textbf{Control variables}\\
+    Interface properties, maximum stresses at crack onset, energy release rates, applied strain.\\
+    \midrule
+ \textbf{Output variables} \\
+  $\theta$, $\Delta\theta$, $a$, stress field, peak crack boundary stresses.\\
+  \midrule
+    \bottomrule
+    \end{tabularx}%
+  \label{tab:analysis_tab2}%
+\end{table}%

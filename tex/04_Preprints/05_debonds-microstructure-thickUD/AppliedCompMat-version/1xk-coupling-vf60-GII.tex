@@ -1,0 +1,245 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{2.5pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={draw=white!80.0!black,font=\fontsize{15}{14}\selectfont,row sep=7.5pt},
+legend image post style={xscale=1.5,yscale=1.5},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+xmax=160.0,
+ymin=0.0,
+xtick={0.0,10.0,30.0,50.0,70.0,90.0,110.0,130.0,150.0},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$\Delta\theta\left[^{\circ}\right]$},
+ylabel={$G_{II}\left[\nicefrac{J}{m^{2}}\right]$},
+% LEGEND ENTRIES
+legend entries={},
+]
+
+% 1x1 - coupling
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+table{
+10.00	0.17463251
+20.00	0.29337890
+30.00	0.49099192
+40.00	0.69508761
+50.00	0.80543979
+60.00	0.71524987
+70.00	0.55253115
+80.00	0.41083111
+90.00	0.27657692
+100.00	0.16279189
+110.00	0.08329775
+120.00	0.03273242
+130.00	0.01002971
+140.00	0.00286646
+150.00	0.00189072
+};
+\addlegendentry{$1\times 1-coupling$};
+
+% 1x3-coupling
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
+table{
+10.00	0.180434
+20.00	0.318663
+30.00	0.530142
+40.00	0.715407
+50.00	0.884026
+60.00	0.992100
+70.00	0.901432
+80.00	0.663497
+90.00	0.450358
+100.00	0.238059
+110.00	0.080776
+120.00	0.017993
+130.00	0.009669
+140.00	0.020569
+150.00	0.035388
+};
+\addlegendentry{$1\times 3-coupling$};
+
+% 1x5 - coupling
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
+table{
+10.00	0.178851
+20.00	0.316068
+30.00	0.527541
+40.00	0.712752
+50.00	0.881875
+60.00	0.991305
+70.00	0.901813
+80.00	0.663416
+90.00	0.450341
+100.00	0.237959
+110.00	0.080675
+120.00	0.017956
+130.00	0.009646
+140.00	0.020511
+150.00	0.035271
+};
+\addlegendentry{$1\times 5-coupling$};
+
+% 1x7-coupling
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
+table{
+10.00	0.177970
+20.00	0.315676
+30.00	0.526939
+40.00	0.713014
+50.00	0.881764
+60.00	0.991329
+70.00	0.901777
+80.00	0.663391
+90.00	0.450270
+100.00	0.237956
+110.00	0.080680
+120.00	0.017962
+130.00	0.009643
+140.00	0.020494
+150.00	0.035261
+};
+\addlegendentry{$1\times 7-coupling$};
+
+% 1x11 - coupling
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
+table{
+10.00	0.166960
+20.00	0.309023
+30.00	0.522992
+40.00	0.713964
+50.00	0.880971
+60.00	0.991469
+70.00	0.902021
+80.00	0.663470
+90.00	0.450298
+100.00	0.237975
+110.00	0.080681
+120.00	0.017959
+130.00	0.009643
+140.00	0.020485
+150.00	0.035181
+};
+\addlegendentry{$1\times 11-coupling$};
+
+% 1x21-coupling
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
+table{
+10.00	0.156567
+20.00	0.325266
+30.00	0.524569
+40.00	0.708636
+50.00	0.885487
+60.00	0.992329
+70.00	0.902427
+80.00	0.663710
+90.00	0.450488
+100.00	0.238201
+110.00	0.080856
+120.00	0.018004
+130.00	0.009552
+140.00	0.020423
+150.00	0.034656
+};
+\addlegendentry{$1\times 21-coupling$};
+
+% 1x101 - coupling
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=diamond*]
+table{
+10.00	0.178724
+20.00	0.317672
+30.00	0.526918
+40.00	0.711936
+50.00	0.881640
+60.00	0.991392
+70.00	0.901800
+80.00	0.663378
+90.00	0.450257
+100.00	0.237930
+110.00	0.080672
+120.00	0.017962
+130.00	0.009642
+140.00	0.020488
+150.00	0.035258
+};
+\addlegendentry{$1\times 101-coupling$};
+
+% 1x201-coupling
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=diamond*,mark options={fill=white}]
+table{
+10.00	0.172692
+20.00	0.313084
+30.00	0.526970
+40.00	0.712298
+50.00	0.881466
+60.00	0.991490
+70.00	0.901929
+80.00	0.663451
+90.00	0.450319
+100.00	0.237985
+110.00	0.080690
+120.00	0.017966
+130.00	0.009641
+140.00	0.020469
+150.00	0.035207
+};
+\addlegendentry{$1\times 201-coupling$};
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

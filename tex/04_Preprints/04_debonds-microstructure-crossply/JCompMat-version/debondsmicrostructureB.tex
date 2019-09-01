@@ -68,7 +68,7 @@ In the present work, we investigate debond development under in-plane longitudin
 
 \begin{figure}[!htb]
 \centering
-  \includegraphics[height=0.225\textheight]{thinPly.pdf}
+  \includegraphics[width=\columnwidth]{thinPly.pdf}
 \caption{Models of $\left[0_{m\cdot 1\cdot2L}^{\circ},90_{1\cdot2L}^{\circ},0_{m\cdot 1\cdot2L}^{\circ}\right]$ laminates with an ultra-thin $90^{\circ}$ layer, where the $90^{\circ}$ ply is made up by a single ``row'' of fibers. Debonds are repeating at different distances, measured in terms of the number $n-1$ of fully bonded fibers appearing between two consecutive debonds. $2L$ is the thickness of one-fiber row.}\label{fig:laminateModelsA}
 \end{figure}
 
@@ -82,7 +82,7 @@ The choice of a square-packing configuration with a controlled number of fibers 
 
 \begin{figure}[!htb]
 \centering
-        \includegraphics[height=0.425\textheight]{ThickPly.pdf}
+        \includegraphics[width=\columnwidth]{ThickPly.pdf}
    %    \caption{Mutiple rows of fibers with a debond appearing every $n$ fibers within the central row: model $n\times k-free$ ($n=3$ and $k=3$ in the figure).}\label{subfig:thickply}
 \caption{Models of $\left[0_{m\cdot k\cdot2L}^{\circ},90_{k\cdot2L}^{\circ},0_{m\cdot k\cdot2L}^{\circ}\right]$ laminates with a $90^{\circ}$ layer of variable thickness, determined by the number $k$ of ``rows'' of fibers along the vertical direction.  Debonds are repeating at different distances along the horizontal direction, measured in terms of the number $n-1$ of fully bonded fibers appearing between two consecutive debonds. $2L$ is the thickness of one-fiber row.}\label{fig:laminateModelsB}
 \end{figure}
@@ -121,7 +121,7 @@ The RUCs are discretized and solved with the Finite Element Method (FEM) using t
 
 \begin{figure}[!htb]
 \centering
-        \includegraphics[height=0.375\textheight]{RUC.pdf}
+        \includegraphics[width=\columnwidth]{RUC.pdf}
 \caption{Schematic of the model with its main parameters.}\label{fig:modelschem}
 \end{figure}
 
@@ -129,13 +129,13 @@ The FEM model is discretized using second order, 2D, plane strain triangular (CP
 
 \begin{table}[!h]
  \centering
- \caption{Summary of mechanical properties of fiber, matrix and UD layer.}%$E$ stands for Young's modulus, $\mu$ for shear modulus and $\nu$ for Poisson's ratio. Indexes $L$ and $T$ stand respectively for \emph{longitudinal} and \emph{transverse}.}
+ \caption{Summary of mechanical properties of fiber, matrix and UD layer (GF: glass fiber; EP: epoxy; UD: glass-fiber/epoxy uni-directional properties).}%$E$ stands for Young's modulus, $\mu$ for shear modulus and $\nu$ for Poisson's ratio. Indexes $L$ and $T$ stand respectively for \emph{longitudinal} and \emph{transverse}.}
  \begin{tabular}{ccccccc}
-\textbf{Material} & \textbf{$V_{f}\left[\%\right]$}\  & \textbf{$E_{L}\left[GPa\right]$}\ & \textbf{$E_{T}\left[GPa\right]$}\  & \textbf{$G_{LT}\left[GPa\right]$} &\textbf{$\nu_{LT}\left[-\right]$} & \textbf{$\nu_{TT}\left[-\right]$} \\
+\footnotesize & \footnotesize\textbf{$V_{f}\left[\%\right]$}\  &\footnotesize \textbf{$E_{L}\left[GPa\right]$}\ & \footnotesize\textbf{$E_{T}\left[GPa\right]$}\  & \footnotesize\textbf{$G_{LT}\left[GPa\right]$} &\footnotesize\textbf{$\nu_{LT}\left[-\right]$} &\footnotesize \textbf{$\nu_{TT}\left[-\right]$} \\
 \midrule
-Glass fiber &-   & 70.0 & 70.0  & 29.2 & 0.2  & 0.2\\
-Epoxy    &-& 3.5 & 3.5   & 1.25 &  0.4& 0.4\\
-UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
+\footnotesize GF &\footnotesize-   &\footnotesize 70.0 &\footnotesize 70.0  &\footnotesize 29.2 &\footnotesize 0.2  & \footnotesize0.2\\
+\footnotesize EP    &-&\footnotesize 3.5 &\footnotesize 3.5   &\footnotesize 1.25 &\footnotesize  0.4&\footnotesize 0.4\\
+\footnotesize UD&\footnotesize60.0&\footnotesize43.442&\footnotesize13.714&\footnotesize 4.315&\footnotesize 0.273&\footnotesize0.465\\
 \end{tabular}
 \label{tab:phaseprop}
 \end{table}
@@ -152,7 +152,7 @@ We first focus our attention on the model $1\times 1-m\cdot t_{90^{\circ}}$, whi
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[height=0.375\textheight]{1x1-i-vf60-GI.pdf}
+\includegraphics[width=\columnwidth]{1x1-i-vf60-GI.pdf}
 \caption{Effect of the proximity of the $0^{\circ}/90^{\circ}$ interface and of the thickness of the $0^{\circ}$ layer on Mode I ERR: models $1\times 1-free$, $1\times 1-H$, $1\times 1-coupling$, $1\times 1-coupling+H$ and $1\times 1-m\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{fig:thicknessGI}
 \end{figure}
 
@@ -160,7 +160,7 @@ In Figures~\ref{fig:thicknessGI} and~\ref{fig:thicknessGII} it is possible to ob
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[height=0.375\textheight]{1x1-i-vf60-GII.pdf}
+\includegraphics[width=\columnwidth]{1x1-i-vf60-GII.pdf}
 \caption{Effect of the proximity of the $0^{\circ}/90^{\circ}$ interface and of the thickness of the $0^{\circ}$ layer on Mode II ERR: models $1\times 1-free$, $1\times 1-H$, $1\times 1-coupling$, $1\times 1-coupling+H$ and $1\times 1-m\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{fig:thicknessGII}
 \end{figure}
 
@@ -179,7 +179,7 @@ As observed in a previous work~\cite{DiStasio2019}, the presence of fully bonded
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[height=0.375\textheight]{nx1-1-vf60-GI.pdf}
+\includegraphics[width=\columnwidth]{nx1-1-vf60-GI.pdf}
 \caption{Effect of the presence of the $0^{\circ}$ layer on Mode I ERR of non-interactive debonds: models $21\times 1-free$, $21\times 1-H$, $21\times 1-coupling$, $21\times 1-coupling+H$, $21\times 1-1\cdot t_{90^{\circ}}$ and $21\times 1-10\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{fig:debonddebondGI}
 \end{figure}
 
@@ -188,7 +188,7 @@ The effect of the $0^{\circ}$ layer thickness is instead non-existent: values of
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[height=0.375\textheight]{nx1-1-vf60-GII.pdf}
+\includegraphics[width=\columnwidth]{nx1-1-vf60-GII.pdf}
 \caption{Effect of the presence of the $0^{\circ}$ layer on Mode II ERR of non-interactive debonds: models $21\times 1-free$, $21\times 1-H$, $21\times 1-coupling$, $21\times 1-coupling+H$, $21\times 1-1\cdot t_{90^{\circ}}$ and $21\times 1-10\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{fig:debonddebondGII}
 \end{figure}
 
@@ -200,7 +200,7 @@ After having investigated the effect of the proximity of the $0^{\circ}/90^{\cir
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[height=0.375\textheight]{1xk-1-vf60-GI.pdf}
+\includegraphics[width=\columnwidth]{1xk-1-vf60-GI.pdf}
 \caption{Effect of the presence of undamaged fiber rows in the $90^{\circ}$ layer on debond-$0^{\circ}/90^{\circ}$ interface interaction for Mode I ERR: models $1\times k-1\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{fig:1kGI}
 \end{figure}
 
@@ -208,7 +208,7 @@ Observation of Fig.~\ref{fig:1kGI}, Fig.~\ref{fig:1kGII}, Fig.~\ref{fig:nkGI} an
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[height=0.375\textheight]{1xk-1-vf60-GII.pdf}
+\includegraphics[width=\columnwidth]{1xk-1-vf60-GII.pdf}
 \caption{Effect of the presence of undamaged fiber rows in the $90^{\circ}$ layer on debond-$0^{\circ}/90^{\circ}$ interface interaction for Mode II ERR: models $1\times k-1\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{fig:1kGII}
 \end{figure}
 
@@ -216,7 +216,7 @@ The results of Figures~\ref{fig:1kGI}, \ref{fig:1kGII}, \ref{fig:nkGI} and~\ref{
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[height=0.375\textheight]{nxk-1-vf60-GI.pdf}
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI.pdf}
 \caption{Effect of the presence of undamaged fiber rows in the $90^{\circ}$ layer on debond-$0^{\circ}/90^{\circ}$ interface interaction for Mode I ERR: models $n\times k-1\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{fig:nkGI}
 \end{figure}
 
@@ -224,7 +224,7 @@ Analogous results can be found in~\cite{Velasco2018, Paris2018}, where the autho
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[height=0.375\textheight]{nxk-1-vf60-GII.pdf}
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII.pdf}
 \caption{Effect of the presence of undamaged fiber rows in the $90^{\circ}$ layer on debond-$0^{\circ}/90^{\circ}$ interface interaction for Mode II ERR: models $n\times k-1\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{fig:nkGII}
 \end{figure}
 

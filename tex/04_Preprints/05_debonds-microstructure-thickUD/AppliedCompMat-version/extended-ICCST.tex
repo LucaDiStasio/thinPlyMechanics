@@ -140,19 +140,33 @@ In Equation~\ref{eq:LVf}, $V_{f}$ is the fiber volume fraction and $R_{f}$ the f
 \end{figure}
 
 We consider that upon application of a load in the $x$-direction, the strain response in the $y$-direction is small due to the very small minor Poisson's ratio of the UD composite. We also assume that debond size to be significantly larger in the fiber longitudinal direction than in the arc direction. We therefore use 2D models under the assumption of plane strain defined in the $x-z$ section of the composite, which allows us to focus our interest on debond growth along the arc direction. Assumptions of generalized plane strain would be more suited to represent the physics, however it would limit the scope of comparisons with previous studies in the literature. It is for this reason that plane strain conditions are preferred.\\
-All RVEs are symmetric with respect to the horizontal direction, thus only half of the RVE is explicitly modeled and symmetry conditions are applied to the lower boundary of the RVE (Fig.~\ref{fig:laminateModelsA} and Fig.~\ref{fig:laminateModelsB}). The number $n$ of fibers in the horizontal directions and $k$ in the vertical direction belonging to the RVE determine the damage state of the modeled UD composite. In particular, a $n\times k$ RVE represents a UD composite in which a debond appear after $n-1$ fully bonded fibers inside a fiber row, and a fiber row contains debonds after $k-1$ fiber rows with no damage. To model such configurations, conditions of coupling of the horizontal displacement $u_{x}$ are applied to the right and left boundary, which ensures that the computed solution represents a model in which the RVE is repeated infinite times in the horizontal direction. It is worth to highlight that the repetition of the RVE occurs in a mirror-like fashion: moving along the $x$-axis, if a debond appears on the right side of its fiber, the next one is placed on the left side. The number of fibers in the horizontal and vertical directions determine also the total size of the RVE, described by its total length $l$ and total height $h$:
+All RVEs are symmetric with respect to the horizontal direction, thus only half of the RVE is explicitly modeled and symmetry conditions are applied to the lower boundary of the RVE (Fig.~\ref{fig:laminateModelsA} and Fig.~\ref{fig:laminateModelsB}). The number $n$ of fibers in the horizontal directions and $k$ in the vertical direction belonging to the RVEdetermine the total size of the RVE, described by its total length $l$ and total height $h$:
 
 \begin{equation}\label{eq:lengthheight}
 l=n2L\qquad h=k2L;
 \end{equation}
 
-where $2L$ is the side length of the square unit cell previously introduced and $L$ is defined according to Eq.~\ref{eq:LVf}.\\
+where $2L$ is the side length of the square unit cell previously introduced and $L$ is defined according to Eq.~\ref{eq:LVf}. The number of fibers in the horizontal and vertical directions determine as well the damage state of the modeled UD composite. In particular, a $n\times k$ RVE represents a UD composite in which a debond appear after $n-1$ fully bonded fibers inside a fiber row, and a fiber row contains debonds after $k-1$ fiber rows with no damage (see Fig.~\ref{fig:laminateModelsA} and Fig.~\ref{fig:laminateModelsB}). To model such configurations, conditions of coupling of the horizontal displacement $u_{x}$ are applied to the right and left boundary, which ensures that the computed solution represents a model in which the RVE is repeated infinite times in the horizontal direction. It is worth to highlight that the repetition of the RVE occurs in a mirror-like fashion: moving along the $x$-axis, if a debond appears on the right side of its fiber, the next one is placed on the left side.\\
 This might lead to extreme conditions in the model. Consider for example the case of $1\times k$ RVEs: inside a fiber row containing damage, an infinite number of debonds is present and debonds are facing each other pair-by-pair. Such configuration is physically unlikely, however the evaluation of the ERR in this case provides a bound for the case of maximum debond mutual interaction in the vertical direction. Thus, the models proposed here might represent extreme configuration, but they provide theoretical bounds for debond behavior in an actual composite. In particular, observations regarding mechanisms favoring debond growth will represent an upper bound on ERR and thus a conservative estimation of the actual behavior, still of use for the structural designer. Greater care should instead be taken when considering mechanisms preventing debond growth: the ERR estimate provided by our models would be a lower bound, thus debond growth might be higher than predicted in the actual composite.\\
 Repetition occurs also along the vertical direction. Here two cases can be distinguished: first, debonds aligned in the vertical direction are placed on the same side of their respective fibers as in Figure~\ref{fig:laminateModelsA}; second; debonds aligned in the vertical direction are placed on alternating opposite sides of their respective fibers in Figure~\ref{fig:laminateModelsB}. The first is case of symmetric repetition with respect to the upper boundary of the RVE; the second case is one of anti-symmetric repetition with respect to the upper boundary of the RVE. The two different families of RVEs (symmetric with respect to anti-symmetric repetition) are thus respectively called $n\times k-symm$ and $n\times k-asymm$. The details of the boundary conditions adopted in the two different cases are described in Sec.~\ref{subsec:bc}.
 
 \subsection{Equivalent boundary conditions and their validation}\label{subsec:bc}
 
-Two main families of Representative Volume Elements have been introduced in the previous section.
+Two main families of Representative Volume Elements have been introduced in the previous section, distinguished by their pattern of repetition along the vertial direction: $n\times k-symm$ and $n\times k-asymm$.\\
+To model the symmetric repetition of $n\times k-symm$ we adopt, on the upper boundary, conditions of coupling of the vertical displacements $u_{z}$ of the type
+
+\begin{equation}\label{eq:symmcoupling}
+u_{z}\left(x,h\right) = u^{\nu}_{z},
+\end{equation}
+
+where $h$ is the total height of the RVE defined in Eq.~\ref{eq:lengthheight} and $u^{\nu}_{z}$ is the constant value of the vertical displacement, equal for all the points on the upper boundary, which is \emph{a priori} unknown and is evaluated as part of the elastic solution.\\
+
+\begin{equation}\label{eq:asymmcoupling}
+\begin{aligned}
+u_{z}\left(x,h\right) - u_{z}\left(0,h\right) &= -\left(u_{z}\left(-x,h\right) - u_{z}\left(0,h\right)\right)\\
+u_{x}\left(x,h\right) &= -u_{x}\left(-x,h\right)
+\end{aligned}
+\end{equation}
 
 \subsection{Finite Element (FE) discretization}
 

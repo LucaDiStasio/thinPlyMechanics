@@ -48,7 +48,7 @@
 %
 \begin{document}
 
-\title{Formation of transverse cracks from the growth of multiple adjacent debonds on consecutive fibers in UD composites under transverse loading: Effect of the mutual position of debonds on Energy Release Rate
+\title{Formation of transverse cracks from the growth of multiple adjacent debonds on consecutive fibers in UD composites under transverse tension: Effect of the mutual position of debonds on Energy Release Rate
 }
 %\subtitle{}
 
@@ -110,12 +110,6 @@ An analysis of the configuration preceding kinking and linking thus seems to lac
 \subsection{Introduction \& Nomenclature}\label{subsec:names}
 
 We focus in this article on debond growth in unidirectional (UD) composites subjected to in-plane transverse tensile loading. In particular, the interaction between debonds is studied through the development of models of Representative Volume Elements (RVE) of laminates with different configurations of debonds (see Fig.~\ref{fig:laminateModelsA} and Fig.~\ref{fig:laminateModelsB}).\\
-In order to facilitate the description of the models, let us assume that the UD composite mid-plane lies in the $x-y$ plane, where $y$ coincides with the UD $0^{\circ}$ direction while the $x-axis$ represents the UD in-plane transverse direction. Axis $z$ is the through-the-thickness direction of the composite.\\
-The composite RVE is defined in the $x-z$ plane and is repeating both along $x$ and $z$. Mathematically, it corresponds to an infinite composite which models, in a limiting case, the behavior of a thick UD composite (free surfaces very far from the debonds). According to the proposed RUC design, the composite with debonds is considered as a sequence of stacked damaged and undamaged fiber rows, with each row having only one fiber in the thickness direction. Given that all the RUCs are characterized by a regular microstructure with fibers organized in a square-packing arrangement, they are as well Representative Volume Elements (RVE) of composites with a specific spatial distribution of debonds.  Two considerations lie at the basis of the chosen RVE models. First, upon application of a load in the $x$-direction, the strain response in the $y$-direction is small due to the very small minor Poisson's ratio of the UD composite. Second, debonds are considered to be significantly longer in the fiber longitudinal direction than in the arc direction. We therefore use 2D models under the assumption of plane strain and defined in the $x-z$ section of the composite.  The analysis presented applies to long debonds and focuses on understanding the mechanisms of growth along the arc direction. Transverse tensile strain is applied to the composites in the form of a constant displacement in the $x$-direction along the vertical boundary of the RUC as shown in  Figures~\ref{fig:laminateModelsA} to~\ref{fig:modelschem}. As models are distinguished by the number of rows of fibers and by the spacing between debonds along the vertical and horizontal directions, the corresponding RUCs can be categorized based on the number $n$ of fibers in the horizontal direction and $k$ in the vertical direction. Vertical displacement coupling is always applied along the free surfaces. Thus. we introduce the common notation $n\times k-coupling$ to denote a RUC with $n\times k$ fibers and kinematic coupling applied to it. In Section~\ref{subsec:rve}, a detailed account of the selected combinations of $n$, $k$, and boundary conditions is provided as well as a description of the corresponding models of damaged composite.
-
-\subsection{Models of Representative Volume Element (RVE) and equivalent boundary conditions}\label{subsec:rve}
-
-The model shown in Fig.~\ref{fig:laminateModelsA} represents an infinite UD laminate in which debonds appear regularly every $n^{th}$ undamaged fiber in horizontal fiber rows and fiber rows containing damaged fibers appear every $k^{th}$ row of only undamaged fibers. The model is used to study the interaction between debonds appearing at regular but potentially different intervals along the horizontal and vertical direction, measured in terms of fully bonded (undamaged) fibers present between them. By changing the value of parameters $n$ and $k$ (number of fibers respectively in the horizontal and vertical direction) different distribution of debonds can be investigated: from isolated debonds far apart from each other (early stages of damage) to a UD with all the fibers partially debonded (an unphysical limit case). The model of Fig.~\ref{fig:laminateModelsA} is referred to as $n\times k-coupling$.
 
 \begin{figure}[!h]
 \centering
@@ -123,13 +117,42 @@ The model shown in Fig.~\ref{fig:laminateModelsA} represents an infinite UD lami
 \caption{Representative Volume Element $n\times k-symm$ of a UD composite with debonds appearing after $n-1$ and after $k-1$ undamaged fibers respectively in the horizontal and vertical direction. In the vertical direction, on fibers belonging to the same ``column'', debonds are located always on the same side.}\label{fig:laminateModelsA}
 \end{figure}
 
-Models in Figures~\ref{fig:laminateModelsB} and~\ref{fig:laminateModelsC} represent instead a UD composite with respectively vertical lines and horizontal rows of partially debonded fibers repeating at the regular intervals respectively in the horizontal and vertical direction, measured respectively in terms of vertical lines and horizontal rows of fully bonded (undamaged) fibers. According to the nomenclature introduced in Section~\ref{subsec:names}, these two models are identified respectively by $n\times 1-coupling$ and $1\times k-coupling$.
+In order to facilitate the description of the models, let us assume that the UD composite mid-plane lies in the $x-y$ plane, where $y$ coincides with the UD $0^{\circ}$ direction while the $x-axis$ represents the UD in-plane transverse direction. Axis $z$ is the through-the-thickness direction of the composite.\\
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{asymm.pdf}
 \caption{Representative Volume Element $n\times k-asymm$  of a UD composite with debonds appearing after $n-1$ and after $k-1$ undamaged fibers respectively in the horizontal and vertical direction. In the vertical direction, on fibers belonging to the same ``column'', debonds are located on the opposite sides of consecutive fibers.}\label{fig:laminateModelsB}
 \end{figure}
+
+The composite RVE is defined in the $x-z$ plane and is repeating both along $x$ and $z$. Mathematically, it corresponds to an infinite UD composite which models, practically, the behavior of debonds located far away from the laminate free surfaces. i.e. close to the laminate mid-plane, in a relatively thick UD composite (thickness $>100$ fiber diameters). The composite with debonds is modeled as a sequence of fiber rows with or without debonds stacked on each other in the vertical (through-the-thickness) direction. Notice that each row contains only one fiber in the vertical direction. A regular microstructure is adopted for all RVEs, with fibers organized in a square-packing configuration. This choice is motivated by our interest in investigating the mechanisms that favors or prevent debond growth, and not in simulating crack path evolution in an arbitrary, randomized distribution of fibers. The regularity of the square-packing arrangement allows the identification of the different mechanisms influencing debond growth. Given their square-packing arrangement of fibers, each RVE is built by using the unit cell in Figure~\ref{fig:modelschem} as the basic building block. The unit cell contains one fiber place in its center and has a size of $2L\times2L$, where
+
+\begin{equation}\label{eq:LVf}
+L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}.
+\end{equation}
+
+In Equation~\ref{eq:LVf}, $V_{f}$ is the fiber volume fraction and $R_{f}$ the fiber radius. The fiber volume fraction is assumed equal to $60\%$ in each RVE and the fiber radius equal to $1\mu m$. The choice of the previous value is not dictated by physical considerations but by simplicity. It is thus useful to remark here that, in a linear elastic solution as the one considered in the present work, the ERR is proportional to the geometrical dimensions of the model and, consequently, recalculation of the ERR for fibers of any size requires a simple multiplication. Notice also that, given the relationship in Eq.~\ref{eq:LVf} and that the unit cell is identically repeated following a square-packing configuration, $V_{f}$ is homogeneous, i.e. no clustering of fibers is considered.\\
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{RUC.pdf}
+\caption{Schematic of the model with its main parameters.}\label{fig:modelschem}
+\end{figure}
+
+We consider that upon application of a load in the $x$-direction, the strain response in the $y$-direction is small due to the very small minor Poisson's ratio of the UD composite. We also assume that debond size to be significantly larger in the fiber longitudinal direction than in the arc direction. We therefore use 2D models under the assumption of plane strain defined in the $x-z$ section of the composite, which allows us to focus our interest on debond growth along the arc direction. Assumptions of generalized plane strain would be more suited to represent the physics, however it would limit the scope of comparisons with previous studies in the literature. It is for this reason that plane strain conditions are preferred.\\
+All RVEs are symmetric with respect to the horizontal direction, thus only half of the RVE is explicitly modeled and symmetry conditions are applied to the lower boundary of the RVE (Fig.~\ref{fig:laminateModelsA} and Fig.~\ref{fig:laminateModelsB}). The number $n$ of fibers in the horizontal directions and $k$ in the vertical direction belonging to the RVE determine the damage state of the modeled UD composite. In particular, a $n\times k$ RVE represents a UD composite in which a debond appear after $n-1$ fully bonded fibers inside a fiber row, and a fiber row contains debonds after $k-1$ fiber rows with no damage. To model such configurations, conditions of coupling of the horizontal displacement $u_{x}$ are applied to the right and left boundary, which ensures that the computed solution represents a model in which the RVE is repeated infinite times in the horizontal direction. It is worth to highlight that the repetition of the RVE occurs in a mirror-like fashion: moving along the $x$-axis, if a debond appears on the right side of its fiber, the next one is placed on the left side.\\
+This might lead to extreme conditions in the model. Consider for example the case of $1\times k$ RVEs: inside a fiber row containing damage, an infinite number of debonds is present and debonds are facing each other pair-by-pair. Such configuration is physically unlikely, however the evaluation of the ERR in this case provides a bound for the case of maximum debond mutual interaction in the vertical direction. Thus, the models proposed here might represent extreme configuration, but they provide theoretical bounds for debond behavior in an actual composite. In particular, observations regarding mechanisms favoring debond growth will represent an upper bound on ERR and thus a conservative estimation of the actual behavior, still of use for the structural designer. Greater care should instead be taken when considering mechanisms preventing debond growth: the ERR estimate provided by our models would be a lower bound, thus debond growth might be higher than predicted in the actual composite.\\
+Repetition occurs also along the vertical direction. Here two cases can be distinguished: first, debonds aligned in the vertical direction are placed on the same side of their respective fibers as in Figure~\ref{fig:laminateModelsA}; second; debonds aligned in the vertical direction are placed on alternating opposite sides of their respective fibers in Figure~\ref{fig:laminateModelsB}. The first is case of symmetric repetition with respect to the upper boundary of the RVE; the second case is one of anti-symmetric repetition with respect to the upper boundary of the RVE. The two different families of RVEs (symmetric with respect to anti-symmetric repetition) are thus respectively called $n\times k-symm$ and $n\times k-asymm$.
+
+\subsection{Models of Representative Volume Element (RVE) and equivalent boundary conditions}\label{subsec:rve}
+
+The model shown in Fig.~\ref{fig:laminateModelsA} represents an infinite UD laminate in which debonds appear regularly every $n^{th}$ undamaged fiber in horizontal fiber rows and fiber rows containing damaged fibers appear every $k^{th}$ row of only undamaged fibers. The model is used to study the interaction between debonds appearing at regular but potentially different intervals along the horizontal and vertical direction, measured in terms of fully bonded (undamaged) fibers present between them. By changing the value of parameters $n$ and $k$ (number of fibers respectively in the horizontal and vertical direction) different distribution of debonds can be investigated: from isolated debonds far apart from each other (early stages of damage) to a UD with all the fibers partially debonded (an unphysical limit case). The model of Fig.~\ref{fig:laminateModelsA} is referred to as $n\times k-coupling$.
+
+
+
+Models in Figures~\ref{fig:laminateModelsB} and~\ref{fig:laminateModelsC} represent instead a UD composite with respectively vertical lines and horizontal rows of partially debonded fibers repeating at the regular intervals respectively in the horizontal and vertical direction, measured respectively in terms of vertical lines and horizontal rows of fully bonded (undamaged) fibers. According to the nomenclature introduced in Section~\ref{subsec:names}, these two models are identified respectively by $n\times 1-coupling$ and $1\times k-coupling$.
+
+
 
 Model $n\times 1-coupling$ in Figure~\ref{fig:laminateModelsB} is studied to investigate the interaction of debonds in a configuration that represents, although in an idealized form, the stage preceding coalescence of debonds and formation of macroscopic transverse cracks. 
 On the other hand, model $n\times 1-coupling$ in Figure~\ref{fig:laminateModelsC} addresses a configuration of debonds that has not been observed in in-situ analyses of UD composites in transverse tension and can thus be deemed unphysical, but has nonetheless the potential to shed light on debonds' interaction mechanisms that makes this configuration unobservable.
@@ -142,19 +165,9 @@ Discretization and analysis of RUCs is performed with the Finite Element Method 
 l=2nL\qquad h=kL;
 \end{equation}
 
-where $2L$ is the length of a one-fiber unit, see Fig.~\ref{fig:modelschem}, and $L$ is defined as a function of the fiber volume fraction $V_{f}$ and the fiber radius $R_{f}$ according to
+where $2L$ is the length of a one-fiber unit, see Fig.~\ref{fig:modelschem}, and $L$ is defined as a function of th
 
-\begin{equation}\label{eq:LVf}
-L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}.
-\end{equation}
 
-$R_{f}$ is assumed to be the same for every fiber and equal to $1\ \mu m$. The choice of the previous value is not dictated by physical considerations but for simplicity. It is thus useful to remark here that, in a linear elastic solution as the one considered in the present work, the ERR is proportional to the geometrical dimensions of the model and, consequently, recalculation of the ERR for fibers of any size requires a simple multiplication. Notice also that relationships in Eqs.~\ref{eq:lengthheight} and~\ref{eq:LVf} imply that the local and global $V_{f}$ are everywhere equal.
-
-\begin{figure}[!h]
-\centering
-\includegraphics[width=\textwidth]{RUC.pdf}
-\caption{Schematic of the model with its main parameters.}\label{fig:modelschem}
-\end{figure}
 
 The debond is placed symmetrically with respect to the $x$ axis (see Fig.~\ref{fig:modelschem}) and it is characterized by an angular size of $\Delta\theta$ (making the full debond size equal to $2\Delta\theta$). For large debond sizes (at least $\geq 60^{\circ}-80^{\circ}$), a region $\Delta\Phi$ of variable size appears at the crack tip where the crack faces are in contact with each other but free to slide relatively to each other. In order to model crack faces motion in the contact zone, frictionless contact is considered between the two crack faces to allow free sliding and avoid interpenetration. Symmetry with respect to the $x$ axis is applied on the lower boundary and coupling of vertical displacement on the upper boundary. Kinematic coupling on the $x$-displacement is applied along the left and right sides of the RUC in the form of a constant $x$-displacement $\pm\bar{\varepsilon}_{x} l$, corresponding to transverse strain $\bar{\varepsilon}_{x}$ equal to $1\%$.
 

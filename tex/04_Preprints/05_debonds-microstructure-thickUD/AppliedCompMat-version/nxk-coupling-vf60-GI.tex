@@ -60,29 +60,29 @@ ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
 legend entries={},
 ]
 
-% 1x1 - coupling
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
-table{
-10.00	1.94924367
-20.00	1.86981658
-30.00	1.55057941
-40.00	1.09897290
-50.00	0.57601740
-60.00	0.22638102
-70.00	0.08043570
-80.00	0.01962154
-90.00	0.00007766
-100.00	0.00000222
-110.00	0.00000172
-120.00	0.00000081
-130.00	0.00000019
-140.00	0.00000002
-150.00	0.00059528
-};
-\addlegendentry{$1\times 1-coupling$};
+%% 1x1 - coupling
+%\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+%table{
+%10.00	1.94924367
+%20.00	1.86981658
+%30.00	1.55057941
+%40.00	1.09897290
+%50.00	0.57601740
+%60.00	0.22638102
+%70.00	0.08043570
+%80.00	0.01962154
+%90.00	0.00007766
+%100.00	0.00000222
+%110.00	0.00000172
+%120.00	0.00000081
+%130.00	0.00000019
+%140.00	0.00000002
+%150.00	0.00059528
+%};
+%\addlegendentry{$1\times 1-coupling$};
 
 % 3x3 - coupling
-\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
+\addplot[line width=\linewidth,black,smooth]
 table{
 10.00	3.309634
 20.00	3.041771
@@ -100,10 +100,31 @@ table{
 140.00	0.000001
 150.00	0.001058
 };
-\addlegendentry{$3\times 3-coupling$};
+\addlegendentry{$3\times 3-symm$};
+
+% 3x3 - asymm
+\addplot[mark size=\markersize,black,only marks,mark=square*,mark options={fill=white}]
+table{
+10.00	3.317120
+20.00	3.054053
+30.00	2.236587
+40.00	1.416338
+50.00	0.752342
+60.00	0.243831
+70.00	0.002998
+80.00	0.000033
+90.00	0.000036
+100.00	0.000034
+110.00	0.000019
+120.00	0.000009
+130.00	0.000003
+140.00	0.000001
+150.00	0.001113
+};
+\addlegendentry{$3\times 3-asymm$};
 
 % 7x3 - coupling
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
+\addplot[line width=\linewidth,red,dashed,dash pattern=on 10pt off 5pt]
 table{
 10.00	3.479770
 20.00	3.462973
@@ -121,31 +142,52 @@ table{
 140.00	0.000001
 150.00	0.000484
 };
-\addlegendentry{$7\times 3-coupling$};
+\addlegendentry{$7\times 3-symm$};
 
-% 7x7 - coupling
-\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
+% 7x3 - asymm
+\addplot[mark size=\markersize,red,only marks,mark=*,mark options={fill=white}]
 table{
-10.00	3.492485
-20.00	3.484145
-30.00	2.734127
-40.00	1.796497
-50.00	0.948124
-60.00	0.283091
-70.00	0.000671
-80.00	0.000059
-90.00	0.000065
-100.00	0.000062
-110.00	0.000034
+10.00	3.483439
+20.00	3.469345
+30.00	2.725793
+40.00	1.806275
+50.00	0.980817
+60.00	0.327407
+70.00	0.006412
+80.00	0.000044
+90.00	0.000053
+100.00	0.000054
+110.00	0.000032
 120.00	0.000016
 130.00	0.000006
 140.00	0.000001
-150.00	0.001516
+150.00	0.000512
 };
-\addlegendentry{$7\times 7-coupling$};
+\addlegendentry{$7\times 3-asymm$};
+
+%% 7x7 - coupling
+%\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
+%table{
+%10.00	3.492485
+%20.00	3.484145
+%30.00	2.734127
+%40.00	1.796497
+%50.00	0.948124
+%60.00	0.283091
+%70.00	0.000671
+%80.00	0.000059
+%90.00	0.000065
+%100.00	0.000062
+%110.00	0.000034
+%120.00	0.000016
+%130.00	0.000006
+%140.00	0.000001
+%150.00	0.001516
+%};
+%\addlegendentry{$7\times 7-coupling$};
 
 % 21x3 - coupling
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
+\addplot[line width=\linewidth,blue,smooth,dotted]
 table{
 10.00	3.523756
 20.00	3.587038
@@ -163,31 +205,52 @@ table{
 140.00	0.000002
 150.00	0.000511
 };
-\addlegendentry{$21\times 3-coupling$};
+\addlegendentry{$21\times 3-symm$};
 
-% 21x21 - coupling
-\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
+% 21x3 - asymm
+\addplot[mark size=\markersize,blue,only marks,mark=triangle*,mark options={fill=white}]
 table{
-10.00	3.530167
-20.00	3.578468
-30.00	2.851689
-40.00	1.894717
-50.00	1.003343
-60.00	0.293348
-70.00	0.000395
-80.00	0.000069
-90.00	0.000076
-100.00	0.000073
+10.00	3.528412
+20.00	3.595995
+30.00	2.904613
+40.00	1.981567
+50.00	1.110189
+60.00	0.387068
+70.00	0.011085
+80.00	0.000050
+90.00	0.000063
+100.00	0.000064
 110.00	0.000039
-120.00	0.000019
-130.00	0.000006
-140.00	0.000001
-150.00	0.001975
+120.00	0.000020
+130.00	0.000008
+140.00	0.000002
+150.00	0.000545
 };
-\addlegendentry{$21\times 21-coupling$};
+\addlegendentry{$21\times 3-asymm$};
+
+%% 21x21 - coupling
+%\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
+%table{
+%10.00	3.530167
+%20.00	3.578468
+%30.00	2.851689
+%40.00	1.894717
+%50.00	1.003343
+%60.00	0.293348
+%70.00	0.000395
+%80.00	0.000069
+%90.00	0.000076
+%100.00	0.000073
+%110.00	0.000039
+%120.00	0.000019
+%130.00	0.000006
+%140.00	0.000001
+%150.00	0.001975
+%};
+%\addlegendentry{$21\times 21-coupling$};
 
 % 101x3 - coupling
-\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=square*]
+\addplot[line width=\linewidth,green,smooth,dashed,dash pattern=on 20pt off 15pt]
 table{
 10.00	3.544015
 20.00	3.637489
@@ -205,28 +268,49 @@ table{
 140.00	0.000002
 150.00	0.000529
 };
-\addlegendentry{$101\times 3-coupling$};
+\addlegendentry{$101\times 3-symm$};
 
-% 101x101 - coupling
-\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=square*,mark options={fill=white}]
+% 101x3 - asymm
+\addplot[mark size=\markersize,green,only marks,mark=diamond*,mark options={fill=white}]
 table{
-10.00	3.535031
-20.00	3.589410
-30.00	2.867213
-40.00	1.907160
-50.00	1.010565
-60.00	0.294689
-70.00	0.000361
-80.00	0.000070
-90.00	0.000077
-100.00	0.000074
-110.00	0.000040
-120.00	0.000019
-130.00	0.000007
-140.00	0.000001
-150.00	0.002048
+10.00	3.548441
+20.00	3.646395
+30.00	2.977038
+40.00	2.055957
+50.00	1.167272
+60.00	0.414317
+70.00	0.013437
+80.00	0.000052
+90.00	0.000067
+100.00	0.000069
+110.00	0.000042
+120.00	0.000022
+130.00	0.000009
+140.00	0.000002
+150.00	0.000564
 };
-\addlegendentry{$101\times 101-coupling$};
+\addlegendentry{$101\times 3-asymm$};
+
+%% 101x101 - coupling
+%\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=square*,mark options={fill=white}]
+%table{
+%10.00	3.535031
+%20.00	3.589410
+%30.00	2.867213
+%40.00	1.907160
+%50.00	1.010565
+%60.00	0.294689
+%70.00	0.000361
+%80.00	0.000070
+%90.00	0.000077
+%100.00	0.000074
+%110.00	0.000040
+%120.00	0.000019
+%130.00	0.000007
+%140.00	0.000001
+%150.00	0.002048
+%};
+%\addlegendentry{$101\times 101-coupling$};
 
 \end{axis}
 %Tikz axis ends%

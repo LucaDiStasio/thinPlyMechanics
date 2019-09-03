@@ -174,7 +174,7 @@ u_{z}\left(x,h\right) = \bar{u}_{z},
 \end{equation}
 
 where $h$ is the total height of the RVE defined in Eq.~\ref{eq:lengthheight} and $\bar{u}_{z}$ is the constant value of the vertical displacement, equal for all the points on the upper boundary. The value of $\bar{u}_{z}$ is \emph{a priori} unknown and is evaluated as part of the elastic solution.\\
-The asymmetric repetition of $n\times k-asymm$ RVE ( Fig.~\ref{fig:laminateModelsB}) is modeled with the following set of conditions applied to the vertical $u_{z}$ and horizontal displacements $u_{x}$:
+The asymmetric repetition of $n\times k-asymm$ RVE (Fig.~\ref{fig:laminateModelsB}) is modeled with the following set of conditions applied to the vertical $u_{z}$ and horizontal displacements $u_{x}$:
 
 \begin{equation}\label{eq:asymmcoupling}
 \begin{aligned}
@@ -183,7 +183,21 @@ u_{x}\left(x,h\right) &= -u_{x}\left(-x,h\right),
 \end{aligned}
 \end{equation}
 
-where $h$ is again the total height of the RVE and $u_{z}\left(0,h\right)$ is the vertical displacement of the upper boundary mid-point, which is always located at coordinates $(0,h)$. Similarly to $\bar{u}_{z}$ in the symmetric case, $u_{z}\left(0,h\right)$ is \emph{a priori} unknown and is computed as part of the elastic solution. To the authors' knowledge, this is the first time the set of boundary conditions in Eq.~\ref{eq:asymmcoupling} is proposed and used to model an asymmetric coupling as the one reported in Figure~\ref{fig:laminateModelsB}. To validate them, Mode I (Fig.~\ref{}) and Mode II ERR (Fig.~\ref{}) are evaluated for $3\times 1-asymm$ RVE and compared with the results 
+where $h$ is again the total height of the RVE and $u_{z}\left(0,h\right)$ is the vertical displacement of the upper boundary mid-point, which is always located at coordinates $(0,h)$. Similarly to $\bar{u}_{z}$ in the symmetric case, $u_{z}\left(0,h\right)$ is \emph{a priori} unknown and is computed as part of the elastic solution.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{asymm-vs-explmodel-vf60-GI.pdf}
+\caption{Validation of asymmetric coupling conditions of Eq.~\ref{eq:asymmcoupling}: Mode I ERR, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{fig:validationGI}
+\end{figure}
+
+To the authors' knowledge, this is the first time the set of boundary conditions in Eq.~\ref{eq:asymmcoupling} is proposed and used to model an asymmetric coupling as the one reported in Figure~\ref{fig:laminateModelsB}. To validate them, Mode I (Fig.~\ref{fig:validationGI}) and Mode II ERR (Fig.~\ref{fig:validationGII}) are evaluated for $3\times 1-asymm$ RVE and compared with the results 
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{asymm-vs-explmodel-vf60-GII.pdf}
+\caption{Validation of asymmetric coupling conditions of Eq.~\ref{eq:asymmcoupling}: Mode II ERR, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{fig:validationGII}
+\end{figure}
 
 \subsection{Finite Element (FE) discretization}
 

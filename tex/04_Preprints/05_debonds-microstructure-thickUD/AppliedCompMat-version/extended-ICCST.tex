@@ -107,9 +107,9 @@ An analysis of the configuration preceding kinking and linking thus seems to lac
 
 \section{RVE models \& FE discretization}\label{sec:rveFem}
 
-\subsection{Introduction \& Nomenclature}\label{subsec:names}
+\subsection{Introduction, properties and nomenclature}\label{subsec:names}
 
-We focus in this article on debond growth in unidirectional (UD) composites subjected to in-plane transverse tensile loading. In particular, the interaction between debonds is studied through the development of models of Representative Volume Elements (RVE) of laminates with different configurations of debonds (see Fig.~\ref{fig:laminateModelsA} and Fig.~\ref{fig:laminateModelsB}).\\
+We focus in this article on debond growth in unidirectional (UD) composites subjected to in-plane transverse tensile loading. In particular, the interaction between debonds is studied through the development of models of Representative Volume Elements (RVE) of laminates with different configurations of debonds (see Fig.~\ref{fig:laminateModelsA} and Fig.~\ref{fig:laminateModelsB}).
 
 \begin{figure}[!h]
 \centering
@@ -117,7 +117,7 @@ We focus in this article on debond growth in unidirectional (UD) composites subj
 \caption{Representative Volume Element $n\times k-symm$ of a UD composite with debonds appearing after $n-1$ and after $k-1$ undamaged fibers respectively in the horizontal and vertical direction. In the vertical direction, on fibers belonging to the same ``column'', debonds are located always on the same side.}\label{fig:laminateModelsA}
 \end{figure}
 
-In order to facilitate the description of the models, let us assume that the UD composite mid-plane lies in the $x-y$ plane, where $y$ coincides with the UD $0^{\circ}$ direction while the $x-axis$ represents the UD in-plane transverse direction. Axis $z$ is the through-the-thickness direction of the composite.\\
+In order to facilitate the description of the models, let us assume that the UD composite mid-plane lies in the $x-y$ plane, where $y$ coincides with the UD $0^{\circ}$ direction while the $x-axis$ represents the UD in-plane transverse direction. Axis $z$ is the through-the-thickness direction of the composite.
 
 \begin{figure}[!h]
 \centering
@@ -131,13 +131,27 @@ The composite RVE is defined in the $x-z$ plane and is repeating both along $x$ 
 L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}.
 \end{equation}
 
-In Equation~\ref{eq:LVf}, $V_{f}$ is the fiber volume fraction and $R_{f}$ the fiber radius. The fiber volume fraction is assumed equal to $60\%$ in each RVE and the fiber radius equal to $1\mu m$. The choice of the previous value is not dictated by physical considerations but by simplicity. It is thus useful to remark here that, in a linear elastic solution as the one considered in the present work, the ERR is proportional to the geometrical dimensions of the model and, consequently, recalculation of the ERR for fibers of any size requires a simple multiplication. Notice also that, given the relationship in Eq.~\ref{eq:LVf} and that the unit cell is identically repeated following a square-packing configuration, $V_{f}$ is homogeneous, i.e. no clustering of fibers is considered.\\
+In Equation~\ref{eq:LVf}, $V_{f}$ is the fiber volume fraction and $R_{f}$ the fiber radius. The fiber volume fraction is assumed equal to $60\%$ in each RVE and the fiber radius equal to $1\mu m$. The choice of the previous value is not dictated by physical considerations but by simplicity. It is thus useful to remark here that, in a linear elastic solution as the one considered in the present work, the ERR is proportional to the geometrical dimensions of the model and, consequently, recalculation of the ERR for fibers of any size requires a simple multiplication. Notice also that, given the relationship in Eq.~\ref{eq:LVf} and that the unit cell is identically repeated following a square-packing configuration, $V_{f}$ is homogeneous, i.e. no clustering of fibers is considered.
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{RUC.pdf}
 \caption{Schematic of the model with its main parameters.}\label{fig:modelschem}
 \end{figure}
+
+A glass fiber-epoxy UD composite is treated in the present work, and it is assumed that the response of each phase lies always in the linear elastic domain. The material properties of glass fiber and epoxy are reported in Table~\ref{tab:phaseprop}.
+
+\begin{table}[!htbp]
+ \centering
+ \caption{Summary of the mechanical properties of fiber and matrix. $E$ stands for Young's modulus, $\mu$ for shear modulus and $\nu$ for Poisson's ratio.}
+ \begin{tabular}{cccc}
+\textbf{Material} & \textbf{$E\left[GPa\right]$}\ & \textbf{$\mu\left[GPa\right]$} & \textbf{$\nu\left[-\right]$} \\
+\midrule
+Glass fiber    & 70.0  & 29.2   & 0.2  \\
+Epoxy    & 3.5    & 1.25   & 0.4
+\end{tabular}
+\label{tab:phaseprop}
+\end{table}
 
 We consider that upon application of a load in the $x$-direction, the strain response in the $y$-direction is small due to the very small minor Poisson's ratio of the UD composite. We also assume that debond size to be significantly larger in the fiber longitudinal direction than in the arc direction. We therefore use 2D models under the assumption of plane strain defined in the $x-z$ section of the composite, which allows us to focus our interest on debond growth along the arc direction. Assumptions of generalized plane strain would be more suited to represent the physics, however it would limit the scope of comparisons with previous studies in the literature. It is for this reason that plane strain conditions are preferred.\\
 All RVEs are symmetric with respect to the horizontal direction, thus only half of the RVE is explicitly modeled and symmetry conditions are applied to the lower boundary of the RVE (Fig.~\ref{fig:laminateModelsA} and Fig.~\ref{fig:laminateModelsB}). The number $n$ of fibers in the horizontal directions and $k$ in the vertical direction belonging to the RVEdetermine the total size of the RVE, described by its total length $l$ and total height $h$:
@@ -153,20 +167,23 @@ Repetition occurs also along the vertical direction. Here two cases can be disti
 \subsection{Equivalent boundary conditions and their validation}\label{subsec:bc}
 
 Two main families of Representative Volume Elements have been introduced in the previous section, distinguished by their pattern of repetition along the vertial direction: $n\times k-symm$ and $n\times k-asymm$.\\
-To model the symmetric repetition of $n\times k-symm$ we adopt, on the upper boundary, conditions of coupling of the vertical displacements $u_{z}$ of the type
+To model the symmetric repetition of $n\times k-symm$ RVE ( Fig.~\ref{fig:laminateModelsA}) we adopt, on the upper boundary, conditions of coupling of the vertical displacements $u_{z}$ of the type
 
 \begin{equation}\label{eq:symmcoupling}
-u_{z}\left(x,h\right) = u^{\nu}_{z},
+u_{z}\left(x,h\right) = \bar{u}_{z},
 \end{equation}
 
-where $h$ is the total height of the RVE defined in Eq.~\ref{eq:lengthheight} and $u^{\nu}_{z}$ is the constant value of the vertical displacement, equal for all the points on the upper boundary, which is \emph{a priori} unknown and is evaluated as part of the elastic solution.\\
+where $h$ is the total height of the RVE defined in Eq.~\ref{eq:lengthheight} and $\bar{u}_{z}$ is the constant value of the vertical displacement, equal for all the points on the upper boundary. The value of $\bar{u}_{z}$ is \emph{a priori} unknown and is evaluated as part of the elastic solution.\\
+The asymmetric repetition of $n\times k-asymm$ RVE ( Fig.~\ref{fig:laminateModelsB}) is modeled with the following set of conditions applied to the vertical $u_{z}$ and horizontal displacements $u_{x}$:
 
 \begin{equation}\label{eq:asymmcoupling}
 \begin{aligned}
 u_{z}\left(x,h\right) - u_{z}\left(0,h\right) &= -\left(u_{z}\left(-x,h\right) - u_{z}\left(0,h\right)\right)\\
-u_{x}\left(x,h\right) &= -u_{x}\left(-x,h\right)
+u_{x}\left(x,h\right) &= -u_{x}\left(-x,h\right),
 \end{aligned}
 \end{equation}
+
+where $h$ is again the total height of the RVE and $u_{z}\left(0,h\right)$ is the vertical displacement of the upper boundary mid-point, which is always located at coordinates $(0,h)$. Similarly to $\bar{u}_{z}$ in the symmetric case, $u_{z}\left(0,h\right)$ is \emph{a priori} unknown and is computed as part of the elastic solution. To the authors' knowledge, this is the first time the set of boundary conditions in Eq.~\ref{eq:asymmcoupling} is proposed and used to model an asymmetric coupling as the one reported in Figure~\ref{fig:laminateModelsB}. To validate them, Mode I (Fig.~\ref{}) and Mode II ERR (Fig.~\ref{}) are evaluated for $3\times 1-asymm$ RVE and compared with the results 
 
 \subsection{Finite Element (FE) discretization}
 
@@ -182,19 +199,7 @@ where $2L$ is the length of a one-fiber unit, see Fig.~\ref{fig:modelschem}, and
 
 The debond is placed symmetrically with respect to the $x$ axis (see Fig.~\ref{fig:modelschem}) and it is characterized by an angular size of $\Delta\theta$ (making the full debond size equal to $2\Delta\theta$). For large debond sizes (at least $\geq 60^{\circ}-80^{\circ}$), a region $\Delta\Phi$ of variable size appears at the crack tip where the crack faces are in contact with each other but free to slide relatively to each other. In order to model crack faces motion in the contact zone, frictionless contact is considered between the two crack faces to allow free sliding and avoid interpenetration. Symmetry with respect to the $x$ axis is applied on the lower boundary and coupling of vertical displacement on the upper boundary. Kinematic coupling on the $x$-displacement is applied along the left and right sides of the RUC in the form of a constant $x$-displacement $\pm\bar{\varepsilon}_{x} l$, corresponding to transverse strain $\bar{\varepsilon}_{x}$ equal to $1\%$.
 
-\begin{table}[!htbp]
- \centering
- \caption{Summary of the mechanical properties of fiber and matrix. $E$ stands for Young's modulus, $\mu$ for shear modulus and $\nu$ for Poisson's ratio.}
- \begin{tabular}{cccc}
-\textbf{Material} & \textbf{$E\left[GPa\right]$}\ & \textbf{$\mu\left[GPa\right]$} & \textbf{$\nu\left[-\right]$} \\
-\midrule
-Glass fiber    & 70.0  & 29.2   & 0.2  \\
-Epoxy    & 3.5    & 1.25   & 0.4
-\end{tabular}
-\label{tab:phaseprop}
-\end{table}
-
-Meshing of the model is accomplished with second order, 2D, plane strain triangular (CPE6) and quadrilateral (CPE8) elements. A regular mesh of 8-node ($2^{nd}$ order rectangular) elements with almost unitary aspect ratio is enforced at the crack tip in order to ensure the convergence of the ERR. The angular size $\delta$ of an element in the crack tip neighborhood is always equal to $0.05^{\circ}$. The crack faces are modeled as element-based surfaces and a small-sliding contact pair interaction with no friction is imposed between them. The Mode I, Mode II and total Energy Release Rates (ERRs) (respectively referred to as $G_{I}$, $G_{II}$ and $G_{TOT}$) are the main result of FEM simulations; they are evaluated using the VCCT~\cite{Krueger2004} implemented in a in-house Python routine and, for $G_{TOT}$ only, the J-integral~\cite{Rice1968} is calculated by use of the Abaqus built-in command. A glass fiber-epoxy UD composite is treated in the present work, and it is assumed that their response lies always in the linear elastic domain. The material properties of glass fiber and epoxy are reported in Table~\ref{tab:phaseprop}. Validation is performed with respect to the results reported in~\cite{Paris2007,Sandino2016}, which were obtained with the Boundary Element Method (BEM) for a model of a single fiber with a symmetric debond placed in an infinite matrix. As discussed in more detail in~\cite{DiStasio2019}, the agreement between FEM (present work) and BEM~\cite{Paris2007,Sandino2016} solutions is good and the difference between the two does not exceed $5\%$. This provides us with a level of uncertainty with which we can analyze the significance of observed trends: any relative difference in ERR between different RUCs smaller than $5\%$ cannot be reliably distinguished from numerical uncertainty and its discussion should thus be avoided.
+Meshing of the model is accomplished with second order, 2D, plane strain triangular (CPE6) and quadrilateral (CPE8) elements. A regular mesh of 8-node ($2^{nd}$ order rectangular) elements with almost unitary aspect ratio is enforced at the crack tip in order to ensure the convergence of the ERR. The angular size $\delta$ of an element in the crack tip neighborhood is always equal to $0.05^{\circ}$. The crack faces are modeled as element-based surfaces and a small-sliding contact pair interaction with no friction is imposed between them. The Mode I, Mode II and total Energy Release Rates (ERRs) (respectively referred to as $G_{I}$, $G_{II}$ and $G_{TOT}$) are the main result of FEM simulations; they are evaluated using the VCCT~\cite{Krueger2004} implemented in a in-house Python routine and, for $G_{TOT}$ only, the J-integral~\cite{Rice1968} is calculated by use of the Abaqus built-in command. Validation is performed with respect to the results reported in~\cite{Paris2007,Sandino2016}, which were obtained with the Boundary Element Method (BEM) for a model of a single fiber with a symmetric debond placed in an infinite matrix. As discussed in more detail in~\cite{DiStasio2019}, the agreement between FEM (present work) and BEM~\cite{Paris2007,Sandino2016} solutions is good and the difference between the two does not exceed $5\%$. This provides us with a level of uncertainty with which we can analyze the significance of observed trends: any relative difference in ERR between different RUCs smaller than $5\%$ cannot be reliably distinguished from numerical uncertainty and its discussion should thus be avoided.
 
 \section{Results \& Discussion}\label{sec:results}
 

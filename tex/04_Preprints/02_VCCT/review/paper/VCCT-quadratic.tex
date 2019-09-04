@@ -132,6 +132,16 @@
 \pgfmathsetmacro\yEBMtoFBM{0.5*(\yEBM+\yFBM)}
 \pgfmathsetmacro\xCTBMtoEBM{0.5*(\xCTBM+\xEBM)}
 \pgfmathsetmacro\yCTBMtoEBM{0.5*(\yCTBM+\yEBM)}
+\pgfmathsetmacro\xCtoCBF{0.5*(\xC+\xCBF)}
+\pgfmathsetmacro\yCtoCBF{0.5*(\yC+\yCBF)}
+\pgfmathsetmacro\xDtoDBF{0.5*(\xD+\xDBF)}
+\pgfmathsetmacro\yDtoDBF{0.5*(\yD+\yDBF)}
+\pgfmathsetmacro\xCtoD{0.5*(\xC+\xD)}
+\pgfmathsetmacro\yCtoD{0.5*(\yC+\yD)}
+\pgfmathsetmacro\xCTBFtoCBF{0.5*(\xCTBF+\xCBF)}
+\pgfmathsetmacro\yCTBFtoCBF{0.5*(\yCTBF+\yCBF)}
+\pgfmathsetmacro\xCBFtoDBF{0.5*(\xCBF+\xDBF)}
+\pgfmathsetmacro\yCBFtoDBF{0.5*(\yCBF+\yDBF)}
 
 \def\xFin{0.45}
 \pgfmathsetmacro\yFin{-sqrt(3)*\xFin+(\yCT+sqrt(3)*\xCT)}
@@ -180,7 +190,7 @@
     \fill \Point  circle[radius=0.75pt];
 }
 
-\foreach \Point in {(\xAtoB,\yAtoB),(\xBtoBBF,\yBtoBBF),(\xBtoBBM,\yBtoBBM),(\xAtoABF,\yAtoABF),(\xAtoABM,\yAtoABM),(\xCTtoCTBF,\yCTtoCTBF),(\xCTtoCTBM,\yCTtoCTBM),(\xEtoEBM,\yEtoEBM),(\xFtoFBM,\yFtoFBM),(\xBBMtoABM,\yBBMtoABM),(\xBBFtoABF,\yBBFtoABF),(\xCTBMtoABM,\yCTBMtoABM),(\xCTBFtoABF,\yCTBFtoABF),(\xEtoF,\yEtoF),(\xEBMtoFBM,\yEBMtoFBM),(\xCTBMtoEBM,\yCTBMtoEBM)}{
+\foreach \Point in {(\xAtoB,\yAtoB),(\xBtoBBF,\yBtoBBF),(\xBtoBBM,\yBtoBBM),(\xAtoABF,\yAtoABF),(\xAtoABM,\yAtoABM),(\xCTtoCTBF,\yCTtoCTBF),(\xCTtoCTBM,\yCTtoCTBM),(\xEtoEBM,\yEtoEBM),(\xFtoFBM,\yFtoFBM),(\xBBMtoABM,\yBBMtoABM),(\xBBFtoABF,\yBBFtoABF),(\xCTBMtoABM,\yCTBMtoABM),(\xCTBFtoABF,\yCTBFtoABF),(\xEtoF,\yEtoF),(\xEBMtoFBM,\yEBMtoFBM),(\xCTBMtoEBM,\yCTBMtoEBM),(\xCtoD,\yCtoD),(\xCtoCBF,\yCtoCBF),(\xDtoDBF,\yDtoDBF),(\xCTBFtoCBF,\yCTBFtoCBF),(\xCBFtoDBF,\yCBFtoDBF)}{
     \fill \Point  circle[radius=0.75pt];
 }
 

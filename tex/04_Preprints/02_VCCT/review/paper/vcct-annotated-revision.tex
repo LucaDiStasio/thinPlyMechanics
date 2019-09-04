@@ -147,7 +147,24 @@ In order to express the VCCT formulation of the ERR in terms of FEM variables, w
 \end{bmatrix}.
 \end{equation}
 
-Nodes belonging to the elements sharing the crack tip are involved in the VCCT estimation of the ERR and it is assumed that, given a sufficiently fine discretization, they are aligned with the crack propagation direction defined at the crack tip. However, irrespectively of how small the elements in the crack tip neighborhood are, a misalignment always exists with respect to the assumed crack propagation direction (in the crack tip reference frame). This is measured by the matrices $\underline{\underline{P}}_{\delta}\left(p\right)$, defined as
+Nodes belonging to the elements sharing the crack tip are involved in the VCCT estimation of the ERR and it is assumed that, given a sufficiently fine discretization, they are aligned with the crack propagation direction defined at the crack tip.
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{VCCT-linear.pdf}
+       \caption{Elements with $1^{st}$ order shape functions: $m=1$ and $p,q=1$.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{VCCT-quadratic.pdf}
+       \caption{Elements with $2^{nd}$ order shape functions: $m=2$ and $p,q=1,2$.}
+    \end{subfigure}
+
+\caption{Schematic of the mesh at the fiber/matrix interface crack tip.}\label{fig:vcctmesh}
+\end{figure}
+
+However, irrespectively of how small the elements in the crack tip neighborhood are, a misalignment always exists with respect to the assumed crack propagation direction (in the crack tip reference frame). This is measured by the matrices $\underline{\underline{P}}_{\delta}\left(p\right)$, defined as
 
 \begin{equation}\label{eq:Pmatrix}
 \underline{\underline{P}}_{\delta}\left(p\right)=\begin{bmatrix}

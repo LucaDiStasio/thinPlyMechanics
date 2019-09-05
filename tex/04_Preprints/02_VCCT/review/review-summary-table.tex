@@ -1,33 +1,33 @@
 \begin{longtable}{ccccXX}
-\bf{N.}&\bf{Status}&\bf{Reviewer}&\bf{Line(s)}&\bf{Observation}&\bf{Action}\\
+\bf{N.}&\bf{Status}&\bf{Reviewer}&\bf{Line(s)/Section(s)}&\bf{Observation(s)}&\bf{Action(s)}\\
 &\textcolor{red}{\xmark}\textrightarrow To-Do&&&&\\
 &\textcolor{orange}{$\blacksquare$}\textrightarrow In Progress&&&&\\
 &\textcolor{green}{\cmark}\textrightarrow Reviewed&&&&\\
 \toprule
 \bottomrule
-1&\textcolor{red}{\xmark}&1&introduction&The issues related to mesh dependency of the modal contributions to the energy release rate in bi-material interface crack problems are long known in the literature. In this respect, some additional references could be usefully added in the Introduction: 
+1&\textcolor{red}{\xmark}&1&Introduction&The issues related to mesh dependency of the modal contributions to the energy release rate in bi-material interface crack problems are long known in the literature. In this respect, some additional references could be usefully added in the Introduction: 
 1) I.S. Raju, J.H. Crews Jr., M.A. Aminpour, Convergence of strain energy release rate components for Edge-Delaminated composite laminates, Engineering Fracture Mechanics 30 (3) (1988) 383-396. doi: 10.1016/0013-7944(88)90196-8.
 2) A. Agrawal, A.M. Karlsson, Obtaining mode mixity for a bimaterial interface crack using the virtual crack closure technique, International Journal of Fracture 141 (1-2) (2006) 75-98. doi:10.1007/s10704-006-0069-4.
 3)  R. Krueger, K. Shivakumar, I.S. Raju, Fracture mechanics analyses for interface crack problems - A review, in: Proceedings of the 54th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics, and Materials Conference, 2013. doi:10.2514/6.2013-1476.\\
 \midrule
-2&\textcolor{green}{\cmark}&1&section 3& To help understanding, it would be useful to add a figure of the mesh in the neighbourhood of the crack tip showing the delta-sized elements (e.g., in two cases with m = 1 and m = 2) with the indices p and q.&In Section 3: added a figure for first order elements and one figure for second order elements showing the $\delta$-sized elements at the crack tip and $p,q$-based indexing of the nodes; added reference in the text.\\
+2&\textcolor{green}{\cmark}&1&Section 3& To help understanding, it would be useful to add a figure of the mesh in the neighbourhood of the crack tip showing the delta-sized elements (e.g., in two cases with m = 1 and m = 2) with the indices p and q.&\textit{In Section 3:} added a figure for first order elements and one figure for second order elements showing the $\delta$-sized elements at the crack tip and $p,q$-based indexing of the nodes; added reference in the text.\\
 \midrule
-3&\textcolor{red}{\xmark}&1&section 3& If I correctly understand, the permutation matrix is denoted as $P_{\pi}$ in Eq. (7) and as D in Eq. (8). Please, check and unify notation.\\
+3&\textcolor{green}{\cmark}&1&Section 3& If I correctly understand, the permutation matrix is denoted as $P_{\pi}$ in Eq. (7) and as D in Eq. (8). Please, check and unify notation.&\textit{In Section 3:}  Eq. (8) modified to agree with  Eq. (7); the correct notation is indeed $P_{\pi}$.\\
 \midrule
-4&\textcolor{red}{\xmark}&1&section 3&The comparison between Eq. (11) and a similar one in the paper by Valvo (2012) is useful, but should be revised:
+4&\textcolor{red}{\xmark}&1&Section 3&The comparison between Eq. (11) and a similar one in the paper by Valvo (2012) is useful, but should be revised:
 a - the two relations are different because of an additional term in the submitted manuscript. Indeed, Eq. (11) relates the forces at the crack-tip node with the relative displacements at adjacent nodes (on the same mesh). Instead, Valvo (2012) relates forces and displacements at the same crack-tip node (on two different meshes);
 b - the linear relationship between forces and displacements is not "assumed a priori" in the cited paper, but is an immediate consequence of the linear elastic model;
 c - also according to Valvo (2012), the crack-tip stiffness matrix is not diagonal in general because of Poisson's effect, as well as material mismatch and geometric asymmetry. The matrix is diagonalised to obtain the mode I and mode II contributions to the energy release rate;
 d - lastly, consider also the following development:
 P.S. Valvo, A further step towards a physically consistent virtual crack closure technique, International Journal of Fracture 192 (2) (2015) 235-244. doi:10.1007/s10704-015-0007-4.\\
 \midrule
-5&\textcolor{red}{\xmark}&1&section 3&In Eq. (12), an operator called Tr appears for the first time, but is not defined. I presume it is the Trace of the matrix, but for clarity it would be better to specify in the manuscript. In Eq. (12), also check the order of the arguments, which maybe have to be rearranged to yield a 2x2 matrix (as in the following equations).\\
+5&\textcolor{red}{\xmark}&1&Section 3&In Eq. (12), an operator called Tr appears for the first time, but is not defined. I presume it is the Trace of the matrix, but for clarity it would be better to specify in the manuscript. In Eq. (12), also check the order of the arguments, which maybe have to be rearranged to yield a 2x2 matrix (as in the following equations).\\
 \midrule
-6&\textcolor{red}{\xmark}&1&conclusions& In the Conclusions, the comments about the cited part of the Abaqus User's Manual should be revised. The Manual gives suggestions on how to improve the accuracy of stress and strain calculations in the neighbourhood of the crack tip, as well as of the J-integral (total energy release rate). At least from the cited part, there is no direct reference to VCCT computation of mode I and mode II contributions to energy release rate, which are known to be mesh dependent quantities.\\
+6&\textcolor{red}{\xmark}&1&Conclusions& In the Conclusions, the comments about the cited part of the Abaqus User's Manual should be revised. The Manual gives suggestions on how to improve the accuracy of stress and strain calculations in the neighbourhood of the crack tip, as well as of the J-integral (total energy release rate). At least from the cited part, there is no direct reference to VCCT computation of mode I and mode II contributions to energy release rate, which are known to be mesh dependent quantities.\\
 \midrule
-7&\textcolor{red}{\xmark}&1&appendix A&In Appendix A, there is an attemp to cover at the same time both two-dimensional (d = 2) and three-dimensional (d = 3) problems. However, to achieve fully this goal, also matrices in Eqs. (A.1), (A.2), ..., (A.11) should have optional additional columns and rows. This would only add up to confusion. For the sake of clarity, it would be better to focus on the two-dimensional problem only (as concerns equations) and simply state that extension to three-dimensional problems is straightforward.\\
+7&\textcolor{red}{\xmark}&1&Appendix A&In Appendix A, there is an attemp to cover at the same time both two-dimensional (d = 2) and three-dimensional (d = 3) problems. However, to achieve fully this goal, also matrices in Eqs. (A.1), (A.2), ..., (A.11) should have optional additional columns and rows. This would only add up to confusion. For the sake of clarity, it would be better to focus on the two-dimensional problem only (as concerns equations) and simply state that extension to three-dimensional problems is straightforward.\\
 \midrule
-8&\textcolor{red}{\xmark}&1&appendix A&Again in Appendix A, correct:
+8&\textcolor{red}{\xmark}&1&Appendix A&Again in Appendix A, correct:
 - "$u_{r,M}, u_{r,F}$ the x-displacement" --> "$u_{theta,M}, u_{theta,F}$ the r-displacement";
 - "$u_{theta,M}, u_{theta,F}$ the y-displacement" --> "$u_{theta,M}, u_{theta,F}$ the theta-displacement".\\
 \midrule

@@ -787,10 +787,10 @@ where $g=det\left(\underline{\underline{J}}^{T}\underline{\underline{J}}\right)$
 which is amenable to numerical integration by means of a Gaussian quadrature of the form
 
 \begin{equation}\label{eq:elstiffnum}
-\underline{\underline{k_{e}}}\approx \sum_{i=1}^{N}\dots\sum_{j=1}^{N}w_{i}\dots w_{j}\left(\underline{\underline{B}}^{T}\left(\xi_{i}, \dots,\eta_{j}\right)\cdot\underline{\underline{D}}\cdot\underline{\underline{B}}\left(\xi_{i}, \dots,\eta_{j}\right)\sqrt{g}\right),
+\underline{\underline{k_{e}}}\approx \underbrace{\sum_{k=1}^{N}\dots\sum_{h=1}^{N}}_{d\ times}w_{k}\dots w_{h}\left(\underline{\underline{B}}^{T}\left(\xi_{i}\left(k, \dots,h\right)\right)\cdot\underline{\underline{D}}\cdot\underline{\underline{B}}\left(\xi_{i}\left(k, \dots,h\right)\right)\sqrt{g}\right),
 \end{equation}
 
-where $\left(\xi_{i}, \dots,\eta_{j}\right)$ are the coordinates of the $N$ Gaussian quadrature points. The element stiffness matrix as evaluated in Eq.~\ref{eq:elstiffnum} is in general a full symmetric (in the case of linear elasticity) matrix of the form
+where \replaced{$\xi_{i}\left(k, \dots,h\right)$ }{$\left(\xi_{i}, \dots,\eta_{j}\right)$} are the coordinates of the $N$ Gaussian quadrature points. \replaced{The element stiffness matrix as evaluated in Eq.~\ref{eq:elstiffnum} is in general a full symmetric matrix in the case of linear elasticity. For 2D rectangular elements with quadratic shape functions (8-nodes serendipity elements), the element stiffness matrix has the form }{The element stiffness matrix as evaluated in Eq.~\ref{eq:elstiffnum} is in general a full symmetric (in the case of linear elasticity) matrix of the form}
 
 \begin{equation}\label{eq:elstiffmatrix}
 k_{e}=\begin{bmatrix}

@@ -704,21 +704,17 @@ Luca Di Stasio thanks Prof. Janis Varna for the useful discussions and suggestio
 
 \subsection{Foundational relations}
 
-In the isoparametric formulation of the Finite Element Method, the element Jacobian $J$ and its inverse $J^{-1}$ can be expressed in general as 
+\added{We review and present in this Section the foundational relations of the isoparametric formulation of the Finite Element Method. The objective here is to provide a theoretical foundation to the expressions in Equation~\ref{eq:ctforce1} and Equation~\ref{eq:ctforce2} and a reference for the explicit calculation of the nodal stiffness matrices proposed in Eq.~\ref{eq:ctforce1} and Eq.~\ref{eq:ctforce2}. We propose a general treatment, valid for 2- and 3-dimensional problems, so that the interested reader could evaluate the nodal stiffness matrices for both a 2- and a 3-dimensional crack. However, in order to clarify the structure of some specific objects, we explicitly write their 2-dimensional form, which is of interest for the problem of this paper.}\\
+\added{Denoting by $d$ the number of geometrical dimensions of the problem ($d=2$ in the present work),} the element Jacobian $J$ and its inverse $J^{-1}$ can be expressed in general as 
 
 \begin{equation}
-\underline{\underline{J}}=\begin{bmatrix}
-\underline{e}_{\xi}|\underline{e}_{\eta}
-\end{bmatrix}=\begin{bmatrix}
-\frac{\partial x}{\partial\xi}&\frac{\partial x}{\partial\eta}\\\frac{\partial y}{\partial\xi}&\frac{\partial y}{\partial\eta}
-\end{bmatrix}\qquad\underline{\underline{J}}^{-1}=\begin{bmatrix}
-\underline{e}^{x}|\underline{e}^{y}
-\end{bmatrix}=\begin{bmatrix}
-\frac{\partial \xi}{\partial x}&\frac{\partial \xi}{\partial y}\\\frac{\partial \eta}{\partial x}&\frac{\partial \eta}{\partial y}
-\end{bmatrix}
+\added{J_{ij}=\left(e_{\xi_{j}}\right)_{i}=\frac{\partial x_{i}}{\partial\xi_{j}}
+\quad
+J_{ij}^{-1}=\left(e^{x_{j}}\right)_{i}=\frac{\partial \xi_{i}}{\partial x_{j}}\quad i,j=1,\dots,d}
 \end{equation}
 
-where $\left\{e_{\xi}, e_{\eta}\right\}$ and $\left\{e^{x}, e^{y}\right\}$ are respectively the covariant and contravariant basis vectors of the mapping between global $\left\{x, y\right\}$ and local element $\left\{\xi, \eta\right\}$ coordinates:
+\added{where $\left(e_{\xi_{j}}\right)$ and $\left(e^{x_{j}}\right)$ are respectively the covariant and contravariant basis vectors of the mapping between global $\left\{x_{i}\right\}$ and local element $\left\{\xi_{i}\right\}$ coordinates.\\
+In 2D, assuming the global coordinates are $\left\{x, y\right\}$ and the local element coordinates are $\left\{\xi, \eta\right\}$, the covariant and contravariant basis vectors assume the form}
 
 \begin{equation}
 \underline{e}_{\xi}=\begin{bmatrix}
@@ -736,13 +732,29 @@ where $\left\{e_{\xi}, e_{\eta}\right\}$ and $\left\{e^{x}, e^{y}\right\}$ are r
 \end{bmatrix}.
 \end{equation}
 
-Denoting by $d$ the number of geometrical dimensions of the problem ($d=2$ in the present work) and by $\underline{p}$ the $d\times 1$ position vector in global coordinates, we can formally introduce the $3\left(d-1\right)\times d$ matrix operator of partial differentiation $\underline{\underline{\widetilde{B}}}$ such that
+\added{and the element Jacobian $J$ and its inverse $J^{-1}$ can be computed for a 2D problem as}
+
+\begin{equation}
+\underline{\underline{J}}=\begin{bmatrix}
+\underline{e}_{\xi}|\underline{e}_{\eta}
+\end{bmatrix}=\begin{bmatrix}
+\frac{\partial x}{\partial\xi}&\frac{\partial x}{\partial\eta}\\\frac{\partial y}{\partial\xi}&\frac{\partial y}{\partial\eta}
+\end{bmatrix}\qquad\underline{\underline{J}}^{-1}=\begin{bmatrix}
+\underline{e}^{x}|\underline{e}^{y}
+\end{bmatrix}=\begin{bmatrix}
+\frac{\partial \xi}{\partial x}&\frac{\partial \xi}{\partial y}\\\frac{\partial \eta}{\partial x}&\frac{\partial \eta}{\partial y}
+\end{bmatrix}.
+\end{equation}
+
+\deleted{where $\left\{e_{\xi}, e_{\eta}\right\}$ and $\left\{e^{x}, e^{y}\right\}$ are respectively the covariant and contravariant basis vectors of the mapping between global $\left\{x, y\right\}$ and local element $\left\{\xi, \eta\right\}$ coordinates:}
+
+Denoting \deleted{by $d$ the number of geometrical dimensions of the problem ($d=2$ in the present work) and} by $\underline{p}$ the $d\times 1$ position vector in global coordinates, we can formally introduce the $3\left(d-1\right)\times d$ matrix operator of partial differentiation $\underline{\underline{\widetilde{B}}}$ such that
 
 \begin{equation}\label{eq:introB}
 \underline{\varepsilon}\left(\underline{p}\right)=\underline{\underline{\widetilde{B}}}\cdot\underline{u}\left(\underline{p}\right),
 \end{equation}
 
-where $\underline{u}$ and $\underline{\varepsilon}$ are respectively the $d\times 1$ displacement vector and the $3\left(d-1\right)\times 1$ strain vector in Voigt notation. Denoting by $n$ the number of nodes of a generic element ($n=s\times m$ where $s$ represents the number of sides of the element and $m$ the order of the shape functions), we can furthermore introduce the $d\times d\cdot n$ matrix \underline{\underline{N}} of shape functions such that
+where $\underline{u}$ and $\underline{\varepsilon}$ are respectively the $d\times 1$ displacement vector and the $3\left(d-1\right)\times 1$ strain vector in Voigt notation. Denoting by $n$ the number of nodes of a generic element\replaced{, it holds that $n=s\times m$ where $s$ represents the number of sides of the element ($3$ for a triangle, $4$ for a rectangle, \dots) and $m$ the order of the shape functions ($1$ for linear shape functions, $2$ for quadratic shape functions, \dots).}{($n=s\times m$ where $s$ represents the number of sides of the element and $m$ the order of the shape functions),} \replaced{We can now }{We can furthermore} introduce the $d\times d\cdot n$ matrix \underline{\underline{N}} of shape functions such that
 
 \begin{equation}\label{eq:introN}
 \underline{u}=\underline{\underline{N}}\cdot\underline{u}_{N},
@@ -763,13 +775,13 @@ We introduce the linear elastic material behavior in the form of the $3\left(d-1
 where $\underline{\sigma}$ the $3\left(d-1\right)\times 1$ stress vector in Voigt notation. It is finally possible to define the $n\times n$ element stiffness matrix $\underline{\underline{k_{e}}}$ as 
 
 \begin{equation}\label{eq:elestiff}
-\underline{\underline{k_{e}}}=\int_{V_{e}\left(x,y\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV_{e}\left(x,\dots,y\right)=\int_{V_{e}\left(\xi,\eta\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)\sqrt{g}dV_{e}\left(\xi,\dots,\eta\right),
+\added{\underline{\underline{k_{e}}}=\int_{V_{e}\left(x_{i}\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV_{e}\left(x_{i}\right)=\int_{V_{e}\left(\xi_{i}\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)\sqrt{g}dV_{e}\left(\xi_{i}\right)},
 \end{equation}
 
 where $g=det\left(\underline{\underline{J}}^{T}\underline{\underline{J}}\right)$ and $V_{e}$ is the element volume. Given that isoparametric elements are always defined between $-1$ and $1$ in each dimension, Equation~\ref{eq:elestiff} can simplified to
 
 \begin{equation}
-\underline{\underline{k_{e}}}=\int_{-1}^{1}\dots\int_{-1}^{1}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)\sqrt{g}d\xi,\dots, d\eta,
+\added{\underline{\underline{k_{e}}}=\int_{-1}^{1}\dots\int_{-1}^{1}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)\sqrt{g}d\xi_{i}},
 \end{equation}
 
 which is amenable to numerical integration by means of a Gaussian quadrature of the form

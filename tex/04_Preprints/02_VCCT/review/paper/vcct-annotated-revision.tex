@@ -2,12 +2,12 @@
 
 \usepackage{amsmath}
 \usepackage{booktabs}
+\usepackage{changes}
 \usepackage[makeroom]{cancel}
 \usepackage[section]{placeins}
 \usepackage{subcaption}
 \usepackage{tabularx}
 \usepackage{nicefrac}
-\usepackage[usenames]{xcolor}
 \usepackage{lineno,hyperref}
 \modulolinenumbers[5]
 
@@ -153,15 +153,15 @@ Nodes belonging to the elements sharing the crack tip are involved in the VCCT e
 \centering
     \begin{subfigure}[b]{0.8\textwidth}
         \includegraphics[width=\textwidth]{VCCT-linear.pdf}
-       \caption{Elements with $1^{st}$ order shape functions: $m=1$ and $p,q=1$.}
+       \caption{\added{Elements with $1^{st}$ order shape functions: $m=1$ and $p,q=1$.}}
     \end{subfigure}
     
     \begin{subfigure}[b]{0.8\textwidth}
         \includegraphics[width=\textwidth]{VCCT-quadratic.pdf}
-       \caption{Elements with $2^{nd}$ order shape functions: $m=2$ and $p,q=1,2$.}
+       \caption{\added{Elements with $2^{nd}$ order shape functions: $m=2$ and $p,q=1,2$.}}
     \end{subfigure}
 
-\caption{Schematic of the mesh at the fiber/matrix interface crack tip.}\label{fig:vcctmesh}
+\caption{\added{Schematic of the mesh at the fiber/matrix interface crack tip.}}\label{fig:vcctmesh}
 \end{figure}
 
 However, irrespectively of how small the elements in the crack tip neighborhood are, a misalignment always exists with respect to the assumed crack propagation direction (in the crack tip reference frame). This is measured by the matrices $\underline{\underline{P}}_{\delta}\left(p\right)$, defined as
@@ -182,7 +182,7 @@ However, irrespectively of how small the elements in the crack tip neighborhood 
 \end{bmatrix},
 \end{equation}
 
-respectively for the free and bonded nodes involved in the VCCT estimation. In Eqs.~\ref{eq:Pmatrix} and~\ref{eq:Qmatrix}, $\delta$ is the angular size of an element in the crack tip neighborhood (see Sec.~\ref{sec:femmodel} and Fig.~\ref{fig:modelschem}), $m$ is the order of the element shape functions and $p,q$ are indices referring to the nodes belonging respectively to free and bonded elements sharing the crack tip. Introducing the permutation matrix
+respectively for the free and bonded nodes involved in the VCCT estimation. In Eqs.~\ref{eq:Pmatrix} and~\ref{eq:Qmatrix}, $\delta$ is the angular size of an element in the crack tip neighborhood (see Sec.~\ref{sec:femmodel} and Fig.~\ref{fig:modelschem}), $m$ is the order of the element shape functions and \replaced{$p,q=1,\dots,m$}{ $p,q$} are indices referring to the nodes belonging respectively to free and bonded elements sharing the crack tip. \added{Figure~\ref{fig:vcctmesh} shows the $p,q$-based numbering of nodes at the crack tip in the case of elements with linear and quadratic (serendipity) shape functions.} Introducing the permutation matrix
 
 
 \begin{equation}

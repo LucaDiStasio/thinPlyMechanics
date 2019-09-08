@@ -271,7 +271,7 @@
 
 %\section[Transverse Cracking in FRPCs]{Initiation of Transverse Cracking in Fiber Reinforced Polymer Composites (FRPCs): Microscopic Observations \& Modeling}
 
-\section{Initiation of Transverse Cracks in Thin-plies}
+\section{Transverse Cracking in Thin-plies}
 
 \subsection{The Thin-ply ``Advantage''}
 
@@ -319,7 +319,7 @@
 \end{columns}
 \end{frame}
 
-\addtocounter{framenumber}{-1}
+%\addtocounter{framenumber}{-1}
 
 \begin{frame}
 \frametitle{\vspace{0.3cm}\small The Thin-ply ``Advantage''? New material, new problem...}
@@ -351,7 +351,11 @@
 \begin{itemize}[label=\ding{212}]
 \item material from NTPT (CH) (on the left)
 \item recent tests (master theses $@$ LTU) have shown the same behavior with material from Oxeon (SE)
+\end{itemize}
+\begin{itemize}[label=\color{green}\ding{52}]
 \item extended range of elastic behavior with no damage-induced stiffness reduction
+\end{itemize}
+\begin{itemize}[label=\color{red}\ding{56}]
 \item brittle failure of the whole laminate!
 \item very risky for application in safety-critical primary structures!
 \end{itemize}
@@ -371,7 +375,7 @@
 \end{columns}
 \end{frame}
 
-\addtocounter{framenumber}{-1}
+%\addtocounter{framenumber}{-1}
 
 \begin{frame}
 \frametitle{\vspace{0.3cm}\small The Thin-ply ``Advantage'': new material, old result}
@@ -426,7 +430,7 @@
 \end{columns}
 \end{frame}
 
-\addtocounter{framenumber}{-1}
+%\addtocounter{framenumber}{-1}
 
 \begin{frame}
 \frametitle{\vspace{0.3cm}\small The Thin-ply ``Advantage'': new material, old result?}
@@ -532,6 +536,8 @@
 
 \end{tikzpicture}
 \end{frame}
+
+%\addtocounter{framenumber}{-1}
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Micromechanics of Initiation}
@@ -736,7 +742,60 @@ $n=1$, $t_{90^{\circ}}=40\mu m$\\\vspace{5pt}
 {\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1163/156855112X629522}{Saito et al., Adv. Compos. Mater. \textbf{21} (1), 2012.}}
 \end{frame}
 
-\section{Modeling the Fiber-Matrix Interface Crack}
+\section{Modeling Fiber/Matrix Debonding}
+
+\subsection{Prelude}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small Micromechanics of Initiation}
+\vspace{-0.5cm}
+\centering
+\captionsetup[subfigure]{labelfont=footnotesize}
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\draw[->,black, line width = 5pt] (-4,0) -- (-4,3);
+\draw[->,black, line width = 5pt] (-4,0) -- (-4,-3);
+\node  at (-4,0) {\includegraphics[height=0.6\textheight]{0-90_2_symm}};
+\draw[<->,red, line width = 1.25pt] (-4.35,-0.5) -- (-3.65,-0.625);
+\node[red, below]  at (-4,-0.65) {\tiny$\mathbf{\sim 15\ mm}$};
+\node[above, right]  at (-3.8,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (-4.2,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\draw[->,black, line width = 5pt] (-2,0) -- (-2,3);
+\draw[->,black, line width = 5pt] (-2,0) -- (-2,-3);
+\node  at (-2,0) {\includegraphics[height=0.6\textheight]{0-90_symm_edge}};
+\draw[<->,red, line width = 1.25pt] (-2.46,-0.6) -- (-1.55,-0.6);
+\node[red, below]  at (-2,-0.6) {\tiny$\mathbf{\sim 2\ mm}$};
+\node[above, right]  at (-1.8,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (-2.2,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\draw[->,black, line width = 5pt] (1,0) -- (1,3);
+\draw[->,black, line width = 5pt] (1,0) -- (1,-3);
+\node  at (1,0) {\includegraphics[height=0.6\textheight]{0-90_symm_debondetail}};
+\draw[<->,red, line width = 1.25pt] (0.075,-0.15) -- (1.1,-0.15);
+\draw[red, line width = 1.5pt] (3.5,0.0) arc(0:360:2.5);
+\node[red, below]  at (0.55,-0.16) {\tiny$\mathbf{\sim 8\ \mu m}$};
+\node[above, right]  at (1.2,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (0.8,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\node[anchor=south west]  at (3.25,1.55) {\scriptsize\textbf{Left:}};
+\node[anchor=west]  at (3.25,1.5) {\scriptsize front view of $\left[0,90_{2}\right]_{S}$,};
+\node[anchor=north west]  at (3.25,1.5) {\scriptsize visual inspection.};
+
+\node[anchor=south west]  at (3.25,0.05) {\scriptsize\textbf{Center:}};
+\node[anchor=west]  at (3.25,0) {\scriptsize  edge view of $\left[0,90\right]_{S}$,};
+\node[anchor=north west]  at (3.25,0) {\scriptsize optical microscope.};
+
+\node[anchor=south west]  at (3.25,-1.45) {\scriptsize\textbf{Right:}};
+\node[anchor=west]  at (3.25,-1.5) {\scriptsize edge view of $\left[0,90\right]_{S}$,};
+\node[anchor=north west]  at (3.25,-1.5) {\scriptsize optical microscope.};
+
+%Tikz axis ends%
+
+\end{tikzpicture}
+\end{frame}
 
 \subsection{Geometry}
 
@@ -764,10 +823,10 @@ $n=1$, $t_{90^{\circ}}=40\mu m$\\\vspace{5pt}
 \end{columns}
 \end{frame}
 
-\subsection{Representative Volume Elements}
+\subsection{RVEs}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Representative Volume Elements}
+\frametitle{\vspace{0.2cm}\small Representative Volume Elements (RVEs)}
 \vspace{-1cm}
 \centering
 \begin{columns}[c]
@@ -954,7 +1013,7 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \end{frame}
 
 
-\section{Debond Energy Release Rate}
+%\section{Debond Energy Release Rate}
 
 \subsection{Interaction of Debonds}
 
@@ -1128,7 +1187,7 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \end{figure}
 \end{frame}
 
-\subsection{Effect of $0^{\circ}$ ply thickness}
+\subsection{$0^{\circ}$ ply thickness}
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
@@ -1244,7 +1303,7 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \end{figure}
 \end{frame}
 
-\subsection{Effect of $90^{\circ}$ ply thickness}
+\subsection{$90^{\circ}$ ply thickness}
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Effect of $90^{\circ}$ ply thickness}
@@ -1331,10 +1390,10 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \end{figure}
 \end{frame}
 
-\section{Conclusions}
+\subsection{Summary}
 
 \begin{frame}
-\frametitle{Conclusions}
+\frametitle{Summary}
 \vspace{-0.5cm}
 \centering
 \begin{itemize}[label=\ding{212}]
@@ -1343,6 +1402,61 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \item No effect of  $0^{\circ}$ ply thickness can be observed when $\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}>1$
 \item A small difference can be observed when  $t_{0^{\circ}}=t_{90^{\circ}}$, due to the smaller bending stiffness of a thinner $0^{\circ}$ layer
 \end{itemize}
+\end{frame}
+
+\section{Measuring Transverse Cracks Propagation}
+
+\subsection{Prelude}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small Micromechanics of Initiation}
+\vspace{-0.5cm}
+\centering
+\captionsetup[subfigure]{labelfont=footnotesize}
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\draw[->,black, line width = 5pt] (-4,0) -- (-4,3);
+\draw[->,black, line width = 5pt] (-4,0) -- (-4,-3);
+\node  at (-4,0) {\includegraphics[height=0.6\textheight]{0-90_2_symm}};
+\draw[<->,red, line width = 1.25pt] (-4.35,-0.5) -- (-3.65,-0.625);
+\node[red, below]  at (-4,-0.65) {\tiny$\mathbf{\sim 15\ mm}$};
+\node[above, right]  at (-3.8,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (-4.2,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\draw[->,black, line width = 5pt] (-2,0) -- (-2,3);
+\draw[->,black, line width = 5pt] (-2,0) -- (-2,-3);
+\node  at (-2,0) {\includegraphics[height=0.6\textheight]{0-90_symm_edge}};
+\draw[<->,red, line width = 1.25pt] (-2.46,-0.6) -- (-1.55,-0.6);
+\node[red, below]  at (-2,-0.6) {\tiny$\mathbf{\sim 2\ mm}$};
+\node[above, right]  at (-1.8,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (-2.2,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\draw[->,black, line width = 5pt] (1,0) -- (1,3);
+\draw[->,black, line width = 5pt] (1,0) -- (1,-3);
+\node  at (1,0) {\includegraphics[height=0.6\textheight]{0-90_symm_debondetail}};
+\draw[<->,red, line width = 1.25pt] (0.075,-0.15) -- (1.1,-0.15);
+\draw[red, line width = 1.5pt] (-1.25,0.0) arc(0:360:2);
+\node[red, below]  at (0.55,-0.16) {\tiny$\mathbf{\sim 8\ \mu m}$};
+\node[above, right]  at (1.2,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (0.8,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\node[anchor=south west]  at (3.25,1.55) {\scriptsize\textbf{Left:}};
+\node[anchor=west]  at (3.25,1.5) {\scriptsize front view of $\left[0,90_{2}\right]_{S}$,};
+\node[anchor=north west]  at (3.25,1.5) {\scriptsize visual inspection.};
+
+\node[anchor=south west]  at (3.25,0.05) {\scriptsize\textbf{Center:}};
+\node[anchor=west]  at (3.25,0) {\scriptsize  edge view of $\left[0,90\right]_{S}$,};
+\node[anchor=north west]  at (3.25,0) {\scriptsize optical microscope.};
+
+\node[anchor=south west]  at (3.25,-1.45) {\scriptsize\textbf{Right:}};
+\node[anchor=west]  at (3.25,-1.5) {\scriptsize edge view of $\left[0,90\right]_{S}$,};
+\node[anchor=north west]  at (3.25,-1.5) {\scriptsize optical microscope.};
+
+%Tikz axis ends%
+
+\end{tikzpicture}
 \end{frame}
 
 \begin{frame}[plain]

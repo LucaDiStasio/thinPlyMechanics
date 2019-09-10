@@ -919,10 +919,10 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 
 \section{Debond Initiation}
 
-\subsection{$\sigma_{rr}$ vs $\tau_{r\theta}$}
+\subsection{$\mathbf{\sigma_{rr}}$ vs $\mathbf{\tau_{r\theta}}$}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small $\sigma_{rr}$ vs $\tau_{r\theta}$}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{rr}}$ vs $\mathbf{\tau_{r\theta}}$: radial stress vs tangential shear at the interface}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -949,7 +949,7 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small $\sigma_{rr}$ vs $\tau_{r\theta}$}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{rr}}$ vs $\mathbf{\tau_{r\theta}}$: radial stress vs tangential shear at the interface}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -976,7 +976,7 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \subsection{$\sigma_{LHS}$}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small $\sigma_{LHS}$}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{LHS}}$: local hydrostatic stress at the interface}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -985,25 +985,35 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{vf60-nodamage-sigmar-notol.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-p2D-notol.pdf}
 \end{figure}
+\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{2D}_{LHS}=\frac{\sigma_{rr}+\sigma_{\theta\theta}}{2}
+\end{equation*}
 \end{column}
 \begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{vf60-nodamage-taurt.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-p3D-notol.pdf}
 \end{figure}
+\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{3D}_{LHS}=\frac{\sigma_{rr}+\sigma_{\theta\theta}+\sigma_{yy}}{3}
+\end{equation*}
 \end{column}
 \end{columns}
-\vspace{-0.25cm}
+\vspace{-0.3cm}
 \includegraphics[width=0.45\textwidth]{refAngle.pdf}
 \end{frame}
 
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small $\sigma_{rr}$ vs $\tau_{r\theta}$}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{LHS}}$: local hydrostatic stress at the interface}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -1012,18 +1022,156 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{vf60-nodamage-sigmar.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-p2D.pdf}
+\end{figure}
+\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{2D}_{LHS}=\frac{\sigma_{rr}+\sigma_{\theta\theta}}{2}
+\end{equation*}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{vf60-nodamage-p3D.pdf}
+\end{figure}
+\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{3D}_{LHS}=\frac{\sigma_{rr}+\sigma_{\theta\theta}+\sigma_{yy}}{3}
+\end{equation*}
+\end{column}
+\end{columns}
+\vspace{-0.3cm}
+\includegraphics[width=0.45\textwidth]{refAngle.pdf}
+\end{frame}
+
+\subsection{$\sigma_{vM}$}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{vM}}$: von Mises stress at the interface}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{vf60-nodamage-vM2D-notol.pdf}
+\end{figure}
+\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{2D}_{vM}=\sqrt{\left(\sigma_{rr}-\sigma_{\theta\theta}\right)^{2}+3\tau_{12}^{2}}
+\end{equation*}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{vf60-nodamage-vM3D.pdf}
+\end{figure}
+%\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{3D}_{LHS}=\frac{3}{2}s_{ij}s_{ij}\quad s_{ij}=\sigma_{ij}-\frac{1}{3}\sigma_{kk}\delta_{ij}
+\end{equation*}
+\end{column}
+\end{columns}
+\vspace{-0.3cm}
+\includegraphics[width=0.45\textwidth]{refAngle.pdf}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{vM}}$: von Mises stress at the interface}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{vf60-nodamage-vM2D.pdf}
+\end{figure}
+\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{2D}_{vM}=\sqrt{\left(\sigma_{rr}-\sigma_{\theta\theta}\right)^{2}+3\tau_{12}^{2}}
+\end{equation*}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{vf60-nodamage-vM3D.pdf}
+\end{figure}
+%\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{3D}_{LHS}=\frac{3}{2}s_{ij}s_{ij}\quad s_{ij}=\sigma_{ij}-\frac{1}{3}\sigma_{kk}\delta_{ij}
+\end{equation*}
+\end{column}
+\end{columns}
+\vspace{-0.3cm}
+\includegraphics[width=0.45\textwidth]{refAngle.pdf}
+\end{frame}
+
+\subsection{$\sigma_{I}$}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{I}}$: maximum principal stress at the interface}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{vf60-nodamage-sigmaI2D-notol.pdf}
 \end{figure}
 \end{column}
 \begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{vf60-nodamage-taurt.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-sigmaI3D-notol.pdf}
 \end{figure}
 \end{column}
 \end{columns}
-\vspace{-0.25cm}
+\vspace{-0.3cm}
+\includegraphics[width=0.45\textwidth]{refAngle.pdf}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{I}}$: maximum principal stress at the interface}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{vf60-nodamage-sigmaI2D.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{vf60-nodamage-sigmaI3D.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\vspace{-0.3cm}
 \includegraphics[width=0.45\textwidth]{refAngle.pdf}
 \end{frame}
 

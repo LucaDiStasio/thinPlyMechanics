@@ -700,7 +700,7 @@ Can we talk about a ply-thickness effect for the fiber-matrix interface crack?
 \end{alertblock}
 \end{frame}
 
-\section{Modeling the Fiber-Matrix Interface Crack}
+\section{Modeling}
 
 \subsection{Geometry}
 
@@ -871,7 +871,7 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \end{aligned}
 \end{equation*}
 \end{column}
-\begin{column}{0.7\columnwidth}
+\begin{column}{0.675\columnwidth}
 \tiny
 \begin{equation*}
 \begin{aligned}
@@ -886,10 +886,10 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \end{column}
 \end{columns}
 \end{column}
-\begin{column}{0.35\textwidth}
+\begin{column}{0.375\textwidth}
 \scriptsize
 \begin{itemize}[label=\ding{212}]
-\item Oscillating singularity
+\item oscillating singularity
 \vspace{-0.25cm}
 \begin{equation*}
 \sigma\sim r^{-\frac{1}{2}}\sin\left(\varepsilon\log r\right),\quad V_{f}\rightarrow 0
@@ -903,14 +903,15 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \begin{equation*}
 \beta=\frac{\mu_{2}\left(\kappa_{1}-1\right)-\mu_{1}\left(\kappa_{2}-1\right)}{\mu_{2}\left(\kappa_{1}+1\right)+\mu_{1}\left(\kappa_{2}+1\right)}
 \end{equation*}}
-\item $G=\frac{\partial W}{\partial A} - \left(\frac{\partial U}{\partial A}+\frac{\partial E_{k}}{\partial A}\right)$
-\item Finite Element Method (FEM) in Abaqus\texttrademark
+\item receding contact
+\item $\frac{G\left(R_{f,2}\right)}{G\left(R_{f,1}\right)}=\frac{R_{f,2}}{R_{f,1}},\frac{G\left(\bar{\varepsilon}_{x,2}\right)}{G\left(\bar{\varepsilon}_{x,1}\right)}=\frac{\bar{\varepsilon}^{2}_{x,2}}{\bar{\varepsilon}^{2}_{x,1}}$
+\item FEM + LEFM (VCCT)
 \item $2^{nd}$ order shape functions
-\item 6-nodes triangles \& 8-nodes quadrilaterals
+%\item 6-nodes triangles \& 8-nodes quadrilaterals
 \item regular mesh of quadrilaterals at the crack tip:
 \begin{itemize}[label=-]
-\item $AR\sim 1$
-\item $\delta=0.05^{\circ}$
+\item $AR\sim 1,\quad\delta=0.05^{\circ}$
+%\item $\delta=0.05^{\circ}$
 \end{itemize}
 \end{itemize}
 \end{column}
@@ -918,12 +919,12 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \end{frame}
 
 
-\section{Debond Energy Release Rate}
+\section{Debond Initiation}
 
-\subsection{Interaction of Debonds}
+\subsection{$\mathbf{\sigma_{rr}}$ vs $\mathbf{\tau_{r\theta}}$}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{rr}}$ vs $\mathbf{\tau_{r\theta}}$: radial stress vs tangential shear at the interface}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -932,25 +933,25 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni1.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-sigmar-notol.pdf}
 \end{figure}
 \end{column}
 \begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni1.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-taurt.pdf}
 \end{figure}
 \end{column}
 \end{columns}
 \vspace{-0.25cm}
-\includegraphics[width=0.275\textwidth]{twofibers-sameside-strainmagni1.pdf}
+\includegraphics[width=0.45\textwidth]{refAngle.pdf}
 \end{frame}
 
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{rr}}$ vs $\mathbf{\tau_{r\theta}}$: radial stress vs tangential shear at the interface}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -959,28 +960,62 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni3.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-sigmar.pdf}
 \end{figure}
 \end{column}
 \begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni3.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-taurt.pdf}
 \end{figure}
 \end{column}
 \end{columns}
 \vspace{-0.25cm}
+\includegraphics[width=0.45\textwidth]{refAngle.pdf}
+\end{frame}
+
+\subsection{$\sigma_{LHS}$}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{LHS}}$: local hydrostatic stress at the interface}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
 \begin{figure}
 \centering
-\includegraphics[width=0.325\textwidth]{twofibers-sameside-strainmagni3.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-p2D-notol.pdf}
 \end{figure}
+\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{2D}_{LHS}=\frac{\sigma_{rr}+\sigma_{\theta\theta}}{2}
+\end{equation*}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{vf60-nodamage-p3D-notol.pdf}
+\end{figure}
+\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{3D}_{LHS}=\frac{\sigma_{rr}+\sigma_{\theta\theta}+\sigma_{yy}}{3}
+\end{equation*}
+\end{column}
+\end{columns}
+\vspace{-0.3cm}
+\includegraphics[width=0.45\textwidth]{refAngle.pdf}
 \end{frame}
 
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{LHS}}$: local hydrostatic stress at the interface}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -989,26 +1024,35 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni21.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-p2D.pdf}
 \end{figure}
+\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{2D}_{LHS}=\frac{\sigma_{rr}+\sigma_{\theta\theta}}{2}
+\end{equation*}
 \end{column}
 \begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni21.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-p3D.pdf}
 \end{figure}
+\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{3D}_{LHS}=\frac{\sigma_{rr}+\sigma_{\theta\theta}+\sigma_{yy}}{3}
+\end{equation*}
 \end{column}
 \end{columns}
-\vspace{-0.25cm}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{twofibers-sameside-strainmagni21.pdf}
-\end{figure}
+\vspace{-0.3cm}
+\includegraphics[width=0.45\textwidth]{refAngle.pdf}
 \end{frame}
 
+\subsection{$\sigma_{vM}$}
+
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Crack Shielding}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{vM}}$: von Mises stress at the interface}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -1017,56 +1061,35 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-crackshield21.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-vM2D-notol.pdf}
 \end{figure}
+\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{2D}_{vM}=\sqrt{\left(\sigma_{rr}-\sigma_{\theta\theta}\right)^{2}+3\tau_{12}^{2}}
+\end{equation*}
 \end{column}
 \begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-crackshield21.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-vM3D.pdf}
 \end{figure}
+%\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{3D}_{LHS}=\frac{3}{2}s_{ij}s_{ij}\quad s_{ij}=\sigma_{ij}-\frac{1}{3}\sigma_{kk}\delta_{ij}
+\end{equation*}
 \end{column}
 \end{columns}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{twofibers-sameside-crackshielding21.pdf}
-\end{figure}
-\end{frame}
-
-\addtocounter{framenumber}{-1}
-
-\begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Crack Shielding}
-\vspace{-.75cm}
-\centering
-\begin{columns}[c]
-\centering
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-crackshield3.pdf}
-\end{figure}
-\end{column}
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-crackshield3.pdf}
-\end{figure}
-\end{column}
-\end{columns}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{twofibers-sameside-crackshielding3.pdf}
-\end{figure}
+\vspace{-0.3cm}
+\includegraphics[width=0.45\textwidth]{refAngle.pdf}
 \end{frame}
 
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Crack Shielding}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{vM}}$: von Mises stress at the interface}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -1075,27 +1098,35 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-crackshield1.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-vM2D.pdf}
 \end{figure}
+\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{2D}_{vM}=\sqrt{\left(\sigma_{rr}-\sigma_{\theta\theta}\right)^{2}+3\tau_{12}^{2}}
+\end{equation*}
 \end{column}
 \begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-crackshield1.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-vM3D.pdf}
 \end{figure}
+%\vspace{-0.5cm}
+\scriptsize
+\begin{equation*}
+\sigma^{3D}_{LHS}=\frac{3}{2}s_{ij}s_{ij}\quad s_{ij}=\sigma_{ij}-\frac{1}{3}\sigma_{kk}\delta_{ij}
+\end{equation*}
 \end{column}
 \end{columns}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{twofibers-sameside-crackshielding1.pdf}
-\end{figure}
+\vspace{-0.3cm}
+\includegraphics[width=0.45\textwidth]{refAngle.pdf}
 \end{frame}
 
-\subsection{Effect of $0^{\circ}$ ply thickness}
+\subsection{$\sigma_{I}$}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{I}}$: maximum principal stress at the interface}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -1104,56 +1135,25 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{1x1-i-vf60-GI-zero.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-sigmaI2D-notol.pdf}
 \end{figure}
 \end{column}
 \begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{1x1-i-vf60-GII-zero.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-sigmaI3D-notol.pdf}
 \end{figure}
 \end{column}
 \end{columns}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{onefiber-sameside-crackshielding1.pdf}
-\end{figure}
-\end{frame}
-
-\addtocounter{framenumber}{-1}
-
-\begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
-\vspace{-.75cm}
-\centering
-\begin{columns}[c]
-\centering
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{1x1-i-vf60-GI-free.pdf}
-\end{figure}
-\end{column}
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{1x1-i-vf60-GII-free.pdf}
-\end{figure}
-\end{column}
-\end{columns}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{onefiber-sameside-crackshielding1.pdf}
-\end{figure}
+\vspace{-0.3cm}
+\includegraphics[width=0.45\textwidth]{refAngle.pdf}
 \end{frame}
 
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
+\frametitle{\vspace{0.2cm}\small $\mathbf{\sigma_{I}}$: maximum principal stress at the interface}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -1162,56 +1162,36 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{1x1-i-vf60-GI-coupling.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-sigmaI2D.pdf}
 \end{figure}
 \end{column}
 \begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{1x1-i-vf60-GII-coupling.pdf}
+\includegraphics[width=\columnwidth]{vf60-nodamage-sigmaI3D.pdf}
 \end{figure}
 \end{column}
 \end{columns}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{onefiber-sameside-crackshielding1.pdf}
-\end{figure}
+\vspace{-0.3cm}
+\includegraphics[width=0.45\textwidth]{refAngle.pdf}
 \end{frame}
 
-\addtocounter{framenumber}{-1}
+\subsection{Summary}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
-\vspace{-.75cm}
+\frametitle{Summary}
+\vspace{-0.5cm}
 \centering
-\begin{columns}[c]
-\centering
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{1x1-i-vf60-GI.pdf}
-\end{figure}
-\end{column}
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{1x1-i-vf60-GII.pdf}
-\end{figure}
-\end{column}
-\end{columns}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{onefiber-sameside-crackshielding1.pdf}
-\end{figure}
+\begin{itemize}[label=\ding{212}]
+\item 
+\end{itemize}
 \end{frame}
 
-\subsection{Effect of $90^{\circ}$ ply thickness}
+\section{Debond Propagation}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $90^{\circ}$ ply thickness}
+\frametitle{\vspace{0.2cm}\small Estimation of $G_{Ic}$}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -1220,79 +1200,24 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-thick.pdf}
+\includegraphics[width=\columnwidth]{vf60-GIc-model.pdf}
+%\caption{$\lambda=0.3$}
 \end{figure}
 \end{column}
 \begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-thick.pdf}
+\includegraphics[width=\columnwidth]{vf60-GIc-lambda.pdf}
+%\caption{$11\times 11-1\cdot t_{90^{\circ}}$}
 \end{figure}
 \end{column}
 \end{columns}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{twofibers-sameside-crackshielding11.pdf}
-\end{figure}
-\end{frame}
-
-\addtocounter{framenumber}{-1}
-
-\begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $90^{\circ}$ ply thickness}
-\vspace{-.75cm}
-\centering
-\begin{columns}[c]
-\centering
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-thin.pdf}
-\end{figure}
-\end{column}
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-thin.pdf}
-\end{figure}
-\end{column}
-\end{columns}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{twofibers-sameside-crackshielding11.pdf}
-\end{figure}
-\end{frame}
-
-\addtocounter{framenumber}{-1}
-
-\begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $90^{\circ}$ ply thickness}
-\vspace{-.75cm}
-\centering
-\begin{columns}[c]
-\centering
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-extremethin.pdf}
-\end{figure}
-\end{column}
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-extremethin.pdf}
-\end{figure}
-\end{column}
-\end{columns}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{twofibers-sameside-crackshielding21-thin.pdf}
-\end{figure}
+\vspace{-0.2cm}
+\scriptsize
+\begin{equation*}
+G_{TOT}\geq G_{c}=G_{Ic}\left(1+\tan^{2}\left(\left(1-\lambda\right)\Psi_{G}\right)\right),\quad\Psi_{G}=tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right)
+\end{equation*}
 \end{frame}
 
 \section{Conclusions}

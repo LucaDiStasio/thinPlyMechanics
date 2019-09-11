@@ -80,7 +80,7 @@
 \RequirePackage{nicefrac}
 \RequirePackage{ifthen}
 \RequirePackage[section]{placeins}
-\RequirePackage{biblatex}
+\RequirePackage[style=ieee]{biblatex}
 %\RequirePackage[sectionbib]{bibunits}
 \RequirePackage[latin1]{inputenc}
 \RequirePackage{subcaption}

@@ -44,16 +44,22 @@
 
 \pgfmathsetmacro\xCT{\R*cos(30)}
 \pgfmathsetmacro\yCT{\R*sin(30)}
+\pgfmathsetmacro\xBO{0.5*\R*(cos(30)+cos(40))}
+\pgfmathsetmacro\yBO{0.5*\R*(sin(30)+sin(40))}
 \pgfmathsetmacro\xA{\R*cos(40)}
 \pgfmathsetmacro\yA{\R*sin(40)}
 \pgfmathsetmacro\xB{\R*cos(50)}
 \pgfmathsetmacro\yB{\R*sin(50)}
 \pgfmathsetmacro\xC{0.95*\R*cos(22)}
 \pgfmathsetmacro\yC{0.95*\R*sin(22)}
+\pgfmathsetmacro\xCC{0.5*\R*(0.95*cos(22)+cos(30))}
+\pgfmathsetmacro\yCC{0.5*\R*(0.95*sin(22)+sin(30))}
 \pgfmathsetmacro\xD{0.95*\R*cos(10)}
 \pgfmathsetmacro\yD{0.95*\R*sin(10)}
 \pgfmathsetmacro\xE{1.10*\R*cos(18)}
 \pgfmathsetmacro\yE{1.10*\R*sin(18)}
+\pgfmathsetmacro\xEE{0.5*\R*(1.1*cos(18)+cos(30))}
+\pgfmathsetmacro\yEE{0.5*\R*(1.1*sin(18)+sin(30))}
 \pgfmathsetmacro\xF{1.10*\R*cos(8)}
 \pgfmathsetmacro\yF{1.10*\R*sin(8)}
 
@@ -93,6 +99,49 @@
 
 \pgfmathsetmacro\xII{0.25*\R*cos(40)}
 \pgfmathsetmacro\yII{0.25*\R*sin(40)}
+
+\pgfmathsetmacro\xAtoB{0.5*(\xA+\xB)}
+\pgfmathsetmacro\yAtoB{0.5*(\yA+\yB)}
+\pgfmathsetmacro\xEtoF{0.5*(\xE+\xF)}
+\pgfmathsetmacro\yEtoF{0.5*(\yE+\yF)}
+\pgfmathsetmacro\xBtoBBF{0.5*(\xB+\xBBF)}
+\pgfmathsetmacro\yBtoBBF{0.5*(\yB+\yBBF)}
+\pgfmathsetmacro\xBtoBBM{0.5*(\xB+\xBBM)}
+\pgfmathsetmacro\yBtoBBM{0.5*(\yB+\yBBM)}
+\pgfmathsetmacro\xAtoABF{0.5*(\xA+\xABF)}
+\pgfmathsetmacro\yAtoABF{0.5*(\yA+\yABF)}
+\pgfmathsetmacro\xAtoABM{0.5*(\xA+\xABM)}
+\pgfmathsetmacro\yAtoABM{0.5*(\yA+\yABM)}
+\pgfmathsetmacro\xCTtoCTBF{0.5*(\xCT+\xCTBF)}
+\pgfmathsetmacro\yCTtoCTBF{0.5*(\yCT+\yCTBF)}
+\pgfmathsetmacro\xCTtoCTBM{0.5*(\xCT+\xCTBM)}
+\pgfmathsetmacro\yCTtoCTBM{0.5*(\yCT+\yCTBM)}
+\pgfmathsetmacro\xEtoEBM{0.5*(\xE+\xEBM)}
+\pgfmathsetmacro\yEtoEBM{0.5*(\yE+\yEBM)}
+\pgfmathsetmacro\xFtoFBM{0.5*(\xF+\xFBM)}
+\pgfmathsetmacro\yFtoFBM{0.5*(\yF+\yFBM)}
+\pgfmathsetmacro\xBBFtoABF{0.5*(\xBBF+\xABF)}
+\pgfmathsetmacro\yBBFtoABF{0.5*(\yBBF+\yABF)}
+\pgfmathsetmacro\xBBMtoABM{0.5*(\xBBM+\xABM)}
+\pgfmathsetmacro\yBBMtoABM{0.5*(\yBBM+\yABM)}
+\pgfmathsetmacro\xCTBFtoABF{0.5*(\xCTBF+\xABF)}
+\pgfmathsetmacro\yCTBFtoABF{0.5*(\yCTBF+\yABF)}
+\pgfmathsetmacro\xCTBMtoABM{0.5*(\xCTBM+\xABM)}
+\pgfmathsetmacro\yCTBMtoABM{0.5*(\yCTBM+\yABM)}
+\pgfmathsetmacro\xEBMtoFBM{0.5*(\xEBM+\xFBM)}
+\pgfmathsetmacro\yEBMtoFBM{0.5*(\yEBM+\yFBM)}
+\pgfmathsetmacro\xCTBMtoEBM{0.5*(\xCTBM+\xEBM)}
+\pgfmathsetmacro\yCTBMtoEBM{0.5*(\yCTBM+\yEBM)}
+\pgfmathsetmacro\xCtoCBF{0.5*(\xC+\xCBF)}
+\pgfmathsetmacro\yCtoCBF{0.5*(\yC+\yCBF)}
+\pgfmathsetmacro\xDtoDBF{0.5*(\xD+\xDBF)}
+\pgfmathsetmacro\yDtoDBF{0.5*(\yD+\yDBF)}
+\pgfmathsetmacro\xCtoD{0.5*(\xC+\xD)}
+\pgfmathsetmacro\yCtoD{0.5*(\yC+\yD)}
+\pgfmathsetmacro\xCTBFtoCBF{0.5*(\xCTBF+\xCBF)}
+\pgfmathsetmacro\yCTBFtoCBF{0.5*(\yCTBF+\yCBF)}
+\pgfmathsetmacro\xCBFtoDBF{0.5*(\xCBF+\xDBF)}
+\pgfmathsetmacro\yCBFtoDBF{0.5*(\yCBF+\yDBF)}
 
 \def\xFin{0.45}
 \pgfmathsetmacro\yFin{-sqrt(3)*\xFin+(\yCT+sqrt(3)*\xCT)}
@@ -141,9 +190,16 @@
     \fill \Point  circle[radius=0.75pt];
 }
 
+\foreach \Point in {(\xAtoB,\yAtoB),(\xBtoBBF,\yBtoBBF),(\xBtoBBM,\yBtoBBM),(\xAtoABF,\yAtoABF),(\xAtoABM,\yAtoABM),(\xCTtoCTBF,\yCTtoCTBF),(\xCTtoCTBM,\yCTtoCTBM),(\xEtoEBM,\yEtoEBM),(\xFtoFBM,\yFtoFBM),(\xBBMtoABM,\yBBMtoABM),(\xBBFtoABF,\yBBFtoABF),(\xCTBMtoABM,\yCTBMtoABM),(\xCTBFtoABF,\yCTBFtoABF),(\xEtoF,\yEtoF),(\xEBMtoFBM,\yEBMtoFBM),(\xCTBMtoEBM,\yCTBMtoEBM),(\xCtoD,\yCtoD),(\xCtoCBF,\yCtoCBF),(\xDtoDBF,\yDtoDBF),(\xCTBFtoCBF,\yCTBFtoCBF),(\xCBFtoDBF,\yCBFtoDBF)}{
+    \fill \Point  circle[radius=0.75pt];
+}
+
 \fill[fill=magenta] (\xCT,\yCT)  circle[radius=0.75pt];
+\fill[fill=purple] (\xBO,\yBO)  circle[radius=0.75pt];
 \fill[fill=magenta] (\xC,\yC)  circle[radius=0.75pt];
+\fill[fill=purple] (\xCC,\yCC)  circle[radius=0.75pt];
 \fill[fill=magenta] (\xE,\yE)  circle[radius=0.75pt];
+\fill[fill=purple] (\xEE,\yEE)  circle[radius=0.75pt];
 
 \node[anchor= west,text=green] at (0.25,0.075) {\Huge $\mathbf{\Delta\theta}$};
 \node[anchor= west,text=violet] at (0.45,0.34) {\Huge $\mathbf{\delta}$};
@@ -154,10 +210,16 @@
 \node[anchor= north east,text=green] at (\xFin,\yFin)  {\Huge $\mathbf{\theta,\hat{\underline{\theta}}}$};
 \draw[white,fill=white] (0.84*\xCT,0.95*\yCT) rectangle(0.97*\xCT,1.05*\yCT);
 \node[anchor= south east,text=magenta] at (0.98*\xCT,0.95*\yCT)  {\Huge \bf{q=1}};
+\draw[white,fill=white] (1.01*\xBO,1.01*\yBO) rectangle(1.15*\xBO,1.11*\yBO);
+\node[anchor= south west,text=purple] at (\xBO,\yBO)  {\Huge \bf{q=2}};
 \draw[white,fill=white] (0.85*\xC,0.76*\yC) rectangle(\xC,0.925*\yC);
 \node[anchor= north east,text=magenta] at (\xC,0.925*\yC)  {\Huge \bf{p=1}};
+\draw[white,fill=white] (0.85*\xCC,0.85*\yCC) rectangle(0.95*\xCC,\yCC);
+\node[anchor= north east,text=purple] at (\xCC,\yCC)  {\Huge \bf{p=2}};
 \draw[white,fill=white] (1.02*\xE,0.81*\yE) rectangle(1.15*\xE,0.99*\yE);
 \node[anchor= north west,text=magenta] at (1.01*\xE,0.975*\yE)  {\Huge \bf{p=1}};
+\draw[white,fill=white] (1.01*\xEE,\yEE) rectangle(1.15*\xEE,1.15*\yEE);
+\node[anchor= south west,text=purple] at (1.01*\xEE,\yEE)  {\Huge \bf{p=2}};
 
 \end{tikzpicture}
 

@@ -9,6 +9,10 @@
 
 \addbibresource{thesisreferences.bib}
 \addbibresource{paperA/refspaperA.bib}
+\addbibresource{paperB/refspaperB.bib}
+%\addbibresource{paperC/refspaperC.bib}
+%\addbibresource{paperD/refspaperD.bib}
+%\addbibresource{paperE/refspaperE.bib}
 
 \begin{document}
 
@@ -132,16 +136,16 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
 
 %-------------------------------------------------------------------
 \def\paperheader{Paper B}
-\def\papertitle{The Theory of Research}
-\def\paperauthorstring{John Doe and Jane Doe}
-\def\referencestring{Example Thesis, Internal Report, Lule{\aa} University of Technology, 2009.}
-\def\copyrightstring{2009, The Publisher, Reprinted with permission.}
+\def\papertitle{Energy release rate of the fiber/matrix interface crack in UD composites under transverse loading: effect of the fiber volume fraction and of the distance to the free surface and to non-adjacent debonds}
+\def\paperauthorstring{Luca Di Stasio, Janis Varna and Zoubir Ayadi}
+\def\referencestring{Theoretical and Applied Fracture Mechanics, Volume 103, October 2019, 102251.}
+\def\copyrightstring{2019, The Publisher, Reprinted with permission.}
 
 % The definitions above could just as well be put directly into the function
 % call below, but were explicitly defined to more clearly illustrate the
 % use of the function \makepaper.
 
-\makepaperaccepted
+\makepaper
   {\paperheader}
   {\papertitle}
   {\paperauthorstring}
@@ -150,7 +154,7 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
 
 % The actual contents is imported by un-commenting the \input line below.
 % Make sure the file exist.
-%\input{paper2.tex}
+\input{paper2.tex}
 
 %-------------------------------------------------------------------
 \def\paperheader{Paper C}

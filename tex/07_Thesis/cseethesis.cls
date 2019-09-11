@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LaTeX document class: cseethesis.cls
 %% Licentiate or doctoral thesis style file,
-%% Luleå Univ. of Tech., Sweden.
+%% Lulea Univ. of Tech., Sweden.
 %%
 %% Created by: Johan E. Carlson, November 5, 2002, originally named 
 %%             eisthesis.cls

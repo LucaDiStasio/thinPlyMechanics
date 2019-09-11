@@ -78,6 +78,7 @@
 \RequirePackage[sectionbib]{bibunits}
 \RequirePackage[latin1]{inputenc}
 \RequirePackage{titletoc}
+\RequirePackage{hyperref}
 
 % ******************************************************
 % Start defining and redefining old book style stuff

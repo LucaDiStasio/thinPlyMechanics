@@ -9,7 +9,7 @@
 
 \begin{document}
 \defaultbibliography{thesisreferences}     %% Change this only.
-\defaultbibliographystyle{plain}        %% Could be changed if you like 
+\defaultbibliographystyle{ieeetr}        %% Could be changed if you like 
                                            %% references typeset differently.
 %-------------------------------------------------------------------
 % Define title, author, etc.
@@ -79,7 +79,7 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
 
 \def\chaponequote{\dots a ``sage", as an anonymous writer has pointed out, ``calls up in the average mind the picture of something grey and pedantic if not green and aromatic"\\[.5\baselineskip]Arthur D. Little}
 \def\chaponequotetext{\dots a ``sage", as an anonymous writer has pointed out, ``calls up in the average mind the picture of something grey and pedantic if not green and aromatic".}
-\def\chaponequoteauthor{Arthur D. Little}
+\def\chaponequoteauthor{Arthur D. Little~\cite{Little1924}}
 \makechapter{A journey of scales}{A journey of scales}{A journey of scales\label{ch1}}
 \epigraph{\chaponequotetext}{\chaponequoteauthor}
 \input{chapter1.tex}
@@ -102,25 +102,25 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
 
 %-------------------------------------------------------------------
 \def\paperheader{Paper A}
-\def\papertitle{The Title of the Papers in the Thesis are Automatically Split In Several Lines if Necessary}
-\def\paperauthorstring{John Doe and Jane Doe}
-\def\referencestring{Example Thesis, Internal Report, Lule{\aa} University of Technology, 2002.}
-\def\copyrightstring{2002, The Publisher, Reprinted with permission.}
+\def\papertitle{Finite Element solution of the fiber/matrix interface crack problem: convergence properties and mode mixity of the Virtual Crack Closure Technique}
+\def\paperauthorstring{Luca Di Stasio and Zoubir Ayadi}
+\def\referencestring{Finite Elements in Analysis and Design, 2019.}
+%\def\copyrightstring{2002, The Publisher, Reprinted with permission.}
 
 % The definitions above could just as well be put directly into the function
 % call below, but were explicitly defined to more clearly illustrate the
 % use of the function \makepaper.
 
-\makepaper
+\makepapersubmitted
   {\paperheader}
   {\papertitle}
   {\paperauthorstring}
   {\referencestring}
-  {\copyrightstring}
+  %{\copyrightstring}
 
 % The actual contents is imported by un-commenting the \input line below.
 % Make sure the file exist.
-\input{paper1.tex}
+\input{paperA/paper1.tex}
 
 
 %-------------------------------------------------------------------

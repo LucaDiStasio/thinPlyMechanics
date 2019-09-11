@@ -41,7 +41,29 @@ Microscopic observations of debond growth, such as the one reported in Fig.~\ref
 
 \section{Representative Volume Elements (RVEs)}\label{paperD:sec:RVEs}
 
+Two families of RVE are studied in the present work. RVEs from both families:
+\begin{itemize}
+\item represent a Uni-Directional (UD) composite, infinite in all 3 directions (length, width and thickness);
+\item are solved using plain strain conditions, and thus represent a debond whose length along the fiber is much greater than its arc size;
+\item consider two linear, homogeneous, isotropic elastic phases, i.e. glass fiber and epoxy matrix, whose properties are reported in Table \ref{paperD:tab:phaseprop};
+\item possess a centrally placed partially debonded fiber and have a total of $n$ fibers along the horizontal direction (loading direction, transverse to composite $0^{\circ}$ direction) and $k$ in the vertical (i.e. through-the-thickness) direction;
+\item repeat infinitely along the horizontal direction in a mirror-like way (the next RVE to the right is the mirror image with respect to the right-side boundary) thanks to the application of coupling conditions on the horizontal displacement along the right and left sides of the element;
+\item are symmetric with respect to the horizontal axis, which allows the discretization of only half RVE through the application of symmetry boundary conditions on the lower side;
+\item are subject to tensile loading in the form of applied displacement corresponding to a $x$-strain level of $1\%$.
+\end{itemize}
+The distinction between the two families of RVE lies in the boundary conditions applied along the upper side.
 
+\begin{table}[!htbp]
+ \centering
+ \caption{Material properties of glass fiber and epoxy adopted in the present study.}
+ \begin{tabular}{cccc}
+\textbf{Material} & \textbf{$E\left[GPa\right]$}\ & \textbf{$\mu\left[GPa\right]$} & \textbf{$\nu\left[-\right]$} \\
+\midrule
+Glass fiber    & 70.0  & 29.2   & 0.2  \\
+Epoxy    & 3.5    & 1.25   & 0.4
+\end{tabular}
+\label{paperD:tab:phaseprop}
+\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 3. RESULTS AND DISCUSSION

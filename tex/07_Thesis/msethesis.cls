@@ -488,7 +488,7 @@
     \hrule
     \addcontentsline{toc}{chapter}{\sc References}
     %\putbib
-    \printbibliography
+    \printbibliography[heading=none]
     \cleardoublepage
 }
 

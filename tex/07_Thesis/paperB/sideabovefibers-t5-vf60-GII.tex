@@ -1,0 +1,179 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{3.pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={draw=white!80.0!black,font=\fontsize{19}{14}\selectfont,row sep=8pt},
+legend image post style={xscale=1.25,yscale=1.25},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+xmax=160.0,
+ymin=0.0,
+xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$\Delta\theta\left[^{\circ}\right]$},
+ylabel={$G_{II}\left[\nicefrac{J}{m^{2}}\right]$},
+% LEGEND ENTRIES
+%legend entries={{$3\times 2-free$},{$5\times 2-free$},{$5\times 3-free$},{$11\times 2-free$},{$11\times 6-free$},{$21\times 2-free$},{$21\times 11-free$},{$101\times 2-free$},{$101\times 11-free$},{$201\times 2-free$},{$201\times 11-free$}},
+legend entries={{$5\times 5-free$},{$11\times 5-free$},{$21\times 5-free$},{$101\times 5-free$},{$201\times 5-free$}},
+]
+
+
+
+% SF2, AF2
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+table{
+10.00	0.71666394
+20.00	1.50007363
+30.00	2.39628382
+40.00	3.10852234
+50.00	3.58792238
+60.00	3.80589293
+70.00	3.58043772
+80.00	3.10079302
+90.00	2.53226142
+100.00	1.72055000
+110.00	0.90779311
+120.00	0.40130416
+130.00	0.16186128
+140.00	0.05250992
+150.00	0.01054751
+};
+
+% SF5, AF2
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=square*,mark options={fill=white}]
+table{
+10.00	0.73000542
+20.00	1.57931289
+30.00	2.60926700
+40.00	3.48318357
+50.00	4.10956181
+60.00	4.43509316
+70.00	4.24069077
+80.00	3.75694315
+90.00	3.12315789
+100.00	2.13972685
+110.00	1.12856456
+120.00	0.49490667
+130.00	0.19441647
+140.00	0.05793346
+150.00	0.00836080
+};
+
+% SF10, AF2
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=*]
+table{
+10.00	0.73025895
+20.00	1.59723307
+30.00	2.65606980
+40.00	3.57187838
+50.00	4.24402208
+60.00	4.61065783
+70.00	4.43541732
+80.00	3.95162249
+90.00	3.30111073
+100.00	2.26969694
+110.00	1.19953316
+120.00	0.52643156
+130.00	0.20675383
+140.00	0.06150199
+150.00	0.00880908
+};
+
+% SF50, AF2
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*,mark options={fill=white}]
+table{
+10.00	0.73533903
+20.00	1.60928568
+30.00	2.69554750
+40.00	3.64864757
+50.00	4.36224812
+60.00	4.76723832
+70.00	4.61111460
+80.00	4.12821142
+90.00	3.46354624
+100.00	2.38918230
+110.00	1.26528187
+120.00	0.55582002
+130.00	0.21839415
+140.00	0.06497764
+150.00	0.00930841
+};
+
+% SF100, AF2
+\addplot[line width=\linewidth,mark size=\markersize,gray,smooth,mark=triangle*]
+table{
+10.00	0.73585276
+20.00	1.61092880
+30.00	2.70075125
+40.00	3.65891473
+50.00	4.37805574
+60.00	4.78821340
+70.00	4.63480469
+80.00	4.15219633
+90.00	3.48557173
+100.00	2.40551845
+110.00	1.27424583
+120.00	0.55985500
+130.00	0.21999040
+140.00	0.06545179
+150.00	0.00937626
+};
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

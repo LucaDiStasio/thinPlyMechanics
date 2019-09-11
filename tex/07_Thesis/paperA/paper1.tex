@@ -1,4 +1,4 @@
-%\begin{bibunit}[ieeetr]
+
 \thispagestyle{plain}
 \begin{center}
 \Large\textbf{Finite Element solution of the fiber/matrix interface crack problem: convergence properties and mode mixity of the Virtual Crack Closure Technique}\\
@@ -17,32 +17,32 @@ The bi-material interface arc crack has been the focus of interest in the compos
 
 \textbf{Keywords:} Fiber/matrix interface crack, Bi-material interface arc crack, Linear Elastic Fracture Mechanics (LEFM), Virtual Crack Closure Technique (VCCT), Mode separation, Convergence
 
-\section{Introduction}\label{sec:intro}
+\section{Introduction}\label{paperA:sec:intro}
 
 Bi-material interfaces represent the basic load transfer mechanism at the heart of Fiber Reinforced Polymer Composite (FRPC) materials. They are present at the macroscale, in the form of adhesive joints; at the mesoscale, as interfaces between layers with different orientations; at the microscale, as fiber-matrix interfaces. Bi-material interfaces have for long attracted the attention of researchers in Fracture Mechanics~\cite{Comninou1990,Hills1993}, due to their hidden complexity.\\
 The problem was first addressed in the 1950's by Williams~\cite{Williams1959}, who derived through a linear elastic asymptotic analysis the stress distribution around an \emph{open} crack (i.e. with crack faces nowhere in contact for any size of the crack) between two infinite half-planes of dissimilar materials. He found the existence of a strong oscillatory behavior in the stress singularity at the crack tip of the form
 
-\begin{equation}\label{eq:singularitywilliams}
+\begin{equation}\label{paperA:eq:singularitywilliams}
 r^{-\frac{1}{2}}\sin\left(\varepsilon\log r\right)\quad\text{with}\quad\varepsilon=\frac{1}{2\pi}\log\left(\frac{1-\beta}{1+\beta}\right),
 \end{equation}
 
-in both Mode I and Mode II. In Eq.~\ref{eq:singularitywilliams}, $\beta$ is one of the two parameters introduced by Dundurs~\cite{Dundurs1969} to characterize bi-material interfaces:
+in both Mode I and Mode II. In Eq.~\ref{paperA:eq:singularitywilliams}, $\beta$ is one of the two parameters introduced by Dundurs~\cite{Dundurs1969} to characterize bi-material interfaces:
 
-\begin{equation}\label{eq:dundursbeta}
+\begin{equation}\label{paperA:eq:dundursbeta}
 \beta=\frac{\mu_{2}\left(\kappa_{1}-1\right)-\mu_{1}\left(\kappa_{2}-1\right)}{\mu_{2}\left(\kappa_{1}+1\right)+\mu_{1}\left(\kappa_{2}+1\right)}
 \end{equation}
 
-where $\kappa=3-4\nu$ in plane strain and $\kappa=\frac{3-4\nu}{1+\nu}$ in plane stress, $\mu$ is the shear modulus, $\nu$ Poisson's coefficient, and indexes $1,2$ refer to the two bulk materials joined at the interface. Defining $a$ as the length of the crack, it was found that the size of the oscillatory region is in the order of $10^{-6}a$~\cite{Erdogan1963}. Given the oscillatory behaviour of the crack tip singularity of Eq.~\ref{eq:singularitywilliams}, the definition of Stress Intensity Factor (SIF) $\lim_{r\rightarrow 0}\sqrt{2\pi r}\sigma$ diverges and ceases to be valid~\cite{Comninou1990}. It implies that the Mode mixity problem at the crack tip is ill-posed.\\
+where $\kappa=3-4\nu$ in plane strain and $\kappa=\frac{3-4\nu}{1+\nu}$ in plane stress, $\mu$ is the shear modulus, $\nu$ Poisson's coefficient, and indexes $1,2$ refer to the two bulk materials joined at the interface. Defining $a$ as the length of the crack, it was found that the size of the oscillatory region is in the order of $10^{-6}a$~\cite{Erdogan1963}. Given the oscillatory behaviour of the crack tip singularity of Eq.~\ref{paperA:eq:singularitywilliams}, the definition of Stress Intensity Factor (SIF) $\lim_{r\rightarrow 0}\sqrt{2\pi r}\sigma$ diverges and ceases to be valid~\cite{Comninou1990}. It implies that the Mode mixity problem at the crack tip is ill-posed.\\
 It was furthermore observed, always in the context of Linear Elastic Fracture Mechanics (LEFM), that an interpenetration zone exists close to the crack tip~\cite{England1965,Malyshev1965} with a length in the order of $10^{-4}a$~\cite{England1965}. Following conclusions firstly proposed in~\cite{Malyshev1965}, the presence of a \emph{contact zone} in the crack tip neighborhood, of a length to be determined from the solution of the elastic problem, was introduced in~\cite{Comninou1977} and shown to provide a physically consistent solution to the straight bi-material interface crack problem.\\
 The curved bi-material interface crack, more often refered to as the fiber-matrix interface crack (or debond) due to its relevance in FRPCs, was first treated by England~\cite{England1966} and by Perlman and Sih~\cite{Perlman1967}, who provided the analytical solution of stress and displacement fields for a circular inclusion with respectively a single debond and an arbitrary number of debonds. Building on their work, Toya~\cite{Toya1974} particularized the solution and provided the expression of the Energy Release Rate (ERR) at the crack  tip. The same problems exposed previously for the \emph{open} straight bi-material crack were shown to exist also for the \emph{open} fiber-matrix interface crack: the presence of strong oscillations in the crack tip singularity and onset of crack face interpenetration at a critical flaw size.\footnote{For the fiber-matrix interface crack, flaw size is measured in terms of the angle $\Delta\theta$ subtended by half of the arc-crack, i.e. $a=2\Delta\theta$.}\\
 In order to treat cases more complex than the single partially debonded fiber in an infinite matrix of~\cite{England1966,Perlman1967,Toya1974}, numerical studies followed. In the 1990's, Par{\'{\i}}s and collaborators~\cite{Paris1996} developed a Boundary Element Method (BEM) with the use of discontinuous singular elements at the crack tip and the Virtual Crack Closure Integral (VCCI)~\cite{Irwin1958} for the evaluation of the Energy Release Rate (ERR). They validated their results~\cite{Paris1996} with respect to Toya's analytical solution~\cite{Toya1974} and analyzed the effect of BEM interface discretization on the stress field in the neighborhood of the crack tip~\cite{DelCano1997}. Following Comninou's work on the straight crack~\cite{Comninou1977}, they furthermore recognized the importance of contact to retrieve a physical solution avoiding interpenetration~\cite{Paris1996} and studied the effect of the contact zone on debond ERR~\cite{Varna1997a}. Their algorithm was then applied to investigate the fiber-matrix interface crack under different geometrical configurations and mechanical loadings ~\cite{Paris2007,Correa2007,Correa2011,Correa2013,Correa2014,Sandino2016,Sandino2018}.\\
 Recently the Finite Element Method (FEM) was also applied to the solution of the fiber-matrix interface crack problem~\cite{Zhuang2018,Varna2017,Zhuang2018a}, in conjunction with the Virtual Crack Closure Technique (VCCT)~\cite{Rybicki1977,Krueger2004} for the evaluation of the ERR at the crack tip. In~\cite{Zhuang2018}, the authors validated their model with respect to the BEM results of~\cite{Paris1996}, but no analysis of the effect of the discretization in the crack tip neighborhood comparable to~\cite{DelCano1997} was proposed. Thanks to the interest in evaluating the ERR of interlaminar delamination, different studies exist in the literature on the effect of mesh discretization on Mode I and Mode II ERR of the bi-material interface crack when evaluated with the VCCT in the context of the FEM~\cite{Sun1987,Manoharan1990,Sun1997}. However, no comparable analysis can be found in the literature on mode separation and convergence analysis of the VCCT when applied to the fiber-matrix interface crack (circular bi-material interface crack) problem in the context of a linear elastic FEM solution. In the present article, we first present the FEM formulation of the problem, together with the main geometrical characteristics, material properties, boundary conditions and loading. We then propose a vectorial formulation of the VCCT and express Mode I and Mode II ERR in terms of FEM natural variables. With this tool, we derive an analytical estimate of the ERR convergence and compare it with numerical results.
 
-\section{FEM formulation of the fiber-matrix interface crack problem}\label{sec:femmodel}
+\section{FEM formulation of the fiber-matrix interface crack problem}\label{paperA:sec:femmodel}
 
-In order to investigate the fiber-matrix interface crack problem, a 2-dimensional model of a single fiber inserted in a rectangular matrix element is considered (see Figure~\ref{fig:modelschem}). Total element length and height are respectively $2L$ and $L$, where $L$ is determined by the fiber radius $R_{f}$ and the fiber volume fraction $V_{f}$ by
+In order to investigate the fiber-matrix interface crack problem, a 2-dimensional model of a single fiber inserted in a rectangular matrix element is considered (see Figure~\ref{paperA:fig:modelschem}). Total element length and height are respectively $2L$ and $L$, where $L$ is determined by the fiber radius $R_{f}$ and the fiber volume fraction $V_{f}$ by
 
-\begin{equation}\label{eq:LVf}
+\begin{equation}\label{paperA:eq:LVf}
 L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}.
 \end{equation}
 
@@ -51,10 +51,10 @@ The fiber radius $R_{f}$ is assumed to be equal to $1\ \mu m$. This choice is no
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{paperA/RUC.pdf}
-\caption{Schematic of the model with its main parameters.}\label{fig:modelschem}
+\caption{Schematic of the model with its main parameters.}\label{paperA:fig:modelschem}
 \end{figure}
 
-As shown in Fig.~\ref{fig:modelschem}, the debond is placed symmetrically with respect to the $x$ axis and its size is characterized by the angle $\Delta\theta$ (which makes the full debond size equal to $2\Delta\theta$ and the full crack length equal to $R_{f}2{\Delta\theta}$). A region $\Delta\Phi$ of unknown size appears at the crack tip for large debond sizes (at least $\geq 60^{\circ}-80^{\circ}$), in which the crack faces are in contact with each other and free to slide. Frictionless contact is thus considered between the two crack faces to allow free sliding and avoid interpenetration. Symmetry with respect to the $x$ axis is applied on the lower boundary while the upper surface is left free. Kinematic coupling on the $x$-displacement is applied along the left and right sides of the model in the form of a constant $x$-displacement $\pm\bar{\varepsilon}_{x} L$, which corresponds to transverse strain $\bar{\varepsilon}_{x}$ equal to $1\%$ in the results here presented.
+As shown in Fig.~\ref{paperA:fig:modelschem}, the debond is placed symmetrically with respect to the $x$ axis and its size is characterized by the angle $\Delta\theta$ (which makes the full debond size equal to $2\Delta\theta$ and the full crack length equal to $R_{f}2{\Delta\theta}$). A region $\Delta\Phi$ of unknown size appears at the crack tip for large debond sizes (at least $\geq 60^{\circ}-80^{\circ}$), in which the crack faces are in contact with each other and free to slide. Frictionless contact is thus considered between the two crack faces to allow free sliding and avoid interpenetration. Symmetry with respect to the $x$ axis is applied on the lower boundary while the upper surface is left free. Kinematic coupling on the $x$-displacement is applied along the left and right sides of the model in the form of a constant $x$-displacement $\pm\bar{\varepsilon}_{x} L$, which corresponds to transverse strain $\bar{\varepsilon}_{x}$ equal to $1\%$ in the results here presented.
 
 \begin{table}[!htbp]
  \centering
@@ -65,16 +65,16 @@ As shown in Fig.~\ref{fig:modelschem}, the debond is placed symmetrically with r
 Glass fiber    & 70.0  & 29.2   & 0.2  \\
 Epoxy    & 3.5    & 1.25   & 0.4
 \end{tabular}
-\label{tab:phaseprop}
+\label{paperA:tab:phaseprop}
 \end{table}
 
-The model problem is solved with the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM software~\cite{abq12}. The model is meshed with second order, 2D, plane strain triangular (CPE6) and rectangular (CPE8) elements. A regular mesh of rectangular elements with almost unitary aspect ratio is used at the crack tip. The angular size $\delta$ of an element in the crack tip neighborhood represents the main parameter of the numerical analysis. The crack faces are modeled as element-based surfaces and a small-sliding contact pair interaction with no friction is imposed between them. The Mode I, Mode II and total Energy Release Rates (ERRs) (respectively referred to as $G_{I}$, $G_{II}$ and $G_{TOT}$) are evaluated using the VCCT~\cite{Krueger2004}, implemented in a in-house Python routine. A glass fiber-epoxy system is considered in the present work, and it is assumed that their response lies always in the linear elastic domain. The elastic properties of glass fiber and epoxy are reported in Table~\ref{tab:phaseprop}.
+The model problem is solved with the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM software~\cite{abq12}. The model is meshed with second order, 2D, plane strain triangular (CPE6) and rectangular (CPE8) elements. A regular mesh of rectangular elements with almost unitary aspect ratio is used at the crack tip. The angular size $\delta$ of an element in the crack tip neighborhood represents the main parameter of the numerical analysis. The crack faces are modeled as element-based surfaces and a small-sliding contact pair interaction with no friction is imposed between them. The Mode I, Mode II and total Energy Release Rates (ERRs) (respectively referred to as $G_{I}$, $G_{II}$ and $G_{TOT}$) are evaluated using the VCCT~\cite{Krueger2004}, implemented in a in-house Python routine. A glass fiber-epoxy system is considered in the present work, and it is assumed that their response lies always in the linear elastic domain. The elastic properties of glass fiber and epoxy are reported in Table~\ref{paperA:tab:phaseprop}.
 
 \section{Vectorial formulation of the Virtual Crack Closure Technique (VCCT)}
 
-In order to express the VCCT formulation of the ERR in terms of FEM variables, we need to introduce a few rotation matrices in order to represent the discretized representation (FE mesh) of a crack along a circular interface. The position of the crack tip is characterized by the angular size of the crack (see Sec.~\ref{sec:femmodel} and Fig.~\ref{fig:modelschem} for reference) and the rotation corresponding to the crack tip reference frame is represented by the matrix $\underline{\underline{R}}_{\Delta\theta}$ defined as
+In order to express the VCCT formulation of the ERR in terms of FEM variables, we need to introduce a few rotation matrices in order to represent the discretized representation (FE mesh) of a crack along a circular interface. The position of the crack tip is characterized by the angular size of the crack (see Sec.~\ref{paperA:sec:femmodel} and Fig.~\ref{paperA:fig:modelschem} for reference) and the rotation corresponding to the crack tip reference frame is represented by the matrix $\underline{\underline{R}}_{\Delta\theta}$ defined as
 
-\begin{equation}\label{eq:Rmatrix}
+\begin{equation}\label{paperA:eq:Rmatrix}
 \underline{\underline{R}}_{\Delta\theta}=\begin{bmatrix}
 \cos\left(\Delta\theta\right) & \sin\left(\Delta\theta\right) \\
 -\sin\left(\Delta\theta\right) & \cos\left(\Delta\theta\right)
@@ -83,7 +83,7 @@ In order to express the VCCT formulation of the ERR in terms of FEM variables, w
 
 Nodes belonging to the elements sharing the crack tip are involved in the VCCT estimation of the ERR and it is assumed that, given a sufficiently fine discretization, they are aligned with the crack propagation direction defined at the crack tip. However, irrespectively of how small the elements in the crack tip neighborhood are, a misalignment always exists with respect to the assumed crack propagation direction (in the crack tip reference frame). This is measured by the matrices $\underline{\underline{P}}_{\delta}\left(p\right)$, defined as
 
-\begin{equation}\label{eq:Pmatrix}
+\begin{equation}\label{paperA:eq:Pmatrix}
 \underline{\underline{P}}_{\delta}\left(p\right)=\begin{bmatrix}
 \cos\left(\left(1+\frac{1-p}{m}\right)\delta\right) & \sin\left(\left(1+\frac{1-p}{m}\right)\delta\right) \\
 -\sin\left(\left(1+\frac{1-p}{m}\right)\delta\right) & \cos\left(\left(1+\frac{1-p}{m}\right)\delta\right)
@@ -92,14 +92,14 @@ Nodes belonging to the elements sharing the crack tip are involved in the VCCT e
 
  and $\underline{\underline{Q}}_{\delta}\left(q\right)$, equal to
 
-\begin{equation}\label{eq:Qmatrix}
+\begin{equation}\label{paperA:eq:Qmatrix}
 \underline{\underline{Q}}_{\delta}\left(q\right)=\begin{bmatrix}
 \cos\left(\frac{q-1}{m}\delta\right) & \sin\left(\frac{q-1}{m}\delta\right) \\
 -\sin\left(\frac{q-1}{m}\delta\right) & \cos\left(\frac{q-1}{m}\delta\right)
 \end{bmatrix},
 \end{equation}
 
-respectively for the free and bonded nodes involved in the VCCT estimation. In Eqs.~\ref{eq:Pmatrix} and~\ref{eq:Qmatrix}, $\delta$ is the angular size of an element in the crack tip neighborhood (see Sec.~\ref{sec:femmodel} and Fig.~\ref{fig:modelschem}), $m$ is the order of the element shape functions and $p,q$ are indices referring to the nodes belonging respectively to free and bonded elements sharing the crack tip. Introducing the permutation matrix
+respectively for the free and bonded nodes involved in the VCCT estimation. In Eqs.~\ref{paperA:eq:Pmatrix} and~\ref{paperA:eq:Qmatrix}, $\delta$ is the angular size of an element in the crack tip neighborhood (see Sec.~\ref{paperA:sec:femmodel} and Fig.~\ref{paperA:fig:modelschem}), $m$ is the order of the element shape functions and $p,q$ are indices referring to the nodes belonging respectively to free and bonded elements sharing the crack tip. Introducing the permutation matrix
 
 
 \begin{equation}
@@ -111,11 +111,11 @@ respectively for the free and bonded nodes involved in the VCCT estimation. In E
 
 it is possible to express the derivatives of rotation matrices $\underline{\underline{R}}_{\Delta\theta}$, $\underline{\underline{P}}_{\delta}$ and $\underline{\underline{Q}}_{\delta}$ with respect to their argument:
 
-\begin{equation}\label{eq:rotmatdev}
+\begin{equation}\label{paperA:eq:rotmatdev}
 \frac{\partial \underline{\underline{R}}_{\Delta\theta}}{\partial \Delta\theta}=\underline{\underline{D}}\cdot\underline{\underline{R}}_{\Delta\theta},\quad\frac{\partial \underline{\underline{P}}_{\delta}}{\partial \delta}=\left(1+\frac{1-p}{m}\right)\underline{\underline{D}}\cdot\underline{\underline{P}}_{\delta},\quad\frac{\partial \underline{\underline{Q}}_{\delta}}{\partial \delta}=\frac{q-1}{m}\underline{\underline{D}}\cdot\underline{\underline{Q}}_{\delta}.
 \end{equation}
 
-By means of Eqs.~\ref{eq:Pmatrix} and~\ref{eq:Qmatrix}, we can express the crack tip forces $
+By means of Eqs.~\ref{paperA:eq:Pmatrix} and~\ref{paperA:eq:Qmatrix}, we can express the crack tip forces $
 \underline{F}_{xy}=\begin{bmatrix}
 F_{x} \\
 F_{y}
@@ -125,7 +125,7 @@ u_{x} \\
 u_{y}
 \end{bmatrix}$ in the crack tip reference frame (where the tangential direction $\theta$ correspond to the direction of crack propagation) while taking into account the misalignment to the finite  discretization as
 
-\begin{equation}\label{eq:FUrot}
+\begin{equation}\label{paperA:eq:FUrot}
 \underline{F}_{r\theta}=\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy}\qquad\underline{u}_{r\theta}=\underline{\underline{P}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{u}_{xy}
 \end{equation}
 
@@ -139,24 +139,24 @@ u_{\theta}
 
 The crack tip forces can be expressed as a function of the crack opening displacement as
 
-\begin{equation}\label{eq:ctforce1}
+\begin{equation}\label{paperA:eq:ctforce1}
 \underline{F}_{xy}=\underline{\underline{K}}_{xy}\underline{u}_{xy}+\underline{\widetilde{F}}_{xy},
 \end{equation}
 
 where $\underline{\underline{K}}_{xy}$ is in general a full matrix of the form $\underline{\underline{K}}_{xy}=\begin{bmatrix}
 K_{xx}  K_{xy}\\
 K_{yx}  K_{yy}
-\end{bmatrix}$ and $\underline{\widetilde{F}}_{xy}$ represents the effect of the rest of the FE solution through the remaining nodes of the elements attached to the crack tip. As such, the term $\underline{\widetilde{F}}_{xy}$ can be expressed as a linear combination of the solution vector $\underline{u}_{N}$ of nodal displacements of the form $\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}$. Equation~\ref{eq:ctforce1} thus become
+\end{bmatrix}$ and $\underline{\widetilde{F}}_{xy}$ represents the effect of the rest of the FE solution through the remaining nodes of the elements attached to the crack tip. As such, the term $\underline{\widetilde{F}}_{xy}$ can be expressed as a linear combination of the solution vector $\underline{u}_{N}$ of nodal displacements of the form $\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}$. Equation~\ref{paperA:eq:ctforce1} thus become
 
-\begin{equation}\label{eq:ctforce2}
+\begin{equation}\label{paperA:eq:ctforce2}
 \underline{F}_{xy}=\underline{\underline{K}}_{xy}\underline{u}_{xy}+\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}.
 \end{equation}
 
-An exemplifying derivation of the relationships expressed in Equations~\ref{eq:ctforce1} and~\ref{eq:ctforce2} can be found in \ref{app:ctforcesexample}. It is worthwhile to observe that another author~\cite{Valvo2011} proposed a relationship of the form $\underline{F}_{xy}=\underline{\underline{K}}_{xy}\underline{u}_{xy}$. However, in~\cite{Valvo2011}, this relationship is assumed \emph{a priori} and manipulated to propose a revised version of the VCCT, based on the assumption that the matrix $\underline{\underline{K}}_{xy}$ should be diagonal to provide physically-consistent fracture mode partitioning. On the other hand, in the present work we derive the relationships of Eqs.~\ref{eq:ctforce1} and~\ref{eq:ctforce2} from the formulation of the Finite Element Method. According to our derivation, it seems correct that the matrix $\underline{\underline{K}}_{xy}$ should not in general be diagonal in order to take into account Poisson's effect. In fact, a positive crack opening displacement would cause a transverse displacement in the neighborhood of the crack tip. Given that material properties are different on the two sides of a bi-material interface, a net shear would be applied to the crack tip which would correspond to a net contribution to the crack tip force related to crack shear displacement. The analytical derivations presented in \ref{app:ctforcesexample} confirm these physical considerations.\\
-Based upon the work of Raju~\cite{Raju1987}, we introduce the matrix $\underline{\underline{T}}_{pq}$ to represent the weights needed in the VCCT to account for the use of singular elements. As already done previously, indices $p$ and $q$ refer to nodes placed respectively on the free (crack face) and bonded side of the crack tip. Nodes are enumerated so that the crack tip has always index $1$, i.e. the higher the index the further the node is from the crack tip. Matrix $\underline{\underline{T}}_{pq}$ has always a size of $d\times d$, where $d=2$ for a $2D$ problem and $d=3$ for a $3D$ problem. An element $\underline{\underline{T}}_{pq}\left(i,j\right)$ with $i,j=1,\dots,d$ represents the weight to be assigned to the product of component $i$ of the displacement extracted at node $p$ with component $j$ of the force extracted at node $q$. The expression of  for quadrilateral elements with or without singularity is reported in \ref{app:Tpq}. Notice that, given $m$ is the order of the element shape functions, the element side has $m+1$ nodes and this represents the upper limit of indices $p$ and $q$.\\%$\underline{\underline{T}}_{pq}$
+An exemplifying derivation of the relationships expressed in Equations~\ref{paperA:eq:ctforce1} and~\ref{paperA:eq:ctforce2} can be found in \ref{paperA:app:ctforcesexample}. It is worthwhile to observe that another author~\cite{Valvo2011} proposed a relationship of the form $\underline{F}_{xy}=\underline{\underline{K}}_{xy}\underline{u}_{xy}$. However, in~\cite{Valvo2011}, this relationship is assumed \emph{a priori} and manipulated to propose a revised version of the VCCT, based on the assumption that the matrix $\underline{\underline{K}}_{xy}$ should be diagonal to provide physically-consistent fracture mode partitioning. On the other hand, in the present work we derive the relationships of Eqs.~\ref{paperA:eq:ctforce1} and~\ref{paperA:eq:ctforce2} from the formulation of the Finite Element Method. According to our derivation, it seems correct that the matrix $\underline{\underline{K}}_{xy}$ should not in general be diagonal in order to take into account Poisson's effect. In fact, a positive crack opening displacement would cause a transverse displacement in the neighborhood of the crack tip. Given that material properties are different on the two sides of a bi-material interface, a net shear would be applied to the crack tip which would correspond to a net contribution to the crack tip force related to crack shear displacement. The analytical derivations presented in \ref{paperA:app:ctforcesexample} confirm these physical considerations.\\
+Based upon the work of Raju~\cite{Raju1987}, we introduce the matrix $\underline{\underline{T}}_{pq}$ to represent the weights needed in the VCCT to account for the use of singular elements. As already done previously, indices $p$ and $q$ refer to nodes placed respectively on the free (crack face) and bonded side of the crack tip. Nodes are enumerated so that the crack tip has always index $1$, i.e. the higher the index the further the node is from the crack tip. Matrix $\underline{\underline{T}}_{pq}$ has always a size of $d\times d$, where $d=2$ for a $2D$ problem and $d=3$ for a $3D$ problem. An element $\underline{\underline{T}}_{pq}\left(i,j\right)$ with $i,j=1,\dots,d$ represents the weight to be assigned to the product of component $i$ of the displacement extracted at node $p$ with component $j$ of the force extracted at node $q$. The expression of  for quadrilateral elements with or without singularity is reported in \ref{paperA:app:Tpq}. Notice that, given $m$ is the order of the element shape functions, the element side has $m+1$ nodes and this represents the upper limit of indices $p$ and $q$.\\%$\underline{\underline{T}}_{pq}$
 By using matrix $\underline{\underline{T}}_{pq}$, it is possible to express the total ERR $G$ evaluated with the VCCT as
 
-\begin{equation}\label{eq:gtot}
+\begin{equation}\label{paperA:eq:gtot}
 G_{TOT} = \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{r\theta,q}\right).
 \end{equation}
 
@@ -165,13 +165,13 @@ G_{I} \\
 G_{II}
 \end{bmatrix}$ of fracture mode ERRs, Mode I and Mode II ERR evaluated with the VCCT can be expressed as
 
-\begin{equation}\label{eq:g}
+\begin{equation}\label{paperA:eq:g}
 \underline{G} =\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{F}_{r\theta,q}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\right),
 \end{equation}
 
-where $Diag\left(\right)$ is the function that extracts the main diagonal of the input matrix as a column vector. Substituting Equations~\ref{eq:FUrot} and~\ref{eq:ctforce2} in Equations~\ref{eq:gtot} and~\ref{eq:g}, we can express the Mode I, Mode II and total Energy Release Rate as a function of the crack displacements and the FE solution (more details in \ref{app:ctforcesexample}) as
+where $Diag\left(\right)$ is the function that extracts the main diagonal of the input matrix as a column vector. Substituting Equations~\ref{paperA:eq:FUrot} and~\ref{paperA:eq:ctforce2} in Equations~\ref{paperA:eq:gtot} and~\ref{paperA:eq:g}, we can express the Mode I, Mode II and total Energy Release Rate as a function of the crack displacements and the FE solution (more details in \ref{paperA:app:ctforcesexample}) as
 
-\begin{equation}\label{eq:gtotlong}
+\begin{equation}\label{paperA:eq:gtotlong}
 \begin{split}
 G_{TOT} =&\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{K}}_{xy,q}\underline{u}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\&+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\widetilde{F}}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)
 \end{split}
@@ -191,9 +191,9 @@ G_{II}
 
 \section{Rotational invariance of $G_{TOT}$}
 
-Recalling Equation~\ref{eq:gtotlong} and observing that matrix $\underline{\underline{T}}_{pq}$ is always equal to the identity matrix pre-multiplied by a suitable real constant (see Eq.~\ref{eq:Tpq} in \ref{app:Tpq}), the total Energy Release Rate can be rewritten as
+Recalling Equation~\ref{paperA:eq:gtotlong} and observing that matrix $\underline{\underline{T}}_{pq}$ is always equal to the identity matrix pre-multiplied by a suitable real constant (see Eq.~\ref{paperA:eq:Tpq} in \ref{paperA:app:Tpq}), the total Energy Release Rate can be rewritten as
 
-\begin{equation}\label{eq:gtotlong1}
+\begin{equation}\label{paperA:eq:gtotlong1}
 \begin{split}
 G_{TOT}&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\left(\underline{\underline{K}}_{xy,q}\underline{u}_{xy,q}+\underline{\widetilde{F}}_{xy,q}\right)\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\right)=\\
 &=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\right),
@@ -202,23 +202,23 @@ G_{TOT}&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underlin
 
 where $\underline{F}_{xy}$ and $\underline{u}_{xy}$ are the vectors of respectively the crack tip forces and crack displacements in the global ($x-y$) reference frame. Given that $\underline{\underline{Q}}_{\delta}$, $\underline{\underline{P}}_{\delta}$ and $\underline{\underline{R}}_{\Delta\theta}$ all represent a linear transformation (a rigid rotation in particular), the invariance of the trace to linear transformations ensures that
 
-\begin{equation}\label{eq:gtotlong2}
+\begin{equation}\label{paperA:eq:gtotlong2}
 \begin{split}
 G_{TOT}&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\right)=\\
 &=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\right).
 \end{split}
 \end{equation}
 
-As $G_{TOT}$ was defined according to Equation~\ref{eq:gtot} and given that $Tr\left(AB\right)=Tr\left(BA\right)$, it holds that
+As $G_{TOT}$ was defined according to Equation~\ref{paperA:eq:gtot} and given that $Tr\left(AB\right)=Tr\left(BA\right)$, it holds that
 
-\begin{equation}\label{eq:gtotrotinv}
+\begin{equation}\label{paperA:eq:gtotrotinv}
 \begin{split}
 G_{TOT} &= \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{r\theta,q}=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{F}_{r\theta,q}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\right)=\\
 &=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underline{F}_{xy,q}\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\right)=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}\underline{u}_{xy,p}^{T}\underline{\underline{T}}_{pq}^{T}\underline{F}_{xy,q}
 \end{split}
 \end{equation}
 
-which shows that the total Energy Release Rate is invariant to rigid rotations and can be calculated equivalently with forces and displacements expressed in the local crack tip reference frame or the global reference frame. The analytical result is confirmed by the numerical solution of the fiber-matrix interface crack with different element orders and model fiber volume fractions, as shown in Figure~\ref{fig:gtotrotinvnum}.
+which shows that the total Energy Release Rate is invariant to rigid rotations and can be calculated equivalently with forces and displacements expressed in the local crack tip reference frame or the global reference frame. The analytical result is confirmed by the numerical solution of the fiber-matrix interface crack with different element orders and model fiber volume fractions, as shown in Figure~\ref{paperA:fig:gtotrotinvnum}.
 
 \begin{figure}[!h]
 \centering
@@ -242,10 +242,10 @@ which shows that the total Energy Release Rate is invariant to rigid rotations a
        \caption{$V_{f}=40\%$, $2^{nd}$ order elements, $\delta=0.05^{\circ}$ .}
     \end{subfigure}
 
-\caption{Numerical invariance of the total Energy Release Rate: $G_{TOT}$ computed with the VCCT with rotated forces and displacements (label \emph{rotated}), with the VCCT with forces and displacements in the global reference frame (label \emph{unrotated}) and with J-integral method (label \emph{J-integral}).}\label{fig:gtotrotinvnum}
+\caption{Numerical invariance of the total Energy Release Rate: $G_{TOT}$ computed with the VCCT with rotated forces and displacements (label \emph{rotated}), with the VCCT with forces and displacements in the global reference frame (label \emph{unrotated}) and with J-integral method (label \emph{J-integral}).}\label{paperA:fig:gtotrotinvnum}
 \end{figure}
 
-The result of Equation~\ref{eq:gtotrotinv} has also physical implications:
+The result of Equation~\ref{paperA:eq:gtotrotinv} has also physical implications:
 
 \begin{itemize}[label={--}]
 \item given that stress and displacement fields at the crack tip are the same, two cracks with different crack paths are energetically equivalent with respect to the total Energy Release Rate;
@@ -256,7 +256,7 @@ The result of Equation~\ref{eq:gtotrotinv} has also physical implications:
 
 \subsection{Analytical considerations}
 
-Substituting Equations~\ref{eq:rotmatdev} in the derivative of Equation~\ref{eq:g}, we can investigate the dependency of Mode I and Mode II ERR with respect to the size $\delta$ of an element in the crack tip neighborhood through
+Substituting Equations~\ref{paperA:eq:rotmatdev} in the derivative of Equation~\ref{paperA:eq:g}, we can investigate the dependency of Mode I and Mode II ERR with respect to the size $\delta$ of an element in the crack tip neighborhood through
 
 \begin{equation}
 \scriptsize
@@ -271,7 +271,7 @@ Substituting Equations~\ref{eq:rotmatdev} in the derivative of Equation~\ref{eq:
 
 which, after refactoring, provides
 
-\begin{equation}\label{eq:Gdev}
+\begin{equation}\label{paperA:eq:Gdev}
 \scriptsize
 \begin{split}
 \frac{\partial \underline{G}}{\partial \delta}=&\frac{1}{\delta}\underline{G}+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\left(\underline{\underline{K}}_{xy}\underline{u}_{xy}+\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\right)\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{D}}^{T}\underline{\underline{T}}_{pq}^{T}\right)+\\
@@ -283,35 +283,35 @@ which, after refactoring, provides
 
 Following the asymptotic analysis of~\cite{Williams1959,Comninou1990}, in the case of an \emph{open crack} the displacement in the crack tip neighborhood will have a functional form of the type
 
-\begin{equation}\label{eq:basicasymptotic}
+\begin{equation}\label{paperA:eq:basicasymptotic}
 u\left(\delta\right)\sim \sqrt{\delta}\left(\sin,\cos\right)\left(\epsilon\log{\delta}\right)\quad\text{with}\quad\epsilon=\frac{1}{2\pi}\log{\left(\frac{1-\beta}{1+\beta}\right)}
 \end{equation}
 
-and $\beta$ is Dundurs' parameter introduced in Section~\ref{sec:intro}. Application of Equation~\ref{eq:basicasymptotic} to the terms on the right hand side of Eq.~\ref{eq:Gdev} provides:
+and $\beta$ is Dundurs' parameter introduced in Section~\ref{paperA:sec:intro}. Application of Equation~\ref{paperA:eq:basicasymptotic} to the terms on the right hand side of Eq.~\ref{paperA:eq:Gdev} provides:
 
-\begin{equation}\label{eq:asym1}
+\begin{equation}\label{paperA:eq:asym1}
 \underline{u}_{xy},\underline{u}_{N}\sim u\left(\delta\right)\sim\sqrt{\delta}\left(\sin,\cos\right)\left(\epsilon\log{\delta}\right)\xrightarrow{\delta\rightarrow 0}0;
 \end{equation}
 
-\begin{equation}\label{eq:asym2}
+\begin{equation}\label{paperA:eq:asym2}
 \underline{u}_{xy}\underline{u}_{xy}^{T},\underline{u}_{N}\underline{u}_{xy}^{T}\sim u^{2}\left(\delta\right)\sim\delta\left(\sin^{2},\cos^{2},\sin\cdot\cos\right)\left(\epsilon\log{\delta}\right)\xrightarrow{\delta\rightarrow 0}0;
 \end{equation}
 
-\begin{equation}\label{eq:asym3}
+\begin{equation}\label{paperA:eq:asym3}
 \frac{\partial \underline{u}_{xy}}{\partial \delta}\underline{u}_{xy}^{T},\frac{\partial \underline{u}_{N}}{\partial \delta}\underline{u}_{xy}^{T}\sim -\frac{1}{2}\left(\sin^{2},\cos^{2},\sin\cdot\cos\right)\left(\epsilon\log{\delta}\right)+\left(-\sin^{2},\cos^{2},\pm\sin\cdot\cos\right)\left(\epsilon\log{\delta}\right)\xrightarrow{\delta\rightarrow 0}finite;
 \end{equation}
 
-\begin{equation}\label{eq:asym4}
+\begin{equation}\label{paperA:eq:asym4}
 \underline{G}\sim\frac{1}{\delta}\underline{u}_{xy}\underline{u}_{xy}^{T}\sim \frac{1}{\delta}u^{2}\left(\delta\right)\sim\left(\sin^{2},\cos^{2},\sin\cdot\cos\right)\left(\epsilon\log{\delta}\right)\xrightarrow{\delta\rightarrow 0}finite.
 \end{equation}
 
-In Equations~\ref{eq:asym1}-\ref{eq:asym4}, the multiplication by a trigonometric function of the type $\left(\sin,\cos,\sin^{2},\cos^{2},\sin\cdot\cos\right)$ prevents the divergence of the asymptote. Recalling Eqs.~\ref{eq:Pmatrix} and~\ref{eq:Qmatrix}, in the limit of $\delta\rightarrow 0$ the rotation matrices become equal to the identity matrix:
+In Equations~\ref{paperA:eq:asym1}-\ref{paperA:eq:asym4}, the multiplication by a trigonometric function of the type $\left(\sin,\cos,\sin^{2},\cos^{2},\sin\cdot\cos\right)$ prevents the divergence of the asymptote. Recalling Eqs.~\ref{paperA:eq:Pmatrix} and~\ref{paperA:eq:Qmatrix}, in the limit of $\delta\rightarrow 0$ the rotation matrices become equal to the identity matrix:
 
-\begin{equation}\label{eq:PQasym}
+\begin{equation}\label{paperA:eq:PQasym}
 \underline{\underline{P}}_{\delta},\underline{\underline{Q}}_{\delta}\xrightarrow{\delta\rightarrow 0}\begin{bmatrix}1&0\\0&1\end{bmatrix}.
 \end{equation}
 
-Applying the results of Equations~\ref{eq:asym1}-\ref{eq:PQasym} to Eq.~\ref{eq:Gdev}, it can be shown that the derivative of $\underline{G}$ can be split in a factor that goes to $0$ in the limit of $\delta\rightarrow 0$ and in a factor independent of $\delta$:
+Applying the results of Equations~\ref{paperA:eq:asym1}-\ref{paperA:eq:PQasym} to Eq.~\ref{paperA:eq:Gdev}, it can be shown that the derivative of $\underline{G}$ can be split in a factor that goes to $0$ in the limit of $\delta\rightarrow 0$ and in a factor independent of $\delta$:
 
 \begin{equation}
 \lim_{\delta\rightarrow 0}\frac{\partial \underline{G}}{\partial \delta}\sim\frac{1}{\delta}\left(\cancelto{0}{\underline{F}\left(\delta\right)}+\underline{C}\right).
@@ -325,7 +325,7 @@ Thus, asymptotically, the Mode I and Mode II Energy Release Rate behave like the
 
 \subsection{Numerical results}
 
-Evaluations of the Mode I, Mode II and total Energy Release Rate using the VCCT applied to the FE solution of the fiber-matrix interface crack in the single fiber model of Sec.~\ref{sec:femmodel} are reported respectively in Fig.~\ref{fig:ginum}, Fig.~\ref{fig:giinum} and Fig.~\ref{fig:gtotnum}.
+Evaluations of the Mode I, Mode II and total Energy Release Rate using the VCCT applied to the FE solution of the fiber-matrix interface crack in the single fiber model of Sec.~\ref{paperA:sec:femmodel} are reported respectively in Fig.~\ref{paperA:fig:ginum}, Fig.~\ref{paperA:fig:giinum} and Fig.~\ref{paperA:fig:gtotnum}.
 
 \begin{figure}[!h]
 \centering
@@ -349,10 +349,10 @@ Evaluations of the Mode I, Mode II and total Energy Release Rate using the VCCT 
        \caption{$V_{f}=40\%$, $2^{nd}$ order elements.}
     \end{subfigure}
 
-\caption{Effect of the size $\delta$ of an element at the crack tip on Mode I ERR.}\label{fig:ginum}
+\caption{Effect of the size $\delta$ of an element at the crack tip on Mode I ERR.}\label{paperA:fig:ginum}
 \end{figure}
 
-Results for Mode I ERR in Fig.~\ref{fig:ginum} show clearly the transition from the \emph{open} crack regime, where Mode I ERR is different from zero, to the \emph{closed} crack regime of the debond, where $G_{I}=0$. Looking at Fig.~\ref{fig:ginum}, the crack is \emph{open} for $\Delta\theta\leq60^{\circ}$ and it is \emph{closed}, i.e. a contact zone is present, for $\Delta\theta\geq70^{\circ}$. As expected from the analysis of the previous section, and given that Mode I ERR is different from zero only in the \emph{open} crack regime, a significant dependence on the element size $\delta$ can be observed in  Fig.~\ref{fig:ginum} when using both $1^{st}$ and $2^{nd}$ order elements and with both an effectively infinite ($V_{f}=0.1\%$) and finite size ($V_{f}=40\%$) matrix. At first sight, it is immediate to see from Fig.~\ref{fig:ginum} that a decrease in $\delta$ leads to a decrease in $G_{I}$. However, two further effects can be observed due to the refinement of the mesh at the crack tip, i.e. the decrease of the element size $\delta$. First, the occurrence of the peak $G_{I}$ is shifted to lower angles for very low volume fractions: it occurs at $\Delta\theta=30^{\circ}$ with $\delta=1.0^{\circ}, 0.5^{\circ}$ and at $\Delta\theta=20^{\circ}$ with $\delta\leq0.25^{\circ}$ for both $1^{st}$ and $2^{nd}$ order elements and $V_{f}=0.1\%$. Second, the apperance of the contact zone, i.e. the switch to the \emph{closed} crack regime, is anticipated to smaller debonds: it occurs at  $\Delta\theta=70^{\circ}$ with $\delta\geq0.2^{\circ}$ and at $\Delta\theta=60^{\circ}$ with $\delta<0.2^{\circ}$ for both $1^{st}$ and $2^{nd}$ order elements and both $V_{f}=0.1\%$ and $V_{f}=40\%$.
+Results for Mode I ERR in Fig.~\ref{paperA:fig:ginum} show clearly the transition from the \emph{open} crack regime, where Mode I ERR is different from zero, to the \emph{closed} crack regime of the debond, where $G_{I}=0$. Looking at Fig.~\ref{paperA:fig:ginum}, the crack is \emph{open} for $\Delta\theta\leq60^{\circ}$ and it is \emph{closed}, i.e. a contact zone is present, for $\Delta\theta\geq70^{\circ}$. As expected from the analysis of the previous section, and given that Mode I ERR is different from zero only in the \emph{open} crack regime, a significant dependence on the element size $\delta$ can be observed in  Fig.~\ref{paperA:fig:ginum} when using both $1^{st}$ and $2^{nd}$ order elements and with both an effectively infinite ($V_{f}=0.1\%$) and finite size ($V_{f}=40\%$) matrix. At first sight, it is immediate to see from Fig.~\ref{paperA:fig:ginum} that a decrease in $\delta$ leads to a decrease in $G_{I}$. However, two further effects can be observed due to the refinement of the mesh at the crack tip, i.e. the decrease of the element size $\delta$. First, the occurrence of the peak $G_{I}$ is shifted to lower angles for very low volume fractions: it occurs at $\Delta\theta=30^{\circ}$ with $\delta=1.0^{\circ}, 0.5^{\circ}$ and at $\Delta\theta=20^{\circ}$ with $\delta\leq0.25^{\circ}$ for both $1^{st}$ and $2^{nd}$ order elements and $V_{f}=0.1\%$. Second, the apperance of the contact zone, i.e. the switch to the \emph{closed} crack regime, is anticipated to smaller debonds: it occurs at  $\Delta\theta=70^{\circ}$ with $\delta\geq0.2^{\circ}$ and at $\Delta\theta=60^{\circ}$ with $\delta<0.2^{\circ}$ for both $1^{st}$ and $2^{nd}$ order elements and both $V_{f}=0.1\%$ and $V_{f}=40\%$.
 
 \begin{figure}[!h]
 \centering
@@ -376,10 +376,10 @@ Results for Mode I ERR in Fig.~\ref{fig:ginum} show clearly the transition from 
        \caption{$V_{f}=40\%$, $2^{nd}$ order elements.}
     \end{subfigure}
 
-\caption{Effect of the size $\delta$ of an element at the crack tip on Mode II ERR.}\label{fig:giinum}
+\caption{Effect of the size $\delta$ of an element at the crack tip on Mode II ERR.}\label{paperA:fig:giinum}
 \end{figure}
 
-Observing Figure~\ref{fig:giinum}, it possible to notice the existence of two distinct regimes in the behavior of $G_{II}$ with respect to the element size $\delta$. For $\Delta\theta\leq60^{\circ}$ $G_{II}$ depends on the value of $\delta$, while $\Delta\theta\geq70^{\circ}$ it is effectively independent of the element size at the crack tip for both $1^{st}$ and $2^{nd}$ order elements and both an effectively infinite ($V_{f}=0.1\%$) and finite size ($V_{f}=40\%$) matrix. Comparing the value of $\Delta\theta$ at which the change from the $\delta$-dependency regime to the $\delta$-independency regime occurs for $G_{II}$ with Mode I ERR in Fig.~\ref{fig:ginum}, it is possible to observe that the $\delta$-dependency regime change of Mode II ERR coincides with the onset of the contact zone, i.e. the transition from \emph{open} crack regime to the \emph{closed} crack regime. The result confirms the analytical considerations of the previous section: for an \emph{open} crack both Mode I and Mode II ERR depend on the element size $\delta$ at the crack tip.
+Observing Figure~\ref{paperA:fig:giinum}, it possible to notice the existence of two distinct regimes in the behavior of $G_{II}$ with respect to the element size $\delta$. For $\Delta\theta\leq60^{\circ}$ $G_{II}$ depends on the value of $\delta$, while $\Delta\theta\geq70^{\circ}$ it is effectively independent of the element size at the crack tip for both $1^{st}$ and $2^{nd}$ order elements and both an effectively infinite ($V_{f}=0.1\%$) and finite size ($V_{f}=40\%$) matrix. Comparing the value of $\Delta\theta$ at which the change from the $\delta$-dependency regime to the $\delta$-independency regime occurs for $G_{II}$ with Mode I ERR in Fig.~\ref{paperA:fig:ginum}, it is possible to observe that the $\delta$-dependency regime change of Mode II ERR coincides with the onset of the contact zone, i.e. the transition from \emph{open} crack regime to the \emph{closed} crack regime. The result confirms the analytical considerations of the previous section: for an \emph{open} crack both Mode I and Mode II ERR depend on the element size $\delta$ at the crack tip.
 
 \begin{figure}[!h]
 \centering
@@ -403,14 +403,14 @@ Observing Figure~\ref{fig:giinum}, it possible to notice the existence of two di
        \caption{$V_{f}=40\%$, $2^{nd}$ order elements.}
     \end{subfigure}
 
-\caption{Effect of the size $\delta$ of an element at the crack tip on total ERR.}\label{fig:gtotnum}
+\caption{Effect of the size $\delta$ of an element at the crack tip on total ERR.}\label{paperA:fig:gtotnum}
 \end{figure}
 
-Further observation of Figure~\ref{fig:giinum} reveals that, in the \emph{open} crack regime, decreasing the element size $\delta$ causes an increase of Mode II ERR. Similarly to Mode I ERR, a shift of the peak $G_{II}$ can also observed for $V_{f}=0.1\%$: the maximum value of $G_{II}$ occurs at $\Delta\theta=70^{\circ}$ for $\delta>0.25^{\circ}$ for $1^{st}$ order elements and for $\delta>0.5^{\circ}$ for $2^{nd}$ order elements, while it is shifted to $\Delta\theta=60^{\circ}$ for $\delta\leq0.25^{\circ}$ for $1^{st}$ order elements and for $\delta\leq0.5^{\circ}$ for $2^{nd}$ order elements.
+Further observation of Figure~\ref{paperA:fig:giinum} reveals that, in the \emph{open} crack regime, decreasing the element size $\delta$ causes an increase of Mode II ERR. Similarly to Mode I ERR, a shift of the peak $G_{II}$ can also observed for $V_{f}=0.1\%$: the maximum value of $G_{II}$ occurs at $\Delta\theta=70^{\circ}$ for $\delta>0.25^{\circ}$ for $1^{st}$ order elements and for $\delta>0.5^{\circ}$ for $2^{nd}$ order elements, while it is shifted to $\Delta\theta=60^{\circ}$ for $\delta\leq0.25^{\circ}$ for $1^{st}$ order elements and for $\delta\leq0.5^{\circ}$ for $2^{nd}$ order elements.
 
 \begin{table}[!h]
  \centering
- \caption{Summary of linear regression results and main statistical tests for Mode I ERR}\label{tab:GIinterp}
+ \caption{Summary of linear regression results and main statistical tests for Mode I ERR}\label{paperA:tab:GIinterp}
  \begin{tabular}{ccccccccc}
 \small$\mathbf{V_{f} \left[\%\right]}$&\small\bf{Order}&\small$\mathbf{\Delta\theta \left[^{\circ}\right]}$&\small$\mathbf{A\left[\frac{J}{m^{2}}\right]}$ &\small$\mathbf{B\left[\frac{J}{m^{2}}\right]}$ &\small $\mathbf{r\left[-\right]}$ &\small $\mathbf{r^{2}\left[-\right]}$ &\small $\mathbf{p(A)\left[-\right]}$ &\small $\mathbf{p(B)\left[-\right]}$\\
 \toprule
@@ -445,11 +445,11 @@ Further observation of Figure~\ref{fig:giinum} reveals that, in the \emph{open} 
 \end{tabular}
 \end{table}
 
-Analysis of the total ERR in Figure~\ref{fig:gtotnum} leads to an observation that was not predicted by the considerations of the previous section: $G_{TOT}$ is effectively independent of the element size $\delta$ in both the \emph{open} and the \emph{closed} crack regimes, at least for reasonably small elements ($\delta\leq1.0^{\circ}$). Given that $G_{II}=G_{TOT}$ for the \emph{closed} crack, it explains the independency of $G_{II}$ from $\delta$ after the onset of the contact zone.
+Analysis of the total ERR in Figure~\ref{paperA:fig:gtotnum} leads to an observation that was not predicted by the considerations of the previous section: $G_{TOT}$ is effectively independent of the element size $\delta$ in both the \emph{open} and the \emph{closed} crack regimes, at least for reasonably small elements ($\delta\leq1.0^{\circ}$). Given that $G_{II}=G_{TOT}$ for the \emph{closed} crack, it explains the independency of $G_{II}$ from $\delta$ after the onset of the contact zone.
 
 \begin{table}[!h]
  \centering
- \caption{Summary of linear regression results and main statistical tests for Mode II ERR}\label{tab:GIIinterp}
+ \caption{Summary of linear regression results and main statistical tests for Mode II ERR}\label{paperA:tab:GIIinterp}
  \begin{tabular}{ccccccccc}
 \small$\mathbf{V_{f} \left[\%\right]}$&\small\bf{Order}&\small$\mathbf{\Delta\theta \left[^{\circ}\right]}$&\small$\mathbf{A\left[\frac{J}{m^{2}}\right]}$ &\small$\mathbf{B\left[\frac{J}{m^{2}}\right]}$ &\small $\mathbf{r\left[-\right]}$ &\small $\mathbf{r^{2}\left[-\right]}$ &\small $\mathbf{p(A)\left[-\right]}$ &\small $\mathbf{p(B)\left[-\right]}$\\
 \toprule
@@ -484,7 +484,7 @@ Analysis of the total ERR in Figure~\ref{fig:gtotnum} leads to an observation th
 \end{tabular}
 \end{table}
 
-Analysis of Fig.~\ref{fig:ginum}, Fig.~\ref{fig:giinum} and Fig.~\ref{fig:gtotnum} has shown the dependency of Mode I and Mode II ERR on the element size $\delta$. Following the derivations of the previous section, we model the dependency of $G_{I}$ and $G_{II}$ with respect to $\delta$ as
+Analysis of Fig.~\ref{paperA:fig:ginum}, Fig.~\ref{paperA:fig:giinum} and Fig.~\ref{paperA:fig:gtotnum} has shown the dependency of Mode I and Mode II ERR on the element size $\delta$. Following the derivations of the previous section, we model the dependency of $G_{I}$ and $G_{II}$ with respect to $\delta$ as
 
 \begin{equation}
 G_{\left(\cdot\right)}=A\left(\Delta\theta\right)\ln\delta+B\left(\Delta\theta\right),
@@ -514,7 +514,7 @@ where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are paramete
        \caption{$2^{nd}$ order elements.}
     \end{subfigure}
 
-\caption{Logarithmic dependence on $\delta$ of Mode I ERR: interpolation of numerical results for $V_{f}=0.1\%$.}\label{fig:giinterp01}
+\caption{Logarithmic dependence on $\delta$ of Mode I ERR: interpolation of numerical results for $V_{f}=0.1\%$.}\label{paperA:fig:giinterp01}
 \end{figure}
 
 \begin{figure}[!h]
@@ -539,7 +539,7 @@ where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are paramete
        \caption{$2^{nd}$ order elements.}
     \end{subfigure}
 
-\caption{Logarithmic dependence on $\delta$ of Mode I ERR: interpolation of numerical results for $V_{f}=40\%$.}\label{fig:giinterp40}
+\caption{Logarithmic dependence on $\delta$ of Mode I ERR: interpolation of numerical results for $V_{f}=40\%$.}\label{paperA:fig:giinterp40}
 \end{figure}
 
 \begin{figure}[!h]
@@ -564,7 +564,7 @@ where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are paramete
        \caption{$2^{nd}$ order elements.}
     \end{subfigure}
 
-\caption{Logarithmic dependence on $\delta$ of Mode II ERR: interpolation of numerical results for $V_{f}=0.1\%$.}\label{fig:giiinterp01}
+\caption{Logarithmic dependence on $\delta$ of Mode II ERR: interpolation of numerical results for $V_{f}=0.1\%$.}\label{paperA:fig:giiinterp01}
 \end{figure}
 
 \begin{figure}[!h]
@@ -589,10 +589,10 @@ where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are paramete
        \caption{$2^{nd}$ order elements.}
     \end{subfigure}
 
-\caption{Logarithmic dependence on $\delta$ of Mode II ERR: interpolation of numerical results for $V_{f}=40\%$.}\label{fig:giiinterp40}
+\caption{Logarithmic dependence on $\delta$ of Mode II ERR: interpolation of numerical results for $V_{f}=40\%$.}\label{paperA:fig:giiinterp40}
 \end{figure}
 
-As shown in Fig.~\ref{fig:giinterp01}, Fig.~\ref{fig:giinterp40}, Fig.~\ref{fig:giiinterp01} and Fig.~\ref{fig:giiinterp40} both in linear and logarithmic scales of $\delta$, the result is remarkable: both the correlation coefficient $r$ and the $r^{2}$ ratio (of explained to total variance) are always greater than $0.95$ and the $p$-values of the coefficients $A$ and $B$ are at least $<1E-6$ and often $<1E-11$ (see Table~\ref{tab:GIinterp} for $G_{I}$ and Table~\ref{tab:GIIinterp} for $G_{II}$). The results of the linear regression confirm the analytical derivations of the previous section, which showed the logarithmic behavior of Mode I and Mode II ERR. Similar conclusions were reached in~\cite{Sun1987,Manoharan1990} for a straight bi-material crack with respect to the parameter $\nicefrac{\Delta a}{a}$; however, no functional expression of $G_{\left(\cdot\right)}$ was proposed.
+As shown in Fig.~\ref{paperA:fig:giinterp01}, Fig.~\ref{paperA:fig:giinterp40}, Fig.~\ref{paperA:fig:giiinterp01} and Fig.~\ref{paperA:fig:giiinterp40} both in linear and logarithmic scales of $\delta$, the result is remarkable: both the correlation coefficient $r$ and the $r^{2}$ ratio (of explained to total variance) are always greater than $0.95$ and the $p$-values of the coefficients $A$ and $B$ are at least $<1E-6$ and often $<1E-11$ (see Table~\ref{paperA:tab:GIinterp} for $G_{I}$ and Table~\ref{paperA:tab:GIIinterp} for $G_{II}$). The results of the linear regression confirm the analytical derivations of the previous section, which showed the logarithmic behavior of Mode I and Mode II ERR. Similar conclusions were reached in~\cite{Sun1987,Manoharan1990} for a straight bi-material crack with respect to the parameter $\nicefrac{\Delta a}{a}$; however, no functional expression of $G_{\left(\cdot\right)}$ was proposed.
 
 \section{Conclusions \& Outlook}
 
@@ -615,10 +615,12 @@ The conclusion is significant: as the behavior of Mode I and Mode II is logarith
 Luca Di Stasio thanks Prof. Janis Varna for the useful discussions and suggestions. Luca Di Stasio gratefully acknowledges the support of the European School of Materials (EUSMAT) through the DocMASE Doctoral Programme and the European Commission through the Erasmus Mundus Programme.
 
 %\bibliography{refs}
-\printbibliography
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\printbibliography[heading=none]
 
 \paperappendix
-\section{Derivation of the relationship between crack tip forces and displacements for first order quadrilateral elements}\label{app:ctforcesexample}
+\section{Derivation of the relationship between crack tip forces and displacements for first order quadrilateral elements}\label{paperA:app:ctforcesexample}
 
 \subsection{Foundational relations}
 
@@ -656,17 +658,17 @@ where $\left\{e_{\xi}, e_{\eta}\right\}$ and $\left\{e^{x}, e^{y}\right\}$ are r
 
 Denoting by $d$ the number of geometrical dimensions of the problem ($d=2$ in the present work) and by $\underline{p}$ the $d\times 1$ position vector in global coordinates, we can formally introduce the $3\left(d-1\right)\times d$ matrix operator of partial differentiation $\underline{\underline{\widetilde{B}}}$ such that
 
-\begin{equation}\label{eq:introB}
+\begin{equation}\label{paperA:eq:introB}
 \underline{\varepsilon}\left(\underline{p}\right)=\underline{\underline{\widetilde{B}}}\cdot\underline{u}\left(\underline{p}\right),
 \end{equation}
 
 where $\underline{u}$ and $\underline{\varepsilon}$ are respectively the $d\times 1$ displacement vector and the $3\left(d-1\right)\times 1$ strain vector in Voigt notation. Denoting by $n$ the number of nodes of a generic element ($n=s\times m$ where $s$ represents the number of sides of the element and $m$ the order of the shape functions), we can furthermore introduce the $d\times d\cdot n$ matrix \underline{\underline{N}} of shape functions such that
 
-\begin{equation}\label{eq:introN}
+\begin{equation}\label{paperA:eq:introN}
 \underline{u}=\underline{\underline{N}}\cdot\underline{u}_{N},
 \end{equation}
 
-where $\underline{u}_{N}$ is the $d\cdot n\times 1$ vector of element nodal variables. Having introduced $\underline{\underline{\widetilde{B}}}$ and $\underline{\underline{N}}$ in Equations~\ref{eq:introB} and~\ref{eq:introN} respectively, it is possible to define the $3\left(d-1\right)\times d\cdot n$ matrix $\underline{\underline{B}}$ of derivatives (with respect to global coordinates) of shape functions as
+where $\underline{u}_{N}$ is the $d\cdot n\times 1$ vector of element nodal variables. Having introduced $\underline{\underline{\widetilde{B}}}$ and $\underline{\underline{N}}$ in Equations~\ref{paperA:eq:introB} and~\ref{paperA:eq:introN} respectively, it is possible to define the $3\left(d-1\right)\times d\cdot n$ matrix $\underline{\underline{B}}$ of derivatives (with respect to global coordinates) of shape functions as
 
 \begin{equation}
 \underline{\underline{B}}=\underline{\underline{\widetilde{B}}}\cdot\underline{\underline{N}}.
@@ -680,11 +682,11 @@ We introduce the linear elastic material behavior in the form of the $3\left(d-1
 
 where $\underline{\sigma}$ the $3\left(d-1\right)\times 1$ stress vector in Voigt notation. It is finally possible to define the $n\times n$ element stiffness matrix $\underline{\underline{k_{e}}}$ as
 
-\begin{equation}\label{eq:elestiff}
+\begin{equation}\label{paperA:eq:elestiff}
 \underline{\underline{k_{e}}}=\int_{V_{e}\left(x,y\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV_{e}\left(x,\dots,y\right)=\int_{V_{e}\left(\xi,\eta\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)\sqrt{g}dV_{e}\left(\xi,\dots,\eta\right),
 \end{equation}
 
-where $g=det\left(\underline{\underline{J}}^{T}\underline{\underline{J}}\right)$ and $V_{e}$ is the element volume. Given that isoparametric elements are always defined between $-1$ and $1$ in each dimension, Equation~\ref{eq:elestiff} can simplified to
+where $g=det\left(\underline{\underline{J}}^{T}\underline{\underline{J}}\right)$ and $V_{e}$ is the element volume. Given that isoparametric elements are always defined between $-1$ and $1$ in each dimension, Equation~\ref{paperA:eq:elestiff} can simplified to
 
 \begin{equation}
 \underline{\underline{k_{e}}}=\int_{-1}^{1}\dots\int_{-1}^{1}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)\sqrt{g}d\xi,\dots, d\eta,
@@ -692,13 +694,13 @@ where $g=det\left(\underline{\underline{J}}^{T}\underline{\underline{J}}\right)$
 
 which is amenable to numerical integration by means of a Gaussian quadrature of the form
 
-\begin{equation}\label{eq:elstiffnum}
+\begin{equation}\label{paperA:eq:elstiffnum}
 \underline{\underline{k_{e}}}\approx \sum_{i=1}^{N}\dots\sum_{j=1}^{N}w_{i}\dots w_{j}\left(\underline{\underline{B}}^{T}\left(\xi_{i}, \dots,\eta_{j}\right)\cdot\underline{\underline{D}}\cdot\underline{\underline{B}}\left(\xi_{i}, \dots,\eta_{j}\right)\sqrt{g}\right),
 \end{equation}
 
-where $\left(\xi_{i}, \dots,\eta_{j}\right)$ are the coordinates of the $N$ Gaussian quadrature points. The element stiffness matrix as evaluated in Eq.~\ref{eq:elstiffnum} is in general a full symmetric (in the case of linear elasticity) matrix of the form
+where $\left(\xi_{i}, \dots,\eta_{j}\right)$ are the coordinates of the $N$ Gaussian quadrature points. The element stiffness matrix as evaluated in Eq.~\ref{paperA:eq:elstiffnum} is in general a full symmetric (in the case of linear elasticity) matrix of the form
 
-\begin{equation}\label{eq:elstiffmatrix}
+\begin{equation}\label{paperA:eq:elstiffmatrix}
 k_{e}=\begin{bmatrix}
 k_{e|11}&k_{e|12}&k_{e|13}&k_{e|14}&k_{e|15}&k_{e|16}&k_{e|17}&k_{e|18}\\
 k_{e|12}&k_{e|22}&k_{e|23}&k_{e|24}&k_{e|25}&k_{e|26}&k_{e|27}&k_{e|28}\\
@@ -713,7 +715,7 @@ k_{e|18}&k_{e|28}&k_{e|38}&k_{e|48}&k_{e|58}&k_{e|68}&k_{e|78}&k_{e|88}\\
 
 \subsection{Calculation of displacements and reaction forces}
 
-With reference to Fig.~\ref{fig:vcctlinear}, we define:
+With reference to Fig.~\ref{paperA:fig:vcctlinear}, we define:
 
 \begin{description}
 \item[$u_{x,M}$, $u_{x,F}$] the $x$-displacement of the nodes belonging to the free side of the first element belonging to the crack, respectively on the matrix (bulk) and fiber (inclusion) side;
@@ -728,7 +730,7 @@ The $x-y$ reference frame is the global reference frame, while the $r-\theta$ re
 
 \begin{figure}[!h]
 \includegraphics[width=\textwidth]{paperA/VCCT-linear.pdf}
-\caption{Schematic representation of the discretized crack tip geometry for  $1^{st}$ order quadrilateral elements.}\label{fig:vcctlinear}
+\caption{Schematic representation of the discretized crack tip geometry for  $1^{st}$ order quadrilateral elements.}\label{paperA:fig:vcctlinear}
 \end{figure}
 
 The crack opening displacement $u_{r}$ and the crack shear displacement $u_{\theta}$ at the crack tip can thus be written as
@@ -739,7 +741,7 @@ u_{r}=\cos\left(\Delta\theta\right) u_{x}+\sin\left(\Delta\theta\right) u_{y}\qq
 
 where $u_{x}$ and $u_{y}$ are defined as
 
-\begin{equation}\label{eq:uxuy}
+\begin{equation}\label{paperA:eq:uxuy}
 u_{x}=u_{x,M}-u_{x,F}\qquad u_{y}=u_{y,M}-u_{y,F}
 \end{equation}
 
@@ -771,9 +773,9 @@ which can be simplified to
 \end{cases}.
 \end{equation}
 
-Making use of Eq.~\ref{eq:elstiffmatrix}, four equations can be written in the four displacement $u_{x,FCT}$, $u_{x,MCT}$, $u_{y,FCT}$ and $u_{y,MCT}$:
+Making use of Eq.~\ref{paperA:eq:elstiffmatrix}, four equations can be written in the four displacement $u_{x,FCT}$, $u_{x,MCT}$, $u_{y,FCT}$ and $u_{y,MCT}$:
 
-\begin{equation}\label{eq:syseqs01}
+\begin{equation}\label{paperA:eq:syseqs01}
 \begin{cases}
 &\left(k_{e,M|11}+k_{e,M|33}\right)u_{x,MCT}+\left(k_{e,M|12}+k_{e,M|34}\right)u_{y,MCT}+\\&+k_{e,M|13}u_{x,M}+k_{e,M|14}u_{y,M}+\left(k_{M|17}+k_{M|35}\right)u_{N,MC|7}+\left(k_{M|18}+k_{M|36}\right)u_{N,MC|8}+\\&+\sum_{i=5}^{6}k_{M|1i}u_{N,MC|i}+\sum_{i=7}^{8}k_{M|3i}u_{N,MB|i}+k_{M|31}u_{x,NCOI}+k_{M|32}u_{y,NCOI}=0\\[10pt]
 &\left(k_{e,M|21}+k_{e,M|43}\right)u_{x,MCT}+\left(k_{e,M|22}+k_{e,M|44}\right)u_{y,MCT}+\\&+k_{e,M|23}u_{x,M}+k_{e,M|24}u_{y,M}+\left(k_{M|27}+k_{M|45}\right)u_{N,MC|7}+\left(k_{M|28}+k_{M|46}\right)u_{N,MC|8}+\\&+\sum_{i=5}^{6}k_{M|2i}u_{N,MC|i}+\sum_{i=7}^{8}k_{M|4i}u_{N,MB|i}+k_{M|41}u_{x,NCOI}+k_{M|42}u_{y,NCOI}=0\\[10pt]
@@ -782,9 +784,9 @@ Making use of Eq.~\ref{eq:elstiffmatrix}, four equations can be written in the f
 \end{cases}.
 \end{equation}
 
-Solving for $u_{y,FCT}$ and $u_{y,MCT}$ the third and fourth relations in Eq.~\ref{eq:syseqs01} and substituting in the first two expressions of Eq.~\ref{eq:syseqs01}, we get
+Solving for $u_{y,FCT}$ and $u_{y,MCT}$ the third and fourth relations in Eq.~\ref{paperA:eq:syseqs01} and substituting in the first two expressions of Eq.~\ref{paperA:eq:syseqs01}, we get
 
-\begin{equation}\label{eq:syseqs02}
+\begin{equation}\label{paperA:eq:syseqs02}
 \footnotesize
 \begin{cases}
 &\left(k_{e,M|11}+k_{e,M|33}+k_{e,F|77}+k_{e,F|55}\right)u_{x,MCT}+\left(k_{e,M|12}+k_{e,M|34}+k_{e,F|78}+k_{e,F|56}\right)u_{y,MCT}+\\&+k_{e,M|13}u_{x,M}+k_{e,M|14}u_{y,M}+k_{e,F|75}u_{x,F}+k_{e,F|76}u_{y,F}+\\&+\left(k_{M|31}+k_{F|57}\right)u_{x,NCOI}+\left(k_{M|32}+k_{F|58}\right)u_{y,NCOI}+\\&+\left(k_{M|17}+k_{M|35}\right)u_{N,MC|7}+\left(k_{M|18}+k_{M|36}\right)u_{N,MC|8}+\left(k_{F|71}+k_{F|53}\right)u_{N,FC|1}+\left(k_{F|72}+k_{F|54}\right)u_{N,FC|2}+\\&+\sum_{i=5}^{6}k_{M|1i}u_{N,MC|i}+\sum_{i=7}^{8}k_{M|3i}u_{N,MB|i}+\sum_{i=2}^{3}k_{F|7i}u_{N,FC|i}+\sum_{i=1}^{2}k_{F|5i}u_{N,FB|i}=0\\[10pt]
@@ -821,9 +823,9 @@ Solving for $u_{y,FCT}$ and $u_{y,MCT}$ the third and fourth relations in Eq.~\r
 %\end{cases}
 %\end{equation}
 
-Solving the system of two equations and observing that $u_{x,F},u_{y,F}\sim0$ for a stiffer inclusion as a fiber in a polymeric composite, we can express $u_{x,MCT}$ as a function of $u_{x}$ and $u_{y}$ (see Eq.~\ref{eq:uxuy}) as
+Solving the system of two equations and observing that $u_{x,F},u_{y,F}\sim0$ for a stiffer inclusion as a fiber in a polymeric composite, we can express $u_{x,MCT}$ as a function of $u_{x}$ and $u_{y}$ (see Eq.~\ref{paperA:eq:uxuy}) as
 
-\begin{equation}\label{eq:syseqs03}
+\begin{equation}\label{paperA:eq:syseqs03}
 \scriptsize
 \begin{split}
 %&u_{y,MCT}=-\frac{k_{e,M|11}+k_{e,M|33}+k_{e,F|77}+k_{e,F|55}}{k_{e,M|12}+k_{e,M|34}+k_{e,F|78}+k_{e,F|56}}u_{x,MCT}+\\
@@ -848,7 +850,7 @@ Solving the system of two equations and observing that $u_{x,F},u_{y,F}\sim0$ fo
 
 while the reaction forces at the crack tip can be expressed as
 
-\begin{equation}\label{eq:forcesreform}
+\begin{equation}\label{paperA:eq:forcesreform}
 \begin{cases}
 F_{x,CT}&=R_{x,FCT}=\\&=\left(k_{e,F|77}+k_{e,F|55}\right)u_{x,FCT}+\left(k_{e,F|78}+k_{e,F|56}\right)u_{y,FCT}+\\
 &+k_{e,F|75}\cancelto{\approx 0}{u_{x,F}}+k_{e,F|76}\cancelto{\approx 0}{u_{y,F}}+\\
@@ -859,7 +861,7 @@ F_{y,CT}&=R_{y,FCT}=\\&=\left(k_{e,F|87}+k_{e,F|65}\right)u_{x,FCT}+\left(k_{e,F
 \end{cases}.
 \end{equation}
 
-Substituting Eq.~\ref{eq:syseqs01} in Eq.~\ref{eq:syseqs02}, Eq.~\ref{eq:syseqs03} and Eq.~\ref{eq:forcesreform} and solving, we obtain an expression of the form
+Substituting Eq.~\ref{paperA:eq:syseqs01} in Eq.~\ref{paperA:eq:syseqs02}, Eq.~\ref{paperA:eq:syseqs03} and Eq.~\ref{paperA:eq:forcesreform} and solving, we obtain an expression of the form
 
 \begin{equation}
 \begin{cases}
@@ -883,55 +885,55 @@ F_{y,CT}&= K_{yx}u_{x}+K_{yy}u_{y}+\widetilde{F}_{y}\\
 
 where $\widetilde{F}_{x}$ and $\widetilde{F}_{y}$ represent the influence of the FE solution through the nodes of the elements sharing the crack tip that do not belong to any of the phase interfaces, i.e. the nodes of the elements sharing the crack tip that belong to the bulk of each phase.
 
-\section{Expression of  for quadrilateral elements with or without singularity}\label{app:Tpq}
+\section{Expression of the VCCT weights matrix for quadrilateral elements with or without singularity}\label{paperA:app:Tpq}
 
-The expression of  for quadrilateral elements with or without singularity is
-%$\underline{\underline{T}}_{pq}$
-%\begin{equation}\label{eq:Tpq}
-%\scriptsize
-%\begin{split}
-%\underline{\underline{T}}_{pq}&=\begin{cases}
-%\underline{\underline{I}}\ for\ p=q<2\\
-%\underline{\underline{0}}\ otherwise
-%\end{cases}%\quad \text{for $1^{st}$ order quadrilateral elements}\\
-%&=\begin{cases}
-%\underline{\underline{I}}\ for\ p=q<3\\
-%\underline{\underline{0}}\ otherwise
-%\end{cases}\quad \text{for $2^{nd}$ order quadrilateral elements}\\
-%&=\begin{cases}
-%\underline{\underline{I}}\ for\ p=q<4\\
-%\underline{\underline{0}}\ otherwise
-%\end{cases}\quad \text{for $3^{rd}$ order quadrilateral elements}\\
-%&=\begin{cases}
-%\left(14-\frac{33\pi}{8}\right)\underline{\underline{I}}\ for\ p=1,q=1\\
-%\left(-52+\frac{33\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=2\\
-%\left(17-\frac{21\pi}{4}\right)\underline{\underline{I}}\ for\ p=2,q=1\\
-%\left(-\frac{7}{2}+\frac{21\pi}{16}\right)\underline{\underline{I}}\ for\ p=2,q=2\\
-%\left(8-\frac{21\pi}{8}\right)\underline{\underline{I}}\ for\ p=1,q=3\\
-%\left(-32+\frac{21\pi}{2}\right)\underline{\underline{I}}\ for\ p=2,q=3\\
-%\underline{\underline{0}}\ otherwise
-%\end{cases}\quad \text{for $2^{nd}$ order quarter-point quadrilateral elements}\\
-%&=\begin{cases}
-%\left(-11187+\frac{7155\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=1\\
-%\left(38556-\frac{24543\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=2\\
-%\left(-53055+\frac{33777\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=3\\
-%\left(\frac{11396}{3}-\frac{9575\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=1\\
-%\left(-12936+\frac{33003\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=2\\
-%\left(17988-\frac{45837\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=3\\
-%\left(-\frac{8453}{3}+\frac{3595\pi}{4}\right)\underline{\underline{I}}\ for\ p=3,q=1\\
-%\left(9804-\frac{12411\pi}{4}\right)\underline{\underline{I}}\ for\ p=3,q=2\\
-%\left(-13587+\frac{17289\pi}{4}\right)\underline{\underline{I}}\ for\ p=3,q=3\\
-%\left(6948-\frac{17685\pi}{8}\right)\underline{\underline{I}}\ for\ p=1,q=4\\
-%\left(-23976+\frac{60993\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=4\\
-%\left(33372-\frac{84807\pi}{8}\right)\underline{\underline{I}}\ for\ p=3,q=4\\
-%\underline{\underline{0}}\ otherwise
-%\end{cases}\quad \text{for $3^{rd}$ order quarter-point quadrilateral elements}\\
-%\end{split}
-%\end{equation}
+The expression of $\underline{\underline{T}}_{pq}$ for quadrilateral elements with or without singularity is
+
+\begin{equation}\label{paperA:eq:Tpq}
+\scriptsize
+\begin{split}
+\underline{\underline{T}}_{pq}&=\begin{cases}
+\underline{\underline{I}}\ for\ p=q<2\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $1^{st}$ order quadrilateral elements}\\
+&=\begin{cases}
+\underline{\underline{I}}\ for\ p=q<3\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $2^{nd}$ order quadrilateral elements}\\
+&=\begin{cases}
+\underline{\underline{I}}\ for\ p=q<4\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $3^{rd}$ order quadrilateral elements}\\
+&=\begin{cases}
+\left(14-\frac{33\pi}{8}\right)\underline{\underline{I}}\ for\ p=1,q=1\\
+\left(-52+\frac{33\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=2\\
+\left(17-\frac{21\pi}{4}\right)\underline{\underline{I}}\ for\ p=2,q=1\\
+\left(-\frac{7}{2}+\frac{21\pi}{16}\right)\underline{\underline{I}}\ for\ p=2,q=2\\
+\left(8-\frac{21\pi}{8}\right)\underline{\underline{I}}\ for\ p=1,q=3\\
+\left(-32+\frac{21\pi}{2}\right)\underline{\underline{I}}\ for\ p=2,q=3\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $2^{nd}$ order quarter-point quadrilateral elements}\\
+&=\begin{cases}
+\left(-11187+\frac{7155\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=1\\
+\left(38556-\frac{24543\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=2\\
+\left(-53055+\frac{33777\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=3\\
+\left(\frac{11396}{3}-\frac{9575\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=1\\
+\left(-12936+\frac{33003\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=2\\
+\left(17988-\frac{45837\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=3\\
+\left(-\frac{8453}{3}+\frac{3595\pi}{4}\right)\underline{\underline{I}}\ for\ p=3,q=1\\
+\left(9804-\frac{12411\pi}{4}\right)\underline{\underline{I}}\ for\ p=3,q=2\\
+\left(-13587+\frac{17289\pi}{4}\right)\underline{\underline{I}}\ for\ p=3,q=3\\
+\left(6948-\frac{17685\pi}{8}\right)\underline{\underline{I}}\ for\ p=1,q=4\\
+\left(-23976+\frac{60993\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=4\\
+\left(33372-\frac{84807\pi}{8}\right)\underline{\underline{I}}\ for\ p=3,q=4\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $3^{rd}$ order quarter-point quadrilateral elements}\\
+\end{split}
+\end{equation}
 
 where $\underline{\underline{I}}$ is the identity matrix.
 
-%\section{Derivation of the vectorial formulation of the ERR}\label{app:errvecfor}
+%\section{Derivation of the vectorial formulation of the ERR}\label{paperA:app:errvecfor}
 %
 %\begin{equation}
 %\begin{split}
@@ -962,6 +964,3 @@ where $\underline{\underline{I}}$ is the identity matrix.
 %&+\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{\underline{\widetilde{K}}}_{N}\underline{u}_{N}\underline{u}_{xy}^{T}\underline{\underline{R}}_{\Delta\theta}^{T}\underline{\underline{P}}_{\delta}^{T}\underline{\underline{T}}_{pq}^{T}\right)
 %\end{split}
 %\end{equation}
-
-%\putbib[paperA/refspaperA]
-%\end{bibunit}

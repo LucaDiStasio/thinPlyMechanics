@@ -1,9 +1,4 @@
 pdflatex thesis.tex
-bibtex bu1
-bibtex bu2
-bibtex bu3
-bibtex bu4
+biber thesis
 pdflatex thesis.tex
 pdflatex thesis.tex
-pdflatex thesis.tex
-pause

@@ -1,15 +1,21 @@
 %-------------------------------------------------------------------
 % Document class and package definitions
 %-------------------------------------------------------------------
-\documentclass[12pt,a4paper,openright,final,twoside]{cseethesis}
+\documentclass[12pt,a4paper,openright,final,twoside]{msethesis}
 %Included for Gather Purpose only:
 %input "thesisreferences.bib"
 
 \usepackage{epigraph}
 
+\addbibresource{thesisreferences.bib}
+\addbibresource{paperA/refspaperA.bib}
+
 \begin{document}
-\defaultbibliography{thesisreferences}     %% Change this only.
-\defaultbibliographystyle{ieeetr}        %% Could be changed if you like 
+
+\newrefsection
+
+%\defaultbibliography{thesisreferences}     %% Change this only.
+%\defaultbibliographystyle{ieeetr}        %% Could be changed if you like
                                            %% references typeset differently.
 %-------------------------------------------------------------------
 % Define title, author, etc.
@@ -50,12 +56,12 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Begin Part I
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\makepartpage{Part I} 
+\makepartpage{Part I}
 
 %% Initialize part containing the thesis introduction chapters
 \startchapters
 
-\begin{bibunit}
+%\begin{bibunit}
 %------------------------ Start chapter 1 --------------------------
 % The \makechapter command takes three arguments
 %  1) An abbreviated version of the chapter name,
@@ -85,13 +91,13 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
 \input{chapter1.tex}
 
 \makechapter{Modeling damage in FRPC}{Modeling damage in FRPC}{Modeling damage in FRPC}
-\input{chapter2.tex}
+%\input{chapter2.tex}
 
 \makechapter{The fiber-matrix interface crack problem}{The fiber-matrix interface crack problem}{The fiber-matrix interface crack problem}
-\input{chapter3.tex}
+%\input{chapter3.tex}
 
 \makebib
-\end{bibunit}
+%\end{bibunit}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Begin Part II - Collection of papers
@@ -111,6 +117,7 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
 % call below, but were explicitly defined to more clearly illustrate the
 % use of the function \makepaper.
 
+\newrefsection
 \makepapersubmitted
   {\paperheader}
   {\papertitle}
@@ -143,7 +150,7 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
 
 % The actual contents is imported by un-commenting the \input line below.
 % Make sure the file exist.
-\input{paper2.tex}
+%\input{paper2.tex}
 
 %-------------------------------------------------------------------
 \def\paperheader{Paper C}
@@ -165,7 +172,7 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
 
 % The actual contents is imported by un-commenting the \input line below.
 % Make sure the file exist.
-\input{paper3.tex}
+%\input{paper3.tex}
 
 %-------------------------------------------------------------------
 \def\paperheader{Paper D}
@@ -183,6 +190,6 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
 
 % The actual contents is imported by un-commenting the \input line below.
 % Make sure the file exist.
-\input{paper3.tex}
+%\input{paper3.tex}
 
 \end{document}

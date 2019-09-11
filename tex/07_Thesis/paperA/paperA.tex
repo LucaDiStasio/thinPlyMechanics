@@ -1,4 +1,26 @@
-%\begin{bibunit}[ieeetr]
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage[makeroom]{cancel}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{nicefrac}
+\usepackage[usenames]{xcolor}
+\usepackage{lineno,hyperref}
+\modulolinenumbers[5]
+
+
+
+%% `Elsevier LaTeX' style
+\bibliographystyle{ieeetr}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
 \thispagestyle{plain}
 \begin{center}
 \Large\textbf{Finite Element solution of the fiber/matrix interface crack problem: convergence properties and mode mixity of the Virtual Crack Closure Technique}\\
@@ -20,7 +42,7 @@ The bi-material interface arc crack has been the focus of interest in the compos
 \section{Introduction}\label{sec:intro}
 
 Bi-material interfaces represent the basic load transfer mechanism at the heart of Fiber Reinforced Polymer Composite (FRPC) materials. They are present at the macroscale, in the form of adhesive joints; at the mesoscale, as interfaces between layers with different orientations; at the microscale, as fiber-matrix interfaces. Bi-material interfaces have for long attracted the attention of researchers in Fracture Mechanics~\cite{Comninou1990,Hills1993}, due to their hidden complexity.\\
-The problem was first addressed in the 1950's by Williams~\cite{Williams1959}, who derived through a linear elastic asymptotic analysis the stress distribution around an \emph{open} crack (i.e. with crack faces nowhere in contact for any size of the crack) between two infinite half-planes of dissimilar materials. He found the existence of a strong oscillatory behavior in the stress singularity at the crack tip of the form
+The problem was first addressed in the 1950's by Williams~\cite{Williams1959}, who derived through a linear elastic asymptotic analysis the stress distribution around an \emph{open} crack (i.e. with crack faces nowhere in contact for any size of the crack) between two infinite half-planes of dissimilar materials. He found the existence of a strong oscillatory behavior in the stress singularity at the crack tip of the form 
 
 \begin{equation}\label{eq:singularitywilliams}
 r^{-\frac{1}{2}}\sin\left(\varepsilon\log r\right)\quad\text{with}\quad\varepsilon=\frac{1}{2\pi}\log\left(\frac{1-\beta}{1+\beta}\right),
@@ -50,7 +72,7 @@ The fiber radius $R_{f}$ is assumed to be equal to $1\ \mu m$. This choice is no
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=\textwidth]{paperA/RUC.pdf}
+\includegraphics[width=\textwidth]{RUC.pdf}
 \caption{Schematic of the model with its main parameters.}\label{fig:modelschem}
 \end{figure}
 
@@ -71,7 +93,7 @@ Epoxy    & 3.5    & 1.25   & 0.4
 The model problem is solved with the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM software~\cite{abq12}. The model is meshed with second order, 2D, plane strain triangular (CPE6) and rectangular (CPE8) elements. A regular mesh of rectangular elements with almost unitary aspect ratio is used at the crack tip. The angular size $\delta$ of an element in the crack tip neighborhood represents the main parameter of the numerical analysis. The crack faces are modeled as element-based surfaces and a small-sliding contact pair interaction with no friction is imposed between them. The Mode I, Mode II and total Energy Release Rates (ERRs) (respectively referred to as $G_{I}$, $G_{II}$ and $G_{TOT}$) are evaluated using the VCCT~\cite{Krueger2004}, implemented in a in-house Python routine. A glass fiber-epoxy system is considered in the present work, and it is assumed that their response lies always in the linear elastic domain. The elastic properties of glass fiber and epoxy are reported in Table~\ref{tab:phaseprop}.
 
 \section{Vectorial formulation of the Virtual Crack Closure Technique (VCCT)}
-
+ 
 In order to express the VCCT formulation of the ERR in terms of FEM variables, we need to introduce a few rotation matrices in order to represent the discretized representation (FE mesh) of a crack along a circular interface. The position of the crack tip is characterized by the angular size of the crack (see Sec.~\ref{sec:femmodel} and Fig.~\ref{fig:modelschem} for reference) and the rotation corresponding to the crack tip reference frame is represented by the matrix $\underline{\underline{R}}_{\Delta\theta}$ defined as
 
 \begin{equation}\label{eq:Rmatrix}
@@ -90,7 +112,7 @@ Nodes belonging to the elements sharing the crack tip are involved in the VCCT e
 \end{bmatrix}
 \end{equation}
 
- and $\underline{\underline{Q}}_{\delta}\left(q\right)$, equal to
+ and $\underline{\underline{Q}}_{\delta}\left(q\right)$, equal to 
 
 \begin{equation}\label{eq:Qmatrix}
 \underline{\underline{Q}}_{\delta}\left(q\right)=\begin{bmatrix}
@@ -123,7 +145,7 @@ F_{y}
 \underline{u}_{xy}=\begin{bmatrix}
 u_{x} \\
 u_{y}
-\end{bmatrix}$ in the crack tip reference frame (where the tangential direction $\theta$ correspond to the direction of crack propagation) while taking into account the misalignment to the finite  discretization as
+\end{bmatrix}$ in the crack tip reference frame (where the tangential direction $\theta$ correspond to the direction of crack propagation) while taking into account the misalignment to the finite  discretization as 
 
 \begin{equation}\label{eq:FUrot}
 \underline{F}_{r\theta}=\underline{\underline{Q}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{F}_{xy}\qquad\underline{u}_{r\theta}=\underline{\underline{P}}_{\delta}\underline{\underline{R}}_{\Delta\theta}\underline{u}_{xy}
@@ -137,12 +159,12 @@ u_{r} \\
 u_{\theta}
 \end{bmatrix}$.
 
-The crack tip forces can be expressed as a function of the crack opening displacement as
+The crack tip forces can be expressed as a function of the crack opening displacement as 
 
 \begin{equation}\label{eq:ctforce1}
 \underline{F}_{xy}=\underline{\underline{K}}_{xy}\underline{u}_{xy}+\underline{\widetilde{F}}_{xy},
 \end{equation}
-
+ 
 where $\underline{\underline{K}}_{xy}$ is in general a full matrix of the form $\underline{\underline{K}}_{xy}=\begin{bmatrix}
 K_{xx}  K_{xy}\\
 K_{yx}  K_{yy}
@@ -153,7 +175,7 @@ K_{yx}  K_{yy}
 \end{equation}
 
 An exemplifying derivation of the relationships expressed in Equations~\ref{eq:ctforce1} and~\ref{eq:ctforce2} can be found in \ref{app:ctforcesexample}. It is worthwhile to observe that another author~\cite{Valvo2011} proposed a relationship of the form $\underline{F}_{xy}=\underline{\underline{K}}_{xy}\underline{u}_{xy}$. However, in~\cite{Valvo2011}, this relationship is assumed \emph{a priori} and manipulated to propose a revised version of the VCCT, based on the assumption that the matrix $\underline{\underline{K}}_{xy}$ should be diagonal to provide physically-consistent fracture mode partitioning. On the other hand, in the present work we derive the relationships of Eqs.~\ref{eq:ctforce1} and~\ref{eq:ctforce2} from the formulation of the Finite Element Method. According to our derivation, it seems correct that the matrix $\underline{\underline{K}}_{xy}$ should not in general be diagonal in order to take into account Poisson's effect. In fact, a positive crack opening displacement would cause a transverse displacement in the neighborhood of the crack tip. Given that material properties are different on the two sides of a bi-material interface, a net shear would be applied to the crack tip which would correspond to a net contribution to the crack tip force related to crack shear displacement. The analytical derivations presented in \ref{app:ctforcesexample} confirm these physical considerations.\\
-Based upon the work of Raju~\cite{Raju1987}, we introduce the matrix $\underline{\underline{T}}_{pq}$ to represent the weights needed in the VCCT to account for the use of singular elements. As already done previously, indices $p$ and $q$ refer to nodes placed respectively on the free (crack face) and bonded side of the crack tip. Nodes are enumerated so that the crack tip has always index $1$, i.e. the higher the index the further the node is from the crack tip. Matrix $\underline{\underline{T}}_{pq}$ has always a size of $d\times d$, where $d=2$ for a $2D$ problem and $d=3$ for a $3D$ problem. An element $\underline{\underline{T}}_{pq}\left(i,j\right)$ with $i,j=1,\dots,d$ represents the weight to be assigned to the product of component $i$ of the displacement extracted at node $p$ with component $j$ of the force extracted at node $q$. The expression of  for quadrilateral elements with or without singularity is reported in \ref{app:Tpq}. Notice that, given $m$ is the order of the element shape functions, the element side has $m+1$ nodes and this represents the upper limit of indices $p$ and $q$.\\%$\underline{\underline{T}}_{pq}$
+Based upon the work of Raju~\cite{Raju1987}, we introduce the matrix $\underline{\underline{T}}_{pq}$ to represent the weights needed in the VCCT to account for the use of singular elements. As already done previously, indices $p$ and $q$ refer to nodes placed respectively on the free (crack face) and bonded side of the crack tip. Nodes are enumerated so that the crack tip has always index $1$, i.e. the higher the index the further the node is from the crack tip. Matrix $\underline{\underline{T}}_{pq}$ has always a size of $d\times d$, where $d=2$ for a $2D$ problem and $d=3$ for a $3D$ problem. An element $\underline{\underline{T}}_{pq}\left(i,j\right)$ with $i,j=1,\dots,d$ represents the weight to be assigned to the product of component $i$ of the displacement extracted at node $p$ with component $j$ of the force extracted at node $q$. The expression of $\underline{\underline{T}}_{pq}$ for quadrilateral elements with or without singularity is reported in \ref{app:Tpq}. Notice that, given $m$ is the order of the element shape functions, the element side has $m+1$ nodes and this represents the upper limit of indices $p$ and $q$.\\
 By using matrix $\underline{\underline{T}}_{pq}$, it is possible to express the total ERR $G$ evaluated with the VCCT as
 
 \begin{equation}\label{eq:gtot}
@@ -163,13 +185,13 @@ G_{TOT} = \frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underli
 Introducing the vector $\underline{G}=\begin{bmatrix}
 G_{I} \\
 G_{II}
-\end{bmatrix}$ of fracture mode ERRs, Mode I and Mode II ERR evaluated with the VCCT can be expressed as
+\end{bmatrix}$ of fracture mode ERRs, Mode I and Mode II ERR evaluated with the VCCT can be expressed as 
 
 \begin{equation}\label{eq:g}
 \underline{G} =\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Diag\left(\underline{F}_{r\theta,q}\underline{u}_{r\theta,p}^{T}\underline{\underline{T}}_{pq}^{T}\right),
 \end{equation}
 
-where $Diag\left(\right)$ is the function that extracts the main diagonal of the input matrix as a column vector. Substituting Equations~\ref{eq:FUrot} and~\ref{eq:ctforce2} in Equations~\ref{eq:gtot} and~\ref{eq:g}, we can express the Mode I, Mode II and total Energy Release Rate as a function of the crack displacements and the FE solution (more details in \ref{app:ctforcesexample}) as
+where $Diag\left(\right)$ is the function that extracts the main diagonal of the input matrix as a column vector. Substituting Equations~\ref{eq:FUrot} and~\ref{eq:ctforce2} in Equations~\ref{eq:gtot} and~\ref{eq:g}, we can express the Mode I, Mode II and total Energy Release Rate as a function of the crack displacements and the FE solution (more details in \ref{app:ctforcesexample}) as 
 
 \begin{equation}\label{eq:gtotlong}
 \begin{split}
@@ -209,7 +231,7 @@ G_{TOT}&=\frac{1}{2R_{f}\delta}\sum_{p=1}^{m+1}\sum_{q=1}^{m+1}Tr\left(\underlin
 \end{split}
 \end{equation}
 
-As $G_{TOT}$ was defined according to Equation~\ref{eq:gtot} and given that $Tr\left(AB\right)=Tr\left(BA\right)$, it holds that
+As $G_{TOT}$ was defined according to Equation~\ref{eq:gtot} and given that $Tr\left(AB\right)=Tr\left(BA\right)$, it holds that 
 
 \begin{equation}\label{eq:gtotrotinv}
 \begin{split}
@@ -223,22 +245,22 @@ which shows that the total Energy Release Rate is invariant to rigid rotations a
 \begin{figure}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-1st-05-invrot-GTOT.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-1st-05-invrot-GTOT.pdf}
        \caption{$V_{f}=0.1\%$, $1^{st}$ order elements, $\delta=0.05^{\circ}$.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-2nd-05-invrot-GTOT.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-2nd-05-invrot-GTOT.pdf}
        \caption{$V_{f}=0.1\%$, $2^{nd}$ order elements, $\delta=0.05^{\circ}$.}
     \end{subfigure}
 
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-1st-05-invrot-GTOT.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-1st-05-invrot-GTOT.pdf}
        \caption{$V_{f}=40\%$, $1^{st}$ order elements, $\delta=0.05^{\circ}$.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-2nd-05-invrot-GTOT.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-2nd-05-invrot-GTOT.pdf}
        \caption{$V_{f}=40\%$, $2^{nd}$ order elements, $\delta=0.05^{\circ}$ .}
     \end{subfigure}
 
@@ -256,7 +278,7 @@ The result of Equation~\ref{eq:gtotrotinv} has also physical implications:
 
 \subsection{Analytical considerations}
 
-Substituting Equations~\ref{eq:rotmatdev} in the derivative of Equation~\ref{eq:g}, we can investigate the dependency of Mode I and Mode II ERR with respect to the size $\delta$ of an element in the crack tip neighborhood through
+Substituting Equations~\ref{eq:rotmatdev} in the derivative of Equation~\ref{eq:g}, we can investigate the dependency of Mode I and Mode II ERR with respect to the size $\delta$ of an element in the crack tip neighborhood through 
 
 \begin{equation}
 \scriptsize
@@ -330,22 +352,22 @@ Evaluations of the Mode I, Mode II and total Energy Release Rate using the VCCT 
 \begin{figure}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-1st-GI.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-1st-GI.pdf}
        \caption{$V_{f}=0.1\%$, $1^{st}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-2nd-GI.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-2nd-GI.pdf}
        \caption{$V_{f}=0.1\%$, $2^{nd}$ order elements.}
     \end{subfigure}
 
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-1st-GI.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-1st-GI.pdf}
        \caption{$V_{f}=40\%$, $1^{st}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-2nd-GI.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-2nd-GI.pdf}
        \caption{$V_{f}=40\%$, $2^{nd}$ order elements.}
     \end{subfigure}
 
@@ -357,22 +379,22 @@ Results for Mode I ERR in Fig.~\ref{fig:ginum} show clearly the transition from 
 \begin{figure}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-1st-GII.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-1st-GII.pdf}
        \caption{$V_{f}=0.1\%$, $1^{st}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-2nd-GII.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-2nd-GII.pdf}
        \caption{$V_{f}=0.1\%$, $2^{nd}$ order elements.}
     \end{subfigure}
 
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-1st-GII.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-1st-GII.pdf}
        \caption{$V_{f}=40\%$, $1^{st}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-2nd-GII.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-2nd-GII.pdf}
        \caption{$V_{f}=40\%$, $2^{nd}$ order elements.}
     \end{subfigure}
 
@@ -384,22 +406,22 @@ Observing Figure~\ref{fig:giinum}, it possible to notice the existence of two di
 \begin{figure}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-1st-GTOT.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-1st-GTOT.pdf}
        \caption{$V_{f}=0.1\%$, $1^{st}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-2nd-GTOT.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-2nd-GTOT.pdf}
        \caption{$V_{f}=0.1\%$, $2^{nd}$ order elements.}
     \end{subfigure}
 
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-1st-GTOT.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-1st-GTOT.pdf}
        \caption{$V_{f}=40\%$, $1^{st}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-2nd-GTOT.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-2nd-GTOT.pdf}
        \caption{$V_{f}=40\%$, $2^{nd}$ order elements.}
     \end{subfigure}
 
@@ -495,22 +517,22 @@ where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are paramete
 \begin{figure}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-1st-vsDelta-GI.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-1st-vsDelta-GI.pdf}
        \caption{$1^{st}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-1st-semilogvsDelta-GI.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-1st-semilogvsDelta-GI.pdf}
        \caption{$1^{st}$ order elements.}
     \end{subfigure}
 
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-2nd-vsDelta-GI.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-2nd-vsDelta-GI.pdf}
        \caption{$2^{nd}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-2nd-semilogvsDelta-GI.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-2nd-semilogvsDelta-GI.pdf}
        \caption{$2^{nd}$ order elements.}
     \end{subfigure}
 
@@ -520,22 +542,22 @@ where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are paramete
 \begin{figure}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-1st-vsDelta-GI.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-1st-vsDelta-GI.pdf}
        \caption{$1^{st}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-1st-semilogvsDelta-GI.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-1st-semilogvsDelta-GI.pdf}
        \caption{$1^{st}$ order elements.}
     \end{subfigure}
 
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-2nd-vsDelta-GI.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-2nd-vsDelta-GI.pdf}
        \caption{$2^{nd}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-2nd-semilogvsDelta-GI.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-2nd-semilogvsDelta-GI.pdf}
        \caption{$2^{nd}$ order elements.}
     \end{subfigure}
 
@@ -545,22 +567,22 @@ where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are paramete
 \begin{figure}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-1st-vsDelta-GII.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-1st-vsDelta-GII.pdf}
        \caption{$1^{st}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-1st-semilogvsDelta-GII.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-1st-semilogvsDelta-GII.pdf}
        \caption{$1^{st}$ order elements.}
     \end{subfigure}
 
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-2nd-vsDelta-GII.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-2nd-vsDelta-GII.pdf}
        \caption{$2^{nd}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-2nd-semilogvsDelta-GII.pdf}
+        \includegraphics[width=\textwidth]{Vf0_1-free-2nd-semilogvsDelta-GII.pdf}
        \caption{$2^{nd}$ order elements.}
     \end{subfigure}
 
@@ -570,22 +592,22 @@ where $A\left(\Delta\theta\right)$ and $B\left(\Delta\theta\right)$ are paramete
 \begin{figure}[!h]
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-1st-vsDelta-GII.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-1st-vsDelta-GII.pdf}
        \caption{$1^{st}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-1st-semilogvsDelta-GII.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-1st-semilogvsDelta-GII.pdf}
        \caption{$1^{st}$ order elements.}
     \end{subfigure}
 
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-2nd-vsDelta-GII.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-2nd-vsDelta-GII.pdf}
        \caption{$2^{nd}$ order elements.}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{paperA/Vf40-free-2nd-semilogvsDelta-GII.pdf}
+        \includegraphics[width=\textwidth]{Vf40-free-2nd-semilogvsDelta-GII.pdf}
        \caption{$2^{nd}$ order elements.}
     \end{subfigure}
 
@@ -606,7 +628,7 @@ The application of the Virtual Crack Closure Technique to the calculation of Mod
 \item the sign of the logarithm is always positive for $G_{I}$, i.e. it decreases when $\delta$ decreases, and negative for $G_{II}$, i.e. it increases when $\delta$ decreases.
 \end{itemize}
 
-The conclusion is significant: as the behavior of Mode I and Mode II is logarithmic with respect to mesh size, there exists no asymptotic limit and thus no convergence of the values. A convergence analysis based on the reduction of the error between successive iterations would not provide a reliable assessment of the accuracy of the FE solution of Mode I and Mode II Energy Release Rate of the fiber-matrix interface crack. A validation is thus required with respect to data obtained through a different method, be it analytical, numerical or experimental. Moreover, it has been shown that: first, the same behavior appears when using $1^{st}$ as well as $2^{nd}$ order elements; second, no improvement is expected with the use of singular elements, as the logarithmic dependency of $G_{I}$ and $G_{II}$ is governed by the definition of ERR itself together with the asymptotic behavior of the displacement field at the crack tip. These two conclusions run contrary to the suggestions provided in the manuals of many commercial FEM packages, such as Abaqus~\cite{abq12} which suggests that (Section 11.4.2 of the \emph{Abaqus Analysis User's Guide}): ``\textit{Sharp cracks (where the crack faces lie on top of one another in the undeformed configuration) are usually modeled using small-strain assumptions. Focused meshes, [...], should normally be used for small-strain fracture mechanics evaluations. However, for a sharp crack the strain field becomes singular at the crack tip. [...] In most cases the singularity at the crack tip should be considered in small-strain analysis (when geometric nonlinearities are ignored). Including the singularity often improves the accuracy of the J-integral, the stress intensity factors, and the stress and strain calculations because the stresses and strains in the region close to the crack tip are more accurate.}''. We have shown that, in the context of the fiber/matrix interface crack, the convergence of the Energy Release Rate is determined by the asymptotic behavior of the elastic solution and only marginally by the choice of element order and type, thus contradicting the statements in~\cite{abq12}.
+The conclusion is significant: as the behavior of Mode I and Mode II is logarithmic with respect to mesh size, there exists no asymptotic limit and thus no convergence of the values. A convergence analysis based on the reduction of the error between successive iterations would not provide a reliable assessment of the accuracy of the FE solution of Mode I and Mode II Energy Release Rate of the fiber-matrix interface crack. A validation is thus required with respect to data obtained through a different method, be it analytical, numerical or experimental. Moreover, it has been shown that: first, the same behavior appears when using $1^{st}$ as well as $2^{nd}$ order elements; second, no improvement is expected with the use of singular elements, as the logarithmic dependency of $G_{I}$ and $G_{II}$ is governed by the definition of ERR itself together with the asymptotic behavior of the displacement field at the crack tip. These two conclusions run contrary to the suggestions provided in the manuals of many commercial FEM packages, such as Abaqus~\cite{abq12} which suggests that (Section 11.4.2 of the \emph{Abaqus Analysis User's Guide}): ``\textit{Sharp cracks (where the crack faces lie on top of one another in the undeformed configuration) are usually modeled using small-strain assumptions. Focused meshes, [...], should normally be used for small-strain fracture mechanics evaluations. However, for a sharp crack the strain field becomes singular at the crack tip. [...] In most cases the singularity at the crack tip should be considered in small-strain analysis (when geometric nonlinearities are ignored). Including the singularity often improves the accuracy of the J-integral, the stress intensity factors, and the stress and strain calculations because the stresses and strains in the region close to the crack tip are more accurate.}''. We have shown that, in the context of the fiber/matrix interface crack, the convergence of the Energy Release Rate is determined by the asymptotic behavior of the elastic solution and only marginally by the choice of element order and type, thus contradicting the statements in~\cite{abq12}. 
 
 \FloatBarrier
 
@@ -614,15 +636,14 @@ The conclusion is significant: as the behavior of Mode I and Mode II is logarith
 
 Luca Di Stasio thanks Prof. Janis Varna for the useful discussions and suggestions. Luca Di Stasio gratefully acknowledges the support of the European School of Materials (EUSMAT) through the DocMASE Doctoral Programme and the European Commission through the Erasmus Mundus Programme.
 
-%\bibliography{refs}
-\printbibliography
+\bibliography{refspaperA}
 
-\paperappendix
+\appendix
 \section{Derivation of the relationship between crack tip forces and displacements for first order quadrilateral elements}\label{app:ctforcesexample}
 
 \subsection{Foundational relations}
 
-In the isoparametric formulation of the Finite Element Method, the element Jacobian $J$ and its inverse $J^{-1}$ can be expressed in general as
+In the isoparametric formulation of the Finite Element Method, the element Jacobian $J$ and its inverse $J^{-1}$ can be expressed in general as 
 
 \begin{equation}
 \underline{\underline{J}}=\begin{bmatrix}
@@ -678,7 +699,7 @@ We introduce the linear elastic material behavior in the form of the $3\left(d-1
 \underline{\sigma}=\underline{\underline{D}}\cdot\underline{\varepsilon},
 \end{equation}
 
-where $\underline{\sigma}$ the $3\left(d-1\right)\times 1$ stress vector in Voigt notation. It is finally possible to define the $n\times n$ element stiffness matrix $\underline{\underline{k_{e}}}$ as
+where $\underline{\sigma}$ the $3\left(d-1\right)\times 1$ stress vector in Voigt notation. It is finally possible to define the $n\times n$ element stiffness matrix $\underline{\underline{k_{e}}}$ as 
 
 \begin{equation}\label{eq:elestiff}
 \underline{\underline{k_{e}}}=\int_{V_{e}\left(x,y\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)dV_{e}\left(x,\dots,y\right)=\int_{V_{e}\left(\xi,\eta\right)}\left(\underline{\underline{B}}^{T}\underline{\underline{D}}\cdot\underline{\underline{B}}\right)\sqrt{g}dV_{e}\left(\xi,\dots,\eta\right),
@@ -727,7 +748,7 @@ With reference to Fig.~\ref{fig:vcctlinear}, we define:
 The $x-y$ reference frame is the global reference frame, while the $r-\theta$ reference frame is such that the $\theta$ direction coincides with the crack propagation direction at the crack tip and $r$ the in-plane normal to the propagation direction. For an arc-crack as the present one, the $r$-direction coincides with the radial direction of the inclusion.
 
 \begin{figure}[!h]
-\includegraphics[width=\textwidth]{paperA/VCCT-linear.pdf}
+\includegraphics[width=\textwidth]{VCCT-linear.pdf}
 \caption{Schematic representation of the discretized crack tip geometry for  $1^{st}$ order quadrilateral elements.}\label{fig:vcctlinear}
 \end{figure}
 
@@ -749,7 +770,7 @@ and $2\Delta\theta$ is total angular size of the debond. The corresponding force
 F_{r}=\cos\left(\Delta\theta\right) F_{x,CT}+\sin\left(\Delta\theta\right) F_{y,CT}\qquad F_{\theta}=-\sin\left(\Delta\theta\right) F_{x,CT}+\cos\left(\Delta\theta\right) F_{y,CT}.
 \end{equation}
 
-At the crack tip, the FE mesh possesses two coincident points, labeled $FCT$ and $MCT$. Continuity of the displacements at the crack tip must be ensured. Furthermore, in order to measure the force at the crack tip, a fully-constraint dummy node needs to be created and formally linked to the two nodes at the crack tip by the conditions
+At the crack tip, the FE mesh possesses two coincident points, labeled $FCT$ and $MCT$. Continuity of the displacements at the crack tip must be ensured. Furthermore, in order to measure the force at the crack tip, a fully-constraint dummy node needs to be created and formally linked to the two nodes at the crack tip by the conditions 
 
 \begin{equation}
 \begin{cases}
@@ -878,56 +899,56 @@ which can be reformulated synthetically as
 \begin{cases}
 F_{x,CT}&= K_{xx}u_{x}+K_{xy}u_{y}+\widetilde{F}_{x}\\
 F_{y,CT}&= K_{yx}u_{x}+K_{yy}u_{y}+\widetilde{F}_{y}\\
-\end{cases},
+\end{cases}, 
 \end{equation}
 
 where $\widetilde{F}_{x}$ and $\widetilde{F}_{y}$ represent the influence of the FE solution through the nodes of the elements sharing the crack tip that do not belong to any of the phase interfaces, i.e. the nodes of the elements sharing the crack tip that belong to the bulk of each phase.
 
-\section{Expression of  for quadrilateral elements with or without singularity}\label{app:Tpq}
+\section{Expression of $\underline{\underline{T}}_{pq}$ for quadrilateral elements with or without singularity}\label{app:Tpq}
 
-The expression of  for quadrilateral elements with or without singularity is
-%$\underline{\underline{T}}_{pq}$
-%\begin{equation}\label{eq:Tpq}
-%\scriptsize
-%\begin{split}
-%\underline{\underline{T}}_{pq}&=\begin{cases}
-%\underline{\underline{I}}\ for\ p=q<2\\
-%\underline{\underline{0}}\ otherwise
-%\end{cases}%\quad \text{for $1^{st}$ order quadrilateral elements}\\
-%&=\begin{cases}
-%\underline{\underline{I}}\ for\ p=q<3\\
-%\underline{\underline{0}}\ otherwise
-%\end{cases}\quad \text{for $2^{nd}$ order quadrilateral elements}\\
-%&=\begin{cases}
-%\underline{\underline{I}}\ for\ p=q<4\\
-%\underline{\underline{0}}\ otherwise
-%\end{cases}\quad \text{for $3^{rd}$ order quadrilateral elements}\\
-%&=\begin{cases}
-%\left(14-\frac{33\pi}{8}\right)\underline{\underline{I}}\ for\ p=1,q=1\\
-%\left(-52+\frac{33\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=2\\
-%\left(17-\frac{21\pi}{4}\right)\underline{\underline{I}}\ for\ p=2,q=1\\
-%\left(-\frac{7}{2}+\frac{21\pi}{16}\right)\underline{\underline{I}}\ for\ p=2,q=2\\
-%\left(8-\frac{21\pi}{8}\right)\underline{\underline{I}}\ for\ p=1,q=3\\
-%\left(-32+\frac{21\pi}{2}\right)\underline{\underline{I}}\ for\ p=2,q=3\\
-%\underline{\underline{0}}\ otherwise
-%\end{cases}\quad \text{for $2^{nd}$ order quarter-point quadrilateral elements}\\
-%&=\begin{cases}
-%\left(-11187+\frac{7155\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=1\\
-%\left(38556-\frac{24543\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=2\\
-%\left(-53055+\frac{33777\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=3\\
-%\left(\frac{11396}{3}-\frac{9575\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=1\\
-%\left(-12936+\frac{33003\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=2\\
-%\left(17988-\frac{45837\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=3\\
-%\left(-\frac{8453}{3}+\frac{3595\pi}{4}\right)\underline{\underline{I}}\ for\ p=3,q=1\\
-%\left(9804-\frac{12411\pi}{4}\right)\underline{\underline{I}}\ for\ p=3,q=2\\
-%\left(-13587+\frac{17289\pi}{4}\right)\underline{\underline{I}}\ for\ p=3,q=3\\
-%\left(6948-\frac{17685\pi}{8}\right)\underline{\underline{I}}\ for\ p=1,q=4\\
-%\left(-23976+\frac{60993\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=4\\
-%\left(33372-\frac{84807\pi}{8}\right)\underline{\underline{I}}\ for\ p=3,q=4\\
-%\underline{\underline{0}}\ otherwise
-%\end{cases}\quad \text{for $3^{rd}$ order quarter-point quadrilateral elements}\\
-%\end{split}
-%\end{equation}
+The expression of $\underline{\underline{T}}_{pq}$ for quadrilateral elements with or without singularity is
+
+\begin{equation}\label{eq:Tpq}
+\scriptsize
+\begin{split}
+\underline{\underline{T}}_{pq}&=\begin{cases}
+\underline{\underline{I}}\ for\ p=q<2\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $1^{st}$ order quadrilateral elements}\\
+&=\begin{cases}
+\underline{\underline{I}}\ for\ p=q<3\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $2^{nd}$ order quadrilateral elements}\\
+&=\begin{cases}
+\underline{\underline{I}}\ for\ p=q<4\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $3^{rd}$ order quadrilateral elements}\\
+&=\begin{cases}
+\left(14-\frac{33\pi}{8}\right)\underline{\underline{I}}\ for\ p=1,q=1\\
+\left(-52+\frac{33\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=2\\
+\left(17-\frac{21\pi}{4}\right)\underline{\underline{I}}\ for\ p=2,q=1\\
+\left(-\frac{7}{2}+\frac{21\pi}{16}\right)\underline{\underline{I}}\ for\ p=2,q=2\\
+\left(8-\frac{21\pi}{8}\right)\underline{\underline{I}}\ for\ p=1,q=3\\
+\left(-32+\frac{21\pi}{2}\right)\underline{\underline{I}}\ for\ p=2,q=3\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $2^{nd}$ order quarter-point quadrilateral elements}\\
+&=\begin{cases}
+\left(-11187+\frac{7155\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=1\\
+\left(38556-\frac{24543\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=2\\
+\left(-53055+\frac{33777\pi}{2}\right)\underline{\underline{I}}\ for\ p=1,q=3\\
+\left(\frac{11396}{3}-\frac{9575\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=1\\
+\left(-12936+\frac{33003\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=2\\
+\left(17988-\frac{45837\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=3\\
+\left(-\frac{8453}{3}+\frac{3595\pi}{4}\right)\underline{\underline{I}}\ for\ p=3,q=1\\
+\left(9804-\frac{12411\pi}{4}\right)\underline{\underline{I}}\ for\ p=3,q=2\\
+\left(-13587+\frac{17289\pi}{4}\right)\underline{\underline{I}}\ for\ p=3,q=3\\
+\left(6948-\frac{17685\pi}{8}\right)\underline{\underline{I}}\ for\ p=1,q=4\\
+\left(-23976+\frac{60993\pi}{8}\right)\underline{\underline{I}}\ for\ p=2,q=4\\
+\left(33372-\frac{84807\pi}{8}\right)\underline{\underline{I}}\ for\ p=3,q=4\\
+\underline{\underline{0}}\ otherwise
+\end{cases}\quad \text{for $3^{rd}$ order quarter-point quadrilateral elements}\\
+\end{split}
+\end{equation}
 
 where $\underline{\underline{I}}$ is the identity matrix.
 
@@ -963,5 +984,4 @@ where $\underline{\underline{I}}$ is the identity matrix.
 %\end{split}
 %\end{equation}
 
-%\putbib[paperA/refspaperA]
-%\end{bibunit}
+\end{document}

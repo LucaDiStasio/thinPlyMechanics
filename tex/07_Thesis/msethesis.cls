@@ -3,7 +3,7 @@
 %% Licentiate or doctoral thesis style file,
 %% Lulea Univ. of Tech., Sweden.
 %%
-%% Created by: Johan E. Carlson, November 5, 2002, originally named 
+%% Created by: Johan E. Carlson, November 5, 2002, originally named
 %%             eisthesis.cls
 %%
 %% Derived from the Standard LaTeX Book document class.
@@ -39,7 +39,7 @@
 %%   March 5, 2009
 %%   June 7, 2009
 %%   September 1, 2010
-%%  
+%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ******************************************************
@@ -80,7 +80,8 @@
 \RequirePackage{nicefrac}
 \RequirePackage{ifthen}
 \RequirePackage[section]{placeins}
-\RequirePackage[sectionbib]{bibunits}
+\RequirePackage{biblatex}
+%\RequirePackage[sectionbib]{bibunits}
 \RequirePackage[latin1]{inputenc}
 \RequirePackage{subcaption}
 \RequirePackage{titletoc}
@@ -193,7 +194,7 @@
      {\Huge \textbf{#1\\[3cm]}}
      {\LARGE \textbf{#2}}\\[20mm]
      {\large #3} \vfill
-     {\large \mbox{}\hrulefill\mbox{}\\[10mm] 
+     {\large \mbox{}\hrulefill\mbox{}\\[10mm]
       \textbf{\supervisorstring}\\[3mm]#4\\[12mm]}
      #8
   \end{center}
@@ -214,16 +215,16 @@
    %--- Make Table of Conents
   \renewcommand{\contentsname}{\hrule\vspace*{8pt}\Huge{\hfill{\sc
                 Contents}\vspace*{8pt}\hrule\vspace*{-1cm} }}
-    
+
   \titlecontents{chapter}[0.7cm]
     {\vspace{0.3cm}}
     {\contentslabel{1.7cm}}
     {\hspace{-0.7cm}}
     {\hfill\contentspage}
- 
+
    \tableofcontents
    \cleardoublepage
-  
+
  %--- Include preface
 
  \setcounter{secnumdepth}{-2}
@@ -246,7 +247,7 @@
  \fancyhf{}
  \fancyhead[RE]{}
  \fancyhead[LO]{}
- \fancyhead[LE]{\thepage} 
+ \fancyhead[LE]{\thepage}
  \fancyhead[RO]{\thepage}
 }
 
@@ -289,7 +290,7 @@
   \fancyhf{}
   \fancyhead[RE]{}
   \fancyhead[LO]{}
-  \fancyhead[LE]{\thepage} 
+  \fancyhead[LE]{\thepage}
   \fancyhead[RO]{\thepage}
 }
 
@@ -306,7 +307,7 @@
  \fancyhf{}
  \fancyhead[RE]{}
  \fancyhead[LO]{}
- \fancyhead[LE]{\thepage} 
+ \fancyhead[LE]{\thepage}
  \fancyhead[RO]{\thepage}
  \cleardoublepage
 }
@@ -318,7 +319,7 @@
 {
    % First argument is an abbreviated version
    % of the chapter name, used as page header
-   % Second argument is the chapter name as it occurs in the TOC. 
+   % Second argument is the chapter name as it occurs in the TOC.
    % The third argument is what is actually printed on the first page
    % of the chapter.
 
@@ -341,7 +342,7 @@
 
 
    \renewcommand{\thechapter}{\arabic{chapter}}
-   \renewcommand{\thesection}{\arabic{chapter}.\arabic{section}} 
+   \renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
    \renewcommand{\thesubsection}{
                  \arabic{chapter}.\arabic{section}.\arabic{subsection}}
    \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
@@ -351,7 +352,7 @@
    \cleardoublepage
    \thispagestyle{plain}
    \chapter[#3]{#4}
-   
+
    \vspace*{-2\baselineskip}
    \hfill\parbox[t]{.6\textwidth}{%
       \begin{flushright}
@@ -362,7 +363,7 @@
    \fancyhf{}
    \fancyhead[RE]{\sc{\nouppercase{#2}}}
    \fancyhead[LO]{\sc{\nouppercase{\rightmark}}}
-   \fancyhead[LE]{\thepage} 
+   \fancyhead[LE]{\thepage}
    \fancyhead[RO]{\thepage}
 }
 
@@ -373,7 +374,7 @@
 {
    \fancyhead[RE]{}
    \fancyhead[LO]{}
-   \fancyhead[LE]{\thepage} 
+   \fancyhead[LE]{\thepage}
    \fancyhead[RO]{\thepage}
    \cleardoublepage
    \thispagestyle{plain}
@@ -387,7 +388,7 @@
    \fancyhf{}
    \fancyhead[RE]{\sc{\nouppercase{#1}}}
    \fancyhead[LO]{\sc{\nouppercase{\rightmark}}}
-   \fancyhead[LE]{\thepage} 
+   \fancyhead[LE]{\thepage}
    \fancyhead[RO]{\thepage}
 }
 
@@ -399,7 +400,7 @@
 {
    \fancyhead[RE]{}
    \fancyhead[LO]{}
-   \fancyhead[LE]{\thepage} 
+   \fancyhead[LE]{\thepage}
    \fancyhead[RO]{\thepage}
    \cleardoublepage
    \thispagestyle{plain}
@@ -413,7 +414,7 @@
    \fancyhf{}
    \fancyhead[RE]{\sc{\nouppercase{#1}}}
    \fancyhead[LO]{\sc{\nouppercase{\rightmark}}}
-   \fancyhead[LE]{\thepage} 
+   \fancyhead[LE]{\thepage}
    \fancyhead[RO]{\thepage}
 }
 
@@ -425,7 +426,7 @@
 {
    \fancyhead[RE]{}
    \fancyhead[LO]{}
-   \fancyhead[LE]{\thepage} 
+   \fancyhead[LE]{\thepage}
    \fancyhead[RO]{\thepage}
    \cleardoublepage
    \thispagestyle{plain}
@@ -439,7 +440,7 @@
    \fancyhf{}
    \fancyhead[RE]{\sc{\nouppercase{#1}}}
    \fancyhead[LO]{\sc{\nouppercase{\rightmark}}}
-   \fancyhead[LE]{\thepage} 
+   \fancyhead[LE]{\thepage}
    \fancyhead[RO]{\thepage}
 }
 
@@ -451,7 +452,7 @@
 {
    \fancyhead[RE]{}
    \fancyhead[LO]{}
-   \fancyhead[LE]{\thepage} 
+   \fancyhead[LE]{\thepage}
    \fancyhead[RO]{\thepage}
    \cleardoublepage
    \thispagestyle{plain}
@@ -463,20 +464,20 @@
    \fancyhf{}
    \fancyhead[RE]{\sc{\nouppercase{#1}}}
    \fancyhead[LO]{\sc{\nouppercase{\rightmark}}}
-   \fancyhead[LE]{\thepage} 
+   \fancyhead[LE]{\thepage}
    \fancyhead[RO]{\thepage}
 }
 
 % ------------------------------------------
 % \makebib command
 % ------------------------------------------
-\newcommand{\makebib}
+\newcommand{\makebib}[1]
 {
     \def\bibname{}
     \cleardoublepage
     \fancyhead[RE]{\sc References}
     \fancyhead[LO]{\sc References}
-    \fancyhead[LE]{\thepage} 
+    \fancyhead[LE]{\thepage}
     \fancyhead[RO]{\thepage}
     \thispagestyle{plain}
     \vspace*{2cm}
@@ -486,7 +487,8 @@
     {\Huge{\hfill\sc References}}\\[-6pt]
     \hrule
     \addcontentsline{toc}{chapter}{\sc References}
-    \putbib
+    %\putbib
+    \printbibliography
     \cleardoublepage
 }
 
@@ -496,7 +498,7 @@
 \renewcommand{\appendix}%
 {
   \cleardoublepage%
-  \setcounter{section}{0} 
+  \setcounter{section}{0}
   % ------------------------------------------
   % Adjust section headings
   % ------------------------------------------

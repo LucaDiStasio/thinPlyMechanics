@@ -43,7 +43,7 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \label{paperE:tab:phaseprop}
 \end{table}
 
-The use of coupling conditions allows the study of a Repeating Unit Cells (RUC) of reduced size with respect to the corresponding RVE, which translates in a gain in terms of computational time and memory usage during the evaluation of Finite Element (FE) solution. The RVEs studied in this article are reported in Figure~\ref{paperE:fig:rves} with the corresponding RUC highlighted by dashed line (in blue in the online color version) and with symmetry and coupling conditions represented by rollers (\includegraphics[scale=0.5]{roller.pdf}). Details about the central one-fiber unit cell are shown in Figure~\ref{paperE:fig:ruc}. Notice that the analysis, in terms of stresses and Energy Release Rate (ERR), is conducted on this central one-fiber unit cell, both in the case of an undamaged and of a partially debonded fiber.\\
+The use of coupling conditions allows the study of a Repeating Unit Cells (RUC) of reduced size with respect to the corresponding RVE, which translates in a gain in terms of computational time and memory usage during the evaluation of Finite Element (FE) solution. The RVEs studied in this article are reported in Figure~\ref{paperE:fig:rves} with the corresponding RUC highlighted by dashed line (in blue in the online color version) and with symmetry and coupling conditions represented by rollers (\includegraphics[scale=0.5]{paperE/roller.pdf}). Details about the central one-fiber unit cell are shown in Figure~\ref{paperE:fig:ruc}. Notice that the analysis, in terms of stresses and Energy Release Rate (ERR), is conducted on this central one-fiber unit cell, both in the case of an undamaged and of a partially debonded fiber.\\
 Nomenclature and main features of the RVEs studied are described in the following.
 
 \begin{description}
@@ -65,10 +65,10 @@ which represent conditions of anti-symmetric coupling~\cite{DiStasio2019b}.
 
 \begin{figure}[!h]
 \centering
-    \subfigure[$n\times k-free$]{\label{paperE:fig:rves-a}\raisebox{0.07\textheight}{\includegraphics[width=0.4\textwidth]{thickPlyUD.pdf}}}\quad
-    \subfigure[$n\times k-coupling$]{\label{paperE:fig:rves-b}\includegraphics[width=0.4\textwidth]{coupling.pdf}}\\
-    \subfigure[$n\times k-asymm$]{\label{paperE:fig:rves-c}\raisebox{0.0275\textheight}{\includegraphics[width=0.4\textwidth]{asymm.pdf}}}\quad
-    \subfigure[$n\times k-m\times t_{90^{\circ}}$]{\label{paperE:fig:rves-d}\includegraphics[width=0.4\textwidth]{ThickPlyCP.pdf}}
+    \subfigure[$n\times k-free$]{\label{paperE:fig:rves-a}\raisebox{0.07\textheight}{\includegraphics[width=0.4\textwidth]{paperE/thickPlyUD.pdf}}}\quad
+    \subfigure[$n\times k-coupling$]{\label{paperE:fig:rves-b}\includegraphics[width=0.4\textwidth]{paperE/coupling.pdf}}\\
+    \subfigure[$n\times k-asymm$]{\label{paperE:fig:rves-c}\raisebox{0.0275\textheight}{\includegraphics[width=0.4\textwidth]{paperE/asymm.pdf}}}\quad
+    \subfigure[$n\times k-m\times t_{90^{\circ}}$]{\label{paperE:fig:rves-d}\includegraphics[width=0.4\textwidth]{paperE/ThickPlyCP.pdf}}
 \caption{Composite RVEs and corresponding RUCs analyzed.}\label{paperE:fig:rves}
 \end{figure}
 
@@ -76,7 +76,7 @@ Every RUC is symmetric with respect to the horizontal ($x$) direction, thus only
 
 \begin{figure}[!h]
 \centering
-        \includegraphics[height=0.15\textheight]{RUC.pdf}
+        \includegraphics[height=0.15\textheight]{paperE/RUC.pdf}
 \caption{One-fiber unit cell and main parameters characterizing the debonding process.}\label{paperE:fig:ruc}
 \end{figure}
 
@@ -84,7 +84,7 @@ The FE solution is obtained using Abaqus~\cite{abq12} using second order, 2D, pl
 
 \begin{figure}[!h]
 \centering
-        \includegraphics[height=0.2\textheight]{vf60-G-methodsaccuracy.pdf}
+        \includegraphics[height=0.2\textheight]{paperE/vf60-G-methodsaccuracy.pdf}
 \caption{Total ERR of $11\times11-free$ evaluated respectively with the VCCT and the J-integral.}\label{paperE:fig:errerror}
 \end{figure}
 
@@ -92,14 +92,14 @@ Total ERR is underestimated, due to the high $\frac{\delta}{\Delta\theta}$ ratio
 
 \begin{figure}[!hp]
 \centering
-    \subfigure[Radial stress $\sigma_{rr}$]{\label{paperE:fig:stress-a}\includegraphics[height=0.2\textheight]{vf60-nodamage-sigmar.pdf}}\
-    \subfigure[Shear stress $\tau_{r\psi}$]{\label{paperE:fig:stress-b}\raisebox{0.04\textheight}{\includegraphics[height=0.16\textheight]{vf60-nodamage-taurt.pdf}}}\\
-    \subfigure[Local Hydrostatic Stress (LHS), neglecting $\sigma_{yy}$, $\sigma_{LHS,2D}$.]{\label{paperE:fig:stress-c}\includegraphics[height=0.2\textheight]{vf60-nodamage-p2D.pdf}}\
-    \subfigure[Local Hydrostatic Stress (LHS), considering $\sigma_{yy}$, $\sigma_{LHS,3D}$.]{\label{paperE:fig:stress-d}\includegraphics[height=0.2\textheight]{vf60-nodamage-p3D.pdf}}
-    \subfigure[Local von Mises stress, neglecting $\sigma_{yy}$, $\sigma_{vM,2D}$.]{\label{paperE:fig:stress-e}\includegraphics[height=0.2\textheight]{vf60-nodamage-vM2D.pdf}}\
-    \subfigure[Local von Mises stress, considering $\sigma_{yy}$, $\sigma_{vM,3D}$.]{\label{paperE:fig:stress-f}\raisebox{0.04\textheight}{\includegraphics[height=0.16\textheight]{vf60-nodamage-vM3D.pdf}}}
-    \subfigure[Local Maximum Principal Stress (LMPS), neglecting $\sigma_{yy}$, $\sigma_{LMPS,2D}$.]{\label{paperE:fig:stress-g}\includegraphics[height=0.2\textheight]{vf60-nodamage-sigmaI2D.pdf}}\
-    \subfigure[Local Maximum Principal Stress (LMPS), considering $\sigma_{yy}$, $\sigma_{LMPS,3D}$.]{\label{paperE:fig:stress-h}\includegraphics[height=0.2\textheight]{vf60-nodamage-sigmaI3D.pdf}}
+    \subfigure[Radial stress $\sigma_{rr}$]{\label{paperE:fig:stress-a}\includegraphics[height=0.2\textheight]{paperE/vf60-nodamage-sigmar.pdf}}\
+    \subfigure[Shear stress $\tau_{r\psi}$]{\label{paperE:fig:stress-b}\raisebox{0.04\textheight}{\includegraphics[height=0.16\textheight]{paperE/vf60-nodamage-taurt.pdf}}}\\
+    \subfigure[Local Hydrostatic Stress (LHS), neglecting $\sigma_{yy}$, $\sigma_{LHS,2D}$.]{\label{paperE:fig:stress-c}\includegraphics[height=0.2\textheight]{paperE/vf60-nodamage-p2D.pdf}}\
+    \subfigure[Local Hydrostatic Stress (LHS), considering $\sigma_{yy}$, $\sigma_{LHS,3D}$.]{\label{paperE:fig:stress-d}\includegraphics[height=0.2\textheight]{paperE/vf60-nodamage-p3D.pdf}}
+    \subfigure[Local von Mises stress, neglecting $\sigma_{yy}$, $\sigma_{vM,2D}$.]{\label{paperE:fig:stress-e}\includegraphics[height=0.2\textheight]{paperE/vf60-nodamage-vM2D.pdf}}\
+    \subfigure[Local von Mises stress, considering $\sigma_{yy}$, $\sigma_{vM,3D}$.]{\label{paperE:fig:stress-f}\raisebox{0.04\textheight}{\includegraphics[height=0.16\textheight]{paperE/vf60-nodamage-vM3D.pdf}}}
+    \subfigure[Local Maximum Principal Stress (LMPS), neglecting $\sigma_{yy}$, $\sigma_{LMPS,2D}$.]{\label{paperE:fig:stress-g}\includegraphics[height=0.2\textheight]{paperE/vf60-nodamage-sigmaI2D.pdf}}\
+    \subfigure[Local Maximum Principal Stress (LMPS), considering $\sigma_{yy}$, $\sigma_{LMPS,3D}$.]{\label{paperE:fig:stress-h}\includegraphics[height=0.2\textheight]{paperE/vf60-nodamage-sigmaI3D.pdf}}
 \caption{Stress distribution at the fiber/matrix interface in the absence of damage with respect to angular coordinate $\psi$; applied strain $\bar{\varepsilon}_{x}=1\%$.}\label{paperE:fig:stress}
 \end{figure}
 
@@ -134,8 +134,8 @@ where $\Psi_{G}$ is the energy-based phase angle, $G_{TOT}$ is the total ERR, $G
 
 \begin{figure}[!h]
 \centering
-    \subfigure[$\lambda=0.3$]{\label{paperE:fig:GIc-a}\includegraphics[height=0.23\textheight]{vf60-GIc-model.pdf}}\quad
-    \subfigure[$11\times 11-1\cdot t_{90^{\circ}}$]{\label{paperE:fig:GIc-b}\includegraphics[height=0.23\textheight]{vf60-GIc-lambda.pdf}}
+    \subfigure[$\lambda=0.3$]{\label{paperE:fig:GIc-a}\includegraphics[height=0.23\textheight]{paperE/vf60-GIc-model.pdf}}\quad
+    \subfigure[$11\times 11-1\cdot t_{90^{\circ}}$]{\label{paperE:fig:GIc-b}\includegraphics[height=0.23\textheight]{paperE/vf60-GIc-lambda.pdf}}
 \caption{Estimated values of $G_{Ic}$ assuming different values of initial debond size, for different RUCs and varying $\lambda$, with global applied strain $\bar{\varepsilon}_{x}$ equal to $1\%$.}\label{paperE:fig:GIc}
 \end{figure}
 
@@ -149,14 +149,14 @@ Notice that, although evaluated using $G_{I}$, $G_{II}$ and $G_{TOT}$ computed w
 
 \begin{figure}[!htbp]
 \centering
-    \subfigure[$21\times 1-free$]{\label{paperE:fig:debondsize-a}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A0.pdf}}\
-    \subfigure[$21\times 1-1\cdot t_{90^{\circ}}$]{\label{paperE:fig:debondsize-b}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A0T1.pdf}}\\
-    \subfigure[$21\times 3-free$]{\label{paperE:fig:debondsize-c}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A3.pdf}}\
-    \subfigure[$21\times 3-1\cdot t_{90^{\circ}}$]{\label{paperE:fig:debondsize-d}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A3T1.pdf}}\\
-    \subfigure[$21\times 21-free$]{\label{paperE:fig:debondsize-e}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A10.pdf}}\
-    \subfigure[$21\times 21-1\cdot t_{90^{\circ}}$]{\label{paperE:fig:debondsize-f}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A10T1.pdf}}\\
-    \subfigure[$21\times 1-coupling$]{\label{paperE:fig:debondsize-g}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A0vk.pdf}}\
-    \subfigure[$21\times 1-asymm$]{\label{paperE:fig:debondsize-h}\includegraphics[width=0.45\textwidth]{vf60-dsize-S10A0asymm.pdf}}
+    \subfigure[$21\times 1-free$]{\label{paperE:fig:debondsize-a}\includegraphics[width=0.45\textwidth]{paperE/vf60-dsize-S10A0.pdf}}\
+    \subfigure[$21\times 1-1\cdot t_{90^{\circ}}$]{\label{paperE:fig:debondsize-b}\includegraphics[width=0.45\textwidth]{paperE/vf60-dsize-S10A0T1.pdf}}\\
+    \subfigure[$21\times 3-free$]{\label{paperE:fig:debondsize-c}\includegraphics[width=0.45\textwidth]{paperE/vf60-dsize-S10A3.pdf}}\
+    \subfigure[$21\times 3-1\cdot t_{90^{\circ}}$]{\label{paperE:fig:debondsize-d}\includegraphics[width=0.45\textwidth]{paperE/vf60-dsize-S10A3T1.pdf}}\\
+    \subfigure[$21\times 21-free$]{\label{paperE:fig:debondsize-e}\includegraphics[width=0.45\textwidth]{paperE/vf60-dsize-S10A10.pdf}}\
+    \subfigure[$21\times 21-1\cdot t_{90^{\circ}}$]{\label{paperE:fig:debondsize-f}\includegraphics[width=0.45\textwidth]{paperE/vf60-dsize-S10A10T1.pdf}}\\
+    \subfigure[$21\times 1-coupling$]{\label{paperE:fig:debondsize-g}\includegraphics[width=0.45\textwidth]{paperE/vf60-dsize-S10A0vk.pdf}}\
+    \subfigure[$21\times 1-asymm$]{\label{paperE:fig:debondsize-h}\includegraphics[width=0.45\textwidth]{paperE/vf60-dsize-S10A0asymm.pdf}}
 \caption{$G_{TOT}$ and $G_{c}$ for several RUCs and different values of $G_{Ic}$ and $\lambda$, computed for $\bar{\varepsilon}_{x}=1\%$. Each intersection point of $G_{TOT}$ and $G_{c}$ curves such that $G_{TOT}\left(\Delta\theta\geq\Delta\theta_{intersection}\right)\leq G_{c}\left(\Delta\theta\geq\Delta\theta_{intersection}\right)$ determines an estimate of $\Delta\theta_{max}$.}\label{paperE:fig:debondsize}
 \end{figure}
 

@@ -65,12 +65,35 @@ which represent conditions of anti-symmetric coupling~\cite{DiStasio2019b}.
 
 \begin{figure}[!h]
 \centering
-    \subfigure[$n\times k-free$]{\label{paperE:fig:rves-a}\raisebox{0.07\textheight}{\includegraphics[width=0.4\textwidth]{paperE/thickPlyUD.pdf}}}\quad
-    \subfigure[$n\times k-coupling$]{\label{paperE:fig:rves-b}\includegraphics[width=0.4\textwidth]{paperE/coupling.pdf}}\\
-    \subfigure[$n\times k-asymm$]{\label{paperE:fig:rves-c}\raisebox{0.0275\textheight}{\includegraphics[width=0.4\textwidth]{paperE/asymm.pdf}}}\quad
-    \subfigure[$n\times k-m\times t_{90^{\circ}}$]{\label{paperE:fig:rves-d}\includegraphics[width=0.4\textwidth]{paperE/ThickPlyCP.pdf}}
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/thickPlyUD.pdf}
+        \caption{$n\times k-free$.}\label{paperE:fig:rves-a}
+    \end{subfigure} ~
+   \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/coupling.pdf}
+        \caption{$n\times k-coupling$.}\label{paperE:fig:rves-b}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/asymm.pdf}
+        \caption{$n\times k-asymm$.}\label{paperE:fig:rves-c}
+    \end{subfigure} ~
+   \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/ThickPlyCP.pdf}
+        \caption{$n\times k-asymm$.}\label{paperE:fig:rves-d}
+    \end{subfigure}
+
 \caption{Composite RVEs and corresponding RUCs analyzed.}\label{paperE:fig:rves}
 \end{figure}
+
+%\begin{figure}[!h]
+%\centering
+%    \subfigure[$n\times k-free$]{\label{paperE:fig:rves-a}\raisebox{0.07\textheight}{\includegraphics[width=0.4\textwidth]{paperE/thickPlyUD.pdf}}}\quad
+%    \subfigure[$n\times k-coupling$]{\label{paperE:fig:rves-b}\includegraphics[width=0.4\textwidth]{paperE/coupling.pdf}}\\
+%    \subfigure[$n\times k-asymm$]{\label{paperE:fig:rves-c}\raisebox{0.0275\textheight}{\includegraphics[width=0.4\textwidth]{paperE/asymm.pdf}}}\quad
+%    \subfigure[$n\times k-m\times t_{90^{\circ}}$]{\label{paperE:fig:rves-d}\includegraphics[width=0.4\textwidth]{paperE/ThickPlyCP.pdf}}
+%\caption{Composite RVEs and corresponding RUCs analyzed.}\label{paperE:fig:rves}
+%\end{figure}
 
 Every RUC is symmetric with respect to the horizontal ($x$) direction, thus only half of it is modeled in the FE solution through the use of symmetry boundary conditions on the bottom side. Conditions of coupling of the horizontal displacement are applied on the left and right side, to model the repetition of the RUC along the horizontal direction. A tensile load is applied on the right and left side in the form of displacement $\bar{u}_{x}=\pm\bar{\varepsilon}_{x}nL$ with $\bar{\varepsilon}_{x}=1\%$. The debond has a size of $2\Delta\theta$ (see Figure~\ref{paperE:fig:ruc}), with $\Delta\theta\geq0$ ($\Delta\theta=0$ is the case of no damage at all). For large debonds ($\Delta\theta\geq 60^{\circ}-80^{\circ}$), a region called \emph{contact zone}, of size $\Delta\Phi$ to be determined by the solution itself, appears at the crack tip. Correct resolution of this behavior requires the imposition of conditions of non-interpenetration of the crack faces. Crack face contact is assumed to be frictionless.
 

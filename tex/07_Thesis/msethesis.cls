@@ -1,18 +1,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LaTeX document class: cseethesis.cls
+%% LaTeX document class: msethesis.cls
 %% Licentiate or doctoral thesis style file,
 %% Lulea Univ. of Tech., Sweden.
 %%
-%% Created by: Johan E. Carlson, November 5, 2002, originally named
-%%             eisthesis.cls
+%% Created by: Luca Di Stasio, September 12, 2019
 %%
-%% Derived from the Standard LaTeX Book document class.
+%%
+%% Derived from: cseethesis by Johan E. Carlson, November 5, 2002, originally named
+%%             eisthesis.cls, derived from the Standard LaTeX Book document class.
 %%
 %% This document class is free to use, copy, distribute,
 %% and modify, as long as reference to the original author
 %% is given.
 %%
-%% Last modified by: Johan E. Carlson, June 7, 2009.
+%% Last modified by: Luca Di Stasio, September 12, 2019.
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -45,13 +46,13 @@
 % ******************************************************
 % Identification
 % ******************************************************
-\def\classversion{3.1}
-\def\classdate{September 1, 2010}
+\def\classversion{1.0}
+\def\classdate{September 12, 2019}
 
 \typeout{Document class version: \classversion}
 \typeout{Last modified: \classdate}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{cseethesis}
+\ProvidesClass{msethesis}
 
 % ******************************************************
 % Declare Options
@@ -80,8 +81,7 @@
 \RequirePackage{nicefrac}
 \RequirePackage{ifthen}
 \RequirePackage[section]{placeins}
-\RequirePackage[backend=biber,sorting=none]{biblatex}
-%\RequirePackage[sectionbib]{bibunits}
+\RequirePackage[backend=biber,style=ieee]{biblatex}
 \RequirePackage[latin1]{inputenc}
 \RequirePackage{subcaption}
 \RequirePackage{titletoc}

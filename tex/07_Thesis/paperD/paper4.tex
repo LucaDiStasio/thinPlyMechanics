@@ -102,7 +102,7 @@ where $h$ is the height of the RVE and $u_{z}\left(0,h\right)$ is the unknown ve
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 3. RESULTS AND DISCUSSION
+% 3. FINITE ELEMENT SOLUTION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Finite Element solution}
@@ -113,7 +113,7 @@ The length and height of the generic $n \times k-symm$ and $n \times k-asymm$ RV
 l=n\cdot2L\quad h=k\cdot2L,
 \end{equation}
 
-where $2L\cdot2L$ is the size of a $1$-fiber unit cell (see Fig. 4) and $L$ is determined by
+where $2L\cdot2L$ is the size of a $1$-fiber unit cell (see Fig.~\ref{paperD:fig:ruc}) and $L$ is determined by
 
 \begin{equation}
 L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}},
@@ -123,11 +123,39 @@ where $R_{f}$ and $V_{f}$ are respectively the fiber radius and volume fraction.
 
 \begin{figure}[!htb]
 \centering
-  \includegraphics[height=0.225\textheight]{paperD/RUC.pdf}
+  \includegraphics[width=\textwidth]{paperD/RUC.pdf}
 \caption{Schematic of the model with its main parameters.}\label{paperD:fig:ruc}
 \end{figure}
+
+The debond size is equal to $2\Delta\theta$, while the contact zone size is denoted by $\Delta\Phi$. The crack faces interaction in the contact zone is assumed to be frictionless. Consequently, crack faces are modeled as surfaces whose interaction is defined by conditions of no-interpenetration and frictionless sliding.\\
+The model is discretized and solved using the Finite Element Method (FEM) in the Abaqus environment~\cite{abq12}. The Mode I and Mode II ERR are computed using the Virtual Crack Closure Technique (VCCT)~\cite{Krueger2004} implemented in a custom Python routine, while the total ERR is evaluated by means of the Abaqus built-in J-Integral method~\cite{Rice1968}. The mesh is composed by 8-nodes quadrilaterals and 6-nodes triangles with quadratic shape functions. It is worth to recall here that the linear elastic solution of the fiber/interface crack possesses an oscillating singularity in the stress and displacement at the crack tip~\cite{England1966,Perlman1967,Toya1974}. The oscillating nature of the singularity prevents the convergence of Mode I and Mode II ERR at least when, according to their definition, computed for an infinitesimal increment of the crack length. The computational issue can be circumvented by evaluating the mode decomposition of the ERR over a finite size. This leads naturally to the use of numerical techniques based on domain discretization (such as FEM or BEM) in conjunction with the VCCT. In order to ensure the convergence of the Energy Release Rate, a regular mesh of quadrilaterals with almost unitary aspect ratio is used in the crack tip neighborhood in every RVE analyzed. The size of the elements in this region is characterized by their angular size $\delta$, which is always equal to $0.05^{\circ}$ in all our analyses. This ensures that the results from different models are consistent with each other and comparisons between them are meaningful. The convergence of the model has been verified on the 1-fiber RVE with an infinite matrix ($V_{f}\rightarrow0$) with respect to the BEM results presented in~\cite{Sandino2016}. By comparing FEM and BEM results, it is possible to estimate the relative accuracy of our results at around $5\%$. It implies that differences in the ERR smaller than this value cannot be considered significant.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 4. CONCLUSIONS AND OUTLOOK
+% 4. RESULTS & DISCUSSION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Results \& discussion}
+
+We first devote our attention to the $n \times 1−symm$ and $n \times 1−asymm$ Representative Volume Elements. They both represent an infinite UD in which a column (i.e. a vertical line) made of only partially debonded fibers, with debonds of equal size, is repeating along the horizontal (loading, transverse to laminate $0^{\circ}$) direction every $n−1$ columns of fully bonded fibers.\\
+In the $n \times 1−symm$ RVE, debonds appear always on the same side of consecutive fibers belonging to the same column, i.e. the debond mid-point is always at $0^{\circ}$ or $180^{\circ}$ inside the same column of partially debonded fibers (see Figure~\ref{paperD:fig:coupling-rve}). In the $n \times 1−asymm$ RVE instead, debonds are placed on alternating sides of consecutive fibers belonging to the same column of damaged fibers, i.e. the debond mid-point is located alternatively at $0^{\circ}$ and $180^{\circ}$ inside the same column (see Figure~\ref{paperD:fig:asymm-rve}). Observing Fig.~\ref{paperD:fig:nx1-GI} and Fig.~\ref{paperD:fig:nx1-GII}, it is possible to notice that, for both types of RVE, Mode I and Mode II ERR increase when the spacing between columns of damaged fibers (measured in terms of number of columns of fully bonded fibers) increases.
+
+\begin{figure}[!htb]
+\centering
+  \includegraphics[width=\textwidth]{paperD/nx1-coupling-vf60-GI.pdf}
+\caption{Comparison of Mode I ERR between $n \times 1−symm$ and $n \times 1−asymm$ RVEs, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{paperD:fig:nx1-GI}
+\end{figure}
+
+This is due to the $x$-strain magnification effect: the presence of an increasing number of unit cells with a fully bonded fiber between consecutive unit cells containing a debond in the horizontal direction causes, for the same applied macroscopic strain, an increase of the $x$-strain applied to the unit cell with the debonded fiber and thus of the local $x$-strain in the debond tip neighborhood. Given that the ERR is equal to the integral of the product of stresses and displacements at the debond tip, a magnification of the strain, and thus of the displacement, leads to an increase in the value of ERR.\\
+In reverse, this effect can be interpreted as a consequence of crack shielding: increasing the number of columns of partially debonded fibers in the UD decreases the local magnitude of the strain at the debond tip, as a discontinuity appears in the displacement field for each additional debond present. In turn, decreasing the magnitude of the displacements in the debond neighborhood decreases the ERR.
+
+\begin{figure}[!htb]
+\centering
+  \includegraphics[width=\textwidth]{paperD/nx1-coupling-vf60-GII.pdf}
+\caption{Comparison of Mode II ERR between $n \times 1−symm$ and $n \times 1−asymm$ RVEs, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{paperD:fig:nx1-GII}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 5. CONCLUSIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusions}

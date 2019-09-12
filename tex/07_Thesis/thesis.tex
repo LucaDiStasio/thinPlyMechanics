@@ -165,9 +165,23 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
 \def\referencestring{Journal of Composite Materials, 2019.}
 \def\copyrightstring{2019, The Authors.}
 
-% The definitions above could just as well be put directly into the function
-% call below, but were explicitly defined to more clearly illustrate the
-% use of the function \makepaper.
+\newrefsection
+\makepapersubmitted
+  {\paperheader}
+  {\papertitle}
+  {\paperauthorstring}
+  {\referencestring}
+  {\copyrightstring}
+
+
+\input{paperC/paper3.tex}
+
+%-------------------------------------------------------------------
+\def\paperheader{Paper D}
+\def\papertitle{Growth of interface cracks on consecutive fibers: on the same or on the opposite sides?}
+\def\paperauthorstring{Luca Di Stasio, Janis Varna and Zoubir Ayadi}
+\def\referencestring{Proceedings of the 12$^{th}$ International Conference on Composite Science and Technology (ICCST 12), Materials Today: Proceedings, 2019.}
+\def\copyrightstring{2019, The Authors.}
 
 \newrefsection
 \makepapersubmitted
@@ -177,29 +191,7 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
   {\referencestring}
   {\copyrightstring}
 
-% The actual contents is imported by un-commenting the \input line below.
-% Make sure the file exist.
-\input{paperC/paper3.tex}
+%\input{paperD/paper4.tex}
 
 %-------------------------------------------------------------------
-\def\paperheader{Paper D}
-\def\papertitle{Growth of interface cracks on consecutive fibers: on the same or on the opposite sides?}
-\def\paperauthorstring{Luca Di Stasio, Janis Varna and Zoubir Ayadi}
-\def\referencestring{Proceedings of the 12^{$th$} International Conference on Composite Science and Technology (ICCST 12), Materials Today: Proceedings, 2019.}
-\def\copyrightstring{2019, The Authors.}
-
-% The definitions above could just as well be put directly into the function
-% call below, but were explicitly defined to more clearly illustrate the
-% use of the function \makepaper.
-
-\newrefsection
-\makepapersubmitted
-  {\paperheader}
-  {\papertitle}
-  {\paperauthorstring}
-
-% The actual contents is imported by un-commenting the \input line below.
-% Make sure the file exist.
-\input{paperD/paper4.tex}
-
 \end{document}

@@ -136,8 +136,8 @@ The model is discretized and solved using the Finite Element Method (FEM) in the
 
 \section{Results \& discussion}
 
-We first devote our attention to the $n \times 1−symm$ and $n \times 1−asymm$ Representative Volume Elements. They both represent an infinite UD in which a column (i.e. a vertical line) made of only partially debonded fibers, with debonds of equal size, is repeating along the horizontal (loading, transverse to laminate $0^{\circ}$) direction every $n−1$ columns of fully bonded fibers.\\
-In the $n \times 1−symm$ RVE, debonds appear always on the same side of consecutive fibers belonging to the same column, i.e. the debond mid-point is always at $0^{\circ}$ or $180^{\circ}$ inside the same column of partially debonded fibers (see Figure~\ref{paperD:fig:coupling-rve}). In the $n \times 1−asymm$ RVE instead, debonds are placed on alternating sides of consecutive fibers belonging to the same column of damaged fibers, i.e. the debond mid-point is located alternatively at $0^{\circ}$ and $180^{\circ}$ inside the same column (see Figure~\ref{paperD:fig:asymm-rve}). Observing Fig.~\ref{paperD:fig:nx1-GI} and Fig.~\ref{paperD:fig:nx1-GII}, it is possible to notice that, for both types of RVE, Mode I and Mode II ERR increase when the spacing between columns of damaged fibers (measured in terms of number of columns of fully bonded fibers) increases.
+We first devote our attention to the $n \times 1-symm$ and $n \times 1-asymm$ Representative Volume Elements. They both represent an infinite UD in which a column (i.e. a vertical line) made of only partially debonded fibers, with debonds of equal size, is repeating along the horizontal (loading, transverse to laminate $0^{\circ}$) direction every $n−1$ columns of fully bonded fibers.\\
+In the $n \times 1-symm$ RVE, debonds appear always on the same side of consecutive fibers belonging to the same column, i.e. the debond mid-point is always at $0^{\circ}$ or $180^{\circ}$ inside the same column of partially debonded fibers (see Figure~\ref{paperD:fig:coupling-rve}). In the $n \times 1-asymm$ RVE instead, debonds are placed on alternating sides of consecutive fibers belonging to the same column of damaged fibers, i.e. the debond mid-point is located alternatively at $0^{\circ}$ and $180^{\circ}$ inside the same column (see Figure~\ref{paperD:fig:asymm-rve}). Observing Fig.~\ref{paperD:fig:nx1-GI} and Fig.~\ref{paperD:fig:nx1-GII}, it is possible to notice that, for both types of RVE, Mode I and Mode II ERR increase when the spacing between columns of damaged fibers (measured in terms of number of columns of fully bonded fibers) increases.
 
 \begin{figure}[!htb]
 \centering
@@ -154,8 +154,8 @@ In reverse, this effect can be interpreted as a consequence of crack shielding: 
 \caption{Comparison of Mode II ERR between $n \times 1−symm$ and $n \times 1−asymm$ RVEs, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{paperD:fig:nx1-GII}
 \end{figure}
 
-Increasing number of unit cells with a fully bonded fiber causes also a delay in the contact zone onset (corresponding to $G_{I}=0$) by $\sim10^{\circ}$  in both sets of RVEs: from $70^{\circ}$ to $80^{\circ}$ for $n \times 1−asymm$, from $90^{\circ}$ to $100^{\circ}$ for $n \times 1−symm$ (see Fig.~\ref{paperD:fig:nx1-GI}). Furthermore, it causes the maximum of $G_{II}$ to occur at larger debond sizes: from $80^{\circ}$ to $100^{\circ}$ for $n \times 1−asymm$, from $60^{\circ}$ to $90^{\circ}$ for $n \times 1−symm$ (see Fig.~\ref{paperD:fig:nx1-GII}).\\
-Comparing the two families of RVE, it is possible to see in Fig.~\ref{paperD:fig:nx1-GI} that $G_{I}$ is consistently higher for $n \times 1−symm$. Similarly, the onset of the contact zone in $n \times 1−symm$ (at $90^{\circ}−100^{\circ}$) is significantly delayed with respect to $n \times 1 – asymm$ (at $70^{\circ} − 80^{\circ}$). 
+Increasing number of unit cells with a fully bonded fiber causes also a delay in the contact zone onset (corresponding to $G_{I}=0$) by $\sim10^{\circ}$  in both sets of RVEs: from $70^{\circ}$ to $80^{\circ}$ for $n \times 1-asymm$, from $90^{\circ}$ to $100^{\circ}$ for $n \times 1-symm$ (see Fig.~\ref{paperD:fig:nx1-GI}). Furthermore, it causes the maximum of $G_{II}$ to occur at larger debond sizes: from $80^{\circ}$ to $100^{\circ}$ for $n \times 1-asymm$, from $60^{\circ}$ to $90^{\circ}$ for $n \times 1-symm$ (see Fig.~\ref{paperD:fig:nx1-GII}).\\
+Comparing the two families of RVE, it is possible to see in Fig.~\ref{paperD:fig:nx1-GI} that $G_{I}$ is consistently higher for $n \times 1-symm$. Similarly, the onset of the contact zone in $n \times 1-symm$ (at $90^{\circ}-100^{\circ}$) is significantly delayed with respect to $n \times 1 - asymm$ (at $70^{\circ} − 80^{\circ}$). 
 
 \begin{figure}[!htb]
 \centering
@@ -163,11 +163,17 @@ Comparing the two families of RVE, it is possible to see in Fig.~\ref{paperD:fig
 \caption{Comparison of Mode I ERR between $n \times 3−symm$ and $n \times 1−asymm$ RVEs, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{paperD:fig:nxk-GI}
 \end{figure}
 
+In the $n \times 1−symm$ RVE, in the case of smaller Mode I dominated debonds, the presence of a debond on the same side of the consecutive fiber provides a local free surface which causes the matrix to shrink away from the surface of the two fibers.  This mechanism favors the opening of crack faces, and thus an increase in Mode I ERR. In $n \times 1−asymm$ RVE, on the other hand, the matrix in the debond tip neighborhood is constrained by the next fiber (debonded on the opposite side) which reduces the x-displacement.
+
 \begin{figure}[!htb]
 \centering
   \includegraphics[width=\textwidth]{paperD/nxk-coupling-vf60-GII.pdf}
 \caption{Comparison of Mode II ERR between $n \times 3−symm$ and $n \times 1−asymm$ RVEs, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{paperD:fig:nxk-GII}
 \end{figure}
+
+Comparing Mode II ERR for the two types of RVE in Fig.~\ref{paperD:fig:nx1-GII}, $G_{II}$ appears to be higher for $n \times 1 - asymm$
+ RVEs than for $n \times 1-symm$ in the $80^{\circ}-100^{\circ}$ range while slightly lower for smaller debonds ($<80^{\circ}$). Mode II peak value is delayed in $n \times 1 - asymm$ to larger debond sizes ($80^{\circ}−100^{\circ}$) than in $n \times 1-symm$ ($60^{\circ}-90^{\circ}$). For larger values of $\Delta\theta$ ($\sim80^{\circ}-100^{\circ}$), the presence of a local free surface due to a debond on the same side of the consecutive fiber causes a decrease in the x-displacement at the crack tip, which now contributes mainly to Mode II. When debonds are located on opposite sides of consecutive fibers, the presence of a fully bonded interface leads instead to a magnification of the x-displacement at the crack tip, and thus an increase in $G_{II}$. When debonds on consecutive fibers reach a size of $\sim110^{\circ}, they are creating two free surfaces close to each other, which cause a relaxation in the elastic fields in both types of RVE. This leads to a quick decrease in the value of Mode II ERR and makes the results of the two different RVEs practically indistinguishable.\\
+It is at this point interesting to investigate the effect of the presence of fully bonded fibers between two consecutive partially debonded fibers in the through-the-thickness direction. A comparison of Mode I and of Mode II ERR between $n \times 3−symm$ and $n \times 3 – asymm$ are reported respectively in Fig.~\ref{paperD:fig:nxk-GI} and in Fig.~\ref{paperD:fig:nxk-GII}: the presence of two bonded fiber rows between rows containing debonded fibers already makes the results of the two different RVEs practically identical. The effect of the relative position (same or opposite sides of the fibers) of two consecutive debonds in the through-the-thickness direction is thus an extremely localized problem: the presence of just two fully bonded fibers in between makes the two configurations indistinguishable, at least from an energy point of view. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 5. CONCLUSIONS
@@ -175,14 +181,23 @@ Comparing the two families of RVE, it is possible to see in Fig.~\ref{paperD:fig
 
 \section{Conclusions}
 
-Different models of Repeating Unit Cell, representing different cross-ply laminates, have been studied in order to investigate the effect of the presence of the $0^{\circ}$ layer and of its thickness on debond Energy Release Rate for interactive and non-interactive debonds. A particular damage state is studied, in which only the central row of fibers of the $90^{\circ}$ ply possesses debonds. The thickness of the $90^{\circ}$ ply is measured in terms of the number of fiber rows in the layer; the $0^{\circ}$ layer is on the other hand modelled as a homogenized material, the thickness of which is a multiple of the $90^{\circ}$ ply thickness. In order to investigate the mechanisms of the debond-$0^{\circ}/90^{\circ}$ interface interaction, Mode I and Mode II ERR of cross-ply RUCs are compared with those of RUCs with equivalent boundary conditions on the upper boundary: free surface; coupling conditions on the vertical displacements; an applied linear distribution of the horizontal displacement; coupling conditions on the vertical displacements superimposed to an applied linear distribution of the horizontal displacement (this last combination represents the most extreme effect of the $0^{\circ}$ layer on debond growth). It has been found that:
-\begin{itemize}
-\item by forcing the $0^{\circ}/90^{\circ}$ interface to remain approximately straight and controlling the uniformity of the horizontal displacements in the composite (and thus in the $90^{\circ}$ ply), the presence of the $0^{\circ}$ layer causes more homogeneous local (i.e. in the debond neighborhood) strains, reducing the ERR at the debond crack tip;
-\item when increasing the thickness of the $0^{\circ}$ layer, the effect of the presence of the $0^{\circ}$ layer on debond ERR remains the same as in the case $t_{0^{\circ}}=t_{90^{\circ}}$;
-%\item no difference in ERR is seen when one or more rows of fibers with no damage are present between the debond and the $0^{\circ}/90^{\circ}$ interface, a change is observed only no row of undamaged fibers is present between the debond and the $0^{\circ}/90^{\circ}$ interface;
-\item no effect of the $90^{\circ}$ layer thickness, measured in terms of number of fiber rows, is observed; a reduction in ERR takes place only when the thickness is reduced to only one fiber row.
-\end{itemize}
-The results reported in this article strengthen the claim that the ply-thickness effect does not influence the growth of individual debonds, as previously suggested in the literature~\cite{Saito2012,Herraez2015,Velasco2018, Paris2018}.
+Two different types of Representative Volume Element have been developed to study the effect of the relative position (same or opposite sides of the fibers) of consecutive debonds in the through-the thickness direction. The RVEs are repeating in the horizontal direction thanks to the application of coupling conditions on the horizontal displacements on their right and left sides. The case with debonds located on the same side of their respective fibers is modeled using conditions of coupling of the vertical displacements on the top boundary, which corresponds to the element repeating in the vertical (through-the-thickness) direction in a symmetric way. In order to model the second configuration, with debonds placed on opposite sides of consecutive fibers, a novel set of coupling conditions is introduced, which models an element repeating in the vertical direction anti-symmetrically. 
+
+Debond growth is characterized through the evaluation of Mode I and Mode II Energy Release Rate by means of the Virtual Crack Closure Technique. The comparison between the ERR of the two families of RVE provides insights into the effect of the relative position of debonds (same or opposite sides of the respective fiber) belonging to fibers aligned in the vertical or through-the-thickness direction, i.e. located in the same “column” of fibers. It has been found that: 
+
+the relative position of debonds influences the ERR only if debonds are located on consecutive fibers: the presence of just two fully bonded fiber rows between rows containing debonds makes the ERR unaffected by debonds’ relative position; 
+
+when debonds are located on consecutive vertically aligned fibers, 
+GI
+ is higher and contact zone onset is delayed if debonds are on the same side of their respective fibers; 
+
+no significant difference in 
+GII
+ between the two RVE families can be observed except in the range 
+∆θ=80°−100°
+, in which it is higher when debonds are located on opposite sides of consecutive vertically aligned fibers. 
+
+Given that debond growth is likelier when the Mode Ratio is Mode I dominated, it is reasonable to expect that the growth of consecutive vertically aligned debonds with no fully bonded fiber in between is favored when they are located on the same side of their respective fibers. However, assuming that the applied strain is high enough to cause debond growth in Mode II with the onset of a contact zone, larger debond sizes are reached when debonds are on opposite sides. When instead vertically-aligned debonds are separated by fully bonded fibers, neither configuration (debonds on the same or opposite sides of the debonded fibers) is favored from an Energy Release Rate point of view. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ACKNOWLEDGEMENTS
@@ -190,7 +205,7 @@ The results reported in this article strengthen the claim that the ply-thickness
 
 \section*{Acknowledgements}
 
-Luca Di Stasio gratefully acknowledges the support of the European School of Materials (EUSMAT) through the DocMASE Doctoral Programme and the European Commission through the Erasmus Mundus Programme.
+Luca Di Stasio gratefully acknowledges the support of the European School of Materials (EUSMAT) through the DocMASE Doctoral Programme and the European Commission through the Erasmus Mundus Program.
 
 
 \section*{References}

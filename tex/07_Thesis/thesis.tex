@@ -2,8 +2,6 @@
 % Document class and package definitions
 %-------------------------------------------------------------------
 \documentclass[12pt,a4paper,openright,final,twoside]{msethesis}
-%Included for Gather Purpose only:
-%input "thesisreferences.bib"
 
 \usepackage{epigraph}
 \usepackage[final]{changes}
@@ -13,15 +11,13 @@
 \addbibresource{paperB/refspaperB.bib}
 \addbibresource{paperC/refspaperC.bib}
 \addbibresource{paperD/refspaperD.bib}
-%\addbibresource{paperE/refspaperE.bib}
+\addbibresource{paperE/refspaperE.bib}
 
 \begin{document}
 
 \newrefsection
 
-%\defaultbibliography{thesisreferences}     %% Change this only.
-%\defaultbibliographystyle{ieeetr}        %% Could be changed if you like
-                                           %% references typeset differently.
+
 %-------------------------------------------------------------------
 % Define title, author, etc.
 %-------------------------------------------------------------------
@@ -65,22 +61,6 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
 
 %% Initialize part containing the thesis introduction chapters
 \startchapters
-
-%\begin{bibunit}
-%------------------------ Start chapter 1 --------------------------
-% The \makechapter command takes three arguments
-%  1) An abbreviated version of the chapter name,
-%     to be used as page header
-%  2) String to be added to the table of contents
-%  3) The chapter name, possibly split in to lines,
-%     as in Chapter 2 below.
-%
-%  The different arguments can have different line breaks.
-%
-% The actual contents of the chapter is included by removing the
-% comment from the \input line below. Make sure the file
-% chapter1.tex exists.
-%-------------------------------------------------------------------
 
 %\def\myquote{``This report, by its very length, defends itself against the risk of being read."\\[.5\baselineskip] Winston Churchill}
 
@@ -192,6 +172,23 @@ Lule{\aa} University of Technology\\ Lule{\aa}, Sweden}
   {\copyrightstring}
 
 \input{paperD/paper4.tex}
+
+%-------------------------------------------------------------------
+\def\paperheader{Paper E}
+\def\papertitle{Estimating the average size of fiber/matrix interface cracks in UD and cross-ply laminates}
+\def\paperauthorstring{Luca Di Stasio, Janis Varna and Zoubir Ayadi}
+\def\referencestring{Proceedings of the $7^{th}$ ECCOMAS Thematic Conference on the Mechanical Response of Composites, 2019.}
+\def\copyrightstring{2019, The Publisher, Reprinted with permission.}
+
+\newrefsection
+\makepaper
+  {\paperheader}
+  {\papertitle}
+  {\paperauthorstring}
+  {\referencestring}
+  {\copyrightstring}
+
+\input{paperE/paper5.tex}
 
 %-------------------------------------------------------------------
 \end{document}

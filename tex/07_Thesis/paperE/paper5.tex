@@ -115,14 +115,42 @@ Total ERR is underestimated, due to the high $\frac{\delta}{\Delta\theta}$ ratio
 
 \begin{figure}[!hp]
 \centering
-    \subfigure[Radial stress $\sigma_{rr}$]{\label{paperE:fig:stress-a}\includegraphics[height=0.2\textheight]{paperE/vf60-nodamage-sigmar.pdf}}\
-    \subfigure[Shear stress $\tau_{r\psi}$]{\label{paperE:fig:stress-b}\raisebox{0.04\textheight}{\includegraphics[height=0.16\textheight]{paperE/vf60-nodamage-taurt.pdf}}}\\
-    \subfigure[Local Hydrostatic Stress (LHS), neglecting $\sigma_{yy}$, $\sigma_{LHS,2D}$.]{\label{paperE:fig:stress-c}\includegraphics[height=0.2\textheight]{paperE/vf60-nodamage-p2D.pdf}}\
-    \subfigure[Local Hydrostatic Stress (LHS), considering $\sigma_{yy}$, $\sigma_{LHS,3D}$.]{\label{paperE:fig:stress-d}\includegraphics[height=0.2\textheight]{paperE/vf60-nodamage-p3D.pdf}}
-    \subfigure[Local von Mises stress, neglecting $\sigma_{yy}$, $\sigma_{vM,2D}$.]{\label{paperE:fig:stress-e}\includegraphics[height=0.2\textheight]{paperE/vf60-nodamage-vM2D.pdf}}\
-    \subfigure[Local von Mises stress, considering $\sigma_{yy}$, $\sigma_{vM,3D}$.]{\label{paperE:fig:stress-f}\raisebox{0.04\textheight}{\includegraphics[height=0.16\textheight]{paperE/vf60-nodamage-vM3D.pdf}}}
-    \subfigure[Local Maximum Principal Stress (LMPS), neglecting $\sigma_{yy}$, $\sigma_{LMPS,2D}$.]{\label{paperE:fig:stress-g}\includegraphics[height=0.2\textheight]{paperE/vf60-nodamage-sigmaI2D.pdf}}\
-    \subfigure[Local Maximum Principal Stress (LMPS), considering $\sigma_{yy}$, $\sigma_{LMPS,3D}$.]{\label{paperE:fig:stress-h}\includegraphics[height=0.2\textheight]{paperE/vf60-nodamage-sigmaI3D.pdf}}
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-sigmar.pdf}
+        \caption{Radial stress $\sigma_{rr}$.}\label{paperE:fig:stress-a}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-taurt.pdf}
+        \caption{Shear stress $\tau_{r\psi}$.}\label{paperE:fig:stress-b}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-p2D.pdf}
+        \caption{Local Hydrostatic Stress (LHS), neglecting $\sigma_{yy}$, $\sigma_{LHS,2D}$.}\label{paperE:fig:stress-c}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-p3D.pdf}
+        \caption{Local Hydrostatic Stress (LHS), considering $\sigma_{yy}$, $\sigma_{LHS,3D}$.}\label{paperE:fig:stress-d}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-vM2D.pdf}
+        \caption{Local von Mises stress, neglecting $\sigma_{yy}$, $\sigma_{vM,2D}$.}\label{paperE:fig:stress-e}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-vM3D.pdf}
+        \caption{Local von Mises stress, considering $\sigma_{yy}$, $\sigma_{vM,3D}$.}\label{paperE:fig:stress-f}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-sigmaI2D.pdf}
+        \caption{Local Maximum Principal Stress (LMPS), neglecting $\sigma_{yy}$, $\sigma_{LMPS,2D}$.}\label{paperE:fig:stress-g}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-sigmaI3D.pdf}
+        \caption{Local Maximum Principal Stress (LMPS), considering $\sigma_{yy}$, $\sigma_{LMPS,3D}$.}\label{paperE:fig:stress-h}
+    \end{subfigure}
+
 \caption{Stress distribution at the fiber/matrix interface in the absence of damage with respect to angular coordinate $\psi$; applied strain $\bar{\varepsilon}_{x}=1\%$.}\label{paperE:fig:stress}
 \end{figure}
 

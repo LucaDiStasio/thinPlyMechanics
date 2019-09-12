@@ -28,7 +28,7 @@ Onset of transverse cracks is determined at the microscopic level by initiation 
 
 \begin{figure}[!htb]
 \centering
-  \includegraphics[height=0.225\textheight]{paperD/debonds.jpg}
+  \includegraphics[width=\textwidth]{paperD/debonds.jpg}
 \caption{Debonds in the $90^{\circ}$ layer of a $\left[0^{\circ}/90^{\circ}\right]_{S}$ laminate after being subjected to tensile strain in the horizontal direction.}\label{paperD:fig:debonds-microscope}
 \end{figure}
 
@@ -69,7 +69,7 @@ Given a global reference frame with axes $x$, $y$ and $z$, the composite is mode
 
 \begin{figure}[!htb]
 \centering
-  \includegraphics[height=0.225\textheight]{paperD/coupling.pdf}
+  \includegraphics[width=\textwidth]{paperD/coupling.pdf}
 \caption{Representative Volume Element $n \times k-symm$ of a UD composite with debonds appearing after $n-1$ and after $k-1$ undamaged fibers respectively in the horizontal and vertical direction. In the vertical direction, on fibers belonging to the same ´´column", debonds are located always on the same side.}\label{paperD:fig:coupling-rve}
 \end{figure}
 
@@ -79,11 +79,11 @@ The first family has coupling conditions applied to the vertical displacement of
 u_{z}\left(x,h\right)=u_{z}^{\nu},
 \end{equation}
 
-where $h$ is the height of the RVE and $u_{z}^{\nu}$ is the unknown constant vertical displacement of the upper boundary due to Poisson’s effect, which is evaluated as part of the elastic solution. This condition implies that the element is repeating along the vertical direction, symmetrically with respect to the upper boundary line. It means, in turn, that the next debonded fiber will have a debond on the same side as the preceding one (see Fig.~\ref{paperD:fig:coupling-rve}). We will refer to this set of RVEs as $n \times k-symm$, where $n$ and $k$ are the number of fibers respectively in the RVE’s horizontal and vertical direction.
+where $h$ is the height of the RVE and $u_{z}^{\nu}$ is the unknown constant vertical displacement of the upper boundary due to Poisson's effect, which is evaluated as part of the elastic solution. This condition implies that the element is repeating along the vertical direction, symmetrically with respect to the upper boundary line. It means, in turn, that the next debonded fiber will have a debond on the same side as the preceding one (see Fig.~\ref{paperD:fig:coupling-rve}). We will refer to this set of RVEs as $n \times k-symm$, where $n$ and $k$ are the number of fibers respectively in the RVE's horizontal and vertical direction.
 
 \begin{figure}[!htb]
 \centering
-  \includegraphics[height=0.225\textheight]{paperD/asymm.pdf}
+  \includegraphics[width=\textwidth]{paperD/asymm.pdf}
 \caption{Representative Volume Element $n \times k-asymm$ of a UD composite with debonds appearing after $n-1$ and after $k-1$ undamaged fibers respectively in the horizontal and vertical direction. In the vertical direction, on fibers belonging to the same ´´column", debonds are located on the opposite sides of consecutive fibers.}\label{paperD:fig:asymm-rve}
 \end{figure}
 
@@ -97,7 +97,7 @@ u_{z}\left(x,h\right)-u_{z}\left(0,h\right)=-\left(u_{z}\left(-x,h\right)-u_{z}\
 u_{x}\left(x,h\right)=-u_{x}\left(-x,h\right),
 \end{equation}
 
-where $h$ is the height of the RVE and $u_{z}\left(0,h\right)$ is the unknown vertical displacement of the upper boundary’s mid-point due to Poisson’s effect, which is evaluated as part of the elastic solution. This condition, an anti-symmetric coupling condition, implies that the element is repeating along the vertical direction, anti-symmetrically with respect to the upper boundary line, i.e. the next debonded fiber will have a debond on the opposite side with respect to the preceding one (see Fig.~\ref{paperD:fig:asymm-rve}). To the authors’ knowledge, this is the first time that this kind of coupling condition is proposed to model the growth of multiple debonds on alternating sides of consecutive fibers along the through-the-thickness direction. We will refer to this set of RVEs as $n \times k-asymm$, where $n$ and $k$ are the number of fibers respectively in the RVE’s horizontal and vertical direction.
+where $h$ is the height of the RVE and $u_{z}\left(0,h\right)$ is the unknown vertical displacement of the upper boundary's mid-point due to Poisson's effect, which is evaluated as part of the elastic solution. This condition, an anti-symmetric coupling condition, implies that the element is repeating along the vertical direction, anti-symmetrically with respect to the upper boundary line, i.e. the next debonded fiber will have a debond on the opposite side with respect to the preceding one (see Fig.~\ref{paperD:fig:asymm-rve}). To the authors' knowledge, this is the first time that this kind of coupling condition is proposed to model the growth of multiple debonds on alternating sides of consecutive fibers along the through-the-thickness direction. We will refer to this set of RVEs as $n \times k-asymm$, where $n$ and $k$ are the number of fibers respectively in the RVE's horizontal and vertical direction.
 
 
 
@@ -119,7 +119,7 @@ where $2L\cdot2L$ is the size of a $1$-fiber unit cell (see Fig.~\ref{paperD:fig
 L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}},
 \end{equation}
 
-where $R_{f}$ and $V_{f}$ are respectively the fiber radius and volume fraction. The fiber radius is assumed to be always equal to $1\ μm$: within the scope of Linear Elastic Fracture Mechanics (LEFM), the ERR is linearly proportional to the fiber radius, which is representative of the crack size. Thus, the fiber radius represents a scale parameter and a simple multiplication is needed to obtain the ERR for a different value of the fiber radius. The volume fraction is assumed to be homogeneous and equal to $60\%$.
+where $R_{f}$ and $V_{f}$ are respectively the fiber radius and volume fraction. The fiber radius is assumed to be always equal to $1\ \mu m$: within the scope of Linear Elastic Fracture Mechanics (LEFM), the ERR is linearly proportional to the fiber radius, which is representative of the crack size. Thus, the fiber radius represents a scale parameter and a simple multiplication is needed to obtain the ERR for a different value of the fiber radius. The volume fraction is assumed to be homogeneous and equal to $60\%$.
 
 \begin{figure}[!htb]
 \centering
@@ -171,8 +171,7 @@ In the $n \times 1-symm$ RVE, in the case of smaller Mode I dominated debonds, t
 \caption{Comparison of Mode II ERR between $n \times 3-symm$ and $n \times 1-asymm$ RVEs, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{paperD:fig:nxk-GII}
 \end{figure}
 
-Comparing Mode II ERR for the two types of RVE in Fig.~\ref{paperD:fig:nx1-GII}, $G_{II}$ appears to be higher for $n \times 1 - asymm$
- RVEs than for $n \times 1-symm$ in the $80^{\circ}-100^{\circ}$ range while slightly lower for smaller debonds ($<80^{\circ}$). Mode II peak value is delayed in $n \times 1 - asymm$ to larger debond sizes ($80^{\circ}-100^{\circ}$) than in $n \times 1-symm$ ($60^{\circ}-90^{\circ}$). For larger values of $\Delta\theta$ ($\sim80^{\circ}-100^{\circ}$), the presence of a local free surface due to a debond on the same side of the consecutive fiber causes a decrease in the x-displacement at the crack tip, which now contributes mainly to Mode II. When debonds are located on opposite sides of consecutive fibers, the presence of a fully bonded interface leads instead to a magnification of the x-displacement at the crack tip, and thus an increase in $G_{II}$. When debonds on consecutive fibers reach a size of $\sim110^{\circ}, they are creating two free surfaces close to each other, which cause a relaxation in the elastic fields in both types of RVE. This leads to a quick decrease in the value of Mode II ERR and makes the results of the two different RVEs practically indistinguishable.\\
+Comparing Mode II ERR for the two types of RVE in Fig.~\ref{paperD:fig:nx1-GII}, $G_{II}$ appears to be higher for $n \times 1 - asymm$ RVEs than for $n \times 1-symm$ in the $80^{\circ}-100^{\circ}$ range while slightly lower for smaller debonds ($<80^{\circ}$). Mode II peak value is delayed in $n \times 1 - asymm$ to larger debond sizes ($80^{\circ}-100^{\circ}$) than in $n \times 1-symm$ ($60^{\circ}-90^{\circ}$). For larger values of $\Delta\theta$ ($\sim80^{\circ}-100^{\circ}$), the presence of a local free surface due to a debond on the same side of the consecutive fiber causes a decrease in the x-displacement at the crack tip, which now contributes mainly to Mode II. When debonds are located on opposite sides of consecutive fibers, the presence of a fully bonded interface leads instead to a magnification of the x-displacement at the crack tip, and thus an increase in $G_{II}$. When debonds on consecutive fibers reach a size of $\sim110^{\circ}$, they are creating two free surfaces close to each other, which cause a relaxation in the elastic fields in both types of RVE. This leads to a quick decrease in the value of Mode II ERR and makes the results of the two different RVEs practically indistinguishable.\\
 It is at this point interesting to investigate the effect of the presence of fully bonded fibers between two consecutive partially debonded fibers in the through-the-thickness direction. A comparison of Mode I and of Mode II ERR between $n \times 3-symm$ and $n \times 3-asymm$ are reported respectively in Fig.~\ref{paperD:fig:nxk-GI} and in Fig.~\ref{paperD:fig:nxk-GII}: the presence of two bonded fiber rows between rows containing debonded fibers already makes the results of the two different RVEs practically identical. The effect of the relative position (same or opposite sides of the fibers) of two consecutive debonds in the through-the-thickness direction is thus an extremely localized problem: the presence of just two fully bonded fibers in between makes the two configurations indistinguishable, at least from an energy point of view.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -185,7 +184,7 @@ Two different types of Representative Volume Element have been developed to stud
 Debond growth is characterized through the evaluation of Mode I and Mode II Energy Release Rate by means of the Virtual Crack Closure Technique. The comparison between the ERR of the two families of RVE provides insights into the effect of the relative position of debonds (same or opposite sides of the respective fiber) belonging to fibers aligned in the vertical or through-the-thickness direction, i.e. located in the same ``column" of fibers. It has been found that:
 
 \begin{enumerate}
-\item the relative position of debonds influences the ERR only if debonds are located on consecutive fibers: the presence of just two fully bonded fiber rows between rows containing debonds makes the ERR unaffected by debonds’ relative position;
+\item the relative position of debonds influences the ERR only if debonds are located on consecutive fibers: the presence of just two fully bonded fiber rows between rows containing debonds makes the ERR unaffected by debonds' relative position;
 \item when debonds are located on consecutive vertically aligned fibers, $G_{I}$  is higher and contact zone onset is delayed if debonds are on the same side of their respective fibers;
 \item no significant difference in $G_{II}$ between the two RVE families can be observed except in the range $\Delta\theta=80^{\circ}-100^{\circ}$, in which it is higher when debonds are located on opposite sides of consecutive vertically aligned fibers.
 \end{enumerate}

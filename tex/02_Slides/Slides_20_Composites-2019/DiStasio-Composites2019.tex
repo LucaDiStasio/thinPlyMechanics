@@ -1186,15 +1186,22 @@ $\forall\ \Delta\theta$
 \includegraphics[width=0.45\textwidth]{refAngle.pdf}
 \end{frame}
 
-\subsection{Summary}
+\subsection{Observations \& Conclusions}
 
 \begin{frame}
-\frametitle{Summary}
+\frametitle{Observations \& Conclusions}
 \vspace{-0.5cm}
 \centering
+\scriptsize
 \begin{itemize}[label=\ding{212}]
-\item 
+\item For all stresses analyzed, no significant difference is present between the different RUCs for $\psi\leq10^{\circ}$;
+\item for all stresses analyzed, no difference can be observed by increasing $k$ when $k\geq3$;
+\item for all stresses analyzed, no difference can be observed between $1\times  k-free$ and $1\times  k-1\cdot t_{90^{\circ}}$ for $k\geq3$;
+\item $\sigma_{rr}$, $\sigma_{LHS,2D}$, $\sigma_{LHS,3D}$, $\sigma_{vM,2D}$, $\sigma_{LMPS,2D}$ and $\sigma_{LMPS,3D}$ all reach their peak value at $0^{\circ}$ and $180^{\circ}$ and decrease to $99\%$ the peak value between $2^{\circ}$ and $8^{\circ}$, to $95\%$ the peak value between $6^{\circ}$ and $12^{\circ}$ and to $90\%$ the peak value between $8^{\circ}$ and $15^{\circ}$ from the occurrence of the maximum.
 \end{itemize}
+\begin{alertblock}{\centering\scriptsize\bf It seems reasonable to conclude that...}
+...a stress-based criterion would predict, irrespectively of the specific criterion chosen, the onset of an interface crack at $0^{\circ}$ or $180^{\circ}$ with an initial size at least comprised in the range $2^{\circ}-8^{\circ}$ ($1\%$ margin) and likely in the range $6^{\circ}-12^{\circ}$ ($5\%$ margin).
+\end{alertblock}
 \end{frame}
 
 \section{Debond Propagation}
@@ -1391,18 +1398,53 @@ G_{TOT}\left(\Delta\theta\right)>G_{c}=G_{Ic}\left(1+\tan^{2}\left(\left(1-\lamb
 \end{equation*}
 \end{frame}
 
+\subsection{Observations \& Conclusions}
+
+\begin{frame}
+\frametitle{Observations \& Conclusions}
+\vspace{-0.5cm}
+\centering
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item The effect of the presence of the $0^{\circ}$ layer is to reduce the maximum size of debonds;
+\item however, the estimated debond size is the same for $n\times k-free$ and $n\times k-1\cdot t_{90^{\circ}}$ for $k\geq3$;
+\item the presence of a debond on the neighboring fiber in the vertical direction ($21\times 1-coupling$ and $21\times 1-asymm$) favors instead the growth of larger debonds;
+\item the largest size is achieved when debonds are on opposite sides of consecutive fibers.
+\end{itemize}
+\begin{alertblock}{\centering\scriptsize\bf Estimated debond size range in cross-ply ($n\times k-1\cdot t_{90^{\circ}}$)}
+\centering
+$40^{\circ}-60^{\circ}$
+\end{alertblock}
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+\begin{alertblock}{\centering\scriptsize\bf Measured debond size range in cross-ply ({\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1016/j.compscitech.2017.12.009}{Correa et al., Compos. Sci. Technol. \textbf{155} (213-220), 2018}})}
+\centering
+$21.4^{\circ}-89.2^{\circ}$, average $49.3^{\circ}$, standard deviation of $11.7^{\circ}$\\ $63\%$ of measurements in $40^{\circ}-60^{\circ}$ range
+\end{alertblock}
+\end{frame}
+
 \section{Conclusions}
 
 \begin{frame}
 \frametitle{Conclusions}
 \vspace{-0.5cm}
 \centering
+\scriptsize
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
 \begin{itemize}[label=\ding{212}]
-\item No effect of  $90^{\circ}$ ply thickness can be observed when $t_{90^{\circ}}$ is at least $\sim3\diameter_{fiber}$
-\item Only if $t_{90^{\circ}}$ is reduced to $1\diameter_{fiber}$, ERR is reduced for a given level of applied strain, i.e. debond growth is delayed to higher levels of applied strain ($G\sim\varepsilon_{applied}^{2}$)
-\item No effect of  $0^{\circ}$ ply thickness can be observed when $\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}>1$
-\item A small difference can be observed when  $t_{0^{\circ}}=t_{90^{\circ}}$, due to the smaller bending stiffness of a thinner $0^{\circ}$ layer
+\item A stress criterion for initiation would likely predict, irrespectively of which criterion from those proposed in the literature is chosen, the onset of a debond at $0^{\circ}$ or $180^{\circ}$ with a semi-aperture $\Delta\theta_{0}$ in the range $2^{\circ}-12^{\circ}$, corresponding to a margin of $5\%$ on the satisfaction of the criterion.
+\item Assuming that debond propagation occurs unstably immediately after debond onset at the same level of global applied strain $\bar{\varepsilon}_{x}$, it is possible to evaluate the parameter $G_{Ic}$ in the expression of the critical ERR and with it to estimate the range of expected maximum debond size.
+\item The prediction for a cross-ply laminate (models $n\times k-1\cdot t_{90^{\circ}}$, $k\geq3$) agrees well with the debond size distribution in $\left[0^{\circ}_{3},90^{\circ}_{3}\right]_{S}$ estimated in \textit{\scriptsize\href{https://doi.org/10.1016/j.compscitech.2017.12.009}{Correa et al., Compos. Sci. Technol. \textbf{155} (213-220), 2018}} through microscopic observations.
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\centering
+\vspace{0.5cm}
+\LARGE
+\textbf{Thank you for listening today!}
 \end{frame}
 
 \begin{frame}[plain]

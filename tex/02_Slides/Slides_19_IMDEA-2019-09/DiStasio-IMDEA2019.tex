@@ -562,10 +562,10 @@
 {\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1016/S1359-835X(96)00123-6}{Zhang et al., Compos. Part A-Appl. S. \textbf{28} (4), 1997.}}
 \end{frame}
 
-\subsection{A Counter-intuitive Observation}
+\subsection{An Interesting Observation}
 
 \begin{frame}
-\frametitle{\vspace{0.3cm}\small A Counter-intuitive Observation}
+\frametitle{\vspace{0.3cm}\small An Interesting Observation}
 \vspace{-0.5cm}
 \centering
 \tiny
@@ -602,7 +602,7 @@ $n=4$, $t_{90^{\circ}}=160\mu m$
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.3cm}\small A Counter-intuitive Observation}
+\frametitle{\vspace{0.3cm}\small An Interesting Observation}
 \vspace{-0.5cm}
 \centering
 \tiny
@@ -644,7 +644,7 @@ $n=2$, $t_{90^{\circ}}=80\mu m$
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.3cm}\small A Counter-intuitive Observation}
+\frametitle{\vspace{0.3cm}\small An Interesting Observation}
 \vspace{-0.5cm}
 \centering
 \tiny
@@ -688,7 +688,7 @@ $n=1$, $t_{90^{\circ}}=40\mu m$\\\vspace{5pt}
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Objectives}
 \vspace{-0.5cm}
-Can we talk about a ply-thickness effect for the fiber-matrix interface crack?
+$90^{\circ}$ layer thickness and $0^{\circ}$ layer thickness: what are their their effects on fiber-matrix interface crack growth?
 %\vspace{-0.5cm}
 \centering
 \begin{alertblock}{\centering\scriptsize\bf Stage 1: isolated debonds}
@@ -886,10 +886,11 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \end{column}
 \end{columns}
 \end{column}
-\begin{column}{0.35\textwidth}
+\begin{column}{0.375\textwidth}
 \scriptsize
+$\forall\ \Delta\theta\neq0^{\circ}$
 \begin{itemize}[label=\ding{212}]
-\item Oscillating singularity
+\item oscillating singularity
 \vspace{-0.25cm}
 \begin{equation*}
 \sigma\sim r^{-\frac{1}{2}}\sin\left(\varepsilon\log r\right),\quad V_{f}\rightarrow 0
@@ -904,14 +905,18 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \beta=\frac{\mu_{2}\left(\kappa_{1}-1\right)-\mu_{1}\left(\kappa_{2}-1\right)}{\mu_{2}\left(\kappa_{1}+1\right)+\mu_{1}\left(\kappa_{2}+1\right)}
 \end{equation*}}
 \item receding contact
-\item Finite Element Method (FEM) in Abaqus\texttrademark
-\item $2^{nd}$ order shape functions
-\item 6-nodes triangles \& 8-nodes quadrilaterals
+\item $\frac{G\left(R_{f,2}\right)}{G\left(R_{f,1}\right)}=\frac{R_{f,2}}{R_{f,1}},\frac{G\left(\bar{\varepsilon}_{x,2}\right)}{G\left(\bar{\varepsilon}_{x,1}\right)}=\frac{\bar{\varepsilon}^{2}_{x,2}}{\bar{\varepsilon}^{2}_{x,1}}$
+\item FEM + LEFM (VCCT)
+%\item 6-nodes triangles \& 8-nodes quadrilaterals
 \item regular mesh of quadrilaterals at the crack tip:
 \begin{itemize}[label=-]
-\item $AR\sim 1$
-\item $\delta=0.05^{\circ}$
+\item $AR\sim 1,\quad\delta=0.05^{\circ}$
+%\item $\delta=0.05^{\circ}$
 \end{itemize}
+\end{itemize}
+$\forall\ \Delta\theta$
+\begin{itemize}[label=\ding{212}]
+\item $2^{nd}$ order shape functions
 \end{itemize}
 \end{column}
 \end{columns}

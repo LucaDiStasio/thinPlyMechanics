@@ -81,7 +81,7 @@
 \RequirePackage{nicefrac}
 \RequirePackage{ifthen}
 \RequirePackage[section]{placeins}
-\RequirePackage[backend=biber,style=ieee]{biblatex}
+\RequirePackage[backend=biber,sorting=none]{biblatex}
 \RequirePackage[latin1]{inputenc}
 \RequirePackage{subcaption}
 \RequirePackage{titletoc}

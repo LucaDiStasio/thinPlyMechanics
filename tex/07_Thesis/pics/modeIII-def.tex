@@ -1,0 +1,57 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{verbatim}
+
+
+\usetikzlibrary{arrows}
+
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------------%
+%                Single RVE with applied constant strain, only debonded
+%----------------------------------------------------------------------------------------------%
+ 
+\begin{tikzpicture}[x=3.5cm, y=3.5cm]
+\def\linewidth{1.25pt}
+
+\draw[black,line width=\linewidth] (-0.25,1) .. controls (0.75,2) .. (1.5,3);
+\filldraw[white] (0.5,1)--(1.5,1)--(1.5,2)--(0.5,2)--(0.5,1);
+\filldraw[white] (0.5,2)--(0.5,2) .. controls (0.75,3) .. (1.5,4) -- (2.5,4) .. controls (1.75,3) .. (1.5,2)--(0.5,2);
+
+\draw[black,line width=\linewidth] (-0.25,0)--(0.75,0)--(0.75,1)--(-0.25,1)--(-0.25,0);
+\draw[black,line width=\linewidth] (0.5,1)--(1.5,1)--(1.5,2)--(0.5,2)--(0.5,1);
+
+%\draw[black,line width=\linewidth] (1,1)--(2,2.35)--(1,1.5);
+
+\draw[black,line width=\linewidth] (2.5,2)--(2.5,4)--(1.5,4);
+%\draw[black,line width=\linewidth] (2.5,4)--(1.5,4)--(0.25,2.33);
+\draw[black,line width=\linewidth] (0.75,0) .. controls (1.75,1) .. (2.5,2);
+
+\draw[black,line width=\linewidth] (1.5,1) .. controls (1.75,2) .. (2,2.33);%(1.5,1)--(2,2.33);
+\draw[black,line width=\linewidth] (1.5,2) .. controls (1.75,3) .. (2.5,4);
+\draw[black,line width=\linewidth] (0.5,2) .. controls (0.75,3) .. (1.5,4);
+
+
+\draw[black,->,line width=2.25*\linewidth] (1.5,1.5) -- (2,1.5);
+\draw[black,->,line width=2.25*\linewidth] (-0.25,0.5)--(-0.75,0.5);
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,903 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+\pgfkeys{/pgf/number format/.cd,1000 sep={}}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{2.5pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={at={(axis cs:1750,6.5)},anchor=north west,draw=white!80.0!black,font=\fontsize{15}{14}\selectfont,row sep=7.5pt},
+legend image post style={xscale=1.1,yscale=1.1},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+%xmin=0.0,
+%xmax=90.0,
+ymin=0.0,
+xtick={1750,1800,1850,1900,1950,1960,1970,1980,1990,2000,2010,2020},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={Year},
+ylabel={$CO_{2}$ emissions $\left[Gt\right]$},
+% LEGEND ENTRIES
+legend entries={},
+]
+
+\addplot[no marks, black]
+table[x=Year, y expr=\thisrow{Amount}/1000000000]{
+Country Code Year Amount
+ International-transport IntTra 1751 0
+ International-transport IntTra 1752 0
+ International-transport IntTra 1753 0
+ International-transport IntTra 1754 0
+ International-transport IntTra 1755 0
+ International-transport IntTra 1756 0
+ International-transport IntTra 1757 0
+ International-transport IntTra 1758 0
+ International-transport IntTra 1759 0
+ International-transport IntTra 1760 0
+ International-transport IntTra 1761 0
+ International-transport IntTra 1762 0
+ International-transport IntTra 1763 0
+ International-transport IntTra 1764 0
+ International-transport IntTra 1765 0
+ International-transport IntTra 1766 0
+ International-transport IntTra 1767 0
+ International-transport IntTra 1768 0
+ International-transport IntTra 1769 0
+ International-transport IntTra 1770 0
+ International-transport IntTra 1771 0
+ International-transport IntTra 1772 0
+ International-transport IntTra 1773 0
+ International-transport IntTra 1774 0
+ International-transport IntTra 1775 0
+ International-transport IntTra 1776 0
+ International-transport IntTra 1777 0
+ International-transport IntTra 1778 0
+ International-transport IntTra 1779 0
+ International-transport IntTra 1780 0
+ International-transport IntTra 1781 0
+ International-transport IntTra 1782 0
+ International-transport IntTra 1783 0
+ International-transport IntTra 1784 0
+ International-transport IntTra 1785 0
+ International-transport IntTra 1786 0
+ International-transport IntTra 1787 0
+ International-transport IntTra 1788 0
+ International-transport IntTra 1789 0
+ International-transport IntTra 1790 0
+ International-transport IntTra 1791 0
+ International-transport IntTra 1792 0
+ International-transport IntTra 1793 0
+ International-transport IntTra 1794 0
+ International-transport IntTra 1795 0
+ International-transport IntTra 1796 0
+ International-transport IntTra 1797 0
+ International-transport IntTra 1798 0
+ International-transport IntTra 1799 0
+ International-transport IntTra 1800 0
+ International-transport IntTra 1801 0
+ International-transport IntTra 1802 0
+ International-transport IntTra 1803 0
+ International-transport IntTra 1804 0
+ International-transport IntTra 1805 0
+ International-transport IntTra 1806 0
+ International-transport IntTra 1807 0
+ International-transport IntTra 1808 0
+ International-transport IntTra 1809 0
+ International-transport IntTra 1810 0
+ International-transport IntTra 1811 0
+ International-transport IntTra 1812 0
+ International-transport IntTra 1813 0
+ International-transport IntTra 1814 0
+ International-transport IntTra 1815 0
+ International-transport IntTra 1816 0
+ International-transport IntTra 1817 0
+ International-transport IntTra 1818 0
+ International-transport IntTra 1819 0
+ International-transport IntTra 1820 0
+ International-transport IntTra 1821 0
+ International-transport IntTra 1822 0
+ International-transport IntTra 1823 0
+ International-transport IntTra 1824 0
+ International-transport IntTra 1825 0
+ International-transport IntTra 1826 0
+ International-transport IntTra 1827 0
+ International-transport IntTra 1828 0
+ International-transport IntTra 1829 0
+ International-transport IntTra 1830 0
+ International-transport IntTra 1831 0
+ International-transport IntTra 1832 0
+ International-transport IntTra 1833 0
+ International-transport IntTra 1834 0
+ International-transport IntTra 1835 0
+ International-transport IntTra 1836 0
+ International-transport IntTra 1837 0
+ International-transport IntTra 1838 0
+ International-transport IntTra 1839 0
+ International-transport IntTra 1840 0
+ International-transport IntTra 1841 0
+ International-transport IntTra 1842 0
+ International-transport IntTra 1843 0
+ International-transport IntTra 1844 0
+ International-transport IntTra 1845 0
+ International-transport IntTra 1846 0
+ International-transport IntTra 1847 0
+ International-transport IntTra 1848 0
+ International-transport IntTra 1849 0
+ International-transport IntTra 1850 0
+ International-transport IntTra 1851 0
+ International-transport IntTra 1852 0
+ International-transport IntTra 1853 0
+ International-transport IntTra 1854 0
+ International-transport IntTra 1855 0
+ International-transport IntTra 1856 0
+ International-transport IntTra 1857 0
+ International-transport IntTra 1858 0
+ International-transport IntTra 1859 0
+ International-transport IntTra 1860 0
+ International-transport IntTra 1861 0
+ International-transport IntTra 1862 0
+ International-transport IntTra 1863 0
+ International-transport IntTra 1864 0
+ International-transport IntTra 1865 0
+ International-transport IntTra 1866 0
+ International-transport IntTra 1867 0
+ International-transport IntTra 1868 0
+ International-transport IntTra 1869 0
+ International-transport IntTra 1870 0
+ International-transport IntTra 1871 0
+ International-transport IntTra 1872 0
+ International-transport IntTra 1873 0
+ International-transport IntTra 1874 0
+ International-transport IntTra 1875 0
+ International-transport IntTra 1876 0
+ International-transport IntTra 1877 0
+ International-transport IntTra 1878 0
+ International-transport IntTra 1879 0
+ International-transport IntTra 1880 0
+ International-transport IntTra 1881 0
+ International-transport IntTra 1882 0
+ International-transport IntTra 1883 0
+ International-transport IntTra 1884 0
+ International-transport IntTra 1885 0
+ International-transport IntTra 1886 0
+ International-transport IntTra 1887 0
+ International-transport IntTra 1888 0
+ International-transport IntTra 1889 0
+ International-transport IntTra 1890 0
+ International-transport IntTra 1891 0
+ International-transport IntTra 1892 0
+ International-transport IntTra 1893 0
+ International-transport IntTra 1894 0
+ International-transport IntTra 1895 0
+ International-transport IntTra 1896 0
+ International-transport IntTra 1897 0
+ International-transport IntTra 1898 0
+ International-transport IntTra 1899 0
+ International-transport IntTra 1900 0
+ International-transport IntTra 1901 0
+ International-transport IntTra 1902 0
+ International-transport IntTra 1903 0
+ International-transport IntTra 1904 0
+ International-transport IntTra 1905 0
+ International-transport IntTra 1906 0
+ International-transport IntTra 1907 0
+ International-transport IntTra 1908 0
+ International-transport IntTra 1909 0
+ International-transport IntTra 1910 0
+ International-transport IntTra 1911 0
+ International-transport IntTra 1912 0
+ International-transport IntTra 1913 0
+ International-transport IntTra 1914 0
+ International-transport IntTra 1915 0
+ International-transport IntTra 1916 0
+ International-transport IntTra 1917 0
+ International-transport IntTra 1918 0
+ International-transport IntTra 1919 0
+ International-transport IntTra 1920 0
+ International-transport IntTra 1921 0
+ International-transport IntTra 1922 0
+ International-transport IntTra 1923 0
+ International-transport IntTra 1924 0
+ International-transport IntTra 1925 0
+ International-transport IntTra 1926 0
+ International-transport IntTra 1927 0
+ International-transport IntTra 1928 0
+ International-transport IntTra 1929 0
+ International-transport IntTra 1930 0
+ International-transport IntTra 1931 0
+ International-transport IntTra 1932 0
+ International-transport IntTra 1933 0
+ International-transport IntTra 1934 0
+ International-transport IntTra 1935 0
+ International-transport IntTra 1936 0
+ International-transport IntTra 1937 0
+ International-transport IntTra 1938 0
+ International-transport IntTra 1939 0
+ International-transport IntTra 1940 0
+ International-transport IntTra 1941 0
+ International-transport IntTra 1942 0
+ International-transport IntTra 1943 0
+ International-transport IntTra 1944 0
+ International-transport IntTra 1945 0
+ International-transport IntTra 1946 0
+ International-transport IntTra 1947 0
+ International-transport IntTra 1948 0
+ International-transport IntTra 1949 0
+ International-transport IntTra 1950 0
+ International-transport IntTra 1951 0
+ International-transport IntTra 1952 0
+ International-transport IntTra 1953 0
+ International-transport IntTra 1954 0
+ International-transport IntTra 1955 0
+ International-transport IntTra 1956 0
+ International-transport IntTra 1957 0
+ International-transport IntTra 1958 0
+ International-transport IntTra 1959 213369376
+ International-transport IntTra 1960 238240608
+ International-transport IntTra 1961 263240080
+ International-transport IntTra 1962 272612592
+ International-transport IntTra 1963 285136144
+ International-transport IntTra 1964 312103184
+ International-transport IntTra 1965 322618864
+ International-transport IntTra 1966 349047296
+ International-transport IntTra 1967 373563120
+ International-transport IntTra 1968 394825312
+ International-transport IntTra 1969 413412784
+ International-transport IntTra 1970 437225120
+ International-transport IntTra 1971 461070432
+ International-transport IntTra 1972 492339008
+ International-transport IntTra 1973 527539056
+ International-transport IntTra 1974 489382160
+ International-transport IntTra 1975 448436960
+ International-transport IntTra 1976 439793584
+ International-transport IntTra 1977 450327584
+ International-transport IntTra 1978 456567376
+ International-transport IntTra 1979 458483648
+ International-transport IntTra 1980 447044640
+ International-transport IntTra 1981 412885168
+ International-transport IntTra 1982 374153024
+ International-transport IntTra 1983 358885136
+ International-transport IntTra 1984 360273792
+ International-transport IntTra 1985 368118416
+ International-transport IntTra 1986 394004576
+ International-transport IntTra 1987 432128496
+ International-transport IntTra 1988 447370736
+ International-transport IntTra 1989 464199488
+ International-transport IntTra 1990 553613225.4
+ International-transport IntTra 1991 535058310.3
+ International-transport IntTra 1992 551258531
+ International-transport IntTra 1993 561160990.6
+ International-transport IntTra 1994 586237720
+ International-transport IntTra 1995 619380427.5
+ International-transport IntTra 1996 671490103.1
+ International-transport IntTra 1997 708027257
+ International-transport IntTra 1998 753176974.8
+ International-transport IntTra 1999 777916623.2
+ International-transport IntTra 2000 788039117.9
+ International-transport IntTra 2001 784340431.5
+ International-transport IntTra 2002 803239387.9
+ International-transport IntTra 2003 839092770.7
+ International-transport IntTra 2004 910479076.1
+ International-transport IntTra 2005 948914696.4
+ International-transport IntTra 2006 1001919131
+ International-transport IntTra 2007 1059592183
+ International-transport IntTra 2008 1077662402
+ International-transport IntTra 2009 1037253519
+ International-transport IntTra 2010 1100956240
+ International-transport IntTra 2011 1125021881
+ International-transport IntTra 2012 1118539693
+ International-transport IntTra 2013 1134168972
+ International-transport IntTra 2014 1137738966
+ International-transport IntTra 2015 1144622625
+ International-transport IntTra 2016 1155307739
+ International-transport IntTra 2017 1155307739
+};
+\addlegendentry{International-transport};
+
+\addplot[no marks, black, loosely dashed]
+table[x=Year, y expr=\thisrow{Amount}/1000000000]{
+Country Code Year Amount
+EU-28 EU-28 1751 9350528
+EU-28 EU-28 1752 9354192
+EU-28 EU-28 1753 9354192
+EU-28 EU-28 1754 9357856
+EU-28 EU-28 1755 9361520
+EU-28 EU-28 1756 10006384
+EU-28 EU-28 1757 10010048
+EU-28 EU-28 1758 10013712
+EU-28 EU-28 1759 10017376
+EU-28 EU-28 1760 10017376
+EU-28 EU-28 1761 10973680
+EU-28 EU-28 1762 10977344
+EU-28 EU-28 1763 10981008
+EU-28 EU-28 1764 10984672
+EU-28 EU-28 1765 10988336
+EU-28 EU-28 1766 12259744
+EU-28 EU-28 1767 12263408
+EU-28 EU-28 1768 12267072
+EU-28 EU-28 1769 12270736
+EU-28 EU-28 1770 12274400
+EU-28 EU-28 1771 13611760
+EU-28 EU-28 1772 13615424
+EU-28 EU-28 1773 13619088
+EU-28 EU-28 1774 13622752
+EU-28 EU-28 1775 13626416
+EU-28 EU-28 1776 15037056
+EU-28 EU-28 1777 15040720
+EU-28 EU-28 1778 15044384
+EU-28 EU-28 1779 15048048
+EU-28 EU-28 1780 15055376
+EU-28 EU-28 1781 16843408
+EU-28 EU-28 1782 16847072
+EU-28 EU-28 1783 16854400
+EU-28 EU-28 1784 16858064
+EU-28 EU-28 1785 16865392
+EU-28 EU-28 1786 19148064
+EU-28 EU-28 1787 19155392
+EU-28 EU-28 1788 19159056
+EU-28 EU-28 1789 19166384
+EU-28 EU-28 1790 19173712
+EU-28 EU-28 1791 21416080
+EU-28 EU-28 1792 21892400
+EU-28 EU-28 1793 21910720
+EU-28 EU-28 1794 21877744
+EU-28 EU-28 1795 21888736
+EU-28 EU-28 1796 22947632
+EU-28 EU-28 1797 24090800
+EU-28 EU-28 1798 25091072
+EU-28 EU-28 1799 26424768
+EU-28 EU-28 1800 27835408
+EU-28 EU-28 1801 27688848
+EU-28 EU-28 1802 36489776
+EU-28 EU-28 1803 31187968
+EU-28 EU-28 1804 33972608
+EU-28 EU-28 1805 33074928
+EU-28 EU-28 1806 34709072
+EU-28 EU-28 1807 36493440
+EU-28 EU-28 1808 34668768
+EU-28 EU-28 1809 34683424
+EU-28 EU-28 1810 36958768
+EU-28 EU-28 1811 39131520
+EU-28 EU-28 1812 40520176
+EU-28 EU-28 1813 40696048
+EU-28 EU-28 1814 41564416
+EU-28 EU-28 1815 42883456
+EU-28 EU-28 1816 46998128
+EU-28 EU-28 1817 48709216
+EU-28 EU-28 1818 48859440
+EU-28 EU-28 1819 49181872
+EU-28 EU-28 1820 49892688
+EU-28 EU-28 1821 50603504
+EU-28 EU-28 1822 52596720
+EU-28 EU-28 1823 55645168
+EU-28 EU-28 1824 57506480
+EU-28 EU-28 1825 59616944
+EU-28 EU-28 1826 60100592
+EU-28 EU-28 1827 64464416
+EU-28 EU-28 1828 65039664
+EU-28 EU-28 1829 64585328
+EU-28 EU-28 1830 87005344
+EU-28 EU-28 1831 82234816
+EU-28 EU-28 1832 82069936
+EU-28 EU-28 1833 83257072
+EU-28 EU-28 1834 85100064
+EU-28 EU-28 1835 86111328
+EU-28 EU-28 1836 100023536
+EU-28 EU-28 1837 99356688
+EU-28 EU-28 1838 102958400
+EU-28 EU-28 1839 106050816
+EU-28 EU-28 1840 113008752
+EU-28 EU-28 1841 116342992
+EU-28 EU-28 1842 122509504
+EU-28 EU-28 1843 125023008
+EU-28 EU-28 1844 132046896
+EU-28 EU-28 1845 143903600
+EU-28 EU-28 1846 144958832
+EU-28 EU-28 1847 157196592
+EU-28 EU-28 1848 156859504
+EU-28 EU-28 1849 165136480
+EU-28 EU-28 1850 176791664
+EU-28 EU-28 1851 173952064
+EU-28 EU-28 1852 180525280
+EU-28 EU-28 1853 186779728
+EU-28 EU-28 1854 221620704
+EU-28 EU-28 1855 221254304
+EU-28 EU-28 1856 236771344
+EU-28 EU-28 1857 238313888
+EU-28 EU-28 1858 240966624
+EU-28 EU-28 1859 253995808
+EU-28 EU-28 1860 280317984
+EU-28 EU-28 1861 297996784
+EU-28 EU-28 1862 302030848
+EU-28 EU-28 1863 317580864
+EU-28 EU-28 1864 342056384
+EU-28 EU-28 1865 365945664
+EU-28 EU-28 1866 376028992
+EU-28 EU-28 1867 393209488
+EU-28 EU-28 1868 397316832
+EU-28 EU-28 1869 415156848
+EU-28 EU-28 1870 420099584
+EU-28 EU-28 1871 446443744
+EU-28 EU-28 1872 482292320
+EU-28 EU-28 1873 507962304
+EU-28 EU-28 1874 468369120
+EU-28 EU-28 1875 516722928
+EU-28 EU-28 1876 520724016
+EU-28 EU-28 1877 518305776
+EU-28 EU-28 1878 521101408
+EU-28 EU-28 1879 537164384
+EU-28 EU-28 1880 605032656
+EU-28 EU-28 1881 620322528
+EU-28 EU-28 1882 641284272
+EU-28 EU-28 1883 676172880
+EU-28 EU-28 1884 670446048
+EU-28 EU-28 1885 670006368
+EU-28 EU-28 1886 667606448
+EU-28 EU-28 1887 692415392
+EU-28 EU-28 1888 733485168
+EU-28 EU-28 1889 766692000
+EU-28 EU-28 1890 799426176
+EU-28 EU-28 1891 825213408
+EU-28 EU-28 1892 809447216
+EU-28 EU-28 1893 779970336
+EU-28 EU-28 1894 850146928
+EU-28 EU-28 1895 868100528
+EU-28 EU-28 1896 909514720
+EU-28 EU-28 1897 950254736
+EU-28 EU-28 1898 976917664
+EU-28 EU-28 1899 1037029248
+EU-28 EU-28 1900 1085027648
+EU-28 EU-28 1901 1071463520
+EU-28 EU-28 1902 1073603296
+EU-28 EU-28 1903 1122601968
+EU-28 EU-28 1904 1137847872
+EU-28 EU-28 1905 1180698352
+EU-28 EU-28 1906 1210274160
+EU-28 EU-28 1907 1342764400
+EU-28 EU-28 1908 1364015600
+EU-28 EU-28 1909 1360926848
+EU-28 EU-28 1910 1383240608
+EU-28 EU-28 1911 1414032864
+EU-28 EU-28 1912 1455644912
+EU-28 EU-28 1913 1576472640
+EU-28 EU-28 1914 1403733360
+EU-28 EU-28 1915 1329823152
+EU-28 EU-28 1916 1389040720
+EU-28 EU-28 1917 1380254448
+EU-28 EU-28 1918 1301027776
+EU-28 EU-28 1919 1095755840
+EU-28 EU-28 1920 1284272304
+EU-28 EU-28 1921 1168412960
+EU-28 EU-28 1922 1304618496
+EU-28 EU-28 1923 1234097488
+EU-28 EU-28 1924 1422412432
+EU-28 EU-28 1925 1410383520
+EU-28 EU-28 1926 1172032992
+EU-28 EU-28 1927 1509392128
+EU-28 EU-28 1928 1503203632
+EU-28 EU-28 1929 1629754528
+EU-28 EU-28 1930 1503932768
+EU-28 EU-28 1931 1366232320
+EU-28 EU-28 1932 1238516272
+EU-28 EU-28 1933 1265692160
+EU-28 EU-28 1934 1367206944
+EU-28 EU-28 1935 1417337792
+EU-28 EU-28 1936 1481150016
+EU-28 EU-28 1937 1621664416
+EU-28 EU-28 1938 1606674992
+EU-28 EU-28 1939 1640530352
+EU-28 EU-28 1940 1703210400
+EU-28 EU-28 1941 1682838560
+EU-28 EU-28 1942 1700605296
+EU-28 EU-28 1943 1688539744
+EU-28 EU-28 1944 1487074704
+EU-28 EU-28 1945 852759360
+EU-28 EU-28 1946 1212058528
+EU-28 EU-28 1947 1369090240
+EU-28 EU-28 1948 1481410160
+EU-28 EU-28 1949 1600468176
+EU-28 EU-28 1950 1678555344
+EU-28 EU-28 1951 1868687632
+EU-28 EU-28 1952 1902257200
+EU-28 EU-28 1953 1937750368
+EU-28 EU-28 1954 2037590704
+EU-28 EU-28 1955 2185748208
+EU-28 EU-28 1956 2295873392
+EU-28 EU-28 1957 2343237920
+EU-28 EU-28 1958 2300786816
+EU-28 EU-28 1959 2474598758
+EU-28 EU-28 1960 2645188374
+EU-28 EU-28 1961 2739401229
+EU-28 EU-28 1962 2898203859
+EU-28 EU-28 1963 3096111111
+EU-28 EU-28 1964 3211239374
+EU-28 EU-28 1965 3269236018
+EU-28 EU-28 1966 3324322051
+EU-28 EU-28 1967 3359622140
+EU-28 EU-28 1968 3545750813
+EU-28 EU-28 1969 3768940969
+EU-28 EU-28 1970 3940223684
+EU-28 EU-28 1971 4031100548
+EU-28 EU-28 1972 4145687906
+EU-28 EU-28 1973 4340557869
+EU-28 EU-28 1974 4278398800
+EU-28 EU-28 1975 4176706152
+EU-28 EU-28 1976 4464283655
+EU-28 EU-28 1977 4422461300
+EU-28 EU-28 1978 4555283225
+EU-28 EU-28 1979 4724499342
+EU-28 EU-28 1980 4619084718
+EU-28 EU-28 1981 4388224890
+EU-28 EU-28 1982 4284779330
+EU-28 EU-28 1983 4241661089
+EU-28 EU-28 1984 4254759568
+EU-28 EU-28 1985 4341638695
+EU-28 EU-28 1986 4340998381
+EU-28 EU-28 1987 4382617156
+EU-28 EU-28 1988 4338447234
+EU-28 EU-28 1989 4396967397
+EU-28 EU-28 1990 4479328893
+EU-28 EU-28 1991 4423024482
+EU-28 EU-28 1992 4278958094
+EU-28 EU-28 1993 4194973674
+EU-28 EU-28 1994 4174499726
+EU-28 EU-28 1995 4221464747
+EU-28 EU-28 1996 4325073851
+EU-28 EU-28 1997 4235932265
+EU-28 EU-28 1998 4228986394
+EU-28 EU-28 1999 4164147220
+EU-28 EU-28 2000 4187334052
+EU-28 EU-28 2001 4259400201
+EU-28 EU-28 2002 4235814501
+EU-28 EU-28 2003 4327781747
+EU-28 EU-28 2004 4337972863
+EU-28 EU-28 2005 4314639655
+EU-28 EU-28 2006 4320409661
+EU-28 EU-28 2007 4274408815
+EU-28 EU-28 2008 4173862503
+EU-28 EU-28 2009 3831829410
+EU-28 EU-28 2010 3951262617
+EU-28 EU-28 2011 3805961187
+EU-28 EU-28 2012 3747240906
+EU-28 EU-28 2013 3659240891
+EU-28 EU-28 2014 3490383183
+EU-28 EU-28 2015 3523491826
+EU-28 EU-28 2016 3503031204
+EU-28 EU-28 2017 3543683484
+};
+\addlegendentry{EU-28};
+
+\addplot[no marks, black, dotted]
+table[x=Year, y expr=\thisrow{Amount}/1000000000]{
+Country Code Year Amount
+  United-States USA 1751 0
+  United-States USA 1752 0
+  United-States USA 1753 0
+  United-States USA 1754 0
+  United-States USA 1755 0
+  United-States USA 1756 0
+  United-States USA 1757 0
+  United-States USA 1758 0
+  United-States USA 1759 0
+  United-States USA 1760 0
+  United-States USA 1761 0
+  United-States USA 1762 0
+  United-States USA 1763 0
+  United-States USA 1764 0
+  United-States USA 1765 0
+  United-States USA 1766 0
+  United-States USA 1767 0
+  United-States USA 1768 0
+  United-States USA 1769 0
+  United-States USA 1770 0
+  United-States USA 1771 0
+  United-States USA 1772 0
+  United-States USA 1773 0
+  United-States USA 1774 0
+  United-States USA 1775 0
+  United-States USA 1776 0
+  United-States USA 1777 0
+  United-States USA 1778 0
+  United-States USA 1779 0
+  United-States USA 1780 0
+  United-States USA 1781 0
+  United-States USA 1782 0
+  United-States USA 1783 0
+  United-States USA 1784 0
+  United-States USA 1785 0
+  United-States USA 1786 0
+  United-States USA 1787 0
+  United-States USA 1788 0
+  United-States USA 1789 0
+  United-States USA 1790 0
+  United-States USA 1791 0
+  United-States USA 1792 0
+  United-States USA 1793 0
+  United-States USA 1794 0
+  United-States USA 1795 0
+  United-States USA 1796 0
+  United-States USA 1797 0
+  United-States USA 1798 0
+  United-States USA 1799 0
+  United-States USA 1800 252816
+  United-States USA 1801 267472
+  United-States USA 1802 289456
+  United-States USA 1803 296784
+  United-States USA 1804 333424
+  United-States USA 1805 340752
+  United-States USA 1806 333424
+  United-States USA 1807 377392
+  United-States USA 1808 392048
+  United-States USA 1809 403040
+  United-States USA 1810 417696
+  United-States USA 1811 447008
+  United-States USA 1812 483648
+  United-States USA 1813 520288
+  United-States USA 1814 560592
+  United-States USA 1815 600896
+  United-States USA 1816 663184
+  United-States USA 1817 718144
+  United-States USA 1818 780432
+  United-States USA 1819 762112
+  United-States USA 1820 791424
+  United-States USA 1821 828064
+  United-States USA 1822 864704
+  United-States USA 1823 901344
+  United-States USA 1824 1014928
+  United-States USA 1825 1135840
+  United-States USA 1826 1315376
+  United-States USA 1827 1447280
+  United-States USA 1828 1593840
+  United-States USA 1829 1795360
+  United-States USA 1830 2088480
+  United-States USA 1831 2264352
+  United-States USA 1832 3022800
+  United-States USA 1833 3528432
+  United-States USA 1834 3381872
+  United-States USA 1835 4316192
+  United-States USA 1836 4730224
+  United-States USA 1837 5305472
+  United-States USA 1838 5030672
+  United-States USA 1839 5517984
+  United-States USA 1840 5873392
+  United-States USA 1841 6214144
+  United-States USA 1842 6917632
+  United-States USA 1843 7764016
+  United-States USA 1844 9306560
+  United-States USA 1845 11204512
+  United-States USA 1846 12710416
+  United-States USA 1847 15070032
+  United-States USA 1848 16784784
+  United-States USA 1849 18221072
+  United-States USA 1850 19792928
+  United-States USA 1851 24633072
+  United-States USA 1852 26791168
+  United-States USA 1853 30162048
+  United-States USA 1854 33159200
+  United-States USA 1855 38160560
+  United-States USA 1856 40036528
+  United-States USA 1857 41055120
+  United-States USA 1858 41648688
+  United-States USA 1859 45320016
+  United-States USA 1860 47437808
+  United-States USA 1861 45679088
+  United-States USA 1862 47448800
+  United-States USA 1863 54809776
+  United-States USA 1864 58656976
+  United-States USA 1865 58821856
+  United-States USA 1866 59232224
+  United-States USA 1867 72865968
+  United-States USA 1868 82352064
+  United-States USA 1869 93695808
+  United-States USA 1870 98620224
+  United-States USA 1871 103020688
+  United-States USA 1872 126305408
+  United-States USA 1873 139506800
+  United-States USA 1874 134296592
+  United-States USA 1875 135747536
+  United-States USA 1876 132820000
+  United-States USA 1877 147175552
+  United-States USA 1878 143903600
+  United-States USA 1879 175468960
+  United-States USA 1880 198684064
+  United-States USA 1881 210192688
+  United-States USA 1882 235393680
+  United-States USA 1883 253882224
+  United-States USA 1884 267589248
+  United-States USA 1885 272161920
+  United-States USA 1886 287462784
+  United-States USA 1887 307380288
+  United-States USA 1888 373874560
+  United-States USA 1889 335541792
+  United-States USA 1890 401746608
+  United-States USA 1891 427423920
+  United-States USA 1892 450448496
+  United-States USA 1893 454094176
+  United-States USA 1894 425049648
+  United-States USA 1895 479947360
+  United-States USA 1896 480881680
+  United-States USA 1897 500286224
+  United-States USA 1898 545320448
+  United-States USA 1899 625532736
+  United-States USA 1900 662736992
+  United-States USA 1901 721525872
+  United-States USA 1902 764493600
+  United-States USA 1903 894404384
+  United-States USA 1904 880221040
+  United-States USA 1905 984498480
+  United-States USA 1906 1033339600
+  United-States USA 1907 1201802992
+  United-States USA 1908 1050974432
+  United-States USA 1909 1163352976
+  United-States USA 1910 1269227920
+  United-States USA 1911 1256385600
+  United-States USA 1912 1341210864
+  United-States USA 1913 1440113216
+  United-States USA 1914 1315698432
+  United-States USA 1915 1365268688
+  United-States USA 1916 1516258464
+  United-States USA 1917 1668468352
+  United-States USA 1918 1745584560
+  United-States USA 1919 1476951072
+  United-States USA 1920 1735889616
+  United-States USA 1921 1421972752
+  United-States USA 1922 1433327488
+  United-States USA 1923 1894009536
+  United-States USA 1924 1695592944
+  United-States USA 1925 1740898304
+  United-States USA 1926 1888535520
+  United-States USA 1927 1844838656
+  United-States USA 1928 1827786400
+  United-States USA 1929 1960338928
+  United-States USA 1930 1742210016
+  United-States USA 1931 1483080944
+  United-States USA 1932 1256400256
+  United-States USA 1933 1347183184
+  United-States USA 1934 1434390048
+  United-States USA 1935 1490262384
+  United-States USA 1936 1710695952
+  United-States USA 1937 1789563552
+  United-States USA 1938 1513418864
+  United-States USA 1939 1667863792
+  United-States USA 1940 1871490592
+  United-States USA 1941 2039213856
+  United-States USA 1942 2193896944
+  United-States USA 1943 2267184272
+  United-States USA 1944 2440377888
+  United-States USA 1945 2355340112
+  United-States USA 1946 2253033904
+  United-States USA 1947 2480762496
+  United-States USA 1948 2577052416
+  United-States USA 1949 2159990288
+  United-States USA 1950 2535942336
+  United-States USA 1951 2612369712
+  United-States USA 1952 2545080352
+  United-States USA 1953 2605745200
+  United-States USA 1954 2483052496
+  United-States USA 1955 2721721792
+  United-States USA 1956 2852903984
+  United-States USA 1957 2828611664
+  United-States USA 1958 2740924816
+  United-States USA 1959 2823004702
+  United-States USA 1960 2887820432
+  United-States USA 1961 2877369848
+  United-States USA 1962 2984001744
+  United-States USA 1963 3116022372
+  United-States USA 1964 3252755199
+  United-States USA 1965 3388192678
+  United-States USA 1966 3559179160
+  United-States USA 1967 3693298171
+  United-States USA 1968 3828306054
+  United-States USA 1969 4021502617
+  United-States USA 1970 4325500825
+  United-States USA 1971 4351308657
+  United-States USA 1972 4558452642
+  United-States USA 1973 4762452212
+  United-States USA 1974 4592958261
+  United-States USA 1975 4400795008
+  United-States USA 1976 4607168187
+  United-States USA 1977 4735366318
+  United-States USA 1978 4882964043
+  United-States USA 1979 4894042875
+  United-States USA 1980 4716716355
+  United-States USA 1981 4530369843
+  United-States USA 1982 4301970691
+  United-States USA 1983 4335916563
+  United-States USA 1984 4468262025
+  United-States USA 1985 4484338153
+  United-States USA 1986 4487855840
+  United-States USA 1987 4680834052
+  United-States USA 1988 4885590503
+  United-States USA 1989 4948021163
+  United-States USA 1990 5121264461
+  United-States USA 1991 5070839400
+  United-States USA 1992 5174059076
+  United-States USA 1993 5284687882
+  United-States USA 1994 5377987137
+  United-States USA 1995 5439213314
+  United-States USA 1996 5626186717
+  United-States USA 1997 5703890708
+  United-States USA 1998 5752324190
+  United-States USA 1999 5832250178
+  United-States USA 2000 6000606067
+  United-States USA 2001 5902454993
+  United-States USA 2002 5943651279
+  United-States USA 2003 5991319569
+  United-States USA 2004 6106620735
+  United-States USA 2005 6132005704
+  United-States USA 2006 6052236286
+  United-States USA 2007 6130983563
+  United-States USA 2008 5932775281
+  United-States USA 2009 5495394958
+  United-States USA 2010 5701075808
+  United-States USA 2011 5570706560
+  United-States USA 2012 5366730281
+  United-States USA 2013 5519612557
+  United-States USA 2014 5568759258
+  United-States USA 2015 5420804127
+  United-States USA 2016 5310861406
+  United-States USA 2017 5269529513
+};
+\addlegendentry{USA};
+
+
+
+%International Energy Agency (IEA) via The World Bank
+%http://data.worldbank.org/data-catalog/world-development-indicators
+
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

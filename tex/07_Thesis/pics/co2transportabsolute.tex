@@ -23,6 +23,19 @@
 \def\markersize{4.5pt}
 \def\linewidth{2.5pt}
 
+\pgfplotsset{
+    compat=newest,
+    /pgfplots/legend image code/.code={%
+        \draw[mark repeat=2,mark phase=2,#1] 
+            plot coordinates {
+                (0cm,0cm) 
+                (0.6cm,0cm)
+                (1.2cm,0cm)
+                (1.8cm,0cm)
+                (2.4cm,0cm)%
+            };
+    },
+}
 %Tikz picture starts%
 
 \begin{tikzpicture}
@@ -34,8 +47,8 @@
 scale=0.5,
 % STYLE
 %title style={font=\fontsize{40}{8}\selectfont},
-xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
-ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.1)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.1,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
 tick align=outside,
 tick label style={font=\huge},
 legend style={at={(axis cs:1750,6.5)},anchor=north west,draw=white!80.0!black,font=\fontsize{15}{14}\selectfont,row sep=7.5pt},
@@ -52,7 +65,7 @@ line width=0.75mm,
 %xmin=0.0,
 %xmax=90.0,
 ymin=0.0,
-xtick={1750,1800,1850,1900,1950,1960,1970,1980,1990,2000,2010,2020},
+xtick={1750,1800,1850,1900,1950,2000},
 % CONTENT
 %title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
 xlabel={Year},
@@ -332,9 +345,9 @@ Country Code Year Amount
  International-transport IntTra 2016 1155307739
  International-transport IntTra 2017 1155307739
 };
-\addlegendentry{International-transport};
+\addlegendentry{International transport};
 
-\addplot[no marks, black, loosely dashed]
+\addplot[no marks, black, dash pattern=on 24pt off 18pt]
 table[x=Year, y expr=\thisrow{Amount}/1000000000]{
 Country Code Year Amount
 EU-28 EU-28 1751 9350528
@@ -607,7 +620,7 @@ EU-28 EU-28 2017 3543683484
 };
 \addlegendentry{EU-28};
 
-\addplot[no marks, black, dotted]
+\addplot[no marks, black, dash pattern=on \pgflinewidth off 5pt]
 table[x=Year, y expr=\thisrow{Amount}/1000000000]{
 Country Code Year Amount
   United-States USA 1751 0
@@ -880,265 +893,278 @@ Country Code Year Amount
 };
 \addlegendentry{USA};
 
-\addplot[no marks, black]
+\addplot[no marks, black, dash pattern=on 12pt off 6pt on \the\pgflinewidth off 6pt]
 table[x=Year, y expr=\thisrow{Amount}/1000000000]{
 Country Code Year Amount
-China CHN 1751 0
-China CHN 1752 0
-China CHN 1753 0
-China CHN 1754 0
-China CHN 1755 0
-China CHN 1756 0
-China CHN 1757 0
-China CHN 1758 0
-China CHN 1759 0
-China CHN 1760 0
-China CHN 1761 0
-China CHN 1762 0
-China CHN 1763 0
-China CHN 1764 0
-China CHN 1765 0
-China CHN 1766 0
-China CHN 1767 0
-China CHN 1768 0
-China CHN 1769 0
-China CHN 1770 0
-China CHN 1771 0
-China CHN 1772 0
-China CHN 1773 0
-China CHN 1774 0
-China CHN 1775 0
-China CHN 1776 0
-China CHN 1777 0
-China CHN 1778 0
-China CHN 1779 0
-China CHN 1780 0
-China CHN 1781 0
-China CHN 1782 0
-China CHN 1783 0
-China CHN 1784 0
-China CHN 1785 0
-China CHN 1786 0
-China CHN 1787 0
-China CHN 1788 0
-China CHN 1789 0
-China CHN 1790 0
-China CHN 1791 0
-China CHN 1792 0
-China CHN 1793 0
-China CHN 1794 0
-China CHN 1795 0
-China CHN 1796 0
-China CHN 1797 0
-China CHN 1798 0
-China CHN 1799 0
-China CHN 1800 0
-China CHN 1801 0
-China CHN 1802 0
-China CHN 1803 0
-China CHN 1804 0
-China CHN 1805 0
-China CHN 1806 0
-China CHN 1807 0
-China CHN 1808 0
-China CHN 1809 0
-China CHN 1810 0
-China CHN 1811 0
-China CHN 1812 0
-China CHN 1813 0
-China CHN 1814 0
-China CHN 1815 0
-China CHN 1816 0
-China CHN 1817 0
-China CHN 1818 0
-China CHN 1819 0
-China CHN 1820 0
-China CHN 1821 0
-China CHN 1822 0
-China CHN 1823 0
-China CHN 1824 0
-China CHN 1825 0
-China CHN 1826 0
-China CHN 1827 0
-China CHN 1828 0
-China CHN 1829 0
-China CHN 1830 0
-China CHN 1831 0
-China CHN 1832 0
-China CHN 1833 0
-China CHN 1834 0
-China CHN 1835 0
-China CHN 1836 0
-China CHN 1837 0
-China CHN 1838 0
-China CHN 1839 0
-China CHN 1840 0
-China CHN 1841 0
-China CHN 1842 0
-China CHN 1843 0
-China CHN 1844 0
-China CHN 1845 0
-China CHN 1846 0
-China CHN 1847 0
-China CHN 1848 0
-China CHN 1849 0
-China CHN 1850 0
-China CHN 1851 0
-China CHN 1852 0
-China CHN 1853 0
-China CHN 1854 0
-China CHN 1855 0
-China CHN 1856 0
-China CHN 1857 0
-China CHN 1858 0
-China CHN 1859 0
-China CHN 1860 0
-China CHN 1861 0
-China CHN 1862 0
-China CHN 1863 0
-China CHN 1864 0
-China CHN 1865 0
-China CHN 1866 0
-China CHN 1867 0
-China CHN 1868 0
-China CHN 1869 0
-China CHN 1870 0
-China CHN 1871 0
-China CHN 1872 0
-China CHN 1873 0
-China CHN 1874 0
-China CHN 1875 0
-China CHN 1876 0
-China CHN 1877 0
-China CHN 1878 0
-China CHN 1879 0
-China CHN 1880 0
-China CHN 1881 0
-China CHN 1882 0
-China CHN 1883 0
-China CHN 1884 0
-China CHN 1885 0
-China CHN 1886 0
-China CHN 1887 0
-China CHN 1899 095264
-China CHN 1902 95264
-China CHN 1903 1963904
-China CHN 1904 2088480
-China CHN 1905 2297328
-China CHN 1906 17110880
-China CHN 1907 16839744
-China CHN 1908 22731456
-China CHN 1909 20837168
-China CHN 1910 18748688
-China CHN 1911 27846400
-China CHN 1912 9786544
-China CHN 1913 10757504
-China CHN 1914 15106672
-China CHN 1915 16088624
-China CHN 1916 17964592
-China CHN 1917 19851552
-China CHN 1918 21042352
-China CHN 1919 24255680
-China CHN 1920 26769184
-China CHN 1921 25288928
-China CHN 1922 26633616
-China CHN 1923 32151600
-China CHN 1924 35093792
-China CHN 1925 33221488
-China CHN 1926 29590464
-China CHN 1927 33525600
-China CHN 1928 34115504
-China CHN 1929 35819264
-China CHN 1930 37922400
-China CHN 1931 40260032
-China CHN 1932 38600240
-China CHN 1933 42216608
-China CHN 1934 49273472
-China CHN 1935 57627392
-China CHN 1936 65039664
-China CHN 1937 60576912
-China CHN 1938 55304416
-China CHN 1939 67157456
-China CHN 1940 86100336
-China CHN 1941 107615344
-China CHN 1942 113869792
-China CHN 1943 97304848
-China CHN 1944 97865440
-China CHN 1945 50350688
-China CHN 1946 31275904
-China CHN 1947 33587888
-China CHN 1948 23852640
-China CHN 1949 59309168
-China CHN 1950 78647760
-China CHN 1951 101723632
-China CHN 1952 128221680
-China CHN 1953 134102400
-China CHN 1954 161256304
-China CHN 1955 190890736
-China CHN 1956 216348208
-China CHN 1957 256348096
-China CHN 1958 525380960
-China CHN 1959 720152146.7
-China CHN 1960 778979465.8
-China CHN 1961 550958537.3
-China CHN 1962 439342105.3
-China CHN 1963 435517603.7
-China CHN 1964 435703730.3
-China CHN 1965 474680624.9
-China CHN 1966 521458912.9
-China CHN 1967 432223556.9
-China CHN 1968 467805643
-China CHN 1969 575944671.2
-China CHN 1970 770167190.3
-China CHN 1971 874016350.7
-China CHN 1972 928893957.8
-China CHN 1973 965646598.3
-China CHN 1974 985085216
-China CHN 1975 1142101906
-China CHN 1976 1190964535
-China CHN 1977 1304402788
-China CHN 1978 1455257506
-China CHN 1979 1487113084
-China CHN 1980 1458886738
-China CHN 1981 1442782298
-China CHN 1982 1570468325
-China CHN 1983 1655810483
-China CHN 1984 1802317096
-China CHN 1985 1951773228
-China CHN 1986 2052242012
-China CHN 1987 2191053006
-China CHN 1988 2347763494
-China CHN 1989 2386884998
-China CHN 1990 2420302108
-China CHN 1991 2538923968
-China CHN 1992 2657112406
-China CHN 1993 2835795473
-China CHN 1994 3010242208
-China CHN 1995 3265056964
-China CHN 1996 3408346591
-China CHN 1997 3414549286
-China CHN 1998 3265902621
-China CHN 1999 3258134887
-China CHN 2000 3349294776
-China CHN 2001 3426144062
-China CHN 2002 3782439297
-China CHN 2003 4452310296
-China CHN 2004 5125894416
-China CHN 2005 5771168440
-China CHN 2006 6377748016
-China CHN 2007 6861750652
-China CHN 2008 7375189907
-China CHN 2009 7758811768
-China CHN 2010 8500542695
-China CHN 2011 9388199234
-China CHN 2012 9633899303
-China CHN 2013 9796527160
-China CHN 2014 9820360492
-China CHN 2015 9716467840
-China CHN 2016 9704479432
-China CHN 2017 9838754028
+ Africa AF 1751 0
+ Africa AF 1752 0
+ Africa AF 1753 0
+ Africa AF 1754 0
+ Africa AF 1755 0
+ Africa AF 1756 0
+ Africa AF 1757 0
+ Africa AF 1758 0
+ Africa AF 1759 0
+ Africa AF 1760 0
+ Africa AF 1761 0
+ Africa AF 1762 0
+ Africa AF 1763 0
+ Africa AF 1764 0
+ Africa AF 1765 0
+ Africa AF 1766 0
+ Africa AF 1767 0
+ Africa AF 1768 0
+ Africa AF 1769 0
+ Africa AF 1770 0
+ Africa AF 1771 0
+ Africa AF 1772 0
+ Africa AF 1773 0
+ Africa AF 1774 0
+ Africa AF 1775 0
+ Africa AF 1776 0
+ Africa AF 1777 0
+ Africa AF 1778 0
+ Africa AF 1779 0
+ Africa AF 1780 0
+ Africa AF 1781 0
+ Africa AF 1782 0
+ Africa AF 1783 0
+ Africa AF 1784 0
+ Africa AF 1785 0
+ Africa AF 1786 0
+ Africa AF 1787 0
+ Africa AF 1788 0
+ Africa AF 1789 0
+ Africa AF 1790 0
+ Africa AF 1791 0
+ Africa AF 1792 0
+ Africa AF 1793 0
+ Africa AF 1794 0
+ Africa AF 1795 0
+ Africa AF 1796 0
+ Africa AF 1797 0
+ Africa AF 1798 0
+ Africa AF 1799 0
+ Africa AF 1800 0
+ Africa AF 1801 0
+ Africa AF 1802 0
+ Africa AF 1803 0
+ Africa AF 1804 0
+ Africa AF 1805 0
+ Africa AF 1806 0
+ Africa AF 1807 0
+ Africa AF 1808 0
+ Africa AF 1809 0
+ Africa AF 1810 0
+ Africa AF 1811 0
+ Africa AF 1812 0
+ Africa AF 1813 0
+ Africa AF 1814 0
+ Africa AF 1815 0
+ Africa AF 1816 0
+ Africa AF 1817 0
+ Africa AF 1818 0
+ Africa AF 1819 0
+ Africa AF 1820 0
+ Africa AF 1821 0
+ Africa AF 1822 0
+ Africa AF 1823 0
+ Africa AF 1824 0
+ Africa AF 1825 0
+ Africa AF 1826 0
+ Africa AF 1827 0
+ Africa AF 1828 0
+ Africa AF 1829 0
+ Africa AF 1830 0
+ Africa AF 1831 0
+ Africa AF 1832 0
+ Africa AF 1833 0
+ Africa AF 1834 0
+ Africa AF 1835 0
+ Africa AF 1836 0
+ Africa AF 1837 0
+ Africa AF 1838 0
+ Africa AF 1839 0
+ Africa AF 1840 0
+ Africa AF 1841 0
+ Africa AF 1842 0
+ Africa AF 1843 0
+ Africa AF 1844 0
+ Africa AF 1845 0
+ Africa AF 1846 0
+ Africa AF 1847 0
+ Africa AF 1848 0
+ Africa AF 1849 0
+ Africa AF 1850 0
+ Africa AF 1851 0
+ Africa AF 1852 0
+ Africa AF 1853 0
+ Africa AF 1854 0
+ Africa AF 1855 0
+ Africa AF 1856 0
+ Africa AF 1857 0
+ Africa AF 1858 0
+ Africa AF 1859 0
+ Africa AF 1860 0
+ Africa AF 1861 0
+ Africa AF 1862 0
+ Africa AF 1863 0
+ Africa AF 1864 0
+ Africa AF 1865 0
+ Africa AF 1866 0
+ Africa AF 1867 0
+ Africa AF 1868 0
+ Africa AF 1869 0
+ Africa AF 1870 0
+ Africa AF 1871 0
+ Africa AF 1872 0
+ Africa AF 1873 0
+ Africa AF 1874 0
+ Africa AF 1875 0
+ Africa AF 1876 0
+ Africa AF 1877 0
+ Africa AF 1878 0
+ Africa AF 1879 0
+ Africa AF 1880 0
+ Africa AF 1881 0
+ Africa AF 1882 0
+ Africa AF 1883 0
+ Africa AF 1884 21984
+ Africa AF 1885 36640
+ Africa AF 1886 47632
+ Africa AF 1887 47632
+ Africa AF 1888 80608
+ Africa AF 1889 131904
+ Africa AF 1890 296784
+ Africa AF 1891 296784
+ Africa AF 1892 479984
+ Africa AF 1893 1799024
+ Africa AF 1894 2432896
+ Africa AF 1895 3337904
+ Africa AF 1896 4257568
+ Africa AF 1897 4777856
+ Africa AF 1898 6049264
+ Africa AF 1899 5517984
+ Africa AF 1900 2330304
+ Africa AF 1901 3909488
+ Africa AF 1902 5825760
+ Africa AF 1903 7895920
+ Africa AF 1904 8914512
+ Africa AF 1905 10259200
+ Africa AF 1906 11717472
+ Africa AF 1907 12930256
+ Africa AF 1908 13402912
+ Africa AF 1909 15385136
+ Africa AF 1910 17411328
+ Africa AF 1911 16865392
+ Africa AF 1912 17953600
+ Africa AF 1913 19606064
+ Africa AF 1914 19551104
+ Africa AF 1915 19606064
+ Africa AF 1916 23251744
+ Africa AF 1917 25343888
+ Africa AF 1918 24728336
+ Africa AF 1919 25446480
+ Africa AF 1920 28051584
+ Africa AF 1921 27985632
+ Africa AF 1922 23973552
+ Africa AF 1923 29048192
+ Africa AF 1924 30631040
+ Africa AF 1925 32180912
+ Africa AF 1926 34437936
+ Africa AF 1927 33837040
+ Africa AF 1928 34771360
+ Africa AF 1929 35808272
+ Africa AF 1930 33701472
+ Africa AF 1931 29469552
+ Africa AF 1932 26629952
+ Africa AF 1933 28502256
+ Africa AF 1934 32539984
+ Africa AF 1935 35914528
+ Africa AF 1936 39025264
+ Africa AF 1937 41846544
+ Africa AF 1938 44022960
+ Africa AF 1939 46858896
+ Africa AF 1940 49650864
+ Africa AF 1941 54033008
+ Africa AF 1942 58829184
+ Africa AF 1943 60126240
+ Africa AF 1944 66648160
+ Africa AF 1945 67531184
+ Africa AF 1946 68168720
+ Africa AF 1947 67952544
+ Africa AF 1948 71744784
+ Africa AF 1949 77354368
+ Africa AF 1950 94941568
+ Africa AF 1951 101203344
+ Africa AF 1952 110425632
+ Africa AF 1953 112078096
+ Africa AF 1954 117640048
+ Africa AF 1955 129529728
+ Africa AF 1956 135260224
+ Africa AF 1957 141752832
+ Africa AF 1958 148769392
+ Africa AF 1959 147841143.3
+ Africa AF 1960 156567067.8
+ Africa AF 1961 161994254.1
+ Africa AF 1962 166334786.6
+ Africa AF 1963 176334743
+ Africa AF 1964 193639229.6
+ Africa AF 1965 213634280.9
+ Africa AF 1966 221081974.5
+ Africa AF 1967 237045012.2
+ Africa AF 1968 257282104.4
+ Africa AF 1969 277915809.1
+ Africa AF 1970 302623753.9
+ Africa AF 1971 331868172.1
+ Africa AF 1972 351877790.8
+ Africa AF 1973 378012574.7
+ Africa AF 1974 388408344.3
+ Africa AF 1975 387307167.4
+ Africa AF 1976 420186590.8
+ Africa AF 1977 433019043.8
+ Africa AF 1978 462508407.8
+ Africa AF 1979 499039438.4
+ Africa AF 1980 535662719.8
+ Africa AF 1981 548541106.2
+ Africa AF 1982 571681434.7
+ Africa AF 1983 594483205.9
+ Africa AF 1984 649208757
+ Africa AF 1985 665646575.4
+ Africa AF 1986 689587818.6
+ Africa AF 1987 689585630.7
+ Africa AF 1988 724597302.5
+ Africa AF 1989 697746148
+ Africa AF 1990 657850152.1
+ Africa AF 1991 686854278.6
+ Africa AF 1992 669557139.1
+ Africa AF 1993 709543245
+ Africa AF 1994 720231497
+ Africa AF 1995 775510660.8
+ Africa AF 1996 793572765.9
+ Africa AF 1997 812679985
+ Africa AF 1998 835329976.3
+ Africa AF 1999 828335346.2
+ Africa AF 2000 884531576.9
+ Africa AF 2001 879118731.4
+ Africa AF 2002 884151838.9
+ Africa AF 2003 961971967.9
+ Africa AF 2004 1033091840
+ Africa AF 2005 1044075215
+ Africa AF 2006 1083798148
+ Africa AF 2007 1126332954
+ Africa AF 2008 1178142922
+ Africa AF 2009 1188275614
+ Africa AF 2010 1193783772
+ Africa AF 2011 1198373015
+ Africa AF 2012 1233842174
+ Africa AF 2013 1250643564
+ Africa AF 2014 1290489212
+ Africa AF 2015 1289003257
+ Africa AF 2016 1310656389
+ Africa AF 2017 1331739959
 };
-\addlegendentry{China};
+\addlegendentry{Africa};
 
 %Le Quéré et al. (2018). Global Carbon Project; Carbon Dioxide Information Analysis Centre (CDIAC)
 

@@ -42,9 +42,9 @@
 
 %Tikz axis starts%
 
-\begin{axis}[width=30cm,
+\begin{axis}[width=10cm,
 % SCALE
-scale=0.5,
+scale=1,
 % STYLE
 xbar,
 %title style={font=\fontsize{40}{8}\selectfont},
@@ -69,9 +69,11 @@ line width=0.75mm,
 %xtick={1750,1800,1850,1900,1950,2000},
 % CONTENT
 %title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
-xlabel={$10^{9}\$$},
+xlabel={$billion\ \$$},
+ytick=data,
+bar width=20pt,
 %ylabel={$n. countries$},
-symbolic y coords = {France, Germany, United States, United Kingdom},
+symbolic y coords = {Italy,Sweden,Germany, France,United Kingdom, United States},
 nodes near coords,
 % LEGEND ENTRIES
 legend entries={},
@@ -79,8 +81,7 @@ legend entries={},
 
 %Green Climate Fund (GCF)
 
-\addplot coordinates { (1.035,France)         (1.003,Germany)
-                         (3.0,United States)  (1.211,United Kingdom) };
+\addplot coordinates {(3.0,United States) (1.211,United Kingdom) (1.035,France) (1.003,Germany) (0.268,Italy) (0.581,Sweden)};
 
 %\addplot[line width=\linewidth,blue, marker size=\marker size, mark=*]
 %table[x=Year, y expr=\thisrow{Amount}/1000000000]{
@@ -89,7 +90,7 @@ legend entries={},
 %Austria AUT 2018 34800000
 %Belgium BEL 2018 66900000.00000001
 %Bulgaria BGR 2018 100000
-%Canada CAN 2018 277000000
+%Canada CAN 2018 277 000 000
 %Chile CHL 2018 300000
 %Colombia COL 2018 300000
 %Cyprus CYP 2018 470000
@@ -98,12 +99,12 @@ legend entries={},
 %Estonia EST 2018 1300000
 %Finland FIN 2018 107000000
 %France FRA 2018 1035000000
-%Germany DEU 2018 1003000000
+%Germany DEU 2018 1 003 000 000
 %Hungary HUN 2018 4300000
 %Iceland ISL 2018 700000
 %Indonesia IDN 2018 250000
 %Ireland IRL 2018 2700000
-%Italy ITA 2018 268000000
+%Italy ITA 2018 268 000 000
 %Japan JPN 2018 1500000000
 %Latvia LVA 2018 470000
 %Liechtenstein LIE 2018 100000
@@ -122,10 +123,10 @@ legend entries={},
 %Romania ROU 2018 100000
 %South Korea KOR 2018 100000000
 %Spain ESP 2018 161000000
-%Sweden SWE 2018 581000000
-%Switzerland CHE 2018 100000000
+%Sweden SWE 2018 581 000 000
+%Switzerland CHE 2018 100 000 000
 %United Kingdom GBR 2018 1211000000
-%United States USA 2018 3000000000
+%United States USA 2018 3 000 000 000
 %World OWID_WRL 2018 10200000000
 %};
 %\addlegendentry{Kyoto Protocol};

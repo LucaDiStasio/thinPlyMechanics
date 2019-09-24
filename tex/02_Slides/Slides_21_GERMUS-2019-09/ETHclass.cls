@@ -91,11 +91,11 @@
 \leavevmode%
   \hbox{
     \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.5ex,dp=1.5ex,left]{author in head/foot}%
-      \qquad\color{white}{\tiny\underline{L. Di Stasio}, J. Varna, Z. Ayadi}%
+      \qquad\color{white}{\tiny\underline{L. Di Stasio}}%
     \end{beamercolorbox}%
 
     \begin{beamercolorbox}[wd=.45\paperwidth,ht=2.5ex,dp=1.5ex,center]{title in head/foot}%
-      \color{white}{Girona (ES) - September 18-20, 2019}%
+      \color{white}{Getafe, Madrid (ES) - September 17, 2019}%
     \end{beamercolorbox}%
 
     \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.5ex,dp=1.5ex,right]{title in head/foot}%
@@ -106,11 +106,11 @@
 \leavevmode%
   \hbox{
     \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.5ex,dp=0.75ex,left]{author in head/foot}%
-      \qquad\color{white}{\tiny\underline{L. Di Stasio}, J. Varna, Z. Ayadi}%
+      \qquad\color{white}{\tiny\underline{L. Di Stasio}}%
     \end{beamercolorbox}%
 
     \begin{beamercolorbox}[wd=.45\paperwidth,ht=2.5ex,dp=0.75ex,center]{title in head/foot}%
-      \color{white}{Girona (ES) - September 18-20, 2019}%
+      \color{white}{Getafe, Madrid (ES) - September 17, 2019}%
     \end{beamercolorbox}%
 
     \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.5ex,dp=0.75ex,right]{title in head/foot}%

@@ -1,0 +1,246 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{2.5pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={draw=white!80.0!black,font=\fontsize{20}{14}\selectfont,row sep=7.5pt},
+legend image post style={xscale=1.5,yscale=1.5},
+legend cell align={left},
+legend pos=north east,
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+xmax=160.0,
+ymin=0.0,
+xtick={0.0,10.0,30.0,50.0,70.0,90.0,110.0,130.0,150.0},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$\Delta\theta\left[^{\circ}\right]$},
+ylabel={$G_{TOT}\left[\nicefrac{J}{m^{2}}\right]$},
+% LEGEND ENTRIES
+legend entries={},
+]
+
+% delta = 1.0
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+table{
+10.00	1.02736660
+20.00	1.18494967
+30.00	1.12333320
+40.00	1.02266229
+50.00	0.90997170
+60.00	0.77945168
+70.00	0.63045293
+80.00	0.46629232
+90.00	0.31077309
+100.00	0.19155578
+110.00	0.10981899
+120.00	0.05623141
+130.00	0.02493554
+140.00	0.01013604
+150.00	0.00502980
+};
+\addlegendentry{$1.0^{\circ}$};
+
+% delta = 0.5
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
+table{
+10.00	1.03099757
+20.00	1.18496232
+30.00	1.12275151
+40.00	1.02178549
+50.00	0.90889986
+60.00	0.77802792
+70.00	0.62769927
+80.00	0.46429868
+90.00	0.30901139
+100.00	0.19030657
+110.00	0.10899678
+120.00	0.05572787
+130.00	0.02467853
+140.00	0.01003275
+150.00	0.00500834
+};
+\addlegendentry{$0.5^{\circ}$};
+
+% delta = 0.25
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
+table{
+10.00	1.03261741
+20.00	1.18493793
+30.00	1.12246176
+40.00	1.02141600
+50.00	0.90840942
+60.00	0.77736116
+70.00	0.62667044
+80.00	0.46337502
+90.00	0.30821285
+100.00	0.18974065
+110.00	0.10862179
+120.00	0.05549868
+130.00	0.02456237
+140.00	0.00998717
+150.00	0.00499930
+};
+\addlegendentry{$0.25^{\circ}$};
+
+% delta = 0.2
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
+table{
+10.00	1.03293488
+20.00	1.18492316
+30.00	1.12240152
+40.00	1.02131622
+50.00	0.90828601
+60.00	0.77721708
+70.00	0.62638377
+80.00	0.46318328
+90.00	0.30804962
+100.00	0.18962674
+110.00	0.10854654
+120.00	0.05545288
+130.00	0.02453836
+140.00	0.00997758
+150.00	0.00499736
+};
+\addlegendentry{$0.2^{\circ}$};
+
+% delta = 0.125
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
+table{
+10.00	1.03339319
+20.00	1.18491056
+30.00	1.12230008
+40.00	1.02120109
+50.00	0.90814478
+60.00	0.77699203
+70.00	0.62610024
+80.00	0.46291566
+90.00	0.30782018
+100.00	0.18946448
+110.00	0.10843810
+120.00	0.05538536
+130.00	0.02450455
+140.00	0.00996422
+150.00	0.00499463
+};
+\addlegendentry{$0.125^{\circ}$};
+
+% delta = 0.1
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
+table{
+10.00	1.03354724
+20.00	1.18492443
+30.00	1.12225964
+40.00	1.02114643
+50.00	0.90807147
+60.00	0.77693607
+70.00	0.62601801
+80.00	0.46280992
+90.00	0.30774257
+100.00	0.18940157
+110.00	0.10840533
+120.00	0.05536310
+130.00	0.02449275
+140.00	0.00995936
+150.00	0.00499383
+};
+\addlegendentry{$0.1^{\circ}$};
+
+% delta = 0.0625
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=diamond*]
+table{
+10.00	1.03376546
+20.00	1.18490090
+30.00	1.12218509
+40.00	1.02110234
+50.00	0.90800906
+60.00	0.77681352
+70.00	0.62589784
+80.00	0.46266893
+90.00	0.30762932
+100.00	0.18932632
+110.00	0.10834977
+120.00	0.05532863
+130.00	0.02447648
+140.00	0.00995296
+150.00	0.00499247
+};
+\addlegendentry{$0.0625^{\circ}$};
+
+% delta = 0.05
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=diamond*,mark options={fill=white}]
+table{
+10.00	1.03385050
+20.00	1.18489585
+30.00	1.12221696
+40.00	1.02105542
+50.00	0.90794989
+60.00	0.77680104
+70.00	0.62583590
+80.00	0.46263681
+90.00	0.30757046
+100.00	0.18929397
+110.00	0.10833022
+120.00	0.05532046
+130.00	0.02447080
+140.00	0.00995012
+150.00	0.00499219
+};
+\addlegendentry{$0.05^{\circ}$};
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

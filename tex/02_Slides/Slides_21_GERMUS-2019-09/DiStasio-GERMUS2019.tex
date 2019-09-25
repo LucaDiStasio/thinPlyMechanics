@@ -1532,7 +1532,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 
 \section{Debond Propagation}
 
-\subsection{Debond Interaction}
+\subsection{Debond Interaction: Horizontal}
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
@@ -1702,6 +1702,157 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \centering
 \includegraphics[width=\textwidth]{twofibers-sameside-crackshielding1.pdf}
 \end{figure}
+\end{frame}
+
+\subsection{Debond Interaction: Vertical}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Consecutive Debonds: Mode I}
+\vspace{-0.5cm}
+\centering
+\begin{columns}
+\centering
+\begin{column}{0.65\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nx1-coupling-vf60-GI.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.35\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{twofibers-sameside-dtheta100.pdf}
+\end{figure}
+\vspace{-0.5cm}
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{twofibers-oppositeside-dtheta80.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Consecutive Debonds: Mode II}
+\vspace{-0.5cm}
+\centering
+\begin{columns}
+\centering
+\begin{column}{0.65\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nx1-coupling-vf60-GII-dtheta80.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.35\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{twofibers-sameside-dtheta80.pdf}
+\end{figure}
+\vspace{-0.5cm}
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{twofibers-oppositeside-dtheta80.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Consecutive Debonds: Mode II}
+\vspace{-0.5cm}
+\centering
+\begin{columns}
+\centering
+\begin{column}{0.65\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nx1-coupling-vf60-GII-dtheta110.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.35\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{twofibers-sameside-dtheta110.pdf}
+\end{figure}
+\vspace{-0.5cm}
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{twofibers-oppositeside-dtheta110.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Consecutive Debonds: Mode II}
+\vspace{-0.5cm}
+\centering
+\begin{columns}
+\centering
+\begin{column}{0.65\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nx1-coupling-vf60-GII-dtheta150.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.35\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{twofibers-sameside-dtheta150.pdf}
+\end{figure}
+\vspace{-0.5cm}
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{twofibers-oppositeside-dtheta150.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small Non-Consecutive Debonds}
+\vspace{-0.9cm}
+\centering
+\begin{columns}
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-coupling-vf60-GI.pdf}
+\end{figure}
+\vspace{-0.8cm}
+\begin{figure}
+\centering
+\includegraphics[width=0.5\columnwidth]{twofibersbetweendebonds-sameside-dtheta80.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-coupling-vf60-GII.pdf}
+\end{figure}
+\vspace{-0.8cm}
+\begin{figure}
+\centering
+\includegraphics[width=0.5\columnwidth]{twofibersbetweendebonds-oppositeside-dtheta80.pdf}
+\end{figure}
+\end{column}
+\end{columns}
 \end{frame}
 
 \subsection{$0^{\circ}$ ply thickness}
@@ -2121,24 +2272,24 @@ $21.4^{\circ}-89.2^{\circ}$, average $49.3^{\circ}$, standard deviation of $11.7
 \end{alertblock}
 \end{frame}
 
-%\subsection{Observations \& Conclusions}
-%
-%\begin{frame}
-%\frametitle{Observations \& Conclusions}
-%\vspace{-0.5cm}
-%\scriptsize
-%\centering
-%\begin{itemize}[label=\ding{212}]
-%\item No effect of  $90^{\circ}$ ply thickness can be observed when $t_{90^{\circ}}$ is at least $\sim3\diameter_{fiber}$
-%\item Only if $t_{90^{\circ}}$ is reduced to $1\diameter_{fiber}$, ERR is reduced for a given level of applied strain, i.e. debond growth is delayed to higher levels of applied strain ($G\sim\varepsilon_{applied}^{2}$)
-%\item No effect of  $0^{\circ}$ ply thickness can be observed when $\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}>1$
-%\item A small difference can be observed when  $t_{0^{\circ}}=t_{90^{\circ}}$, due to the smaller bending stiffness of a thinner $0^{\circ}$ layer
-%\end{itemize}
-%\vspace{0.5cm}
-%\begin{alertblock}{\centering\scriptsize\bf It seems reasonable to conclude that...}
-%...the ply-thickness and ply-block effects have no influence on fiber/matrix interface crack growth.
-%\end{alertblock}
-%\end{frame}
+\section{Moving Forward}
+
+\begin{frame}
+\frametitle{Moving Forward: Ideas}
+\vspace{-0.5cm}
+\footnotesize
+\centering
+\begin{itemize}[label=$\RHD$]
+\item Microscopic characterization of transverse cracks, debonds and microstructure: optical microscope and image analysis, edge view (both sides), increasing load levels on same specimen, different lay-ups and materials\\[7.5pt]
+\begin{itemize}[label=\ding{212}]
+\item SEM? TEM? $\mu$-CT?\\[20pt]
+\end{itemize}
+\item Microstructure-controlled debonding as toughening mechanisms for thin-ply laminates\\[7.5pt]
+\begin{itemize}[label=\ding{212}]
+\item 3D-printing? Improved spread-tow technique?
+\end{itemize}
+\end{itemize}
+\end{frame}
 
 \begin{frame}
 \frametitle{}

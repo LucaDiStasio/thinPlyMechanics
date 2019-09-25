@@ -602,11 +602,11 @@
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{thinPly.pdf}
+\includegraphics[width=\columnwidth]{freeThickPly.pdf}
 \end{figure}
 \vspace{-0.25cm}
 \begin{equation*}
-n\times 1-m\cdot t_{90^{\circ}}
+n\times k-free
 \end{equation*}
 \end{column}
 \begin{column}{0.45\textwidth}
@@ -630,34 +630,26 @@ n\times  k-m\cdot t_{90^{\circ}}
 \vspace{-1.25cm}
 \centering
 \begin{columns}[c]
-\begin{column}{0.55\textwidth}
+\begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{freeThinPly.pdf}
-\end{figure}
-%\vspace{-0.25cm}
-\begin{equation*}
-\begin{aligned}
-&-free\\
-n\times 1&-coupling\\
-&-coupling+H\\
-\end{aligned}
-\end{equation*}
-\end{column}
-\begin{column}{0.45\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{freeThickPly.pdf}
+\includegraphics[width=\columnwidth]{coupling.pdf}
 \end{figure}
 \vspace{-0.25cm}
 \begin{equation*}
-\begin{aligned}
-&-free\\
-n\times k&-coupling\\
-&-coupling+H\\
-\end{aligned}
+n\times k-symm
+\end{equation*}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{asymm.pdf}
+\end{figure}
+\vspace{-0.25cm}
+\begin{equation*}
+n\times k-asymm
 \end{equation*}
 \end{column}
 \end{columns}
@@ -1771,24 +1763,216 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \end{figure}
 \end{frame}
 
-\subsection{Observations \& Conclusions}
+\subsection{Estimation of $G_{Ic}$}
 
 \begin{frame}
-\frametitle{Observations \& Conclusions}
-\vspace{-0.5cm}
-\scriptsize
+\frametitle{\vspace{0.2cm}\small Estimation of $G_{Ic}$}
+\vspace{-.75cm}
 \centering
-\begin{itemize}[label=\ding{212}]
-\item No effect of  $90^{\circ}$ ply thickness can be observed when $t_{90^{\circ}}$ is at least $\sim3\diameter_{fiber}$
-\item Only if $t_{90^{\circ}}$ is reduced to $1\diameter_{fiber}$, ERR is reduced for a given level of applied strain, i.e. debond growth is delayed to higher levels of applied strain ($G\sim\varepsilon_{applied}^{2}$)
-\item No effect of  $0^{\circ}$ ply thickness can be observed when $\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}>1$
-\item A small difference can be observed when  $t_{0^{\circ}}=t_{90^{\circ}}$, due to the smaller bending stiffness of a thinner $0^{\circ}$ layer
-\end{itemize}
-\vspace{0.5cm}
-\begin{alertblock}{\centering\scriptsize\bf It seems reasonable to conclude that...}
-...the ply-thickness and ply-block effects have no influence on fiber/matrix interface crack growth.
-\end{alertblock}
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{vf60-GIc-model.pdf}
+%\caption{$\lambda=0.3$}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{vf60-GIc-lambda.pdf}
+%\caption{$11\times 11-1\cdot t_{90^{\circ}}$}
+\end{figure}
+\end{column}
+\end{columns}
+\vspace{-0.2cm}
+\scriptsize
+\begin{equation*}
+G_{Ic}=\left.\frac{G_{c}}{1+\tan^{2}\left(\left(1-\lambda\right)\Psi_{G}\right)}\right|_{G_{c}=G_{TOT}\left(\Delta\theta_{0}\right)},\quad\Psi_{G}=\left.tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right)\right|_{\Delta\theta_{0}}
+\end{equation*}
 \end{frame}
+
+\subsection{Estimation of $\Delta\theta_{max}$}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Estimation of $\Delta\theta_{max}$}
+\vspace{-1.25cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\caption{\scriptsize $21\times 1-free$}
+\includegraphics[width=\columnwidth]{vf60-dsize-S10A0.pdf}
+\end{figure}
+\scriptsize
+\begin{equation*}
+\Delta\theta_{max}\in\left(30^{\circ}-105^{\circ}\right)
+\end{equation*}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\caption{\scriptsize$21\times 1-1\cdot t_{90^{\circ}}$}
+\includegraphics[width=\columnwidth]{vf60-dsize-S10A0T1.pdf}
+\end{figure}
+\scriptsize
+\begin{equation*}
+\Delta\theta_{max}\in\left(30^{\circ}-50^{\circ}\right)
+\end{equation*}
+\end{column}
+\end{columns}
+\scriptsize
+\vspace{0.25cm}
+\begin{equation*}
+G_{TOT}\left(\Delta\theta\right)>G_{c}=G_{Ic}\left(1+\tan^{2}\left(\left(1-\lambda\right)\Psi_{G}\right)\right),\quad\Psi_{G}=\left.tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right)\right|_{\Delta\theta}
+\end{equation*}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Estimation of $\Delta\theta_{max}$}
+\vspace{-1.25cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\caption{\scriptsize $21\times 3-free$}
+\includegraphics[width=\columnwidth]{vf60-dsize-S10A3.pdf}
+\end{figure}
+\scriptsize
+\begin{equation*}
+\Delta\theta_{max}\in\left(40^{\circ}-60^{\circ}\right)
+\end{equation*}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\caption{\scriptsize$21\times 3-1\cdot t_{90^{\circ}}$}
+\includegraphics[width=\columnwidth]{vf60-dsize-S10A3T1.pdf}
+\end{figure}
+\scriptsize
+\begin{equation*}
+\Delta\theta_{max}\in\left(40^{\circ}-60^{\circ}\right)
+\end{equation*}
+\end{column}
+\end{columns}
+\scriptsize
+\vspace{0.25cm}
+\begin{equation*}
+G_{TOT}\left(\Delta\theta\right)>G_{c}=G_{Ic}\left(1+\tan^{2}\left(\left(1-\lambda\right)\Psi_{G}\right)\right),\quad\Psi_{G}=\left.tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right)\right|_{\Delta\theta}
+\end{equation*}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Estimation of $\Delta\theta_{max}$}
+\vspace{-1.25cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\caption{\scriptsize $21\times 21-free$}
+\includegraphics[width=\columnwidth]{vf60-dsize-S10A10.pdf}
+\end{figure}
+\scriptsize
+\begin{equation*}
+\Delta\theta_{max}\in\left(40^{\circ}-60^{\circ}\right)
+\end{equation*}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\caption{\scriptsize$21\times 21-1\cdot t_{90^{\circ}}$}
+\includegraphics[width=\columnwidth]{vf60-dsize-S10A10T1.pdf}
+\end{figure}
+\scriptsize
+\begin{equation*}
+\Delta\theta_{max}\in\left(40^{\circ}-60^{\circ}\right)
+\end{equation*}
+\end{column}
+\end{columns}
+\scriptsize
+\vspace{0.25cm}
+\begin{equation*}
+G_{TOT}\left(\Delta\theta\right)>G_{c}=G_{Ic}\left(1+\tan^{2}\left(\left(1-\lambda\right)\Psi_{G}\right)\right),\quad\Psi_{G}=\left.tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right)\right|_{\Delta\theta}
+\end{equation*}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Estimation of $\Delta\theta_{max}$}
+\vspace{-1.25cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\caption{\scriptsize $21\times 21-symm$}
+\includegraphics[width=\columnwidth]{vf60-dsize-S10A0vk.pdf}
+\end{figure}
+\scriptsize
+\begin{equation*}
+\Delta\theta_{max}\in\left(80^{\circ}-110^{\circ}\right)
+\end{equation*}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\caption{\scriptsize$21\times 21-asymm$}
+\includegraphics[width=\columnwidth]{vf60-dsize-S10A0asymm.pdf}
+\end{figure}
+\scriptsize
+\begin{equation*}
+\Delta\theta_{max}\in\left(55^{\circ}-115^{\circ}\right)
+\end{equation*}
+\end{column}
+\end{columns}
+\scriptsize
+\vspace{0.25cm}
+\begin{equation*}
+G_{TOT}\left(\Delta\theta\right)>G_{c}=G_{Ic}\left(1+\tan^{2}\left(\left(1-\lambda\right)\Psi_{G}\right)\right),\quad\Psi_{G}=\left.tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right)\right|_{\Delta\theta}
+\end{equation*}
+\end{frame}
+
+%\subsection{Observations \& Conclusions}
+%
+%\begin{frame}
+%\frametitle{Observations \& Conclusions}
+%\vspace{-0.5cm}
+%\scriptsize
+%\centering
+%\begin{itemize}[label=\ding{212}]
+%\item No effect of  $90^{\circ}$ ply thickness can be observed when $t_{90^{\circ}}$ is at least $\sim3\diameter_{fiber}$
+%\item Only if $t_{90^{\circ}}$ is reduced to $1\diameter_{fiber}$, ERR is reduced for a given level of applied strain, i.e. debond growth is delayed to higher levels of applied strain ($G\sim\varepsilon_{applied}^{2}$)
+%\item No effect of  $0^{\circ}$ ply thickness can be observed when $\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}>1$
+%\item A small difference can be observed when  $t_{0^{\circ}}=t_{90^{\circ}}$, due to the smaller bending stiffness of a thinner $0^{\circ}$ layer
+%\end{itemize}
+%\vspace{0.5cm}
+%\begin{alertblock}{\centering\scriptsize\bf It seems reasonable to conclude that...}
+%...the ply-thickness and ply-block effects have no influence on fiber/matrix interface crack growth.
+%\end{alertblock}
+%\end{frame}
 
 \begin{frame}
 \frametitle{}

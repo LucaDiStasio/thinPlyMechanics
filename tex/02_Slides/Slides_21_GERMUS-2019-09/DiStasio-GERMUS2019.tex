@@ -630,7 +630,7 @@ n\times  k-m\cdot t_{90^{\circ}}
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Representative Volume Elements}
-\vspace{-1.25cm}
+\vspace{-0.9cm}
 \centering
 \begin{columns}[c]
 \begin{column}{0.5\textwidth}
@@ -639,12 +639,12 @@ n\times  k-m\cdot t_{90^{\circ}}
 \centering
 \includegraphics[width=\columnwidth]{coupling.pdf}
 \end{figure}
-\vspace{-0.25cm}
+\vspace{-0.275cm}
 \begin{equation*}
-n\times k-symm\ (coupling)
-\end{equation*}
-\begin{equation*}
-n\times k-coupling+H
+\begin{split}
+n\times k&-symm\ (coupling)\\
+n\times k&-coupling+H
+\end{split}
 \end{equation*}
 \end{column}
 \begin{column}{0.5\textwidth}
@@ -1512,10 +1512,10 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \includegraphics[width=0.45\textwidth]{refAngle.pdf}
 \end{frame}
 
-\subsection{Observations \& Conclusions}
+\subsection{Observations}
 
 \begin{frame}
-\frametitle{Observations \& Conclusions}
+\frametitle{Observations}
 \vspace{-0.5cm}
 \centering
 \scriptsize
@@ -1532,7 +1532,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 
 \section{Debond Propagation}
 
-\subsection{Interaction of Debonds}
+\subsection{Debond Interaction}
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
@@ -1704,7 +1704,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \end{figure}
 \end{frame}
 
-\subsection{Effect of $0^{\circ}$ ply thickness}
+\subsection{$0^{\circ}$ ply thickness}
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
@@ -1820,7 +1820,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \end{figure}
 \end{frame}
 
-\subsection{Effect of $90^{\circ}$ ply thickness}
+\subsection{$90^{\circ}$ ply thickness}
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Effect of $90^{\circ}$ ply thickness}
@@ -1907,7 +1907,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \end{figure}
 \end{frame}
 
-\subsection{Estimation of $G_{Ic}$}
+\subsection{$G_{Ic}$}
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Estimation of $G_{Ic}$}
@@ -1937,9 +1937,12 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \begin{equation*}
 G_{Ic}=\left.\frac{G_{c}}{1+\tan^{2}\left(\left(1-\lambda\right)\Psi_{G}\right)}\right|_{G_{c}=G_{TOT}\left(\Delta\theta_{0}\right)},\quad\Psi_{G}=\left.tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right)\right|_{\Delta\theta_{0}}
 \end{equation*}
+\begin{equation*}
+G_{Ic}\in\left[2,4.5\right]\nicefrac{J}{m^{2}}\ with\ R_{f}=1\mu m,\bar{\varepsilon}_{x}=1\%, G_{Ic}\in\left[3.2,7.2\right]\nicefrac{J}{m^{2}}\ with\ R_{f}=10\mu m,\bar{\varepsilon}_{x}=0.4\%
+\end{equation*}
 \end{frame}
 
-\subsection{Estimation of $\Delta\theta_{max}$}
+\subsection{$\Delta\theta_{max}$}
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Estimation of $\Delta\theta_{max}$}
@@ -2097,6 +2100,25 @@ G_{TOT}\left(\Delta\theta\right)>G_{c}=G_{Ic}\left(1+\tan^{2}\left(\left(1-\lamb
 \begin{equation*}
 G_{TOT}\left(\Delta\theta\right)>G_{c}=G_{Ic}\left(1+\tan^{2}\left(\left(1-\lambda\right)\Psi_{G}\right)\right),\quad\Psi_{G}=\left.tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right)\right|_{\Delta\theta}
 \end{equation*}
+\end{frame}
+
+\subsection{Comparison}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Comparison with Experimental Observations (literature)}
+\vspace{-0.5cm}
+\centering
+\scriptsize
+\begin{alertblock}{\centering\scriptsize\bf Estimated debond size range in cross-ply ($n\times k-1\cdot t_{90^{\circ}}$)}
+\centering
+$40^{\circ}-60^{\circ}$
+\end{alertblock}
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+\begin{alertblock}{\centering\scriptsize\bf Measured debond size range in cross-ply ({\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1016/j.compscitech.2017.12.009}{Correa et al., Compos. Sci. Technol. \textbf{155} (213-220), 2018}})}
+\centering
+$21.4^{\circ}-89.2^{\circ}$, average $49.3^{\circ}$, standard deviation of $11.7^{\circ}$\\ $63\%$ of measurements in $40^{\circ}-60^{\circ}$ range
+\end{alertblock}
 \end{frame}
 
 %\subsection{Observations \& Conclusions}

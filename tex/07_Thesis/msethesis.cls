@@ -194,6 +194,12 @@
      {\Huge \textbf{#1\\[20mm]}}
      {\LARGE \textbf{#2}}\\[20mm]
      {\large #3} \vfill
+     {\begin{table}[!h]
+     \begin{tabular}{ccc}
+     \includegraphics[width=0.3\textwidth]{pics/logo-ijl}&\includegraphics[width=0.3\textwidth]{pics/logo-ltu}&\includegraphics[width=0.3\textwidth]{pics/logo-eeigm}\\
+     \multicolumn{3}{c}{\includegraphics[width=0.3\textwidth]{pics/logo-docmase}}
+     \end{tabular}
+     \end{table}}
      %{\large \mbox{}\hrulefill\mbox{}\\[10mm]}
      #8
   \end{center}

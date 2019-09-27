@@ -211,8 +211,7 @@
 
   \thispagestyle{plain}
   \vspace*{6cm}
-  \hfill{\emph{A mio figlio, Levante Libero Antonio:}}\\
-  \hfill{\emph{abbi sempre il coraggio di tentare!}}
+  {\begin{flushright}\emph{#5}\end{flushright}}
 
   \cleardoublepage
   \thispagestyle{plain}

@@ -190,14 +190,15 @@
   \setcounter{page}{1}
   \pagenumbering{roman}
   \begin{center}
-     %\vspace{1cm} \mbox{}\hrulefill \mbox{}\\[2.5cm]
-     {\Huge \textbf{#1\\[20mm]}}
-     {\LARGE \textbf{#2}}\\[20mm]
-     {\large #3} \vfill
-     {\begin{table}[!h]
-     \begin{tabular}{ccc}
-     \includegraphics[width=0.3\textwidth]{pics/logo-ijl}&\includegraphics[width=0.3\textwidth]{pics/logo-ltu}&\includegraphics[width=0.3\textwidth]{pics/logo-eeigm}\\
-     \multicolumn{3}{c}{\includegraphics[width=0.3\textwidth]{pics/logo-docmase}}
+     \vspace{-1cm} %\mbox{}\hrulefill \mbox{}\\[2.5cm]
+     {\Huge \textbf{#1\\[8mm]}}
+     {\LARGE \textbf{#2}}\\[8mm]
+     {\large #3} %\vfill
+     {\centering\begin{table}[!h]
+     \centering\begin{tabular}{cc}
+     \multicolumn{2}{c}{\includegraphics[width=0.3\textwidth]{pics/logo-ltu}}\\[10pt]
+     \includegraphics[width=0.3\textwidth]{pics/logo-ijl}&\includegraphics[width=0.475\textwidth]{pics/logo-eeigm}\\[10pt]
+     \multicolumn{2}{c}{\includegraphics[width=0.3\textwidth]{pics/logo-docmase}}
      \end{tabular}
      \end{table}}
      %{\large \mbox{}\hrulefill\mbox{}\\[10mm]}

@@ -190,12 +190,11 @@
   \setcounter{page}{1}
   \pagenumbering{roman}
   \begin{center}
-     \vspace{1cm} \mbox{}\hrulefill \mbox{}\\[2.5cm]
-     {\Huge \textbf{#1\\[3cm]}}
+     %\vspace{1cm} \mbox{}\hrulefill \mbox{}\\[2.5cm]
+     {\Huge \textbf{#1\\[20mm]}}
      {\LARGE \textbf{#2}}\\[20mm]
      {\large #3} \vfill
-     {\large \mbox{}\hrulefill\mbox{}\\[10mm]
-      \textbf{\supervisorstring}\\[3mm]#4\\[12mm]}
+     %{\large \mbox{}\hrulefill\mbox{}\\[10mm]}
      #8
   \end{center}
 

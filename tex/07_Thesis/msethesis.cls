@@ -210,7 +210,15 @@
   %--- Make page with the \dedication string
 
   \thispagestyle{plain}
-  \vspace*{6cm} \hfill{\emph{#5}}
+  \vspace*{6cm}
+  \hfill{\emph{A mio figlio, Levante Libero Antonio:}}\\
+  \hfill{\emph{abbi sempre il coraggio di tentare!}}
+
+  \cleardoublepage
+  \thispagestyle{plain}
+  \vspace*{6cm}
+  \epigraph{Never give up on a dream just because of the time it will take to accomplish it. The time will pass anyway.}{Earl Nightingale}
+  \epigraph{\dots E intanto si allarga la nebbia e avresti potuto vivere al mare}{Luciano Ligabue}
 
    %--- Make abstract page
    \chapter*{\hrule\medskip\hfill \sc Abstract\medskip\hrule}

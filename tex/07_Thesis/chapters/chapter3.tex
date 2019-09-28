@@ -63,6 +63,67 @@ The main parameter of the mesh sensitivity study is the angular size $\delta$ of
 \caption{\added{Schematic of the mesh at the fiber/matrix interface crack tip.}}\label{chap3:paperA:fig:vcctmesh}
 \end{figure}
 
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-1st-semilogvsDelta-GI.pdf}
+       \caption{$V_{f}=0.1\%$, $1^{st}$ order elements.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-2nd-semilogvsDelta-GI.pdf}
+       \caption{$V_{f}=0.1\%$, $2^{nd}$ order elements.}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{paperA/Vf40-free-1st-semilogvsDelta-GI.pdf}
+       \caption{$V_{f}=40\%$, $1^{st}$ order elements.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{paperA/Vf40-free-2nd-semilogvsDelta-GI.pdf}
+       \caption{$V_{f}=40\%$, $2^{nd}$ order elements.}
+    \end{subfigure}
+
+\caption{Logarithmic dependence on $\delta$ of Mode I ERR: interpolation of numerical results.}\label{chap3:paperA:fig:gIinterp}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-1st-semilogvsDelta-GII.pdf}
+       \caption{$V_{f}=0.1\%$, $1^{st}$ order elements.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{paperA/Vf0_1-free-2nd-semilogvsDelta-GII.pdf}
+       \caption{$V_{f}=0.1\%$, $2^{nd}$ order elements.}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{paperA/Vf40-free-1st-semilogvsDelta-GII.pdf}
+       \caption{$V_{f}=40\%$, $1^{st}$ order elements.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{paperA/Vf40-free-2nd-semilogvsDelta-GII.pdf}
+       \caption{$V_{f}=40\%$, $2^{nd}$ order elements.}
+    \end{subfigure}
+
+\caption{Logarithmic dependence on $\delta$ of Mode II ERR: interpolation of numerical results.}\label{chap3:paperA:fig:gIIinterp}
+\end{figure}
+
+It is found in Paper A that
+
+\begin{itemize}
+\item the total ERR is invariant to rotations of the reference frame (and more in general to linear transformations), which implies that rotation of crack tip forces and displacement is actually not required in the use of the VCCT for the calculation of $G_{TOT}$;
+\item the total ERR does not depend on the size $\delta$ of the elements at the crack tip, at least for reasonably small elements ($\delta\leq1.0^{\circ}$) ;
+\item as a consequence, Mode II ERR for the \emph{closed} interface crack does not depend on $\delta$, as $G_{II}=G_{TOT}$ after the onset of the contact zone;
+\item for the \emph{open} interface crack, Mode I and Mode II ERR depend on the element size $\delta$ through a logarithmic law of the type $A\left(\Delta\theta\right)\ln\delta+B\left(\Delta\theta\right)$, as shown in Figure~\ref{chap3:paperA:fig:gIinterp} and Figure~\ref{chap3:paperA:fig:gIIinterp};
+\item the sign of the logarithm is always positive for $G_{I}$ (see Figure~\ref{chap3:paperA:fig:gIinterp}), i.e. it decreases when $\delta$ decreases, and negative for $G_{II}$ (see Figure~\ref{chap3:paperA:fig:gIIinterp}), i.e. it increases when $\delta$ decreases.
+\end{itemize}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Paper B
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

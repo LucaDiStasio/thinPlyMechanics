@@ -227,7 +227,14 @@
 
    %--- Make abstract page
    \chapter*{\hrule\medskip\hfill \sc Abstract\medskip\hrule}
-   \noindent #6
+   \noindent
+   \input{abstract.tex}
+
+   \cleardoublepage
+
+   \chapter*{\hrule\medskip\hfill \sc R\'esum\'e\medskip\hrule}
+   \noindent
+   \input{resume.tex}
 
    \cleardoublepage
 

@@ -130,7 +130,28 @@ It is found in Paper A that
 \section{Paper B}
 \section*{Energy release rate of the fiber/matrix interface crack in UD composites under transverse loading: effect of the fiber volume fraction and of the distance to the free surface and to non-adjacent debonds}
 
-In Paper B, fiber/matrix interface crack growth is studied in Representative Volume Elements of UD composites subjected to transverse loading.
+In Paper B, fiber/matrix interface crack growth is studied in Representative Volume Elements of UD composites subjected to transverse loading. A unit cell constituted by one fiber and the surrounding matrix, shown in Figure~\ref{chap3:paperB:fig:modelschem}, represents the basic element of the RVE.
+
+\begin{figure}[!h]
+    \includegraphics[width=\textwidth]{paperB/RUC.pdf}
+    \caption{Schematic of the reference unit cell with its main parameters.}\label{chap3:paperB:fig:modelschem}
+\end{figure}
+
+The unit cell has a size of $2L\times2L$, where
+
+\begin{equation}\label{chap3:paperB:eq:LVf}
+L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}},
+\end{equation}
+
+$R_{f}$ is the fiber radius, assumed to be equal to $1\ \mu m$, and $V_{f}$ the fiber volume fraction. Notice that the value of $1\ \mu m$ for the fiber radius is arbitrary and chosen for simplicity: in the context of Linear Elastic Fracture Mechanics (LEFM), the Energy Release Rate (ERR) is directly proportional to the fiber radius, thus evaluation of the ERR for another value of fiber radius requires simply a multiplication.\\
+The RVE is made up by the repetition of the unit cell of Figure~\ref{chap3:paperB:fig:modelschem} $n$ times in the horizontal (loading) direction and $k$ times in the vertical (through-the-thickness) direction (see Figure~\ref{chap3:paperB:fig:thickply}). The fiber of the unit cell placed in the center of the RVE is always partially debonded, and the debond has an angular size $\Delta\theta$.
+
+\begin{figure}[!h]
+    \includegraphics[width=\textwidth]{paperB/thickPly.pdf}
+    \caption{Multiple rows of fibers with a debond appearing every $n$ fibers within the central row: model $n\times k-free$ ($n=3$ and $k=3$ in the figure).}\label{chap3:paperB:fig:thickply}
+\end{figure}
+
+The RVE is symmetric with respect to the horizontal axis, thus only half of it is explicitly modelled and conditions of symmetry are applied on the lower boundary of the RVE. On the left and right boundaries, conditions of coupling of the $x$-displacement (horizontal displacement) are applied. This implies that the RVE 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Paper C

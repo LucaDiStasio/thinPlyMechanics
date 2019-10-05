@@ -217,7 +217,7 @@
   \thispagestyle{plain}
   \vspace*{6cm}
   \epigraph{Never give up on a dream just because of the time it will take to accomplish it. The time will pass anyway.}{Earl Nightingale}
-  \epigraph{\dots E intanto si allarga la nebbia e avresti potuto vivere al mare}{Luciano Ligabue}
+  \epigraph{\dots e intanto si allarga la nebbia e avresti potuto vivere al mare}{Luciano Ligabue}
 
   %--- Make preface
   \chapter*{\hrule\medskip\hfill \sc Preface\medskip\hrule}

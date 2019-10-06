@@ -131,7 +131,7 @@ It is found in Paper A that
 \section{Paper B}
 \section*{Energy release rate of the fiber/matrix interface crack in UD composites under transverse loading: effect of the fiber volume fraction and of the distance to the free surface and to non-adjacent debonds}
 
-In Paper B, fiber/matrix interface crack growth is studied in Representative Volume Elements of UD composites subjected to transverse loading. A unit cell constituted by one fiber and the surrounding matrix, shown in Figure~\ref{chap3:paperB:fig:modelschem}, represents the basic element of the RVE.
+In Paper B, fiber/matrix interface crack growth is studied in Representative Volume Elements of UD composites subjected to transverse tensile loading. A unit cell constituted by one fiber and the surrounding matrix, shown in Figure~\ref{chap3:paperB:fig:modelschem}, represents the basic element of the RVE.
 
 \begin{figure}[!h]
     \includegraphics[width=0.9\textwidth]{paperB/RUC.pdf}
@@ -152,7 +152,7 @@ The RVE is made up by $n$ unit cells as the one of Figure~\ref{chap3:paperB:fig:
     \caption{Multiple rows of fibers with a debond appearing every $n$ fibers within the central row: model $n\times k-free$ ($n=3$ and $k=3$ in the figure).}\label{chap3:paperB:fig:thickply}
 \end{figure}
 
-The RVE is symmetric with respect to the horizontal axis ($x$-axis), thus only half of it is explicitly modelled and conditions of symmetry are applied on the lower boundary of the RVE. On the left and right boundaries, conditions of coupling of the $x$-displacement (horizontal displacement) are applied. This implies that the computed solution corresponds to the RVE repeating an infinite number of times to the left and to the right symmetrically with the respect to the side boundary, i.e. if the debond in the central unit cell is placed on the right side of the fiber, then the next one to the right and to the left is on the left side, the successive one is on the right, and so on. As a consequence, the number $n$ of unit cells in the horizontal direction determines the distance between consecutive debonds in the horizontal direction, which corresponds to the $n-1$ fully bonded fibers. The upper and lower boundaries (but, given the symmetry with respect to the $x$-axis, only the upper one is explicitly modeled) are left free. Thus, the family of RVEs studied in this paper is called $n\times k-free$.\\
+The RVE is symmetric with respect to the horizontal axis ($x$-axis), thus only half of it is explicitly modelled and conditions of symmetry are applied on the lower boundary of the RVE. On the left and right boundaries, conditions of coupling of the $x$-displacement (horizontal displacement) are applied. This implies that the computed solution corresponds to the RVE repeating an infinite number of times to the left and to the right symmetrically with the respect to the side boundary, i.e. if the debond in the central unit cell is placed on the right side of the fiber, then the next one to the right and to the left is on the left side, the successive one is on the right, and so on. As a consequence, the number $n$ of unit cells in the horizontal direction determines the distance between consecutive debonds in the horizontal direction, which corresponds to $n-1$ fully bonded fibers. The upper and lower boundaries (but, given the symmetry with respect to the $x$-axis, only the upper one is explicitly modeled) are left free. Thus, the family of RVEs studied in this paper is called $n\times k-free$.\\
 A constant $x$-strain equal to $1\%$ is applied to the left and right boundary. The selected value of $1\%$ is arbitrary, as in LEFM the ERR is proportional to the square of the strain. Thus, the value of the ERR for another level of applied strain can calculated with a multiplication. Contact between debond faces is considered frictionless. The fiber and matrix phases, respectively glass fiber and epoxy, are considered to be homogeneous, isotropic and linear elastic. Their material properties are reported in Table~\ref{chap3:paperB:tab:phaseprop}.
 
 \begin{table}[!htbp]
@@ -176,14 +176,41 @@ The model is meshed with second order quadrilateral and triangular elements, whi
 \caption{Validation of the single fiber model for the infinite matrix case with respect to the BEM solution in \cite{Sandino2016}.}\label{chap3:paperB:fig:validation}
 \end{figure}
 
+The most important observations and conclusions of the paper are summarized below.
+
 \begin{enumerate}
-\item With a decreasing number of fully bonded fibers between two partially debonded fibers in the central row, the ERR decreases. It seems to exist a characteristic distance between debonds which defines the transition to a non-interactive solution. However, this distance depends on the number of perfectly bonded fiber rows surrounding the central row and on the fiber volume fraction. This distance can be estimated to be around $100$ fully bonded fibers for a 1-fiber-row thick UD with $V_{f}=30\%$ and $200$ for a 1-fiber-row thick UD with $V_{f}=60\%$, while it is expected to be around $100$ fibers for a 5-fibers-row thick UD with $V_{f}=60\%$.
-\item The presence of a free surface close to the debond leads to higher Mode I and Mode II ERRs and a shift of the peak $G$ values to larger debonds.
-\item The presence of fibers (fully or partially bonded) in the composite thickness direction, along the same vertical line as the analyzed central fiber, appears to have a restraining effect on both $G_{I}$ and $G_{II}$. The free composite surface effect on the ERR decays very fast: adding more than $2$ fully bonded fibers below and above the central row leads to stable constant values of ERR.
-\item The presence of a debond in the fiber above the central partially debonded one only delays the appearance of the contact zone, while no significant effect on the ERR has been observed.
-\item Increasing the fiber content (decreasing the inter-fiber distance), magnifies in general the effects described in the previous points.
-\item The results and conclusions presented agree well with previous observations reported in the literature~\cite{Sandino2016,Zhuang2018}. A mechanical explanation of the observed trends has been presented based on the mismatch in elastic properties, particularly Poisson's ratios, and the positions of fibers and debonds with respect to the loading direction.
+\item The Energy Release Rate, both Mode I and Mode II, decreases with a decreasing number of fully bonded fibers between two consecutive partially debonded fibers in the central row, as shown in Figure~\ref{chap3:paperB:fig:sidefibersMI} for Mode I and Figure~\ref{chap3:paperB:fig:sidefibersMI} for Mode II in the case of $n\times1-free$ RVE. Furthermore, it seems that a characteristic distance between debonds exits that defines the transition between an interactive and a non-interactive solution. However, this distance appears to depend on the thickness of the UD, i.e. on the number $k$ of fiber rows in the vertical direction, and also on the fiber volume fraction. An estimate of such distance provides: around $100$ fully bonded fibers for a 1-fiber-row thick UD with $V_{f}=30\%$; around $200$ fibers for a 1-fiber-row thick UD with $V_{f}=60\%$; around $100$ fibers for a 5-fibers-row thick UD with $V_{f}=60\%$.
+\item When the free surface is close to the debond, higher Mode I and Mode II ERRs are obtained and the peak $G$ values are shifted to larger debonds (Figure~\ref{chap3:paperB:fig:sidefibersMI} and Figure~\ref{chap3:paperB:fig:sidefibersMI}). However, the effect of the composite free surface on the ERR declines very fast: the presence of at least $2$ fully bonded fibers below and above the central row results in stable constant values of ERR.
+\item An increase in the fiber volume fraction, which corresponds to a decrease in the inter-fiber distance, leads in general to a magnification of the effects previously described.
 \end{enumerate}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperB/sidefibers-vf30-GI.pdf}
+        \caption{$V_{f}=30\%$.}\label{chap3:paperB:subfig:sidefiber30MI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperB/sidefibers-vf60-GI.pdf}
+        \caption{$V_{f}=60\%$.}\label{chap3:paperB:subfig:sidefiber60MI}
+    \end{subfigure}
+
+\caption{Effect of the interaction between debonds appearing at regular intervals on Mode I ERR in an UD with a single row of fibers at different levels of fiber volume fraction $V_{f}$, subject to an applied transverse strain $\varepsilon_{x}$ of $1\%$.}\label{chap3:paperB:fig:sidefibersMI}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperB/sidefibers-vf30-GII.pdf}
+        \caption{$V_{f}=30\%$.}\label{chap3:paperB:subfig:sidefiber30MII}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperB/sidefibers-vf60-GII.pdf}
+        \caption{$V_{f}=60\%$.}\label{chap3:paperB:subfig:sidefiber60MII}
+    \end{subfigure}
+
+\caption{Effect of the interaction between debonds appearing at regular intervals on Mode II ERR in an UD with a single row of fibers at different levels of fiber volume fraction $V_{f}$, subject to an applied transverse strain $\varepsilon_{x}$ of $1\%$.}\label{chap3:paperB:fig:sidefibersMII}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Paper C
@@ -191,11 +218,143 @@ The model is meshed with second order quadrilateral and triangular elements, whi
 \section{Paper C}
 \section*{Effect of the proximity to the $\mathbf{0^{\circ}/90^{\circ}}$ interface on Energy Release Rate of fiber/matrix interface crack growth in the  $\mathbf{90^{\circ}}$-ply of a cross-ply laminate under tensile loading}
 
+In Paper C, fiber/matrix interface crack growth is studied in Representative Volume Elements of cross-ply laminates subjected to tensile loading. Similarly to Paper B, the unit cell constituted by one fiber and the surrounding matrix, shown in Figure~\ref{chap3:paperB:fig:modelschem}, represents the basic element of the RVE. The unit cell has a size of $2L\times2L$, where
+
+\begin{equation}\label{chap3:paperC:eq:LVf}
+L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}},
+\end{equation}
+
+$R_{f}$ is the fiber radius, assumed again to be equal to $1\ \mu m$, and $V_{f}$ is the fiber volume fraction.\\
+The RVE is constituted by $n$ unit cells in the horizontal (loading) direction and $k$ unit cells in the vertical (through-the-thickness) direction (see Figure~\ref{chap3:paperC:fig:laminateModelsB}). The fiber of the unit cell placed in the center of the RVE is always partially debonded, and the debond has an angular size $\Delta\theta$ which can vary between $10^{\circ}$ and $150^{\circ}$.
+
+\begin{figure}[!htb]
+\centering
+        \includegraphics[width=0.9\textwidth]{paperC/ThickPly.pdf}
+   %    \caption{Mutiple rows of fibers with a debond appearing every $n$ fibers within the central row: model $n\times k-free$ ($n=3$ and $k=3$ in the figure).}\label{paperC:subfig:thickply}
+\caption{Models of $\left[0_{m\cdot k\cdot2L}^{\circ},90_{k\cdot2L}^{\circ},0_{m\cdot k\cdot2L}^{\circ}\right]$ laminates with a $90^{\circ}$ layer of variable thickness, determined by the number $k$ of ``rows'' of fibers along the vertical direction.  Debonds are repeating at different distances along the horizontal direction, measured in terms of the number $n-1$ of fully bonded fibers appearing between two consecutive debonds. $2L$ is the thickness of one-fiber row.}\label{chap3:paperC:fig:laminateModelsB}
+\end{figure}
+
+On top and below these $n\times k$ fibers, a homogenized $0^{\circ}$ ply is explicitly modelled, as shown in Figure~\ref{chap3:paperC:fig:laminateModelsB}. The thickness of these $0^{\circ}$ plies is defined as $m$ times the thickness $t_{90^{\circ}}$ of the central $90^{\circ}$ ply, where
+
+\begin{equation}\label{chap3:paperC:eq:90thickness}
+t_{90^{\circ}}=k2L.
+\end{equation}
+
+The RVE is symmetric with respect to the $x$-axis (horizontal axis), thus only half of it is explicitly modelled and conditions of symmetry are applied on the lower boundary of the RVE. On the left and right boundaries, conditions of coupling of the $x$-displacement (horizontal displacement) are applied, which implies that, as for the RVEs of paper A, the computed solution corresponds to the RVE repeating an infinite number of times to the left and to the right in a symmetric way with the respect to the side. Thus, the number $n$ of unit cells in the horizontal direction determines the distance between consecutive debonds in the horizontal direction, equal to $n-1$ fully bonded fibers. This family of RVEs is called $n\times k-m\cdot t_{90^{\circ}}$.\\
+In order to understand the mechanisms influencing debond ERR by comparison with known conditions at the boundary, an additional family of RVEs is treated in which the $0^{\circ}$ layer is not present. In its place, different combinations of displacement boundary conditions are applied to the upper boundary. When the upper boundary is free, the $1\times 1-free$ RVE is defined, as in Paper A. The $1\times 1-coupling$ RVE is instead obtained when coupling of the vertical displacements $u_{z}$ is applied to the upper boundary (coupling condition). In the case a linear distribution of the horizontal displacement $u_{x}$ is applied to the upper boundary (H-condition), the RVE is refered to as $1\times 1-H$. Finally, when the linear distribution of the horizontal displacement $u_{x}$ is superimposed to the condition of coupling of the vertical displacements $u_{z}$ on the upper boundary, the $1\times 1-coupling+H$ RVE is obtained.\\
+A constant $x$-strain equal to $1\%$ is applied to the left and right boundary. Contact between debond faces is considered frictionless. The fiber and matrix phases, respectively glass fiber and epoxy, are considered to be homogeneous, isotropic and linear elastic. The elastic properties of the $0^{\circ}$ ply are computed using Hashin's Concentric Cylinder Assembly model~\cite{Hashin1983} with the self-consistency scheme for the out-of-plane shear modulus of Christensen~\cite{Christensen1979}. The elastic properties of the three phases are reported in Table~\ref{chap3:paperC:tab:phaseprop}.
+
+\begin{table}[!h]
+ \centering
+ \caption{Summary of mechanical properties of fiber, matrix and UD layer (GF: glass fiber; EP: epoxy; UD: glass-fiber/epoxy uni-directional properties).}%$E$ stands for Young's modulus, $\mu$ for shear modulus and $\nu$ for Poisson's ratio. Indexes $L$ and $T$ stand respectively for \emph{longitudinal} and \emph{transverse}.}
+ \begin{tabular}{ccccccc}
+\\
+\small& \small\textbf{$V_{f}\left[\%\right]$}\  &\small \textbf{$E_{L}\left[GPa\right]$}\ & \small\textbf{$E_{T}\left[GPa\right]$}\  & \small\textbf{$G_{LT}\left[GPa\right]$} &\small\textbf{$\nu_{LT}\left[-\right]$} &\small \textbf{$\nu_{TT}\left[-\right]$} \\
+\midrule
+\small GF &\small-   &\small 70.0 &\small 70.0  &\small 29.2 &\small 0.2  &\small 0.2\\
+\small EP    &-&\small 3.5 &\small 3.5   &\small 1.25 &\small  0.4&\small 0.4\\
+\small UD&\small60.0&\small43.442&\small13.714&\small 4.315&\small 0.273&\small0.465\\
+\end{tabular}
+\label{chap3:paperC:tab:phaseprop}
+\end{table}
+
+The model is meshed with second order quadrilateral and triangular elements, while at the crack tip only second order quadrilateral elements are used with unitary aspect ratio, determined by the arc size $R_{f}\delta$ where $\delta$ is the angular size. The angular size $\delta$ of the elements at the crack tip is assumed as equal to $0.05^{\circ}$ based on the comparison with the Boundary Element Method (BEM) results provided in~\cite{Paris2007,Sandino2016} conducted in Paper A. Thus, the same level of accuracy of $5\%$ on ERR applies here.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.9\textwidth]{paperC/nx1-1-vf60-GI.pdf}
+\caption{Effect of the presence of the $0^{\circ}$ layer on Mode I ERR: models $21\times 1-free$, $21\times 1-H$, $21\times 1-coupling$, $21\times 1-coupling+H$, $21\times 1-1\cdot t_{90^{\circ}}$ and $21\times 1-10\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{chap3:paperC:fig:debonddebondGI}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.9\textwidth]{paperC/nx1-1-vf60-GII.pdf}
+\caption{Effect of the presence of the $0^{\circ}$ layer on Mode II ERR: models $21\times 1-free$, $21\times 1-H$, $21\times 1-coupling$, $21\times 1-coupling+H$, $21\times 1-1\cdot t_{90^{\circ}}$ and $21\times 1-10\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{chap3:paperC:fig:debonddebondGII}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.9\textwidth]{paperC/1xk-1-vf60-GI.pdf}
+\caption{Effect of the presence of undamaged fiber rows in the $90^{\circ}$ layer on debond-$0^{\circ}/90^{\circ}$ interface interaction for Mode I ERR: models $1\times k-1\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{chap3:paperC:fig:1kGI}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.9\textwidth]{paperC/1xk-1-vf60-GII.pdf}
+\caption{Effect of the presence of undamaged fiber rows in the $90^{\circ}$ layer on debond-$0^{\circ}/90^{\circ}$ interface interaction for Mode II ERR: models $1\times k-1\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{chap3:paperC:fig:1kGII}
+\end{figure}
+
+The relevant results of Paper C are summarized in the following.
+
+\begin{itemize}
+\item Comparison between $n\times k-1\cdot t_{90^{\circ}}$ on one side and $n\times k-free$, $n\times k-H$, $n\times k-coupling$, $n\times k-coupling+H$ on the other (Figure~\ref{chap3:paperC:fig:debonddebondGI} and Figure~\ref{chap3:paperC:fig:debonddebondGII}) shows that the presence of the $0^{\circ}$ layer forces the $0^{\circ}/90^{\circ}$ interface to remain approximately straight and controls the uniformity of the horizontal displacement field in the composite, and thus in the $90^{\circ}$ ply. The presence of the $0^{\circ}$ layer thus causes a more homogeneous strain field, which reduces the Energy Release Rate at the debond tip.
+\item Increasing the thickness of the $0^{\circ}$ layer, such that $\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}$, does not lead to any significant change in debond ERR.
+\item No effect of the $90^{\circ}$ layer thickness, measured in terms of number $k$ of fiber rows, is observed, as shown in Figure~\ref{chap3:paperC:fig:1kGI} and Figure~\ref{chap3:paperC:fig:1kGII}. Only if the thickness is reduced to only one fiber row, the Energy Release Rate decreases in value.
+\item These results strengthen the claim that the ply-thickness effect does not influence the growth of individual debonds, as observed previously in the literature~\cite{Saito2012,Herraez2015,Velasco2018, Paris2018}.
+\end{itemize}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Paper D
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Paper D}
 \section*{Growth of interface cracks on consecutive fibers: on the same or on the opposite sides?}
+
+In Paper D, fiber/matrix interface crack growth is studied in Representative Volume Elements of thick UD composites subjected to transverse tensile loading. Similarly to PAper A and Paper B, the unit cell of one fiber and its surrounding matrix, shown in Figure~\ref{chap3:paperB:fig:modelschem}, represents the basic element of the RVE. The unit cell has a size of $2L\times2L$, where
+
+\begin{equation}\label{chap3:paperC:eq:LVf}
+L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}},
+\end{equation}
+
+$R_{f}$ is the fiber radius, assumed again to be equal to $1\ \mu m$, and $V_{f}$ is the fiber volume fraction.\\
+The RVE is formed by $n$ unit cells in the horizontal (loading) direction and $k$ unit cells in the vertical (through-the-thickness) direction (see Figure~\ref{chap3:paperD:fig:coupling-rve} and Figure~\ref{chap3:paperD:fig:asymm-rve}). The fiber of the unit cell placed in the center of the RVE is always partially debonded, and the debond has an angular size $\Delta\theta$ which can vary between $10^{\circ}$ and $150^{\circ}$.
+
+\begin{figure}[!htb]
+\centering
+  \includegraphics[width=0.9\textwidth]{paperD/coupling.pdf}
+\caption{Representative Volume Element $n \times k-symm$ of a UD composite with debonds appearing after $n-1$ and after $k-1$ undamaged fibers respectively in the horizontal and vertical direction. In the vertical direction, on fibers belonging to the same ´´column", debonds are located always on the same side.}\label{chap3:paperD:fig:coupling-rve}
+\end{figure}
+
+The RVE is symmetric with respect to the $x$-axis (horizontal axis), thus only half of it is explicitly modelled and conditions of symmetry are applied on the lower boundary of the RVE. On the left and right boundaries, conditions of coupling of the $x$-displacement (horizontal displacement) are applied, which implies that, as for the RVEs of Paper A and Paper B, the computed solution corresponds to the RVE repeating an infinite number of times to the left and to the right in a symmetric way with the respect to the side. Thus, the number $n$ of unit cells in the horizontal direction determines the distance between consecutive debonds in the horizontal direction, equal to $n-1$ fully bonded fibers. On the top boundary, two different sets of boundary conditions are applied. The first are conditions of coupling of the vertical displacement $u_{z}$, expressed as
+
+\begin{equation}
+u_{z}\left(x,h\right)=u_{z}^{\nu},
+\end{equation}
+
+where $h=kL$ corresponds to the height of the RVE and $u_{z}^{\nu}$ represents the unknown constant vertical displacement of the upper boundary due to Poisson's effect, which is calculated as part of the elastic solution. This set of conditions implies that the computed solution is that of the RVE repeating an infinite number of times in the vertical direction in a symmetric way as shown in Figure~\ref{chap3:paperD:fig:coupling-rve}, i.e. if the debond in the central unit cell appears on the right, all the debonds in the vertical direction aligned with it will be placed on the right half of their respective fiber. This family of RVEs is referred to as $n\times k-symm$.
+
+\begin{figure}[!htb]
+\centering
+  \includegraphics[width=0.9\textwidth]{paperD/asymm.pdf}
+\caption{Representative Volume Element $n \times k-asymm$ of a UD composite with debonds appearing after $n-1$ and after $k-1$ undamaged fibers respectively in the horizontal and vertical direction. In the vertical direction, on fibers belonging to the same ´´column", debonds are located on the opposite sides of consecutive fibers.}\label{chap3:paperD:fig:asymm-rve}
+\end{figure}
+
+The second set of conditions represents instead anti-symmetric coupling conditions, expressed as
+
+\begin{equation}
+u_{z}\left(x,h\right)-u_{z}\left(0,h\right)=-\left(u_{z}\left(-x,h\right)-u_{z}\left(0,h\right)\right),
+\end{equation}
+
+\begin{equation}
+u_{x}\left(x,h\right)=-u_{x}\left(-x,h\right),
+\end{equation}
+
+where $h$ represents the height of the RVE and $u_{z}\left(0,h\right)$ stands for the unknown vertical displacement of the upper boundary's mid-point caused by Poisson's effect, which is evaluated as part of the elastic solution. Similarly to $n\times k-symm$, this set of conditions implies that the RVE is repeating infinite times in the vertical direction. However, the unit cell is repeated anti-symmetrically this time: if a debond is placed on the right side of its fiber, the next one aligned in the vertical direction will appear on the left side (Figure~\ref{chap3:paperD:fig:asymm-rve}). This second set of RVEs is named $n\times k-asymm$.\\
+A constant horizontal strain ($x$-strain) equal to $1\%$ is applied to the left and right boundary. Frictionless contact is considered between debond faces. The fiber and matrix phases, respectively glass fiber and epoxy, are considered to be homogeneous, isotropic and linear elastic. The elastic properties of the two phases are reported in Table~\ref{chap3:paperC:tab:phaseprop}.
+
+\begin{table}[!h]
+ \centering
+ \caption{Material properties of glass fiber and epoxy adopted in the present study.}
+ \begin{tabular}{cccc}
+\\
+\textbf{Material} & \textbf{$E\left[GPa\right]$}\ & \textbf{$\mu\left[GPa\right]$} & \textbf{$\nu\left[-\right]$} \\
+\midrule
+Glass fiber    & 70.0  & 29.2   & 0.2  \\
+Epoxy    & 3.5    & 1.25   & 0.4
+\end{tabular}
+\label{chap3:paperD:tab:phaseprop}
+\end{table}
+
+The model is meshed with second order quadrilateral and triangular elements, while at the crack tip only second order quadrilateral elements are used with unitary aspect ratio, determined by the arc size $R_{f}\delta$ where $\delta$ is the angular size. The angular size $\delta$ of the elements at the crack tip is assumed as equal to $0.05^{\circ}$ based on the comparison with the Boundary Element Method (BEM) results provided in~\cite{Paris2007,Sandino2016} conducted in Paper A. Thus, the same level of accuracy of $5\%$ on ERR applies here.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Paper E

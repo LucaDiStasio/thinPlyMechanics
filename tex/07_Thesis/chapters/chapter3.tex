@@ -38,6 +38,7 @@ $V_{f}$ is the fiber volume fraction and $R_{f}$ is the fiber radius, assumed to
  \centering
  \caption{Summary of the mechanical properties of fiber and matrix. $E$ stands for Young's modulus, $\mu$ for shear modulus and $\nu$ for Poisson's ratio.}
  \begin{tabular}{cccc}
+\\
 \textbf{Material} & \textbf{$E\left[GPa\right]$}\ & \textbf{$\mu\left[GPa\right]$} & \textbf{$\nu\left[-\right]$} \\
 \midrule
 Glass fiber    & 70.0  & 29.2   & 0.2  \\
@@ -133,7 +134,7 @@ It is found in Paper A that
 In Paper B, fiber/matrix interface crack growth is studied in Representative Volume Elements of UD composites subjected to transverse loading. A unit cell constituted by one fiber and the surrounding matrix, shown in Figure~\ref{chap3:paperB:fig:modelschem}, represents the basic element of the RVE.
 
 \begin{figure}[!h]
-    \includegraphics[width=\textwidth]{paperB/RUC.pdf}
+    \includegraphics[width=0.9\textwidth]{paperB/RUC.pdf}
     \caption{Schematic of the reference unit cell with its main parameters.}\label{chap3:paperB:fig:modelschem}
 \end{figure}
 
@@ -143,15 +144,46 @@ The unit cell has a size of $2L\times2L$, where
 L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}},
 \end{equation}
 
-$R_{f}$ is the fiber radius, assumed to be equal to $1\ \mu m$, and $V_{f}$ the fiber volume fraction. Notice that the value of $1\ \mu m$ for the fiber radius is arbitrary and chosen for simplicity: in the context of Linear Elastic Fracture Mechanics (LEFM), the Energy Release Rate (ERR) is directly proportional to the fiber radius, thus evaluation of the ERR for another value of fiber radius requires simply a multiplication.\\
-The RVE is made up by the repetition of the unit cell of Figure~\ref{chap3:paperB:fig:modelschem} $n$ times in the horizontal (loading) direction and $k$ times in the vertical (through-the-thickness) direction (see Figure~\ref{chap3:paperB:fig:thickply}). The fiber of the unit cell placed in the center of the RVE is always partially debonded, and the debond has an angular size $\Delta\theta$.
+$R_{f}$ is the fiber radius, assumed to be equal to $1\ \mu m$, and $V_{f}$ is the fiber volume fraction. Notice that the value of $1\ \mu m$ for the fiber radius is arbitrary and chosen for simplicity: in the context of Linear Elastic Fracture Mechanics (LEFM), the Energy Release Rate (ERR) is directly proportional to the fiber radius, thus evaluation of the ERR for another value requires simply a multiplication.\\
+The RVE is made up by $n$ unit cells as the one of Figure~\ref{chap3:paperB:fig:modelschem} in the horizontal (loading) direction and $k$ unit cells in the vertical (through-the-thickness) direction (see Figure~\ref{chap3:paperB:fig:thickply}). The fiber of the unit cell placed in the center of the RVE is always partially debonded, and the debond has an angular size $\Delta\theta$ which can vary between $10^{\circ}$ and $150^{\circ}$.
 
 \begin{figure}[!h]
-    \includegraphics[width=\textwidth]{paperB/thickPly.pdf}
+    \includegraphics[width=0.9\textwidth]{paperB/thickPly.pdf}
     \caption{Multiple rows of fibers with a debond appearing every $n$ fibers within the central row: model $n\times k-free$ ($n=3$ and $k=3$ in the figure).}\label{chap3:paperB:fig:thickply}
 \end{figure}
 
-The RVE is symmetric with respect to the horizontal axis, thus only half of it is explicitly modelled and conditions of symmetry are applied on the lower boundary of the RVE. On the left and right boundaries, conditions of coupling of the $x$-displacement (horizontal displacement) are applied. This implies that the RVE 
+The RVE is symmetric with respect to the horizontal axis ($x$-axis), thus only half of it is explicitly modelled and conditions of symmetry are applied on the lower boundary of the RVE. On the left and right boundaries, conditions of coupling of the $x$-displacement (horizontal displacement) are applied. This implies that the computed solution corresponds to the RVE repeating an infinite number of times to the left and to the right symmetrically with the respect to the side boundary, i.e. if the debond in the central unit cell is placed on the right side of the fiber, then the next one to the right and to the left is on the left side, the successive one is on the right, and so on. As a consequence, the number $n$ of unit cells in the horizontal direction determines the distance between consecutive debonds in the horizontal direction, which corresponds to the $n-1$ fully bonded fibers. The upper and lower boundaries (but, given the symmetry with respect to the $x$-axis, only the upper one is explicitly modeled) are left free. Thus, the family of RVEs studied in this paper is called $n\times k-free$.\\
+A constant $x$-strain equal to $1\%$ is applied to the left and right boundary. The selected value of $1\%$ is arbitrary, as in LEFM the ERR is proportional to the square of the strain. Thus, the value of the ERR for another level of applied strain can calculated with a multiplication. Contact between debond faces is considered frictionless. The fiber and matrix phases, respectively glass fiber and epoxy, are considered to be homogeneous, isotropic and linear elastic. Their material properties are reported in Table~\ref{chap3:paperB:tab:phaseprop}.
+
+\begin{table}[!htbp]
+ \centering
+ \caption{Summary of the mechanical properties of fiber and matrix. $E$ stands for Young's modulus, $\mu$ for shear modulus and $\nu$ for Poisson's ratio.}
+ \begin{tabular}{cccc}
+\\
+\textbf{Material} & \textbf{$E\left[GPa\right]$}\ & \textbf{$\mu\left[GPa\right]$} & \textbf{$\nu\left[-\right]$} \\
+\midrule
+Glass fiber    & 70.0  & 29.2   & 0.2  \\
+Epoxy    & 3.5    & 1.25   & 0.4
+\end{tabular}
+\label{chap3:paperB:tab:phaseprop}
+\end{table}
+
+The model is meshed with second order quadrilateral and triangular elements, while at the crack tip only second order quadrilateral elements are used with unitary aspect ratio, determined by the arc size $R_{f}\delta$ where $\delta$ is the angular size. Given the results on convergence of Paper A, the angular size $\delta$ of the elements at the crack tip is determined here by comparison with the Boundary Element Method (BEM) results provided in~\cite{Paris2007,Sandino2016} for a single debonded fiber in an infinite matrix. The comparison is conducted using the $1\times1-free$ RVE with $V_{f}=0.0079$, which corresponds to $L\sim100 R_{f}$. A trade-off between accuracy and computational cost (time and memory required for the solution) is found for $\delta=0.05^{\circ}$. A comparison between the ERR computed with $\delta=0.05^{\circ}$ and the BEM results is shown in Figure~\ref{chap3:paperB:fig:validation}. The error between FEM and BEM solution does not exceed $5\%$ for any value of $\Delta\theta$. This provides a measure of the accuracy of the results proposed here: differences between values of ERR smaller than $5\%$ should not be taken into consideration.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.9\textwidth]{paperB/validation-VCCT.pdf}
+\caption{Validation of the single fiber model for the infinite matrix case with respect to the BEM solution in \cite{Sandino2016}.}\label{chap3:paperB:fig:validation}
+\end{figure}
+
+\begin{enumerate}
+\item With a decreasing number of fully bonded fibers between two partially debonded fibers in the central row, the ERR decreases. It seems to exist a characteristic distance between debonds which defines the transition to a non-interactive solution. However, this distance depends on the number of perfectly bonded fiber rows surrounding the central row and on the fiber volume fraction. This distance can be estimated to be around $100$ fully bonded fibers for a 1-fiber-row thick UD with $V_{f}=30\%$ and $200$ for a 1-fiber-row thick UD with $V_{f}=60\%$, while it is expected to be around $100$ fibers for a 5-fibers-row thick UD with $V_{f}=60\%$.
+\item The presence of a free surface close to the debond leads to higher Mode I and Mode II ERRs and a shift of the peak $G$ values to larger debonds.
+\item The presence of fibers (fully or partially bonded) in the composite thickness direction, along the same vertical line as the analyzed central fiber, appears to have a restraining effect on both $G_{I}$ and $G_{II}$. The free composite surface effect on the ERR decays very fast: adding more than $2$ fully bonded fibers below and above the central row leads to stable constant values of ERR.
+\item The presence of a debond in the fiber above the central partially debonded one only delays the appearance of the contact zone, while no significant effect on the ERR has been observed.
+\item Increasing the fiber content (decreasing the inter-fiber distance), magnifies in general the effects described in the previous points.
+\item The results and conclusions presented agree well with previous observations reported in the literature~\cite{Sandino2016,Zhuang2018}. A mechanical explanation of the observed trends has been presented based on the mismatch in elastic properties, particularly Poisson's ratios, and the positions of fibers and debonds with respect to the loading direction.
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Paper C

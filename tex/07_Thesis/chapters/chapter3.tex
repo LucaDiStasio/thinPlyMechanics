@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Paper A
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Paper A}
+\section{Paper A}\label{chap3:paperA}
 \section*{Finite Element solution of the fiber/matrix interface crack problem: convergence properties and mode mixity of the Virtual Crack Closure Technique}
 
 The analysis of bi-material interface cracks, such as the fiber/matrix interface crack or debond, in the context of Linear Elastic Fracture Mechanics hides some peculiar complexities due to the nature of the solution at the crack tip. The solution to the fiber/matrix interface crack problem can be classified into two different regimes~\cite{Paris1996,Varna1997a}: the \emph{open crack} and \emph{closed crack} solution. The distinction between the two lies in the existence of a region of contact between crack faces (contact zone) at the crack tip: if it exists, we talk about a \emph{closed crack} solution, otherwise of an \emph{open crack} solution.\\
@@ -128,7 +128,7 @@ It is found in Paper A that
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Paper B
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Paper B}
+\section{Paper B}\label{chap3:paperB}
 \section*{Energy release rate of the fiber/matrix interface crack in UD composites under transverse loading: effect of the fiber volume fraction and of the distance to the free surface and to non-adjacent debonds}
 
 In Paper B, fiber/matrix interface crack growth is studied in Representative Volume Elements of UD composites subjected to transverse tensile loading. A unit cell constituted by one fiber and the surrounding matrix, shown in Figure~\ref{chap3:paperB:fig:modelschem}, represents the basic element of the RVE.
@@ -215,7 +215,7 @@ The most important observations and conclusions of the paper are summarized belo
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Paper C
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Paper C}
+\section{Paper C}\label{chap3:paperC}
 \section*{Effect of the proximity to the $\mathbf{0^{\circ}/90^{\circ}}$ interface on Energy Release Rate of fiber/matrix interface crack growth in the  $\mathbf{90^{\circ}}$-ply of a cross-ply laminate under tensile loading}
 
 In Paper C, fiber/matrix interface crack growth is studied in Representative Volume Elements of cross-ply laminates subjected to tensile loading. Similarly to Paper B, the unit cell constituted by one fiber and the surrounding matrix, shown in Figure~\ref{chap3:paperB:fig:modelschem}, represents the basic element of the RVE. The unit cell has a size of $2L\times2L$, where
@@ -296,7 +296,7 @@ The relevant results of Paper C are summarized in the following.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Paper D
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Paper D}
+\section{Paper D}\label{chap3:paperD}
 \section*{Growth of interface cracks on consecutive fibers: on the same or on the opposite sides?}
 
 In Paper D, fiber/matrix interface crack growth is studied in Representative Volume Elements of thick UD composites subjected to transverse tensile loading. Similarly to PAper A and Paper B, the unit cell of one fiber and its surrounding matrix, shown in Figure~\ref{chap3:paperB:fig:modelschem}, represents the basic element of the RVE. The unit cell has a size of $2L\times2L$, where
@@ -356,8 +356,158 @@ Epoxy    & 3.5    & 1.25   & 0.4
 
 The model is meshed with second order quadrilateral and triangular elements, while at the crack tip only second order quadrilateral elements are used with unitary aspect ratio, determined by the arc size $R_{f}\delta$ where $\delta$ is the angular size. The angular size $\delta$ of the elements at the crack tip is assumed as equal to $0.05^{\circ}$ based on the comparison with the Boundary Element Method (BEM) results provided in~\cite{Paris2007,Sandino2016} conducted in Paper A. Thus, the same level of accuracy of $5\%$ on ERR applies here.
 
+\begin{figure}[!htb]
+\centering
+  \includegraphics[width=0.9\textwidth]{paperD/nx1-coupling-vf60-GI.pdf}
+\caption{Comparison of Mode I ERR between $n \times 1-symm$ and $n \times 1-asymm$ RVEs, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{chap3:paperD:fig:nx1-GI}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+  \includegraphics[width=0.9\textwidth]{paperD/nx1-coupling-vf60-GII.pdf}
+\caption{Comparison of Mode II ERR between $n \times 1-symm$ and $n \times 1-asymm$ RVEs, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{chap3:paperD:fig:nx1-GII}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+  \includegraphics[width=\textwidth]{paperD/nxk-coupling-vf60-GI.pdf}
+\caption{Comparison of Mode I ERR between $n \times 3-symm$ and $n \times 1-asymm$ RVEs, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{chap3:paperD:fig:nxk-GI}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+  \includegraphics[width=\textwidth]{paperD/nxk-coupling-vf60-GII.pdf}
+\caption{Comparison of Mode II ERR between $n \times 3-symm$ and $n \times 1-asymm$ RVEs, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{chap3:paperD:fig:nxk-GII}
+\end{figure}
+
+The main findings of Paper D are summarized below.
+
+\begin{enumerate}
+\item The relative position of debonds, i.e. same or opposite sides of their respective fiber, has an effect on the Energy Release Rate only if debonds are located on consecutive fibers, as shown in Figure~\ref{chap3:paperD:fig:nx1-GI} and Figure~\ref{chap3:paperD:fig:nx1-GII}. The sensitivity of the ERR to debonds' relative position disappears with presence of just two fully bonded fiber rows between rows containing debonds (Figure~\ref{chap3:paperD:fig:nxk-GI} and Figure~\ref{chap3:paperD:fig:nxk-GII}) and neither configuration (debonds on the same or opposite sides of the debonded fibers) is favored from an energy point of view.
+\item In the case of debonds located on consecutive vertically aligned fibers, the values of $G_{I}$ are higher and contact zone onset is delayed to larger debonds when debonds are on the same side of their respective fibers (Figure~\ref{chap3:paperD:fig:nx1-GI}). As debond growth is likelier when the Mode Ratio is Mode I dominated, it thus seems reasonable to expect that the growth of consecutive vertically aligned debonds (with no fully bonded fiber in between) is favored when they are located on the same side of their respective fibers.
+\item No significant difference in $G_{II}$ between the two RVE families is observed except in the range $\Delta\theta=80^{\circ}-100^{\circ}$. In this range, the largest values of $G_{II}$ are obtained and $G_{II}$ is higher when debonds are located on opposite sides of consecutive vertically aligned fibers. This means that, assuming the applied strain is high enough to cause debond growth in Mode II with the onset of a contact zone, larger debond sizes will likely be reached when debonds are on opposite sides.
+\end{enumerate}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Paper E
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Paper E}
-\section*{Estimating the average size of fiber/matrix interface cracks in ud and cross-ply laminates}
+\section{Paper E}\label{chap3:paperE}
+\section*{Estimating the average size of fiber/matrix interface cracks in UD and cross-ply laminates}
+
+In Paper E, initiation and propagation of debonds are studied in Representative Volume Elements of UD composites and cross-ply laminates. The objective in particular is to estimate initial flaw size after debond initiation and the final maximum size after debond propagation. The RVE considered are $n\times k-free$ (see Section~\ref{chap3:paperB} for details), $n\times k-m\cdot t_{90^{\circ}}$ (Section~\ref{chap3:paperC}), $n\times k-symm$ and $n\times k-asymm$ (see Section~\ref{chap3:paperD}).\\
+Debond initiation at the undamaged fiber/matrix interface is assumed to be governed by the stress and thus determined by a stess-based criterion. The distribution of stresses at the fiber/matrix interface is thus analyzed in models $1\times k-free$ and $1\times k-1\cdot t_{90^{\circ}}$ with $k=1,3,11,201$, $\Delta\theta=0^{\circ}$ (i.e. the undamaged case) and $\bar{\varepsilon}_{x}=1\%$. Selected stress components are presented, on the basis of their relevance in previous studies on debond initiation and growth available in the literature: the radial $\sigma_{rr}$ and shear $\tau_{r\psi}$ stress~\cite{Mantic2009} (Fig.~\ref{chap3:paperE:fig:stress-a} and Fig.~\ref{chap3:paperE:fig:stress-b}), the Local Hydrostatic Stress (LHS, following ~\cite{Carraro2016}) $\sigma_{LHS}$~\cite{Asp1996a,Asp1996b} (Fig.~\ref{chap3:paperE:fig:stress-c} and Fig.~\ref{chap3:paperE:fig:stress-d}), the local von Mises stress $\sigma_{vM}$~\cite{Canal2012}  (Fig.~\ref{chap3:paperE:fig:stress-e} and Fig.~\ref{chap3:paperE:fig:stress-f}), the Local Maximum Principal Stress (LMPS, notation of~\cite{Carraro2016}) $\sigma_{LMPS}$~\cite{Carraro2014}  (Fig.~\ref{chap3:paperE:fig:stress-g} and Fig.~\ref{chap3:paperE:fig:stress-h}). Conditions of plane strain, considered here in all RVEs, imply the existence of an out-of-plane axial component of the stress ($\sigma_{yy}$ in the notation of the paper): to study the effect of the out-of-plane component (tri-axial stress state, see~\cite{Asp1995}), $\sigma_{LHS}$, $\sigma_{vM}$ and $\sigma_{LMPS}$ are evaluated both neglecting (index $2D$) and considering it (index $3D$).
+
+\begin{figure}[!hp]
+\centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-sigmar.pdf}
+        \caption{Radial stress $\sigma_{rr}$.}\label{chap3:paperE:fig:stress-a}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-taurt.pdf}
+        \caption{Shear stress $\tau_{r\psi}$.}\label{chap3:paperE:fig:stress-b}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-p2D.pdf}
+        \caption{Local Hydrostatic Stress (LHS), neglecting $\sigma_{yy}$, $\sigma_{LHS,2D}$.}\label{chap3:paperE:fig:stress-c}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-p3D.pdf}
+        \caption{Local Hydrostatic Stress (LHS), considering $\sigma_{yy}$, $\sigma_{LHS,3D}$.}\label{chap3:paperE:fig:stress-d}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-vM2D.pdf}
+        \caption{Local von Mises stress, neglecting $\sigma_{yy}$, $\sigma_{vM,2D}$.}\label{chap3:paperE:fig:stress-e}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-vM3D.pdf}
+        \caption{Local von Mises stress, considering $\sigma_{yy}$, $\sigma_{vM,3D}$.}\label{chap3:paperE:fig:stress-f}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-sigmaI2D.pdf}
+        \caption{Local Maximum Principal Stress (LMPS), neglecting $\sigma_{yy}$, $\sigma_{LMPS,2D}$.}\label{chap3:paperE:fig:stress-g}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-nodamage-sigmaI3D.pdf}
+        \caption{Local Maximum Principal Stress (LMPS), considering $\sigma_{yy}$, $\sigma_{LMPS,3D}$.}\label{chap3:paperE:fig:stress-h}
+    \end{subfigure}
+
+\caption{Stress distribution at the fiber/matrix interface in the absence of damage with respect to angular coordinate $\psi$; applied strain $\bar{\varepsilon}_{x}=1\%$.}\label{chap3:paperE:fig:stress}
+\end{figure}
+
+Observing Figure~\ref{chap3:paperE:fig:stress}, it seems reasonable to conclude that a stress-based criterion would predict, irrespectively of the specific criterion chosen, debond onset to occur at $0^{\circ}$ (or $180^{\circ}$, given the symmetry of the geometry considered) with an initial size at least in the range $2^{\circ}-8^{\circ}$, corresponding to a $1\%$ margin on the value of the stress to satisfy the criterion, and likely in the range $6^{\circ}-12^{\circ}$, corresponding to a $5\%$ margin on the satisfaction of the criterion.\\
+Assuming now that, as in~\cite{Correa2016}, once an initial debond of a size $\Delta\theta_{0}\sim2^{\circ}-12^{\circ}$) is formed, the debond will grow unstably at the same level of global applied strain $\bar{\varepsilon}_{x}$, according to an energy-based criterion of the form~\cite{Hutchinson1991,Mantic2009}:
+
+\begin{equation}\label{chap3:paperE:eq:propcrit}
+G_{TOT}\geq G_{c}=G_{Ic}\left(1+\tan^{2}\left(\left(1-\lambda\right)\Psi_{G}\right)\right),\quad\Psi_{G}=tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right),
+\end{equation}
+
+where $\Psi_{G}$ represents the energy-based phase angle, $G_{TOT}$ is the total ERR, $G_{c}$ is the critical ERR, $G_{Ic}$ is the Mode I critical ERR (material property) and $\lambda$ the mode mixity sensitivity parameter (material property, usually $0.2\leq\lambda\leq0.35$). Given that in the present model debond propagation starts as soon as an initial debond is formed, the propagation criterion in Equation~\ref{chap3:paperE:eq:propcrit} is satisfied for the initial debond size $\Delta\theta_{0}$. Thus, by calculating $G_{I}$, $G_{II}$ and $G_{TOT}$ and equating $G_{c}$ to $G_{TOT}$ in Eq.~\ref{chap3:paperE:eq:propcrit}, it is possible to evaluate $G_{Ic}$ for different values of the initial debond size $\Delta\theta_{0}$ and of the parameter $\lambda$ (Figure~\ref{chap3:paperE:fig:GIc}).
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-GIc-model.pdf}
+        \caption{$\lambda=0.3$.}\label{chap3:paperE:fig:GIc-a}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-GIc-lambda.pdf}
+        \caption{$11\times 11-1\cdot t_{90^{\circ}}$.}\label{chap3:paperE:fig:GIc-b}
+    \end{subfigure}
+
+\caption{Estimated values of $G_{Ic}$ assuming different values of initial debond size, for different RUCs and varying $\lambda$, with global applied strain $\bar{\varepsilon}_{x}$ equal to $1\%$.}\label{chap3:paperE:fig:GIc}
+\end{figure}
+
+It is possible to observe in Figure~\ref{chap3:paperE:fig:GIc} that neither RUC configuration nor $\lambda$ affects $G_{Ic}$ significantly for $\Delta\theta_{0}<10^{\circ}$, which corresponds to the range of initial debond size previously determined. Thus, we can assume a value of $G_{Ic}$ in the range $2-4.5\ \left[\frac{J}{m^{2}}\right]$, with $0.2\leq\lambda\leq0.35$ and $\bar{\varepsilon}_{x}=1\%$.
+
+\begin{figure}[!htbp]
+\centering
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A0.pdf}
+        \caption{$21\times 1-free$.}\label{chap3:paperE:fig:debondsize-a}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A0T1.pdf}
+        \caption{$21\times 1-1\cdot t_{90^{\circ}}$.}\label{chap3:paperE:fig:debondsize-b}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A3.pdf}
+        \caption{$21\times 3-free$.}\label{chap3:paperE:fig:debondsize-c}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A3T1.pdf}
+        \caption{$21\times 3-1\cdot t_{90^{\circ}}$.}\label{chap3:paperE:fig:debondsize-d}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A10.pdf}
+        \caption{$21\times 21-free$.}\label{chap3:paperE:fig:debondsize-e}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A10T1.pdf}
+        \caption{$21\times 21-1\cdot t_{90^{\circ}}$.}\label{chap3:paperE:fig:debondsize-f}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A0vk.pdf}
+        \caption{$21\times 1-coupling$.}\label{chap3:paperE:fig:debondsize-g}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A0asymm.pdf}
+        \caption{$21\times 1-asymm$.}\label{chap3:paperE:fig:debondsize-h}
+    \end{subfigure}
+
+\caption{$G_{TOT}$ and $G_{c}$ for several RUCs and different values of $G_{Ic}$ and $\lambda$, computed for $\bar{\varepsilon}_{x}=1\%$. Each intersection point of $G_{TOT}$ and $G_{c}$ curves such that $G_{TOT}\left(\Delta\theta\geq\Delta\theta_{intersection}\right)\leq G_{c}\left(\Delta\theta\geq\Delta\theta_{intersection}\right)$ determines an estimate of $\Delta\theta_{max}$.}\label{chap3:paperE:fig:debondsize}
+\end{figure}
+
+Finally, by calculating $G_{c}$ according to Equation~\ref{chap3:paperE:eq:propcrit}, the expected maximum debond size $\Delta\theta_{max}$ is the value of $\Delta\theta$ such that
+
+\begin{equation}\label{paperE:eq:debmax}
+G_{TOT}\left(\Delta\theta\geq\Delta\theta_{max}\right)\leq G_{c}\left(\Delta\theta\geq\Delta\theta_{max}\right).
+\end{equation}
+
+TThe following ranges of maximum debond size are obtained (see Figure~\ref{chap3:paperE:fig:debondsize}): for a 1-fiber row UD composite, $30^{\circ}-105^{\circ}$; for a 1-fiber row $90^{\circ}$ ply in a cross-ply laminate, $30^{\circ}-45^{\circ}$; for a multiple fiber-rows UD composite and a multiple fiber-rows $90^{\circ}$ ply in a cross-ply laminate , $40^{\circ}-60^{\circ}$; for consecutive debonds along the vertical direction in a UD composite, $80^{\circ}-110^{\circ}$ when debonds are on the same sides and $60^{\circ}-115^{\circ}$ when on opposite sides. The estimate for the RVE of a cross-ply laminate ($n\times k-1\cdot t_{90^{\circ}}$ RVE, $k\geq3$) is in good agreeement with the debond size distribution estimated in~\cite{Correa2018} through microscopic observations of $\left[0^{\circ}_{3},90^{\circ}_{3}\right]_{S}$ specimens loaded in tension.

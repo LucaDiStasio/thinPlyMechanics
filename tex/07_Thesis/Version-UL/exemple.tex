@@ -1,0 +1,731 @@
+%             Exemple d'utilisation de la classe thesul
+%             ------------------------------------------
+%
+%
+% (de manière generale, les commandes de thesul sont celles
+% qui ne sont pas complètement en minuscules)
+%
+% Voir la documentation complète pour plus de détails.
+%
+%
+% D. Roegel, 30 mars 2013
+%
+\documentclass[11pt]{thesul}
+%----------------------------------------------------------------------
+%                     Chargement de quelques packages
+%----------------------------------------------------------------------
+
+% Si l'on veut produire une version PDF avec des hyperliens :
+%\usepackage[pageanchor=false]{tulhypref}
+
+% Si on veut le style de bibliographie named :
+%\usepackage{named}
+
+% Pour les figures :
+\usepackage{graphicx}
+
+% Si on veut des mini-tables des matières (utiliser minitoc-hyper 
+% en conjonction avec tulhypref) :
+\usepackage[french]{minitoc}
+
+
+%-------------------------------------------------------------------
+%                             Marges
+%-------------------------------------------------------------------
+
+% pour positionner les vraies marges:
+%\SetRealMargins{1mm}{1mm}
+
+%-------------------------------------------------------------------
+%                             En-têtes
+%-------------------------------------------------------------------
+
+% Les en-têtes: quelques exemples
+%\UppercaseHeadings 
+%\UnderlineHeadings
+%\newcommand\bfheadings[1]{{\bf #1}}
+%\FormatHeadingsWith{\bfheadings}
+%\FormatHeadingsWith{\uppercase}
+%\FormatHeadingsWith{\underline}
+\newcommand\upun[1]{\uppercase{\underline{\underline{#1}}}}
+\FormatHeadingsWith\upun
+
+\newcommand\itheadings[1]{\textit{#1}}
+\FormatHeadingsWith{\itheadings}
+
+% pour avoir un trait sous l'en-tete:
+\setlength{\HeadRuleWidth}{0.4pt}
+
+%-------------------------------------------------------------------
+%                         Les références
+%-------------------------------------------------------------------
+
+\NoChapterNumberInRef
+\NoChapterPrefix
+
+%-------------------------------------------------------------------
+%                           Brouillons
+%-------------------------------------------------------------------
+
+% ceci ajoute une marque « brouillon » et la date
+%\ThesisDraft
+
+%-------------------------------------------------------------------
+%                   Pour collecter un glossaire et un index
+%-------------------------------------------------------------------
+
+\makeglossary
+\makeindex
+
+\begin{document}
+
+
+      \OddHead={{\leftmark\rightmark}{\hfil\slshape\rightmark}}
+      \EvenHead={{\leftmark}{{\slshape\leftmark}\hfil}}
+      \OddFoot={\hfil\thepage}
+      \EvenFoot={\thepage\hfil}
+      \pagestyle{ThesisHeadingsII}
+
+%-------------------------------------------------------------------
+%                          Encadrements
+%-------------------------------------------------------------------
+
+% encadre les chapitres dans la table des matières:
+% (ces commandes doivent figurer apres \begin{document}
+
+\FrameChaptersInToc  
+%\FramePartsInToc
+
+
+%-------------------------------------------------------------------
+%            Réinitialisation de la numérotation des chapitres
+%-------------------------------------------------------------------
+
+% Si la commande suivante est présente,
+% elle doit figurer APRÈS \begin{document}
+% et avant la première commande \part
+\ResetChaptersAtParts 
+
+%-------------------------------------------------------------------
+%               mini-tables des matières par chapitre
+%-------------------------------------------------------------------
+
+% préparer les mini-tables des matières par chapitre.
+% (commande de minitoc.sty)
+\dominitoc
+
+%-------------------------------------------------------------------
+%                         Page de titre:
+%-------------------------------------------------------------------
+
+\ThesisTitle{Comment j'ai r\'eussi \`a prouver mon existence}
+\ThesisDate{28 janvier 1986}
+\ThesisAuthor{Auteur anonyme}
+
+% Type de la these
+\ThesisUL
+
+% Jury:
+
+% (ne pas mettre de \\ apres la dernière entree)
+
+% Exemple de création d'une nouvelle catégorie dans le jury:
+
+\NewJuryCategory{family}{\it Membre de la famille :}
+                        {\it Membres de la famille :}
+
+\family={Mon frère\\Ma sœur}
+
+\def\blanc{\hspace*{1cm}}
+
+\President    = {Le président}
+\Rapporteurs  = {Le rapporteur 1&de Paris\\
+                 Le rapporteur 2\\
+                 \blanc suite&taratata\\
+                 Le rapporteur 3}
+\Examinateurs = {L'examinateur 1&d'ici\\
+                 L'examinateur 2}
+%\Invites=       {}
+
+% Création de la page de titre:
+\MakeThesisTitlePage
+
+% on peut en faire plusieurs:
+%\MakeThesisTitlePage
+
+%-------------------------------------------------------------------
+
+
+%-------------------------------------------------------------------
+%                          remerciements
+%-------------------------------------------------------------------
+
+%\DontFrameThisInToc
+\begin{ThesisAcknowledgments}
+Les remerciements.
+\end{ThesisAcknowledgments}
+
+%-------------------------------------------------------------------
+%                            dédicace
+%-------------------------------------------------------------------
+
+\begin{ThesisDedication}
+Je dédie cette thèse\\
+à ma machine.\\
+Oui, à Pandore,\\
+qui fut la première de toutes.
+\end{ThesisDedication}
+
+
+%-------------------------------------------------------------------
+%                  écriture de `Chapitre' et `Partie' 
+%                      dans la table des matières
+%-------------------------------------------------------------------
+
+\WritePartLabelInToc
+\WriteChapterLabelInToc
+
+%-------------------------------------------------------------------
+%                        table des matières
+%-------------------------------------------------------------------
+
+\tableofcontents
+
+%-------------------------------------------------------------------
+%              Exemple d'utilisation de \SpecialSection
+%-------------------------------------------------------------------
+
+\SpecialSection{Introduction générale}
+
+
+%\FrameThisInToc
+\DontNumberThisInToc
+\part{Une partie}
+
+% Pour ne pas avoir le mot « Chapitre » au début de chaque chapitre.
+\NoChapterHead
+
+\DontWriteThisInToc   
+\listoffigures
+
+\WriteThisInToc
+\FrameThisInToc
+\NumberThisInToc
+\part*{Introduction (La première partie)}
+
+% La commande \mainmatter permet de passer
+% à la numérotation arabe (ce que fait \pagenumbering{arabic}) 
+% et de faire commencer la nouvelle page 1 sur une page impaire.
+% On évitera donc d'utiliser directement \pagenumbering{arabic}.
+\mainmatter
+
+\NumberThisInToc
+\chapter*{Introduction (Le premier chapitre)}
+\section{Une première section}
+
+Une « autre » page avec « plein » de texte « et » très varié.
+Une autre page avec plein de texte très varié .
+Une autre page avec plein de texte très varié.
+
+\DontFrameThisInToc
+\chapter*{Introduction (Le premier chapitre)}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\chapter{Encore un chapitre (test de \oe)}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\DontFrameThisInToc
+\chapter{Et un chapitre (cha\^{\i}ne ou cha\^\i ne ?)}
+\minitoc
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Ceci est une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+(cf. le label \S\ref{toto})
+Une autre page avec plein de texte très varié.
+
+\section{Une autre section}
+
+Une autre page «avec» <<plein>> de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+% On met une petite ligne de séparation dans la table des
+% matières, ainsi qu'un saut de page.
+%
+\PutLineInToc
+\PutNewPageInToc
+
+%\DontFrameThisInToc
+\WriteThisInToc
+\chapter{Le second chapitre}
+\minitoc
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Un label.\label{toto}
+
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Encore une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec
+
+
+\NumberThisInToc
+\part{Une autre partie}
+
+\FrameThisInToc
+\chapter{Le troisième chapitre}
+\minitoc
+plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section du troisième chapitre}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\PutLineInToc
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+
+\section{Une section}
+
+vec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page\index{page} avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein\index{plein} de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec p
+lein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+\begin{figure}[htb]
+\includegraphics{rosette}
+\caption{x}
+\end{figure}
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec
+
+
+\section{Une section}
+
+plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page
+
+
+\begin{figure}[htb]
+\caption{x\label{toutou}}
+\end{figure}
+
+\section{Une section}
+
+avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\begin{figure}[htb]
+\caption{x}
+\end{figure}
+
+\chapter{Le quatri\`eme chapitre}
+
+plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page
+
+
+\section{Une section}
+
+avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+\begin{figure}[htb]
+\includegraphics{rosette}
+\caption{x}
+\end{figure}
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page
+
+
+\section{Une section}
+
+avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte\index{texte} très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page
+
+\begin{figure}[htb]
+\caption{x\label{rintintin}}
+\end{figure}
+
+\section{Une section}
+
+avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\begin{figure}[htb]
+\caption{x}
+\end{figure}
+
+% En cours de route, on peut changer le cadrage par défaut:
+\DontFrameChaptersInToc
+
+\Annexes
+
+\Annex{première annexe}
+
+plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page
+
+
+\section{Une section}
+
+avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+% En cours de route, on peut changer le cadrage par defaut:
+\FrameChaptersInToc
+\Annex{deuxième annexe}
+
+plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+Une autre page avec plein de texte très varié.
+
+\section{Une section}
+
+\Glossary{Chat1}{animal}\Glossary{Chien1}{Autre animal}
+\Glossary{Chat2}{animal}\Glossary{Chien2}{Autre animal}
+\Glossary{Chat3}{animal}\Glossary{Chien3}{Autre animal}
+\Glossary{Chat4}{animal}\Glossary{Chien4}{Autre animal}
+\Glossary{Chat5}{animal}\Glossary{Chien5}{Autre animal}
+\Glossary{Chat6}{animal}\Glossary{Chien6}{Autre animal}
+\Glossary{Chat7}{animal}\Glossary{Chien7}{Autre animal}
+\Glossary{Chat8}{animal}\Glossary{Chien8}{Autre animal}
+\Glossary{Chat9}{animal}\Glossary{Chien9}{Autre animal}
+\Glossary{Chat10}{animal}\Glossary{Chien10}{Autre animal}
+\Glossary{Chat11}{animal}\Glossary{Chien11}{Autre animal}
+\Glossary{Chat12}{animal}\Glossary{Chien12}{Autre animal}
+\Glossary{Chat13}{animal}\Glossary{Chien13}{Autre animal}
+\Glossary{Chat14}{animal}\Glossary{Chien14}{Autre animal}
+\Glossary{Chat15}{animal}\Glossary{Chien15}{Autre animal}
+\Glossary{Chat16}{animal}\Glossary{Chien16}{Autre animal}
+\Glossary{Chat17}{animal}\Glossary{Chien17}{Autre animal}
+\Glossary{Chat18}{animal}\Glossary{Chien18}{Autre animal}
+\Glossary{Chat19}{animal}\Glossary{Chien19}{Autre animal}
+\Glossary{Chat22}{animal}\Glossary{Chien22}{Autre animal}
+\Glossary{Chat23}{animal}\Glossary{Chien23}{Autre animal}
+\Glossary{Chat24}{animal}\Glossary{Chien24}{Autre animal}
+\Glossary{Chat25}{animal}\Glossary{Chien25}{Autre animal}
+\Glossary{Chat26}{animal}\Glossary{Chien26}{Autre animal}
+\Glossary{Chat27}{animal}\Glossary{Chien27}{Autre animal}
+\Glossary{Chat28}{animal}\Glossary{Chien28}{Autre animal}
+\Glossary{Chat29}{animal}\Glossary{Chien29}{Autre animal}
+
+%-------------------------------------------------------------------
+%                         Le glossaire
+%-------------------------------------------------------------------
+\BeginGloWith{Voici un glossaire tout-à-fait fictif,
+              introduit par un texte sur toute la largeur
+              des deux colonnes.}
+\twocolumn
+\PrintGlossary
+
+%-------------------------------------------------------------------
+%              L'index (toujours sur deux colonnes)
+%-------------------------------------------------------------------
+\BeginIndWith{Voici un index}
+\PrintIndex
+
+\onecolumn
+
+%-------------------------------------------------------------------
+%                       La bibliographie
+%-------------------------------------------------------------------
+
+% La bibliographie (comme d'habitude)
+
+%\nocite{*}
+%\bibliographystyle{named}
+%\bibliography{TC}
+
+\begin{thebibliography}{Lam91a}
+
+\bibitem[CM88]{chandy88a}
+K.~M. Chandy and J.~Misra.
+\newblock \emph{Parallel program design: a foundation}.
+\newblock Addison-Wesley Publishing Company, 1988.
+
+\bibitem[Lam91a]{lamport91a}
+Leslie Lamport.
+\newblock {The Temporal Logic of Actions}.
+\newblock Technical Report~79, SRC, 1991.
+
+\end{thebibliography}
+
+%-------------------------------------------------------------------
+%                          Les résumés
+%-------------------------------------------------------------------
+% (si le résumé apparaît sur une colonne étroite, avec la
+% bibliographie à gauche, c'est sans doute parce que vous avez
+% oublié de générer les fichiers d'index et de glossaire...)
+
+\NumberAbstractPages
+\begin{ThesisAbstract}
+  \begin{FrenchAbstract}
+    Le résumé.
+    \KeyWords{chat, chien, puces.}
+  \end{FrenchAbstract}
+  \begin{EnglishAbstract}
+    % résumé du DEC SRC Research Report #12
+    % Date: June 23, 1986
+    % 
+    %     "Fractional Cascading."
+    %     Bernard Chazelle and Leonidas J. Guibas.
+    %     58 pages.
+    In computational geometry many search problems and range queries
+    can be solved by performing an iterative search for the same key
+    in separate ordered lists.  In Part I of this report we show that,
+    if these ordered lists can be put in a one-to-one correspondence
+    with the nodes of a graph of degree  d  so that the iterative
+    search always proceeds along edges of that graph, then we can
+    do much better than the obvious sequence of binary searches. Without
+    expanding the storage by more than a constant factor, we can build
+    a data-structure, called a fractional cascading structure,
+    in which all original searches after the first can be carried
+    out at only  log d  extra cost per search.  Several results related
+    to the dynamization of this structure are also presented. Part
+    II gives  numerous applications of this technique to geometric
+    problems.  
+
+    Examples include intersecting a polygonal path with
+    a line, slanted range search, orthogonal range search, computing
+    locus functions, and others. Some results on the optimality of
+    fractional cascading, and certain extensions of the technique
+    for retrieving additional information are also included.
+    \KeyWords{cat, dog, flees.}
+  \end{EnglishAbstract}
+\end{ThesisAbstract}
+
+
+\end{document}
+
+
+

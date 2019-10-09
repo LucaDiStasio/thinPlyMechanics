@@ -1,0 +1,126 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{2.5pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={at={(axis description cs:1,.5)},anchor=west,draw=white!80.0!black,font=\fontsize{15}{14}\selectfont,row sep=7.5pt},
+legend image post style={xscale=1.1,yscale=1.1},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+ymin=12.0,
+%ymax=1.2,
+xtick={0.0,0.3,0.7,1.2},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$\varepsilon\left[\%\right]$},
+ylabel={$E_{x}\left[GPa\right]$},
+% LEGEND ENTRIES
+legend entries={},
+]
+
+% 
+\addplot[line width=\linewidth,mark size=\markersize,blue,mark=*]
+table{
+0.3 19.0
+0.7 18.25
+1.2 15.5
+};
+\addlegendentry{RT, $1\ \nicefrac{mm}{min}$};
+
+\addplot[line width=\linewidth,mark size=\markersize,blue,mark=square*,mark options={fill=white}]
+table{
+0.3 18.4
+0.7 16
+1.2 14.5
+};
+\addlegendentry{RT, $50\ \nicefrac{mm}{min}$};
+
+\addplot[line width=\linewidth,mark size=\markersize,blue,mark=triangle*]
+table{
+0.3 18.5
+0.7 15
+1.2 13.8
+};
+\addlegendentry{RT, $500\ \nicefrac{mm}{min}$};
+
+\addplot[line width=\linewidth,mark size=\markersize,red,mark=*]
+table{
+0.3 15.3
+0.7 15.3
+1.2 15.42
+};
+\addlegendentry{$110^{\circ}$ $1\ \nicefrac{mm}{min}$};
+
+\addplot[line width=\linewidth,mark size=\markersize,red,mark=square*,mark options={fill=white}]
+table{
+0.3 16.4
+0.7 16
+1.2 16.8
+};
+\addlegendentry{$110^{\circ}$, $50\ \nicefrac{mm}{min}$};
+
+\addplot[line width=\linewidth,mark size=\markersize,red,mark=triangle*]
+table{
+0.3 16.62
+0.7 16.5
+1.2 16.8
+};
+\addlegendentry{$110^{\circ}$, $500\ \nicefrac{mm}{min}$};
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

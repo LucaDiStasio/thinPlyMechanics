@@ -238,7 +238,14 @@
 
    \cleardoublepage
 
-   %--- Make Table of Conents
+   %--- Make list of papers
+   \chapter*{\hrule\medskip\hfill \sc List of publications\medskip\hrule}
+   \noindent
+   \input{listofpapers.tex}
+
+   \cleardoublepage
+
+   %--- Make Table of Contents
   \renewcommand{\contentsname}{\hrule\vspace*{8pt}\Huge{\hfill{\sc
                 Contents}\vspace*{8pt}\hrule\vspace*{-1cm} }}
 

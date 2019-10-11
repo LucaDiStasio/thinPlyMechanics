@@ -196,6 +196,7 @@
      {\large #3} %\vfill
      {\centering\begin{table}[!h]
      \centering\begin{tabular}{cc}
+     \\
      \multicolumn{2}{c}{\includegraphics[width=0.3\textwidth]{pics/logo-ltu}}\\[10pt]
      \includegraphics[width=0.3\textwidth]{pics/logo-ijl}&\includegraphics[width=0.475\textwidth]{pics/logo-eeigm}\\[10pt]
      \multicolumn{2}{c}{\includegraphics[width=0.3\textwidth]{pics/logo-docmase}}

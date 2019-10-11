@@ -32,7 +32,7 @@ The 1-step VCCT in the force-displacement formulation~\cite{Krueger2004} is cons
 L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}},
 \end{equation}
 
-$V_{f}$ is the fiber volume fraction and $R_{f}$ is the fiber radius, assumed to be equal to $1\ \mu m$. The occurrence of a contact zone after a critical size of the debond is considered and a contact pair interaction is established between crack faces. The interaction is considered frictionless. As the model is symmetric with respect to the $x$-axis (see Figure~\ref{chap3:paperA:fig:modelschem}), only half of it is explicitly modeled and symmetry conditions are applied to the lower boundary. A constant $x$-strain of $1\%$ is applied to the right and left boundary. Glass fiber and epoxy are considered and their properties are reported in Table~\ref{chap3:paperA:tab:phaseprop}.
+$V_{f}$ is the fiber volume fraction and $R_{f}$ is the fiber radius, assumed to be equal to $1\ \mu m$. Conditions of plane strain are assumed. The occurrence of a contact zone after a critical size of the debond is considered and a contact pair interaction is established between crack faces. The interaction is considered frictionless. As the model is symmetric with respect to the $x$-axis (see Figure~\ref{chap3:paperA:fig:modelschem}), only half of it is explicitly modeled and symmetry conditions are applied to the lower boundary. A constant $x$-strain of $1\%$ is applied to the right and left boundary. Glass fiber and epoxy are considered and their properties are reported in Table~\ref{chap3:paperA:tab:phaseprop}.
 
 \begin{table}[!htbp]
  \centering
@@ -51,12 +51,12 @@ The main parameter of the mesh sensitivity study is the angular size $\delta$ of
 
 \begin{figure}[!h]
 \centering
-    \begin{subfigure}[b]{0.75\textwidth}
+    \begin{subfigure}[b]{0.6\textwidth}
         \includegraphics[width=\textwidth]{paperA/VCCT-linear.pdf}
        \caption{\added{Elements with $1^{st}$ order shape functions: $m=1$ and $p,q=1$.}}
     \end{subfigure}
 
-    \begin{subfigure}[b]{0.75\textwidth}
+    \begin{subfigure}[b]{0.6\textwidth}
         \includegraphics[width=\textwidth]{paperA/VCCT-quadratic.pdf}
        \caption{\added{Elements with $2^{nd}$ order shape functions: $m=2$ and $p,q=1,2$.}}
     \end{subfigure}
@@ -114,14 +114,12 @@ The main parameter of the mesh sensitivity study is the angular size $\delta$ of
 \caption{Logarithmic dependence on $\delta$ of Mode II ERR: interpolation of numerical results.}\label{chap3:paperA:fig:gIIinterp}
 \end{figure}
 
-It is found in Paper A that
+The most important contributions of Paper A are summarized below.
 
 \begin{itemize}
-\item the total Ener is invariant to rotations of the reference frame (and more in general to linear transformations), which implies that rotation of crack tip forces and displacement is actually not required in the use of the VCCT for the calculation of $G_{TOT}$;
-\item the total ERR does not depend on the size $\delta$ of the elements at the crack tip, at least for reasonably small elements ($\delta\leq1.0^{\circ}$) ;
-\item as a consequence, Mode II ERR for the \emph{closed} interface crack does not depend on $\delta$, as $G_{II}=G_{TOT}$ after the onset of the contact zone;
-\item for the \emph{open} interface crack, Mode I and Mode II ERR depend on the element size $\delta$ through a logarithmic law of the type $A\left(\Delta\theta\right)\ln\delta+B\left(\Delta\theta\right)$, as shown in Figure~\ref{chap3:paperA:fig:gIinterp} and Figure~\ref{chap3:paperA:fig:gIIinterp};
-\item the sign of the logarithm is always positive for $G_{I}$ (see Figure~\ref{chap3:paperA:fig:gIinterp}), i.e. it decreases when $\delta$ decreases, and negative for $G_{II}$ (see Figure~\ref{chap3:paperA:fig:gIIinterp}), i.e. it increases when $\delta$ decreases.
+\item The total Energy Release Rate is found to invariant to rotations of the crack tip reference frame.
+\item The total Energy Release Rate does not depend on the size $\delta$ of the elements at the debond tip, at least for reasonably small elements, i.e. $\delta\leq1.0^{\circ}$. Thus, in \emph{closed crack} case, Mode II ERR does not depend on $\delta$, as $G_{II}=G_{TOT}$ as soon as contact zone onset occurs.
+\item In \emph{open crack} case, Mode I and Mode II ERR depend on the element size $\delta$ at the debond tip. The dependence is described by a logarithmic law of the type $A\left(\Delta\theta\right)\ln\delta+B\left(\Delta\theta\right)$, as shown in Figure~\ref{chap3:paperA:fig:gIinterp} and Figure~\ref{chap3:paperA:fig:gIIinterp}. It is found that the sign of the logarithm is always positive for $G_{I}$ (see Figure~\ref{chap3:paperA:fig:gIinterp}), i.e. it decreases when $\delta$ decreases, and negative for $G_{II}$ (see Figure~\ref{chap3:paperA:fig:gIIinterp}), i.e. it increases when $\delta$ decreases.
 \end{itemize}
 
 
@@ -152,6 +150,7 @@ The RVE is made up by $n$ unit cells as the one of Figure~\ref{chap3:paperB:fig:
     \caption{Multiple rows of fibers with a debond appearing every $n$ fibers within the central row: model $n\times k-free$ ($n=3$ and $k=3$ in the figure).}\label{chap3:paperB:fig:thickply}
 \end{figure}
 
+The RVE is assumed to belong to a central cross-section (i.e. not on the laminate edge) in a slender laminate, i.e. laminate length and width are much greater than the thickness. The debond is assumed to be much more developed in the fiber longitudinal direction than in the arc direction. Thus, conditions of plane strain are adopted.\\
 The RVE is symmetric with respect to the horizontal axis ($x$-axis), thus only half of it is explicitly modelled and conditions of symmetry are applied on the lower boundary of the RVE. On the left and right boundaries, conditions of coupling of the $x$-displacement (horizontal displacement) are applied. This implies that the computed solution corresponds to the RVE repeating an infinite number of times to the left and to the right symmetrically with the respect to the side boundary, i.e. if the debond in the central unit cell is placed on the right side of the fiber, then the next one to the right and to the left is on the left side, the successive one is on the right, and so on. As a consequence, the number $n$ of unit cells in the horizontal direction determines the distance between consecutive debonds in the horizontal direction, which corresponds to $n-1$ fully bonded fibers. The upper and lower boundaries (but, given the symmetry with respect to the $x$-axis, only the upper one is explicitly modeled) are left free. Thus, the family of RVEs studied in this paper is called $n\times k-free$.\\
 A constant $x$-strain equal to $1\%$ is applied to the left and right boundary. The selected value of $1\%$ is arbitrary, as in LEFM the ERR is proportional to the square of the strain. Thus, the value of the ERR for another level of applied strain can calculated with a multiplication. Contact between debond faces is considered frictionless. The fiber and matrix phases, respectively glass fiber and epoxy, are considered to be homogeneous, isotropic and linear elastic. Their material properties are reported in Table~\ref{chap3:paperB:tab:phaseprop}.
 
@@ -186,11 +185,11 @@ The most important observations and conclusions of the paper are summarized belo
 
 \begin{figure}[!h]
 \centering
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperB/sidefibers-vf30-GI.pdf}
         \caption{$V_{f}=30\%$.}\label{chap3:paperB:subfig:sidefiber30MI}
     \end{subfigure} ~
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperB/sidefibers-vf60-GI.pdf}
         \caption{$V_{f}=60\%$.}\label{chap3:paperB:subfig:sidefiber60MI}
     \end{subfigure}
@@ -200,11 +199,11 @@ The most important observations and conclusions of the paper are summarized belo
 
 \begin{figure}[!h]
 \centering
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperB/sidefibers-vf30-GII.pdf}
         \caption{$V_{f}=30\%$.}\label{chap3:paperB:subfig:sidefiber30MII}
     \end{subfigure} ~
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperB/sidefibers-vf60-GII.pdf}
         \caption{$V_{f}=60\%$.}\label{chap3:paperB:subfig:sidefiber60MII}
     \end{subfigure}
@@ -240,6 +239,7 @@ On top and below these $n\times k$ fibers, a homogenized $0^{\circ}$ ply is expl
 t_{90^{\circ}}=k2L.
 \end{equation}
 
+Similarly to Paper B, the RVE is assumed to be extracted from a central cross-section (i.e. not on the laminate edge) in a slender laminate, i.e. such that laminate length and width are much greater than the thickness. The debond is further assumed to be much more developed in the fiber longitudinal direction than in the arc direction. Thus, conditions of plane strain are adopted.\\
 The RVE is symmetric with respect to the $x$-axis (horizontal axis), thus only half of it is explicitly modelled and conditions of symmetry are applied on the lower boundary of the RVE. On the left and right boundaries, conditions of coupling of the $x$-displacement (horizontal displacement) are applied, which implies that, as for the RVEs of paper A, the computed solution corresponds to the RVE repeating an infinite number of times to the left and to the right in a symmetric way with the respect to the side. Thus, the number $n$ of unit cells in the horizontal direction determines the distance between consecutive debonds in the horizontal direction, equal to $n-1$ fully bonded fibers. This family of RVEs is called $n\times k-m\cdot t_{90^{\circ}}$.\\
 In order to understand the mechanisms influencing debond ERR by comparison with known conditions at the boundary, an additional family of RVEs is treated in which the $0^{\circ}$ layer is not present. In its place, different combinations of displacement boundary conditions are applied to the upper boundary. When the upper boundary is free, the $1\times 1-free$ RVE is defined, as in Paper A. The $1\times 1-coupling$ RVE is instead obtained when coupling of the vertical displacements $u_{z}$ is applied to the upper boundary (coupling condition). In the case a linear distribution of the horizontal displacement $u_{x}$ is applied to the upper boundary (H-condition), the RVE is refered to as $1\times 1-H$. Finally, when the linear distribution of the horizontal displacement $u_{x}$ is superimposed to the condition of coupling of the vertical displacements $u_{z}$ on the upper boundary, the $1\times 1-coupling+H$ RVE is obtained.\\
 A constant $x$-strain equal to $1\%$ is applied to the left and right boundary. Contact between debond faces is considered frictionless. The fiber and matrix phases, respectively glass fiber and epoxy, are considered to be homogeneous, isotropic and linear elastic. The elastic properties of the $0^{\circ}$ ply are computed using Hashin's Concentric Cylinder Assembly model~\cite{Hashin1983} with the self-consistency scheme for the out-of-plane shear modulus of Christensen~\cite{Christensen1979}. The elastic properties of the three phases are reported in Table~\ref{chap3:paperC:tab:phaseprop}.
@@ -314,6 +314,7 @@ The RVE is formed by $n$ unit cells in the horizontal (loading) direction and $k
 \caption{Representative Volume Element $n \times k-symm$ of a UD composite with debonds appearing after $n-1$ and after $k-1$ undamaged fibers respectively in the horizontal and vertical direction. In the vertical direction, on fibers belonging to the same ´´column", debonds are located always on the same side.}\label{chap3:paperD:fig:coupling-rve}
 \end{figure}
 
+The same assumptions made in Paper B and Paper C on laminate and debond geometry hold, and conditions of plane strain are assumed.\\
 The RVE is symmetric with respect to the $x$-axis (horizontal axis), thus only half of it is explicitly modelled and conditions of symmetry are applied on the lower boundary of the RVE. On the left and right boundaries, conditions of coupling of the $x$-displacement (horizontal displacement) are applied, which implies that, as for the RVEs of Paper A and Paper B, the computed solution corresponds to the RVE repeating an infinite number of times to the left and to the right in a symmetric way with the respect to the side. Thus, the number $n$ of unit cells in the horizontal direction determines the distance between consecutive debonds in the horizontal direction, equal to $n-1$ fully bonded fibers. On the top boundary, two different sets of boundary conditions are applied. The first are conditions of coupling of the vertical displacement $u_{z}$, expressed as
 
 \begin{equation}
@@ -370,13 +371,13 @@ The model is meshed with second order quadrilateral and triangular elements, whi
 
 \begin{figure}[!htb]
 \centering
-  \includegraphics[width=\textwidth]{paperD/nxk-coupling-vf60-GI.pdf}
+  \includegraphics[width=0.9\textwidth]{paperD/nxk-coupling-vf60-GI.pdf}
 \caption{Comparison of Mode I ERR between $n \times 3-symm$ and $n \times 1-asymm$ RVEs, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{chap3:paperD:fig:nxk-GI}
 \end{figure}
 
 \begin{figure}[!htb]
 \centering
-  \includegraphics[width=\textwidth]{paperD/nxk-coupling-vf60-GII.pdf}
+  \includegraphics[width=0.9\textwidth]{paperD/nxk-coupling-vf60-GII.pdf}
 \caption{Comparison of Mode II ERR between $n \times 3-symm$ and $n \times 1-asymm$ RVEs, $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{chap3:paperD:fig:nxk-GII}
 \end{figure}
 
@@ -449,11 +450,11 @@ where $\Psi_{G}$ represents the energy-based phase angle, $G_{TOT}$ is the total
 
 \begin{figure}[!h]
 \centering
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperE/vf60-GIc-model.pdf}
         \caption{$\lambda=0.3$.}\label{chap3:paperE:fig:GIc-a}
     \end{subfigure} ~
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperE/vf60-GIc-lambda.pdf}
         \caption{$11\times 11-1\cdot t_{90^{\circ}}$.}\label{chap3:paperE:fig:GIc-b}
     \end{subfigure}
@@ -465,20 +466,20 @@ It is possible to observe in Figure~\ref{chap3:paperE:fig:GIc} that neither RUC 
 
 \begin{figure}[!htbp]
 \centering
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A0.pdf}
         \caption{$21\times 1-free$.}\label{chap3:paperE:fig:debondsize-a}
     \end{subfigure} ~
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A0T1.pdf}
         \caption{$21\times 1-1\cdot t_{90^{\circ}}$.}\label{chap3:paperE:fig:debondsize-b}
     \end{subfigure}
 
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A3.pdf}
         \caption{$21\times 3-free$.}\label{chap3:paperE:fig:debondsize-c}
     \end{subfigure} ~
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A3T1.pdf}
         \caption{$21\times 3-1\cdot t_{90^{\circ}}$.}\label{chap3:paperE:fig:debondsize-d}
     \end{subfigure}
@@ -487,16 +488,16 @@ It is possible to observe in Figure~\ref{chap3:paperE:fig:GIc} that neither RUC 
         \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A10.pdf}
         \caption{$21\times 21-free$.}\label{chap3:paperE:fig:debondsize-e}
     \end{subfigure} ~
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A10T1.pdf}
         \caption{$21\times 21-1\cdot t_{90^{\circ}}$.}\label{chap3:paperE:fig:debondsize-f}
     \end{subfigure}
 
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A0vk.pdf}
         \caption{$21\times 1-coupling$.}\label{chap3:paperE:fig:debondsize-g}
     \end{subfigure} ~
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{paperE/vf60-dsize-S10A0asymm.pdf}
         \caption{$21\times 1-asymm$.}\label{chap3:paperE:fig:debondsize-h}
     \end{subfigure}

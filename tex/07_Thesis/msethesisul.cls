@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LaTeX document class: msethesis.cls
+%% LaTeX document class: msethesisul.cls
 %% Licentiate or doctoral thesis style file,
 %% Lulea Univ. of Tech., Sweden.
 %%
@@ -225,16 +225,16 @@
 
   \cleardoublepage
 
-   %--- Make abstract page
-   \chapter*{\hrule\medskip\hfill \sc Abstract\medskip\hrule}
+   \chapter*{\hrule\medskip\hfill \sc R\'esum\'e\medskip\hrule}
    \noindent
-   \input{abstract.tex}
+   \input{resume-UL.tex}
 
    \cleardoublepage
 
-   \chapter*{\hrule\medskip\hfill \sc R\'esum\'e\medskip\hrule}
+   %--- Make abstract page
+   \chapter*{\hrule\medskip\hfill \sc Abstract\medskip\hrule}
    \noindent
-   \input{resume.tex}
+   \input{abstract-UL.tex}
 
    \cleardoublepage
 

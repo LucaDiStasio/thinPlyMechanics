@@ -1,0 +1,194 @@
+%-------------------------------------------------------------------
+% Document class and package definitions
+%-------------------------------------------------------------------
+\documentclass[12pt,a4paper,openright,final,twoside]{msethesisul}
+
+\usepackage{epigraph}
+\usepackage[final]{changes}
+
+\addbibresource{thesisreferences.bib}
+\addbibresource{paperA/refspaperA.bib}
+\addbibresource{paperB/refspaperB.bib}
+\addbibresource{paperC/refspaperC.bib}
+\addbibresource{paperD/refspaperD.bib}
+\addbibresource{paperE/refspaperE.bib}
+
+\begin{document}
+
+\newrefsection
+
+
+%-------------------------------------------------------------------
+% Define title, author, etc.
+%-------------------------------------------------------------------
+\def\thesistitle{Influence of microstructure on debonding at the fiber/matrix interface in fiber-reinforced polymers under tensile loading}
+\def\theauthor{Luca Di Stasio}
+\def\theaddress{Division of Materials Science\\Department of Engineering Sciences and Mathematics\\
+Lule{\aa} University of Technology\\ Lule{\aa}, Sweden\\[5pt]\&\\[5pt]Institut Jean Lamour\\\'Ecole Europ\'eenne d'Ing\'enieurs en G\'enie des Mat\'eriaux\\Universit\'e de Lorraine\\Nancy, France\\[10mm]The work presented in this thesis is the result of the collaboration between Lule\aa\ University of Technology and Universit\'e de Lorraine aimed at a double degree as part of the DocMASE Programme}
+
+\def\supervisors{Janis Varna, Zoubir Ayadi}
+\def\supervisorstring{Supervisors:} % Edit here if you have only one supervisor
+\def\dedication{A mio figlio, Levante Libero Antonio:\\ abbi sempre il coraggio di tentare!}
+
+% Read abstract and preface from separate files.
+% Make sure these exist. See example files.
+\def\theabstract{\input{abstract.tex}}
+\def\thepreface{\input{preface.tex}}
+
+
+% Change here if you want to remove the logo printed on the first page
+
+%\def\thelogo{\includegraphics[width=2.5cm]{eu1_f_eng}} % old EU logo
+\def\thelogo{} % no logo
+
+% The definitions above could be put directly in the function call below,
+% but is here defined explicitly, for the purpose of clarity.
+
+\startpreamble
+  {\thesistitle}
+  {\theauthor}
+  {\theaddress}
+  {\supervisors}
+  {\dedication}
+  {\theabstract}
+  {\thepreface}
+  {\thelogo}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Begin Part I
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makepartpage{Part I}
+
+%% Initialize part containing the thesis introduction chapters
+\startchapters
+
+%\def\myquote{``This report, by its very length, defends itself against the risk of being read."\\[.5\baselineskip] Winston Churchill}
+
+%\makechapter{Running header}{Table of contents entry}{Title
+%appearing on the\\ chapter start page\label{ch2}}
+%\input{chapter2.tex}
+
+\def\chaponequote{\dots a ``sage", as an anonymous writer has pointed out, ``calls up in the average mind the picture of something grey and pedantic if not green and aromatic"\\[.5\baselineskip]Arthur D. Little}
+\def\chaponequotetext{\dots a ``sage", as an anonymous writer has pointed out, ``calls up in the average mind the picture of something grey and pedantic if not green and aromatic".}
+\def\chaponequoteauthor{Arthur D. Little~\cite{Little1924}}
+\makechapter{A journey of scales}{A journey of scales}{A journey of scales\label{ch1}}
+\epigraph{\chaponequotetext}{\chaponequoteauthor}
+\input{chapters/chapter1.tex}
+
+%\makechapter{The fiber/matrix interface crack}{The fiber/matrix interface crack}{The fiber/matrix interface crack}
+%\input{chapters/chapter2.tex}
+
+\makechapter{Summary of appended papers}{Summary of appended papers}{Summary of appended papers}
+\input{chapters/chapter3.tex}
+
+\makebib
+%\end{bibunit}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Begin Part II - Collection of papers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makepartpage{Part II}%
+\startpapers
+
+%-------------------------------------------------------------------
+\def\paperheader{Paper A}
+\def\papertitle{Finite Element solution of the fiber/matrix interface crack problem: convergence properties and mode mixity of the Virtual Crack Closure Technique}
+\def\paperauthorstring{Luca Di Stasio and Zoubir Ayadi}
+\def\referencestring{Finite Elements in Analysis and Design, Volume 167, December 2019, 103332.}
+\def\copyrightstring{2019, The Publisher, Reprinted with permission.}
+
+% The definitions above could just as well be put directly into the function
+% call below, but were explicitly defined to more clearly illustrate the
+% use of the function \makepaper.
+
+\newrefsection
+\makepaper
+  {\paperheader}
+  {\papertitle}
+  {\paperauthorstring}
+  {\referencestring}
+  {\copyrightstring}
+
+% The actual contents is imported by un-commenting the \input line below.
+% Make sure the file exist.
+\input{paperA/paper1.tex}
+
+
+%-------------------------------------------------------------------
+\def\paperheader{Paper B}
+\def\papertitle{Energy release rate of the fiber/matrix interface crack in UD composites under transverse loading: effect of the fiber volume fraction and of the distance to the free surface and to non-adjacent debonds}
+\def\paperauthorstring{Luca Di Stasio, Janis Varna and Zoubir Ayadi}
+\def\referencestring{Theoretical and Applied Fracture Mechanics, Volume 103, October 2019, 102251.}
+\def\copyrightstring{2019, The Publisher, Reprinted with permission.}
+
+% The definitions above could just as well be put directly into the function
+% call below, but were explicitly defined to more clearly illustrate the
+% use of the function \makepaper.
+
+\newrefsection
+\makepaper
+  {\paperheader}
+  {\papertitle}
+  {\paperauthorstring}
+  {\referencestring}
+  {\copyrightstring}
+
+% The actual contents is imported by un-commenting the \input line below.
+% Make sure the file exist.
+\input{paperB/paper2.tex}
+
+%-------------------------------------------------------------------
+\def\paperheader{Paper C}
+\def\papertitle{Effect of the proximity to the $0^{\circ}/90^{\circ}$ interface on Energy Release Rate of fiber/matrix interface crack growth in the  $90^{\circ}$-ply of a cross-ply laminate under tensile loading}
+\def\paperauthorstring{Luca Di Stasio, Janis Varna and Zoubir Ayadi}
+\def\referencestring{Journal of Composite Materials, 2019.}
+\def\copyrightstring{2019, The Authors.}
+
+\newrefsection
+\makepapersubmitted
+  {\paperheader}
+  {\papertitle}
+  {\paperauthorstring}
+  {\referencestring}
+  {\copyrightstring}
+
+
+\input{paperC/paper3.tex}
+
+%-------------------------------------------------------------------
+\def\paperheader{Paper D}
+\def\papertitle{Growth of interface cracks on consecutive fibers: on the same or on the opposite sides?}
+\def\paperauthorstring{Luca Di Stasio, Janis Varna and Zoubir Ayadi}
+\def\referencestring{Proceedings of the 12$^{th}$ International Conference on Composite Science and Technology (ICCST 12), Materials Today: Proceedings, 2019.}
+\def\copyrightstring{2019, The Authors.}
+
+\newrefsection
+\makepapersubmitted
+  {\paperheader}
+  {\papertitle}
+  {\paperauthorstring}
+  {\referencestring}
+  {\copyrightstring}
+
+\input{paperD/paper4.tex}
+
+%-------------------------------------------------------------------
+\def\paperheader{Paper E}
+\def\papertitle{Estimating the average size of fiber/matrix interface cracks in UD and cross-ply laminates}
+\def\paperauthorstring{Luca Di Stasio, Janis Varna and Zoubir Ayadi}
+\def\referencestring{Proceedings of the $7^{th}$ ECCOMAS Thematic Conference on the Mechanical Response of Composites, 2019.}
+\def\copyrightstring{2019, The Publisher, Reprinted with permission.}
+
+\newrefsection
+\makepaper
+  {\paperheader}
+  {\papertitle}
+  {\paperauthorstring}
+  {\referencestring}
+  {\copyrightstring}
+
+\input{paperE/paper5.tex}
+
+%-------------------------------------------------------------------
+\end{document}

@@ -84,12 +84,24 @@ def main():
                 for da in nDebsA:
                     a = nTotFibsA - da
                     for dtheta in range(10,160,10):
-                        with open(join(inpDir,'inputRVEdataMVDfreeasymmL1_144S1A2D2d10-LPC'+ext),'r') as inp:
+                        with open(join(inpDir,'inputRVEdataMVDfreeasymmL1_144S1d10COARED'+ext),'r') as inp:
                             lines = inp.readlines()
                         newlines = []
                         for line in lines:
-                            if 'S1A2D2' in line:
-                                newlines.append(line.replace('L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a),'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'))
+                            if 'L1_144S1d10' in line:
+                                newlines.append(line.replace('L1_144S1d10','L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)'))
+                            elif 'geometry, nDebonds' in line:
+                                newlines.append('geometry, nDebonds            @' + str(da) +'                $int')
+                            elif 'geometry, debonds, deltatheta' in line:
+                                newline = 'geometry, debonds, deltatheta @['
+                                for deb in range(1,da+1):
+                                    if deb>1:
+                                        newline += ','
+                                    newline += str(deb)
+                                newline += ']  $list of float'
+                                newlines.append( + str(da) +'                $int')
+                            else:
+                                newlines.append(line)
                         with open(join(inpDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)'-LPC'+ext),'w') as inp:
                     newlines = []
                     for line in lines:

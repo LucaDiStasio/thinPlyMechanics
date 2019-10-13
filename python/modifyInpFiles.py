@@ -84,8 +84,13 @@ def main():
                 for da in nDebsA:
                     a = nTotFibsA - da
                     for dtheta in range(10,160,10):
-                        with open(join(inpDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)'-LPC'+ext),'r') as inp:
+                        with open(join(inpDir,'inputRVEdataMVDfreeasymmL1_144S1A2D2d10-LPC'+ext),'r') as inp:
                             lines = inp.readlines()
+                        newlines = []
+                        for line in lines:
+                            if 'S1A2D2' in line:
+                                newlines.append(line.replace('L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a),'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'))
+                        with open(join(inpDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)'-LPC'+ext),'w') as inp:
                     newlines = []
                     for line in lines:
                         if 'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a) in line:

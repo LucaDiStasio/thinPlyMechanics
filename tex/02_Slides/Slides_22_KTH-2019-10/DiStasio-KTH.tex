@@ -826,7 +826,7 @@ $n=1$, $t_{90^{\circ}}=40\mu m$\\\vspace{5pt}
 \subsection{RVEs}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Representative Volume Elements (RVEs)}
+\frametitle{\vspace{0.2cm}\small Representative Volume Elements}
 \vspace{-1cm}
 \centering
 \begin{columns}[c]
@@ -834,11 +834,14 @@ $n=1$, $t_{90^{\circ}}=40\mu m$\\\vspace{5pt}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{thinPly.pdf}
+\includegraphics[width=\columnwidth]{freeThickPly.pdf}
 \end{figure}
 \vspace{-0.25cm}
 \begin{equation*}
-n\times 1-m\cdot t_{90^{\circ}}
+n\times k-free
+\end{equation*}
+\begin{equation*}
+n\times k-H
 \end{equation*}
 \end{column}
 \begin{column}{0.45\textwidth}
@@ -859,41 +862,174 @@ n\times  k-m\cdot t_{90^{\circ}}
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Representative Volume Elements}
-\vspace{-1.25cm}
+\vspace{-0.9cm}
 \centering
 \begin{columns}[c]
-\begin{column}{0.55\textwidth}
+\begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{freeThinPly.pdf}
+\includegraphics[width=\columnwidth]{coupling.pdf}
 \end{figure}
-%\vspace{-0.25cm}
+\vspace{-0.275cm}
 \begin{equation*}
-\begin{aligned}
-&-free\\
-n\times 1&-coupling\\
-&-coupling+H\\
-\end{aligned}
+\begin{split}
+n\times k&-symm\ (coupling)\\
+n\times k&-coupling+H
+\end{split}
 \end{equation*}
 \end{column}
-\begin{column}{0.45\textwidth}
+\begin{column}{0.5\textwidth}
 \centering
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{freeThickPly.pdf}
+\includegraphics[width=\columnwidth]{asymm.pdf}
 \end{figure}
 \vspace{-0.25cm}
 \begin{equation*}
-\begin{aligned}
-&-free\\
-n\times k&-coupling\\
-&-coupling+H\\
-\end{aligned}
+n\times k-asymm
 \end{equation*}
 \end{column}
 \end{columns}
 \end{frame}
+
+%\subsection{Equivalent boundary conditions}
+%
+%\begin{frame}
+%\frametitle{\vspace{0.2cm}\small Equivalent boundary conditions: linear horizontal displacement (H)}
+%\vspace{-1.25cm}
+%\centering
+%\begin{columns}[c]
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{freeThickPly.pdf}
+%\end{figure}
+%\vspace{-0.25cm}
+%\begin{equation*}
+%n\times k-H
+%\end{equation*}
+%\end{column}
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{equation*}
+%\scriptsize
+%u_{x}\left(x,h\right)=\bar{\varepsilon}_{x}x
+%\end{equation*}
+%\end{column}
+%\end{columns}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{\vspace{0.2cm}\small Equivalent boundary conditions: symmetric coupling}
+%\vspace{-1.25cm}
+%\centering
+%\begin{columns}[c]
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{coupling.pdf}
+%\end{figure}
+%\vspace{-0.25cm}
+%\begin{equation*}
+%n\times k-symm\ (coupling)
+%\end{equation*}
+%\end{column}
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{equation*}
+%\scriptsize
+%u_{z}\left(x,h\right)=\bar{u}_{z}\left(x,h\right)
+%\end{equation*}
+%\end{column}
+%\end{columns}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{\vspace{0.2cm}\small Equivalent boundary conditions: coupling + H}
+%\vspace{-1.25cm}
+%\centering
+%\begin{columns}[c]
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{coupling.pdf}
+%\end{figure}
+%\vspace{-0.25cm}
+%\begin{equation*}
+%n\times k-coupling+H
+%\end{equation*}
+%\end{column}
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{equation*}
+%\scriptsize
+%u_{z}\left(x,h\right)=\bar{u}_{z}\left(x,h\right)
+%\end{equation*}
+%\begin{equation*}
+%\scriptsize
+%u_{x}\left(x,h\right)=\bar{\varepsilon}_{x}x
+%\end{equation*}
+%\end{column}
+%\end{columns}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{\vspace{0.2cm}\small Equivalent boundary conditions: anti-symmetric coupling}
+%\vspace{-1.25cm}
+%\centering
+%\begin{columns}[c]
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{equation*}
+%\begin{split}
+%\scriptsize
+%u_{z}&\left(x,h\right)=-u_{z}\left(0,h\right)=\\&-\left(u_{z}\left(-x,h\right)-u_{z}\left(0,h\right)\right)
+%\end{split}
+%\end{equation*}
+%\begin{equation*}
+%\scriptsize
+%u_{x}\left(x,h\right)=-u_{x}\left(-x,h\right)
+%\end{equation*}
+%\end{column}
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{asymm.pdf}
+%\end{figure}
+%\vspace{-0.25cm}
+%\begin{equation*}
+%n\times k-asymm
+%\end{equation*}
+%\end{column}
+%\end{columns}
+%\end{frame}
+
+%\begin{frame}
+%\frametitle{\vspace{0.2cm}\small Equivalent boundary conditions: validation}
+%\vspace{-1.25cm}
+%\centering
+%\begin{columns}[c]
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{figure}
+%\centering
+%\includegraphics[width=1.1\columnwidth]{asymm-vs-explmodel-vf60-GI.pdf}
+%\end{figure}
+%\end{column}
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{asymm-vs-explmodel-vf60-GII.pdf}
+%\end{figure}
+%\end{column}
+%\end{columns}
+%\end{frame}
 
 \subsection{Assumptions}
 
@@ -1018,91 +1154,6 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \subsection{Interaction of Debonds}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
-\vspace{-.75cm}
-\centering
-\begin{columns}[c]
-\centering
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni1.pdf}
-\end{figure}
-\end{column}
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni1.pdf}
-\end{figure}
-\end{column}
-\end{columns}
-\vspace{-0.25cm}
-\includegraphics[width=0.275\textwidth]{twofibers-sameside-strainmagni1.pdf}
-\end{frame}
-
-\addtocounter{framenumber}{-1}
-
-\begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
-\vspace{-.75cm}
-\centering
-\begin{columns}[c]
-\centering
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni3.pdf}
-\end{figure}
-\end{column}
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni3.pdf}
-\end{figure}
-\end{column}
-\end{columns}
-\vspace{-0.25cm}
-\begin{figure}
-\centering
-\includegraphics[width=0.325\textwidth]{twofibers-sameside-strainmagni3.pdf}
-\end{figure}
-\end{frame}
-
-\addtocounter{framenumber}{-1}
-
-\begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
-\vspace{-.75cm}
-\centering
-\begin{columns}[c]
-\centering
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni21.pdf}
-\end{figure}
-\end{column}
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni21.pdf}
-\end{figure}
-\end{column}
-\end{columns}
-\vspace{-0.25cm}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{twofibers-sameside-strainmagni21.pdf}
-\end{figure}
-\end{frame}
-
-\begin{frame}
 \frametitle{\vspace{0.2cm}\small Interaction of Debonds: Crack Shielding}
 \vspace{-.75cm}
 \centering
@@ -1184,6 +1235,91 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{twofibers-sameside-crackshielding1.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni1.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni1.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\vspace{-0.25cm}
+\includegraphics[width=0.275\textwidth]{twofibers-sameside-strainmagni1.pdf}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni3.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni3.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\vspace{-0.25cm}
+\begin{figure}
+\centering
+\includegraphics[width=0.325\textwidth]{twofibers-sameside-strainmagni3.pdf}
+\end{figure}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni21.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni21.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\vspace{-0.25cm}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{twofibers-sameside-strainmagni21.pdf}
 \end{figure}
 \end{frame}
 

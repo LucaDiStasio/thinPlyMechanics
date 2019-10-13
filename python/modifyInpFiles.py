@@ -54,17 +54,18 @@ def getMaxSectionNumber(S,A):
 def main():
     #inpDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
     #outDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
-    inpDir = 'C:/Abaqus_WD/ElType'
-    outDir = 'C:/Abaqus_WD/ElType/modified'
+    inpDir = 'C:/Abaqus_WD/MultipleVerticalDebonds'
+    outDir = 'C:/Abaqus_WD/MultipleVerticalDebonds/modified'
     #inpDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
     #outDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
     baseName = 'inputRVEdata'
     itbaseName = 'inputRVEiterables'
     ext = '.deck'
     Ls = [1.144]
-    elTypes = ['PS','GPE']
-    nFibsA = [0,1,5,10]
-    nFibsS = [0,5,10]
+    #nFibsA = [0,1,5,10]
+    nTotFibsA = 100
+    nDebsA = [1,2,5,10]
+    nFibsS = [50]
 
     #fileListSide = []
     #fileListAbove = []
@@ -79,11 +80,12 @@ def main():
         os.mkdir(outDir)
 
     for L in Ls:
-        for elType in elTypes:
             for s in nFibsS:
-                for a in nFibsA:
-                    with open(join(inpDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+elType+'-LPC'+ext),'r') as inp:
-                        lines = inp.readlines()
+                for da in nDebsA:
+                    a = nTotFibsA - da
+                    for dtheta in range(10,160,10):
+                        with open(join(inpDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)'-LPC'+ext),'r') as inp:
+                            lines = inp.readlines()
                     newlines = []
                     for line in lines:
                         if 'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a) in line:

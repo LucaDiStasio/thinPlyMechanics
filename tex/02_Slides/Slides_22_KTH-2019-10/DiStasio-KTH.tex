@@ -1677,31 +1677,27 @@ $T_{stress\ free}\ \left[^{\circ}C\right]$&116.3\\
 \centering
 \begin{columns}[c]
 \begin{column}{0.5\textwidth}
+\centering
+\begin{table}
+\centering
+\footnotesize
+\begin{tabular}{ccc}
+&RT&110$^{\circ}C$\\
+\midrule
+1 $\nicefrac{mm}{min}$&3 sp.&3 sp.\\
+50 $\nicefrac{mm}{min}$&4 sp.&4 sp.\\
+500 $\nicefrac{mm}{min}$&4 sp.&4 sp.\\
+\end{tabular}
+\end{table}
+\end{column}
+\begin{column}{0.5\textwidth}
+\vspace{-0.5cm}
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{testing-procedure}
 \end{figure}
 \end{column}
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{testing-procedure-temp}
-\end{figure}
-\end{column}
 \end{columns}
-\begin{table}
-\centering
-\small
-\begin{tabular}{cccc}
-&\multicolumn{3}{c}{Cross-head speed}\\
-\cline{2-4}\\[-7.5pt]
-T&1 $\left[\nicefrac{mm}{min}\right]$&50 $\left[\nicefrac{mm}{min}\right]$&500 $\left[\nicefrac{mm}{min}\right]$\\
-\midrule
-room&3 sp.&4 sp.&4 sp.\\
-110$\left[^{\circ}\right]$&3 sp.&4 sp.&4 sp.\\
-\end{tabular}
-\end{table}
 \end{frame}
 
 \subsection{Crack density}
@@ -1876,7 +1872,12 @@ room&3 sp.&4 sp.&4 sp.\\
 \frametitle{\vspace{0.2cm}\small Design Idea}
 \vspace{-.75cm}
 \centering
-
+\small
+\begin{itemize}[label=\ding{46}]
+\item Use weak fiber/matrix interfaces $+$ microstructure $\rightarrow$ dissipate energy through diffuse debonding $+$ lower stiffness reduction
+\item Use microstructure (\emph{ply-thickness effect}) $\rightarrow$ prevent transverse cracking $=$ significant stiffness reduction
+\item Use partially reacted interfaces \emph{and/or} locally partially cured matrix \emph{and/or} nanoparticles-based local control of degree of reaction$\rightarrow$ re-bonding $@ T\sim T_{stress\ free}$ in unloaded state $=$ stiffness recovery
+\end{itemize}
 \end{frame}
 
 \begin{frame}[plain]

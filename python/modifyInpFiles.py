@@ -54,8 +54,8 @@ def getMaxSectionNumber(S,A):
 def main():
     #inpDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
     #outDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
-    inpDir = 'C:/Abaqus_WD/MultipleVerticalDebonds'
-    outDir = 'C:/Abaqus_WD/MultipleVerticalDebonds/modified'
+    inpDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/MultipleVerticalDebonds'
+    outDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/MultipleVerticalDebonds/modified'
     #inpDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
     #outDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
     baseName = 'inputRVEdata'
@@ -91,61 +91,109 @@ def main():
                             if 'L1_144S1d10' in line:
                                 newlines.append(line.replace('L1_144S1d10','L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)'))
                             elif 'geometry, nDebonds' in line:
-                                newlines.append('geometry, nDebonds            @' + str(da) +'                $int')
+                                newlines.append('geometry, nDebonds            @' + str(da) +'                $int' + '\n')
                             elif 'geometry, debonds, deltatheta' in line:
                                 newline = 'geometry, debonds, deltatheta @['
                                 for deb in range(1,da+1):
                                     if deb>1:
                                         newline += ','
-                                    newline += str(deb)
+                                    newline += str(dtheta)
                                 newline += ']  $list of float'
-                                newlines.append( + str(da) +'                $int')
+                                newlines.append(newline + '\n')
+                            elif 'geometry, debonds, theta' in line:
+                                newline = 'geometry, debonds, theta @['
+                                for deb in range(1,da+1):
+                                    if deb>1:
+                                        newline += ','
+                                    if deb%2>0:
+                                        newline += str(180.0)
+                                    else:
+                                        newline += str(0.0)
+                                newline += ']  $list of float'
+                                newlines.append(newline + '\n')
+                            elif 'sectionRegions'  in line and '@DEBFIBER-ROWS-FIBERS' in line:
+                                insertSectionAssignment = True
+                            elif insertSectionAssignment and 'sectionRegions'  in line and 'offsetValue'  in line:
+                                newlines.append(line)
+                                newlines.append('sectionRegions, 6, name                 @fiberSection $string' + '\n')
+                                newlines.append('sectionRegions, 6, set                  @UPPER-FIBERS $string' + '\n')
+                                newlines.append('sectionRegions, 6, offsetType           @MIDDLE_SURFACE $ABAQUS keyword' + '\n')
+                                newlines.append('sectionRegions, 6, offsetField          @  $string' + '\n')
+                                newlines.append('sectionRegions, 6, thicknessAssignment  @FROM_SECTION $ABAQUS keyword' + '\n')
+                                newlines.append('sectionRegions, 6, offsetValue          @0.0 $float' + '\n')
+                            elif 'BC, northSide, type' in line:
+                                newlines.append('BC, northSide, type     @adjacentFibers $string' + '\n')
+                            elif 'BC, northSide, nFibers' in line:
+                                newlines.append('BC, northSide, nFibers  @' + str(a) + ' $int' + '\n')
                             else:
                                 newlines.append(line)
-                        with open(join(inpDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)'-LPC'+ext),'w') as inp:
-                    newlines = []
-                    for line in lines:
-                        if 'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a) in line:
-                            newlines.append(line.replace('L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a),'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'))
-                        elif 'materials, 2, elastic, values' in line:
-                            newlines.append(line)
-                            newlines.append('materials, 3, name            @UD $string' + '\n')
-                            newlines.append('materials, 3, elastic, type   @ENGINEERING_CONSTANTS $ABAQUS keyword' + '\n')
-                            newlines.append('materials, 3, elastic, values @[43442,13714,13714,0.273,0.273,0.465,4315,4315,4681] $list of float' + '\n')
-                        elif 'sections, 2, thickness' in line:
-                            newlines.append(line)
-                            newlines.append('sections, 3, name      @udSection $string' + '\n')
-                            newlines.append('sections, 3, type      @HomogeneousSolidSection $string' + '\n')
-                            newlines.append('sections, 3, material  @UD $string' + '\n')
-                            newlines.append('sections, 3, thickness @1.0 $float' + '\n')
-                        elif 'sectionRegions, ' + str(getMaxSectionNumber(s,a)) + ', offsetValue' in line:
-                            newlines.append(line)
-                            newlines.append('sectionRegions, ' + str(getMaxSectionNumber(s,a)+1) + ', name                 @udSection $string' + '\n')
-                            newlines.append('sectionRegions, ' + str(getMaxSectionNumber(s,a)+1) + ', set                  @BOUNDING-PLY $string' + '\n')
-                            newlines.append('sectionRegions, ' + str(getMaxSectionNumber(s,a)+1) + ', offsetType           @MIDDLE_SURFACE $ABAQUS keyword' + '\n')
-                            newlines.append('sectionRegions, ' + str(getMaxSectionNumber(s,a)+1) + ', offsetField          @  $string' + '\n')
-                            newlines.append('sectionRegions, ' + str(getMaxSectionNumber(s,a)+1) + ', thicknessAssignment  @FROM_SECTION $ABAQUS keyword' + '\n')
-                            newlines.append('sectionRegions, ' + str(getMaxSectionNumber(s,a)+1) + ', offsetValue          @0.0 $float' + '\n')
-                        elif 'BC, northSide, type' in line:
-                            if a>0:
-                                newlines.append('BC, northSide, type     @adjacentFibersboundingPly $string' + '\n')
-                            else:
-                                newlines.append('BC, northSide, type     @boundingPly $string' + '\n')
-                        elif 'BC, northSide, tRatio' in line:
-                            newlines.append('BC, northSide, tRatio   @1.0 $float' + '\n')
-                        else:
-                            newlines.append(line)
-                    with open(join(outDir,baseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'+elType+'-LPC'+ext),'w') as out:
-                        for line in newlines:
-                            out.write(line)
-                    with open(join(inpDir,itbaseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+elType+'-LPC'+ext),'r') as inp:
-                        lines = inp.readlines()
-                    with open(join(outDir,itbaseName+'Free'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'+elType+'-LPC'+ext),'w') as out:
+                        with open(join(inpDir,baseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
+                            for line in newlines:
+                                inp.write(line)
+                        with open(join(inpDir,itbaseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
+                            inp.write('# everything after is a comment' + '\n')
+                            inp.write('# keywords are divided by commas: keyword1, keyword2, ...' + '\n')
+                            inp.write('# the corresponding value is introduced by @' + '\n')
+                            inp.write('# variable type is introduced by $' + '\n')
+                            inp.write('#' + '\n')
+                            inp.write('# Output directory and filenames' + '\n')
+                            inp.write('basename             @RVE1_144-HSD-MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+' $string' + '\n')
+                            inp.write('free parameters      @1             $int' + '\n')
+                            inp.write('geometry, deltatheta @[' + str(dtheta) + ',' + str(dtheta) + ',10]   $min,max,step #other possibility: [v1,v2,...,vn] $ list of values' + '\n')
+                        with open(join(inpDir,'inputRVEdataMVDfreeasymmL1_144S1d10COARED'+ext),'r') as inp:
+                            lines = inp.readlines()
+                        newlines = []
                         for line in lines:
-                            if 'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a) in line:
-                                out.write(line.replace('L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a),'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'T1'))
+                            if 'L1_144S1d10' in line:
+                                newlines.append(line.replace('asymmL1_144S1d10','symmL'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)'))
+                            elif 'geometry, nDebonds' in line:
+                                newlines.append('geometry, nDebonds            @' + str(da) +'                $int' + '\n')
+                            elif 'geometry, debonds, deltatheta' in line:
+                                newline = 'geometry, debonds, deltatheta @['
+                                for deb in range(1,da+1):
+                                    if deb>1:
+                                        newline += ','
+                                    newline += str(dtheta)
+                                newline += ']  $list of float'
+                                newlines.append(newline + '\n')
+                            elif 'geometry, debonds, theta' in line:
+                                newline = 'geometry, debonds, theta @['
+                                for deb in range(1,da+1):
+                                    if deb>1:
+                                        newline += ','
+                                    newline += str(0.0)
+                                newline += ']  $list of float'
+                                newlines.append(newline + '\n')
+                            elif 'sectionRegions'  in line and '@DEBFIBER-ROWS-FIBERS' in line:
+                                insertSectionAssignment = True
+                            elif insertSectionAssignment and 'sectionRegions'  in line and 'offsetValue'  in line:
+                                newlines.append(line)
+                                newlines.append('sectionRegions, 6, name                 @fiberSection $string' + '\n')
+                                newlines.append('sectionRegions, 6, set                  @UPPER-FIBERS $string' + '\n')
+                                newlines.append('sectionRegions, 6, offsetType           @MIDDLE_SURFACE $ABAQUS keyword' + '\n')
+                                newlines.append('sectionRegions, 6, offsetField          @  $string' + '\n')
+                                newlines.append('sectionRegions, 6, thicknessAssignment  @FROM_SECTION $ABAQUS keyword' + '\n')
+                                newlines.append('sectionRegions, 6, offsetValue          @0.0 $float' + '\n')
+                            elif 'BC, northSide, type' in line:
+                                newlines.append('BC, northSide, type     @adjacentFibers $string' + '\n')
+                            elif 'BC, northSide, nFibers' in line:
+                                newlines.append('BC, northSide, nFibers  @' + str(a) + ' $int' + '\n')
                             else:
-                                out.write(line)
+                                newlines.append(line)
+                        with open(join(inpDir,baseName+'MVDfreesymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
+                            for line in newlines:
+                                inp.write(line)
+                        with open(join(inpDir,itbaseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
+                            inp.write('# everything after is a comment' + '\n')
+                            inp.write('# keywords are divided by commas: keyword1, keyword2, ...' + '\n')
+                            inp.write('# the corresponding value is introduced by @' + '\n')
+                            inp.write('# variable type is introduced by $' + '\n')
+                            inp.write('#' + '\n')
+                            inp.write('# Output directory and filenames' + '\n')
+                            inp.write('basename             @RVE1_144-HSD-MVDfreesymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+' $string' + '\n')
+                            inp.write('free parameters      @1             $int' + '\n')
+                            inp.write('geometry, deltatheta @[' + str(dtheta) + ',' + str(dtheta) + ',10]   $min,max,step #other possibility: [v1,v2,...,vn] $ list of values' + '\n')
+
 
 
 if __name__ == '__main__':

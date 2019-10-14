@@ -89,7 +89,7 @@ def main():
                         newlines = []
                         for line in lines:
                             if 'L1_144S1d10' in line:
-                                newlines.append(line.replace('L1_144S1d10','L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)'))
+                                newlines.append(line.replace('L1_144S1d10','L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)))
                             elif 'geometry, nDebonds' in line:
                                 newlines.append('geometry, nDebonds            @' + str(da) +'                $int' + '\n')
                             elif 'geometry, debonds, deltatheta' in line:

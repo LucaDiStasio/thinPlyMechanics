@@ -87,6 +87,7 @@ def main():
                         with open(join(inpDir,'inputRVEdataMVDfreeasymmL1_144S1d10COARED'+ext),'r') as inp:
                             lines = inp.readlines()
                         newlines = []
+                        insertSectionAssignment = False
                         for line in lines:
                             if 'L1_144S1d10' in line:
                                 newlines.append(line.replace('L1_144S1d10','L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)))
@@ -121,6 +122,7 @@ def main():
                                 newlines.append('sectionRegions, 6, offsetField          @  $string' + '\n')
                                 newlines.append('sectionRegions, 6, thicknessAssignment  @FROM_SECTION $ABAQUS keyword' + '\n')
                                 newlines.append('sectionRegions, 6, offsetValue          @0.0 $float' + '\n')
+                                insertSectionAssignment = False
                             elif 'BC, northSide, type' in line:
                                 newlines.append('BC, northSide, type     @adjacentFibers $string' + '\n')
                             elif 'BC, northSide, nFibers' in line:
@@ -143,6 +145,7 @@ def main():
                         with open(join(inpDir,'inputRVEdataMVDfreeasymmL1_144S1d10COARED'+ext),'r') as inp:
                             lines = inp.readlines()
                         newlines = []
+                        insertSectionAssignment = False
                         for line in lines:
                             if 'L1_144S1d10' in line:
                                 newlines.append(line.replace('asymmL1_144S1d10','symmL'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)))
@@ -174,6 +177,7 @@ def main():
                                 newlines.append('sectionRegions, 6, offsetField          @  $string' + '\n')
                                 newlines.append('sectionRegions, 6, thicknessAssignment  @FROM_SECTION $ABAQUS keyword' + '\n')
                                 newlines.append('sectionRegions, 6, offsetValue          @0.0 $float' + '\n')
+                                insertSectionAssignment = False
                             elif 'BC, northSide, type' in line:
                                 newlines.append('BC, northSide, type     @adjacentFibers $string' + '\n')
                             elif 'BC, northSide, nFibers' in line:

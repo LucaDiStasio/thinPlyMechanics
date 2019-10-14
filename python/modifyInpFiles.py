@@ -129,10 +129,10 @@ def main():
                                 newlines.append('BC, northSide, nFibers  @' + str(a) + ' $int' + '\n')
                             else:
                                 newlines.append(line)
-                        with open(join(inpDir,baseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
+                        with open(join(outDir,baseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
                             for line in newlines:
                                 inp.write(line)
-                        with open(join(inpDir,itbaseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
+                        with open(join(outDir,itbaseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
                             inp.write('# everything after is a comment' + '\n')
                             inp.write('# keywords are divided by commas: keyword1, keyword2, ...' + '\n')
                             inp.write('# the corresponding value is introduced by @' + '\n')
@@ -184,10 +184,10 @@ def main():
                                 newlines.append('BC, northSide, nFibers  @' + str(a) + ' $int' + '\n')
                             else:
                                 newlines.append(line)
-                        with open(join(inpDir,baseName+'MVDfreesymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
+                        with open(join(outDir,baseName+'MVDfreesymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
                             for line in newlines:
                                 inp.write(line)
-                        with open(join(inpDir,itbaseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
+                        with open(join(outDir,itbaseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
                             inp.write('# everything after is a comment' + '\n')
                             inp.write('# keywords are divided by commas: keyword1, keyword2, ...' + '\n')
                             inp.write('# the corresponding value is introduced by @' + '\n')

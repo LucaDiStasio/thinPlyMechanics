@@ -127,6 +127,10 @@ def main():
                                 newlines.append('BC, northSide, type     @adjacentFibers $string' + '\n')
                             elif 'BC, northSide, nFibers' in line:
                                 newlines.append('BC, northSide, nFibers  @' + str(a) + ' $int' + '\n')
+                            elif 'BC, rightSide, nFibers' in line:
+                                newlines.append('BC, rightSide, nFibers  @' + str(s) + ' $int' + '\n')
+                            elif 'BC, leftSide, nFibers' in line:
+                                newlines.append('BC, leftSide, nFibers  @' + str(s) + ' $int' + '\n')
                             else:
                                 newlines.append(line)
                         with open(join(outDir,baseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
@@ -182,6 +186,10 @@ def main():
                                 newlines.append('BC, northSide, type     @adjacentFibers $string' + '\n')
                             elif 'BC, northSide, nFibers' in line:
                                 newlines.append('BC, northSide, nFibers  @' + str(a) + ' $int' + '\n')
+                            elif 'BC, rightSide, nFibers' in line:
+                                newlines.append('BC, rightSide, nFibers  @' + str(s) + ' $int' + '\n')
+                            elif 'BC, leftSide, nFibers' in line:
+                                newlines.append('BC, leftSide, nFibers  @' + str(s) + ' $int' + '\n')
                             else:
                                 newlines.append(line)
                         with open(join(outDir,baseName+'MVDfreesymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:

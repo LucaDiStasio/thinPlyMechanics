@@ -63,9 +63,9 @@ def main():
     ext = '.cmd'
     Ls = [1.144]
     #nFibsA = [0,1,5,10]
-    nTotFibsA = 100
+    nTotFibsA = 20
     nDebsA = [1,2,5,10]
-    nFibsS = [50]
+    nFibsS = [10]
 
     #fileListSide = []
     #fileListAbove = []
@@ -87,12 +87,11 @@ def main():
                 a = nTotFibsA - da
                 for dtheta in range(10,160,10):
                     if not count:
-                        cmdLine += 'cd D:/01*/06*/thinPlyMechanics/windows-cmd && startRVESimPipeMVDasymm ' + str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)
+                        cmdLine += 'cd C:/02*/01*/01*/thinPlyMechanics/windows-cmd && startRVESimPipeMVDLPC ' + str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)
                     else:
-                        cmdLine += ' && cd D:/01*/06*/thinPlyMechanics/windows-cmd && startRVESimPipeMVDasymm ' + str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)
-                    cmdLine += ' && cd D:/01*/06*/thinPlyMechanics/windows-cmd && startRVESimPipeMVDsymm ' + str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)
+                        cmdLine += ' && cd C:/02*/01*/01*/thinPlyMechanics/windows-cmd && startRVESimPipeMVDLPC ' + str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)
 
-    with open(join(outDir,'runMVDPipeEEIGM'+ext),'w') as cmd:
+    with open(join(outDir,'runMVDPipeLPCtotA20'+ext),'w') as cmd:
         cmd.write(cmdLine)
 
 

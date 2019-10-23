@@ -84,7 +84,7 @@ def main():
                 for da in nDebsA:
                     a = nTotFibsA - da
                     for dtheta in range(10,160,10):
-                        with open(join(inpDir,'inputRVEdataMVDfreeasymmL1_144S1d10COARED'+ext),'r') as inp:
+                        with open(join(inpDir,'inputRVEdataMVDfreeasymmL1_144S1d10-LPC'+ext),'r') as inp:
                             lines = inp.readlines()
                         newlines = []
                         insertSectionAssignment = False
@@ -133,10 +133,10 @@ def main():
                                 newlines.append('BC, leftSide, nFibers  @' + str(s) + ' $int' + '\n')
                             else:
                                 newlines.append(line)
-                        with open(join(outDir,baseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
+                        with open(join(outDir,baseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'-LPC'+ext),'w') as inp:
                             for line in newlines:
                                 inp.write(line)
-                        with open(join(outDir,itbaseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
+                        with open(join(outDir,itbaseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'-LPC'+ext),'w') as inp:
                             inp.write('# everything after is a comment' + '\n')
                             inp.write('# keywords are divided by commas: keyword1, keyword2, ...' + '\n')
                             inp.write('# the corresponding value is introduced by @' + '\n')
@@ -146,7 +146,7 @@ def main():
                             inp.write('basename             @RVE1_144-HSD-MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+' $string' + '\n')
                             inp.write('free parameters      @1             $int' + '\n')
                             inp.write('geometry, deltatheta @[' + str(dtheta) + ',' + str(dtheta) + ',10]   $min,max,step #other possibility: [v1,v2,...,vn] $ list of values' + '\n')
-                        with open(join(inpDir,'inputRVEdataMVDfreeasymmL1_144S1d10COARED'+ext),'r') as inp:
+                        with open(join(inpDir,'inputRVEdataMVDfreeasymmL1_144S1d10-LPC'+ext),'r') as inp:
                             lines = inp.readlines()
                         newlines = []
                         insertSectionAssignment = False
@@ -192,10 +192,10 @@ def main():
                                 newlines.append('BC, leftSide, nFibers  @' + str(s) + ' $int' + '\n')
                             else:
                                 newlines.append(line)
-                        with open(join(outDir,baseName+'MVDfreesymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
+                        with open(join(outDir,baseName+'MVDfreesymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'-LPC'+ext),'w') as inp:
                             for line in newlines:
                                 inp.write(line)
-                        with open(join(outDir,itbaseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'COARED'+ext),'w') as inp:
+                        with open(join(outDir,itbaseName+'MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'-LPC'+ext),'w') as inp:
                             inp.write('# everything after is a comment' + '\n')
                             inp.write('# keywords are divided by commas: keyword1, keyword2, ...' + '\n')
                             inp.write('# the corresponding value is introduced by @' + '\n')

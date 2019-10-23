@@ -63,9 +63,9 @@ def main():
     ext = '.deck'
     Ls = [1.144]
     #nFibsA = [0,1,5,10]
-    nTotFibsA = 100
+    nTotFibsA = 20
     nDebsA = [1,2,5,10]
-    nFibsS = [50]
+    nFibsS = [10]
 
     #fileListSide = []
     #fileListAbove = []

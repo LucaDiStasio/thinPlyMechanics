@@ -65,9 +65,9 @@ def main():
     ext = '.cmd'
     Ls = [1.144]
     #nFibsA = [0,1,5,10]
-    nTotFibsA = 20
+    nTotFibsA = 100
     nDebsA = [1,2,5,10]
-    nFibsS = [10]
+    nFibsS = [50]
 
     #fileListSide = []
     #fileListAbove = []
@@ -94,7 +94,7 @@ def main():
                         cmdLine += ' && cd C:/02*/01*/01*/thinPlyMechanics/windows-cmd && startRVESimPipeMVDLPC ' + str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)
                     count += 1
 
-    with open(join(outDir,'runMVDPipeLPCtotA20'+ext),'w') as cmd:
+    with open(join(outDir,'runMVDPipeLPCtotA100'+ext),'w') as cmd:
         cmd.write(cmdLine)
 
 

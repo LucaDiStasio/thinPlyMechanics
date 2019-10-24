@@ -228,15 +228,28 @@ Thus, Eq.~\ref{eq:betarho} becomes
 
 \subsection{Analytical modeling of $COD\left(\theta\right)$ and $CSD\left(\theta\right)$}
 
+The Crack Opening Displacement (COD) and Crack Sliding Displacement (CSD) are in general a function of $\theta$, the angular coordinate along the crack which varies between $0$ and $\Delta\theta$. Without making any approximation, the Crack Opening Displacement (COD) and Crack Sliding Displacement (CSD) can be expressed as the sum of their average value and a term, respectively $\delta COD\left(\theta\right)$ and $\delta CSD\left(\theta\right)$, that represents the variation of the function from its average:
+
 \begin{equation}
 \begin{aligned}
-COD\left(\theta\right)&=COD_{avg}+\delta COD\left(\theta\right)=COD_{avg}+COD_{max}f\left(\theta\right)\\
-CSD\left(\theta\right)&=CSD_{avg}+\delta CSD\left(\theta\right)=CSD_{avg}+CSD_{max}g\left(\theta\right)
+COD\left(\theta\right)&=COD_{avg}+\delta COD\left(\theta\right)\\
+CSD\left(\theta\right)&=CSD_{avg}+\delta CSD\left(\theta\right).
 \end{aligned}
 \end{equation}
 
+We introduce at this point an approximation and assume that the functions $\delta COD\left(\theta\right)$ and $\delta CSD\left(\theta\right)$ can be expressed as the product of the maximum value and a function, respectively $f\left(\theta\right)$ and $g\left(\theta\right)$:
+
 \begin{equation}
-\int_{0}^{\Delta\theta}f\left(\theta\right)d\theta=0\quad\int_{0}^{\Delta\theta}g\left(\theta\right)d\theta=0
+\begin{aligned}
+COD\left(\theta\right)&=COD_{avg}+\delta COD\left(\theta\right)=COD_{avg}+COD_{max}f\left(\theta\right)\\
+CSD\left(\theta\right)&=CSD_{avg}+\delta CSD\left(\theta\right)=CSD_{avg}+CSD_{max}g\left(\theta\right),
+\end{aligned}
+\end{equation}
+
+where $f\left(\theta\right)$ and $g\left(\theta\right)$ are assumed to be odd functions over the integration domain $\left[0,\Delta\theta\right]$
+
+\begin{equation}
+\int_{0}^{\Delta\theta}f\left(\theta\right)d\theta=0\quad\int_{0}^{\Delta\theta}g\left(\theta\right)d\theta=0.
 \end{equation}
 
 \begin{equation}

@@ -54,8 +54,10 @@ def getMaxSectionNumber(S,A):
 def main():
     #inpDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
     #outDir = 'C:/Users/luca/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
-    inpDir = 'C:/02_Local-folder/01_Luca/01_WD/thinPlyMechanics/windows-cmd'
-    outDir = 'C:/02_Local-folder/01_Luca/01_WD/thinPlyMechanics/windows-cmd'
+    #inpDir = 'C:/02_Local-folder/01_Luca/01_WD/thinPlyMechanics/windows-cmd'
+    #outDir = 'C:/02_Local-folder/01_Luca/01_WD/thinPlyMechanics/windows-cmd'
+    inpDir = 'C:/Users/lucdis/Documents/WD/thinPlyMechanics/windows-cmd'
+    outDir = 'C:/Users/lucdis/Documents/WD/thinPlyMechanics/windows-cmd'
     #inpDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData'
     #outDir = 'D:/OneDrive/01_Luca/07_DocMASE/07_Data/03_FEM/InputData/modified'
     baseName = 'inputRVEdata'

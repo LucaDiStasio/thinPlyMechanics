@@ -90,6 +90,7 @@ def main():
                         cmdLine += 'cd C:/02*/01*/01*/thinPlyMechanics/windows-cmd && startRVESimPipeMVDLPC ' + str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)
                     else:
                         cmdLine += ' && cd C:/02*/01*/01*/thinPlyMechanics/windows-cmd && startRVESimPipeMVDLPC ' + str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)
+                    count += 1
 
     with open(join(outDir,'runMVDPipeLPCtotA20'+ext),'w') as cmd:
         cmd.write(cmdLine)

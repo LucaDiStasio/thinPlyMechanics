@@ -284,7 +284,7 @@ CSD\left(\Delta\theta\right)&=0.
 \end{aligned}
 \end{equation}
 
-The explicit construction of the polynomials $f\left(\theta-\frac{\Delta\Psi}{2}\right)$ and $g\left(\theta-\frac{\Delta\theta}{2}\right)$ for $n=1,2,3$ (or degree $2n-1=1,3,5$) is reported in \ref{app:fandgexplicit}.
+The explicit construction of the polynomials $f\left(\theta-\frac{\Delta\Psi}{2}\right)$ and $g\left(\theta-\frac{\Delta\theta}{2}\right)$ for $n=1,2,3$ (or degree $2n-1=1,3,5$) is reported in \ref{app:fandgexplicit}.\\We recall the expressions of the non-zero components of the Vakulenko-Kachanov tensor
 
 \begin{equation}
 \begin{aligned}
@@ -297,6 +297,11 @@ The explicit construction of the polynomials $f\left(\theta-\frac{\Delta\Psi}{2}
 \end{aligned}
 \end{equation}
 
+and proceed to the integration of the different summands:
+
+\begin{enumerate}
+
+\item 
 \begin{equation}
 \begin{aligned}
 \frac{1}{\Delta\theta}&\int_{0}^{\Delta\theta}COD\left(\theta\right)d\theta=\\
@@ -310,12 +315,14 @@ The explicit construction of the polynomials $f\left(\theta-\frac{\Delta\Psi}{2}
 \end{aligned}
 \end{equation}
 
+\item
 \begin{equation}
 \begin{aligned}
 \frac{1}{\Delta\theta}&\int_{0}^{\Delta\theta}CSD\left(\theta\right)d\theta=CSD_{avg}
 \end{aligned}
 \end{equation}
 
+\item
 \begin{equation}
 \footnotesize
 \begin{aligned}
@@ -324,9 +331,50 @@ The explicit construction of the polynomials $f\left(\theta-\frac{\Delta\Psi}{2}
 =&-\frac{1}{2\Delta\theta}COD_{avg}\left[\cos\left(2\theta\right)\right]\Bigg\rvert_{0}^{\Delta\theta}+\\
 +&\frac{1}{\Delta\theta}\left[COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\theta)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\theta^{k-i}\right)\right]\Bigg\rvert_{0}^{\Delta\Psi}=\\
 =&\frac{1-\cos\left(2\Delta\theta\right)}{2\Delta\theta}COD_{avg}+\\
-+&\frac{1}{\Delta\theta}COD_{max}\sum_{i=0}^{n}\left(-\frac{1}{2}\right)^{i+1}\sin\left(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi\right)\left(\sum_{k=0}^{n-i}a_{k}\left(n-\left(k+1\right)\right)!\Delta\Psi^{k}\right)
++&\frac{1}{\Delta\theta}COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)
 \end{aligned}
 \end{equation}
+
+\item
+\begin{equation}
+\footnotesize
+\begin{aligned}
+&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}CSD\left(\theta\right)\sin\left(2\theta\right)d\theta=\\
+=&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(CSD_{avg}+CSD_{max}\sum_{k=0}^{n-1}b_{2k+1}\theta^{2k+1}\right)\sin\left(2\theta\right)d\theta=\\
+=&-\frac{1}{2\Delta\theta}COD_{avg}\left[\cos\left(2\theta\right)\right]\Bigg\rvert_{0}^{\Delta\theta}+\\
++&\frac{1}{\Delta\theta}\left[COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\theta)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\theta^{k-i}\right)\right]\Bigg\rvert_{0}^{\Delta\Psi}=\\
+=&\frac{1-\cos\left(2\Delta\theta\right)}{2\Delta\theta}COD_{avg}+\\
++&\frac{1}{\Delta\theta}COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)
+\end{aligned}
+\end{equation}
+
+\item
+\begin{equation}
+\footnotesize
+\begin{aligned}
+&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}COD\left(\theta\right)\cos\left(2\theta\right)d\theta=\\
+=&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(COD_{avg}+COD_{max}\sum_{k=0}^{n-1}a_{2k+1}\theta^{2k+1}\right)\cos\left(2\theta\right)d\theta=\\
+=&-\frac{1}{2\Delta\theta}COD_{avg}\left[\cos\left(2\theta\right)\right]\Bigg\rvert_{0}^{\Delta\theta}+\\
++&\frac{1}{\Delta\theta}\left[COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\theta)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\theta^{k-i}\right)\right]\Bigg\rvert_{0}^{\Delta\Psi}=\\
+=&\frac{1-\cos\left(2\Delta\theta\right)}{2\Delta\theta}COD_{avg}+\\
++&\frac{1}{\Delta\theta}COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)
+\end{aligned}
+\end{equation}
+
+\item
+\begin{equation}
+\footnotesize
+\begin{aligned}
+&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}CSD\left(\theta\right)\cos\left(2\theta\right)d\theta=\\
+=&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(CSD_{avg}+CSD_{max}\sum_{k=0}^{n-1}b_{2k+1}\theta^{2k+1}\right)\cos\left(2\theta\right)d\theta=\\
+=&-\frac{1}{2\Delta\theta}COD_{avg}\left[\cos\left(2\theta\right)\right]\Bigg\rvert_{0}^{\Delta\theta}+\\
++&\frac{1}{\Delta\theta}\left[COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\theta)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\theta^{k-i}\right)\right]\Bigg\rvert_{0}^{\Delta\Psi}=\\
+=&\frac{1-\cos\left(2\Delta\theta\right)}{2\Delta\theta}COD_{avg}+\\
++&\frac{1}{\Delta\theta}COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)
+\end{aligned}
+\end{equation}
+
+\end{enumerate}
 
 \bibliography{refs}
 

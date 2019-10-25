@@ -404,18 +404,43 @@ Finally we can compute the expressions of the components of the Vakulenko-Kachan
 \item $\beta_{33}$
 
 \begin{equation}
+\footnotesize
 \begin{aligned}
 &\beta_{33}=\\
 &=\rho_{D}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left[\frac{COD\left(\theta\right)+CSD\left(\theta\right)}{2}\left(1+\sin\left(2\theta\right)\right)-\frac{COD\left(\theta\right)-CSD\left(\theta\right)}{2}\cos\left(2\theta\right)\right]d\theta=\\
+&=\frac{\rho_{D}}{2}\left(COD_{avg}+CSD_{avg}\right)+\\
+&+\frac{\rho_{D}}{2}\frac{1-\cos\left(2\Delta\theta\right)}{2\Delta\theta}COD_{avg}+\frac{\rho_{D}}{2}\frac{1-\cos\left(2\Delta\theta\right)}{2\Delta\theta}CSD_{avg}+\\
+&+\frac{\rho_{D}}{2}\frac{1}{\Delta\theta}COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)+\\
+&+\frac{\rho_{D}}{2}\frac{1}{\Delta\theta}CSD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi)\left(\sum_{k=i}^{2n-1}b_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)+\\
+&-\frac{\rho_{D}}{2}\frac{\sin\left(2\Delta\theta\right)}{2\Delta\theta}COD_{avg}+\\
+&-\frac{\rho_{D}}{2}\frac{1}{\Delta\theta}COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i}\sin(\frac{1+mod\left(i+1,2\right)}{2}\pi-2\Delta\Psi)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)+\\
+&+\frac{\rho_{D}}{2}\frac{\sin\left(2\Delta\theta\right)}{2\Delta\theta}CSD_{avg}+\\
+&+\frac{\rho_{D}}{2}\frac{1}{\Delta\theta}CSD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i}\sin(\frac{1+mod\left(i+1,2\right)}{2}\pi-2\Delta\Psi)\left(\sum_{k=i}^{2n-1}b_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)=\\
+&=\frac{\rho_{D}}{2}COD_{avg}\left(1+\frac{1-\cos\left(2\Delta\theta\right)}{2\Delta\theta}-\frac{\sin\left(2\Delta\theta\right)}{2\Delta\theta}\right)+\\
+&+\frac{\rho_{D}}{2}CSD_{avg}\left(1-\frac{1+\cos\left(2\Delta\theta\right)}{2\Delta\theta}+\frac{\sin\left(2\Delta\theta\right)}{2\Delta\theta}\right)+\\
+&+\frac{\rho_{D}}{2}COD_{max}\frac{1}{\Delta\theta}\sum_{i=0}^{2n-1}\left(\left(-\frac{1}{2}\right)^{i+1}\sin\left(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi\right)-\left(-\frac{1}{2}\right)^{i}\sin\left(\frac{1+mod\left(i+1,2\right)}{2}\pi-2\Delta\Psi\right)\right)\cdot\\&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\cdot\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)+\\
+&+\frac{\rho_{D}}{2}CSD_{max}\frac{1}{\Delta\theta}\sum_{i=0}^{2n-1}\left(\left(-\frac{1}{2}\right)^{i}\sin\left(\frac{1+mod\left(i+1,2\right)}{2}\pi-2\Delta\Psi\right)+\left(-\frac{1}{2}\right)^{i+1}\sin\left(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi\right)\right)\cdot\\&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\cdot\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)
 \end{aligned}
 \end{equation}
 
 \item $\beta_{23}$
 
 \begin{equation}
+\footnotesize
 \begin{aligned}
 &\beta_{23}=\\
-&=\rho_{D}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}2\left[\frac{COD\left(\theta\right)+CSD\left(\theta\right)}{2}\cos\left(2\theta\right)+\frac{COD\left(\theta\right)-CSD\left(\theta\right)}{2}\sin\left(2\theta\right)\right]d\theta\\
+&=\rho_{D}\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}2\left[\frac{COD\left(\theta\right)+CSD\left(\theta\right)}{2}\cos\left(2\theta\right)+\frac{COD\left(\theta\right)-CSD\left(\theta\right)}{2}\sin\left(2\theta\right)\right]d\theta=\\
+&=\frac{\rho_{D}}{2}\frac{\sin\left(2\Delta\theta\right)}{2\Delta\theta}COD_{avg}+\\
+&+\frac{\rho_{D}}{2}\frac{1}{\Delta\theta}COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i}\sin\left(\frac{1+mod\left(i+1,2\right)}{2}\pi-2\Delta\Psi\right)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)+\\
+&+\frac{\rho_{D}}{2}\frac{\sin\left(2\Delta\theta\right)}{2\Delta\theta}CSD_{avg}+\\
+&+\frac{\rho_{D}}{2}\frac{1}{\Delta\theta}CSD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i}\sin\left(\frac{1+mod\left(i+1,2\right)}{2}\pi-2\Delta\Psi\right)\left(\sum_{k=i}^{2n-1}b_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)+\\
+&+\frac{\rho_{D}}{2}\frac{1-\cos\left(2\Delta\theta\right)}{2\Delta\theta}COD_{avg}-\frac{\rho_{D}}{2}\frac{1-\cos\left(2\Delta\theta\right)}{2\Delta\theta}CSD_{avg}+\\
+&+\frac{\rho_{D}}{2}\frac{1}{\Delta\theta}COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin\left(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi\right)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)+\\
+&-\frac{\rho_{D}}{2}\frac{1}{\Delta\theta}CSD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin\left(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi\right)\left(\sum_{k=i}^{2n-1}b_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)=\\
+&=\frac{\rho_{D}}{2}COD_{avg}\left(\frac{1-\cos\left(2\Delta\theta\right)}{2\Delta\theta}+\frac{\sin\left(2\Delta\theta\right)}{2\Delta\theta}\right)+\\
+&-\frac{\rho_{D}}{2}CSD_{avg}\left(\frac{1-\cos\left(2\Delta\theta\right)}{2\Delta\theta}-\frac{\sin\left(2\Delta\theta\right)}{2\Delta\theta}\right)+\\
+&+\frac{\rho_{D}}{2}COD_{max}\frac{1}{\Delta\theta}\sum_{i=0}^{2n-1}\left(\left(-\frac{1}{2}\right)^{i}\sin\left(\frac{1+mod\left(i+1,2\right)}{2}\pi-2\Delta\Psi\right)+\left(-\frac{1}{2}\right)^{i+1}\sin\left(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi\right)\right)\cdot\\&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\cdot\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)+\\
+&+\frac{\rho_{D}}{2}CSD_{max}\frac{1}{\Delta\theta}\sum_{i=0}^{2n-1}\left(\left(-\frac{1}{2}\right)^{i}\sin\left(\frac{1+mod\left(i+1,2\right)}{2}\pi-2\Delta\Psi\right)-\left(-\frac{1}{2}\right)^{i+1}\sin\left(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi\right)\right)\cdot\\&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\cdot\left(\sum_{k=i}^{2n-1}b_{k}\frac{k!}{\left(k-i\right)!}\Delta\Psi^{k-i}\right)\\
 \end{aligned}
 \end{equation}
 

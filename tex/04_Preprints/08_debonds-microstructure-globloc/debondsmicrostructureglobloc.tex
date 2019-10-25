@@ -322,7 +322,7 @@ The explicit construction of the polynomials $f\left(\theta-\frac{\Delta\Psi}{2}
 &\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}COD\left(\theta\right)\sin\left(2\theta\right)d\theta=\\
 =&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(COD_{avg}+COD_{max}\sum_{k=0}^{n-1}a_{2k+1}\theta^{2k+1}\right)\sin\left(2\theta\right)d\theta=\\
 =&-\frac{1}{2\Delta\theta}COD_{avg}\left[\cos\left(2\theta\right)\right]\Bigg\rvert_{0}^{\Delta\theta}+\\
-+&\frac{1}{\Delta\theta}\left[COD_{max}\sum_{i=0}^{n}\left(-\frac{1}{2}\right)^{i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\theta)\left(\sum_{k=0}^{n-i}a_{k}\left(n-\left(k+1\right)\right)!\theta^{k}\right)\right]\Bigg\rvert_{0}^{\Delta\Psi}=\\
++&\frac{1}{\Delta\theta}\left[COD_{max}\sum_{i=0}^{2n-1}\left(-\frac{1}{2}\right)^{i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\theta)\left(\sum_{k=i}^{2n-1}a_{k}\frac{k!}{\left(k-i\right)!}\theta^{k-i}\right)\right]\Bigg\rvert_{0}^{\Delta\Psi}=\\
 =&\frac{1-\cos\left(2\Delta\theta\right)}{2\Delta\theta}COD_{avg}+\\
 +&\frac{1}{\Delta\theta}COD_{max}\sum_{i=0}^{n}\left(-\frac{1}{2}\right)^{i+1}\sin\left(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi\right)\left(\sum_{k=0}^{n-i}a_{k}\left(n-\left(k+1\right)\right)!\Delta\Psi^{k}\right)
 \end{aligned}

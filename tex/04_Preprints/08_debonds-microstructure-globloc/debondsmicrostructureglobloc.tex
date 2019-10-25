@@ -261,7 +261,18 @@ where $f\left(\theta-\frac{\Delta\Psi}{2}\right)$ and $g\left(\theta-\frac{\Delt
 We assume the two functions $f\left(\theta-\frac{\Delta\Psi}{2}\right)$ and $g\left(\theta-\frac{\Delta\theta}{2}\right)$ to be two odd polynomials of degree $2n-1$:
 
 \begin{equation}
-f\left(\theta-\frac{\Delta\Psi}{2}\right)=\sum_{k=0}^{n-1}a_{2k+1}\left(\theta-\frac{\Delta\Psi}{2}\right)^{2k+1}\quad g\left(\theta-\frac{\Delta\theta}{2}\right)=\sum_{k=0}^{n-1}b_{2k+1}\left(\theta-\frac{\Delta\theta}{2}\right)^{2k+1},
+\begin{aligned}
+f\left(\theta-\frac{\Delta\Psi}{2}\right)&=
+\begin{cases}
+&\sum_{k=0}^{n-1}a_{2k+1}\left(\theta-\frac{\Delta\Psi}{2}\right)^{2k+1}\quad0\leq\theta\leq\Delta\Psi\\
+&0\quad otherwise
+\end{cases}\\
+g\left(\theta-\frac{\Delta\theta}{2}\right)&=
+\begin{cases}
+&\sum_{k=0}^{n-1}b_{2k+1}\left(\theta-\frac{\Delta\theta}{2}\right)^{2k+1}\quad0\leq\theta\leq\Delta\theta\\
+&0\quad otherwise
+\end{cases}
+\end{aligned}
 \end{equation}
 
 which satisfy by construction the conditions expressed in Equation~\ref{eq:integcondition}. The coefficients $a_{2k+1}$ and $b_{2k+1}$ are determined by imposing that
@@ -287,8 +298,11 @@ The explicit construction of the polynomials $f\left(\theta-\frac{\Delta\Psi}{2}
 
 \begin{equation}
 \begin{aligned}
-\frac{1}{\Delta\theta}&\int_{0}^{\Delta\Psi}COD\left(\theta\right)d\theta=\\
-=&\frac{1}{\Delta\theta}\int_{0}^{\Delta\Psi}\left(COD_{avg}+COD_{max}\sum_{k=0}^{n-1}a_{2k+1}\left(\theta-\frac{\Delta\Psi}{2}\right)^{2k+1}\right)d\theta=\\
+\frac{1}{\Delta\theta}&\int_{0}^{\Delta\theta}COD\left(\theta\right)d\theta=\\
+=&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(COD_{avg}+COD_{max}\sum_{k=0}^{n-1}a_{2k+1}\left(\theta-\frac{\Delta\Psi}{2}\right)^{2k+1}\right)d\theta=\\
+=&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}COD_{avg}d\theta+\\
++&\frac{1}{\Delta\theta}\int_{0}^{\Delta\Psi}COD_{max}\sum_{k=0}^{n-1}a_{2k+1}\left(\theta-\frac{\Delta\Psi}{2}\right)^{2k+1}d\theta+\\
++&\frac{1}{\Delta\theta}\int_{\Delta\Psi}^{\Delta\theta}COD_{max}\sum_{k=0}^{n-1}a_{2k+1}\left(\theta-\frac{\Delta\Psi}{2}\right)^{2k+1}d\theta=\\
 =&\frac{1}{\Delta\theta}\left[COD_{avg}\theta+COD_{max}\sum_{k=0}^{n-1}\frac{a_{2k+1}}{2\left(k+1\right)}\left(\theta-\frac{\Delta\Psi}{2}\right)^{2\left(k+1\right)}\right]\Bigg\rvert_{0}^{\Delta\Psi}=\\
 =&\frac{\Delta\Psi}{\Delta\theta}COD_{avg}+COD_{max}\sum_{k=0}^{n-1}\frac{a_{2k+1}}{2\left(k+1\right)\Delta\theta}\left(\left(\frac{\Delta\Psi}{2}\right)^{2\left(k+1\right)}-\left(-\frac{\Delta\Psi}{2}\right)^{2\left(k+1\right)}\right)=\\
 =&\frac{\Delta\Psi}{\Delta\theta}COD_{avg}
@@ -304,12 +318,12 @@ The explicit construction of the polynomials $f\left(\theta-\frac{\Delta\Psi}{2}
 \begin{equation}
 \footnotesize
 \begin{aligned}
-&\frac{1}{\Delta\theta}\int_{0}^{\min\left(\Delta\theta,\Delta\Phi\right)}COD\left(\theta\right)\sin\left(2\theta\right)d\theta=\\
-=&\frac{1}{\Delta\theta}\int_{0}^{\Delta\theta}\left(COD_{avg}+COD_{max}\sum_{k=0}^{n-1}a_{2k+1}\theta^{2k+1}\right)\sin\left(2\theta\right)d\theta=\\
-=&-\frac{1}{2\Delta\theta}COD_{avg}\left[\cos\left(2\theta\right)\right]\Bigg\rvert_{0}^{\min\left(\Delta\theta,\Delta\Phi\right)}+\\
-+&\frac{1}{\Delta\theta}\left[COD_{max}\sum_{i=0}^{n-1}\left(-\frac{1}{2}\right)^{2i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\theta)\left(\sum_{k=0}^{i}a_{2k+1}\left(\left(n-1\right)-2\left(k+1\right)\right)!\theta^{2\left(k+1\right)}\right)\right]\Bigg\rvert_{0}^{\min\left(\Delta\theta,\Delta\Phi\right)}=\\
-=&\frac{1}{2\Delta\theta}COD_{avg}\left(1-\cos\left(2\min\left(\Delta\theta,\Delta\Phi\right)\right)\right)+\\
-+&\frac{1}{\Delta\theta}COD_{max}\sum_{i=0}^{n-1}\left(-\frac{1}{2}\right)^{2i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\min\left(\Delta\theta,\Delta\Phi\right))\left(\sum_{k=0}^{i}a_{2k+1}\left(\left(n-1\right)-2\left(k+1\right)\right)!\min\left(\Delta\theta,\Delta\Phi\right)^{2\left(k+1\right)}\right)
+&\frac{1}{\Delta\theta}\int_{0}^{\Delta\Psi}COD\left(\theta\right)\sin\left(2\theta\right)d\theta=\\
+=&\frac{1}{\Delta\theta}\int_{0}^{\Delta\Psi}\left(COD_{avg}+COD_{max}\sum_{k=0}^{n-1}a_{2k+1}\theta^{2k+1}\right)\sin\left(2\theta\right)d\theta=\\
+=&-\frac{1}{2\Delta\theta}COD_{avg}\left[\cos\left(2\theta\right)\right]\Bigg\rvert_{0}^{\Delta\Psi}+\\
++&\frac{1}{\Delta\theta}\left[COD_{max}\sum_{i=0}^{n-1}\left(-\frac{1}{2}\right)^{2i+1}\sin(\frac{1+mod\left(i,2\right)}{2}\pi-2\theta)\left(\sum_{k=0}^{i}a_{2k+1}\left(\left(n-1\right)-2\left(k+1\right)\right)!\theta^{2\left(k+1\right)}\right)\right]\Bigg\rvert_{0}^{\Delta\Psi}=\\
+=&\frac{1}{2\Delta\theta}COD_{avg}\left(1-\cos\left(2\Delta\Psi\right)\right)+\\
++&\frac{1}{\Delta\theta}COD_{max}\sum_{i=0}^{n-1}\left(-\frac{1}{2}\right)^{2i+1}\sin\left(\frac{1+mod\left(i,2\right)}{2}\pi-2\Delta\Psi\right)\left(\sum_{k=0}^{i}a_{2k+1}\left(\left(n-1\right)-2\left(k+1\right)\right)!\Delta\Psi^{2\left(k+1\right)}\right)
 \end{aligned}
 \end{equation}
 
@@ -359,8 +373,8 @@ g\left(\theta-\frac{\Delta\theta}{2}\right)&=\sum_{k=0}^{0}b_{2k+1}\left(\theta-
 
 \begin{equation}
 \begin{aligned}
-f\left(\theta\right)&=\sum_{k=0}^{1}a_{2k+1}\theta^{2k+1}=a_{1}\theta+a_{3}\theta^{3}\\
-g\left(\theta\right)&=\sum_{k=0}^{1}b_{2k+1}\theta^{2k+1}=b_{1}\theta+b_{3}\theta^{3}\\
+f\left(\theta-\frac{\Delta\Psi}{2}\right)&=\sum_{k=0}^{1}a_{2k+1}\left(\theta-\frac{\Delta\Psi}{2}\right)^{2k+1}=a_{1}\left(\theta-\frac{\Delta\Psi}{2}\right)+a_{3}\left(\theta-\frac{\Delta\Psi}{2}\right)^{3}\\
+g\left(\theta-\frac{\Delta\theta}{2}\right)&=\sum_{k=0}^{1}b_{2k+1}\left(\theta-\frac{\Delta\theta}{2}\right)^{2k+1}=b_{1}\left(\theta-\frac{\Delta\theta}{2}\right)+b_{3}\left(\theta-\frac{\Delta\theta}{2}\right)^{3}\\
 \end{aligned}
 \end{equation}
 
@@ -368,8 +382,8 @@ g\left(\theta\right)&=\sum_{k=0}^{1}b_{2k+1}\theta^{2k+1}=b_{1}\theta+b_{3}\thet
 
 \begin{equation}
 \begin{aligned}
-f\left(\theta\right)&=\sum_{k=0}^{2}a_{2k+1}\theta^{2k+1}=a_{1}\theta+a_{3}\theta^{3}+a_{5}\theta^{5}\\
-g\left(\theta\right)&=\sum_{k=0}^{1}b_{2k+1}\theta^{2k+1}=b_{1}\theta+b_{3}\theta^{3}+b_{5}\theta^{5}\\
+f\left(\theta-\frac{\Delta\Psi}{2}\right)&=\sum_{k=0}^{2}a_{2k+1}\left(\theta-\frac{\Delta\Psi}{2}\right)^{2k+1}=\\&=a_{1}\left(\theta-\frac{\Delta\Psi}{2}\right)+a_{3}\left(\theta-\frac{\Delta\Psi}{2}\right)^{3}+a_{5}\left(\theta-\frac{\Delta\Psi}{2}\right)^{5}\\
+g\left(\theta-\frac{\Delta\theta}{2}\right)&=\sum_{k=0}^{1}b_{2k+1}\left(\theta-\frac{\Delta\theta}{2}\right)^{2k+1}=\\&=b_{1}\left(\theta-\frac{\Delta\theta}{2}\right)+b_{3}\left(\theta-\frac{\Delta\theta}{2}\right)^{3}+b_{5}\left(\theta-\frac{\Delta\theta}{2}\right)^{5}\\
 \end{aligned}
 \end{equation}
 \end{description}

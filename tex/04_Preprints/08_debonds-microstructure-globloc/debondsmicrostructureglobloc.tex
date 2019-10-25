@@ -306,15 +306,22 @@ f\left(\theta\right)=\sum_{k=0}^{n-1}a_{2k+1}\theta^{2k+1}\quad g\left(\theta\ri
 
 \begin{equation}
 \begin{aligned}
-f\left(\theta\right)&=\sum_{k=0}^{0}a_{2k+1}\theta^{2k+1}=a_{1}\theta\\
-g\left(\theta\right)&=\sum_{k=0}^{0}b_{2k+1}\theta^{2k+1}=b_{1}\theta
+f\left(\theta-\frac{\Delta\theta}{2}\right)&=\sum_{k=0}^{0}a_{2k+1}\left(\theta-\frac{\Delta\theta}{2}\right)^{2k+1}=a_{1}\left(\theta-\frac{\Delta\theta}{2}\right)\\
+g\left(\theta-\frac{\Delta\theta}{2}\right)&=\sum_{k=0}^{0}b_{2k+1}\left(\theta-\frac{\Delta\theta}{2}\right)^{2k+1}=b_{1}\left(\theta-\frac{\Delta\theta}{2}\right)
 \end{aligned}
 \end{equation}
 
 \begin{equation}
 \begin{aligned}
-\int_{0}^{\Delta\theta}&f\left(\theta\right)d\theta=\int_{0}^{\Delta\theta}a_{1}\theta d\theta=\left[\right]\Bigg\rvert_{0}^{\Delta\theta}\\
-\int_{0}^{\Delta\theta}&g\left(\theta\right)d\theta=0
+\int_{0}^{\Delta\theta}&f\left(\theta-\frac{\Delta\theta}{2}\right)d\theta=\int_{0}^{\Delta\theta}a_{1}\left(\theta-\frac{\Delta\theta}{2}\right) d\theta=\left[\frac{a_{1}}{2}\theta^{2}-a_{1}\frac{\Delta\theta}{2}\theta\right]\Bigg\rvert_{0}^{\Delta\theta}=0\quad\forall a_{1}\\
+\int_{0}^{\Delta\theta}&g\left(\theta-\frac{\Delta\theta}{2}\right)d\theta=\int_{0}^{\Delta\theta}b_{1}\left(\theta-\frac{\Delta\theta}{2}\right) d\theta=\left[\frac{b_{1}}{2}\theta^{2}-b_{1}\frac{\Delta\theta}{2}\theta\right]\Bigg\rvert_{0}^{\Delta\theta}=0\quad\forall b_{1}
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+&COD_{avg}+COD_{max}a_{1}\left(\Delta\Phi-\frac{\Delta\theta}{2}\right)=0\rightarrow a_{1}=-\\
+&CSD_{avg}+CSD_{max}b_{1}\left(\Delta\theta-\frac{\Delta\theta}{2}\right)=0\rightarrow b_{1}=-\frac{2}{\Delta\theta}\frac{CSD_{avg}}{CSD_{max}}
 \end{aligned}
 \end{equation}
 

@@ -289,14 +289,15 @@ The explicit construction of the polynomials $f\left(\theta-\frac{\Delta\Psi}{2}
 \begin{aligned}
 \frac{1}{\Delta\theta}&\int_{0}^{\Delta\Psi}COD\left(\theta\right)d\theta=\\
 =&\frac{1}{\Delta\theta}\int_{0}^{\Delta\Psi}\left(COD_{avg}+COD_{max}\sum_{k=0}^{n-1}a_{2k+1}\left(\theta-\frac{\Delta\Psi}{2}\right)^{2k+1}\right)d\theta=\\
-=&\frac{1}{\Delta\Psi}\left[COD_{avg}\theta+COD_{max}\sum_{k=0}^{n-1}\frac{a_{2k+1}}{2\left(k+1\right)}\left(\theta-\frac{\Delta\Psi}{2}\right)^{2\left(k+1\right)}\right]\Bigg\rvert_{0}^{\Delta\Psi}=\\
-=&COD_{avg}+COD_{max}\sum_{k=0}^{n-1}\frac{a_{2k+1}}{2\left(k+1\right)}\frac{\Delta\Psi^{2\left(k+1\right)}}{\Delta\theta}
+=&\frac{1}{\Delta\theta}\left[COD_{avg}\theta+COD_{max}\sum_{k=0}^{n-1}\frac{a_{2k+1}}{2\left(k+1\right)}\left(\theta-\frac{\Delta\Psi}{2}\right)^{2\left(k+1\right)}\right]\Bigg\rvert_{0}^{\Delta\Psi}=\\
+=&\frac{\Delta\Psi}{\Delta\theta}COD_{avg}+COD_{max}\sum_{k=0}^{n-1}\frac{a_{2k+1}}{2\left(k+1\right)\Delta\theta}\left(\left(\frac{\Delta\Psi}{2}\right)^{2\left(k+1\right)}-\left(-\frac{\Delta\Psi}{2}\right)^{2\left(k+1\right)}\right)=\\
+=&\frac{\Delta\Psi}{\Delta\theta}COD_{avg}
 \end{aligned}
 \end{equation}
 
 \begin{equation}
 \begin{aligned}
-\frac{1}{\Delta\theta}&\int_{0}^{\Delta\theta}CSD\left(\theta\right)d\theta=CSD_{avg}+CSD_{max}\sum_{k=0}^{n-1}\frac{b_{2k+1}}{2\left(k+1\right)}\Delta\theta^{2k+1}
+\frac{1}{\Delta\theta}&\int_{0}^{\Delta\theta}CSD\left(\theta\right)d\theta=CSD_{avg}
 \end{aligned}
 \end{equation}
 

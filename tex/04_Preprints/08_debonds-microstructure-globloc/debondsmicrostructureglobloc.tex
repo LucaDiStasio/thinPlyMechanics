@@ -119,6 +119,32 @@ Applying the previous Principle to debonds, we have:
 \end{aligned}
 \end{equation}
 
+\subsection{Homogenization}
+
+\begin{equation}
+\sigma_{ij}^{avg}=\frac{1}{V}\int_{V}\sigma_{ij}dV\quad\varepsilon_{ij}^{avg}=\frac{1}{V}\int_{V}\varepsilon_{ij}dV
+\end{equation}
+
+\begin{equation}
+\underline{\tilde{\sigma}}_{k}^{avg}=\underline{\underline{\tilde{Q}}}_{k}\left(\underline{\tilde{\varepsilon}}_{k}^{avg}-\underline{\tilde{\alpha}}_{k}\Delta T\right)
+\end{equation}
+
+\begin{equation}
+\underline{\tilde{\sigma}}_{LAM}=\underline{\tilde{\sigma}}^{avg}=\frac{1}{V}\int_{V}\underline{\tilde{\sigma}}dV=\frac{1}{V}\sum_{k=1}^{N}\int_{V_{k}}\underline{\tilde{\sigma}}dV_{k}=\sum_{k=1}^{N}\underline{\tilde{\sigma}}_{k}^{avg}\frac{t_{k}}{h}
+\end{equation}
+
+\begin{equation}
+\varepsilon_{ij}^{avg}=\frac{1}{V}\int_{V}\varepsilon_{ij}dV=\frac{1}{V}\int_{V}\frac{1}{2}\left(u_{i,j}+u_{j,i}\right)dV=\frac{1}{V}\int_{S}\frac{1}{2}\left(u_{i}n_{j}+u_{j}n_{i}\right)dS
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\varepsilon_{ij}^{avg}=&\frac{1}{V}\int_{S}\frac{1}{2}\left(u_{i}n_{j}+u_{j}n_{i}\right)dS=\\
+=&\frac{1}{V}\int_{S_{B}}\frac{1}{2}\left(u_{i}n_{j}+u_{j}n_{i}\right)dS+\frac{1}{V}\int_{S_{C}}\frac{1}{2}\left(u_{i}n_{j}+u_{j}n_{i}\right)dS=\\
+=&\varepsilon_{ij}^{applied}+\beta_{ij}
+\end{aligned}
+\end{equation}
+
 \subsection{Vakulenko-Kachanov tensor}
 
 In the local reference frame of $k$-th layer, the outer normal at crack faces has components:

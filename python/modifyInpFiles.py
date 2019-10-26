@@ -114,6 +114,7 @@ def main():
                                 newlines.append(newline + '\n')
                             elif 'sectionRegions'  in line and '@DEBFIBER-ROWS-FIBERS' in line:
                                 insertSectionAssignment = True
+                                newlines.append(line)
                             elif insertSectionAssignment and 'sectionRegions'  in line and 'offsetValue'  in line:
                                 newlines.append(line)
                                 newlines.append('sectionRegions, 6, name                 @fiberSection $string' + '\n')

@@ -203,9 +203,20 @@ def main():
                             inp.write('# variable type is introduced by $' + '\n')
                             inp.write('#' + '\n')
                             inp.write('# Output directory and filenames' + '\n')
+                            inp.write('basename             @RVE1_144-HSD-MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+' $string' + '\n')
+                            inp.write('free parameters      @1             $int' + '\n')
+                            inp.write('geometry, deltatheta @[' + str(dtheta) + ',' + str(dtheta) + ',10]   $min,max,step #other possibility: [v1,v2,...,vn] $ list of values' + '\n')
+                        with open(join(outDir,itbaseName+'MVDfreesymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'-LPC'+ext),'w') as inp:
+                            inp.write('# everything after is a comment' + '\n')
+                            inp.write('# keywords are divided by commas: keyword1, keyword2, ...' + '\n')
+                            inp.write('# the corresponding value is introduced by @' + '\n')
+                            inp.write('# variable type is introduced by $' + '\n')
+                            inp.write('#' + '\n')
+                            inp.write('# Output directory and filenames' + '\n')
                             inp.write('basename             @RVE1_144-HSD-MVDfreesymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+' $string' + '\n')
                             inp.write('free parameters      @1             $int' + '\n')
                             inp.write('geometry, deltatheta @[' + str(dtheta) + ',' + str(dtheta) + ',10]   $min,max,step #other possibility: [v1,v2,...,vn] $ list of values' + '\n')
+
 
 
 

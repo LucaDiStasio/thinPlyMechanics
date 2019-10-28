@@ -82,7 +82,7 @@ Fiber Reinforced Polymer Composite (FRPC) \sep Debonding \sep Finite element ana
 
 \section{Introduction}
 
-Main ref~\cite{Lundmark2003,Lundmark2006,Varna2012,Varna2018}
+Main ref~\cite{Lundmark2003,Lundmark2006,Varna2012,Loukil2012,Loukil2013a,Loukil2013b,Varna2016,Pupurs2016,Varna2018,Loukil2019a,Loukil2019b}
 
 \section{Derivation of constitutive relations}
 
@@ -151,6 +151,42 @@ Applying the previous Principle to debonds, we have:
 
 \begin{equation}
 \underline{\tilde{\sigma}}_{LAM}=\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{\tilde{Q}}}_{k}\left(\underline{\tilde{\varepsilon}}_{k}^{LAM}-\underline{\tilde{\alpha}}_{k}\Delta T+\underline{\tilde{\beta}}_{k}\right)
+\end{equation}
+
+\begin{equation}
+\underline{\tilde{\sigma}}_{LAM}=\underline{\underline{Q}}_{eff}^{LAM}\underline{\tilde{\varepsilon}}^{LAM}
+\end{equation}
+
+\begin{equation}
+\underline{\underline{Q}}_{eff}^{LAM}\underline{\tilde{\varepsilon}}^{LAM}=\left(\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{\tilde{Q}}}_{k}\right)\underline{\tilde{\varepsilon}}^{LAM}+\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{\tilde{Q}}}_{k}\underline{\tilde{\beta}}_{k}
+\end{equation}
+
+\begin{equation}
+\footnotesize
+\underline{\underline{Q}}_{eff}^{LAM}\underline{\tilde{\varepsilon}}^{LAM}\cdot\frac{\underline{\tilde{\varepsilon}}^{LAM}}{\underline{\tilde{\varepsilon}}^{LAM}\cdot\underline{\tilde{\varepsilon}}^{LAM}}=\left(\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{\tilde{Q}}}_{k}\right)\underline{\tilde{\varepsilon}}^{LAM}\cdot\frac{\underline{\tilde{\varepsilon}}^{LAM}}{\underline{\tilde{\varepsilon}}^{LAM}\cdot\underline{\tilde{\varepsilon}}^{LAM}}+\left(\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{\tilde{Q}}}_{k}\underline{\tilde{\beta}}_{k}\right)\cdot\frac{\underline{\tilde{\varepsilon}}^{LAM}}{\underline{\tilde{\varepsilon}}^{LAM}\cdot\underline{\tilde{\varepsilon}}^{LAM}}
+\end{equation}
+
+\begin{equation}
+\underline{\underline{Q}}_{eff}^{LAM}=\left(\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{\tilde{Q}}}_{k}\right)+\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{\tilde{Q}}}_{k}\frac{\underline{\tilde{\beta}}_{k}\cdot\underline{\tilde{\varepsilon}}^{LAM}}{\underline{\tilde{\varepsilon}}^{LAM}\cdot\underline{\tilde{\varepsilon}}^{LAM}}
+\end{equation}
+
+\begin{equation}
+\underline{\underline{T}}_{k}=\begin{bmatrix}
+\cos^{2}\left(\theta_{k}\right)&\sin^{2}\left(\theta_{k}\right)&2\cos\left(\theta_{k}\right)\sin\left(\theta_{k}\right)\\
+\sin^{2}\left(\theta_{k}\right)&\cos^{2}\left(\theta_{k}\right)&-2\cos\left(\theta_{k}\right)\sin\left(\theta_{k}\right)\\
+-\cos\left(\theta_{k}\right)\sin\left(\theta_{k}\right)&\cos\left(\theta_{k}\right)\sin\left(\theta_{k}\right)&\cos^{2}\left(\theta_{k}\right)-\sin^{2}\left(\theta_{k}\right)\\
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\underline{\underline{\tilde{Q}}}_{k}=\underline{\underline{T}}_{k}^{-1}\underline{\underline{Q}}_{k}\left(\underline{\underline{T}}_{k}^{-1}\right)^{T}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\underline{\underline{Q}}_{eff}^{LAM}=&\left(\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{T}}_{k}^{-1}\underline{\underline{Q}}_{k}\left(\underline{\underline{T}}_{k}^{-1}\right)^{T}\right)+\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{T}}_{k}^{-1}\underline{\underline{Q}}_{k}\left(\underline{\underline{T}}_{k}^{-1}\right)^{T}\frac{\underline{\tilde{\beta}}_{k}\cdot\underline{\tilde{\varepsilon}}^{LAM}}{\underline{\tilde{\varepsilon}}^{LAM}\cdot\underline{\tilde{\varepsilon}}^{LAM}}=\\
+=&\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{T}}_{k}^{-1}\underline{\underline{Q}}_{k}\left(\underline{\underline{T}}_{k}^{-1}\right)^{T}\left(1+\frac{\underline{\tilde{\beta}}_{k}\cdot\underline{\tilde{\varepsilon}}^{LAM}}{\underline{\tilde{\varepsilon}}^{LAM}\cdot\underline{\tilde{\varepsilon}}^{LAM}}\right)
+\end{aligned}
 \end{equation}
 
 \subsection{Vakulenko-Kachanov tensor}
@@ -481,7 +517,19 @@ Finally we can compute the expressions of the components of the Vakulenko-Kachan
 
 \end{enumerate}
 
-\subsection{Non-dimensional crack displacements and crack compliance tensor}
+\subsection{Application to UD composite}
+
+\subsection{Application to $\left[0^{\circ}_{mk},90^{\circ}_{k},0^{\circ}_{mk}\right]$ laminate}
+
+\section{Computations with the Finite Element Method (FEM)}
+
+\subsection{Models of Representative Volume Element (RVE)}
+
+\subsection{Details of FEM implementation}
+
+\section{Results and discussion}
+
+\section{Conclusions}
 
 \bibliography{refs}
 

@@ -184,8 +184,8 @@ Applying the previous Principle to debonds, we have:
 
 \begin{equation}
 \begin{aligned}
-\underline{\underline{Q}}_{eff}^{LAM}=&\left(\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{T}}_{k}^{-1}\underline{\underline{Q}}_{k}\left(\underline{\underline{T}}_{k}^{-1}\right)^{T}\right)+\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{T}}_{k}^{-1}\underline{\underline{Q}}_{k}\left(\underline{\underline{T}}_{k}^{-1}\right)^{T}\frac{\underline{\tilde{\beta}}_{k}\cdot\underline{\tilde{\varepsilon}}^{LAM}}{\underline{\tilde{\varepsilon}}^{LAM}\cdot\underline{\tilde{\varepsilon}}^{LAM}}=\\
-=&\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{T}}_{k}^{-1}\underline{\underline{Q}}_{k}\left(\underline{\underline{T}}_{k}^{-1}\right)^{T}\left(1+\frac{\underline{\tilde{\beta}}_{k}\cdot\underline{\tilde{\varepsilon}}^{LAM}}{\underline{\tilde{\varepsilon}}^{LAM}\cdot\underline{\tilde{\varepsilon}}^{LAM}}\right)
+\underline{\underline{Q}}_{eff}^{LAM}=&\left(\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{T}}_{k}^{-1}\underline{\underline{Q}}_{k}\left(\underline{\underline{T}}_{k}^{-1}\right)^{T}\right)+\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{T}}_{k}^{-1}\underline{\underline{Q}}_{k}\left(\underline{\underline{T}}_{k}^{-1}\right)^{T}\frac{\underline{\underline{T}}_{k}^{-1}\underline{\tilde{\beta}}_{k}\left(\underline{\underline{T}}_{k}^{-1}\right)^{T}\cdot\underline{\tilde{\varepsilon}}^{LAM}}{\underline{\tilde{\varepsilon}}^{LAM}\cdot\underline{\tilde{\varepsilon}}^{LAM}}=\\
+=&\frac{1}{h}\sum_{k=1}^{N}t_{k}\underline{\underline{T}}_{k}^{-1}\underline{\underline{Q}}_{k}\left(\underline{\underline{T}}_{k}^{-1}\right)^{T}\left(1+\frac{\underline{\underline{T}}_{k}^{-1}\underline{\tilde{\beta}}_{k}\left(\underline{\underline{T}}_{k}^{-1}\right)^{T}\cdot\underline{\tilde{\varepsilon}}^{LAM}}{\underline{\tilde{\varepsilon}}^{LAM}\cdot\underline{\tilde{\varepsilon}}^{LAM}}\right)
 \end{aligned}
 \end{equation}
 
@@ -193,7 +193,19 @@ Applying the previous Principle to debonds, we have:
 Q_{eff,lmij}^{LAM}\tilde{\varepsilon}_{ij}^{LAM}=\left(\frac{1}{h}\sum_{k=1}^{N}t_{k}\tilde{Q}_{k,lmij}\right)\tilde{\varepsilon}_{ij}^{LAM}+\frac{1}{h}\sum_{k=1}^{N}t_{k}\tilde{Q}_{k,lmij}\tilde{\beta}_{k,ij}
 \end{equation}
 
-\subsection{Vakulenko-Kachanov tensor}
+\begin{equation}
+Q_{eff,lmij}^{LAM}\tilde{\varepsilon}_{ij}^{LAM}\left(\tilde{\varepsilon}_{ij}^{LAM}\right)^{-1}=\left(\frac{1}{h}\sum_{k=1}^{N}t_{k}\tilde{Q}_{k,lmij}\right)\tilde{\varepsilon}_{ij}^{LAM}\left(\tilde{\varepsilon}_{ij}^{LAM}\right)^{-1}+\frac{1}{h}\left(\sum_{k=1}^{N}t_{k}\tilde{Q}_{k,lmij}\tilde{\beta}_{k,ij}\right)\left(\tilde{\varepsilon}_{ij}^{LAM}\right)^{-1}
+\end{equation}
+
+\begin{equation}
+Q_{eff,lmij}^{LAM}=\left(\frac{1}{h}\sum_{k=1}^{N}t_{k}\tilde{Q}_{k,lmij}\right)+\frac{1}{h}\sum_{k=1}^{N}t_{k}\left(\tilde{Q}_{k,lmij}\tilde{\beta}_{k,ij}\left(\tilde{\varepsilon}_{ij}^{LAM}\right)^{-1}\right)
+\end{equation}
+
+\begin{equation}
+Q_{eff,lmij}^{LAM}=\frac{1}{h}\sum_{k=1}^{N}t_{k}\tilde{Q}_{k,lmij}\left(\frac{1}{2}\left(\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk}\right)+\tilde{\beta}_{k,ij}\left(\tilde{\varepsilon}_{ij}^{LAM}\right)^{-1}\right)
+\end{equation}
+
+\subsection{Exact expression of the Vakulenko-Kachanov tensor}
 
 In the local reference frame of $k$-th layer, the outer normal at crack faces has components:
 

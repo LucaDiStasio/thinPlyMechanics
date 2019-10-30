@@ -90,7 +90,7 @@ def main():
                         insertSectionAssignment = False
                         for line in lines:
                             if 'L1_144S1d10' in line:
-                                newlines.append(line.replace('L1_144S1d10','L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)))
+                                newlines.append(line.replace('sweepOverDeltathetaMVDfreeasymmL1_144S1d10','sweepDthetaMVDfreeasymmL'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)))
                             elif 'geometry, nDebonds' in line:
                                 newlines.append('geometry, nDebonds            @' + str(da) +'                $int' + '\n')
                             elif 'geometry, debonds, deltatheta' in line:
@@ -153,7 +153,7 @@ def main():
                         insertSectionAssignment = False
                         for line in lines:
                             if 'L1_144S1d10' in line:
-                                newlines.append(line.replace('asymmL1_144S1d10','symmL'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)))
+                                newlines.append(line.replace('sweepOverDeltathetaMVDfreeasymmL1_144S1d10','sweepDthetaMVDfreesymmL'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)))
                             elif 'geometry, nDebonds' in line:
                                 newlines.append('geometry, nDebonds            @' + str(da) +'                $int' + '\n')
                             elif 'geometry, debonds, deltatheta' in line:
@@ -204,7 +204,7 @@ def main():
                             inp.write('# variable type is introduced by $' + '\n')
                             inp.write('#' + '\n')
                             inp.write('# Output directory and filenames' + '\n')
-                            inp.write('basename             @RVE1_144-HSD-MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+' $string' + '\n')
+                            inp.write('basename             @RVE1_144-MVDfreeasymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+' $string' + '\n')
                             inp.write('free parameters      @1             $int' + '\n')
                             inp.write('geometry, deltatheta @[' + str(dtheta) + ',' + str(dtheta) + ',10]   $min,max,step #other possibility: [v1,v2,...,vn] $ list of values' + '\n')
                         with open(join(outDir,itbaseName+'MVDfreesymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+'-LPC'+ext),'w') as inp:
@@ -214,7 +214,7 @@ def main():
                             inp.write('# variable type is introduced by $' + '\n')
                             inp.write('#' + '\n')
                             inp.write('# Output directory and filenames' + '\n')
-                            inp.write('basename             @RVE1_144-HSD-MVDfreesymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+' $string' + '\n')
+                            inp.write('basename             @RVE1_144-MVDfreesymm'+'L'+str(L).replace('.','_')+'S'+str(s)+'A'+str(a)+'D'+str(da)+'d'+str(dtheta)+' $string' + '\n')
                             inp.write('free parameters      @1             $int' + '\n')
                             inp.write('geometry, deltatheta @[' + str(dtheta) + ',' + str(dtheta) + ',10]   $min,max,step #other possibility: [v1,v2,...,vn] $ list of values' + '\n')
 

@@ -1,0 +1,253 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{2.5pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={at={(axis description cs:1,.5)},anchor=west,draw=white!80.0!black,font=\fontsize{15}{14}\selectfont,row sep=7.5pt},
+legend image post style={xscale=1.1,yscale=1.1},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+ymin=0.0,
+ymax=1.2,
+xtick={0.0,0.3,0.7,1.2},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$\varepsilon\left[\%\right]$},
+ylabel={$\rho_{kn}\left[-\right]$},
+% LEGEND ENTRIES
+legend entries={},
+]
+
+% 
+\addplot[line width=\linewidth,mark size=\markersize,blue,mark=*]
+table{
+0.3 0.0
+0.7 0.0498
+1.2 0.8957
+};
+\addlegendentry{RT, $1\ \nicefrac{mm}{min}$, S1};
+
+\addplot[line width=\linewidth,mark size=\markersize,blue,mark=*]
+table{
+0.3 0.0
+0.7 0.0257
+1.2 0.4622
+};
+\addlegendentry{RT, $1\ \nicefrac{mm}{min}$, S2};
+
+\addplot[line width=\linewidth,mark size=\markersize,blue,mark=*]
+table{
+0.3 0.0
+0.7 0.02522
+1.2 0.7796
+};
+\addlegendentry{RT, $1\ \nicefrac{mm}{min}$, S3};
+
+%\addplot[line width=\linewidth,mark size=\markersize,blue,mark=square*]
+%table{
+%0.3 0.0
+%0.7 0.37
+%1.2 0.6907
+%};
+%\addlegendentry{RT, $50\ \nicefrac{mm}{min}$, S4};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,blue,mark=square*]
+%table{
+%0.3 0.0
+%0.7 0.3494
+%1.2 0.7526
+%};
+%\addlegendentry{RT, $50\ \nicefrac{mm}{min}$, S5};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,blue,mark=square*]
+%table{
+%0.3 0.0
+%0.7 0.1954
+%1.2 0.6351
+%};
+%\addlegendentry{RT, $50\ \nicefrac{mm}{min}$, S6};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,blue,mark=square*]
+%table{
+%0.3 0.0
+%0.7 0.5195
+%1.2 0.8029
+%};
+%\addlegendentry{RT, $50\ \nicefrac{mm}{min}$, S7};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,blue,mark=triangle*]
+%table{
+%0.3 0.0
+%0.7 0.4839
+%1.2 0.9423
+%};
+%\addlegendentry{RT, $500\ \nicefrac{mm}{min}$, S8};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,blue,mark=triangle*]
+%table{
+%0.3 0.0
+%0.7 0.7736
+%1.2 1.0057
+%};
+%\addlegendentry{RT, $500\ \nicefrac{mm}{min}$, S9};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,blue,mark=triangle*]
+%table{
+%0.3 0.0
+%0.7 0.7847
+%1.2 1.1211
+%};
+%\addlegendentry{RT, $500\ \nicefrac{mm}{min}$, S10};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,blue,mark=triangle*]
+%table{
+%0.3 0.0
+%0.7 0.6524
+%1.2 0.9535
+%};
+%\addlegendentry{RT, $500\ \nicefrac{mm}{min}$, S11};
+
+\addplot[line width=\linewidth,mark size=\markersize,red,mark=*]
+table{
+0.3 0.0
+0.7 0.0
+1.2 0.0
+};
+\addlegendentry{$110^{\circ}$, $1\ \nicefrac{mm}{min}$, S12};
+
+\addplot[line width=\linewidth,mark size=\markersize,red,mark=*]
+table{
+0.3 0.0
+0.7 0.0
+1.2 0.0
+};
+\addlegendentry{$110^{\circ}$, $1\ \nicefrac{mm}{min}$, S13};
+
+\addplot[line width=\linewidth,mark size=\markersize,red,mark=*]
+table{
+0.3 0.0
+0.7 0.0
+1.2 0.0
+};
+\addlegendentry{$110^{\circ}$, $1\ \nicefrac{mm}{min}$, S14};
+
+%\addplot[line width=\linewidth,mark size=\markersize,red,mark=square*]
+%table{
+%0.3 0.0
+%0.7 0.2397
+%1.2 0.4139
+%};
+%\addlegendentry{$110^{\circ}$, $50\ \nicefrac{mm}{min}$, S15};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,red,mark=square*]
+%table{
+%0.3 0.0
+%0.7 0.0462
+%1.2 0.0924
+%};
+%\addlegendentry{$110^{\circ}$, $50\ \nicefrac{mm}{min}$, S16};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,red,mark=square*]
+%table{
+%0.3 0.0
+%0.7 0.1176
+%};
+%\addlegendentry{$110^{\circ}$, $50\ \nicefrac{mm}{min}$, S17};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,red,mark=square*]
+%table{
+%0.3 0.0
+%0.7 0.0988
+%1.2 0.02716
+%};
+%\addlegendentry{$110^{\circ}$, $50\ \nicefrac{mm}{min}$, S18};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,red,mark=triangle*]
+%table{
+%0.3 0.0
+%0.7 0.2285
+%1.2 0.3554
+%};
+%\addlegendentry{$110^{\circ}$, $500\ \nicefrac{mm}{min}$, S19};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,red,mark=triangle*]
+%table{
+%0.3 0.0
+%0.7 0.3772
+%1.2 0.6129
+%};
+%\addlegendentry{$110^{\circ}$, $500\ \nicefrac{mm}{min}$, S20};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,red,mark=triangle*]
+%table{
+%0.3 0.0
+%0.7 0.5978
+%1.2 0.8152
+%};
+%\addlegendentry{$110^{\circ}$, $500\ \nicefrac{mm}{min}$, S21};
+%
+%\addplot[line width=\linewidth,mark size=\markersize,red,mark=triangle*]
+%table{
+%0.3 0.0
+%0.7 0.5467
+%1.2 0.7653
+%};
+%\addlegendentry{$110^{\circ}$, $500\ \nicefrac{mm}{min}$, S22};
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

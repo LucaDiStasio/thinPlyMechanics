@@ -1,0 +1,165 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{dingbat}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{3.pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:1,-0.025)},anchor=north west,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={at={(axis cs:65,1.31)},anchor=west,draw=white!80.0!black,font=\fontsize{15}{14}\selectfont,row sep=7.5pt},
+legend image post style={xscale=1.5,yscale=1.5},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+%xmax=90.0,
+ymin=0.0,
+xtick={0.0},
+ytick={0.0,0.3,0.4,0.7,1.2},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$t\left[min\right]$},
+ylabel={$\varepsilon\left[\%\right]$},
+% LEGEND ENTRIES
+legend entries={},
+]
+
+
+\addplot[line width=\linewidth,mark size=\markersize,black,mark=*]
+table{
+0.0 0.0
+3 0.3
+6 0.0
+10 0.4
+};
+\addlegendentry{Automatic control};
+
+\addplot[line width=\linewidth,mark size=\markersize,black,loosely dashed,mark=*]
+table{
+10 0.4
+11 0.3
+14 0.0
+};
+\addlegendentry{Manual control};
+
+\addplot[line width=\linewidth,mark size=\markersize,black,mark=*]
+table{
+14 0.0
+17 0.3
+20 0.0
+27 0.7
+};
+
+\addplot[line width=\linewidth,mark size=\markersize,black,loosely dashed,mark=*]
+table{
+27 0.7
+28 0.6
+34 0.0
+};
+
+\addplot[line width=\linewidth,mark size=\markersize,black,mark=*]
+table{
+34 0.0
+37 0.3
+40 0.0
+52 1.2
+};
+
+\addplot[line width=\linewidth,mark size=\markersize,black,loosely dashed,mark=*]
+table{
+52 1.2
+53 1.1
+64 0.0
+};
+
+\addplot[line width=\linewidth,mark size=\markersize,black,mark=*]
+table{
+64 0.0
+67 0.3
+70 0.0
+};
+
+\addplot[->,line width=\linewidth,black,loosely dashed]
+table{
+26 1.3
+11 0.325
+};
+
+\addplot[->,line width=\linewidth,black,loosely dashed]
+table{
+43 1.3
+28 0.625
+};
+
+\addplot[->,line width=\linewidth,black,loosely dashed]
+table{
+58 1.3
+53 1.125
+};
+
+\draw[anchor=south] (axis cs:26,1.28) node{\Huge\eye};
+\draw[anchor=south] (axis cs:43,1.28) node{\Huge\eye};
+\draw[anchor=south] (axis cs:58,1.28) node{\Huge\eye};
+
+
+\draw[<-,line width=\linewidth,black,loosely dashed](axis cs:1,-0.05)--(axis cs:10,-0.7);
+\draw[anchor=west] (axis cs:32.5,-1.75) node{\Huge$T>RT$};
+\node[anchor=north] at(axis cs:10,-0.7){\includegraphics[width=10cm]{testing-procedure-temp.pdf}};
+
+\draw[<-,line width=\linewidth,black,loosely dashed](axis cs:34,-0.05)--(axis cs:64,-0.7);
+\draw[<-,line width=\linewidth,black,loosely dashed](axis cs:14,-0.05)--(axis cs:64,-0.7);
+\draw[<-,line width=\linewidth,black,loosely dashed](axis cs:64,-0.05)--(axis cs:64,-0.7);
+\node[anchor=north] at(axis cs:64,-0.7){\includegraphics[width=10cm]{testing-procedure-temp-short.pdf}};
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

@@ -1,0 +1,1887 @@
+%\documentclass[first,firstsupp,handout,compress,notes,navigation,hyperref,table]{ETHclass}
+%\documentclass[first,firstsupp,handout,lastsupp]{ETHclass}
+\documentclass[first,firstsupp,lastsupp,last,hyperref,table]{ETHclass}
+%\documentclass[first,firstsupp]{ETHclass}
+\usepackage{etex}
+
+
+\usepackage{adjustbox}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{animate}
+\usepackage{booktabs}
+\usepackage{charter}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage{ifthen}
+\usepackage{longtable}
+\usepackage{mathrsfs}
+\usepackage{multicol}
+\usepackage{nicefrac}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage{pgfplots}
+\usepackage{pifont}
+\usepackage{ragged2e}
+\usepackage{standalone}
+\usepackage[caption=false]{subfig}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage{wasysym}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\pgfplotsset{compat=1.7}
+
+\setbeamertemplate{navigation symbols}{}
+\usetikzlibrary{arrows,decorations.pathreplacing,positioning,shapes,shadows}
+
+%\usepackage[style=numeric-comp]{biblatex}
+
+%\usepackage{lipsum}
+
+%\usetikzlibrary{fit}
+\usetikzlibrary{arrows}
+\usetikzlibrary{trees}
+
+% Options for beamer:
+%
+% 9,10,11,12,13,14,17pt  Fontsizes
+%
+% compress: navigation bar becomes smaller
+% t       : place contents of frames on top (alternative: b,c)
+% handout : handoutversion
+% notes   : show notes
+% notes=onlyslideswithnotes
+%
+%hyperref={bookmarksopen,bookmarksnumbered} : Needed for menues in
+%                                             acrobat. Also need
+%                                             pdftex as option or
+%                                             compile with
+% pdflatex '\PassOptionsToPackage{pdftex,bookmarksopen,bookmarksnumbered}{hyperref} \input{file}'
+
+%\usepackage{beamerseminar}
+%\usepackage[accumulated]{beamerseminar}
+                                % remove ``accumulated'' option
+                                % for original behaviour
+%\usepackage{beamerbasenotes}
+%\setbeamertemplate{note page}[plain]
+%\setbeameroption{notes on second screen}
+
+%\setbeamertemplate{note page}[plain]
+%\setbeamertemplate{note page}{\ \\[.3cm]
+%\textbf{\color{blue}Notes:}\\%[0.1cm]
+%{\footnotesize %\tiny
+%\insertnote}}
+%\setbeameroption{notes on second screen}
+
+
+\setbeamertemplate{navigation symbols}{} % suppresses all navigation symbols:
+% \setbeamertemplate{navigation symbols}[horizontal] % Organizes the navigation symbols horizontally.
+ %\setbeamertemplate{navigation symbols}[vertical] % Organizes the navigation symbols vertically.
+% \setbeamertemplate{navigation symbols}[only frame symbol] % Shows only the navigational symbol for navigating frames.
+
+\setlayoutscale{0.5}
+\setparametertextfont{\scriptsize}
+\setlabelfont{\scriptsize}
+
+% \useoutertheme[subsection=false]{miniframes}
+% \usepackage{etoolbox}
+% \makeatletter
+% \patchcmd{\slideentry}{\advance\beamer@xpos by1\relax}{}{}{}
+% \def\beamer@subsectionentry#1#2#3#4#5{\advance\beamer@xpos by1\relax}%
+% \makeatother
+
+% \makeatletter
+%     \newenvironment{withoutheadline}{
+%        \setbeamertemplate{headline}{%
+% \vspace{15pt}
+% }
+%     }{}
+% \makeatother
+
+\makeatletter
+    \newenvironment{withoutheadline}{
+         \setbeamertemplate{headline}{%
+\vspace{35pt}
+}
+        %\def\beamer@entrycode{\vspace*{-1.5\headheight}}
+    }{}
+\makeatother
+
+\makeatletter
+    \newenvironment{tocframe}{
+         \setbeamertemplate{headline}{%
+\vspace{35pt}
+}
+         \setbeamertemplate{footline}{%
+\leavevmode%
+  \hbox{
+    \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.5ex,dp=0.75ex,left]{author in head/foot}%
+      \qquad\color{white}{\tiny\underline{L. Di Stasio}}%
+    \end{beamercolorbox}%
+
+    \begin{beamercolorbox}[wd=.45\paperwidth,ht=2.5ex,dp=0.75ex,center]{title in head/foot}%
+      \color{white}{Stockholm (SE) - October 16, 2019}%
+    \end{beamercolorbox}%
+
+    \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.5ex,dp=0.75ex,right]{title in head/foot}%
+      \color{white}{\insertframenumber\totalframes}%
+    \end{beamercolorbox}%
+  }
+}
+        %\def\beamer@entrycode{\vspace*{-1.5\headheight}}
+    }{}
+\makeatother
+
+\newcommand{\Cross}{$\mathbin{\tikz [x=1.4ex,y=1.4ex,line width=.2ex, red] \draw (0,0) -- (1,1) (0,1) -- (1,0);}$}%
+
+\newcommand{\Checkmark}{$\color{green}\mathbf{\checkmark}$}
+
+\setbeamerfont{subsection in toc}{size=\tiny}
+
+\makeatletter
+\patchcmd{\beamer@sectionintoc}
+  {\vfill}
+  {\vskip1.5\itemsep}
+  {}
+  {}
+\makeatother
+
+\setbeamertemplate{frametitle continuation}{}
+
+\setbeamertemplate{bibliography entry title}{}
+\setbeamertemplate{bibliography entry author}{}
+\setbeamertemplate{bibliography entry location}{}
+\setbeamertemplate{bibliography entry note}{}
+
+\setbeamercolor*{bibliography entry title}{fg=black}
+\setbeamercolor*{bibliography entry author}{fg=black}
+\setbeamercolor*{bibliography entry location}{fg=black}
+\setbeamercolor*{bibliography entry note}{fg=black}
+% and kill the abominable icon
+%\setbeamertemplate{bibliography item}{\color{forestgreen}$\blacktriangleright$}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+%\setbeamertemplate{bibliography item}{\theenumiv}
+
+\newcommand{\highlightred}[1]{%
+  \colorbox{red!50}{$\displaystyle#1$}}
+
+\newcommand{\highlightyellow}[1]{%
+  \colorbox{yellow!50}{$\displaystyle#1$}}
+
+\newcommand{\highlightgreen}[1]{%
+  \colorbox{green!50}{$\displaystyle#1$}}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{frametitle}\includegraphics[width=2ex]{freccia_trasparente_verde_foresta.png}\hspace{.5ex}~{\LARGE \textsc{\bfseries \insertsectionhead}}\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\hyphenpenalty=5000
+\tolerance=1000
+
+\graphicspath{{figures/}}
+
+\newenvironment{system}{\left\lbrace\begin{array}{@{}l@{}}}{\end{array}\right.}
+
+\newenvironment{subsystem}{\left\lgroup\begin{array}{@{}l@{}}}{\end{array}\right.}
+
+\defbeamertemplate*{title page}{customized}[1][]
+{
+\usebeamerfont{subtitle}
+\usebeamercolor[fg]{subtitle}
+
+\vspace{-2cm}
+
+{\flushleft
+ \usebeamerfont{title}{\inserttitle}\par
+}
+
+%\vspace{-.5cm}
+%\vspace{-.25cm}
+{\flushright
+\setbeamercolor{author}{bg=white,fg=Red}
+\usebeamerfont{author}{\footnotesize \insertauthor} \par}
+
+\vspace{-.25cm}
+
+{\flushright
+\usebeamerfont{institute}{\tiny \insertinstitute}\par }
+
+\vspace{0.5cm}
+
+{\centering
+\usebeamerfont{date}{\scriptsize \insertdate} \par }
+
+
+}
+
+
+\begin{document}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+\title{\textsc{\small \textbf{Towards tough self-healing thin-ply laminates}}\\\textsc{\scriptsize Insights from computational micromechanical modeling and high-temperature experimental investigation of onset and propagation of transverse cracking}}
+
+\author{\vspace*{-0.5cm}\scriptsize \underline{Luca Di Stasio}$^{1,2}$, Janis Varna$^{1}$, Zoubir Ayadi$^{2}$}
+%\institute{ Science et Ing\'enierie des Mat\'eriaux et M\'etallurgie (SI2M), Institut Jean Lamour, Nancy, France\\Department of Engineering Sciences and Mathematics, Division of Materials Science, Lule\aa\ University of Technology, Lule\aa, Sweden}
+\institute{\tiny$^{1}$Division of Materials Science, Lule\aa\ University of Technology, Lule\aa, Sweden\\$^{2}$EEIGM \& IJL, Universit\'e de Lorraine, Nancy, France}
+\date{\vspace*{-0.2cm}\tiny LTU Composites Seminars Series, Lule\aa\ University of Technology (LTU)\\[-3.5pt]Lule\aa (SE) - November 6, 2019}
+
+\begin{frame}[plain]
+    \titlepage
+
+\end{frame}
+
+\begin{tocframe}
+\begin{frame}
+\frametitle{Outline}
+\justifying
+\vspace*{-0.5cm}
+% \tableofcontents[hidesubsections]
+% \begin{multicols}{2}
+% \tableofcontents[hidesubsections]
+% \end{multicols}
+% \begin{columns}[t]
+%         \begin{column}{.5\textwidth}
+%             \tableofcontents[sections={1-2}]
+%         \end{column}
+%         \begin{column}{.5\textwidth}
+%             \tableofcontents[sections={3-6}]
+%         \end{column}
+%     \end{columns}
+% \end{frame}
+\tableofcontents[hidesubsections]
+\end{frame}
+\end{tocframe}
+
+%\note{}
+
+%\begin{frame}
+%\pagediagram
+%\end{frame}
+%% \note{}
+
+%\section[Transverse Cracking in FRPCs]{Initiation of Transverse Cracking in Fiber Reinforced Polymer Composites (FRPCs): Microscopic Observations \& Modeling}
+
+\section{Transverse Cracking in Thin-plies}
+
+\subsection{The Thin-ply ``Advantage''}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small The Thin-ply ``Advantage'': new material}
+\vspace{-0.8cm}
+\centering
+\begin{columns}[t]
+\begin{column}{0.5\textwidth}
+\centering
+\tiny
+\textbf{2018}, $\mathbf{\left[45^{\circ}, 90^{\circ},-45^{\circ},0^{\circ}\right]_{nS}}$
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+
+\end{column}
+\end{columns}
+\vspace{-0.4cm}
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{thinply-plythicknesseffect.jpg}
+\end{figure}
+\vspace{-0.6cm}
+\centering
+\textcolor{white}{\tiny$t_{90^{\circ}}<10\diameter_{fiber}$}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\end{column}
+\end{columns}
+\vspace{0.15cm}
+\begin{columns}[b]
+\begin{column}{0.5\textwidth}
+\centering
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1016/j.compscitech.2018.08.037}{Cugnoni et al., Compos. Sci. Technol. \textbf{168}, 2018.}}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\end{column}
+\end{columns}
+\end{frame}
+
+%\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small The Thin-ply ``Advantage''? New material, new problem...}
+\vspace{-0.8cm}
+\centering
+\begin{columns}[t]
+\begin{column}{0.5\textwidth}
+\centering
+\tiny
+\textbf{2018}, $\mathbf{\left[45^{\circ}, 90^{\circ},-45^{\circ},0^{\circ}\right]_{nS}}$
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+
+\end{column}
+\end{columns}
+\vspace{-0.4cm}
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{thinply-plythicknesseffect-brittle.png}
+\end{figure}
+
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item material from NTPT (CH) (on the left)
+\item recent tests (master theses $@$ LTU) have shown the same behavior with material from Oxeon (SE)
+\end{itemize}
+\begin{itemize}[label=\color{green}\ding{52}]
+\item extended range of elastic behavior with no damage-induced stiffness reduction
+\end{itemize}
+\begin{itemize}[label=\color{red}\ding{56}]
+\item brittle failure of the whole laminate!
+\item very risky for application in safety-critical primary structures!
+\end{itemize}
+\end{column}
+\end{columns}
+\vspace{0.15cm}
+\begin{columns}[b]
+\begin{column}{0.5\textwidth}
+\centering
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1016/j.compscitech.2018.08.037}{Cugnoni et al., Compos. Sci. Technol. \textbf{168}, 2018.}}
+\end{column}
+\begin{column}{0.5\textwidth}
+\
+\end{column}
+\end{columns}
+\end{frame}
+
+%\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small The Thin-ply ``Advantage'': new material, old result}
+\vspace{-0.8cm}
+\centering
+\begin{columns}[t]
+\begin{column}{0.5\textwidth}
+\centering
+\tiny
+\textbf{2018}, $\mathbf{\left[45^{\circ}, 90^{\circ},-45^{\circ},0^{\circ}\right]_{nS}}$
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\tiny
+\textbf{1979}, $\mathbf{\left[0^{\circ}, 90^{\circ}_{n}\right]_{S}}$
+\end{column}
+\end{columns}
+\vspace{-0.4cm}
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{thinply-plythicknesseffect.jpg}
+\end{figure}
+\vspace{-0.6cm}
+\centering
+\textcolor{white}{\tiny$t_{90^{\circ}}<10\diameter_{fiber}$}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{bailey.png}
+\end{figure}
+\textcolor{white}{\tiny$t_{90^{\circ}}>100\diameter_{fiber}$}
+\end{column}
+\end{columns}
+\vspace{0.15cm}
+\begin{columns}[b]
+\begin{column}{0.5\textwidth}
+\centering
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1016/j.compscitech.2018.08.037}{Cugnoni et al., Compos. Sci. Technol. \textbf{168}, 2018.}}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1098/rspa.1979.0071}{Bailey et al., P. Roy. Soc. A-Math. Phy. \textbf{366} (1727), 1979.}}
+\end{column}
+\end{columns}
+\end{frame}
+
+%\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small The Thin-ply ``Advantage'': new material, old result?}
+\vspace{-0.8cm}
+\centering
+\begin{columns}[t]
+\begin{column}{0.5\textwidth}
+\centering
+\tiny
+\textbf{2018}, $\mathbf{\left[45^{\circ}, 90^{\circ},-45^{\circ},0^{\circ}\right]_{nS}}$
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\tiny
+\textbf{1979}, $\mathbf{\left[0^{\circ}, 90^{\circ}_{n}\right]_{S}}$
+\end{column}
+\end{columns}
+\vspace{-0.4cm}
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{thinply-plythicknesseffect-highlighted.png}
+\end{figure}
+\vspace{-0.6cm}
+\centering
+\textcolor{red}{\tiny$t_{90^{\circ}}<10\diameter_{fiber}$}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{bailey-highlighted.png}
+\end{figure}
+\textcolor{red}{\tiny$t_{90^{\circ}}>100\diameter_{fiber}$}
+\end{column}
+\end{columns}
+\vspace{0.15cm}
+\begin{columns}[b]
+\begin{column}{0.5\textwidth}
+\centering
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1016/j.compscitech.2018.08.037}{Cugnoni et al., Compos. Sci. Technol. \textbf{168}, 2018.}}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1098/rspa.1979.0071}{Bailey et al., P. Roy. Soc. A-Math. Phy. \textbf{366} (1727), 1979.}}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Micromechanics of Initiation}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small Micromechanics of Initiation}
+\vspace{-0.5cm}
+\centering
+\captionsetup[subfigure]{labelfont=footnotesize}
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\draw[->,black, line width = 5pt] (-4,0) -- (-4,3);
+\draw[->,black, line width = 5pt] (-4,0) -- (-4,-3);
+\node  at (-4,0) {\includegraphics[height=0.6\textheight]{0-90_2_symm}};
+\draw[<->,red, line width = 1.25pt] (-4.35,-0.5) -- (-3.65,-0.625);
+\node[red, below]  at (-4,-0.65) {\tiny$\mathbf{\sim 15\ mm}$};
+\node[above, right]  at (-3.8,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (-4.2,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\draw[->,black, line width = 5pt] (-2,0) -- (-2,3);
+\draw[->,black, line width = 5pt] (-2,0) -- (-2,-3);
+\node  at (-2,0) {\includegraphics[height=0.6\textheight]{0-90_symm_edge}};
+\draw[<->,red, line width = 1.25pt] (-2.46,-0.6) -- (-1.55,-0.6);
+\node[red, below]  at (-2,-0.6) {\tiny$\mathbf{\sim 2\ mm}$};
+\node[above, right]  at (-1.8,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (-2.2,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\draw[->,black, line width = 5pt] (1,0) -- (1,3);
+\draw[->,black, line width = 5pt] (1,0) -- (1,-3);
+\node  at (1,0) {\includegraphics[height=0.6\textheight]{0-90_symm_debondetail}};
+\draw[<->,red, line width = 1.25pt] (0.075,-0.15) -- (1.1,-0.15);
+\node[red, below]  at (0.55,-0.16) {\tiny$\mathbf{\sim 8\ \mu m}$};
+\node[above, right]  at (1.2,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (0.8,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\node[anchor=south west]  at (3.25,1.55) {\scriptsize\textbf{Left:}};
+\node[anchor=west]  at (3.25,1.5) {\scriptsize front view of $\left[0,90_{2}\right]_{S}$,};
+\node[anchor=north west]  at (3.25,1.5) {\scriptsize visual inspection.};
+
+\node[anchor=south west]  at (3.25,0.05) {\scriptsize\textbf{Center:}};
+\node[anchor=west]  at (3.25,0) {\scriptsize  edge view of $\left[0,90\right]_{S}$,};
+\node[anchor=north west]  at (3.25,0) {\scriptsize optical microscope.};
+
+\node[anchor=south west]  at (3.25,-1.45) {\scriptsize\textbf{Right:}};
+\node[anchor=west]  at (3.25,-1.5) {\scriptsize edge view of $\left[0,90\right]_{S}$,};
+\node[anchor=north west]  at (3.25,-1.5) {\scriptsize optical microscope.};
+
+%Tikz axis ends%
+
+\end{tikzpicture}
+\end{frame}
+
+%\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Micromechanics of Initiation}
+\vspace{-0.5cm}
+\centering
+\begin{alertblock}{\centering\scriptsize\bf Stage 1: isolated debonds}
+\vspace{-0.25cm}
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{stage1-isolateddebonds.pdf}
+\end{figure}
+\end{alertblock}
+\vspace{-0.5cm}
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1098/rspa.1979.0071}{Bailey et al., P. Roy. Soc. A-Math. Phy. \textbf{366} (1727), 1979.}}\\\vspace{-5pt}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1007/BF00552203}{Bailey et al., J. Mater. Sci. \textbf{16} (3), 1981.}}\\\vspace{-5pt}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1016/S1359-835X(96)00123-6}{Zhang et al., Compos. Part A-Appl. S. \textbf{28} (4), 1997.}}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Micromechanics of Initiation}
+\vspace{-0.5cm}
+\centering
+\begin{alertblock}{\centering\scriptsize\bf Stage 2: consecutive debonds}
+\vspace{-0.25cm}
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{stage2-critdebonds.pdf}
+\end{figure}
+\end{alertblock}
+\vspace{-0.5cm}
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1098/rspa.1979.0071}{Bailey et al., P. Roy. Soc. A-Math. Phy. \textbf{366} (1727), 1979.}}\\\vspace{-5pt}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1007/BF00552203}{Bailey et al., J. Mater. Sci. \textbf{16} (3), 1981.}}\\\vspace{-5pt}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1016/S1359-835X(96)00123-6}{Zhang et al., Compos. Part A-Appl. S. \textbf{28} (4), 1997.}}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Micromechanics of Initiation}
+\vspace{-0.5cm}
+\centering
+\begin{alertblock}{\centering\scriptsize\bf Stage 3: kinking}
+\vspace{-0.25cm}
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{stage3-kinking.pdf}
+\end{figure}
+\end{alertblock}
+\vspace{-0.5cm}
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1098/rspa.1979.0071}{Bailey et al., P. Roy. Soc. A-Math. Phy. \textbf{366} (1727), 1979.}}\\\vspace{-5pt}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1007/BF00552203}{Bailey et al., J. Mater. Sci. \textbf{16} (3), 1981.}}\\\vspace{-5pt}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1016/S1359-835X(96)00123-6}{Zhang et al., Compos. Part A-Appl. S. \textbf{28} (4), 1997.}}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Micromechanics of Initiation}
+\vspace{-0.5cm}
+\centering
+\begin{alertblock}{\centering\scriptsize\bf Stage 4: coalescence}
+\vspace{-0.25cm}
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{stage4-coalescence.pdf}
+\end{figure}
+\end{alertblock}
+\vspace{-0.5cm}
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1098/rspa.1979.0071}{Bailey et al., P. Roy. Soc. A-Math. Phy. \textbf{366} (1727), 1979.}}\\\vspace{-5pt}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1007/BF00552203}{Bailey et al., J. Mater. Sci. \textbf{16} (3), 1981.}}\\\vspace{-5pt}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1016/S1359-835X(96)00123-6}{Zhang et al., Compos. Part A-Appl. S. \textbf{28} (4), 1997.}}
+\end{frame}
+
+\subsection{A Counter-intuitive Observation}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small A Counter-intuitive Observation}
+\vspace{-0.5cm}
+\centering
+\tiny
+$\mathbf{\left[0^{\circ}, 90^{\circ}_{n}\right]_{S}}$
+\vspace{-0.25cm}
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{saito-thick.png}
+\end{figure}
+\vspace{-0.4cm}
+$n=4$, $t_{90^{\circ}}=160\mu m$
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+
+\end{column}
+\end{columns}
+\vspace{-0.1cm}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{saito-fill.png}
+\end{figure}
+\vspace{-0.25cm}
+\textcolor{white}{$n=1$, $t_{90^{\circ}}=40\mu m$}\\\vspace{5pt}
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1163/156855112X629522}{Saito et al., Adv. Compos. Mater. \textbf{21} (1), 2012.}}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small A Counter-intuitive Observation}
+\vspace{-0.5cm}
+\centering
+\tiny
+$\mathbf{\left[0^{\circ}, 90^{\circ}_{n}\right]_{S}}$
+\vspace{-0.25cm}
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{saito-thick.png}
+\end{figure}
+\vspace{-0.4cm}
+$n=4$, $t_{90^{\circ}}=160\mu m$
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{saito-mid.png}
+\end{figure}
+\vspace{-0.4cm}
+$n=2$, $t_{90^{\circ}}=80\mu m$
+\end{column}
+\end{columns}
+\vspace{-0.1cm}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{saito-fill.png}
+\end{figure}
+\vspace{-0.25cm}
+\textcolor{white}{$n=1$, $t_{90^{\circ}}=40\mu m$}\\\vspace{5pt}
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1163/156855112X629522}{Saito et al., Adv. Compos. Mater. \textbf{21} (1), 2012.}}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small A Counter-intuitive Observation}
+\vspace{-0.5cm}
+\centering
+\tiny
+$\mathbf{\left[0^{\circ}, 90^{\circ}_{n}\right]_{S}}$
+\vspace{-0.25cm}
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{saito-thick.png}
+\end{figure}
+\vspace{-0.4cm}
+$n=4$, $t_{90^{\circ}}=160\mu m$
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{saito-mid.png}
+\end{figure}
+\vspace{-0.4cm}
+$n=2$, $t_{90^{\circ}}=80\mu m$
+\end{column}
+\end{columns}
+\vspace{-0.1cm}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{saito-thin.png}
+\end{figure}
+\vspace{-0.25cm}
+$n=1$, $t_{90^{\circ}}=40\mu m$\\\vspace{5pt}
+\pgfmathsetmacro\fontsizeref{4.5}
+\pgfmathsetmacro\stretchref{1}
+{\fontsize{\fontsizeref}{\stretchref} \selectfont \href{https://doi.org/10.1163/156855112X629522}{Saito et al., Adv. Compos. Mater. \textbf{21} (1), 2012.}}
+\end{frame}
+
+\section{Modeling Fiber/Matrix Debonding}
+
+\subsection{Prelude}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small Micromechanics of Initiation}
+\vspace{-0.5cm}
+\centering
+\captionsetup[subfigure]{labelfont=footnotesize}
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\draw[->,black, line width = 5pt] (-4,0) -- (-4,3);
+\draw[->,black, line width = 5pt] (-4,0) -- (-4,-3);
+\node  at (-4,0) {\includegraphics[height=0.6\textheight]{0-90_2_symm}};
+\draw[<->,red, line width = 1.25pt] (-4.35,-0.5) -- (-3.65,-0.625);
+\node[red, below]  at (-4,-0.65) {\tiny$\mathbf{\sim 15\ mm}$};
+\node[above, right]  at (-3.8,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (-4.2,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\draw[->,black, line width = 5pt] (-2,0) -- (-2,3);
+\draw[->,black, line width = 5pt] (-2,0) -- (-2,-3);
+\node  at (-2,0) {\includegraphics[height=0.6\textheight]{0-90_symm_edge}};
+\draw[<->,red, line width = 1.25pt] (-2.46,-0.6) -- (-1.55,-0.6);
+\node[red, below]  at (-2,-0.6) {\tiny$\mathbf{\sim 2\ mm}$};
+\node[above, right]  at (-1.8,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (-2.2,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\draw[->,black, line width = 5pt] (1,0) -- (1,3);
+\draw[->,black, line width = 5pt] (1,0) -- (1,-3);
+\node  at (1,0) {\includegraphics[height=0.6\textheight]{0-90_symm_debondetail}};
+\draw[<->,red, line width = 1.25pt] (0.075,-0.15) -- (1.1,-0.15);
+\draw[red, line width = 1.5pt] (3.5,0.0) arc(0:360:2.5);
+\node[red, below]  at (0.55,-0.16) {\tiny$\mathbf{\sim 8\ \mu m}$};
+\node[above, right]  at (1.2,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (0.8,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\node[anchor=south west]  at (3.25,1.55) {\scriptsize\textbf{Left:}};
+\node[anchor=west]  at (3.25,1.5) {\scriptsize front view of $\left[0,90_{2}\right]_{S}$,};
+\node[anchor=north west]  at (3.25,1.5) {\scriptsize visual inspection.};
+
+\node[anchor=south west]  at (3.25,0.05) {\scriptsize\textbf{Center:}};
+\node[anchor=west]  at (3.25,0) {\scriptsize  edge view of $\left[0,90\right]_{S}$,};
+\node[anchor=north west]  at (3.25,0) {\scriptsize optical microscope.};
+
+\node[anchor=south west]  at (3.25,-1.45) {\scriptsize\textbf{Right:}};
+\node[anchor=west]  at (3.25,-1.5) {\scriptsize edge view of $\left[0,90\right]_{S}$,};
+\node[anchor=north west]  at (3.25,-1.5) {\scriptsize optical microscope.};
+
+%Tikz axis ends%
+
+\end{tikzpicture}
+\end{frame}
+
+\subsection{Geometry}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Geometry}
+\vspace{-1cm}
+\centering
+\begin{columns}[c]
+\begin{column}{0.85\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{laminate-section.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.15\textwidth}
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item $L, W >> t$
+\item $L, W \rightarrow \infty$
+\item Square packing
+\item$L_{d} >> \Delta\theta_{d}$
+\item 2D RVE
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{RVEs}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Representative Volume Elements}
+\vspace{-1cm}
+\centering
+\begin{columns}[c]
+\begin{column}{0.55\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{freeThickPly.pdf}
+\end{figure}
+\vspace{-0.25cm}
+\begin{equation*}
+n\times k-free
+\end{equation*}
+\begin{equation*}
+n\times k-H
+\end{equation*}
+\end{column}
+\begin{column}{0.45\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{ThickPly.pdf}
+\end{figure}
+\vspace{-0.25cm}
+\begin{equation*}
+n\times  k-m\cdot t_{90^{\circ}}
+\end{equation*}
+\end{column}
+\end{columns}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Representative Volume Elements}
+\vspace{-0.9cm}
+\centering
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{coupling.pdf}
+\end{figure}
+\vspace{-0.275cm}
+\begin{equation*}
+\begin{split}
+n\times k&-symm\ (coupling)\\
+n\times k&-coupling+H
+\end{split}
+\end{equation*}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{asymm.pdf}
+\end{figure}
+\vspace{-0.25cm}
+\begin{equation*}
+n\times k-asymm
+\end{equation*}
+\end{column}
+\end{columns}
+\end{frame}
+
+%\subsection{Equivalent boundary conditions}
+%
+%\begin{frame}
+%\frametitle{\vspace{0.2cm}\small Equivalent boundary conditions: linear horizontal displacement (H)}
+%\vspace{-1.25cm}
+%\centering
+%\begin{columns}[c]
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{freeThickPly.pdf}
+%\end{figure}
+%\vspace{-0.25cm}
+%\begin{equation*}
+%n\times k-H
+%\end{equation*}
+%\end{column}
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{equation*}
+%\scriptsize
+%u_{x}\left(x,h\right)=\bar{\varepsilon}_{x}x
+%\end{equation*}
+%\end{column}
+%\end{columns}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{\vspace{0.2cm}\small Equivalent boundary conditions: symmetric coupling}
+%\vspace{-1.25cm}
+%\centering
+%\begin{columns}[c]
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{coupling.pdf}
+%\end{figure}
+%\vspace{-0.25cm}
+%\begin{equation*}
+%n\times k-symm\ (coupling)
+%\end{equation*}
+%\end{column}
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{equation*}
+%\scriptsize
+%u_{z}\left(x,h\right)=\bar{u}_{z}\left(x,h\right)
+%\end{equation*}
+%\end{column}
+%\end{columns}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{\vspace{0.2cm}\small Equivalent boundary conditions: coupling + H}
+%\vspace{-1.25cm}
+%\centering
+%\begin{columns}[c]
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{coupling.pdf}
+%\end{figure}
+%\vspace{-0.25cm}
+%\begin{equation*}
+%n\times k-coupling+H
+%\end{equation*}
+%\end{column}
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{equation*}
+%\scriptsize
+%u_{z}\left(x,h\right)=\bar{u}_{z}\left(x,h\right)
+%\end{equation*}
+%\begin{equation*}
+%\scriptsize
+%u_{x}\left(x,h\right)=\bar{\varepsilon}_{x}x
+%\end{equation*}
+%\end{column}
+%\end{columns}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{\vspace{0.2cm}\small Equivalent boundary conditions: anti-symmetric coupling}
+%\vspace{-1.25cm}
+%\centering
+%\begin{columns}[c]
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{equation*}
+%\begin{split}
+%\scriptsize
+%u_{z}&\left(x,h\right)=-u_{z}\left(0,h\right)=\\&-\left(u_{z}\left(-x,h\right)-u_{z}\left(0,h\right)\right)
+%\end{split}
+%\end{equation*}
+%\begin{equation*}
+%\scriptsize
+%u_{x}\left(x,h\right)=-u_{x}\left(-x,h\right)
+%\end{equation*}
+%\end{column}
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{asymm.pdf}
+%\end{figure}
+%\vspace{-0.25cm}
+%\begin{equation*}
+%n\times k-asymm
+%\end{equation*}
+%\end{column}
+%\end{columns}
+%\end{frame}
+
+%\begin{frame}
+%\frametitle{\vspace{0.2cm}\small Equivalent boundary conditions: validation}
+%\vspace{-1.25cm}
+%\centering
+%\begin{columns}[c]
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{figure}
+%\centering
+%\includegraphics[width=1.1\columnwidth]{asymm-vs-explmodel-vf60-GI.pdf}
+%\end{figure}
+%\end{column}
+%\begin{column}{0.5\textwidth}
+%\centering
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{asymm-vs-explmodel-vf60-GII.pdf}
+%\end{figure}
+%\end{column}
+%\end{columns}
+%\end{frame}
+
+\subsection{Assumptions}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Assumptions}
+\vspace{-0.75cm}
+\centering
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{figure}
+\includegraphics[width=\columnwidth]{RUC.pdf}
+\end{figure}
+\vspace{-0.1cm}
+\tiny
+\begin{equation*}
+R_{f}=1\ \left[\mu m\right]\quad L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}
+\end{equation*}
+\end{column}
+\begin{column}{0.5\textwidth}
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item Linear elastic, homogeneous materials
+\item Concentric Cylinders Assembly with Self-Consistent Shear Model for UD
+\item Plane strain
+\item Frictionless contact interaction
+\item Symmetric w.r.t. x-axis
+\item Coupling of x-displacements on left and right side (repeating unit cell)
+\item Applied uniaxial tensile strain $\bar{\varepsilon}_{x}=1\%$
+\item $V_{f}=60\%$
+\end{itemize}
+\end{column}
+\end{columns}
+\vspace{0.05cm}
+\begin{table}[htbp]
+\tiny
+\centering
+\begin{tabular}{ccccccc}
+\textbf{Material} & \textbf{$V_{f}\left[\%\right]$}\  & \textbf{$E_{L}\left[GPa\right]$}\ & \textbf{$E_{T}\left[GPa\right]$}\  & \textbf{$\mu_{LT}\left[GPa\right]$} &\textbf{$\nu_{LT}\left[-\right]$} &\textbf{$\nu_{TT}\left[-\right]$} \\
+\midrule
+Glass fiber &-   & 70.0 & 70.0  & 29.2 & 0.2  & 0.2\\
+Epoxy    &-& 3.5 & 3.5   & 1.25 &  0.4& 0.4\\
+UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
+\end{tabular}
+\end{table}
+\end{frame}
+
+\subsection{Solution}
+
+\begin{frame}
+\frametitle{\vspace{0.4cm}\small Solution}
+\vspace{-1.1cm}
+\centering
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\begin{figure}
+\includegraphics[width=0.825\columnwidth]{RUC.pdf}
+\end{figure}
+\vspace{-1cm}
+\begin{columns}
+\begin{column}{0.3\columnwidth}
+\tiny
+\begin{equation*}
+\begin{aligned}
+&\text{in }\Omega_{f}, \Omega_{m}, \Omega_{UD}:\\
+&\frac{\partial^{2}\varepsilon_{xx}}{\partial z^{2}}+\frac{\partial^{2}\varepsilon_{zz}}{\partial x^{2}}=\frac{\partial^{2}\gamma_{zx}}{\partial x\partial z}\\
+&\varepsilon_{y}=\gamma_{xy}=\gamma_{yz}=0\\
+&\frac{\partial\sigma_{xx}}{\partial x}+\frac{\partial\tau_{zx}}{\partial z} = 0\\
+&\frac{\partial\tau_{zx}}{\partial x}+\frac{\partial\sigma_{zz}}{\partial z} = 0\\
+&\sigma_{yy}=\nu\left(\sigma_{xx}+\sigma_{zz}\right)\\
+\end{aligned}
+\end{equation*}
+\end{column}
+\begin{column}{0.7\columnwidth}
+\tiny
+\begin{equation*}
+\begin{aligned}
+&\text{for } 0^{\circ}\leq\alpha\leq\Delta\theta:\\
+&\left(\overrightarrow{u}_{m}\left(R_{f},\alpha\right)-\overrightarrow{u}_{f}\left(R_{f},\alpha\right)\right)\cdot\overrightarrow{n}_{\alpha}\geq 0\\
+&\text{for } \Delta\theta\leq\alpha\leq 180^{\circ}:\\
+&\overrightarrow{u}_{m}\left(R_{f},\alpha\right)-\overrightarrow{u}_{f}\left(R_{f},\alpha\right)=0\\
+&\sigma_{ij}=E_{ijkl}\varepsilon_{kl}\\
+&+BC
+\end{aligned}
+\end{equation*}
+\end{column}
+\end{columns}
+\end{column}
+\begin{column}{0.35\textwidth}
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item Oscillating singularity
+\vspace{-0.25cm}
+\begin{equation*}
+\sigma\sim r^{-\frac{1}{2}}\sin\left(\varepsilon\log r\right),\quad V_{f}\rightarrow 0
+\end{equation*}
+%\vspace{-0.25cm}
+{\tiny
+\begin{equation*}
+\varepsilon=\frac{1}{2\pi}\log\left(\frac{1-\beta}{1+\beta}\right)
+\end{equation*}
+%\vspace{-0.25cm}
+\begin{equation*}
+\beta=\frac{\mu_{2}\left(\kappa_{1}-1\right)-\mu_{1}\left(\kappa_{2}-1\right)}{\mu_{2}\left(\kappa_{1}+1\right)+\mu_{1}\left(\kappa_{2}+1\right)}
+\end{equation*}}
+\item receding contact problem
+\item Finite Element Method (FEM) in Abaqus\texttrademark + VCCT
+\item $2^{nd}$ order shape functions
+\item 6-nodes triangles \& 8-nodes quadrilaterals
+\item regular mesh of quadrilaterals at the crack tip:
+\begin{itemize}[label=-]
+\item $AR\sim 1$
+\item $\delta=0.05^{\circ}$
+\end{itemize}
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+%\section{Debond Energy Release Rate}
+
+\subsection{Interaction of Debonds}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Crack Shielding}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-crackshield21.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-crackshield21.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{twofibers-sameside-crackshielding21.pdf}
+\end{figure}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Crack Shielding}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-crackshield3.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-crackshield3.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{twofibers-sameside-crackshielding3.pdf}
+\end{figure}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Crack Shielding}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-crackshield1.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-crackshield1.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{twofibers-sameside-crackshielding1.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni1.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni1.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\vspace{-0.25cm}
+\includegraphics[width=0.275\textwidth]{twofibers-sameside-strainmagni1.pdf}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni3.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni3.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\vspace{-0.25cm}
+\begin{figure}
+\centering
+\includegraphics[width=0.325\textwidth]{twofibers-sameside-strainmagni3.pdf}
+\end{figure}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni21.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni21.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\vspace{-0.25cm}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{twofibers-sameside-strainmagni21.pdf}
+\end{figure}
+\end{frame}
+
+\subsection{$0^{\circ}$ ply thickness}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{1x1-i-vf60-GI-zero.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{1x1-i-vf60-GII-zero.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{onefiber-sameside-crackshielding1.pdf}
+\end{figure}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{1x1-i-vf60-GI-free.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{1x1-i-vf60-GII-free.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{onefiber-sameside-crackshielding1.pdf}
+\end{figure}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{1x1-i-vf60-GI-coupling.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{1x1-i-vf60-GII-coupling.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{onefiber-sameside-crackshielding1.pdf}
+\end{figure}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{1x1-i-vf60-GI.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{1x1-i-vf60-GII.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{onefiber-sameside-crackshielding1.pdf}
+\end{figure}
+\end{frame}
+
+\subsection{$90^{\circ}$ ply thickness}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Effect of $90^{\circ}$ ply thickness}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-thick.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-thick.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{twofibers-sameside-crackshielding11.pdf}
+\end{figure}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Effect of $90^{\circ}$ ply thickness}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-thin.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-thin.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{twofibers-sameside-crackshielding11.pdf}
+\end{figure}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Effect of $90^{\circ}$ ply thickness}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-extremethin.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-extremethin.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{twofibers-sameside-crackshielding21-thin.pdf}
+\end{figure}
+\end{frame}
+
+\subsection{Summary}
+
+\begin{frame}
+\frametitle{Summary}
+\vspace{-0.5cm}
+\centering
+\begin{itemize}[label=\ding{212}]
+\item No effect of  $90^{\circ}$ ply thickness can be observed when $t_{90^{\circ}}$ is at least $\sim3\diameter_{fiber}$
+\item Only if $t_{90^{\circ}}$ is reduced to $1\diameter_{fiber}$, ERR is reduced for a given level of applied strain, i.e. debond growth is delayed to higher levels of applied strain ($G\sim\varepsilon_{applied}^{2}$)
+\item No effect of  $0^{\circ}$ ply thickness can be observed when $\nicefrac{t_{0^{\circ}}}{t_{90^{\circ}}}>1$
+\item A small difference can be observed when  $t_{0^{\circ}}=t_{90^{\circ}}$, due to the smaller bending stiffness of a thinner $0^{\circ}$ layer
+\end{itemize}
+\end{frame}
+
+\section{Measuring Transverse Cracks Propagation}
+
+\subsection{Prelude}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small Micromechanics of Initiation}
+\vspace{-0.5cm}
+\centering
+\captionsetup[subfigure]{labelfont=footnotesize}
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\draw[->,black, line width = 5pt] (-4,0) -- (-4,3);
+\draw[->,black, line width = 5pt] (-4,0) -- (-4,-3);
+\node  at (-4,0) {\includegraphics[height=0.6\textheight]{0-90_2_symm}};
+\draw[<->,red, line width = 1.25pt] (-4.35,-0.5) -- (-3.65,-0.625);
+\node[red, below]  at (-4,-0.65) {\tiny$\mathbf{\sim 15\ mm}$};
+\node[above, right]  at (-3.8,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (-4.2,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\draw[->,black, line width = 5pt] (-2,0) -- (-2,3);
+\draw[->,black, line width = 5pt] (-2,0) -- (-2,-3);
+\node  at (-2,0) {\includegraphics[height=0.6\textheight]{0-90_symm_edge}};
+\draw[<->,red, line width = 1.25pt] (-2.46,-0.6) -- (-1.55,-0.6);
+\node[red, below]  at (-2,-0.6) {\tiny$\mathbf{\sim 2\ mm}$};
+\node[above, right]  at (-1.8,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (-2.2,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\draw[->,black, line width = 5pt] (1,0) -- (1,3);
+\draw[->,black, line width = 5pt] (1,0) -- (1,-3);
+\node  at (1,0) {\includegraphics[height=0.6\textheight]{0-90_symm_debondetail}};
+\draw[<->,red, line width = 1.25pt] (0.075,-0.15) -- (1.1,-0.15);
+\draw[red, line width = 1.5pt] (-1.25,0.0) arc(0:360:2);
+\node[red, below]  at (0.55,-0.16) {\tiny$\mathbf{\sim 8\ \mu m}$};
+\node[above, right]  at (1.2,3) {\Huge$\mathbf{\varepsilon}$};
+\node[below, left]  at (0.8,-3) {\Huge$\mathbf{\varepsilon}$};
+
+\node[anchor=south west]  at (3.25,1.55) {\scriptsize\textbf{Left:}};
+\node[anchor=west]  at (3.25,1.5) {\scriptsize front view of $\left[0,90_{2}\right]_{S}$,};
+\node[anchor=north west]  at (3.25,1.5) {\scriptsize visual inspection.};
+
+\node[anchor=south west]  at (3.25,0.05) {\scriptsize\textbf{Center:}};
+\node[anchor=west]  at (3.25,0) {\scriptsize  edge view of $\left[0,90\right]_{S}$,};
+\node[anchor=north west]  at (3.25,0) {\scriptsize optical microscope.};
+
+\node[anchor=south west]  at (3.25,-1.45) {\scriptsize\textbf{Right:}};
+\node[anchor=west]  at (3.25,-1.5) {\scriptsize edge view of $\left[0,90\right]_{S}$,};
+\node[anchor=north west]  at (3.25,-1.5) {\scriptsize optical microscope.};
+
+%Tikz axis ends%
+
+\end{tikzpicture}
+\end{frame}
+
+\subsection{Materials}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small Materials}
+\vspace{-0.75cm}
+\centering
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\begin{tikzpicture}
+\node at (2,0) {};
+\node  at (4.25,0) {\includegraphics[height=0.75\textheight]{0-90_2_symm}};
+\draw[->,black, line width = 2.5pt,loosely dashed] (4.25,-3.25) -- (4.25,3.25);
+\draw[->,black, line width = 2.5pt,loosely dashed] (2,0) -- (6.5,0);
+\node[anchor=south west] at (4.25,3.1) {$\mathbf{L}$};
+\node[anchor=north west] at (6.35,0) {$\mathbf{T}$};
+\end{tikzpicture}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item Glass fiber/epoxy prepreg
+\item $V_{f}\sim50-55\%$
+\item Lay-up $\left[0^{\circ},90^{\circ}_{2}\right]$
+\item Manufacturing: manual lay-up + vacuum bag + hot press
+\item Cutting and polishing of specimens
+\item Specimen size (nominal): $200\ mm\times15\ mm\times1.85\ mm$
+\end{itemize}
+\vspace{-0.25cm}
+\begin{table}
+\centering
+\scriptsize
+\begin{tabular}{cc}
+\multicolumn{2}{c}{UD properties (measured)}\\
+\midrule
+$E_{L}\ \left[GPa\right]$&38.5\\
+$E_{T}\ \left[GPa\right]$&15.3\\
+$\nu_{LT}\ \left[-\right]$&0.3\\
+$G_{LT}\ \left[GPa\right]$&3.5\\
+$\varepsilon^{lim}_{T}\ \left[\%\right]$&0.43\\
+$\sigma^{lim}_{T}\ \left[MPa\right]$&60\\
+$T_{stress\ free}\ \left[^{\circ}C\right]$&116.3\\
+\end{tabular}
+\end{table}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Equipment}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small Equipment}
+\vspace{-1cm}
+\centering
+\begin{columns}[c]
+\begin{column}{0.55\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\columnwidth]{instron-and-chamber}
+\end{figure}
+\end{column}
+\begin{column}{0.45\textwidth}
+\centering
+\scriptsize
+\vspace{-2.5cm}
+\begin{itemize}[label=\ding{212}]
+\item Universal electro-mechanical testing machine (Instron 3366)
+\item Environmental chamber (Instron), temperature range: $-100^{\circ}$ to $+350^{\circ}C$
+\item Extensometer (Instron), gauge length: $50\ mm$
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Testing procedure}
+
+\begin{frame}
+\frametitle{\vspace{0.3cm}\small Testing procedure}
+\vspace{-1.1cm}
+\centering
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\centering
+\begin{table}
+\centering
+\footnotesize
+\begin{tabular}{ccc}
+&RT&110$^{\circ}C$\\
+\midrule
+1 $\nicefrac{mm}{min}$&3 sp.&3 sp.\\
+50 $\nicefrac{mm}{min}$&4 sp.&4 sp.\\
+500 $\nicefrac{mm}{min}$&4 sp.&4 sp.\\
+\end{tabular}
+\end{table}
+\end{column}
+\begin{column}{0.5\textwidth}
+\vspace{-0.5cm}
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{testing-procedure}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Crack density}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Crack density}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{ncracks.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{crackdensity.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\scriptsize
+\begin{equation*}
+\rho_{kn}=\frac{n\ cracks}{L_{gauge}}t_{90^{\circ}}
+\end{equation*}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Crack density}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{ncracks-v1.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{crackdensity-v1.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\scriptsize
+\begin{equation*}
+\rho_{kn}=\frac{n\ cracks}{L_{gauge}}t_{90^{\circ}}
+\end{equation*}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Crack density}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{ncracks-v50.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{crackdensity-v50.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\scriptsize
+\begin{equation*}
+\rho_{kn}=\frac{n\ cracks}{L_{gauge}}t_{90^{\circ}}
+\end{equation*}
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Crack density}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{ncracks-v500.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{crackdensity-v500.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\scriptsize
+\begin{equation*}
+\rho_{kn}=\frac{n\ cracks}{L_{gauge}}t_{90^{\circ}}
+\end{equation*}
+\end{frame}
+
+\subsection{Young's modulus}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Young's modulus}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{modulus.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{modulus-normalized.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Re-bonding?}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Re-bonding?}
+\vspace{-.75cm}
+\centering
+\begin{columns}[c]
+\centering
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{modulus.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{modulus-normalized.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Design Idea}
+
+\begin{frame}
+\frametitle{\vspace{0.2cm}\small Design Idea}
+\vspace{-.75cm}
+\centering
+\small
+\begin{itemize}[label=\ding{46}]
+\item Use weak fiber/matrix interfaces $+$ microstructure $\rightarrow$ dissipate energy through diffuse debonding $+$ lower stiffness reduction
+\item Use microstructure (\emph{ply-thickness effect}) $\rightarrow$ prevent transverse cracking $=$ significant stiffness reduction
+\item Use partially reacted interfaces \emph{and/or} locally partially cured matrix \emph{and/or} nanoparticles-based local control of degree of reaction$\rightarrow$ re-bonding $@ T\sim T_{stress\ free}$ in unloaded state $=$ stiffness recovery
+\end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+\frametitle{}
+\end{frame}
+
+\end{document}

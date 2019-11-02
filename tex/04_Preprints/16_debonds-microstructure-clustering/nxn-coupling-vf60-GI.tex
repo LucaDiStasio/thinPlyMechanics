@@ -37,7 +37,7 @@ xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{
 ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
 tick align=outside,
 tick label style={font=\huge},
-legend style={draw=white!80.0!black,font=\fontsize{16}{14}\selectfont,row sep=7.5pt},
+legend style={at={(axis description cs:0.45,0.45)},anchor=south west,draw=white!80.0!black,font=\fontsize{16}{14}\selectfont,row sep=7.5pt},
 legend image post style={xscale=1.1,yscale=1.1},
 legend cell align={left},
 clip mode=individual,
@@ -147,28 +147,84 @@ table{
 % 3x3 - coupling - homogeneous
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*,mark options={fill=white}]
 table{
-
+10	3.309634
+20	3.041771
+30	2.234774
+40	1.426149
+50	0.763929
+60	0.250481
+70	0.003812
+80	0.000032
+90	0.000037
+100	0.000035
+110	0.000019
+120	0.000009
+130	0.000003
+140	0.000001
+150	0.001058
 };
 \addlegendentry{$3\times 3-coupling$, homogeneous};
 
 % 5x5 - coupling - homogeneous
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*,mark options={fill=white}]
 table{
-
+10	3.4516734497
+20	3.3822168291
+30	2.6126031196
+40	1.700421751
+50	0.8976661494
+60	0.27432556
+70	0.0009591912
+80	5.02678881407E-005
+90	5.55943371125E-005
+100	5.3202299441E-005
+110	2.91862557123E-005
+120	1.39630604826E-005
+130	4.89864859151E-006
+140	8.8483362016E-007
+150	0.0012350039
 };
 \addlegendentry{$5\times 5-coupling$, homogeneous};
 
 % 7x7 - coupling - homogeneous
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
 table{
-
+10	3.492485
+20	3.484145
+30	2.734127
+40	1.796497
+50	0.948124
+60	0.283091
+70	0.000671
+80	0.000059
+90	0.000065
+100	0.000062
+110	0.000034
+120	0.000016
+130	0.000006
+140	0.000001
+150	0.001516
 };
 \addlegendentry{$7\times 7-coupling$, homogeneous};
 
 % 11x11 - coupling - homogeneous
 \addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=diamond*,mark options={fill=white}]
 table{
-
+10	3.516075
+20	3.548446
+30	2.813314
+40	1.861283
+50	0.984068
+60	0.289745
+70	0.000487
+80	0.000065
+90	0.000072
+100	0.000069
+110	0.000037
+120	0.000018
+130	0.000006
+140	0.000001
+150	0.001794
 };
 \addlegendentry{$11\times 11-coupling$, homogeneous};
 

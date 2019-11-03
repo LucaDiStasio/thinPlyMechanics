@@ -1,0 +1,245 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{2.5pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={at={(axis description cs:0.45,0.45)},anchor=south west,draw=white!80.0!black,font=\fontsize{16}{14}\selectfont,row sep=7.5pt},
+legend image post style={xscale=1.1,yscale=1.1},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+xmax=90.0,
+ymin=0.0,
+xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$\Delta\theta\left[^{\circ}\right]$},
+ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
+% LEGEND ENTRIES
+legend entries={},
+]
+
+% 11x3 - coupling - clustered
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*]
+table{
+10	4.028713
+20	4.163431
+30	3.042050
+40	1.906423
+50	1.010007
+60	0.322566
+70	0.003687
+80	0.000044
+90	0.000067
+100	0.000070
+110	0.000035
+120	0.000015
+130	0.000005
+140	0.000001
+150	0.006033
+};
+\addlegendentry{$11\times 3- coupling$, cluster};
+
+% 11x5 - coupling - clustered
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,]
+table{
+10	3.982842
+20	4.087305
+30	2.961234
+40	1.829203
+50	0.946848
+60	0.284823
+70	0.000895
+80	0.000049
+90	0.000072
+100	0.000072
+110	0.000035
+120	0.000014
+130	0.000004
+140	0.000001
+150	0.006009
+};
+\addlegendentry{$11\times 5-coupling$, cluster};
+
+% 11x7 - coupling - clustered
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=triangle*]
+table{
+10	3.936073
+20	4.065186
+30	2.939426
+40	1.811023
+50	0.932030
+60	0.275585
+70	0.000693
+80	0.000050
+90	0.000073
+100	0.000073
+110	0.000035
+120	0.000014
+130	0.000004
+140	0.000001
+150	0.005979
+};
+\addlegendentry{$11\times 7-coupling$, cluster};
+
+% 11x11 - coupling - clustered
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=diamond*]
+table{
+10	3.940134
+20	4.055941
+30	2.940988
+40	1.811174
+50	0.930287
+60	0.273639
+70	0.000641
+80	0.000050
+90	0.000074
+100	0.000073
+110	0.000035
+120	0.000014
+130	0.000004
+140	0.000001
+150	0.005979
+};
+\addlegendentry{$11\times 11-coupling$, cluster};
+
+% 11x3 - coupling - homogeneous
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=*,mark options={fill=white}]
+table{
+10	3.504734
+20	3.531481
+30	2.822110
+40	1.906691
+50	1.055902
+60	0.362002
+70	0.009336
+80	0.000047
+90	0.000058
+100	0.000059
+110	0.000035
+120	0.000019
+130	0.000007
+140	0.000002
+150	0.000492
+};
+\addlegendentry{$11\times 3-coupling$, homogeneous};
+
+% 11x5 - coupling - homogeneous
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=square*,mark options={fill=white}]
+table{
+10	3.510203
+20	3.535494
+30	2.808278
+40	1.869460
+50	1.003342
+60	0.311165
+70	0.001135
+80	0.000059
+90	0.000067
+100	0.000065
+110	0.000036
+120	0.000018
+130	0.000006
+140	0.000001
+150	0.001287
+};
+\addlegendentry{$11\times 5-coupling$, homogeneous};
+
+% 11x7 - coupling - homogeneous
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
+table{
+10	3.513062
+20	3.542507
+30	2.809694
+40	1.863386
+50	0.990591
+60	0.297240
+70	0.000691
+80	0.000063
+90	0.000070
+100	0.000067
+110	0.000037
+120	0.000018
+130	0.000006
+140	0.000001
+150	0.001609
+};
+\addlegendentry{$11\times 7-coupling$, homogeneous};
+
+% 11x11 - coupling - homogeneous
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=diamond*,mark options={fill=white}]
+table{
+10	3.516075
+20	3.548446
+30	2.813314
+40	1.861283
+50	0.984068
+60	0.289745
+70	0.000487
+80	0.000065
+90	0.000072
+100	0.000069
+110	0.000037
+120	0.000018
+130	0.000006
+140	0.000001
+150	0.001794
+};
+\addlegendentry{$11\times 11-coupling$, homogeneous};
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

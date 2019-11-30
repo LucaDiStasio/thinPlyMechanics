@@ -1,0 +1,329 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{2.5pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={draw=white!80.0!black,font=\fontsize{16}{14}\selectfont,row sep=7.5pt},
+legend image post style={xscale=1.1,yscale=1.1},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+xmax=90.0,
+ymin=0.0,
+xtick={0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$\Delta\theta\left[^{\circ}\right]$},
+ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
+% LEGEND ENTRIES
+legend entries={},
+]
+
+%% 1x1 - symm
+%\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+%table{
+%10.00	1.94924367
+%20.00	1.86981658
+%30.00	1.55057941
+%40.00	1.09897290
+%50.00	0.57601740
+%60.00	0.22638102
+%70.00	0.08043570
+%80.00	0.01962154
+%90.00	0.00007766
+%100.00	0.00000222
+%110.00	0.00000172
+%120.00	0.00000081
+%130.00	0.00000019
+%140.00	0.00000002
+%150.00	0.00059528
+%};
+%\addlegendentry{$1\times 1-symm$};
+
+% 3x3 - symm
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*]
+table{
+10.00	3.309634
+20.00	3.041771
+30.00	2.234774
+40.00	1.426149
+50.00	0.763929
+60.00	0.250481
+70.00	0.003812
+80.00	0.000032
+90.00	0.000037
+100.00	0.000035
+110.00	0.000019
+120.00	0.000009
+130.00	0.000003
+140.00	0.000001
+150.00	0.001058
+};
+\addlegendentry{$3\times 3-symm$};
+
+% 3x3 - asymm
+\addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=square*,mark options={fill=white}]
+table{
+10.00	3.317120
+20.00	3.054053
+30.00	2.236587
+40.00	1.416338
+50.00	0.752342
+60.00	0.243831
+70.00	0.002998
+80.00	0.000033
+90.00	0.000036
+100.00	0.000034
+110.00	0.000019
+120.00	0.000009
+130.00	0.000003
+140.00	0.000001
+150.00	0.001113
+};
+\addlegendentry{$3\times 3-asymm$};
+
+% 7x3 - symm
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*]
+table{
+10.00	3.479770
+20.00	3.462973
+30.00	2.725559
+40.00	1.812806
+50.00	0.987448
+60.00	0.330952
+70.00	0.006987
+80.00	0.000044
+90.00	0.000054
+100.00	0.000054
+110.00	0.000032
+120.00	0.000017
+130.00	0.000006
+140.00	0.000001
+150.00	0.000484
+};
+\addlegendentry{$7\times 3-symm$};
+
+% 7x3 - asymm
+\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
+table{
+10.00	3.483439
+20.00	3.469345
+30.00	2.725793
+40.00	1.806275
+50.00	0.980817
+60.00	0.327407
+70.00	0.006412
+80.00	0.000044
+90.00	0.000053
+100.00	0.000054
+110.00	0.000032
+120.00	0.000016
+130.00	0.000006
+140.00	0.000001
+150.00	0.000512
+};
+\addlegendentry{$7\times 3-asymm$};
+
+%% 7x7 - symm
+%\addplot[line width=\linewidth,mark size=\markersize,red,smooth,mark=*,mark options={fill=white}]
+%table{
+%10.00	3.492485
+%20.00	3.484145
+%30.00	2.734127
+%40.00	1.796497
+%50.00	0.948124
+%60.00	0.283091
+%70.00	0.000671
+%80.00	0.000059
+%90.00	0.000065
+%100.00	0.000062
+%110.00	0.000034
+%120.00	0.000016
+%130.00	0.000006
+%140.00	0.000001
+%150.00	0.001516
+%};
+%\addlegendentry{$7\times 7-symm$};
+
+% 21x3 - symm
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*]
+table{
+10.00	3.523756
+20.00	3.587038
+30.00	2.901772
+40.00	1.987283
+50.00	1.116994
+60.00	0.390664
+70.00	0.011707
+80.00	0.000049
+90.00	0.000063
+100.00	0.000064
+110.00	0.000039
+120.00	0.000021
+130.00	0.000008
+140.00	0.000002
+150.00	0.000511
+};
+\addlegendentry{$21\times 3-symm$};
+
+% 21x3 - asymm
+\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
+table{
+10.00	3.528412
+20.00	3.595995
+30.00	2.904613
+40.00	1.981567
+50.00	1.110189
+60.00	0.387068
+70.00	0.011085
+80.00	0.000050
+90.00	0.000063
+100.00	0.000064
+110.00	0.000039
+120.00	0.000020
+130.00	0.000008
+140.00	0.000002
+150.00	0.000545
+};
+\addlegendentry{$21\times 3-asymm$};
+
+%% 21x21 - symm
+%\addplot[line width=\linewidth,mark size=\markersize,blue,smooth,mark=triangle*,mark options={fill=white}]
+%table{
+%10.00	3.530167
+%20.00	3.578468
+%30.00	2.851689
+%40.00	1.894717
+%50.00	1.003343
+%60.00	0.293348
+%70.00	0.000395
+%80.00	0.000069
+%90.00	0.000076
+%100.00	0.000073
+%110.00	0.000039
+%120.00	0.000019
+%130.00	0.000006
+%140.00	0.000001
+%150.00	0.001975
+%};
+%\addlegendentry{$21\times 21-symm$};
+
+% 101x3 - symm
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=square*]
+table{
+10.00	3.544015
+20.00	3.637489
+30.00	2.974016
+40.00	2.061786
+50.00	1.174346
+60.00	0.418121
+70.00	0.014129
+80.00	0.000052
+90.00	0.000067
+100.00	0.000069
+110.00	0.000042
+120.00	0.000022
+130.00	0.000009
+140.00	0.000002
+150.00	0.000529
+};
+\addlegendentry{$101\times 3-symm$};
+
+% 101x3 - asymm
+\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=square*,mark options={fill=white}]
+table{
+10.00	3.548441
+20.00	3.646395
+30.00	2.977038
+40.00	2.055957
+50.00	1.167272
+60.00	0.414317
+70.00	0.013437
+80.00	0.000052
+90.00	0.000067
+100.00	0.000069
+110.00	0.000042
+120.00	0.000022
+130.00	0.000009
+140.00	0.000002
+150.00	0.000564
+};
+\addlegendentry{$101\times 3-asymm$};
+
+%% 101x101 - symm
+%\addplot[line width=\linewidth,mark size=\markersize,green,smooth,mark=square*,mark options={fill=white}]
+%table{
+%10.00	3.535031
+%20.00	3.589410
+%30.00	2.867213
+%40.00	1.907160
+%50.00	1.010565
+%60.00	0.294689
+%70.00	0.000361
+%80.00	0.000070
+%90.00	0.000077
+%100.00	0.000074
+%110.00	0.000040
+%120.00	0.000019
+%130.00	0.000007
+%140.00	0.000001
+%150.00	0.002048
+%};
+%\addlegendentry{$101\times 101-symm$};
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

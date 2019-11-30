@@ -1,0 +1,155 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+\pgfkeys{/pgf/number format/.cd,1000 sep={}}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{2.5pt}
+
+%\pgfplotsset{
+%    compat=newest,
+%    /pgfplots/legend image code/.code={%
+%        \draw[mark repeat=2,mark phase=2,#1]
+%            plot coordinates {
+%                (0cm 0cm)
+%                (0.6cm 0cm)
+%                (1.2cm 0cm)
+%                (1.8cm 0cm)
+%                (2.4cm 0cm)%
+%            };
+%    },
+%}
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=10cm,height=22.5cm,
+% SCALE
+scale=1,
+% STYLE
+xbar,
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.05)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.1,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={at={(axis description cs:0.9,0.25)},anchor=north east,draw=white!80.0!black,font=\fontsize{22}{14}\selectfont,row sep=7.5pt},
+legend image post style={xscale=2.5,yscale=2.5},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+%xmax=90.0,
+%ymin=0.0,
+xtick={0,0.5,1,1.5,2,2.5,3,3.5},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$billion\ \$$},
+ytick=data,
+bar width=20pt,
+%ylabel={$n. countries$},
+symbolic y coords = {Australia,Italy,Norway,Canada,Sweden,Germany, France,United Kingdom, Japan, United States},
+nodes near coords,
+% LEGEND ENTRIES
+legend entries={},
+]
+
+%Green Climate Fund (GCF)
+
+\addplot coordinates {(3.0,United States) (1.211,United Kingdom) (1.035,France) (1.003,Germany) (0.334,Italy) (0.581,Sweden) (1.5,Japan) (0.187,Australia) (0.271,Norway) (0.277,Canada)};
+\addlegendentry{Pledged};
+
+\addplot coordinates {(3.0,United States) (1.211,United Kingdom) (1.035,France) (1.003,Germany) (0.268,Italy) (0.581,Sweden) (1.5,Japan) (0.187,Australia) (0.271,Norway) (0.277,Canada)};
+\addlegendentry{Signed};
+
+
+
+
+%\addplot[line width=\linewidth,blue, marker size=\marker size, mark=*]
+%table[x=Year, y expr=\thisrow{Amount}/1000000000]{
+%Entity Code Year GCF
+%Australia AUS 2018 187000000
+%Austria AUT 2018 34800000
+%Belgium BEL 2018 66900000.00000001
+%Bulgaria BGR 2018 100000
+%Canada CAN 2018 277 000 000
+%Chile CHL 2018 300000
+%Colombia COL 2018 300000
+%Cyprus CYP 2018 470000
+%Czech Republic CZE 2018 5320000
+%Denmark DNK 2018 71800000
+%Estonia EST 2018 1300000
+%Finland FIN 2018 107000000
+%France FRA 2018 1035000000
+%Germany DEU 2018 1 003 000 000
+%Hungary HUN 2018 4300000
+%Iceland ISL 2018 700000
+%Indonesia IDN 2018 250000
+%Ireland IRL 2018 2700000
+%Italy ITA 2018 268 000 000
+%Japan JPN 2018 1500000000
+%Latvia LVA 2018 470000
+%Liechtenstein LIE 2018 100000
+%Lithuania LTU 2018 100000
+%Luxembourg LUX 2018 33400000
+%Malta MLT 2018 320000
+%Mexico MEX 2018 10000000
+%Monaco MCO 2018 1080000
+%Mongolia MNG 2018 100000
+%Netherlands NLD 2018 134000000
+%New Zealand NZL 2018 2560000
+%Norway NOR 2018 271000000
+%Panama PAN 2018 1000000
+%Poland POL 2018 110000
+%Portugal PRT 2018 2680000
+%Romania ROU 2018 100000
+%South Korea KOR 2018 100000000
+%Spain ESP 2018 161000000
+%Sweden SWE 2018 581 000 000
+%Switzerland CHE 2018 100 000 000
+%United Kingdom GBR 2018 1211000000
+%United States USA 2018 3 000 000 000
+%World OWID_WRL 2018 10200000000
+%};
+%\addlegendentry{Kyoto Protocol};
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

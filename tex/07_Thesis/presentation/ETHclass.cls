@@ -234,8 +234,8 @@
 \setbeamercolor{section in head/foot}{fg=white,bg=ETHZblue}
 \setbeamercolor{subsection in head/foot}{fg=white,bg=ETHZblue}
 
-\setbeamertemplate{section in head/foot shaded}[default][60]
-\setbeamertemplate{subsection in head/foot shaded}[default][60]
+\setbeamertemplate{section in head/foot shaded}[default][30]
+\setbeamertemplate{subsection in head/foot shaded}[default][30]
 
 \setbeamertemplate{headline}{%
 \vspace{27pt}

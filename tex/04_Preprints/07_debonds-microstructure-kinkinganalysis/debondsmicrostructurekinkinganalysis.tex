@@ -44,7 +44,7 @@
 
 \begin{frontmatter}
 
-\title{Analysis of the early stages of transverse cracking in fiber-reinforced laminates: fiber/matrix interface crack density approach}
+\title{Analysis of stresses and strains}
 %\tnotetext[mytitlenote]{Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.}
 
 %% Group authors per affiliation:
@@ -53,22 +53,18 @@
 %\fntext[myfootnote]{Since 1880.}
 
 %% or include affiliations in footnotes:
-\author[nancy,lulea]{Luca Di Stasio}
+\author[lulea]{Luca Di Stasio}
 \author[lulea]{Janis Varna}
-\author[nancy]{Zoubir Ayadi}
 %\ead[url]{www.elsevier.com}
 
 %\author[mysecondaryaddress]{Global Customer Service\corref{mycorrespondingauthor}}
 %\cortext[mycorrespondingauthor]{Corresponding author}
 %\ead{support@elsevier.com}
 
-\address[nancy]{Universit\'e de Lorraine, EEIGM, IJL, 6 Rue Bastien Lepage, F-54010 Nancy, France}
 \address[lulea]{Lule\aa\ University of Technology, University Campus, SE-97187 Lule\aa, Sweden}
 
 \begin{abstract}
-\noindent
-\textcolor{purple}{{\em Priority}: 2}\\
-\textcolor{purple}{{\em Target journal(s)}: Composites Part B: Engineering, Composites Part A: Applied Science and Manufacturing, Composite Science and Technology, Composite Structures, Journal of Composite Materials, Composite Communications}\\
+
 \end{abstract}
 
 %\begin{keyword}
@@ -84,18 +80,92 @@
 
 \section{Models of Representative Volume Element (RVE)}
 
-\textcolor{blue}{We start by describing the different idealized micro-structures considered and the corresponding repeating element or RVE used to model them. Fig.~\ref{fig:fibersOnSideModels}, Fig.~\ref{fig:fibersOnTopModels} and Fig.~\ref{fig:fibersOnSideAndTopModels}}
+\section{Stresses at the interface}
 
-\section{The fiber/matrix interface crack density approach}
+\subsection{$\sigma_{rr}$}
 
-\subsection{Crack density and normalized crack density}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A0free-circum-sigmar.pdf}
+\caption{$\sigma_{rr}$, $11\times 1-free$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
 
-\subsection{Effect of crack density on crack growth in UD and cross-ply laminates with a single layer of fibers}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A0T1-circum-sigmar.pdf}
+\caption{$\sigma_{rr}$, $11\times 1-1\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
 
-\subsection{Effect of thickness on crack growth in UD and cross-ply laminates with a central layer of debonded fibers}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A0vk-circum-sigmar.pdf}
+\caption{$\sigma_{rr}$, $11\times 1-symm$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
 
-\subsection{Effect of crack density and thickness on crack growth in UD and cross-ply laminates}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A0asymm-circum-sigmar.pdf}
+\caption{$\sigma_{rr}$, $11\times 1-asymm$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
 
-\section{Conclusions \& Outlook}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A1free-circum-sigmar.pdf}
+\caption{$\sigma_{rr}$, $11\times 3-free$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
+
+\subsection{$\sigma_{\theta\theta}$}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A0free-circum-sigmatt.pdf}
+\caption{$\sigma_{\theta\theta}$, $11\times 1-free$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A0T1-circum-sigmatt.pdf}
+\caption{$\sigma_{\theta\theta}$, $11\times 1-1\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A0vk-circum-sigmatt.pdf}
+\caption{$\sigma_{\theta\theta}$, $11\times 1-symm$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A0asymm-circum-sigmatt.pdf}
+\caption{$\sigma_{\theta\theta}$, $11\times 1-asymm$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
+
+\subsection{$\tau_{r\theta}$}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A0free-circum-taurt.pdf}
+\caption{$\tau_{r\theta}$, $11\times 1-free$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A0T1-circum-taurt.pdf}
+\caption{$\tau_{r\theta}$, $11\times 1-1\cdot t_{90^{\circ}}$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A0vk-circum-taurt.pdf}
+\caption{$\tau_{r\theta}$, $11\times 1-symm$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{S5A0asymm-circum-taurt.pdf}
+\caption{$\tau_{r\theta}$, $11\times 1-asymm$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{}
+\end{figure}
+
+\section{Conclusions}
 
 \end{document}

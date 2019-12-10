@@ -16,6 +16,7 @@
 \usepackage{ifthen}
 \usepackage{longtable}
 \usepackage{mathrsfs}
+\usepackage{mathtools}
 \usepackage{multicol}
 \usepackage{nicefrac}
 \usepackage{pgf}
@@ -1704,10 +1705,10 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 
 \section{Debond Propagation}
 
-\subsection{Debond Interaction: Horizontal}
+\subsection{Debond interaction: horizontal}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Crack Shielding}
+\frametitle{\vspace{0.2cm}\small Debond interaction: horizontal (loading) direction}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -1736,7 +1737,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Crack Shielding}
+\frametitle{\vspace{0.2cm}\small Debond interaction: horizontal (loading) direction}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -1765,7 +1766,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Crack Shielding}
+\frametitle{\vspace{0.2cm}\small Debond interaction: horizontal (loading) direction}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -1788,95 +1789,6 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{twofibers-sameside-crackshielding1.pdf}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
-\vspace{-.75cm}
-\centering
-\begin{columns}[c]
-\centering
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni1.pdf}
-\end{figure}
-\end{column}
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni1.pdf}
-\end{figure}
-\end{column}
-\end{columns}
-\vspace{-0.25cm}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=0.275\textwidth]{twofibers-sameside-strainmagni1.pdf}
-\end{figure}
-\end{frame}
-
-\addtocounter{framenumber}{-1}
-
-\begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
-\vspace{-.75cm}
-\centering
-\begin{columns}[c]
-\centering
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni3.pdf}
-\end{figure}
-\end{column}
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni3.pdf}
-\end{figure}
-\end{column}
-\end{columns}
-\vspace{-0.25cm}
-\begin{figure}
-\centering
-\includegraphics[width=0.325\textwidth]{twofibers-sameside-strainmagni3.pdf}
-\end{figure}
-\end{frame}
-
-\addtocounter{framenumber}{-1}
-
-\begin{frame}
-\frametitle{\vspace{0.2cm}\small Interaction of Debonds: Strain Magnification}
-\vspace{-.75cm}
-\centering
-\begin{columns}[c]
-\centering
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GI-strainmagni21.pdf}
-\end{figure}
-\end{column}
-\begin{column}{0.5\textwidth}
-\centering
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{nxk-1-vf60-GII-strainmagni21.pdf}
-\end{figure}
-\end{column}
-\end{columns}
-\vspace{-0.25cm}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{twofibers-sameside-strainmagni21.pdf}
 \end{figure}
 \end{frame}
 
@@ -2031,7 +1943,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \end{columns}
 \end{frame}
 
-\subsection{$0^{\circ}$ ply thickness}
+\subsection{$0^{\circ}$ ply}
 
 \begin{frame}
 \frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
@@ -2054,16 +1966,15 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \end{figure}
 \end{column}
 \end{columns}
+\vspace{-0.175cm}
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{zeroplythickness.pdf}
 \end{figure}
 \end{frame}
 
-\addtocounter{framenumber}{-1}
-
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
+\frametitle{\vspace{0.2cm}\small Effect of the presence of $0^{\circ}$ ply: comparison with equivalent BC}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -2104,7 +2015,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
+\frametitle{\vspace{0.2cm}\small Effect of the presence of $0^{\circ}$ ply: comparison with equivalent BC}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -2145,7 +2056,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $0^{\circ}$ ply thickness}
+\frametitle{\vspace{0.2cm}\small Effect of the presence of $0^{\circ}$ ply: comparison with equivalent BC}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -2186,7 +2097,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \subsection{$90^{\circ}$ ply thickness}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $90^{\circ}$ ply thickness}
+\frametitle{\vspace{0.2cm}\small Effect of the presence of $0^{\circ}$ ply: comparison with equivalent BC}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -2206,7 +2117,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \end{figure}
 \end{column}
 \end{columns}
-\vspace{-.25cm}
+\vspace{-.3cm}
 \begin{figure}
 \centering
 \includegraphics[width=0.55\textwidth]{ninetyplythickness.pdf}
@@ -2216,7 +2127,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $90^{\circ}$ ply thickness}
+\frametitle{\vspace{0.2cm}\small Effect of the presence of $0^{\circ}$ ply: comparison with equivalent BC}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -2236,7 +2147,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \end{figure}
 \end{column}
 \end{columns}
-\vspace{-.25cm}
+\vspace{-.3cm}
 \begin{figure}
 \centering
 \includegraphics[width=0.55\textwidth]{ninetyplythickness.pdf}
@@ -2246,7 +2157,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \addtocounter{framenumber}{-1}
 
 \begin{frame}
-\frametitle{\vspace{0.2cm}\small Effect of $90^{\circ}$ ply thickness}
+\frametitle{\vspace{0.2cm}\small Effect of the presence of $0^{\circ}$ ply: comparison with equivalent BC}
 \vspace{-.75cm}
 \centering
 \begin{columns}[c]
@@ -2278,6 +2189,7 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 \frametitle{\vspace{0.2cm}\small Estimation of $G_{Ic}$}
 \vspace{-.75cm}
 \centering
+\scriptsize
 \begin{columns}[c]
 \centering
 \begin{column}{0.5\textwidth}
@@ -2303,7 +2215,10 @@ $\rightarrow 1\times1-free, V_{f}=0.01\%, 2^{nd}\ order\ elements,\delta=0.05^{\
 G_{Ic}=\left.\frac{G_{c}}{1+\tan^{2}\left(\left(1-\lambda\right)\Psi_{G}\right)}\right|_{G_{c}=G_{TOT}\left(\Delta\theta_{0}\right)},\quad\Psi_{G}=\left.tan^{-1}\left(\sqrt{\frac{G_{II}}{G_{I}}}\right)\right|_{\Delta\theta_{0}}
 \end{equation*}
 \begin{equation*}
-G_{Ic}\in\left[2,4.5\right]\nicefrac{J}{m^{2}}\ with\ R_{f}=1\mu m,\bar{\varepsilon}_{x}=1\%, G_{Ic}\in\left[3.2,7.2\right]\nicefrac{J}{m^{2}}\ with\ R_{f}=10\mu m,\bar{\varepsilon}_{x}=0.4\%
+\text{With input }\ R_{f}=1\mu m,\bar{\varepsilon}_{x}=1\%\longrightarrow G_{Ic}\in\left[2,4.5\right]\nicefrac{J}{m^{2}}
+\end{equation*}
+\begin{equation*}
+\text{Experimentally }R_{f}\sim10\mu m,\bar{\varepsilon}_{x}\sim0.4\%\xrightarrow{rescaling}G_{Ic}\in\left[3.2,7.2\right]\nicefrac{J}{m^{2}}
 \end{equation*}
 \end{frame}
 
@@ -2492,10 +2407,11 @@ $21.4^{\circ}-89.2^{\circ}$, average $49.3^{\circ}$, standard deviation of $11.7
 \centering
 \scriptsize
 \begin{itemize}[label=\ding{212}]
+\item The presence of the $0^{\circ}$ layer results in a sizeable effect on debond ERR only in the case of a 1-fiber-row $90^{\circ}$ layer, i.e. $0^{\circ}$ layer extremely close to the debond.
+\item If there is just one row of fully bonded fibers between the debond and the $0^{\circ}$ layer, the effect of the latter becomes almost negligible.
+\item Debond-debond interaction along the vertical direction has signicant influence on ERR, but the presence of just 2 fully bonded fibers in between drastically reduces its importance.
 \item No significant effect of the $90^{\circ}$ layer thickness has been observed.
 \item No significant effect of the $0^{\circ}$ layer thickness has been observed.
-\item Only in the case of a 1-fiber-row $90^{\circ}$ layer the presence of the $0^{\circ}$ layer results in a sizeable effect on debond ERR.
-\item Debond-debond interaction along the vertical direction has signicant influence on ERR, but the presence of just 2 fully bonded fibers in between drastically reduce its importance.
 \end{itemize}
 \begin{alertblock}{\centering\scriptsize\bf It seems reasonable to conclude that...}
 ...debond ERR, and thus debond propagation, is affected by changes in the microstructure only in a very small neighborhood, $\sim1-2\diameter_{fiber}$ around the debond itself.

@@ -1102,57 +1102,34 @@ UD&60.0&43.442&13.714& 4.315& 0.273&0.465\\
 \begin{figure}
 \includegraphics[width=0.825\columnwidth]{RUC.pdf}
 \end{figure}
-\vspace{-1cm}
-\begin{columns}
-\begin{column}{0.3\columnwidth}
-\tiny
-\begin{equation*}
-\begin{aligned}
-&\text{in }\Omega_{f}, \Omega_{m}, \Omega_{UD}:\\
-&\frac{\partial^{2}\varepsilon_{xx}}{\partial z^{2}}+\frac{\partial^{2}\varepsilon_{zz}}{\partial x^{2}}=\frac{\partial^{2}\gamma_{zx}}{\partial x\partial z}\\
-&\varepsilon_{y}=\gamma_{xy}=\gamma_{yz}=0\\
-&\frac{\partial\sigma_{xx}}{\partial x}+\frac{\partial\tau_{zx}}{\partial z} = 0\\
-&\frac{\partial\tau_{zx}}{\partial x}+\frac{\partial\sigma_{zz}}{\partial z} = 0\\
-&\sigma_{yy}=\nu\left(\sigma_{xx}+\sigma_{zz}\right)\\
-\end{aligned}
-\end{equation*}
-\end{column}
-\begin{column}{0.7\columnwidth}
-\tiny
-\begin{equation*}
-\begin{aligned}
-&\text{for } 0^{\circ}\leq\alpha\leq\Delta\theta:\\
-&\left(\overrightarrow{u}_{m}\left(R_{f},\alpha\right)-\overrightarrow{u}_{f}\left(R_{f},\alpha\right)\right)\cdot\overrightarrow{n}_{\alpha}\geq 0\\
-&\text{for } \Delta\theta\leq\alpha\leq 180^{\circ}:\\
-&\overrightarrow{u}_{m}\left(R_{f},\alpha\right)-\overrightarrow{u}_{f}\left(R_{f},\alpha\right)=0\\
-&\sigma_{ij}=E_{ijkl}\varepsilon_{kl}\\
-&+BC
-\end{aligned}
-\end{equation*}
-\end{column}
-\end{columns}
+\scriptsize
+\begin{itemize}[label=\ding{212}]
+\item Compatibility conditions
+\item Equilibrium equations
+\item Non-interpenetration of crack faces
+\item Frictionless sliding of crack faces
+\item $0^{\circ}\leq\Delta\theta\leq150^{\circ}$
+\item $\Delta\theta=0^{\circ}\quad\leftrightarrow\quad$no debond!
+\end{itemize}
 \end{column}
 \begin{column}{0.375\textwidth}
 \scriptsize
 $\forall\ \Delta\theta\neq0^{\circ}$
 \begin{itemize}[label=\ding{212}]
 \item oscillating singularity
-\vspace{-0.25cm}
-\begin{equation*}
-\sigma\sim r^{-\frac{1}{2}}\sin\left(\varepsilon\log r\right),\quad V_{f}\rightarrow 0
-\end{equation*}
-%\vspace{-0.25cm}
-{\tiny
-\begin{equation*}
-\varepsilon=\frac{1}{2\pi}\log\left(\frac{1-\beta}{1+\beta}\right)
-\end{equation*}
-%\vspace{-0.25cm}
-\begin{equation*}
-\beta=\frac{\mu_{2}\left(\kappa_{1}-1\right)-\mu_{1}\left(\kappa_{2}-1\right)}{\mu_{2}\left(\kappa_{1}+1\right)+\mu_{1}\left(\kappa_{2}+1\right)}
-\end{equation*}}
-\item receding contact
-\item $\frac{G\left(R_{f,2}\right)}{G\left(R_{f,1}\right)}=\frac{R_{f,2}}{R_{f,1}},\frac{G\left(\bar{\varepsilon}_{x,2}\right)}{G\left(\bar{\varepsilon}_{x,1}\right)}=\frac{\bar{\varepsilon}^{2}_{x,2}}{\bar{\varepsilon}^{2}_{x,1}}$
+\end{itemize}
+\begin{itemize}[label=$\searrow$]
+\item Mode I and Mode II SIF and ERR not defined for \emph{open crack}
+\item ERR over finite distance
 \item FEM + LEFM (VCCT)
+\end{itemize}
+\begin{itemize}[label=\ding{212}]
+\item receding contact
+\end{itemize}
+\begin{itemize}[label=$\searrow$]
+\item $\frac{G\left(R_{f,2}\right)}{G\left(R_{f,1}\right)}=\frac{R_{f,2}}{R_{f,1}},\frac{G\left(\bar{\varepsilon}_{x,2}\right)}{G\left(\bar{\varepsilon}_{x,1}\right)}=\frac{\bar{\varepsilon}^{2}_{x,2}}{\bar{\varepsilon}^{2}_{x,1}}$
+\end{itemize}
+\begin{itemize}[label=\ding{212}]
 %\item 6-nodes triangles \& 8-nodes quadrilaterals
 \item regular mesh of quadrilaterals at the crack tip:
 \begin{itemize}[label=-]

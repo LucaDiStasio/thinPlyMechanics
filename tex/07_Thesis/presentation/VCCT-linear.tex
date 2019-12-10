@@ -29,7 +29,7 @@
 %                Single RVE with applied constant strain, only debonded
 %----------------------------------------------------------------------------------------------%
 
-\begin{tikzpicture}[scale=7.5,cap=round,x=1.5cm,y=1.5cm]
+\begin{tikzpicture}[scale=4.75,cap=round,x=1.5cm,y=1.5cm]
 
 %----------------------------------------------------------------------------------------------%
 %                                                   CONSTANTS
@@ -103,9 +103,9 @@
 \filldraw[fill=violet!20,draw=violet!50!black] (0,0) -- (\xII,\yII) arc(40:50:0.25*\R);
 
 \draw[->,dashed, line width = 1.25mm] (-0.05,0.0) -- (1.25*\lim,0.0);
-\node[anchor=north] at (1.25*\lim,0.0) {\Huge $\mathbf{x,\underline{i}}$};
+\node[anchor=north] at (1.275*\lim,0.0) {\Huge $\mathbf{x}$};
 \draw[->,dashed, line width = 1.25mm] (0.0,-0.05)  -- (0.0,\lim) ;
-\node[anchor=south east] at (0.0,\lim) {\Huge $\mathbf{y,\underline{j}}$};
+\node[anchor=south east] at (0.0,\lim) {\Huge $\mathbf{y}$};
 
 \node[text=black,anchor=east] at (-0.05,-0.05) {\Huge $\mathbf{O}$};
 
@@ -145,15 +145,15 @@
 \fill[fill=magenta] (\xC,\yC)  circle[radius=0.75pt];
 \fill[fill=magenta] (\xE,\yE)  circle[radius=0.75pt];
 
-\node[anchor= west,text=green] at (0.25,0.075) {\Huge $\mathbf{\Delta\theta}$};
+\node[anchor= west,text=green] at (0.16,0.075) {\Huge $\mathbf{\Delta\theta}$};
 \node[anchor= west,text=violet] at (0.45,0.34) {\Huge $\mathbf{\delta}$};
 \node[anchor= west,text=violet] at (0.38,0.42) {\Huge $\mathbf{\delta}$};
 \node[anchor= west,text=red] at (1.375*\R,0.35) {\Huge $\mathbf{a = R_{f}\Delta\theta}$};
 \node[anchor= west,text=red] at (1.01*\xH,\yH) {\Huge $\mathbf{\Delta a = R_{f}\delta}$};
 \node[anchor= north west,text=green] at (1.95*\xCT,1.95*\yCT)  {\Huge $\mathbf{r,\hat{\underline{r}}}$};
 \node[anchor= north east,text=green] at (\xFin,\yFin)  {\Huge $\mathbf{\theta,\hat{\underline{\theta}}}$};
-\draw[white,fill=white] (0.84*\xCT,0.95*\yCT) rectangle(0.97*\xCT,1.05*\yCT);
-\node[anchor= south east,text=magenta] at (0.98*\xCT,0.95*\yCT)  {\Huge \bf{q=1}};
+\draw[white,fill=white] (0.8*\xCT,0.95*\yCT) rectangle(0.97*\xCT,1.05*\yCT);
+\node[anchor= south east,text=magenta] at (0.98*\xCT,0.92*\yCT)  {\Huge \bf{q=1}};
 \draw[white,fill=white] (0.85*\xC,0.76*\yC) rectangle(\xC,0.925*\yC);
 \node[anchor= north east,text=magenta] at (\xC,0.925*\yC)  {\Huge \bf{p=1}};
 \draw[white,fill=white] (1.02*\xE,0.81*\yE) rectangle(1.15*\xE,0.99*\yE);

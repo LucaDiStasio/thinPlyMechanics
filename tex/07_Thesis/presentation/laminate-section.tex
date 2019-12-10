@@ -95,9 +95,9 @@
 \draw[->,draw=black,dashed,line width=0.65mm] (-32*2*\Rf,10*\Rf*\sinproj) -- (40*2*\Rf,10*\Rf*\sinproj) ;
 \draw[->,draw=black,dashed,line width=0.65mm] (10*\Rf*\cosproj,10*\Rf*\sinproj-15*\Rf) -- (10*\Rf*\cosproj,10*\Rf*\sinproj+15*\Rf) ;
 \draw[->,draw=black,dashed,line width=0.65mm] (-10*\Rf*\cosproj,-10*\Rf*\sinproj) -- (30*\Rf*\cosproj,30*\Rf*\sinproj) ;
-\node[anchor=north] at (40*2*\Rf,10*\Rf*\sinproj) {\huge $x,\mathbf{i}$};
-\node[anchor=west] at (30*\Rf*\cosproj,30*\Rf*\sinproj) {\huge $y,\mathbf{j}$};
-\node[anchor=south] at (10*\Rf*\cosproj,10*\Rf*\sinproj+15*\Rf)  {\huge $z,\mathbf{k}$};
+\node[anchor=north] at (40*2*\Rf,10*\Rf*\sinproj) {\huge $x$};
+\node[anchor=west] at (30*\Rf*\cosproj,30*\Rf*\sinproj) {\huge $y$};
+\node[anchor=south] at (10*\Rf*\cosproj,10*\Rf*\sinproj+15*\Rf)  {\huge $z$};
 
 \draw[line width=0.75mm] (-30*2*\Rf,-2*\Rf) -- (30*2*\Rf,-2*\Rf) --  (30*2*\Rf+20*\Rf*\cosproj,-2*\Rf+20*\Rf*\sinproj)  -- (30*2*\Rf+20*\Rf*\cosproj,2*\Rf+20*\Rf*\sinproj) -- (-30*2*\Rf+20*\Rf*\cosproj,2*\Rf+20*\Rf*\sinproj) -- (-30*2*\Rf,2*\Rf);
 \draw[line width=0.75mm](-30*2*\Rf,2*\Rf) -- (30*2*\Rf,2*\Rf) --  (30*2*\Rf+20*\Rf*\cosproj,2*\Rf+20*\Rf*\sinproj);
@@ -116,6 +116,8 @@
 \draw[->,line width=0.75mm,draw=red](-30*2*\Rf+15*\Rf*\cosproj,7*\Rf+15*\Rf*\sinproj)--(-30*2*\Rf+15*\Rf*\cosproj,2*\Rf+15*\Rf*\sinproj);
 \node[anchor=south, text=red] at (30*2*\Rf+15*\Rf*\cosproj,7*\Rf+15*\Rf*\sinproj) {\huge $\mathbf{A^{'}}$};
 \node[anchor=south, text=red] at (-30*2*\Rf+15*\Rf*\cosproj,7*\Rf+15*\Rf*\sinproj) {\huge $\mathbf{A}$};
+
+\node[anchor=south west] at (-22.5*2*\Rf+15*\Rf*\cosproj,7*\Rf+15*\Rf*\sinproj) {\huge $\mathbf{LAMINATE}$};
 
 \draw[->,draw=black,line width=0.65mm] (10*2*\Rf,-9*\Rf*\sinproj) -- (20*2*\Rf,-9*\Rf*\sinproj) ;
 \node[anchor=west, text=black] at (20*2*\Rf,-9*\Rf*\sinproj) {\LARGE $\mathbf{0^{\circ}}$};
@@ -138,10 +140,12 @@
 \node[anchor=south east, text=red] at (-30*2*\Rf+7*\Rf*\cosproj,3*\Rf+7*\Rf*\sinproj-\transl) {\huge $\mathbf{A}$};
 \node[anchor=south east, text=red] at (30*2*\Rf+7*\Rf*\cosproj,3*\Rf+7*\Rf*\sinproj-\transl) {\huge $\mathbf{A^{'}}$};
 
+\node[anchor=south west] at (-25*2*\Rf+7*\Rf*\cosproj,3*\Rf+7*\Rf*\sinproj-\transl) {\huge $\mathbf{X-Z\quad SECTION}$};
+
 \draw[->,draw=black,dashed,line width=0.65mm] (-34*2*\Rf+7*\Rf*\cosproj,-2*\Rf+7*\Rf*\sinproj-12.5*\Rf-\transl) -- (34*2*\Rf+7*\Rf*\cosproj,-2*\Rf+7*\Rf*\sinproj-12.5*\Rf-\transl);
 \draw[->,draw=black,dashed,line width=0.65mm] (7*\Rf*\cosproj,-2*\Rf+7*\Rf*\sinproj-32*\Rf-\transl) -- (7*\Rf*\cosproj,-2*\Rf+7*\Rf*\sinproj+7*\Rf-\transl);
-\node[anchor=north] at   (34*2*\Rf+7*\Rf*\cosproj,-2*\Rf+7*\Rf*\sinproj-12.5*\Rf-\transl) {\huge $x,\mathbf{i}$};
-\node[anchor=south] at (7*\Rf*\cosproj,-2*\Rf+7*\Rf*\sinproj+7*\Rf-\transl)  {\huge $z,\mathbf{k}$};
+\node[anchor=north] at   (34*2*\Rf+7*\Rf*\cosproj,-2*\Rf+7*\Rf*\sinproj-12.5*\Rf-\transl) {\huge $x$};
+\node[anchor=south] at (7*\Rf*\cosproj,-2*\Rf+7*\Rf*\sinproj+7*\Rf-\transl)  {\huge $z$};
 
 \draw[line width=0.5mm](-30*2*\Rf+7*\Rf*\cosproj,-2*\Rf+7*\Rf*\sinproj-10*\Rf-\transl) -- (30*2*\Rf+7*\Rf*\cosproj,-2*\Rf+7*\Rf*\sinproj-10*\Rf-\transl);
 \draw[line width=0.5mm](-30*2*\Rf+7*\Rf*\cosproj,-2*\Rf+7*\Rf*\sinproj-15*\Rf-\transl) -- (30*2*\Rf+7*\Rf*\cosproj,-2*\Rf+7*\Rf*\sinproj-15*\Rf-\transl);

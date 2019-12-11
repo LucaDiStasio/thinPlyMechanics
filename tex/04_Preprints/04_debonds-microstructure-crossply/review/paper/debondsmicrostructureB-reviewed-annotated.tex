@@ -119,11 +119,20 @@ u_{z}\left(x,kL\right)=u_{z}^{\nu},
 
 \added{where $u_{z}^{\nu}$ is a value independent of $x$ determined as part of the elastic solution and represents Poisson's effect. In other words, the coupling conditions of the vertical displacements $u_{z}\left(x,kL\right)$ of Equation~\ref{eq:couplingconditions} mean that the upper boundary remains straight during deformation but it is allowed to move along the vertical direction by $u_{z}^{\nu}$ while remaining straight.} In the case a linear distribution of the horizontal displacement $u_{x}$ is applied to the upper boundary (H-condition),\added{ as:} 
 
-\textcolor{blue}{\begin{equation}\label{eq:couplingconditions}
+\textcolor{blue}{\begin{equation}\label{eq:lineardist}
 u_{x}\left(x,kL\right)=\bar{\varepsilon}_{x}x
 \end{equation}}
 
-\added{where $\bar{\varepsilon}_{x}$ is the value of the global applied strain,} the model is refered to as $1\times 1-H$. Finally, when the linear distribution of the horizontal displacement $u_{x}$ is superimposed to the condition of coupling of the vertical displacements $u_{z}$ on the upper boundary, we have the $1\times 1-coupling+H$. Further details about this family of RUCs and the corresponding laminate RVE can be found in~\cite{DiStasio2019}.
+\added{where $\bar{\varepsilon}_{x}$ is the value of the global applied strain,} the model is refered to as $1\times 1-H$. \added{The presence of a linearly distributed horizontal displacement along the upper boundary is meant to represent, as an extreme case, the presence of stiffer material, i.e. the $0^{\circ}$ layer, which forces a more homogeneous displacement distribution at the interface.} Finally, when the linear distribution of the horizontal displacement $u_{x}$ is superimposed to the condition of coupling of the vertical displacements $u_{z}$ on the upper boundary, \added{i.e. the following set of equations holds at the upper boundary:} 
+
+\textcolor{blue}{\begin{equation}\label{eq:couplingconditions}
+\begin{aligned}
+u_{z}\left(x,kL\right)&=u_{z}^{\nu}\\
+u_{x}\left(x,kL\right)&=\bar{\varepsilon}_{x}x,
+\end{aligned}
+\end{equation}}
+
+we have the $1\times 1-coupling+H$. Further details about this family of RUCs and the corresponding laminate RVE can be found in~\cite{DiStasio2019}.
 
 %% 2.2 Models of Representative Volume Element (RVE)
 

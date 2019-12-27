@@ -4,7 +4,7 @@
 
 \usepackage{amsmath}
 \usepackage{booktabs}
-\usepackage{changes}
+\usepackage[final]{changes}
 \usepackage[makeroom]{cancel}
 \usepackage{subcaption}
 \usepackage{tabularx}
@@ -106,30 +106,30 @@ We assume damage to be present only in the central ``row'' of fibers of the $90^
 In summary, the models are differentiated by: first, the spacing between debonds along the horizontal direction in the $90^{\circ}$ layer, which corresponds to the number $n$ of fibers in the RUC's horizontal direction; second, the thickness of the middle $90^{\circ}$ ply measured in terms of the number $k$ of fiber rows in the vertical direction; third, the factor $m$ which provides the thickness of $0^{\circ}$ layers as a multiple of the $90^{\circ}$ ply thickness. It thus seems natural to introduce a common notation for the RUCs as $n\times k-m\cdot t_{90^{\circ}}$.\\
 An additional family of RUCs is considered, in which: only one partially debonded fiber is present; the $0^{\circ}$ layer is absent; different combinations of displacement boundary conditions are applied to the upper surface. The application of coupling of horizontal displacements $u_{x}$ along the right and left sides allows for repetition along the horizontal direction. \added{Noticing that the right and left sides are located respectively at $x=+nL$ and $x=-nL$, conditions of coupling of the horizontal displacements along the right and left sides imply that}
 
-\textcolor{blue}{\begin{equation}
+\begin{equation}
 u_{x}\left(\pm nL,z\right)=\pm\bar{\varepsilon}_{x}nL,
-\end{equation}}
+\end{equation}
 
 \added{where $\bar{\varepsilon}_{x}$ is the value of the global applied strain.} When the upper boundary of the RUC is left free, we define the $1\times 1-free$ model. If coupling of the vertical displacements $u_{z}$ is applied to the upper boundary (coupling condition), we define instead the $1\times 1-coupling$ model. \added{Observing that the upper boundary of the RUC is located at $z=kL$, conditions of coupling of the vertical displacements along the upper boundary imply that}
 
-\textcolor{blue}{\begin{equation}\label{eq:couplingconditions}
+\begin{equation}\label{eq:couplingconditions}
 u_{z}\left(x,kL\right)=u_{z}^{\nu},
-\end{equation}}
+\end{equation}
 
 \added{where $u_{z}^{\nu}$ is a value of the vertical displacement independent of $x$ due to Poisson's effect and determined as part of the elastic solution. In other words, the conditions of coupling of the vertical displacements $u_{z}\left(x,kL\right)$ of Equation~\ref{eq:couplingconditions} mean that the upper boundary remains straight during deformation but it is allowed to move along the vertical direction by $u_{z}^{\nu}$ while remaining straight.} In the case a linear distribution of the horizontal displacement $u_{x}$ is applied to the upper boundary (H-condition),\added{ as:} 
 
-\textcolor{blue}{\begin{equation}\label{eq:lineardist}
+\begin{equation}\label{eq:lineardist}
 u_{x}\left(x,kL\right)=\bar{\varepsilon}_{x}x
-\end{equation}}
+\end{equation}
 
 \added{where $\bar{\varepsilon}_{x}$ is the value of the global applied strain,} the model is refered to as $1\times 1-H$. \added{The presence of a linearly distributed horizontal displacement along the upper boundary is meant to represent, as an extreme case, the presence of stiffer material, i.e. the $0^{\circ}$ layer, which forces a more homogeneous displacement distribution at the interface.} Finally, when the linear distribution of the horizontal displacement $u_{x}$ is superimposed to the condition of coupling of the vertical displacements $u_{z}$ on the upper boundary, \added{i.e. the following set of equations holds at the upper boundary:} 
 
-\textcolor{blue}{\begin{equation}\label{eq:couplingconditions}
+\begin{equation}\label{eq:couplingconditions}
 \begin{aligned}
 u_{z}\left(x,kL\right)&=u_{z}^{\nu}\\
 u_{x}\left(x,kL\right)&=\bar{\varepsilon}_{x}x,
 \end{aligned}
-\end{equation}}
+\end{equation}
 
 we have the $1\times 1-coupling+H$. Further details about this family of RUCs and the corresponding laminate RVE can be found in~\cite{DiStasio2019}.
 
@@ -257,9 +257,9 @@ Analogous results can be found in~\cite{Velasco2018, Paris2018}, where the autho
 
 \added{It is finally worth to devote some space to the total Energy Release Rate $G_{TOT}$, which is computed as}
 
-\textcolor{blue}{\begin{equation}
+\begin{equation}
 G_{TOT}=G_{I}+G_{II},
-\end{equation}}
+\end{equation}
 
 \added{i.e. as the sum of Mode I and Mode II ERR evaluated using the Virtual Crack Closure Technique. The total ERR for models $21\times k-1t_{90^{\circ}}$ is shown in Figure~\ref{fig:nkGTOT}.}
 

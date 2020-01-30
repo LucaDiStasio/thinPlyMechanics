@@ -225,18 +225,20 @@
 
   \cleardoublepage
 
-   \chapter*{\hrule\medskip\hfill \sc R\'esum\'e\medskip\hrule}
-   \noindent
-   \input{resume-UL.tex}
-
-   \cleardoublepage
-
-   %--- Make abstract page
+  %--- Make abstract page
    \chapter*{\hrule\medskip\hfill \sc Abstract\medskip\hrule}
    \noindent
-   \input{abstract-UL.tex}
+   \input{abstractFR.tex}
 
    \cleardoublepage
+   
+   \chapter*{\hrule\medskip\hfill \sc R\'esum\'e\medskip\hrule}
+   \noindent
+   \input{resume-longue.tex}
+
+   \cleardoublepage
+
+   
 
    %--- Make list of papers
    \chapter*{\hrule\medskip\hfill \sc List of publications\medskip\hrule}

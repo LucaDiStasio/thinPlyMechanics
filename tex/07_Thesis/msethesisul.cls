@@ -226,13 +226,20 @@
   \cleardoublepage
 
   %--- Make abstract page
-   \chapter*{\hrule\medskip\hfill \sc Abstract\medskip\hrule}
+   \chapter*{\hrule\medskip\hfill \sc R\'esum\'e\medskip\hrule}
    \noindent
    \input{abstractFR.tex}
+   
+   \cleardoublepage
+   
+   %--- Make abstract page
+   \chapter*{\hrule\medskip\hfill \sc Abstract\medskip\hrule}
+   \noindent
+   \input{abstractEN.tex}
 
    \cleardoublepage
    
-   \chapter*{\hrule\medskip\hfill \sc R\'esum\'e\medskip\hrule}
+   \chapter*{\hrule\medskip\hfill \sc Abr\'eg\'e\medskip\hrule}
    \noindent
    \input{resume-longue.tex}
 

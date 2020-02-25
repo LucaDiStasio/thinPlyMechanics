@@ -60,29 +60,8 @@ ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
 legend entries={},
 ]
 
-% 21x41 - 3 debond expl modeled
-\addplot[line width=\linewidth,black,smooth,mark=square*]
-table{
-10	3.658660198
-20	3.902385894
-30	3.104998927
-40	2.191492075
-50	1.132447899
-60	0.264819774
-70	1.84292E-05
-80	0.000225081
-90	0.000141882
-100	0.000145095
-110	8.22182E-05
-120	5.15244E-05
-130	2.54525E-05
-140	7.18346E-06
-150	6.26273E-07
-};
-\addlegendentry{$21\times 41$ --\emph{3 alternating debonds, explicitly modeled}};
-
 % 21x41 - 5 debond expl modeled
-\addplot[line width=\linewidth,black,smooth,mark=square*, mark options={fill=white}]
+\addplot[line width=\linewidth,black,smooth,mark=square*]
 table{
 10	3.66318173
 20	3.961555075
@@ -102,45 +81,26 @@ table{
 };
 \addlegendentry{$21\times 41$ --\emph{5 alternating debonds, explicitly modeled}};
 
-% 21x41 - 11 debond expl modeled
-\addplot[line width=\linewidth,blue,smooth,mark=*]
-table{
-10	3.66672409
-20	4.000884425
-30	3.366427886
-40	2.57107717
-50	1.455770245
-60	0.619387367
-70	0.012204696
-80	7.98806E-05
-90	1.46493E-05
-100	0.000291919
-120	0.000100934
-130	3.97044E-05
-140	1.61204E-05
-};
-\addlegendentry{$21\times 41$ --\emph{11 alternating debonds, explicitly modeled}};
-
-% 21x41 - 21 debond expl modeled
+% 21x41 - 5 debond expl modeled
 \addplot[line width=\linewidth,blue,smooth,mark=*, mark options={fill=white}]
 table{
-10	3.661540083
-20	3.985808917
-30	3.367331019
-40	2.592133096
-50	1.498289239
-60	0.712191762
-70	0.041004405
-80	4.28009E-05
-90	0.000112015
-100	0.00029508
-110	0.000149784
-120	0.000100381
-130	3.95629E-05
-140	1.66234E-05
-150	3.39412E-06
+10	3.730682408
+20	4.387709788
+30	4.487247522
+40	4.132939996
+50	3.000820933
+60	1.458709761
+70	1.378208644
+80	0.374840015
+90	3.12702E-07
+100	0.000130508
+110	0.00010782
+120	6.00601E-05
+130	1.57582E-05
+140	2.43393E-06
+150	0.003017816
 };
-\addlegendentry{$21\times 41$ --\emph{21 alternating debonds, explicitly modeled}};
+\addlegendentry{$21\times 41$ --\emph{5 aligned debonds, explicitly modeled}};
 
 
 \end{axis}

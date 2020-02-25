@@ -60,50 +60,8 @@ ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
 legend entries={},
 ]
 
-% 21x41 - 3 debond expl modeled
-\addplot[line width=\linewidth,black,smooth,mark=square*]
-table{
-10	3.658660198
-20	3.902385894
-30	3.104998927
-40	2.191492075
-50	1.132447899
-60	0.264819774
-70	1.84292E-05
-80	0.000225081
-90	0.000141882
-100	0.000145095
-110	8.22182E-05
-120	5.15244E-05
-130	2.54525E-05
-140	7.18346E-06
-150	6.26273E-07
-};
-\addlegendentry{$21\times 41$ --\emph{3 alternating debonds, explicitly modeled}};
-
-% 21x41 - 5 debond expl modeled
-\addplot[line width=\linewidth,black,smooth,mark=square*, mark options={fill=white}]
-table{
-10	3.66318173
-20	3.961555075
-30	3.260534341
-40	2.456527161
-50	1.315433603
-60	0.487092173
-70	0.001313232
-80	0.000221777
-90	0.000126113
-100	0.000219323
-110	0.000129133
-120	7.71783E-05
-130	3.27695E-05
-140	1.14877E-05
-150	1.57097E-06
-};
-\addlegendentry{$21\times 41$ --\emph{5 alternating debonds, explicitly modeled}};
-
 % 21x41 - 11 debond expl modeled
-\addplot[line width=\linewidth,blue,smooth,mark=*]
+\addplot[line width=\linewidth,black,smooth,mark=square*]
 table{
 10	3.66672409
 20	4.000884425
@@ -121,26 +79,24 @@ table{
 };
 \addlegendentry{$21\times 41$ --\emph{11 alternating debonds, explicitly modeled}};
 
-% 21x41 - 21 debond expl modeled
-\addplot[line width=\linewidth,blue,smooth,mark=*, mark options={fill=white}]
+% 21x41 - 11 debond expl modeled
+\addplot[line width=\linewidth,blue,smooth,mark=square*, mark options={fill=white}]
 table{
-10	3.661540083
-20	3.985808917
-30	3.367331019
-40	2.592133096
-50	1.498289239
-60	0.712191762
-70	0.041004405
-80	4.28009E-05
-90	0.000112015
-100	0.00029508
-110	0.000149784
-120	0.000100381
-130	3.95629E-05
-140	1.66234E-05
-150	3.39412E-06
+10	3.732194922
+20	4.420260975
+30	4.639266722
+40	4.345155308
+50	3.262376624
+60	1.950719903
+70	2.088444264
+80	1.090548824
+90	0.00112695
+100	6.47617E-05
+120	8.10931E-05
+130	2.04624E-05
+140	6.16173E-06
 };
-\addlegendentry{$21\times 41$ --\emph{21 alternating debonds, explicitly modeled}};
+\addlegendentry{$21\times 41$ --\emph{11 aligned debonds, explicitly modeled}};
 
 
 \end{axis}

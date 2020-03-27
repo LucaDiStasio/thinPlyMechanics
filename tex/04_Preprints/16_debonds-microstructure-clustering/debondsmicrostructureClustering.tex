@@ -169,8 +169,16 @@ Meshing of the model is accomplished with second order, 2D, plane strain triangu
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=\textwidth]{nx1-coupling-vf60-GII.pdf}
-\caption{Clustering: models $n\times 1-coupling$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{fig:debonddebondGII}
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{nx1-coupling-vf60-GII.pdf}
+        \caption{Comparison with homogeneous RVE with $V_{f}=60\%$.}\label{subfig:clusterCouplingModeII60}
+    \end{subfigure}\quad
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{nx1-coupling-vf70-GII.pdf}
+        \caption{Comparison with homogeneous RVE with $V_{f}=70\%$.}\label{subfig:clusterCouplingModeII70}
+    \end{subfigure}
+
+\caption{Effect of clustering on Mode II ERR in $n\times 1-coupling$ models. $V^{average}_{f}=60\%$, $V^{cluster}_{f}=70\%$, $\varepsilon_{x}=1\%$.}\label{fig:clusterCouplingModeI}
 \end{figure}
 
 \begin{figure}[!h]

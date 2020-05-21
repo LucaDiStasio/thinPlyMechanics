@@ -153,6 +153,29 @@ Meshing of the model is accomplished with second order, 2D, plane strain triangu
 
 \subsection{Coupling}\label{subsec:coupling}
 
+See Table~\ref{table:coupling} for a summary of models analyzed
+
+\begin{table}[!h]
+\caption{Summary of $n\times k-coupling$ models analyzed}\label{table:coupling}
+\begin{tabularx}{\textwidth}{p{0.2\textwidth}XXp{0.35\textwidth}}
+\bf{Model}&$\mathbf{V_{f}^{cluster}}$ \bf{(local)}&$\mathbf{V_{f}^{average}}$ \bf{(global)}&\bf{Description}\\
+\midrule
+\toprule
+$n\times 3-coupling$, $n=3,5,7,11$&$70\%$&$60\%$&Rectangular clusters with $n$ fibers in the horizontal (loading) direction and $3$ fibers in the vertical (thickness) direction. Clusters are repeating along both the horizontal and the vertical direction.\\
+&\multicolumn{3}{l}{$\rightarrow$ Mode I in Figure~\ref{fig:clusterCouplingnx3ModeI}}\\
+&\multicolumn{3}{l}{$\rightarrow$ Mode II in Figure~\ref{fig:clusterCouplingnx3ModeII}}\\
+\midrule
+$11\times k-coupling$, $k=3,5,7,11$&$70\%$&$60\%$&Rectangular clusters with $11$ fibers in the horizontal (loading) direction and $k$ fibers in the vertical (thickness) direction. Clusters are repeating along both the horizontal and the vertical direction.\\
+&\multicolumn{3}{l}{$\rightarrow$ Mode I in Figure~\ref{fig:clusterCoupling11xkModeI}}\\
+&\multicolumn{3}{l}{$\rightarrow$ Mode II in Figure~\ref{fig:clusterCoupling11xkModeII}}\\
+\midrule
+$n\times n-coupling$, $n=3,5,7,11$&$70\%$&$60\%$&Square clusters with $n$ fibers on each side. Clusters are repeating along both the horizontal and the vertical direction.\\
+&\multicolumn{3}{l}{$\rightarrow$ Mode I in Figure~\ref{fig:clusterCouplingnxnModeI}}\\
+&\multicolumn{3}{l}{$\rightarrow$ Mode II in Figure~\ref{fig:clusterCouplingnxnModeII}}\\
+\midrule
+\end{tabularx}
+\end{table}
+
 \begin{figure}[!h]
 \centering
     \begin{subfigure}[b]{0.475\textwidth}
@@ -237,8 +260,41 @@ Meshing of the model is accomplished with second order, 2D, plane strain triangu
 \caption{Effect of clustering on Mode II ERR in $n\times n-coupling$ models. $V^{average}_{f}=60\%$, $V^{cluster}_{f}=70\%$, $\varepsilon_{x}=1\%$.}\label{fig:clusterCouplingnxnModeII}
 \end{figure}
 
+\begin{enumerate}
+\item Results for cluster models are compared with homogeneous models with same geometry and BCs with $V_{f}=60\%$ and $V_{f}=70\%$
+\item \label{item:a} For all models, Mode I of cluster is very close, although slightly higher, to Mode I of homogeneous model with $V_{f}=60\%$
+\item \label{item:b} For all models, Mode I of cluster is significantly lower than Mode I of homogeneous model with $V_{f}=70\%$
+\item Given~\ref{item:a} and~\ref{item:b}, for Mode I, we can say that the important effect is the presence of a strip of matrix between clusters, which relaxes elastic fields and thus reduces ERR
+\item \label{item:c} For all models, Mode II of cluster has the same shape as Mode II of homogeneous model with $V_{f}=70\%$, with a peak at around $\sim60^{\circ}$ and a small plateau at $\theta=80^{\circ}-90^{\circ}$
+\item \label{item:d} For all models, Mode II of cluster is lower than Mode II of homogeneous model with both $V_{f}=60\%$ and $V_{f}=70\%$; maximum difference $\frac{G_{II}^{homogeneous}-G_{II}^{cluster}}{G_{II}^{homogeneous}}$ is around $\sim10-15\%$
+\item \emph{Explanatory hypothesis} based on~\ref{item:c} and~\ref{item:d}: given that 1) Mode II is dominated by the $x$-strain, 2) $\varepsilon_{x}^{average}$ should be the same in the cluster and in the homogeneous model as the applied strain is the same, 3) fibers can be considered practically rigid, i.e. $\varepsilon_{x}^{fiber}\sim0$ $\longrightarrow$ with respect to the homogenoeus model, in the cluster model we have higher strains in the inter-cluster regions (i.e. big matrix strips) and lower strains inside the clusters, thus decreasing the crack shear displacement at the crack tip and reducing Mode II ERR
+\item other effects, for example of fibers on top or fibers along the loading direction, are in agreement (and thus explained) by previous results
+\end{enumerate}
 
 \subsection{Cross-ply}\label{subsec:crossply}
+
+See Table~\ref{table:crossply} for a summary of models analyzed
+
+\begin{table}[!h]
+\caption{Summary of $n\times k-1\cdot t_{90^{\circ}}$ models analyzed}\label{table:crossply}
+\begin{tabularx}{\textwidth}{p{0.2\textwidth}XXp{0.35\textwidth}}
+\bf{Model}&$\mathbf{V_{f}^{cluster}}$ \bf{(local)}&$\mathbf{V_{f}^{average}}$ \bf{(global)}&\bf{Description}\\
+\midrule
+\toprule
+$n\times 3-1\cdot t_{90^{\circ}}$, $n=3,5,7,11$&$70\%$&$60\%$&Rectangular clusters with $n$ fibers in the horizontal (loading) direction and $3$ fibers in the vertical (thickness) direction. Clusters are repeating along the horizontal direction, only 1 cluster is present in the vertical direction.\\
+&\multicolumn{3}{l}{$\rightarrow$ Mode I in Figure~\ref{fig:cluster1t90nx3ModeI}}\\
+&\multicolumn{3}{l}{$\rightarrow$ Mode II in Figure~\ref{fig:cluster1t90nx3ModeII}}\\
+\midrule
+$11\times k-1\cdot t_{90^{\circ}}$, $k=3,5,7,11$&$70\%$&$60\%$&Rectangular clusters with $11$ fibers in the horizontal (loading) direction and $k$ fibers in the vertical (thickness) direction. Clusters are repeating along the horizontal direction, only 1 cluster is present in the vertical direction.\\
+&\multicolumn{3}{l}{$\rightarrow$ Mode I in Figure~\ref{fig:cluster1t9011xkModeI}}\\
+&\multicolumn{3}{l}{$\rightarrow$ Mode II in Figure~\ref{fig:cluster1t9011xkModeII}}\\
+\midrule
+$n\times n-1\cdot t_{90^{\circ}}$, $n=3,5,7,11$&$70\%$&$60\%$&Square clusters with $n$ fibers on each side. Clusters are repeating along the horizontal direction, only 1 cluster is present in the vertical direction.\\
+&\multicolumn{3}{l}{$\rightarrow$ Mode I in Figure~\ref{fig:cluster1t90nxnModeI}}\\
+&\multicolumn{3}{l}{$\rightarrow$ Mode II in Figure~\ref{fig:cluster1t90nxnModeII}}\\
+\midrule
+\end{tabularx}
+\end{table}
 
 \begin{figure}[!h]
 \centering
@@ -324,6 +380,11 @@ Meshing of the model is accomplished with second order, 2D, plane strain triangu
 \caption{Effect of clustering on Mode II ERR in $n\times n-1\cdot t_{90^{\circ}}$ models. $V^{average}_{f}=60\%$, $V^{cluster}_{f}=70\%$, $\varepsilon_{x}=1\%$.}\label{fig:cluster1t90nxnModeII}
 \end{figure}
 
+\begin{enumerate}
+\item Results for cluster models are compared with homogeneous models with same geometry and BCs with $V_{f}=60\%$ and $V_{f}=70\%$
+\item Results are the same as those for the coupling case, only small numerical differences (often $<5\%$) can be observed
+\item The presence of fully bonded fibers between debond and $0^{\circ}/90^{\circ}$ makes ERR insensitive to the presence of the interface, as previously found
+\end{enumerate}
 
 \section{Conclusions \& Outlook}
 

@@ -60,50 +60,8 @@ ylabel={$G_{II}\left[\nicefrac{J}{m^{2}}\right]$},
 legend entries={},
 ]
 
-% 21x41 - 3 debond expl modeled
+% asymm - 21x41 - 11 debond expl modeled
 \addplot[line width=\linewidth,black,smooth,mark=square*]
-table{
-10	0.755251369
-20	1.767797432
-30	2.975063917
-40	4.60403842
-50	6.087676104
-60	7.675484844
-70	9.397448104
-80	12.10478355
-90	10.62371679
-100	8.080709295
-110	4.111267753
-120	2.0821797
-130	0.949721062
-140	0.322822421
-150	0.058313182
-};
-\addlegendentry{$21\times 41$ --\emph{3 alternating debonds, explicitly modeled}};
-
-% 21x41 - 5 debond expl modeled
-\addplot[line width=\linewidth,black,smooth,mark=square*, mark options={fill=white}]
-table{
-10	0.757179564
-20	1.767670299
-30	2.9969424
-40	4.738015783
-50	6.323257866
-60	8.652358243
-70	11.45827413
-80	15.55446237
-90	12.65029581
-100	13.42381794
-110	6.732658871
-120	3.376515222
-130	1.306742054
-140	0.608192527
-150	0.155706152
-};
-\addlegendentry{$21\times 41$ --\emph{5 alternating debonds, explicitly modeled}};
-
-% 21x41 - 11 debond expl modeled
-\addplot[line width=\linewidth,blue,smooth,mark=*]
 table{
 10	0.75884042
 20	1.772201436
@@ -121,26 +79,27 @@ table{
 };
 \addlegendentry{$21\times 41$ --\emph{11 alternating debonds, explicitly modeled}};
 
-% 21x41 - 21 debond expl modeled
-\addplot[line width=\linewidth,blue,smooth,mark=*, mark options={fill=white}]
+% symm - 21x41 - 11 debond expl modeled
+\addplot[line width=\linewidth,blue,smooth,mark=square*, mark options={fill=white}]
 table{
-10	0.757390072
-20	1.757314559
-30	2.974771232
-40	4.720806908
-50	6.328414659
-60	8.688349604
-70	11.70307237
-80	17.09100627
-90	14.87164409
-100	21.04207754
-110	7.985508198
-120	4.657742917
-130	1.714970454
-140	1.127066324
-150	0.396694285
+10	0.755339548
+20	1.782015031
+30	3.427074897
+40	5.641239465
+50	7.74273606
+60	7.961298379
+70	13.75532864
+80	16.40747189
+90	10.65045591
+100	11.92439291
+120	3.292761628
+130	0.703970989
+140	0.359575209
 };
-\addlegendentry{$21\times 41$ --\emph{21 alternating debonds, explicitly modeled}};
+\addlegendentry{$21\times 41$ --\emph{11 aligned debonds, explicitly modeled}};
+
+
+
 
 \end{axis}
 %Tikz axis ends%

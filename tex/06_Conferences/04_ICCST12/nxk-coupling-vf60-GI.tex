@@ -16,6 +16,17 @@
 %----------------------------------------------------------------------------------------------%
 %----------------------------------------------------------------------------------------------%
 
+\pgfplotsset{
+compat=newest,
+legend image code/.code={
+\draw[mark repeat=2,mark phase=2]
+plot coordinates {
+(0cm,0cm)
+(0.4cm,0cm)        %% default is (0.3cm,0cm)
+(0.8cm,0cm)         %% default is (0.6cm,0cm)
+};%
+}
+}
 
 \begin{document}
 
@@ -82,7 +93,7 @@ legend entries={},
 %\addlegendentry{$1\times 1-coupling$};
 
 % 3x3 - coupling
-\addplot[line width=\linewidth,black,smooth]
+\addplot[line width=\linewidth,mark size=1.15*\markersize,black,dashed,dash pattern=on 20pt off 15pt,mark=square*,mark options={solid}]
 table{
 10.00	3.309634
 20.00	3.041771
@@ -103,7 +114,7 @@ table{
 \addlegendentry{$3\times 3-symm$};
 
 % 3x3 - asymm
-\addplot[mark size=\markersize,black,only marks,mark=square*,mark options={fill=white}]
+\addplot[line width=\linewidth,mark size=\markersize,blue,dotted,mark=*,mark options={solid,fill=white}]
 table{
 10.00	3.317120
 20.00	3.054053

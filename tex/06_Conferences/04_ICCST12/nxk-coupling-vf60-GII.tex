@@ -16,6 +16,17 @@
 %----------------------------------------------------------------------------------------------%
 %----------------------------------------------------------------------------------------------%
 
+\pgfplotsset{
+compat=newest,
+legend image code/.code={
+\draw[mark repeat=2,mark phase=2]
+plot coordinates {
+(0cm,0cm)
+(0.4cm,0cm)        %% default is (0.3cm,0cm)
+(0.8cm,0cm)         %% default is (0.6cm,0cm)
+};%
+}
+}
 
 \begin{document}
 

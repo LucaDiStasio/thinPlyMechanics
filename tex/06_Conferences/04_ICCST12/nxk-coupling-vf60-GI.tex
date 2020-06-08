@@ -16,17 +16,17 @@
 %----------------------------------------------------------------------------------------------%
 %----------------------------------------------------------------------------------------------%
 
-\pgfplotsset{
-compat=newest,
-legend image code/.code={
-\draw[mark repeat=2,mark phase=2]
-plot coordinates {
-(0cm,0cm)
-(0.4cm,0cm)        %% default is (0.3cm,0cm)
-(0.8cm,0cm)         %% default is (0.6cm,0cm)
-};%
-}
-}
+%\pgfplotsset{
+%compat=newest,
+%legend image code/.code={
+%\draw[mark repeat=2,mark phase=2]
+%plot coordinates {
+%(0cm,0cm)
+%(0.4cm,0cm)        %% default is (0.3cm,0cm)
+%(0.8cm,0cm)         %% default is (0.6cm,0cm)
+%};%
+%}
+%}
 
 \begin{document}
 
@@ -135,7 +135,7 @@ table{
 \addlegendentry{$3\times 3-asymm$};
 
 % 7x3 - coupling
-\addplot[line width=\linewidth,red,dashed,dash pattern=on 10pt off 5pt]
+\addplot[line width=\linewidth,mark size=1.15*\markersize,red,dashed,dash pattern=on 10pt off 5pt,mark=*,mark options={solid}]
 table{
 10.00	3.479770
 20.00	3.462973
@@ -156,7 +156,7 @@ table{
 \addlegendentry{$7\times 3-symm$};
 
 % 7x3 - asymm
-\addplot[mark size=\markersize,red,only marks,mark=*,mark options={fill=white}]
+\addplot[line width=\linewidth,mark size=\markersize,green,dotted,mark=triangle*,mark options={solid,fill=white}]
 table{
 10.00	3.483439
 20.00	3.469345

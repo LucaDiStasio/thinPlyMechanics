@@ -16,17 +16,6 @@
 %----------------------------------------------------------------------------------------------%
 %----------------------------------------------------------------------------------------------%
 
-\pgfplotsset{
-compat=newest,
-legend image code/.code={
-\draw[mark repeat=2,mark phase=2]
-plot coordinates {
-(0cm,0cm)
-(0.4cm,0cm)        %% default is (0.3cm,0cm)
-(0.8cm,0cm)         %% default is (0.6cm,0cm)
-};%
-}
-}
 
 \begin{document}
 
@@ -93,7 +82,7 @@ legend entries={},
 %\addlegendentry{$1\times 1-coupling$};
 
 % 3x3 - coupling
-\addplot[line width=\linewidth,black,smooth]
+\addplot[line width=\linewidth,mark size=1.15*\markersize,black,dashed,dash pattern=on 20pt off 15pt,mark=square*,mark options={solid}]
 table{
 10.00	0.684290
 20.00	1.326041
@@ -114,7 +103,7 @@ table{
 \addlegendentry{$3\times 3-coupling$};
 
 % 3x3 - asymm
-\addplot[mark size=\markersize,black,only marks,mark=square*,mark options={fill=white}]
+\addplot[line width=\linewidth,mark size=\markersize,blue,dotted,mark=*,mark options={solid,fill=white}]
 table{
 10.00	0.686370
 20.00	1.336634
@@ -135,7 +124,7 @@ table{
 \addlegendentry{$3\times 3-asymm$};
 
 % 7x3 - coupling
-\addplot[line width=\linewidth,red,smooth,dash pattern=on 10pt off 5pt]
+\addplot[line width=\linewidth,mark size=1.15*\markersize,red,dashed,dash pattern=on 10pt off 5pt,mark=*,mark options={solid}]
 table{
 10.00	0.716696
 20.00	1.521556
@@ -156,7 +145,7 @@ table{
 \addlegendentry{$7\times 3-coupling$};
 
 % 7x3 - asymm
-\addplot[mark size=\markersize,red,only marks,mark=*,mark options={fill=white}]
+\addplot[line width=\linewidth,mark size=\markersize,green,dotted,mark=triangle*,mark options={solid,fill=white}]
 table{
 10.00	0.717672
 20.00	1.527597
@@ -198,7 +187,7 @@ table{
 %\addlegendentry{$7\times 7-coupling$};
 
 % 21x3 - coupling
-\addplot[line width=\linewidth,blue,smooth, dotted]
+\addplot[line width=\linewidth,mark size=\markersize,teal,dashed,dash pattern=on 20pt off 15pt,mark=triangle*,mark options={solid}]
 table{
 10.00	0.729008
 20.00	1.572533
@@ -219,7 +208,7 @@ table{
 \addlegendentry{$21\times 3-coupling$};
 
 % 21x3 - asymm
-\addplot[mark size=\markersize,blue,only marks,mark=triangle*,mark options={fill=white}]
+\addplot[line width=\linewidth,mark size=\markersize,orange,dotted,mark=star,mark options={solid,fill=white}]
 table{
 10.00	0.729202
 20.00	1.580654
@@ -261,7 +250,7 @@ table{
 %\addlegendentry{$21\times 21-coupling$};
 
 % 101x3 - coupling
-\addplot[line width=\linewidth,green,smooth,dash pattern=on 20pt off 15pt]
+\addplot[line width=\linewidth,mark size=\markersize,violet,dashed,dash pattern=on 10pt off 5pt,mark=pentagon*,mark options={solid}]
 table{
 10.00	0.728690
 20.00	1.593309
@@ -282,7 +271,7 @@ table{
 \addlegendentry{$101\times 3-coupling$};
 
 % 101x3 - asymm
-\addplot[mark size=\markersize,green,only marks,mark=diamond*,mark options={fill=white}]
+\addplot[line width=\linewidth,mark size=\markersize,lime,dotted,mark=x,mark options={solid,fill=white}]
 table{
 10.00	0.729610
 20.00	1.601050

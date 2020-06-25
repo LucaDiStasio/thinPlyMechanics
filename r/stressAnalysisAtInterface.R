@@ -37,7 +37,7 @@
 rm(list=ls())
 
 # load libraries
-
+library("ggplot2")
 
 # set path of working directory
 wDir <- file.path("C:","02_Local-folder","01_Luca","01_WD","thinPlyMechanics","r")
@@ -53,3 +53,24 @@ setwd(wDir)
 getwd()
 
 # Load data file and attach data to workspace
+data <- read.table( "S5A0-free-theta000.txt",header=TRUE,sep ="")
+
+#---------------------------------------------------------------------------------------
+# --> Material and load parameters
+
+eps = 0.01 # -
+E1 = 43442.0 #MPa
+E2 = 13714.0 #MPa
+nu12 = 0.273 #-
+nu21 = E2*nu12/E1 #-
+Ehomo = E2/(1-nu21*nu12) #MPa
+sigmaInf = Ehomo*eps #MPa
+
+#---------------------------------------------------------------------------------------
+
+ggplot(data = data, mapping = aes(x = angle, y = Srr)) + geom_point()
+
+data$normSrr = data$Srr/sigmaInf
+
+ggplot(data = data, mapping = aes(x = angle, y = normSrr)) + geom_point()
+

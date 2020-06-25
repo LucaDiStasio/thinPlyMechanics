@@ -1928,10 +1928,15 @@ legend entries={},
 %};
 %\addlegendentry{$\Delta\theta=10^{\circ}$};
 
+\pgfplotstableset{ %
+    create on use/xtrig/.style={ %
+         create col/expr={\sigmaInf*cos(\thisrow{angle})}}
+}
+         
 % S0, A0 - free
 \addplot[line width=\linewidth,mark size=\markersize,black,smooth,mark=*]
-table[x =angle, y expr=\thisrow{Srr}/\sigmaInf]{
-%table[x expr=cos(2*\thisrow{angle}), y expr=\thisrow{Srr}/(\sigmaInf)]{
+%table[x =angle, y expr=\thisrow{Srr}/\sigmaInf]{
+table[x expr=1+cos(2*\thisrow{angle}), y expr=\thisrow{Srr}/(\sigmaInf)]{
 %table[x expr=\sigmaInf*cos(2*\thisrow{angle}), y expr=\thisrow{Srr}]{
 angle	Normangle	Sxx	Syy	Szz	Sxy	Szx	Syz	Srr	Stt	Srt	S13D   S23D	S33D	S12D	S22D	Smises3D	Smises2D	Saverage3D	Saverage2D	I13D	I23D	I33D	I12D	I22D
 0.000000	0.000000	327.341000	216.561000	217.561000	-0.003757	0.000000	0.000000	327.341000	216.561000	-0.003757	327.341000	217.561000	217.561000	327.341000	216.561000	110.283401	288.377362	253.821000	271.951000	761.463000	189221.157309	15422745.754349	543.902000	70889.294287

@@ -39,6 +39,7 @@ rm(list=ls())
 # load libraries
 library("ggplot2")
 library("stats")
+library("SynchWave")
 
 # set path of working directory
 wDir <- file.path("C:","02_Local-folder","01_Luca","01_WD","thinPlyMechanics","r")
@@ -73,14 +74,93 @@ sigmaAvg = 156.362190 #MPa
 ggplot(data = data, mapping = aes(x = angle, y = Srr)) + geom_point()
 
 data$normSrr = data$Srr/sigmaInf
+data$normToAvgSrr = data$Srr/sigmaAvg
 
 ggplot(data = data, mapping = aes(x = angle, y = normSrr)) + geom_point()
+ggplot(data = data, mapping = aes(x = angle, y = normToAvgSrr)) + geom_point()
 
 data$SrrFFT = fft(data$normSrr)
 
-SrrHarmonics <- matrix(0,nrow=length(data$Srr),ncol=length(data$SrrFFT))
-for (i in seq_along(SrrHarmonics[,0])) {
-  for (j in seq_along(SrrHarmonics[i,])) {
-    SrrHarmonics[i,j] <- data$SrrFFT[j]*exp(-(2*pi*i*(i-1)*(j-1)/length(data$Srr)))
-  }
+data$k = 1:length(data$normSrr)
+data$kshift = data$k-ceiling(0.5*length(data$normSrr))
+
+data$SrrRe <- Re(data$SrrFFT)
+data$SrrIm <- Im(data$SrrFFT)
+data$SrrAmplitude <- sqrt(data$SrrRe*data$SrrRe+data$SrrIm*data$SrrIm)
+data$SrrPhaseRad <- atan2(data$SrrIm,data$SrrRe)
+data$SrrPhaseDeg <- data$SrrPhaseRad*180.0/pi
+#SrrAmplitude <- matrix(0,nrow=length(data$Srr),ncol=length(data$SrrFFT))
+#SrrFrequencyRad <- matrix(0,nrow=length(data$Srr),ncol=length(data$SrrFFT))
+#SrrFrequencyDeg <- matrix(0,nrow=length(data$Srr),ncol=length(data$SrrFFT))
+
+ggplot(data = data, mapping = aes(x = data$k, y = data$SrrAmplitude)) + geom_point()
+ggplot(data = data, mapping = aes(x = data$kshift, y = fftshift(data$SrrAmplitude))) + geom_point()
+ggplot(data = data, mapping = aes(x = data$kshift, y = fftshift(data$SrrPhaseDeg))) + geom_point()
+
+harmonicsIndex = 5
+ggplot(data = data, mapping = aes(x = angle, y = cos(harmonicsIndex*data$angle*pi/180))) + geom_point()
+
+harmonicsIndex = 8
+ggplot(data = data, mapping = aes(x = angle, y = data$SrrAmplitude[harmonicsIndex+1]*cos(harmonicsIndex*data$angle*pi/180))) + geom_point()
+
+angle=data$angle
+
+reconstructedSrr <- vector(length=length(data$Srr),mode="double")
+orderMax = 6
+for (j in 0:orderMax){
+  reconstructedSrr = reconstructedSrr + cos(2*j*data$angle*pi/180)
 }
+ggplot(mapping = aes(x = angle, y = reconstructedSrr)) + geom_point()
+
+reconstructedSrrwithAmpl <- vector(length=length(data$Srr),mode="double")
+orderMax = 50
+for (j in 0:orderMax){
+  reconstructedSrrwithAmpl = reconstructedSrrwithAmpl + data$SrrAmplitude[j+1]*cos(2*j*data$angle*pi/180)
+}
+reconstructedSrrwithAmpl = reconstructedSrrwithAmpl/max(reconstructedSrrwithAmpl)
+ggplot(mapping = aes(x = angle, y = reconstructedSrrwithAmpl)) + geom_point()
+
+ggplot()+
+  geom_line(mapping = aes(x = angle, y = reconstructedSrrwithAmpl),color="red") +
+  geom_point(data = data, mapping = aes(x = angle, y = normSrr/max(normSrr)),color="blue")
+
+reconstructedSrrFull <- vector(length=length(data$Srr),mode="double")
+orderMax = 8
+for (j in 0:orderMax){
+  reconstructedSrrFull = reconstructedSrrFull + data$SrrAmplitude[j+1]*cos(2*j*data$angle*pi/180+data$SrrPhaseRad[j+1])
+}
+reconstructedSrrFull = reconstructedSrrFull/max(reconstructedSrrFull)
+ggplot(mapping = aes(x = angle, y = reconstructedSrrFull)) + geom_point()
+
+ggplot()+
+  geom_line(mapping = aes(x = angle, y = reconstructedSrrFull),color="magenta") +
+  geom_point(data = data, mapping = aes(x = angle, y = normSrr/max(normSrr)),color="blue")
+
+y = data$normSrr
+
+x1 = cos(2*1*data$angle*pi/180)
+x2 = cos(2*2*data$angle*pi/180)
+x3 = cos(2*3*data$angle*pi/180)
+x4 = cos(2*4*data$angle*pi/180)
+x5 = cos(2*5*data$angle*pi/180)
+x6 = cos(2*6*data$angle*pi/180)
+x7 = cos(2*7*data$angle*pi/180)
+x8 = cos(2*8*data$angle*pi/180)
+x9 = cos(2*9*data$angle*pi/180)
+x10 = cos(2*10*data$angle*pi/180)
+
+model1 = y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8
+
+ols1 = lm(formula = model1)
+ols1$coefficients
+
+reconstructedSrrOLS <- vector(length=length(data$Srr),mode="double")
+orderMax = 6
+for (j in 0:orderMax){
+  reconstructedSrrOLS = reconstructedSrrOLS + ols1$coefficients[j+1]*cos(2*j*data$angle*pi/180)
+}
+ggplot(mapping = aes(x = angle, y = reconstructedSrrOLS)) + geom_point()
+
+ggplot()+
+  geom_line(mapping = aes(x = angle, y = reconstructedSrrOLS),color="red") +
+  geom_point(data = data, mapping = aes(x = angle, y = normSrr),color="blue")

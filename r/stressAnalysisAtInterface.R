@@ -38,6 +38,7 @@ rm(list=ls())
 
 # load libraries
 library("ggplot2")
+library("stats")
 
 # set path of working directory
 wDir <- file.path("C:","02_Local-folder","01_Luca","01_WD","thinPlyMechanics","r")
@@ -65,6 +66,7 @@ nu12 = 0.273 #-
 nu21 = E2*nu12/E1 #-
 Ehomo = E2/(1-nu21*nu12) #MPa
 sigmaInf = Ehomo*eps #MPa
+sigmaAvg = 156.362190 #MPa
 
 #---------------------------------------------------------------------------------------
 
@@ -74,3 +76,11 @@ data$normSrr = data$Srr/sigmaInf
 
 ggplot(data = data, mapping = aes(x = angle, y = normSrr)) + geom_point()
 
+data$SrrFFT = fft(data$normSrr)
+
+SrrHarmonics <- matrix(0,nrow=length(data$Srr),ncol=length(data$SrrFFT))
+for (i in seq_along(SrrHarmonics[,0])) {
+  for (j in seq_along(SrrHarmonics[i,])) {
+    SrrHarmonics[i,j] <- data$SrrFFT[j]*exp(-(2*pi*i*(i-1)*(j-1)/length(data$Srr)))
+  }
+}

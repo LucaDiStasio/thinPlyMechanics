@@ -185,15 +185,26 @@ for (j in 0:orderMax){
 ggplot(mapping = aes(x = S5A0FreeTheta020$angle, y = S5A0FreeTheta020$normSrr-reconstructedSrrOLS020)) + geom_point() #+ scale_y_log10()#+ ylim(0.0,10)
 ggplot(mapping = aes(x = S5A0FreeTheta020$angle[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0], y = S5A0FreeTheta020$normSrr[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0]-reconstructedSrrOLS020[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0])) + geom_point() + scale_x_log10()#+ ylim(0.0,10)
 
-logyRegion1 = log(S5A0FreeTheta020$normSrr[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][1:3])
-logyRegion2 = log(S5A0FreeTheta020$normSrr[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][4:length(S5A0FreeTheta020$angle)])
+yRegion1 = (S5A0FreeTheta020$normSrr-reconstructedSrrOLS020)[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][1:3]
+yRegion2 = (S5A0FreeTheta020$normSrr-reconstructedSrrOLS020)[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][4:length(S5A0FreeTheta020$angle)]
 
-xLogRegion1 = log(S5A0FreeTheta020$angle[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][1:3])
-olsLogRegion1 = lm(formula = logyRegion1~xLogRegion1)
+xRegion1 = (S5A0FreeTheta020$angle[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][1:3]*pi/180.0)^(-1)
+olsRegion1 = lm(formula = yRegion1~xRegion1)
+summary(olsRegion1)
+
+xRegion2 = (S5A0FreeTheta020$angle[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][4:length(S5A0FreeTheta020$angle)]*pi/180.0)^(-0.5)
+olsRegion2 = lm(formula = yRegion2~xRegion2)
+summary(olsRegion2)
+
+yLogRegion1 = log((S5A0FreeTheta020$normSrr-reconstructedSrrOLS020)[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][1:3])
+yLogRegion2 = log((S5A0FreeTheta020$normSrr-reconstructedSrrOLS020)[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][4:length(S5A0FreeTheta020$angle)])
+
+xLogRegion1 = log(S5A0FreeTheta020$angle[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][1:3]*pi/180.0)
+olsLogRegion1 = lm(formula = yLogRegion1~xLogRegion1)
 summary(olsLogRegion1)
 
-xLogRegion2 = log(S5A0FreeTheta020$angle[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][4:length(S5A0FreeTheta020$angle)])
-olsLogRegion2 = lm(formula = logyRegion2~xLogRegion2)
+xLogRegion2 = log(S5A0FreeTheta020$angle[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][4:length(S5A0FreeTheta020$angle)]*pi/180.0)
+olsLogRegion2 = lm(formula = yLogRegion2~xLogRegion2)
 summary(olsLogRegion2)
 
 ggplot()+

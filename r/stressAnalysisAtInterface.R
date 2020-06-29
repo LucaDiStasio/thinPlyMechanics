@@ -59,6 +59,8 @@ S5A0FreeTheta000 <- read.table( "S5A0-free-theta000.txt",header=TRUE,sep ="")
 S5A0FreeTheta010 <- read.table( "S5A0-free-theta010.txt",header=TRUE,sep ="")
 S5A0FreeTheta020 <- read.table( "S5A0-free-theta020.txt",header=TRUE,sep ="")
 
+S5A0T1Theta000 <- read.table( "S5A0T1-theta000.txt",header=TRUE,sep ="")
+
 #---------------------------------------------------------------------------------------
 # --> Material and load parameters
 
@@ -76,6 +78,12 @@ sigmaAvg = 156.362190 #MPa
 ggplot(data = S5A0FreeTheta000, mapping = aes(x = angle, y = Srr)) + geom_point()
 ggplot(data = S5A0FreeTheta010, mapping = aes(x = angle, y = Srr)) + geom_point()
 
+ggplot(data = S5A0T1Theta000, mapping = aes(x = angle, y = Srr)) + geom_point()
+
+ggplot()+
+  geom_point(data = S5A0FreeTheta000, mapping = aes(x = angle, y = Srr),color="blue") +
+  geom_point(data = S5A0T1Theta000, mapping = aes(x = angle, y = Srr),color="red")
+
 S5A0FreeTheta000$normSrr = S5A0FreeTheta000$Srr/sigmaInf
 S5A0FreeTheta000$normToAvgSrr = S5A0FreeTheta000$Srr/sigmaAvg
 
@@ -85,26 +93,32 @@ S5A0FreeTheta010$normToAvgSrr = S5A0FreeTheta010$Srr/sigmaAvg
 S5A0FreeTheta020$normSrr = S5A0FreeTheta020$Srr/sigmaInf
 S5A0FreeTheta020$normToAvgSrr = S5A0FreeTheta020$Srr/sigmaAvg
 
-ggplot(data = data, mapping = aes(x = angle, y = normSrr)) + geom_point()
-ggplot(data = data, mapping = aes(x = angle, y = normToAvgSrr)) + geom_point()
+S5A0T1Theta000$normSrr = S5A0T1Theta000$Srr/sigmaInf
+S5A0T1Theta000$normToAvgSrr = S5A0T1Theta000$Srr/sigmaAvg
 
-data$SrrFFT = fft(data$normSrr)
+ggplot(data = S5A0FreeTheta000, mapping = aes(x = angle, y = normSrr)) + geom_point()
+ggplot(data = S5A0FreeTheta000, mapping = aes(x = angle, y = normToAvgSrr)) + geom_point()
 
-data$k = 1:length(data$normSrr)
-data$kshift = data$k-ceiling(0.5*length(data$normSrr))
+ggplot(data = S5A0T1Theta000, mapping = aes(x = angle, y = normSrr)) + geom_point()
+ggplot(data = S5A0T1Theta000, mapping = aes(x = angle, y = normToAvgSrr)) + geom_point()
 
-data$SrrRe <- Re(data$SrrFFT)
-data$SrrIm <- Im(data$SrrFFT)
-data$SrrAmplitude <- sqrt(data$SrrRe*data$SrrRe+data$SrrIm*data$SrrIm)
-data$SrrPhaseRad <- atan2(data$SrrIm,data$SrrRe)
-data$SrrPhaseDeg <- data$SrrPhaseRad*180.0/pi
+S5A0FreeTheta000$SrrFFT = fft(S5A0FreeTheta000$normSrr)
+
+S5A0FreeTheta000$k = 1:length(S5A0FreeTheta000$normSrr)
+S5A0FreeTheta000$kshift = S5A0FreeTheta000$k-ceiling(0.5*length(S5A0FreeTheta000$normSrr))
+
+S5A0FreeTheta000$SrrRe <- Re(S5A0FreeTheta000$SrrFFT)
+S5A0FreeTheta000$SrrIm <- Im(S5A0FreeTheta000$SrrFFT)
+S5A0FreeTheta000$SrrAmplitude <- sqrt(S5A0FreeTheta000$SrrRe*S5A0FreeTheta000$SrrRe+S5A0FreeTheta000$SrrIm*S5A0FreeTheta000$SrrIm)
+S5A0FreeTheta000$SrrPhaseRad <- atan2(S5A0FreeTheta000$SrrIm,S5A0FreeTheta000$SrrRe)
+S5A0FreeTheta000$SrrPhaseDeg <- S5A0FreeTheta000$SrrPhaseRad*180.0/pi
 #SrrAmplitude <- matrix(0,nrow=length(data$Srr),ncol=length(data$SrrFFT))
 #SrrFrequencyRad <- matrix(0,nrow=length(data$Srr),ncol=length(data$SrrFFT))
 #SrrFrequencyDeg <- matrix(0,nrow=length(data$Srr),ncol=length(data$SrrFFT))
 
-ggplot(data = data, mapping = aes(x = data$k, y = data$SrrAmplitude)) + geom_point()
-ggplot(data = data, mapping = aes(x = data$kshift, y = fftshift(data$SrrAmplitude))) + geom_point()
-ggplot(data = data, mapping = aes(x = data$kshift, y = fftshift(data$SrrPhaseDeg))) + geom_point()
+ggplot(data = S5A0FreeTheta000, mapping = aes(x = k, y = SrrAmplitude)) + geom_point()
+ggplot(data = S5A0FreeTheta000, mapping = aes(x = kshift, y = fftshift(S5A0FreeTheta000$SrrAmplitude))) + geom_point()
+ggplot(data = S5A0FreeTheta000, mapping = aes(x = kshift, y = fftshift(S5A0FreeTheta000$SrrPhaseDeg))) + geom_point()
 
 harmonicsIndex = 5
 ggplot(data = data, mapping = aes(x = angle, y = cos(harmonicsIndex*data$angle*pi/180))) + geom_point()
@@ -212,3 +226,30 @@ ggplot()+
   geom_point(data = data, mapping = aes(x = angle, y = normSrr),color="blue")
 
 ggplot(mapping = aes(x = angle, y = reconstructedSrrOLS)) + geom_point()
+
+S5A0T1Theta000$SrrFFT = fft(S5A0T1Theta000$normSrr)
+
+S5A0T1Theta000$k = 1:length(S5A0T1Theta000$normSrr)
+S5A0T1Theta000$kshift = S5A0T1Theta000$k-ceiling(0.5*length(S5A0T1Theta000$normSrr))
+
+S5A0T1Theta000$SrrRe <- Re(S5A0T1Theta000$SrrFFT)
+S5A0T1Theta000$SrrIm <- Im(S5A0T1Theta000$SrrFFT)
+S5A0T1Theta000$SrrAmplitude <- sqrt(S5A0T1Theta000$SrrRe*S5A0T1Theta000$SrrRe+S5A0T1Theta000$SrrIm*S5A0T1Theta000$SrrIm)
+S5A0T1Theta000$SrrPhaseRad <- atan2(S5A0T1Theta000$SrrIm,S5A0T1Theta000$SrrRe)
+S5A0T1Theta000$SrrPhaseDeg <- S5A0T1Theta000$SrrPhaseRad*180.0/pi
+
+ggplot(data = S5A0T1Theta000, mapping = aes(x = kshift, y = fftshift(S5A0T1Theta000$SrrAmplitude))) + geom_point()
+
+ggplot() +
+  geom_point(data = S5A0FreeTheta000, mapping = aes(x = kshift, y = fftshift(S5A0FreeTheta000$SrrAmplitude)),color="blue") +
+  geom_point(data = S5A0T1Theta000, mapping = aes(x = kshift, y = fftshift(S5A0T1Theta000$SrrAmplitude)),color="red")
+
+y2 = S5A0T1Theta000$normSrr
+
+model2 = y2 ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8
+
+ols2 = lm(formula = model2)
+ols2$coefficients
+
+summary(ols1)
+summary(ols2)

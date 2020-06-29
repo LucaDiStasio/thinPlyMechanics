@@ -55,7 +55,9 @@ setwd(wDir)
 getwd()
 
 # Load data file and attach data to workspace
-data <- read.table( "S5A0-free-theta000.txt",header=TRUE,sep ="")
+S5A0FreeTheta000 <- read.table( "S5A0-free-theta000.txt",header=TRUE,sep ="")
+S5A0FreeTheta010 <- read.table( "S5A0-free-theta010.txt",header=TRUE,sep ="")
+S5A0FreeTheta020 <- read.table( "S5A0-free-theta020.txt",header=TRUE,sep ="")
 
 #---------------------------------------------------------------------------------------
 # --> Material and load parameters
@@ -71,10 +73,17 @@ sigmaAvg = 156.362190 #MPa
 
 #---------------------------------------------------------------------------------------
 
-ggplot(data = data, mapping = aes(x = angle, y = Srr)) + geom_point()
+ggplot(data = S5A0FreeTheta000, mapping = aes(x = angle, y = Srr)) + geom_point()
+ggplot(data = S5A0FreeTheta010, mapping = aes(x = angle, y = Srr)) + geom_point()
 
-data$normSrr = data$Srr/sigmaInf
-data$normToAvgSrr = data$Srr/sigmaAvg
+S5A0FreeTheta000$normSrr = S5A0FreeTheta000$Srr/sigmaInf
+S5A0FreeTheta000$normToAvgSrr = S5A0FreeTheta000$Srr/sigmaAvg
+
+S5A0FreeTheta010$normSrr = S5A0FreeTheta010$Srr/sigmaInf
+S5A0FreeTheta010$normToAvgSrr = S5A0FreeTheta010$Srr/sigmaAvg
+
+S5A0FreeTheta020$normSrr = S5A0FreeTheta020$Srr/sigmaInf
+S5A0FreeTheta020$normToAvgSrr = S5A0FreeTheta020$Srr/sigmaAvg
 
 ggplot(data = data, mapping = aes(x = angle, y = normSrr)) + geom_point()
 ggplot(data = data, mapping = aes(x = angle, y = normToAvgSrr)) + geom_point()
@@ -136,31 +145,59 @@ ggplot()+
   geom_line(mapping = aes(x = angle, y = reconstructedSrrFull),color="magenta") +
   geom_point(data = data, mapping = aes(x = angle, y = normSrr/max(normSrr)),color="blue")
 
-y = data$normSrr
+y1 = S5A0FreeTheta000$normSrr
 
-x1 = cos(2*1*data$angle*pi/180)
-x2 = cos(2*2*data$angle*pi/180)
-x3 = cos(2*3*data$angle*pi/180)
-x4 = cos(2*4*data$angle*pi/180)
-x5 = cos(2*5*data$angle*pi/180)
-x6 = cos(2*6*data$angle*pi/180)
-x7 = cos(2*7*data$angle*pi/180)
-x8 = cos(2*8*data$angle*pi/180)
-x9 = cos(2*9*data$angle*pi/180)
-x10 = cos(2*10*data$angle*pi/180)
+x1 = cos(2*1*S5A0FreeTheta000$angle*pi/180)
+x2 = cos(2*2*S5A0FreeTheta000$angle*pi/180)
+x3 = cos(2*3*S5A0FreeTheta000$angle*pi/180)
+x4 = cos(2*4*S5A0FreeTheta000$angle*pi/180)
+x5 = cos(2*5*S5A0FreeTheta000$angle*pi/180)
+x6 = cos(2*6*S5A0FreeTheta000$angle*pi/180)
+x7 = cos(2*7*S5A0FreeTheta000$angle*pi/180)
+x8 = cos(2*8*S5A0FreeTheta000$angle*pi/180)
+x9 = cos(2*9*S5A0FreeTheta000$angle*pi/180)
+x10 = cos(2*10*S5A0FreeTheta000$angle*pi/180)
 
-model1 = y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8
+model1 = y1 ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8
 
 ols1 = lm(formula = model1)
 ols1$coefficients
 
-reconstructedSrrOLS <- vector(length=length(data$Srr),mode="double")
+reconstructedSrrOLS <- vector(length=length(S5A0FreeTheta000$Srr),mode="double")
 orderMax = 6
 for (j in 0:orderMax){
-  reconstructedSrrOLS = reconstructedSrrOLS + ols1$coefficients[j+1]*cos(2*j*data$angle*pi/180)
+  reconstructedSrrOLS = reconstructedSrrOLS + ols1$coefficients[j+1]*cos(2*j*S5A0FreeTheta000$angle*pi/180)
 }
-ggplot(mapping = aes(x = angle, y = reconstructedSrrOLS)) + geom_point()
+ggplot(mapping = aes(x = S5A0FreeTheta000$angle, y = S5A0FreeTheta000$normSrr-reconstructedSrrOLS)) + geom_point()
+
+reconstructedSrrOLS010 <- vector(length=length(S5A0FreeTheta010$Srr),mode="double")
+orderMax = 6
+for (j in 0:orderMax){
+  reconstructedSrrOLS010 = reconstructedSrrOLS010 + ols1$coefficients[j+1]*cos(2*j*S5A0FreeTheta010$angle*pi/180)
+}
+ggplot(mapping = aes(x = S5A0FreeTheta010$angle, y = S5A0FreeTheta010$normSrr-reconstructedSrrOLS010)) + geom_point() #+ scale_y_log10()#+ ylim(0.0,10)
+
+reconstructedSrrOLS020 <- vector(length=length(S5A0FreeTheta020$Srr),mode="double")
+orderMax = 6
+for (j in 0:orderMax){
+  reconstructedSrrOLS020 = reconstructedSrrOLS020 + ols1$coefficients[j+1]*cos(2*j*S5A0FreeTheta020$angle*pi/180)
+}
+ggplot(mapping = aes(x = S5A0FreeTheta020$angle, y = S5A0FreeTheta020$normSrr-reconstructedSrrOLS020)) + geom_point() #+ scale_y_log10()#+ ylim(0.0,10)
+ggplot(mapping = aes(x = S5A0FreeTheta020$angle[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0], y = S5A0FreeTheta020$normSrr[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0]-reconstructedSrrOLS020[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0])) + geom_point() + scale_x_log10()#+ ylim(0.0,10)
+
+logyRegion1 = log(S5A0FreeTheta020$normSrr[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][1:3])
+logyRegion2 = log(S5A0FreeTheta020$normSrr[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][4:length(S5A0FreeTheta020$angle)])
+
+xLogRegion1 = log(S5A0FreeTheta020$angle[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][1:3])
+olsLogRegion1 = lm(formula = logyRegion1~xLogRegion1)
+summary(olsLogRegion1)
+
+xLogRegion2 = log(S5A0FreeTheta020$angle[S5A0FreeTheta020$angle>20.0 & S5A0FreeTheta020$angle<=50.0][4:length(S5A0FreeTheta020$angle)])
+olsLogRegion2 = lm(formula = logyRegion2~xLogRegion2)
+summary(olsLogRegion2)
 
 ggplot()+
   geom_line(mapping = aes(x = angle, y = reconstructedSrrOLS),color="red") +
   geom_point(data = data, mapping = aes(x = angle, y = normSrr),color="blue")
+
+ggplot(mapping = aes(x = angle, y = reconstructedSrrOLS)) + geom_point()

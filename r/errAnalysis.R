@@ -62,6 +62,7 @@ S100A5FreeGII <- read.table( "ERR-S100A5-free-GII.txt",header=TRUE,sep ="")
 #---------------------------------------------------------------------------------------
 # --> Material and load parameters
 
+Rf = 10^-6 # m
 eps = 0.01 # -
 E1 = 43442.0 #MPa
 E2 = 13714.0 #MPa
@@ -70,4 +71,57 @@ nu21 = E2*nu12/E1 #-
 Ehomo = E2/(1-nu21*nu12) #MPa
 sigmaInf = Ehomo*eps #MPa
 
+G0 = Ehomo*10^6*Rf*eps^2 #J/m^2
+
 #---------------------------------------------------------------------------------------
+
+ggplot(data = S100A5FreeGI, mapping = aes(x = angle, y = GI)) + geom_point()
+ggplot(data = S100A5FreeGII, mapping = aes(x = angle, y = GII)) + geom_point()
+
+S100A5FreeGI$normGI = S100A5FreeGI$GI/G0
+S100A5FreeGII$normGII = S100A5FreeGII$GII/G0
+
+ggplot(data = S100A5FreeGI, mapping = aes(x = angle, y = normGI)) + geom_point()
+ggplot(data = S100A5FreeGII, mapping = aes(x = angle, y = normGII)) + geom_point()
+
+S100A5FreeGI$GIFFT = fft(S100A5FreeGI$normGI)
+S100A5FreeGII$GIIFFT = fft(S100A5FreeGII$normGII)
+
+S100A5FreeGI$k = 1:length(S100A5FreeGI$normGI)
+S100A5FreeGI$kshift = S100A5FreeGI$k-ceiling(0.5*length(S100A5FreeGI$normGI))
+
+S100A5FreeGII$k = 1:length(S100A5FreeGII$normGII)
+S100A5FreeGII$kshift = S100A5FreeGII$k-ceiling(0.5*length(S100A5FreeGII$normGII))
+
+S100A5FreeGI$GIRe <- Re(S100A5FreeGI$GIFFT)
+S100A5FreeGI$GIIm <- Im(S100A5FreeGI$GIFFT)
+S100A5FreeGI$GIAmplitude <- sqrt(S100A5FreeGI$GIRe*S100A5FreeGI$GIRe+S100A5FreeGI$GIIm*S100A5FreeGI$GIIm)
+S100A5FreeGI$GIPhaseRad <- atan2(S100A5FreeGI$GIIm,S100A5FreeGI$GIRe)
+S100A5FreeGI$GIPhaseDeg <- S100A5FreeGI$GIPhaseRad*180.0/pi
+
+S100A5FreeGII$GIIRe <- Re(S100A5FreeGII$GIIFFT)
+S100A5FreeGII$GIIIm <- Im(S100A5FreeGII$GIIFFT)
+S100A5FreeGII$GIIAmplitude <- sqrt(S100A5FreeGII$GIIRe*S100A5FreeGII$GIIRe+S100A5FreeGII$GIIIm*S100A5FreeGII$GIIIm)
+S100A5FreeGII$GIIPhaseRad <- atan2(S100A5FreeGII$GIIIm,S100A5FreeGII$GIIRe)
+S100A5FreeGII$GIIPhaseDeg <- S100A5FreeGII$GIIPhaseRad*180.0/pi
+
+ggplot(data = S100A5FreeGI, mapping = aes(x = k, y = GIAmplitude)) + geom_point()
+ggplot(data = S100A5FreeGI, mapping = aes(x = kshift, y = fftshift(GIAmplitude))) + geom_point()
+
+y1 = S100A5FreeGI$normGI
+
+x1 = cos(2*1*S100A5FreeGI$angle*pi/180)
+x2 = cos(2*2*S100A5FreeGI$angle*pi/180)
+x3 = cos(2*3*S100A5FreeGI$angle*pi/180)
+x4 = cos(2*4*S100A5FreeGI$angle*pi/180)
+x5 = cos(2*5*S100A5FreeGI$angle*pi/180)
+x6 = cos(2*6*S100A5FreeGI$angle*pi/180)
+x7 = cos(2*7*S100A5FreeGI$angle*pi/180)
+x8 = cos(2*8*S100A5FreeGI$angle*pi/180)
+x9 = cos(2*9*S100A5FreeGI$angle*pi/180)
+x10 = cos(2*10*S100A5FreeGI$angle*pi/180)
+
+modelGI = y1 ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8
+
+olsGI = lm(formula = modelGI)
+summary(olsGI)

@@ -34,6 +34,7 @@
 # --> Get the workspace ready
 
 # clear the workspace
+
 rm(list=ls())
 
 # load libraries
@@ -53,11 +54,10 @@ setwd(wDir)
 
 # Check the current working directory is the desired one
 getwd()
-
 # Load data file and attach data to workspace
-S5A0FreeTheta000 <- read.table( "S5A0-free-theta000.txt",header=TRUE,sep ="")
-S5A0FreeTheta010 <- read.table( "S5A0-free-theta010.txt",header=TRUE,sep ="")
-S5A0FreeTheta020 <- read.table( "S5A0-free-theta020.txt",header=TRUE,sep ="")
+S100A5FreeGI <- read.table( "ERR-S100A5-free-GI.txt",header=TRUE,sep ="")
+S100A5FreeGII <- read.table( "ERR-S100A5-free-GII.txt",header=TRUE,sep ="")
+
 
 #---------------------------------------------------------------------------------------
 # --> Material and load parameters

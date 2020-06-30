@@ -108,20 +108,34 @@ S100A5FreeGII$GIIPhaseDeg <- S100A5FreeGII$GIIPhaseRad*180.0/pi
 ggplot(data = S100A5FreeGI, mapping = aes(x = k, y = GIAmplitude)) + geom_point()
 ggplot(data = S100A5FreeGI, mapping = aes(x = kshift, y = fftshift(GIAmplitude))) + geom_point()
 
-y1 = S100A5FreeGI$normGI
+y1 = S100A5FreeGI$normGI[S100A5FreeGI$angle<80.0]
 
-x1 = cos(2*1*S100A5FreeGI$angle*pi/180)
-x2 = cos(2*2*S100A5FreeGI$angle*pi/180)
-x3 = cos(2*3*S100A5FreeGI$angle*pi/180)
-x4 = cos(2*4*S100A5FreeGI$angle*pi/180)
-x5 = cos(2*5*S100A5FreeGI$angle*pi/180)
-x6 = cos(2*6*S100A5FreeGI$angle*pi/180)
-x7 = cos(2*7*S100A5FreeGI$angle*pi/180)
-x8 = cos(2*8*S100A5FreeGI$angle*pi/180)
-x9 = cos(2*9*S100A5FreeGI$angle*pi/180)
-x10 = cos(2*10*S100A5FreeGI$angle*pi/180)
+angleOLS = S100A5FreeGI$angle[S100A5FreeGI$angle<80.0]
 
-modelGI = y1 ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8
+x1 = sin(1*angleOLS*pi/180)
+x2 = sin(2*angleOLS*pi/180)
+x3 = sin(3*angleOLS*pi/180)
+x4 = sin(4*angleOLS*pi/180)
+x5 = sin(5*angleOLS*pi/180)
+x6 = sin(6*angleOLS*pi/180)
+x7 = sin(7*angleOLS*pi/180)
+x8 = sin(8*angleOLS*pi/180)
+x9 = sin(9*angleOLS*pi/180)
+x10 = sin(10*angleOLS*pi/180)
+
+modelGI = y1 ~ x1 + x2 + x3 + x4
 
 olsGI = lm(formula = modelGI)
 summary(olsGI)
+
+angleReconstruction = seq(from=0.0,to=70.0,by=0.1)
+reconstructedGIOLS <- vector(length=length(angleReconstruction),mode="double")
+orderMin = 0
+orderMax = 1
+for (j in 0:orderMax){
+  reconstructedGIOLS = reconstructedGIOLS + olsGI$coefficients[j+1]*sin(2*j*angleReconstruction*pi/180)
+}
+ggplot()+
+  geom_line(mapping = aes(x = angleReconstruction, y = reconstructedGIOLS),color="green")+
+  geom_point(data=S100A5FreeGI,mapping = aes(x = angle, y = GI),color="blue")
+  

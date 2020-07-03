@@ -94,15 +94,49 @@ extendedGI <- vector(length=2*nPeriods*(length(reducedAngle)-1)+1,mode="double")
 for (i in 1:(2*nPeriods)){
   for (j in 1:(length(reducedAngle)-1)){
     extendedAngle[1+(i-1)*(length(reducedAngle)-1)+j] = (i-1)*CZonset + reducedAngle[j+1]
-    extendedGI[1+(i-1)*(length(reducedAngle)-1)+j] = ((-1)^(i-1))*
+    extendedGI[1+(i-1)*(length(reducedAngle)-1)+j] = ((-1)^(i-1))*reducedGI[((i-1)%%2)*length(reducedAngle)+((-1)^(i-1))*j+(i%%2)]
   }
 }
+
+ggplot()+
+  geom_point(mapping=aes(x=extendedAngle,y=extendedGI),color="blue")+
+  geom_point(mapping=aes(x=reducedAngle,y=reducedGI),color="red")
+
+curvatureEffectGI = (cos(0.5*reducedAngle*pi/180)*(1-sin(0.5*reducedAngle*pi/180)^2*cos(0.5*reducedAngle*pi/180)^2)/(1+sin(0.5*reducedAngle*pi/180)^2)+cos(1.5*reducedAngle*pi/180))^2
+
+ggplot()+
+  geom_point(mapping=aes(x=reducedAngle,y=reducedGI/sin(reducedAngle*pi/180)),color="red")+
+  geom_point(mapping=aes(x=reducedAngle,y=reducedGI/(sin(reducedAngle*pi/180)*curvatureEffectGI)),color="green")
+
+y2 = reducedGI/sin(reducedAngle*pi/180)
+y3 = reducedGI/(sin(reducedAngle*pi/180)*curvatureEffectGI)
+
+x = reducedAngle-CZonset
+x2 = x^2
+x3 = x^3
+
+ols2 = lm(formula = y2~x+x2)
+summary(ols2)
+ggplot()+
+  geom_point(mapping=aes(x=reducedAngle,y=reducedGI/sin(reducedAngle*pi/180)),color="red")+
+  geom_line(mapping=aes(x=reducedAngle,y=ols2$coefficients[1]+ols2$coefficients[2]*x+ols2$coefficients[3]*x2),color="green")
+
+ols3 = lm(formula = y3~x+x2+x3)
+summary(ols3)
+ggplot()+
+  geom_point(mapping=aes(x=reducedAngle,y=reducedGI/(sin(reducedAngle*pi/180)*curvatureEffectGI)),color="red")+
+  geom_line(mapping=aes(x=reducedAngle,y=ols3$coefficients[2]*x+ols3$coefficients[3]*x2+ols3$coefficients[4]*x3),color="green")
 
 S100A5FreeGI$GIFFT = fft(S100A5FreeGI$normGI)
 S100A5FreeGII$GIIFFT = fft(S100A5FreeGII$normGII)
 
+extendedGIFFT = fft(extendedGI)
+
 S100A5FreeGI$k = 1:length(S100A5FreeGI$normGI)
 S100A5FreeGI$kshift = S100A5FreeGI$k-ceiling(0.5*length(S100A5FreeGI$normGI))
+
+extendedk = 1:length(extendedGI)
+extendedkshift = extendedk-ceiling(0.5*length(extendedGI))
 
 S100A5FreeGII$k = 1:length(S100A5FreeGII$normGII)
 S100A5FreeGII$kshift = S100A5FreeGII$k-ceiling(0.5*length(S100A5FreeGII$normGII))
@@ -113,6 +147,12 @@ S100A5FreeGI$GIAmplitude <- sqrt(S100A5FreeGI$GIRe*S100A5FreeGI$GIRe+S100A5FreeG
 S100A5FreeGI$GIPhaseRad <- atan2(S100A5FreeGI$GIIm,S100A5FreeGI$GIRe)
 S100A5FreeGI$GIPhaseDeg <- S100A5FreeGI$GIPhaseRad*180.0/pi
 
+extendedGIRe <- Re(extendedGIFFT)
+extendedGIIm <- Im(extendedGIFFT)
+extendedGIAmplitude <- sqrt(extendedGIRe*extendedGIRe+extendedGIIm*extendedGIIm)
+extendedGIPhaseRad <- atan2(extendedGIIm,extendedGIRe)
+extendedGIPhaseDeg <- extendedGIPhaseRad*180.0/pi
+
 S100A5FreeGII$GIIRe <- Re(S100A5FreeGII$GIIFFT)
 S100A5FreeGII$GIIIm <- Im(S100A5FreeGII$GIIFFT)
 S100A5FreeGII$GIIAmplitude <- sqrt(S100A5FreeGII$GIIRe*S100A5FreeGII$GIIRe+S100A5FreeGII$GIIIm*S100A5FreeGII$GIIIm)
@@ -122,25 +162,51 @@ S100A5FreeGII$GIIPhaseDeg <- S100A5FreeGII$GIIPhaseRad*180.0/pi
 ggplot(data = S100A5FreeGI, mapping = aes(x = k, y = GIAmplitude)) + geom_point()
 ggplot(data = S100A5FreeGI, mapping = aes(x = kshift, y = fftshift(GIAmplitude))) + geom_point()
 
-y1 = S100A5FreeGI$normGI[S100A5FreeGI$angle<80.0]
+ggplot(mapping = aes(x = extendedkshift, y = fftshift(extendedGIAmplitude))) + geom_point()
 
-angleOLS = S100A5FreeGI$angle[S100A5FreeGI$angle<80.0]
 
-x1 = sin(1*angleOLS*pi/180)
-x2 = sin(2*angleOLS*pi/180)
-x3 = sin(3*angleOLS*pi/180)
-x4 = sin(4*angleOLS*pi/180)
-x5 = sin(5*angleOLS*pi/180)
-x6 = sin(6*angleOLS*pi/180)
-x7 = sin(7*angleOLS*pi/180)
-x8 = sin(8*angleOLS*pi/180)
-x9 = sin(9*angleOLS*pi/180)
-x10 = sin(10*angleOLS*pi/180)
+y1 = extendedGI
 
-modelGI = y1 ~ x1 + x2 + x3 + x4
+angleOLS = extendedAngle
+
+angFreq = CZonset/180.0
+
+x1 = sin(1*angFreq*angleOLS*pi/180)
+x2 = sin(2*angFreq*angleOLS*pi/180)
+x3 = sin(3*angFreq*angleOLS*pi/180)
+x4 = sin(4*angFreq*angleOLS*pi/180)
+x5 = sin(5*angFreq*angleOLS*pi/180)
+x6 = sin(6*angFreq*angleOLS*pi/180)
+x7 = sin(7*angFreq*angleOLS*pi/180)
+x8 = sin(8*angFreq*angleOLS*pi/180)
+x9 = sin(9*angFreq*angleOLS*pi/180)
+x10 = sin(10*angFreq*angleOLS*pi/180)
+x11 = sin(11*angFreq*angleOLS*pi/180)
+x12 = sin(12*angFreq*angleOLS*pi/180)
+x13 = sin(13*angFreq*angleOLS*pi/180)
+x14 = sin(14*angFreq*angleOLS*pi/180)
+x15 = sin(15*angFreq*angleOLS*pi/180)
+x16 = sin(6*angFreq*angleOLS*pi/180)
+x17 = sin(7*angFreq*angleOLS*pi/180)
+x18 = sin(8*angFreq*angleOLS*pi/180)
+x19 = sin(9*angFreq*angleOLS*pi/180)
+x20 = sin(10*angFreq*angleOLS*pi/180)
+
+modelGI = y1 ~ x1  + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 +x11 + x12 + x13 + x14 + x15
 
 olsGI = lm(formula = modelGI)
 summary(olsGI)
+
+angleReconstruction = seq(from=0.0,to=extendedAngle[length(extendedAngle)],by=0.1)
+reconstructedGIOLS <- vector(length=length(angleReconstruction),mode="double")
+orderMin = 1
+orderMax = 15
+for (j in c(6,7,13)){
+  reconstructedGIOLS = reconstructedGIOLS + olsGI$coefficients[j+1]*sin(j*angFreq*angleReconstruction*pi/180)
+}
+ggplot()+
+  geom_line(mapping = aes(x = angleReconstruction[angleReconstruction<=CZonset], y = reconstructedGIOLS[angleReconstruction<=CZonset]),color="green")+
+  geom_point(mapping = aes(x = reducedAngle, y = reducedGI),color="blue")
 
 angleReconstruction = seq(from=0.0,to=70.0,by=0.1)
 reconstructedGIOLS <- vector(length=length(angleReconstruction),mode="double")

@@ -127,6 +127,17 @@ ggplot()+
   geom_point(mapping=aes(x=reducedAngle,y=reducedGI/(sin(reducedAngle*pi/180)*curvatureEffectGI)),color="red")+
   geom_line(mapping=aes(x=reducedAngle,y=ols3$coefficients[2]*x+ols3$coefficients[3]*x2+ols3$coefficients[4]*x3),color="green")
 
+referenceGI = G0*sin(reducedAngle*pi/180)*curvatureEffectGI*(ols3$coefficients[2]*x+ols3$coefficients[3]*x2+ols3$coefficients[4]*x3)
+ggplot()+
+  geom_point(mapping=aes(x=reducedAngle[2:(length(reducedAngle)-1)],y=S100A5FreeGI$GI[2:(length(reducedAngle)-1)]/referenceGI[2:(length(reducedAngle)-1)]),color="red")
+
+summary(S100A5FreeGI$GI[2:(length(reducedAngle)-1)]/referenceGI[2:(length(reducedAngle)-1)])
+
+y4 = S100A5FreeGI$GI[2:(length(reducedAngle)-1)]/referenceGI[2:(length(reducedAngle)-1)]
+x4 = reducedAngle[2:(length(reducedAngle)-1)]
+ols4 = lm(formula = y4~x4)
+summary(ols4)
+
 S100A5FreeGI$GIFFT = fft(S100A5FreeGI$normGI)
 S100A5FreeGII$GIIFFT = fft(S100A5FreeGII$normGII)
 

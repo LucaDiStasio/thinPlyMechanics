@@ -84,6 +84,15 @@ S100A5FreeGII$normGII = S100A5FreeGII$GII/G0
 ggplot(data = S100A5FreeGI, mapping = aes(x = angle, y = normGI)) + geom_point()
 ggplot(data = S100A5FreeGII, mapping = aes(x = angle, y = normGII)) + geom_point()
 
+CZonset = S100A5FreeGI$angle[S100A5FreeGI$normGI<10^-3 & S100A5FreeGI$angle!=0.0][1]
+
+nPeriods = 5
+extendedGI <- vector(length=2*nPeriods*(length(S100A5FreeGI$angle)-1)+1,mode="double")
+extendedGI <- vector(length=2*nPeriods*(length(S100A5FreeGI$angle)-1)+1,mode="double")
+for (i in 1:2*nPeriods){
+  
+}
+
 S100A5FreeGI$GIFFT = fft(S100A5FreeGI$normGI)
 S100A5FreeGII$GIIFFT = fft(S100A5FreeGII$normGII)
 

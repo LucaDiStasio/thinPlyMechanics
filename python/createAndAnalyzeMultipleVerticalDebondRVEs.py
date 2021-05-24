@@ -6549,7 +6549,7 @@ def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
                 cmd.write('\n')
                 cmd.write('CD ' + wd + '\n')
                 cmd.write('\n')
-                cmd.write('abaqus analysis job=' + inpfile.split('.')[0] + ' interactive cpus=' + str(ncpus) + '\n')
+                cmd.write('abaqus analysis job=' + inpfile.split('.')[0] + ' interactive parallel=loop cpus=' + str(ncpus) + '\n')
             writeLineToLogFile(logfilepath,'a',2*logindent + 'Executing Windows command file...',True)
             try:
                 subprocess.call('cmd.exe /C ' + cmdfile)
@@ -6567,7 +6567,7 @@ def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
                 bsh.write('\n')
                 bsh.write('cd ' + wd + '\n')
                 bsh.write('\n')
-                bsh.write('abaqus analysis job=' + inpfile.split('.')[0] + ' interactive cpus=' + str(ncpus) + '\n')
+                bsh.write('abaqus analysis job=' + inpfile.split('.')[0] + ' interactive parallel=loop cpus=' + str(ncpus) + '\n')
                 writeLineToLogFile(logfilepath,'a',2*logindent + 'Executing Linux bash file...',True)
                 try:
                     writeLineToLogFile(logfilepath,'a',3*logindent + 'Change permissions to ' + bashfile ,True)

@@ -4737,7 +4737,7 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     modelData['jobname'] = 'Job-Jintegral-' + modelname
 
     writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job with name ' + modelData['jobname'],True)
-    mdb.Job(name=modelData['jobname'], model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=parameters['solver']['cpus'], numGPUs=0)
+    mdb.Job(name=modelData['jobname'], model=modelname, description='', type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=ON, modelPrint=ON, contactPrint=ON, historyPrint=ON, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, numCpus=parameters['solver']['cpus'], numDomains=2*parameters['solver']['cpus'], numGPUs=0)
 
     mdb.save()
 

@@ -6531,7 +6531,7 @@ def runRVEsimulation(wd,inpfile,ncpus,logfilepath,baselogindent,logindent):
     writeLineToLogFile(logfilepath,'a',baselogindent + 2*logindent + 'Creating and submitting job ...',True)
     try:
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Create job ' + inpfile.split('.')[0] + ' from input file ' + inpfile,True)
-        mdb.JobFromInputFile(name=inpfile.split('.')[0],inputFileName=inpfile,type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, parallelizationMethodExplicit=LOOP, numCpus=ncpus, numGPUs=0)
+        mdb.JobFromInputFile(name=inpfile.split('.')[0],inputFileName=inpfile,type=ANALYSIS, atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=99, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, userSubroutine='',scratch='', multiprocessingMode=DEFAULT, parallelizationMethod=LOOP, numCpus=ncpus, numGPUs=0)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + '... done.',True)
         writeLineToLogFile(logfilepath,'a',baselogindent + 3*logindent + 'Submit job ...',True)
         mdb.jobs[inpfile.split('.')[0]].submit(consistencyChecking=OFF)

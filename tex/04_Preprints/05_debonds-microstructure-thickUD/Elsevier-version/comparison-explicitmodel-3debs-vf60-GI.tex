@@ -1,0 +1,122 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{2.5pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={at={(axis description cs:0.15,1.075)},anchor=west,draw=white!80.0!black,font=\fontsize{18}{14}\selectfont,row sep=7.5pt},
+legend image post style={xscale=1.5,yscale=1.5},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+xmax=100.0,
+ymin=0.0,
+%xtick={0.0,10.0,30.0,50.0,70.0,90.0},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$\Delta\theta\left[^{\circ}\right]$},
+ylabel={$G_{I}\left[\nicefrac{J}{m^{2}}\right]$},
+% LEGEND ENTRIES
+legend entries={},
+]
+
+% asymm - 21x41 - 3 debond expl modeled
+\addplot[line width=\linewidth,black,smooth,mark=square*]
+table{
+10	3.658660198
+20	3.902385894
+30	3.104998927
+40	2.191492075
+50	1.132447899
+60	0.264819774
+70	1.84292E-05
+80	0.000225081
+90	0.000141882
+100	0.000145095
+110	8.22182E-05
+120	5.15244E-05
+130	2.54525E-05
+140	7.18346E-06
+150	6.26273E-07
+};
+\addlegendentry{$21\times 41$ --\emph{3 alternating debonds, explicitly modeled}};
+
+% symm - 21x41 - 3 debond expl modeled
+\addplot[line width=\linewidth,blue,smooth,mark=square*, mark options={fill=white}]
+table{
+10	3.721548631
+20	4.303346279
+30	4.193751625
+40	3.52848533
+50	2.509145497
+60	0.877579257
+70	0.59990005
+80	0.046172312
+90	5.2837E-05
+100	0.000109284
+110	7.41691E-05
+120	3.75218E-05
+130	1.12767E-05
+140	1.16313E-06
+150	0.003534152
+};
+\addlegendentry{$21\times 41$ --\emph{3 aligned debonds, explicitly modeled}};
+
+
+
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

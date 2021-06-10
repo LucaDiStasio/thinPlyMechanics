@@ -1,0 +1,158 @@
+\documentclass{standalone}
+
+%----------------------------------------------------------------------------------------------%
+%                                 Packages and basic declarations
+%----------------------------------------------------------------------------------------------%
+
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{nicefrac}
+
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT STARTS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+
+
+\begin{document}
+
+\def\markersize{4.5pt}
+\def\linewidth{2.5pt}
+
+%Tikz picture starts%
+
+\begin{tikzpicture}
+
+%Tikz axis starts%
+
+\begin{axis}[width=30cm,
+% SCALE
+scale=0.5,
+% STYLE
+%title style={font=\fontsize{40}{8}\selectfont},
+xlabel style={at={(axis description cs:0.5,-0.025)},anchor=north,font=\fontsize{48}{40}\selectfont},
+ylabel style={at={(axis description cs:-0.05,.5)},anchor=south,font=\fontsize{48}{40}\selectfont},
+tick align=outside,
+tick label style={font=\huge},
+legend style={at={(axis description cs:1,1.075)},anchor=east,draw=white!80.0!black,font=\fontsize{15}{14}\selectfont,row sep=7.5pt},
+legend image post style={xscale=1.1,yscale=1.1},
+legend cell align={left},
+clip mode=individual,
+% GRID STYLE
+xmajorgrids,
+x grid style={lightgray!92.026143790849673!black},
+ymajorgrids,
+y grid style={lightgray!92.026143790849673!black},
+line width=0.75mm,
+% GRID SIZE
+xmin=0.0,
+xmax=160.0,
+ymin=0.0,
+xtick={0.0,10.0,30.0,50.0,70.0,90.0,110.0,130.0,150.0},
+% CONTENT
+%title={\bf{$\frac{G_{I}}{G_{0}}$ as function of debond's size $\Delta\theta$, in-house VCCT routine}},
+xlabel={$\Delta\theta\left[^{\circ}\right]$},
+ylabel={$G_{II}\left[\nicefrac{J}{m^{2}}\right]$},
+% LEGEND ENTRIES
+legend entries={},
+]
+
+% 21x41 - 3 debond expl modeled
+\addplot[line width=\linewidth,black,smooth,mark=square*]
+table{
+10	0.768303034
+20	1.826800661
+30	3.109873175
+40	5.039388275
+50	6.890258549
+60	6.947233533
+70	11.34923656
+80	15.34327825
+90	14.40456694
+100	11.18158636
+110	5.789699496
+120	2.937321252
+130	1.361178661
+140	0.495137722
+150	0.114986276
+};
+\addlegendentry{$21\times 41$ --\emph{3 alternating debonds, explicitly modeled}};
+
+% 21x41 - 5 debond expl modeled
+\addplot[line width=\linewidth,black,smooth,mark=square*, mark options={fill=white}]
+table{
+10	0.761873384
+20	1.784978292
+30	3.037589229
+40	4.872061447
+50	6.573908733
+60	7.238566714
+70	12.49807758
+80	17.58307337
+90	14.34771949
+100	16.60394548
+110	8.352560429
+130	1.510978584
+140	0.779848788
+150	0.224534198
+};
+\addlegendentry{$21\times 41$ --\emph{5 alternating debonds, explicitly modeled}};
+
+% 21x41 - 11 debond expl modeled
+\addplot[line width=\linewidth,blue,smooth,mark=*]
+table{
+10	0.757240462
+20	1.777855152
+30	3.021970508
+40	4.802705145
+50	6.406652875
+60	7.137508729
+70	12.04030443
+80	17.57903609
+90	14.57725973
+100	20.76204192
+130	1.718389951
+140	1.066221411
+};
+\addlegendentry{$21\times 41$ --\emph{11 alternating debonds, explicitly modeled}};
+
+% 21x41 - 21 debond expl modeled
+\addplot[line width=\linewidth,blue,smooth,mark=*, mark options={fill=white}]
+table{
+10	0.756359674
+20	1.757128996
+30	2.980019539
+40	4.724590726
+50	6.331538403
+60	6.92232522
+70	11.64827718
+80	17.05548822
+90	14.87596311
+100	21.06635459
+110	7.944505185
+120	4.627865642
+130	1.717748554
+140	1.126252704
+150	0.397214954
+};
+\addlegendentry{$21\times 41$ --\emph{21 alternating debonds, explicitly modeled}};
+
+
+\end{axis}
+%Tikz axis ends%
+
+
+\end{tikzpicture}
+%Tikz picture ends%
+
+
+\end{document}
+
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%
+%                                            DOCUMENT ENDS
+%----------------------------------------------------------------------------------------------%
+%----------------------------------------------------------------------------------------------%

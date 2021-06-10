@@ -1,0 +1,385 @@
+%%%%%%%%%%%%%%%%%%%%%%% file template.tex %%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This is a general template file for the LaTeX package SVJour3
+% for Springer journals.          Springer Heidelberg 2010/09/16
+%
+% Copy it to a new file with a new name and use it as the basis
+% for your article. Delete % signs as needed.
+%
+% This template includes a few options for different layouts and
+% content for various journals. Please consult a previous issue of
+% your journal as needed.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% First comes an example EPS file -- just ignore it and
+% proceed on the \documentclass line
+% your LaTeX will extract the file if required
+%
+\RequirePackage{fix-cm}
+%
+%\documentclass{svjour3}                     % onecolumn (standard format)
+%\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
+\documentclass[smallextended]{svjour3}       % onecolumn (second format)
+%\documentclass[twocolumn]{svjour3}          % twocolumn
+%
+\smartqed  % flush right qed marks, e.g. at end of proof
+%
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{nicefrac}
+\usepackage[usenames]{xcolor}
+\usepackage{lineno,hyperref}
+\usepackage{graphicx}
+%
+% \usepackage{mathptmx}      % use Times fonts if available on your TeX system
+%
+% insert here the call for the packages your document requires
+%\usepackage{latexsym}
+% etc.
+%
+% please place your own definitions here and don't use \def but
+% \newcommand{}{}
+%
+% Insert the name of "your journal" with
+% \journalname{myjournal}
+%
+\begin{document}
+
+\title{Interaction effects on the Energy Release Rate of debonds in the fracture plane precursor in UD composites under transverse tension}
+%\subtitle{}
+
+%\titlerunning{Short form of title}        % if too long for running head
+
+\author{Luca Di Stasio   \and
+        Janis Varna
+}
+
+%\authorrunning{Short form of author list} % if too long for running head
+
+\institute{Luca Di Stasio \at
+              Continuum \& Computational Mechanics of Materials (C2M2) Group\\Division of Physical Sciences and Engineering\\King Abdullah University of Science and Technology (KAUST)\\Thuwal, 23955-6900\\Kingdom of Saudi Arabia\\
+              \email{luca.distasio@kaust.edu.sa}           %  \\
+%             \emph{Present address:} of F. Author  %  if needed
+           \and
+           Janis Varna \at
+              Lule\aa\ University of Technology, University Campus, SE-97187 Lule\aa, Sweden\\
+              \email{janis.varna@ltu.se}
+}
+
+\date{Received: date / Accepted: date}
+% The correct dates will be entered by the editor
+
+
+\maketitle
+
+\begin{abstract}
+In a UD composite under transverse tensile loading, an increasing number of fiber/matrix interface cracks (or debonds) appears localized in the regions where transverse failure (in the form of transverse cracks) will occur. Models of Representative Volume Elements (RVEs) of UD composites are developed to study the interaction between debonds in this stage of transverse crack onset, that precedes the appearance of a through-the-thickness crack through crack-kinking into the matrix. Several damage states are studied in the form of different geometrical configurations of partially debonded and fully bonded fibers. It is found that, when the vertically aligned partially debonded fibers are contiguous, the relative position of the debond (same or opposite sides of their respective fibers) influences the Energy Release Rate (ERR) of the debond. Higher values of Mode I ERR are reached for small debonds placed on the same side of their fibers, while higher values of Mode II ERR are obtained for large debonds on opposite sides. Instead, if just two bonded (undamaged) fibers are present between two debonds along the vertical direction, the ERR becomes insensitive to debonds' relative position.
+\keywords{Polymer-matrix Composites (PMCs) \and Transverse Failure \and Debonding \and Finite Element Analysis (FEA)}
+% \PACS{PACS code1 \and PACS code2 \and more}
+% \subclass{MSC code1 \and MSC code2 \and more}
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  INTRODUCTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+The process of damage onset and development in multi-axial Fiber Reinforced Polymer Composite (FRPC) laminates involves several mechanisms, which concur to the final failure of the composite part. Upon loading, one of the first macroscopic mode of damage is the occurrence of transverse cracks in plies where a tensile stress state is generated predominantly in the direction transverse to the fibers. A single transverse crack does not significantly compromise the load-carrying capacity of the laminate, but in large numbers transverse cracks become detrimental to the elastic response of the loaded part. Furthermore, high concentrantions of transverse cracks lead to stress re-distribution and stress concentrations that can promote other more dangerous modes of fracture, quickly leading to the global failure of the laminate or part. Understanding the factors that influence transverse cracks onset and propagation is thus fundamental to improve current laminate design and to identify mechanisms of controlled propagation, delay and suppression of transverse cracks. This would increase the global fracture toughness of FRPC laminates and help to avoid early part replacement, and thus waste, a practice currently in use to prevent sudden catastrophic brittle failure.\\
+Early microscopic observations in glass fiber-epoxy cross-ply laminates determined that onset of transverse cracking occurs at the microscopic level in the form of fiber-matrix interface cracks (or debonds)~\cite{Bailey1981}. Debonds grow along the arc direction of the fiber until reaching a critical size, then kink out of the interface and coalesce with other debonds across the ply thickness~\cite{Zhang1997}. Once a through-the-thickness crack tunnels through the width of the laminate, a transverse crack is formed. Formation and growth of debonds at the microscale thus play a key role in the overall process of initiation of transverse cracking. To improve our understanding of the latter, the former must be studied and modeled.\\
+The first investigations on the mechanics of fiber/matrix debonding proposed analytical models of a single partially debonded fiber placed in an infinite matrix. These models focused on understanding the effect of the elastic properties mismatch between fiber and matrix. They were firstly solved by Perlman and Sih~\cite{Perlman1967}, who provided the solution in terms of stress and displacement fields, and Toya~\cite{Toya1974}, who evaluated the Energy Release Rate (ERR) at the debond tip. A closed-form analytical solution could only be found for the \textit{open crack} case, which assumes that no contact between debond faces occurs. This solution was shown to provide, for large debonds, a non-physical solution that implies interpenetration of crack faces~\cite{Toya1974,Comninou1977}. Numerical treatment of the problem soon followed, in particular with the Boundary Element Method (BEM) solution by Paris et al.~\cite{Paris1996}. The numerical analysis of the single fiber model allowed first to understand the importance of crack face contact in the mechanics of fiber/matrix debonding~\cite{Varna1997a}, confirming earlier results regarding the straight bi-material interface crack~\cite{Comninou1977}. The process of fiber/matrix debonding was investigated in models of a single partially debonded fiber embedded in an effectively infinite matrix under remote tension~\cite{Paris1996} and remote compression~\cite{Correa2007}. Residual thermal stresses were also analyzed~\cite{Correa2011}. The effect of a second nearby fiber was studied, under different uniaxial and biaxial tensile and compressive applied loads~\cite{Correa2013,Correa2014,Sandino2016,Sandino2018}. Debond growth in a hexagonal cluster of fibers embedded in an effectively homogenized UD composite was investigated by Zhuang et al.~\cite{Zhuang2018}. The interaction of two debonds facing each other on two nearby fibers was addressed in~\cite{Varna2017} for a cluster of fibers immersed in a homogenized UD.\\
+Models of kinking were developed for a single fiber in an infinite matrix~\cite{Paris2007} and a partially debonded fiber in a cluster of fibers inside a homogenized UD~\cite{Zhuang2018a}. A study on linking of debonds was proposed in~\cite{Varna2017}.\\
+An analysis of the configuration preceding kinking and linking thus seems to be lacking in the literature. We devote our attention in this paper to the analysis of Representative Volume Elements (RVEs) which model the presence of multiple debonds on fibers aligned across the thickness of UD composites. We focus on understanding the effect of the mutual interaction of consecutive debonds in the vertical direction and of their relative position, i.e. on the same or opposite sides of their respective fibers. We are interested in identifying which mechanisms might favor debond growth and which might, on the other hand, prevent it. For this reason, we select a regular arrangement of fibers and we adopt the approach of Linear Elastic Fracture Mechanics (LEFM) to characterize debond growth, by evaluating Mode I and Mode II Energy Release Rate (ERR). The Finite Element Method (FEM) is chosen to compute stress, strain and displacement fields, which are required to estimate ERR. The characteristics of the RVEs and the Finite Element (FE) solution are described in Sec.~\ref{sec:rveFem}; the main results are reported and discussed in Sec.~\ref{sec:results} and the main conclusions are presented in Sec.~\ref{sec:conclusions}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  RVE MODELS AND FE DISCRETIZATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{RVE models \& FE discretization}\label{sec:rveFem}
+
+\subsection{Introduction, properties and nomenclature}\label{subsec:names}
+
+We focus in this article on debond growth in unidirectional (UD) composites subjected to in-plane transverse tensile loading. In particular, the interaction between debonds is studied through the development of models of Representative Volume Elements (RVEs) of laminates with different configurations of debonds (see Fig.~\ref{fig:laminateModelsA} and Fig.~\ref{fig:laminateModelsB}).
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{coupling.pdf}
+\caption{Representative Volume Element $n\times k-symm$ of a UD composite with debonds appearing after $n-1$ and after $k-1$ undamaged fibers respectively in the horizontal and vertical direction. In the vertical direction, on fibers belonging to the same ``column'', debonds are located always on the same side.}\label{fig:laminateModelsA}
+\end{figure}
+
+In order to facilitate the description of the models, let us assume that the UD composite mid-plane lies in the $x-y$ plane, where $y$ coincides with the UD $0^{\circ}$ direction while the $x$-axis represents the UD in-plane transverse direction. Axis $z$ is the through-the-thickness direction of the composite.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{asymm.pdf}
+\caption{Representative Volume Element $n\times k-asymm$  of a UD composite with debonds appearing after $n-1$ and after $k-1$ undamaged fibers respectively in the horizontal and vertical direction. In the vertical direction, on fibers belonging to the same ``column'', debonds are located on the opposite sides of consecutive fibers.}\label{fig:laminateModelsB}
+\end{figure}
+
+The composite RVE is defined in the $x-z$ plane and is repeating both along $x$ and $z$. Mathematically, it corresponds to an infinite UD composite which models, practically, the behavior of debonds located far away from the UD composite's free surfaces, i.e. close to the laminate mid-plane, in a relatively thick UD composite (thickness $>100$ fiber diameters). The composite with debonds is modeled as a sequence of fiber rows with or without debonds stacked on each other in the vertical (through-the-thickness) direction. Notice that each row contains only one fiber in the vertical direction. A regular microstructure is adopted for all RVEs, with fibers organized in a square-packing configuration. This choice is motivated by our interest in investigating the mechanisms that favor or prevent debond growth, and not in simulating crack path evolution in an arbitrary, randomized distribution of fibers. The regularity of the square-packing arrangement allows the identification of the different mechanisms influencing debond growth. Given their square-packing arrangement of fibers, each RVE is built by using the unit cell in Figure~\ref{fig:modelschem} as the basic building block. The unit cell contains one fiber placed in its center and has a size of $2L\times2L$, where
+
+\begin{equation}\label{eq:LVf}
+L=\frac{R_{f}}{2}\sqrt{\frac{\pi}{V_{f}}}.
+\end{equation}
+
+In Equation~\ref{eq:LVf}, $V_{f}$ is the fiber volume fraction and $R_{f}$ the fiber radius. The fiber volume fraction is assumed equal to $60\%$ in each RVE and the fiber radius equal to $1\ \mu m$. The choice of the previous value is not dictated by physical considerations but by simplicity. It is thus useful to remark here that, in a linear elastic solution as the one considered in the present work, the ERR is proportional to the geometrical dimensions of the model and, consequently, recalculation of the ERR for fibers of any size requires a simple multiplication. Notice also that, given the relationship in Eq.~\ref{eq:LVf} and that the unit cell is identically repeated following a square-packing configuration, $V_{f}$ is homogeneous, i.e. no clustering of fibers is considered.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{RUC.pdf}
+\caption{Schematic of the model with its main parameters.}\label{fig:modelschem}
+\end{figure}
+
+A glass fiber-epoxy UD composite is treated in the present work, and it is assumed that the response of each phase lies always in the linear elastic domain. The material properties of glass fiber and epoxy are reported in Table~\ref{tab:phaseprop}.
+
+\begin{table}[!htbp]
+ \centering
+ \caption{Summary of the mechanical properties of fiber and matrix. $E$ stands for Young's modulus, $\mu$ for shear modulus and $\nu$ for Poisson's ratio.}
+ \begin{tabular}{cccc}
+\textbf{Material} & \textbf{$E\left[GPa\right]$}\ & \textbf{$\mu\left[GPa\right]$} & \textbf{$\nu\left[-\right]$} \\
+\midrule
+Glass fiber    & 70.0  & 29.2   & 0.2  \\
+Epoxy    & 3.5    & 1.25   & 0.4
+\end{tabular}
+\label{tab:phaseprop}
+\end{table}
+
+We consider that upon application of a load in the $x$-direction, the strain response in the $y$-direction is small due to the very small minor Poisson's ratio of the UD composite. We also assume the debond size to be significantly larger in the fiber longitudinal direction than in the arc direction. We therefore use 2D models under the assumption of plane strain defined in the $x-z$ section of the composite, which allows us to focus our interest on debond growth along the arc direction. Assumptions of generalized plane strain would be more suited to represent the physics, however this option would limit the scope of comparisons with previous studies in the literature. It is for this reason that simple plane strain conditions are preferred.\\
+All RVEs are symmetric with respect to the horizontal direction, thus only half of the RVE is explicitly modeled and symmetry conditions are applied to the lower boundary of the RVE (Fig.~\ref{fig:laminateModelsA} and Fig.~\ref{fig:laminateModelsB}). The number $n$ of fibers in the horizontal directions and $k$ in the vertical direction belonging to the RVE determine the total size of the RVE, described by its total length $l$ and total height $h$:
+
+\begin{equation}\label{eq:lengthheight}
+l=n2L\qquad h=k2L;
+\end{equation}
+
+where $2L$ is the side length of the square unit cell previously introduced (Figure~\ref{fig:modelschem}) and $L$ is defined according to Eq.~\ref{eq:LVf}. The number of fibers in the horizontal and vertical directions determine as well the damage state of the modeled UD composite. In particular, a $n\times k$ RVE represents a UD composite in which a debond appear after $n-1$ fully bonded fibers inside a fiber row, and a fiber row contains debonds after $k-1$ fiber rows with no damage (see Fig.~\ref{fig:laminateModelsA} and Fig.~\ref{fig:laminateModelsB}). To model such configurations, conditions of coupling of the horizontal displacement $u_{x}$ are applied to the right and left boundary, which ensure that the computed solution represents a model in which the RVE is repeated infinite times in the horizontal direction. It is worth to highlight that the repetition of the RVE occurs in a mirror-like fashion: moving along the $x$-axis, if a debond appears on the right side of its fiber, the next one is placed on the left side.\\
+This might lead to extreme conditions in the model. Consider for example the case of $1\times k$ RVEs: inside a fiber row containing damage, an infinite number of debonds is present and debonds are facing each other pairwise. Such configuration is physically unlikely, however the evaluation of the ERR in this case provides a bound for the case of maximum mutual interaction between debonds in the horizontal direction. Thus, the models proposed here might represent extreme configuration, but they provide theoretical bounds for debond behavior in an actual composite. In particular, observations regarding mechanisms favoring debond growth will represent an upper bound on ERR and thus a conservative estimation of the actual behavior, still of use for the structural designer. Greater care should instead be taken when considering mechanisms preventing debond growth: the ERR estimate provided by our models would be a lower bound, thus debond growth might be higher than predicted in the actual composite.\\
+Repetition occurs also along the vertical direction. Here two cases can be distinguished: first, debonds aligned in the vertical direction are placed on the same side of their respective fibers as in Figure~\ref{fig:laminateModelsA}; second; debonds aligned in the vertical direction are placed on alternating opposite sides of their respective fibers as in Figure~\ref{fig:laminateModelsB}. The first is a case of symmetric repetition with respect to the upper boundary of the RVE; the second case is one of anti-symmetric repetition with respect to the upper boundary of the RVE. The two different families of RVEs (symmetric or anti-symmetric repetition) are thus respectively called $n\times k-symm$ and $n\times k-asymm$. The details of the boundary conditions adopted in the two different cases are described in Sec.~\ref{subsec:bc}.
+
+\subsection{Equivalent boundary conditions: description and validation}\label{subsec:bc}
+
+Two main families of Representative Volume Elements have been introduced in the previous section, distinguished by the pattern of debond repetition along the vertical direction: $n\times k-symm$ and $n\times k-asymm$.\\
+To model the symmetric repetition of $n\times k-symm$ RVE (Fig.~\ref{fig:laminateModelsA}) we adopt, on the upper boundary, conditions of coupling of the vertical displacements $u_{z}$ of the type
+
+\begin{equation}\label{eq:symmcoupling}
+u_{z}\left(x,h\right) = \bar{u}_{z},
+\end{equation}
+
+where $h$ is the total height of the RVE defined in Eq.~\ref{eq:lengthheight} and $\bar{u}_{z}$ is a constant value of the vertical displacement, equal for all the points on the upper boundary. The value of $\bar{u}_{z}$ is \emph{a priori} unknown and is evaluated as part of the elastic solution.\\
+The anti-symmetric repetition of $n\times k-asymm$ RVE (Fig.~\ref{fig:laminateModelsB}) is modeled with the following set of conditions applied to the vertical displacement $u_{z}$ and horizontal displacement $u_{x}$ on the upper boundary:
+
+\begin{equation}\label{eq:asymmcoupling}
+\begin{aligned}
+u_{z}\left(x,h\right) - u_{z}\left(0,h\right) &= -\left(u_{z}\left(-x,h\right) - u_{z}\left(0,h\right)\right)\\
+u_{x}\left(x,h\right) &= -u_{x}\left(-x,h\right),
+\end{aligned}
+\end{equation}
+
+where $h$ is again the total height of the RVE and $u_{z}\left(0,h\right)$ is the vertical displacement of the upper boundary mid-point, which is always located at coordinates $(0,h)$. Similarly to $\bar{u}_{z}$ in the symmetric case, $u_{z}\left(0,h\right)$ is \emph{a priori} unknown and is computed as part of the elastic solution.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{asymm-vs-explmodel-vf60-GI.pdf}
+\caption{Validation of asymmetric coupling conditions of Eq.~\ref{eq:asymmcoupling}: Mode I ERR, $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{fig:validationGI}
+\end{figure}
+
+To the authors' knowledge, this is the first time the set of boundary conditions of Eq.~\ref{eq:asymmcoupling} is proposed and used to model an anti-symmetric coupling as the one represented in Figure~\ref{fig:laminateModelsB}. To validate them, Mode I (Fig.~\ref{fig:validationGI}) and Mode II ERR (Fig.~\ref{fig:validationGII}) are evaluated for $3\times 1-asymm$ RVE and compared with the results of the $3\times201-asymmetric\ debonds\ (explicitly\ modeled)$ RVE, in the case of an applied strain $\bar{\varepsilon}_{x}$ of $1\%$. The $3\times201-asymmetric\ debonds\ (explicitly\ modeled)$ RVE possesses, as all other RVEs studied here, conditions of coupling of the horizontal displacement applied to the left and right side. It is as well symmetric with respect to the $x$-axis, thus only half of the RVE is modeled and conditions of symmetry are applied to the lower horizontal boundary. The upper side of the RVE is, differently from the other models studied here, left free. Debonds are explicitly modeled and placed on alternating sides of vertically aligned fibers, i.e. if a fiber has a debond on the right side the next fiber above will have the debond on the left side. Debonds are all of the same size. The $3\times201-asymmetric\ debonds\ (explicitly\ modeled)$ RVE thus represents the same configuration as the $3\times 1-asymm$ RVE, but it is explicitly modeled. Comparison of the ERR of the two RVEs provides a validation of the accuracy of the conditions expressed in Eq.~\ref{eq:asymmcoupling} as a set of equivalent boundary conditions to represent the situation with alternating debonds (or anti-symmetric coupling) depicted in Fig.~\ref{fig:laminateModelsB}, which is a more effective strategy in terms of computational cost of the model (time and memory needed to compute the solution).
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{asymm-vs-explmodel-vf60-GII.pdf}
+\caption{Validation of asymmetric coupling conditions of Eq.~\ref{eq:asymmcoupling}: Mode II ERR, $V_{f}=60\%$, $\bar{\varepsilon}_{x}=1\%$.}\label{fig:validationGII}
+\end{figure}
+
+As shown in Figure~\ref{fig:validationGI} and Figure~\ref{fig:validationGII}, a very good agreement is obtained between the results of the two RVEs for both Mode I and Mode II ERR. The validity of the anti-symmetric coupling conditions proposed in Equation~\ref{eq:asymmcoupling} is thus confirmed.
+
+\subsection{Finite Element (FE) solution}
+
+The solution of the elastic problem is obtained with the Finite Element Method (FEM) within the Abaqus environment, a commercial FEM software~\cite{abq12}.\\
+The debond is placed symmetrically with respect to the $x$ axis (see Fig.~\ref{fig:modelschem}) and it is characterized by the angular size $\Delta\theta$ (making the full debond size equal to $2\Delta\theta$). For large debond sizes (at least $\geq 60^{\circ}-80^{\circ}$), a region $\Delta\Phi$ of variable size appears at the crack tip where the crack faces are in contact but free to slide relatively to each other. In order to model crack faces motion in the contact zone, frictionless contact is considered between the two crack faces to allow free sliding and avoid interpenetration.\\
+A constant displacement is applied to all RVEs, the magnitude of which is selected to have a constant applied horizontal strain $\bar{\varepsilon}_{x}$ equal to $1\%$. The choice of this specific value of the applied strain is actually arbitrary. In the context of Linear Elastic Fracture Mechanics, the Energy Release Rate at the debond tip is proportional to the square of the applied strain. Thus, ERR estimation at a different strain level requires a simple multiplication. Furthermore, our interest is to compare the effect of different mechanisms on debond growth, which we characterize with Mode I and Mode II ERR. As such, our focus is not on providing absolute values of ERR for specific damage configurations, but rather to assess and compare the relative changes in ERR due to modifications of the sorrounding environment. In this perspective, the selection of a rather large value of the applied strain helps our understanding by magnifying the differences in ERR. A further consideration regarding the magnitude of the load needs to be made, regarding the presence of contact between debond faces. The problem solved is a linear problem with non-holonomic constraints due to the non-interpenetration conditions (in the form of inequalities) enforced on the relative displacements of the crack faces. In particular, the problem falls under the definition of receding contact problem~\cite{Paris1996,Garrido1991}. This family of problems in LEFM has some peculiar characteristics~\cite{Garrido1991,Keer1972,Tsai1974}: the size and shape of the contact zone does not depend on the magnitude of the applied load, but only on its type. Thus, upon a change in magnitude of the applied strain $\bar{\varepsilon}_{x}$ the size and shape of the contact zone at the fiber/matrix interface will remain the same.\\
+Meshing of the model is accomplished with second order, 2D, plane strain triangular (CPE6, see~\cite{abq12}) and quadrilateral (CPE8, see~\cite{abq12}) elements. An oscillating singularity exists at the debond tip in the stress and displacement fields~\cite{England1971,Toya1974,Comninou1977}. The presence of this singularity prevents the convergence of Mode I and Mode II ERR at the debond tip. Thus, a correct Mode decomposition of the ERR can not be computed in the theoretical limit of an infinitesimal crack increment. It is possible however to avoid the issue by approximating the Mode decomposition over a finite, instead of an infinitesimal, crack increment. This leads naturally to the use of the Virtual Crack Closure Technique (VCCT)~\cite{Krueger2004}, which estimates Mode I and Mode II ERR over a finite crack increment corresponding to the size of the element at the crack tip. To obtain accurate results in terms of Mode decomposition of the ERR, care must be taken in ensuring the quality of the mesh at the debond tip. In particular, a regular mesh of 8-node ($2^{nd}$ order rectangular) elements with almost unitary aspect ratio is constructed at the debond tip. The angular size $\delta$ of an element in the debond tip neighborhood is always equal to $0.05^{\circ}$. The crack faces are modeled as element-based surfaces and a small-sliding contact pair interaction with no friction is imposed between them. The Mode I, Mode II and total Energy Release Rates (ERRs) (respectively referred to as $G_{I}$, $G_{II}$ and $G_{TOT}$) are the main result of FEM simulations; they are evaluated using the VCCT~\cite{Krueger2004} implemented in a in-house Python routine. Validation is performed with respect to the results reported in~\cite{Paris2007,Sandino2016}, which were obtained with the Boundary Element Method (BEM) for a model of a partially debonded single fiber placed in an infinite matrix. As discussed in more detail in~\cite{DiStasio2019}, the agreement between FEM (present work) and BEM~\cite{Paris2007,Sandino2016} solutions is good and the difference between the two does not exceed $5\%$. This provides us with a level of uncertainty with which we can analyze the significance of observed trends: any relative difference in ERR between different RVEs smaller than $5\%$ cannot be reliably distinguished from numerical uncertainty and its discussion should thus be avoided.
+
+\section{Results \& Discussion}\label{sec:results}
+
+\subsection{Effect of debonds mutual position and presence of  fiber columns with no damage on the growth of multiple adjacent debonds along the vertical direction}\label{subsec:adjacentdebonds}
+
+We first focus our attention on comparing $n\times 1-symm$ and $n\times 1-asymm$ RVEs, with $n=3,11,101,201$. Both RVEs model a UD composite in which debonds appear on consecutive fibers aligned in the vertical direction, i.e. a ``column'' of fibers or, in the following, simply a fiber column. In $n\times 1-symm$ and $n\times 1-asymm$ a fiber column containing only partially debonded fibers is present after $n-1$ fiber columns with no damage. Two main effects on debond ERR are analyzed through the comparison of these two families of RVEs: for a given type of RVE ($n\times 1-symm$ vs $n\times 1-asymm$), the effect of an increasing number ($n-1$) of fiber columns with no damage between fiber columns containing damage; for a given number ($n-1$) of fiber columns with no damage present between fiber columns containing only partially debonded fibers, the effect of the mutual position of consecutive debonds, i.e. on the same side ($n\times 1-symm$) or on opposite sides ($n\times 1-asymm$) of their respective fiber.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{nx1-coupling-vf60-GI.pdf}
+\caption{Effect of debonds mutual position on Mode I ERR: models $n\times 1-symm$ and $n\times 1-asymm$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{fig:nx1GI}
+\end{figure}
+
+By looking at Figure~\ref{fig:nx1GI} and Figure~\ref{fig:nx1GII}, it is possible to conclude that, for both $n\times 1-symm$ and $n\times 1-asymm$ RVEs, increasing the number of fiber columns with no damage between fiber columns containing damage causes an increase in both Mode I and Mode II ERR. A few, more specific, observations can be made. For Mode I ERR in Figure~\ref{fig:nx1GI}, increasing the number of fiber columns with no damage causes also a roughly $10^{\circ}$ delay in the onset of the contact zone: from $70^\circ$ to $80^\circ$ for $n\times 1-asymm$ and from $90^\circ$ to $100^\circ$ for $n\times 1-symm$. The occurrence of the maximum value of $G_{I}$ is also delayed: from $10^\circ$ to $20^\circ$ for $n\times 1-asymm$ and from $10^\circ$ to $40^\circ$ for $n\times 1-symm$. For Mode II ERR as well (Figure~\ref{fig:nx1GI}), the occurrence of the maximum value of $G_{II}$  is delayed: from $80^\circ$ to $100^\circ$ for $n\times 1-asymm$ and from $60^\circ$ to $90^\circ$ for $n\times 1-symm$. Comparing on the other hand the ERR of $n\times 1-symm$ and $n\times 1-asymm$ RVEs for a given value of $n$, it is possible to observe that: for Mode I in Figure~\ref{fig:nx1GI}, the ERR is always higher for $n\times 1-symm$, i.e. when debonds occur on the same side of the damaged vertically-aligned fibers; for Mode II in Figure~\ref{fig:nx1GII}, the values of ERR of the two RVEs remain identical or very close to each other when $\Delta\theta<80^{\circ}$,while for larger debonds $n\times 1-asymm$ presents the higher values of ERR.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{nx1-coupling-vf60-GII.pdf}
+\caption{Effect of debonds mutual position on Mode II ERR: models $n\times 1-symm$ and $n\times 1-asymm$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{fig:nx1GII}
+\end{figure}
+
+The increase in Energy Release Rate due to an increasing number of fiber columns with no damage between fiber columns containing debonds is a consequence of the strain magnification effect. The addition of undamaged elements (fiber columns with no damage) in the RVE causes an increase of the global average $x$-strain in the material and thus an increase of strain and displacement at the debond tip, to which the ERR is proportional. A look at this phenomenon from the opposite point of view is as well helpful to the understanding. From the opposite perspective, Figure~\ref{fig:nx1GI} and Figure~\ref{fig:nx1GII} show that the ERR decreases with an increasing number of fiber columns containing debonds. The presence of cracks, in the form of debonds, in the composite causes discontinuities (or jumps) in the strain and displacement field, which leads to a decrease in the average global strain in the material. As the average global strain decreases, the local values of strain and displacement at the debond tip decrease and thus the Energy Release Rate decreases. The two perspectives are complementary to each other for the understanding of the results in Fig.~\ref{fig:nx1GI} and Fig.~\ref{fig:nx1GII}.\\
+In the context of Linear Elastic Fracture Mechanics, a critical Energy Release Rate is assumed to exist and to be a material property, independent of load and geometry. According to Griffith criterion, if the crack ERR is higher than the critical ERR, growth will occur. As a consequence, higher values of ERR could usually be taken as a proxy for the likelihood of crack growth: the configuration with the higher ERR would be the most likely to propagate. Thus, a simple comparison of relative magnitudes of ERR would tell which mechanism favors and which one prevents crack growth. However, the problem is more complex in the case of debonding at the fiber/matrix interface. Although the existence of a critical Energy Release Rate can be postulated, it has been found that its value actually depends on the Mode ratio at the debond tip~\cite{Hutchinson1991}. The functional form of this dependence is still an open issue, although suggestions have been made~\cite{Hutchinson1991,Mantic2009}. A common point of the different criteria proposed for the critical ERR is that it is lower in pure Mode I and Mode I-dominated regimes and increases quickly with the increase of Mode II contribution to the total ERR, reaching the highest value for pure Mode II behavior. It can be concluded that, in general, debonding will more likely occur in pure Mode I or Mode I-dominated rather than pure Mode II or Mode II-dominated loading. Getting back to the results of our analysis, observation of Figure~\ref{fig:nx1GI} implies that a symmetric placement of debonds along the vertical direction, i.e. debonds on the same side of their fibers, would favor the Mode I-dominated growth of small debonds ($\Delta\theta<80^{\circ}-90^{\circ}$) more than an asymmetric placement, i.e. debonds on opposite sides. From observation of Figure~\ref{fig:nx1GII} we can instead conclude that: for large debonds ($\Delta\theta>80^{\circ}-90^{\circ}$) it is likelier that, for a given value of $n$, the ERR-based condition of propagation is satisfied in the case of an asymmetric placement of debonds along the vertical direction, given the higher value of Mode II ERR with the respect to $n\times 1-symm$; provided that for a given value of $n$ the ERR-based condition of propagation is satisfied, larger debond sizes would be obtained in the case of an asymmetric placement of debonds, given that the maximum Mode II ERR occurs at higher values of $\Delta\theta$ for $n\times 1-asymm$ with respect to $n\times 1-symm$.\\
+It is further interesting to observe that models $n\times1-symm$ and $n\times1-asymm$ represent, for $n=101,201$, a very localized state of damage and correspond to a configuration rather close to the final stage of transverse crack formation, with debonds still unconnected. On the other hand, for $n=3,11$, $n\times1-symm$ and $n\times1-asymm$ RVEs represent a rather ``diffuse'' damage state. Figure~\ref{fig:nx1GI} shows that, in the case of a ``diffuse'' damage state ($n=3,11$), the difference between \textit{symmetric} and \textit{anti-symmetric} models is rather small. The difference is instead rather drastic in the case of localized damage, with the \textit{symmetric} case having the largest values. Similarly, Figure~\ref{fig:nx1GII} shows that $G_{II}$ is rather insensitive to debond position ($symm$ vs $asymm$) for $n=3,11$, while a significant difference in magnitude between \textit{symmetric} and \textit{anti-symmetric} models is registered for $n=101,201$, with the \textit{anti-symmetric} case providing the highest values. Based on these observations, we can state that in the case of a \emph{strong interface} (i.e. interface strength higher than matrix strength), with kinking occurring when debonds are small, the \textit{symmetric} configuration is the most favorable to debond growth in terms of ERR. On the other hand for a \emph{weak interface} (interface strength lower than matrix strength), with kinking occurring when debonds are large, the \textit{anti-symmetric} configuration is most favorable to debond growth.
+
+\subsection{Effect of the presence of undamaged fibers on debond-debond interaction along the vertical direction}\label{subsec:fibersinbetween}
+
+It is at this point interesting to investigate the effect of the presence of undamaged (fully bonded) fibers between debonds along the vertical direction on debond-debond interaction. To this end, we study the $n\times 3-symm$ and $n\times 3-asymm$ RVEs, with $n=3,7,21,101$.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{nxk-coupling-vf60-GI.pdf}
+\caption{Effect of the presence of undamaged fibers along the vertical direction on Mode I ERR: models $n\times 3-symm$ and $n\times 3-asymm$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{fig:nxkGI}
+\end{figure}
+
+Results reported in Figure~\ref{fig:nxkGI} and Figure~\ref{fig:nxkGII} respectively for Mode I and Mode II show that the presence of only two undamaged fibers placed between debonds along the vertical direction makes the results of $n\times 3-symm$ and $n\times 3-asymm$ undistinguishable. It appears that the relative placement of debonds does not have any relevant effect on debond ERR, and thus on debond growth, when undamaged fibers are present in between.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{nxk-coupling-vf60-GII.pdf}
+\caption{Effect of the presence of undamaged fibers along the vertical direction on Mode II ERR: models $n\times 3-symm$ and $n\times 3-asymm$. $V_{f}=60\%$, $\varepsilon_{x}=1\%$.}\label{fig:nxkGII}
+\end{figure}
+
+Furthermore, comparison of Figure~\ref{fig:nx1GI} with Figure~\ref{fig:nxkGI} for Mode I and of Figure~\ref{fig:nx1GII} with Figure~\ref{fig:nxkGII} for Mode II shows that, especially for Mode II ERR, the presence of fully bonded fibers between debonds along the vertical direction reduces the strain magnification effect due to the presence of additional fiber columns with only fully bonded fibers along the horizontal direction. Mode I reaches a maximum of $5.5\ \nicefrac{J}{m^{2}}$ for $101\times 1-symm$ and $4\  \nicefrac{J}{m^{2}}$ for $101\times 1-asymm$ (Figure~\ref{fig:nx1GI}), and of $3.5\  \nicefrac{J}{m^{2}}$ for both $101\times 3-symm$ and $101\times 3-asymm$ (Figure~\ref{fig:nxkGI}). The maximum value of Mode II is $30\  \nicefrac{J}{m^{2}}$ for $101\times 1-symm$ and $42.5\  \nicefrac{J}{m^{2}}$ for $101\times 1-asymm$ (Figure~\ref{fig:nx1GII}), and of $4.75\  \nicefrac{J}{m^{2}}$ for both $101\times 3-symm$ and $101\times 3-asymm$ (Figure~\ref{fig:nxkGII}).%\\
+%It is worth observing that $n\times 3-symm$ and $n\times 3-asymm$ RVEs represent a more ``diffuse'' state of damage than $n\times 1-symm$ and $n\times 1-asymm$. Comparison of Figure~\ref{fig:nx1GI} and Figure~\ref{fig:nx1GII} with respectively Figure~\ref{fig:nxkGI} and Figure~\ref{fig:nxkGII} reveals that a huge difference in Mode II ERR exists between the localized ($n\times 1$) and diffuse ($n\times 3$) damage states, with lower values of $G_{II}$ occurring for the ``diffuse'' less dense $n\times 3$ configuration. 
+
+\subsection{Effect of the presence of a finite number of debonds in the vertical direction}\label{subsec:finitenumdebonds}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{asymm-explicitmodel-increasing-vf60-GI.pdf}
+        \caption{Mode I.}\label{subfig:finitedebsalternatingGI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{asymm-explicitmodel-increasing-vf60-GII.pdf}
+        \caption{Mode II.}\label{subfig:finitedebsalternatingGII}
+    \end{subfigure}
+
+\caption{Effect on Mode I and Mode II ERR of a finite increasing number of alternating debonds along the vertical direction for a $21\times41-free$ RVE, $V_{f}=60\%$, $\varepsilon_{x}$ of $1\%$.}\label{fig:finitedebsalternating}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{symm-explicitmodel-increasing-vf60-GI.pdf}
+        \caption{Mode I.}\label{subfig:finitedebsalternatingGI}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{symm-explicitmodel-increasing-vf60-GII.pdf}
+        \caption{Mode II.}\label{subfig:finitedebsalignedGII}
+    \end{subfigure}
+
+\caption{Effect on Mode I and Mode II ERR of a finite increasing number of aligned debonds along the vertical direction for a $21\times41-free$ RVE, $V_{f}=60\%$, $\varepsilon_{x}$ of $1\%$.}\label{fig:finitedebsaligned}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{comparison-explicitmodel-3debs-vf60-GI.pdf}
+        \caption{3 debonds.}\label{subfig:finitedebscomparisonModeI3debs}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{comparison-explicitmodel-5debs-vf60-GI.pdf}
+        \caption{5 debonds.}\label{subfig:finitedebscomparisonModeI5debs}
+    \end{subfigure}
+    
+     \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{comparison-explicitmodel-11debs-vf60-GI.pdf}
+        \caption{11 debonds.}\label{subfig:finitedebscomparisonModeI11debs}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{comparison-explicitmodel-21debs-vf60-GI.pdf}
+        \caption{21 debonds.}\label{subfig:finitedebscomparisonModeI21debs}
+    \end{subfigure}
+
+\caption{Effect on Mode I ERR of a finite increasing number of debonds along the vertical direction for a $21\times41-free$ RVE: comparison between alternating and aligned debonds. $V_{f}=60\%$, $\varepsilon_{x}$ of $1\%$.}\label{fig:finitedebscomparisonModeI}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{comparison-explicitmodel-3debs-vf60-GII.pdf}
+        \caption{3 debonds.}\label{subfig:finitedebscomparisonModeII3debs}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{comparison-explicitmodel-5debs-vf60-GII.pdf}
+        \caption{5 debonds.}\label{subfig:finitedebscomparisonModeII5debs}
+    \end{subfigure}
+    
+     \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{comparison-explicitmodel-11debs-vf60-GII.pdf}
+        \caption{11 debonds.}\label{subfig:finitedebscomparisonModeII11debs}
+    \end{subfigure} ~
+    \begin{subfigure}[b]{0.475\textwidth}
+        \includegraphics[width=\textwidth]{comparison-explicitmodel-21debs-vf60-GII.pdf}
+        \caption{21 debonds.}\label{subfig:finitedebscomparisonModeII21debs}
+    \end{subfigure}
+
+\caption{Effect on Mode II ERR of a finite increasing number of debonds along the vertical direction for a $21\times41-free$ RVE: comparison between alternating and aligned debonds. $V_{f}=60\%$, $\varepsilon_{x}$ of $1\%$.}\label{fig:finitedebscomparisonModeII}
+\end{figure}
+
+\begin{enumerate}
+\item Alternating debonds, Mode I, Figure~\ref{subfig:finitedebsalternatingGI}: no change with increasing number of debonds and no difference with models $101\times1-alternating$ and $201\times1-alternating$, which correspond to an infinite number of debonds along the vertical direction. Apparently, having just the side of the above fiber fully bonded makes the debond unaffected by the presence of another debond: 1) on the opposite side of the fiber just above, 2) on the same side of the subsequent fiber above.
+\item Alternating debonds, Mode II, Figure~\ref{subfig:finitedebsalternatingGII}: it increases with an increasing number of debonds and it is different from models $101\times1-alternating$ and $201\times1-alternating$, which correspond to an infinite number of debonds along the vertical direction. One main difference: two peaks appear, i.e. one local and one global maximum, respectively at $\Delta\theta=80^{\circ}$ and $\Delta\theta=100^{\circ}$. Given that Mode II for $21\times41-11\ alternating\ debonds$ and $21\times41-21\ alternating\ debonds$ are practically identical, we can conclude that there exists a maximum number of debonds after which the marginal effect on ERR of adding an additional one is negligible, or otherwise that there is a ``critical interaction length''.
+\item Aligned debonds, Mode I, Figure~\ref{subfig:finitedebsalignedGI}: it increases with increasing number of debonds. One difference with $101\times1-aligned$ and $201\times1-aligned$ which correspond to an infinite number of debonds along the vertical direction: a second local maximum at $\Delta\theta=70^{\circ}$ appears, more markedly with increasing number of debonds. Also, onset of contact zone is shifted from $\Delta\theta=80^{\circ}$ for $3$ aligned debonds to $\Delta\theta=90^{\circ}$ for at least $5$ aligned debonds.
+\item Aligned debonds, Mode II, Figure~\ref{subfig:finitedebsalignedGII}: it increases with increasing number of debonds. One difference with $101\times1-aligned$ and $201\times1-aligned$ which correspond to an infinite number of debonds along the vertical direction: two local maximum points appear at $\Delta\theta=50^{\circ}$ and at $\Delta\theta=100^{\circ}$. The first, at $\Delta\theta=50^{\circ}$, becomes less marked with increasing number of debonds, the second at $\Delta\theta=100^{\circ}$ becomes more marked with increasing number of debonds. The global maximum is at $70^{\circ}$ for $3$ aligned debonds and $80^{\circ}$  for at least $5$ aligned debonds.
+\item Aligned debonds, Mode I and Mode II, Figure~\ref{fig:finitedebsaligned}: given that ERR for $21\times41-11\ aligned\ debonds$ and $21\times41-21\ aligned\ debonds$ are almost identical, we can conclude that there exists also for the aligned case a maximum number of debonds after which the marginal effect on ERR of adding an additional one is negligible, or otherwise that there is a ``critical interaction length''.
+\item Comparison alternating-aligned: given the same number of debonds, Mode I ERR (Figure~\ref{fig:finitedebscomparisonModeI}) is higher in the case of aligned debonds, Mode II (Figure~\ref{fig:finitedebscomparisonModeII}) is higher in the case of alternating debonds, which is the same result obtained for the models with equivalent boundary conditions.
+\end{enumerate}
+
+\section{Conclusions}\label{sec:conclusions}
+
+The effect of debond-debond interaction along the vertical direction and the influence of debond relative position of their respective fibers have been studied with the use of Representative Volume Elements of thick UD composites. Debond growth has been characterized using tools of Linear Elastic Fracture Mechanics, specifically Mode I and Mode II Energy Release Rate at the debond tip. Two specific configurations have been chosen to investigate the effect of debond relative position: debonds placed on the same side of fibers aligned in the vertical direction, or symmetric repetition, and debonds placed on opposite sides of fibers aligned in the vertical direction, or asymmetric repetition. To model the former, classic conditions of coupling of the vertical displacements on the upper boundary have been employed. To model the asymmetric repetition configuration, a set of boundary conditions, to which we have refered to as anti-symmetric coupling, has been proposed. To the authors' knowledge, this is the first time the anti-symmetric coupling conditions have been proposed in the context of RVE modeling of heterogeneous materials behavior. For this reason, the boundary conditions proposed have been validated with respect to a RVE with debonds explicitly modeled and placed on alternating sides of fibers aligned in the vertical direction. The agreeement between the model with explicitly modeled debonds and the one with equivalent boundary conditions has been found excellent.\\
+Comparison of Mode I and Mode II Energy Release Rate between the two configurations (symmetric and asymmetric repetition of debonds) reveals that:
+
+\begin{itemize}
+\item higher values of Mode I ERR are found for a debond placed in a fiber column with no undamaged fiber inside and debonds placed on the same side of partially debonded fibers;
+\item higher values of Mode II ERR are obtained for a debond placed in a fiber column with no undamaged fiber inside and debonds placed on opposite sides of partially debonded fibers;
+\item no effect of debonds relative position on ERR is registered in the presence of just two undamaged (fully bonded) fibers between two debonds along the vertical direction;
+\item the presence of just two undamaged (fully bonded) fibers between two debonds along the vertical direction reduces, especially for Mode II, the effect of strain magnification.
+\end{itemize}
+
+
+
+\begin{acknowledgements}
+Luca Di Stasio gratefully acknowledges the support of the European School of Materials (EUSMAT) through the DocMASE Doctoral Programme and the European Commission through the Erasmus Mundus Programme.
+\end{acknowledgements}
+
+
+% Authors must disclose all relationships or interests that 
+% could have direct or potential influence or impart bias on 
+% the work: 
+%
+% \section*{Conflict of interest}
+%
+% The authors declare that they have no conflict of interest.
+
+
+% BibTeX users please use one of
+%\bibliographystyle{spbasic}      % basic style, author-year citations
+\bibliographystyle{spmpsci}      % mathematics and physical sciences
+%\bibliographystyle{spphys}       % APS-like style for physics
+\bibliography{refs}   % name your BibTeX data base
+
+%% Non-BibTeX users please use
+%\begin{thebibliography}{}
+%%
+%% and use \bibitem to create references. Consult the Instructions
+%% for authors for reference list style.
+%%
+%\bibitem{RefJ}
+%% Format for Journal Reference
+%Author, Article title, Journal, Volume, page numbers (year)
+%% Format for books
+%\bibitem{RefB}
+%Author, Book title, page numbers. Publisher, place (year)
+%% etc
+%\end{thebibliography}
+
+\end{document}
+% end of file template.tex
+

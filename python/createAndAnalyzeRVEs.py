@@ -36,7 +36,8 @@ POSSIBILITY OF SUCH DAMAGE.
 
 DESCRIPTION
 
-Tested with Abaqus Python 2.6 (64-bit) distribution in Windows 7.
+Tested with Abaqus Python 2.6 (64-bit) for Abaqus 2016 in Windows 7,
+            Abaqus Python 2.7.15 (64-bit) for Abaqus 2021 in Windows 10.
 
 '''
 import sys, os
@@ -4230,8 +4231,12 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
             model.YsymmBC(name='SymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
             if 'symmetric' in parameters['BC']['rightSide']['type']:
                 model.XsymmBC(name='RightSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['RIGHTSIDE'], localCsys=None)
+            elif 'transversecrack' in parameters['BC']['rightSide']['type']:
+                model.XsymmBC(name='RightSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['UPPER-RIGHTSIDE'], localCsys=None)
             if 'symmetric' in parameters['BC']['leftSide']['type']:
                 model.XsymmBC(name='LeftSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LEFTSIDE'], localCsys=None)
+            elif 'transversecrack' in parameters['BC']['leftSide']['type']:
+                model.XsymmBC(name='LeftSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['UPPER-LEFTSIDE'], localCsys=None)
     elif 'quarter' in parameters['geometry']['fiber']['type']:
         for step in parameters['steps'].values():
             model.YsymmBC(name='LowerSymmetryBound', createStepName=step['name'],region=model.rootAssembly.instances['RVE-assembly'].sets['LOWERSIDE'], localCsys=None)
@@ -4254,7 +4259,11 @@ def createRVE(parameters,logfilepath,baselogindent,logindent):
     for load in parameters['loads'].values():
         writeLineToLogFile(logfilepath,'a',3*logindent + 'Apply ' + load['type'] + ' on ' + load['set'] + ' set',True)
         if 'appliedstrain' in load['type'] or 'appliedStrain' in load['type'] or 'Applied Strain' in load['type'] or 'applied strain' in load['type']:
-            if 'right' in load['set'] or 'Right' in load['set'] or 'RIGHT' in load['set']:
+            if 'upperright' in load['set'] or 'UpperRight' in load['set'] or 'UPPERRIGHT' in load['set']:
+                model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*CornerBx, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+            elif 'upperleft' in load['set'] or 'UpperLeft' in load['set'] or 'UPPERLEFT' in load['set']:
+                model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*CornerAx, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
+            elif 'right' in load['set'] or 'Right' in load['set'] or 'RIGHT' in load['set']:
                 model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*CornerBx, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
             elif 'left' in load['set'] or 'Left' in load['set'] or 'LEFT' in load['set']:
                 model.DisplacementBC(name=load['name'],createStepName=load['stepName'],region=model.rootAssembly.instances['RVE-assembly'].sets[load['set']], u1=load['value'][0]*CornerAx, amplitude=UNSET, fixed=OFF, distributionType=UNIFORM, fieldName='',localCsys=None)
